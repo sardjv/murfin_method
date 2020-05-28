@@ -1,0 +1,2 @@
+class SitRecord < ApplicationRecord
+end

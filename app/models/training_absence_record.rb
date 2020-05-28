@@ -1,0 +1,2 @@
+class TrainingAbsenceRecord < ApplicationRecord
+end

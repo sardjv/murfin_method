@@ -1,0 +1,2 @@
+class PositionEitRecord < ApplicationRecord
+end

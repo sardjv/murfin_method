@@ -1,0 +1,17 @@
+en:
+  administrate:
+    actions:
+      revoke: Revoke
+  faker:
+    absence_record:
+      absence_type:
+        - Sickness
+        - Holiday
+        - Compassionate
+        - Travel disruption
+        - Maternity, Paternity and Adoption Leave
+        - Jury duty
+        - Appointment
+        - Training
+        - Disciplinary
+
