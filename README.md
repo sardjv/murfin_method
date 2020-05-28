@@ -1,4 +1,4 @@
-# ESR_API: a Ruby on Rails API for the NHS ESR System
+# Job Plan Stats: a Ruby on Rails app for comparing NHS job plans to actual time spent
 
 ## .env file
 
@@ -103,6 +103,6 @@ docker-compose exec mysql bash
 mysql -u root -p
 (enter root password)
 show databases;
-use esr_api_development;
+use jp_stats_development;
 SELECT * FROM person_records;
 ```
