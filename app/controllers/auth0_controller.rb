@@ -2,7 +2,7 @@ class Auth0Controller < ApplicationController
 
   def callback
     session[:userinfo] = request.env['omniauth.auth']
-    redirect_to admin_root_path
+    redirect_to root_path
   end
 
   def failure
