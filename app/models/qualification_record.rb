@@ -1,0 +1,2 @@
+class QualificationRecord < ApplicationRecord
+end
