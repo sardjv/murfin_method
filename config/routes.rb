@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get 'auth/failure' => 'auth0#failure'
   get 'auth_logout' => 'auth0#destroy'
 
-  constraints lambda { |request| request.session[:userinfo].present? } do
+  constraints ->(request) { request.session[:userinfo].present? } do
     mount Sidekiq::Web => '/sidekiq'
   end
 end

@@ -8,6 +8,8 @@ AllCops:
     - 'db/**/*'
     - 'log/**/*'
     - 'tmp/**/*'
+    - 'node_modules/**/*'
+    - 'bin/*'
 
 Style/Documentation:
   # Skips checking to make sure top level modules / classes have a comment.
@@ -47,10 +49,19 @@ Style/HashTransformValues:
   Enabled: true
 
 Style/ExponentialNotation:
-    Enabled: true
+  Enabled: true
+
+Style/SlicingWithRange:
+  Enabled: true
 
 Layout/SpaceAroundMethodCallOperator:
   Enabled: true
+
+Layout/LineLength:
+  Max: 100
+
+Layout/EmptyLinesAroundAttributeAccessor:
+   Enabled: true
 
 Lint/RaiseException:
   Enabled: true
