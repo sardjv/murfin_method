@@ -17,8 +17,8 @@ It can then be accessed at [http://localhost:3000/](http://localhost:3000/)
 On the first run you need to create, migrate and optionally seed the database:
 
 ```
-docker-compose run api bundle exec rails db:create db:migrate db:seed
-docker-compose run api bundle exec rails db:migrate RAILS_ENV=test
+docker-compose run app bundle exec rails db:create db:migrate db:seed
+docker-compose run app bundle exec rails db:migrate RAILS_ENV=test
 ```
 
 ## Logging in
@@ -45,7 +45,7 @@ The API documentation can be viewed at [http://localhost:3000/api_docs](http://l
 The Swagger docs are generated from the RSpec tests in `spec/controllers/api` To rebuild the swagger docs:
 
 ```
-docker-compose run api bundle exec rails rswag
+docker-compose run app bundle exec rails rswag
 ```
 
 ## ETL and Kiba
@@ -64,7 +64,7 @@ This project uses the [Kiba](https://github.com/thbar/kiba) gem for scalable and
 To run Rubocop, and listen for file changes:
 
 ```
-docker-compose run api bundle exec guard
+docker-compose run app bundle exec guard
 ```
 
 Just press enter to run the whole test suite straight away.
@@ -82,7 +82,7 @@ open coverage/index.html
 To access a 'byebug' debugging point, run with:
 
 ```
-docker-compose run --service-ports api
+docker-compose run --service-ports app
 ```
 
 ## Database
