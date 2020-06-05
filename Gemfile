@@ -15,6 +15,14 @@ gem 'administrate', github: 'thoughtbot/administrate', branch: 'master'
 # https://github.com/SourceLabsLLC/administrate_exportable
 gem 'administrate_exportable', '~> 0.2.0'
 
+# Fixtures replacement with a straightforward definition syntax.
+# https://github.com/thoughtbot/factory_bot
+gem 'factory_bot', '~> 5.2.0'
+
+# Generate fake data such as names, addresses, and phone numbers.
+# https://github.com/faker-ruby/faker
+gem 'faker', '~> 2.11.0'
+
 # A resource-focused Rails library for developing JSON:API compliant servers.
 # https://github.com/cerebris/jsonapi-resources
 gem 'jsonapi-resources', '~> 0.10.2'
@@ -107,14 +115,6 @@ group :test do
   # https://github.com/DatabaseCleaner/database_cleaner
   gem 'database_cleaner-active_record', '~> 1.8.0'
   gem 'database_cleaner-redis', '~> 1.8.0'
-
-  # Fixtures replacement with a straightforward definition syntax.
-  # https://github.com/thoughtbot/factory_bot
-  gem 'factory_bot', '~> 5.2.0'
-
-  # Generate fake data such as names, addresses, and phone numbers.
-  # https://github.com/faker-ruby/faker
-  gem 'faker', '~> 2.11.0'
 
   # RSpec is a specification library for behaviour driven development.
   # https://github.com/rspec/rspec
