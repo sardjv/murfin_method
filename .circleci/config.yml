@@ -70,7 +70,6 @@ workflows:
           requires:   # Test requires that build passes for it to run.
             - build   # Finally, run the build job.
       - heroku/deploy-via-git:
-          context: HEROKU
           requires:
             - test
           filters:
