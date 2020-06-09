@@ -11,8 +11,12 @@
 #  updated_at         :datetime         not null
 #
 describe TimeRange, type: :model do
-  it { expect(TimeRange.new).not_to be_valid }
   it { expect(build(:time_range)).to be_valid }
+
+  it { should validate_presence_of(:start_time) }
+  it { should validate_presence_of(:end_time) }
+  it { should validate_presence_of(:value) }
+  it { should validate_presence_of(:time_range_type_id) }
 
   context 'with a couple of example types' do
     let(:jp_type) { create(:time_range_type, name: 'Job Plan Periods') }
