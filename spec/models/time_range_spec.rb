@@ -18,6 +18,16 @@ describe TimeRange, type: :model do
   it { should validate_presence_of(:value) }
   it { should validate_presence_of(:time_range_type_id) }
 
+  context 'with end_time before start_time' do
+    subject { build(:time_range) }
+
+    before { subject.end_time = subject.start_time - 1.hour }
+
+    it { expect(subject).not_to be_valid }
+  end
+
+  it { should validate_numericality_of(:start_time).is_less_than(:end_time) }
+
   context 'with a couple of example types' do
     let(:jp_type) { create(:time_range_type, name: 'Job Plan Periods') }
     let(:rio_type) { create(:time_range_type, name: 'RIO Appointments') }
