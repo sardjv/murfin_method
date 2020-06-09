@@ -13,5 +13,8 @@ yarn check || yarn install
 # Perform any database tasks needed.
 bundle exec rails db:create db:migrate
 
+# Add schemas to model files, for reference.
+bundle exec annotate --models
+
 # Start server.
 bundle exec rails s
