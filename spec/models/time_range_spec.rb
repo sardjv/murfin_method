@@ -11,5 +11,6 @@
 #  updated_at         :datetime         not null
 #
 describe TimeRange, type: :model do
-  it { expect(TimeRange.new).to be_valid }
+  it { expect(TimeRange.new).not_to be_valid }
+  it { expect(build(:time_range)).to be_valid }
 end
