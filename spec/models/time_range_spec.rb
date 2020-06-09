@@ -26,8 +26,6 @@ describe TimeRange, type: :model do
     it { expect(subject).not_to be_valid }
   end
 
-  it { should validate_numericality_of(:start_time).is_less_than(:end_time) }
-
   context 'with a couple of example types' do
     let(:jp_type) { create(:time_range_type, name: 'Job Plan Periods') }
     let(:rio_type) { create(:time_range_type, name: 'RIO Appointments') }
