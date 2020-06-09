@@ -107,7 +107,7 @@ To change database between MySQL, PostgreSQL and SQL Server:
 To access the MySQL database console:
 
 ```
-docker-compose exec mysql bash
+docker-compose exec db bash
 mysql -u root -p
 (enter root password)
 show databases;
