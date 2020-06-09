@@ -7,6 +7,8 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-class TimeRangeType < ApplicationRecord
-  validates_presence_of :name
+FactoryBot.define do
+  factory :time_range_type do
+    name { Faker::Commerce.unique.department }
+  end
 end
