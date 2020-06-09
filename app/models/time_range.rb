@@ -12,4 +12,11 @@
 #
 class TimeRange < ApplicationRecord
   validates :start_time, :end_time, :value, :time_range_type_id, presence: true
+  validate :validate_end_time_after_start_time
+
+  def validate_end_time_after_start_time
+    return unless end_time < start_time
+
+    errors.add :end_time, 'must occur after start time'
+  end
 end
