@@ -5,5 +5,7 @@ class CreateTimeRangeTypes < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
+
+    add_index 'time_range_types', ['name'], :unique => true
   end
 end
