@@ -10,5 +10,5 @@
 #  updated_at :datetime         not null
 #
 class User < ApplicationRecord
-  has_many :time_ranges
+  has_many :time_ranges, dependent: :destroy
 end
