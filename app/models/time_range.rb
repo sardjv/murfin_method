@@ -11,7 +11,7 @@
 #  updated_at         :datetime         not null
 #
 class TimeRange < ApplicationRecord
-  validates :start_time, :end_time, :value, :time_range_type_id, presence: true
+  validates :start_time, :end_time, :value, :time_range_type_id, :user_id, presence: true
   validate :validate_end_time_after_start_time
 
   def validate_end_time_after_start_time

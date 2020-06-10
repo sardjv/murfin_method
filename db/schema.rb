@@ -23,9 +23,11 @@ ActiveRecord::Schema.define(version: 2020_06_09_151500) do
     t.timestamp "end_time", null: false
     t.integer "value", null: false
     t.bigint "time_range_type_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["time_range_type_id"], name: "index_time_ranges_on_time_range_type_id"
+    t.index ["user_id"], name: "index_time_ranges_on_user_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|

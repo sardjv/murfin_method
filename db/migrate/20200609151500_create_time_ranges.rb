@@ -5,6 +5,7 @@ class CreateTimeRanges < ActiveRecord::Migration[6.0]
       t.timestamp :end_time, null: false
       t.integer :value, null: false
       t.references :time_range_type, null: false
+      t.references :user, null: false
 
       t.timestamps
     end
