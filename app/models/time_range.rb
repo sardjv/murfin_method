@@ -7,10 +7,13 @@
 #  end_time           :datetime         not null
 #  value              :integer          not null
 #  time_range_type_id :bigint           not null
+#  user_id            :bigint           not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #
 class TimeRange < ApplicationRecord
+  belongs_to :user
+
   validates :start_time, :end_time, :value, :time_range_type_id, :user_id, presence: true
   validate :validate_end_time_after_start_time
 

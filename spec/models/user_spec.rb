@@ -9,6 +9,9 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-class User < ApplicationRecord
-  has_many :time_ranges
+describe User, type: :model do
+  subject { build(:user) }
+
+  it { expect(subject).to be_valid }
+  it { should have_many(:time_ranges) }
 end
