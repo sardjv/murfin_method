@@ -39,7 +39,7 @@ describe TimeRange, type: :model do
     context 'with a couple of example ranges' do
       let(:start_time) { DateTime.now.change({ hour: 9 }) }
       let(:end_time) { DateTime.now.change({ hour: 17 }) }
-      let!(:job_plan_periods) {
+      let!(:job_plan_periods) do
         create(
           :time_range,
           time_range_type_id: jp_type.id,
@@ -47,8 +47,8 @@ describe TimeRange, type: :model do
           end_time: end_time,
           value: 2
         )
-      }
-      let!(:rio_appointments) {
+      end
+      let!(:rio_appointments) do
         create(
           :time_range,
           time_range_type_id: jp_type.id,
@@ -56,7 +56,7 @@ describe TimeRange, type: :model do
           end_time: end_time + 1.hour,
           value: 3
         )
-      }
+      end
 
       it { expect(job_plan_periods).to be_valid }
       it { expect(rio_appointments).to be_valid }
