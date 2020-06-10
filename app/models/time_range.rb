@@ -13,6 +13,7 @@
 #
 class TimeRange < ApplicationRecord
   belongs_to :user
+  belongs_to :time_range_type
 
   validates :start_time, :end_time, :value, :time_range_type_id, :user_id, presence: true
   validate :validate_end_time_after_start_time

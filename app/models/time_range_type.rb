@@ -8,5 +8,7 @@
 #  updated_at :datetime         not null
 #
 class TimeRangeType < ApplicationRecord
+  has_many :time_ranges
+
   validates :name, presence: true, uniqueness: true
 end
