@@ -8,6 +8,9 @@
 #  updated_at :datetime         not null
 #
 describe TimeRangeType, type: :model do
-  it { expect(build(:time_range_type)).to be_valid }
+  subject { build(:time_range_type) }
+
+  it { expect(subject).to be_valid }
   it { should validate_presence_of(:name) }
+  it { should validate_uniqueness_of(:name) }
 end
