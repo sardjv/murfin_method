@@ -8,7 +8,7 @@
 #  updated_at :datetime         not null
 #
 class TimeRangeType < ApplicationRecord
-  has_many :time_ranges
+  has_many :time_ranges, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true
 end

@@ -13,5 +13,5 @@ describe User, type: :model do
   subject { build(:user) }
 
   it { expect(subject).to be_valid }
-  it { should have_many(:time_ranges) }
+  it { should have_many(:time_ranges).dependent(:destroy) }
 end
