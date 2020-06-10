@@ -20,6 +20,7 @@ describe TimeRange, type: :model do
   it { should validate_presence_of(:end_time) }
   it { should validate_presence_of(:value) }
   it { should validate_presence_of(:time_range_type_id) }
+  it { should belong_to(:time_range_type) }
   it { should validate_presence_of(:user_id) }
   it { should belong_to(:user) }
 
