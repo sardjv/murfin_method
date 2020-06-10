@@ -11,12 +11,15 @@
 #  updated_at         :datetime         not null
 #
 describe TimeRange, type: :model do
-  it { expect(build(:time_range)).to be_valid }
+  subject { build(:time_range) }
+
+  it { expect(subject).to be_valid }
 
   it { should validate_presence_of(:start_time) }
   it { should validate_presence_of(:end_time) }
   it { should validate_presence_of(:value) }
   it { should validate_presence_of(:time_range_type_id) }
+  it { should validate_presence_of(:user_id) }
 
   context 'with end_time before start_time' do
     subject { build(:time_range) }
