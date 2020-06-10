@@ -4,7 +4,7 @@
 rm -f /app/tmp/pids/server.pid
 
 # If `bundle check` indicates it's needed, `bundle install` here rather than in Dockerfile,
-#    so that we can cache its result in the bundle_cache container.
+# so that we can cache its result in the bundle_cache container.
 bundle check || bundle install
 
 # Yarn install here instead of in Dockerfile since it needs to come after bundle install.
@@ -12,6 +12,12 @@ yarn check || yarn install
 
 # Perform any database tasks needed.
 bundle exec rails db:create db:migrate
+
+# Add schemas to model files, for reference.
+bundle exec annotate --models
+
+# Run Rubocop autofix, Ruby linting.
+bundle exec rubocop -a
 
 # Start server.
 bundle exec rails s

@@ -1,14 +1,14 @@
 # == Schema Information
 #
-# Table name: users
+# Table name: time_range_types
 #
 #  id         :bigint           not null, primary key
-#  first_name :string(255)
-#  last_name  :string(255)
-#  email      :string(255)
+#  name       :string(255)      not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-class User < ApplicationRecord
+class TimeRangeType < ApplicationRecord
   has_many :time_ranges, dependent: :destroy
+
+  validates :name, presence: true, uniqueness: true
 end
