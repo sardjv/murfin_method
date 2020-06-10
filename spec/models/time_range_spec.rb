@@ -37,23 +37,21 @@ describe TimeRange, type: :model do
     let(:rio_type) { create(:time_range_type, name: 'RIO Appointments') }
 
     context 'with a couple of example ranges' do
-      let(:start_time) { DateTime.now.change({ hour: 9 }) }
-      let(:end_time) { DateTime.now.change({ hour: 17 }) }
       let!(:job_plan_periods) do
         create(
           :time_range,
           time_range_type_id: jp_type.id,
-          start_time: start_time,
-          end_time: end_time,
+          start_time: DateTime.now.change({ hour: 9 }),
+          end_time: DateTime.now.change({ hour: 17 }),
           value: 2
         )
       end
       let!(:rio_appointments) do
         create(
           :time_range,
-          time_range_type_id: jp_type.id,
-          start_time: start_time,
-          end_time: end_time + 1.hour,
+          time_range_type_id: rio_type.id,
+          start_time: DateTime.now.change({ hour: 9 }),
+          end_time: DateTime.now.change({ hour: 18 }),
           value: 3
         )
       end
