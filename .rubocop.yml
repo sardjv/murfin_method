@@ -68,3 +68,9 @@ Lint/RaiseException:
 
 Lint/StructNewOverride:
   Enabled: true
+
+Metrics/BlockLength:
+  Exclude:
+    - 'Rakefile'
+    - '**/*.rake'
+    - 'spec/**/*.rb'

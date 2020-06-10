@@ -2,9 +2,7 @@ source 'https://rubygems.org'
 
 # Use SQL Server as the database for Active Record.
 # https://github.com/rails-sqlserver/activerecord-sqlserver-adapter
-# Rails 6 compatibility is under development, remove the branch reference when merged:
-# https://github.com/rails-sqlserver/activerecord-sqlserver-adapter/pull/690
-# gem 'activerecord-sqlserver-adapter', git: 'https://github.com/rails-sqlserver/activerecord-sqlserver-adapter', branch: '6-0-dev'
+# gem 'activerecord-sqlserver-adapter', '~> 6.0.0'
 
 # A Rails engine that helps you put together a super-flexible admin dashboard.
 # https://github.com/thoughtbot/administrate
@@ -123,6 +121,10 @@ group :test do
   # RSpec is a specification library for behaviour driven development.
   # https://github.com/rspec/rspec
   gem 'rspec-rails', '~> 4.0.1'
+
+  # Simple one-liner tests for common Rails functionality.
+  # https://github.com/thoughtbot/shoulda-matchers
+  gem 'shoulda-matchers', '~> 4.3.0'
 
   # Generate code coverage documentation.
   # https://github.com/colszowka/simplecov
