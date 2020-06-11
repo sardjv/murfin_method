@@ -9,6 +9,6 @@
 #
 FactoryBot.define do
   factory :time_range_type do
-    name { Faker::Commerce.unique.department }
+    name { Faker::TimeRangeType.name }
   end
 end
