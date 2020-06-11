@@ -3,7 +3,15 @@
   "info": {
     "title": "Job Plan Statistics API",
     "version": "v1",
-    "description": "This is the Job Plan Statistics API. For more information visit\n                        <a href=\"https://github.com/sardjv/job_plan_statistics\">github.com/sardjv/job_plan_statistics</a>."
+    "description": "This is the Job Plan Statistics API. For more information visit\n                        <a href=\"https://github.com/sardjv/job_plan_statistics\">\n                        github.com/sardjv/job_plan_statistics</a>."
+  },
+  "securityDefinitions": {
+    "JWT": {
+      "description": "The JSON Web Token from Auth0 for authentication.",
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
   },
   "paths": {
     "/api/v1/users": {
@@ -11,6 +19,12 @@
         "summary": "user records",
         "tags": [
           "User"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
         ],
         "produces": [
           "application/vnd.api+json"
@@ -51,12 +65,12 @@
         },
         "Last Name": {
           "type": "string",
-          "example": "sname",
+          "example": "Smith",
           "x-nullable": true
         },
         "First Name": {
           "type": "string",
-          "example": "fname",
+          "example": "John",
           "x-nullable": true
         },
         "Email": {
@@ -76,7 +90,7 @@
             "properties": {
               "id": {
                 "type": "string",
-                "example": "0"
+                "example": "1"
               },
               "type": {
                 "type": "string",
@@ -87,7 +101,7 @@
                 "properties": {
                   "self": {
                     "type": "string",
-                    "example": "https://job-plan-stats.herokuapp.com/api/v1/users/0"
+                    "example": "https://job-plan-stats.herokuapp.com/api/v1/users/1"
                   }
                 }
               },
@@ -128,7 +142,7 @@
           "properties": {
             "id": {
               "type": "string",
-              "example": "0"
+              "example": "1"
             },
             "type": {
               "type": "string",
@@ -139,7 +153,7 @@
               "properties": {
                 "self": {
                   "type": "string",
-                  "example": "https://job_plan_statistics.sardjv.co.uk/api/v1/users/0"
+                  "example": "https://job-plan-stats.herokuapp.com/api/v1/users/1"
                 }
               }
             },
