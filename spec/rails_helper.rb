@@ -43,6 +43,8 @@ RSpec.configure do |config|
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation, except: %w[ar_internal_metadata])
+
+    Webpacker.compile
   end
 
   config.around(:each) do |example|
@@ -83,4 +85,22 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include ActiveJob::TestHelper, type: :job
+end
+
+# Turn off deprecation notices
+Selenium::WebDriver.logger.level = :error
+
+Capybara.register_driver :headless_chrome do |app|
+  args = %w[no-sandbox headless disable-gpu window-size=1400,1400]
+  options = { 'goog:chromeOptions' => { 'args': args } }
+  chrome_capabilities = ::Selenium::WebDriver::Remote::Capabilities.chrome(options)
+  Capybara::Selenium::Driver.new(app,
+                                 browser: :remote,
+                                 url: ENV['SELENIUM_REMOTE_URL'],
+                                 desired_capabilities: chrome_capabilities)
+end
+
+Capybara.configure do |c|
+  c.default_normalize_ws = true
+  c.javascript_driver = :headless_chrome
 end
