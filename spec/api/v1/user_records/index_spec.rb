@@ -1,8 +1,8 @@
 require 'swagger_helper'
 
 describe 'Api::V1::User', type: :request, swagger_doc: 'v1/swagger.json' do
-  let!(:User) { create(:user) }
-  let!(:User2) { create(:user) }
+  let!(:user1) { create(:user) }
+  let!(:user2) { create(:user) }
   let(:response_data) { JSON.parse(response.body)['data'] }
 
   path '/api/v1/users' do
@@ -28,7 +28,7 @@ describe 'Api::V1::User', type: :request, swagger_doc: 'v1/swagger.json' do
               database_record = User.find(response_data.first['id'])
               response_data.first['attributes'].each do |key, value|
                 if database_record.send(key).is_a?(Time)
-                  expect(database_record.send(key).strftime('%Y-%m-%dT%H:%M:%S.000Z')).to eq(value.to_s)
+                  expect(I18n.l(database_record.send(key), format: :iso8601_utc)).to eq(value.to_s)
                 else
                   expect(database_record.send(key).to_s).to eq(value.to_s)
                 end
@@ -41,7 +41,8 @@ describe 'Api::V1::User', type: :request, swagger_doc: 'v1/swagger.json' do
             let!(:'page[number]') { 2 }
 
             run_test! do
-              expect(response_data.length).to eq(1)
+              expect(response_data.first['id']).to eq(user2.id.to_s)
+              expect(response_data.first['attributes']['email']).to eq(user2.email)
             end
           end
         end
