@@ -54,6 +54,7 @@ services:
     depends_on:
       - 'db'
       - 'redis'
+      - webdriver_chrome
     build: .
     # 1) Remove any existing server process in case of dirty shutdown, with -f in case the file doesn't exist.
     # 2) if `bundle check` indicates it's needed, `bundle install` here rather than in Dockerfile,
@@ -67,9 +68,16 @@ services:
       # We cache the bundle so that we don't re-download every gem on any change to the Gemfile.
       - bundle_cache:/bundle
     environment:
+      - SELENIUM_REMOTE_URL=http://webdriver_chrome:4444/wd/hub
       - BUNDLE_PATH=/bundle/vendor
     env_file:
       - '.env'
+
+  webdriver_chrome:
+    image: selenium/standalone-chrome
+    volumes:
+      - '.:/app'
+      - bundle_cache:/bundle
 
   bundle_cache:
     # BusyBox combines tiny versions of many common UNIX utilities into a single small executable.
