@@ -26,4 +26,3 @@ TimeRangeType.pluck(:id).each do |time_range_type_id|
     end
   end
 end
-

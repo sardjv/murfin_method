@@ -20,10 +20,9 @@ FactoryBot.define do
 
     after(:build) do |time_range|
       # Set end_time to be after start_time.
-      time_range.end_time = Faker::Time.between(
-        from: time_range.start_time,
-        to: time_range.start_time + 1.month
-      )
+      unless time_range.end_time
+        time_range.end_time = time_range.start_time + 1.week - 1.second
+      end
     end
   end
 end
