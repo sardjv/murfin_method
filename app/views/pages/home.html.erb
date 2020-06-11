@@ -11,6 +11,11 @@
         Quickly spot service and data collection problems.
       </li>
     </ul>
-    <%= button_to 'Log in', root_url + 'auth/auth0', method: :post, class:'nhsuk-button nhsuk-u-margin-bottom-8' %>
+    <% if user_authenticated? %>
+      <%= link_to 'Log out', auth_logout_path, class:'nhsuk-button nhsuk-u-margin-bottom-8' %>
+    <% else %>
+      <%= button_to 'Log in', root_url + 'auth/auth0', method: :post, class:'nhsuk-button nhsuk-u-margin-bottom-8' %>
+    <% end %>
+
   </div>
 </div>
