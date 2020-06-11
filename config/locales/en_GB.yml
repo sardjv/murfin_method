@@ -1,14 +1,6 @@
 en:
   faker:
-    absence_record:
-      absence_type:
-        - Sickness
-        - Holiday
-        - Compassionate
-        - Travel disruption
-        - Maternity, Paternity and Adoption Leave
-        - Jury duty
-        - Appointment
-        - Training
-        - Disciplinary
-
+    time_range_type:
+      name:
+        - Job Plan sessions
+        - RIO sessions
