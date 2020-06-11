@@ -113,6 +113,10 @@ group :development do
 end
 
 group :test do
+  # Acceptance test framework for web applications
+  # https://github.com/teamcapybara/capybara
+  gem 'capybara', '~> 3.32.2'
+
   # Strategies for cleaning databases between tests.
   # https://github.com/DatabaseCleaner/database_cleaner
   gem 'database_cleaner-active_record', '~> 1.8.0'
@@ -121,6 +125,10 @@ group :test do
   # RSpec is a specification library for behaviour driven development.
   # https://github.com/rspec/rspec
   gem 'rspec-rails', '~> 4.0.1'
+
+  # A browser automation framework and ecosystem.
+  # https://github.com/SeleniumHQ/selenium
+  gem 'selenium-webdriver', '~> 3.142.5'
 
   # Simple one-liner tests for common Rails functionality.
   # https://github.com/thoughtbot/shoulda-matchers
