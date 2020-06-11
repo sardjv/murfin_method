@@ -87,24 +87,17 @@ RSpec.configure do |config|
   config.include ActiveJob::TestHelper, type: :job
 end
 
-# Turn off deprectation notices
+# Turn off deprecation notices
 Selenium::WebDriver.logger.level = :error
 
 Capybara.register_driver :headless_chrome do |app|
   args = %w[no-sandbox headless disable-gpu window-size=1400,1400]
   options = { 'goog:chromeOptions' => { 'args': args } }
   chrome_capabilities = ::Selenium::WebDriver::Remote::Capabilities.chrome(options)
-
-  if ENV['SELENIUM_REMOTE_URL']
-    Capybara::Selenium::Driver.new(app,
-                                   browser: :remote,
-                                   url: ENV['SELENIUM_REMOTE_URL'],
-                                   desired_capabilities: chrome_capabilities)
-  else
-    Capybara::Selenium::Driver.new(app,
-                                   browser: :chrome,
-                                   desired_capabilities: chrome_capabilities)
-  end
+  Capybara::Selenium::Driver.new(app,
+                                 browser: :remote,
+                                 url: ENV['SELENIUM_REMOTE_URL'],
+                                 desired_capabilities: chrome_capabilities)
 end
 
 Capybara.configure do |c|
