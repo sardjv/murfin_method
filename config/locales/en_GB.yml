@@ -1,7 +1,4 @@
 en:
-  administrate:
-    actions:
-      revoke: Revoke
   faker:
     absence_record:
       absence_type:
