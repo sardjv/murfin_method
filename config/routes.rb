@@ -7,6 +7,16 @@ Rails.application.routes.draw do
   get 'auth/failure' => 'auth0#failure'
   get 'auth_logout' => 'auth0#destroy'
 
+  namespace :api do
+    namespace :v1 do
+      jsonapi_resources :users
+    end
+  end
+
+  # Swagger documentation.
+  mount Rswag::Ui::Engine => 'api_docs'
+  mount Rswag::Api::Engine => 'api_docs'
+
   constraints ->(request) { request.session[:userinfo].present? } do
     mount Sidekiq::Web => '/sidekiq'
   end
