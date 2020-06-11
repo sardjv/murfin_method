@@ -6,7 +6,7 @@ class Api::V1::Swagger::User
         properties: {
           'ID' => { type: 'string', example: '1', 'x-nullable': true },
           'Last Name' => { type: 'string', example: 'sname', 'x-nullable': true },
-          'First Name' => { type: 'string', example: 'fname', 'x-nullable': true },
+          'First Name' => { type: 'string', example: 'John', 'x-nullable': true },
           'Email' => { type: 'string', example: nil, 'x-nullable': true }
         }
       },
