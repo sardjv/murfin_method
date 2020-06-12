@@ -2,7 +2,6 @@ class FakeGraphDataJob < ApplicationJob
   queue_as :default
 
   def perform(story:, user:, time_range_type:, graph_start_time:, graph_end_time:, unit:, volatility:)
-
     time_ranges = build_static(
       user: user,
       time_range_type: time_range_type,
@@ -12,13 +11,17 @@ class FakeGraphDataJob < ApplicationJob
     )
 
     case story
+    when :static
+      time_ranges.each do |time_range|
+        time_range.value = adjust(value: time_range.value, volatility: volatility)
+      end
     when :seasonal_summer_and_christmas
       direction = dip_or_spike
-      months = [6, 7, 12]
+      months = ['June', 'July', 'December']
 
       time_ranges.each do |time_range|
-        if months.include?(time_range.start_time.month)
-          time_range.value = adjust(time_range.value, volatility, direction)
+        if months.include?(time_range.start_time.strftime('%B'))
+          time_range.value = adjust(value: time_range.value, volatility: volatility, direction: direction)
         end
       end
     end
@@ -55,9 +58,8 @@ class FakeGraphDataJob < ApplicationJob
 
   # Adjust a value according to a given volatility between 0 and 1.0.
   # From: https://stackoverflow.com/questions/8597731/are-there-known-techniques-to-generate-realistic-looking-fake-stock-data
-  def adjust(old_value, volatility, direction)
-    rnd = rand() # generate number, 0 <= x < 1.0
-    change_percent = 2 * volatility * rnd
+  def adjust(value:, volatility:, direction: :random)
+    change_percent = 2 * volatility * rand
     if (change_percent > volatility)
       change_percent -= (2 * volatility)
     end
@@ -69,8 +71,8 @@ class FakeGraphDataJob < ApplicationJob
       change_percent = (change_percent).abs
     end
 
-    change_amount = old_value * change_percent
-    new_value = old_value + change_amount
+    change_amount = value * change_percent
+    new_value = value + change_amount
     new_value.round
   end
 end

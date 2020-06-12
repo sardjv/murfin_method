@@ -1,5 +1,6 @@
 describe FakeGraphDataJob, type: :job do
   describe 'static' do
+    let(:volatility) { 0 }
     subject(:job) {
       FakeGraphDataJob.perform_later(
         story: :static,
@@ -8,17 +9,27 @@ describe FakeGraphDataJob, type: :job do
         graph_start_time: DateTime.new(2020).beginning_of_year,
         graph_end_time: DateTime.new(2020).end_of_year,
         unit: :week,
-        volatility: 0
+        volatility: volatility
       )
     }
 
     before { perform_enqueued_jobs { job } }
 
-    it 'creates records' do
+    it 'creates identical records' do
       expect(User.count).to eq(1)
       expect(TimeRange.count).to eq(53)
       expect(TimeRange.first.value).to be_an(Integer)
       expect(TimeRange.distinct.pluck(:value).count).to eq(1)
+    end
+
+    context 'with 70% volatility' do
+      let(:volatility) { 0.7 }
+
+      it 'creates varying records' do
+        expect(TimeRange.count).to eq(53)
+        expect(TimeRange.first.value).to be_an(Integer)
+        expect(TimeRange.distinct.pluck(:value).count > 1).to eq(true)
+      end
     end
   end
 
