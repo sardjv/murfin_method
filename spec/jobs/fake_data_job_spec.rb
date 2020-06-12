@@ -1,6 +1,6 @@
 describe FakeDataJob, type: :job do
   let(:classes) { %w[User TimeRangeType TimeRange] }
-  let(:quantity) { 2 }
+  let(:quantity) { 1 }
 
   subject(:job) do
     classes.each do |klass|
@@ -13,7 +13,7 @@ describe FakeDataJob, type: :job do
 
     it 'creates records' do
       classes.each do |klass|
-        expect(klass.constantize.count).to eq(2)
+        expect(klass.constantize.count).to eq(1)
       end
     end
   end

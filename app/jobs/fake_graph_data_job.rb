@@ -26,6 +26,8 @@ class FakeGraphDataJob < ApplicationJob
       time_ranges.each do |time_range|
         if months.include?(time_range.start_time.strftime('%B'))
           time_range.value = adjust(value: time_range.value, volatility: volatility, direction: direction)
+        else
+          time_range.value = adjust(value: time_range.value, volatility: 0.04, direction: :variable)
         end
       end
     end
