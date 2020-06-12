@@ -20,9 +20,7 @@ FactoryBot.define do
 
     after(:build) do |time_range|
       # Set end_time to be after start_time.
-      unless time_range.end_time
-        time_range.end_time = time_range.start_time + 1.week - 1.second
-      end
+      time_range.end_time = time_range.start_time + 1.week - 1.second unless time_range.end_time
     end
   end
 end

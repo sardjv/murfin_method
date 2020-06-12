@@ -1,17 +1,17 @@
 describe FakeGraphDataJob, type: :job do
   describe 'static' do
     let(:volatility) { 0 }
-    subject(:job) {
+    subject(:job) do
       FakeGraphDataJob.perform_later(
         story: :static,
-        user: create(:user),
-        time_range_type: create(:time_range_type),
+        user_id: create(:user).id,
+        time_range_type_id: create(:time_range_type).id,
         graph_start_time: DateTime.new(2020).beginning_of_year,
         graph_end_time: DateTime.new(2020).end_of_year,
         unit: :week,
         volatility: volatility
       )
-    }
+    end
 
     before { perform_enqueued_jobs { job } }
 
@@ -34,17 +34,17 @@ describe FakeGraphDataJob, type: :job do
   end
 
   describe 'seasonal_summer_and_christmas' do
-    subject(:job) {
+    subject(:job) do
       FakeGraphDataJob.perform_later(
         story: :seasonal_summer_and_christmas,
-        user: create(:user),
-        time_range_type: create(:time_range_type),
+        user_id: create(:user).id,
+        time_range_type_id: create(:time_range_type).id,
         graph_start_time: DateTime.new(2020).beginning_of_year,
         graph_end_time: DateTime.new(2020).end_of_year,
         unit: :week,
         volatility: 0.5
       )
-    }
+    end
 
     before { perform_enqueued_jobs { job } }
 
@@ -63,8 +63,8 @@ describe FakeGraphDataJob, type: :job do
     before do
       FakeGraphDataJob.perform_now(
         story: :static,
-        user: user,
-        time_range_type: plan,
+        user_id: user.id,
+        time_range_type_id: plan.id,
         graph_start_time: DateTime.new(2020).beginning_of_year,
         graph_end_time: DateTime.new(2020).end_of_year,
         unit: :week,
@@ -76,8 +76,8 @@ describe FakeGraphDataJob, type: :job do
       before do
         FakeGraphDataJob.perform_now(
           story: :static,
-          user: user,
-          time_range_type: actuals,
+          user_id: user.id,
+          time_range_type_id: actuals.id,
           graph_start_time: DateTime.new(2020).beginning_of_year,
           graph_end_time: DateTime.new(2020).end_of_year,
           unit: :week,
@@ -112,8 +112,8 @@ describe FakeGraphDataJob, type: :job do
       before do
         FakeGraphDataJob.perform_now(
           story: :seasonal_summer_and_christmas,
-          user: user,
-          time_range_type: actuals,
+          user_id: user.id,
+          time_range_type_id: actuals.id,
           graph_start_time: DateTime.new(2020).beginning_of_year,
           graph_end_time: DateTime.new(2020).end_of_year,
           unit: :week,
