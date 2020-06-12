@@ -2,7 +2,14 @@
 class FakeGraphDataJob < ApplicationJob
   queue_as :default
 
-  def perform(story:, user_id:, time_range_type_id:, graph_start_time:, graph_end_time:, unit:, volatility:)
+  def perform(
+    story:,
+    user_id:,
+    time_range_type_id:,
+    graph_start_time:,
+    graph_end_time:,
+    volatility:
+  )
     user = User.find(user_id)
     time_range_type = TimeRangeType.find(time_range_type_id)
 
@@ -10,8 +17,7 @@ class FakeGraphDataJob < ApplicationJob
       user: user,
       time_range_type: time_range_type,
       graph_start_time: graph_start_time,
-      graph_end_time: graph_end_time,
-      unit: unit
+      graph_end_time: graph_end_time
     )
     direction = dip_or_spike
 
@@ -24,11 +30,11 @@ class FakeGraphDataJob < ApplicationJob
       months = %w[June July December]
 
       time_ranges.each do |time_range|
-        if months.include?(time_range.start_time.strftime('%B'))
-          time_range.value = adjust(value: time_range.value, volatility: volatility, direction: direction)
-        else
-          time_range.value = adjust(value: time_range.value, volatility: 0.04, direction: :variable)
-        end
+        time_range.value = if months.include?(time_range.start_time.strftime('%B'))
+                             adjust(value: time_range.value, volatility: volatility, direction: direction)
+                           else
+                             adjust(value: time_range.value, volatility: 0.04, direction: :variable)
+                           end
       end
     end
 
@@ -36,10 +42,11 @@ class FakeGraphDataJob < ApplicationJob
   end
 
   # A flat graph - the same value in each time_range.
-  def build_static(user:, time_range_type:, graph_start_time:, graph_end_time:, unit:)
+  def build_static(user:, time_range_type:, graph_start_time:, graph_end_time:)
     result = []
     start_time = graph_start_time
     value = rand(1..100)
+    unit = :week
 
     while start_time < graph_end_time
       end_time = start_time + 1.send(unit) - 1.second

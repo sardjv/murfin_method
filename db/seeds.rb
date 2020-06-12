@@ -15,7 +15,6 @@ User.pluck(:id).each do |user_id|
     time_range_type_id: plan_id,
     graph_start_time: DateTime.now.beginning_of_year,
     graph_end_time: DateTime.now.end_of_year,
-    unit: :week,
     volatility: 0.05 # 5% weekly variation
   )
 
@@ -25,7 +24,6 @@ User.pluck(:id).each do |user_id|
     time_range_type_id: actuals_id,
     graph_start_time: DateTime.now.beginning_of_year,
     graph_end_time: DateTime.now.end_of_year,
-    unit: :week,
     volatility: 0.5  # 50% seasonal variation
   )
 end
