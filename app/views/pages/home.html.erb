@@ -14,11 +14,11 @@
 
   <% if user_authenticated? %>
     <%= link_to auth_logout_path do %>
-      Log out <i class="far fa-arrow-alt-circle-right"></i>
+      <%= I18n.t('auth.log_out') %> <i class="far fa-arrow-alt-circle-right"></i>
     <% end %>
   <% else %>
     <%= button_to root_url + 'auth/auth0', method: :post, type: 'button', class: 'btn btn-primary' do %>
-      Log in <i class="far fa-arrow-alt-circle-right"></i>
+      <%= I18n.t('auth.log_in') %> <i class="far fa-arrow-alt-circle-right"></i>
     <% end %>
   <% end %>
 
