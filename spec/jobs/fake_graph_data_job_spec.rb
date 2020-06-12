@@ -15,7 +15,7 @@ describe FakeGraphDataJob, type: :job do
 
     it 'creates identical records' do
       expect(User.count).to eq(1)
-      expect(TimeRange.count).to eq(53)
+      expect(TimeRange.count).to eq(52)
       expect(TimeRange.first.value).to be_an(Integer)
       expect(TimeRange.distinct.pluck(:value).count).to eq(1)
     end
@@ -24,7 +24,7 @@ describe FakeGraphDataJob, type: :job do
       let(:volatility) { 0.7 }
 
       it 'creates varying records' do
-        expect(TimeRange.count).to eq(53)
+        expect(TimeRange.count).to eq(52)
         expect(TimeRange.first.value).to be_an(Integer)
         expect(TimeRange.distinct.pluck(:value).count > 1).to eq(true)
       end
@@ -46,7 +46,7 @@ describe FakeGraphDataJob, type: :job do
 
     it 'creates records' do
       expect(User.count).to eq(1)
-      expect(TimeRange.count).to eq(53)
+      expect(TimeRange.count).to eq(52)
       expect(TimeRange.first.value).to be_an(Integer)
     end
   end
@@ -138,10 +138,10 @@ describe FakeGraphDataJob, type: :job do
 
         it 'has seasonality' do
           plan.time_ranges.each do |plan|
-            difference = (plan.value - actuals.time_ranges.find_by(start_time: plan.start_time).value).abs
+            difference = plan.value - actuals.time_ranges.find_by(start_time: plan.start_time).value
 
             unless %w[June July December].include?(plan.start_time.strftime('%B'))
-              expect(difference < 5).to eq(true)
+              expect(difference.abs < 5).to eq(true)
             end
           end
         end
