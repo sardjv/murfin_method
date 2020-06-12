@@ -53,27 +53,22 @@ class FakeGraphDataJob < ApplicationJob
   # A flat graph - the same value in each time_range.
   def build_static(user_id:, time_range_type_id:, start:, random_value:)
     mondays_in_year(start: start).map do |start_time|
-      value = get_value(
-        time_range_type_id: time_range_type_id,
-        user_id: user_id,
-        start_time: start_time,
-        random_value: random_value
-      )
       build_time_range(
         start_time: start_time,
         user_id: user_id,
         time_range_type_id: time_range_type_id,
-        value: value
+        random_value: random_value
       )
     end
   end
 
-  def build_time_range(start_time:, user_id:, time_range_type_id:, value:)
+  def build_time_range(start_time:, user_id:, time_range_type_id:, random_value:)
+    value = plan(time_range_type_id: time_range_type_id, user_id: user_id, start_time: start_time)
     FactoryBot.build(
       :time_range,
       user_id: user_id,
       time_range_type_id: time_range_type_id,
-      value: value,
+      value: value || random_value,
       start_time: start_time,
       end_time: start_time + 1.send(:week) - 1.second
     )
@@ -83,20 +78,15 @@ class FakeGraphDataJob < ApplicationJob
     (start.beginning_of_year..start.end_of_year).to_a.select { |d| d.wday == 1 }
   end
 
-  def get_value(time_range_type_id:, user_id:, start_time:, random_value:)
-    if (existing_plan = TimeRange.where.not(
+  def plan(time_range_type_id:, user_id:, start_time:)
+    TimeRange.where.not(
       time_range_type_id: time_range_type_id
     ).where(
       user_id: user_id,
       start_time: start_time
-    ).first)
-      existing_plan.value
-    else
-      random_value
-    end
+    ).first.try(:value)
   end
 
-  # Randomly choose dip or spike.
   def dip_or_spike
     %i[dip spike].sample
   end
