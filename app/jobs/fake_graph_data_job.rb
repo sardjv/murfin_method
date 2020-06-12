@@ -10,7 +10,7 @@ class FakeGraphDataJob < ApplicationJob
     volatility:
   )
     send(
-      "create_#{story}".to_sym,
+      story,
       time_ranges: build_static(
         user_id: user_id,
         time_range_type_id: time_range_type_id,
@@ -21,7 +21,7 @@ class FakeGraphDataJob < ApplicationJob
     )
   end
 
-  def create_static(time_ranges:, volatility:, direction:)
+  def static(time_ranges:, volatility:, direction:)
     time_ranges.each do |time_range|
       time_range.value = adjust(
         value: time_range.value,
@@ -32,16 +32,20 @@ class FakeGraphDataJob < ApplicationJob
     end
   end
 
-  def create_seasonal_summer_and_christmas(time_ranges:, volatility:, direction:)
-    months = %w[June July December]
+  def seasonal_summer_and_christmas(time_ranges:, volatility:, direction:)
     time_ranges.each do |time_range|
-      time_range.value = if months.include?(time_range.start_time.strftime('%B'))
-                           adjust(value: time_range.value, volatility: volatility, direction: direction)
-                         else
-                           adjust(value: time_range.value, volatility: 0.04, direction: :variable)
-                         end
+      summer_or_christmas = overlaps?(time_range, %w[June July December])
+      time_range.value = adjust(
+        value: time_range.value,
+        volatility: summer_or_christmas ? volatility : 0.04,
+        direction: summer_or_christmas ? direction : :variable
+      )
       time_range.save
     end
+  end
+
+  def overlaps?(time_range, months)
+    months.include?(time_range.start_time.strftime('%B'))
   end
 
   # A flat graph - the same value in each time_range.
