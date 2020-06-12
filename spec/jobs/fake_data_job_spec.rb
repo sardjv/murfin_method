@@ -1,12 +1,12 @@
 describe FakeDataJob, type: :job do
-  let(:classes) { ['User', 'TimeRangeType', 'TimeRange'] }
+  let(:classes) { %w[User TimeRangeType TimeRange] }
   let(:quantity) { 2 }
 
-  subject(:job) {
+  subject(:job) do
     classes.each do |klass|
       FakeDataJob.perform_later(klass: klass, quantity: quantity)
     end
-  }
+  end
 
   context 'job' do
     before { perform_enqueued_jobs { job } }

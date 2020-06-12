@@ -2,7 +2,10 @@
 class FakeGraphDataJob < ApplicationJob
   queue_as :default
 
-  def perform(story:, user:, time_range_type:, graph_start_time:, graph_end_time:, unit:, volatility:)
+  def perform(story:, user_id:, time_range_type_id:, graph_start_time:, graph_end_time:, unit:, volatility:)
+    user = User.find(user_id)
+    time_range_type = TimeRangeType.find(time_range_type_id)
+
     time_ranges = build_static(
       user: user,
       time_range_type: time_range_type,
@@ -63,22 +66,20 @@ class FakeGraphDataJob < ApplicationJob
 
   # Randomly choose dip or spike.
   def dip_or_spike
-    [:dip, :spike, :variable].sample
+    %i[dip spike variable].sample
   end
 
   # Adjust a value according to a given volatility between 0 and 1.0.
   # From: https://stackoverflow.com/questions/8597731/are-there-known-techniques-to-generate-realistic-looking-fake-stock-data
   def adjust(value:, volatility:, direction:)
     change_percent = 2 * volatility * rand
-    if (change_percent > volatility)
-      change_percent -= (2 * volatility)
-    end
+    change_percent -= (2 * volatility) if change_percent > volatility
 
     case direction
     when :dip
-      change_percent = change_percent = -(change_percent).abs
+      change_percent = change_percent = -change_percent.abs
     when :spike
-      change_percent = (change_percent).abs
+      change_percent = change_percent.abs
     end
 
     change_amount = value * change_percent
