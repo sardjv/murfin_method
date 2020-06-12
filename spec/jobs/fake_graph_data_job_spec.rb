@@ -107,5 +107,56 @@ describe FakeGraphDataJob, type: :job do
         end
       end
     end
+
+    context 'with seasonal actuals' do
+      before do
+        FakeGraphDataJob.perform_now(
+          story: :seasonal_summer_and_christmas,
+          user: user,
+          time_range_type: actuals,
+          graph_start_time: DateTime.new(2020).beginning_of_year,
+          graph_end_time: DateTime.new(2020).end_of_year,
+          unit: :week,
+          volatility: actuals_volatility
+        )
+      end
+
+      context 'with 0% volatility' do
+        let(:actuals_volatility) { 0.0 }
+        it 'matches the job plan exactly' do
+          differences = plan.time_ranges.map do |plan|
+            (plan.value - actuals.time_ranges.find_by(start_time: plan.start_time).value).abs
+          end
+
+          expect(differences.uniq).to eq([0])
+        end
+      end
+
+      context 'with 2% volatility' do
+        let(:actuals_volatility) { 0.02 }
+        it 'tracks the job plan closely' do
+          differences = plan.time_ranges.map do |plan|
+            (plan.value - actuals.time_ranges.find_by(start_time: plan.start_time).value).abs
+          end
+
+          expect(differences.max < 3).to eq(true)
+        end
+      end
+
+      context 'with 50% volatility' do
+        let(:actuals_volatility) { 0.5 }
+        it 'tracks the job plan closely' do
+          plan.time_ranges.each do |plan|
+            difference = (plan.value - actuals.time_ranges.find_by(start_time: plan.start_time).value).abs
+
+            if %w[June July December].include?(plan.start_time.strftime('%B'))
+              expect(difference > 1).to eq(true)
+            else
+              expect(difference).to eq(0)
+            end
+          end
+        end
+      end
+    end
   end
 end
