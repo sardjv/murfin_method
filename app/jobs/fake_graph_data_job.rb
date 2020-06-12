@@ -1,3 +1,4 @@
+# Fake data generator! Useful for generating data with realistic stories like seasonality for demos.
 class FakeGraphDataJob < ApplicationJob
   queue_as :default
 
@@ -17,7 +18,7 @@ class FakeGraphDataJob < ApplicationJob
       end
     when :seasonal_summer_and_christmas
       direction = dip_or_spike
-      months = ['June', 'July', 'December']
+      months = %w[June July December]
 
       time_ranges.each do |time_range|
         if months.include?(time_range.start_time.strftime('%B'))
@@ -34,14 +35,23 @@ class FakeGraphDataJob < ApplicationJob
     result = []
     start_time = graph_start_time
     value = rand(1..100)
+
     while start_time < graph_end_time
       end_time = start_time + 1.send(unit) - 1.second
+
+      # If there's an existing time range of a different type, assume that's a plan and track it.
+      plan = TimeRange.where.not(
+        time_range_type: time_range_type
+      ).where(
+        user: user,
+        start_time: start_time
+      ).first
 
       result << FactoryBot.build(
         :time_range,
         user_id: user.id,
         time_range_type_id: time_range_type.id,
-        value: value,
+        value: plan.try(:value) || value,
         start_time: start_time,
         end_time: end_time
       )
