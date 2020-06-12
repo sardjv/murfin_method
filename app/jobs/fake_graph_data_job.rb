@@ -6,8 +6,7 @@ class FakeGraphDataJob < ApplicationJob
     story:,
     user_id:,
     time_range_type_id:,
-    graph_start_time:,
-    graph_end_time:,
+    start:,
     volatility:
   )
     user = User.find(user_id)
@@ -16,8 +15,7 @@ class FakeGraphDataJob < ApplicationJob
     time_ranges = build_static(
       user: user,
       time_range_type: time_range_type,
-      graph_start_time: graph_start_time,
-      graph_end_time: graph_end_time
+      start: start
     )
     direction = dip_or_spike
 
@@ -42,13 +40,13 @@ class FakeGraphDataJob < ApplicationJob
   end
 
   # A flat graph - the same value in each time_range.
-  def build_static(user:, time_range_type:, graph_start_time:, graph_end_time:)
+  def build_static(user:, time_range_type:, start:)
     result = []
-    start_time = graph_start_time
+    start_time = start.beginning_of_year
     value = rand(1..100)
     unit = :week
 
-    while start_time < graph_end_time
+    while start_time < start.end_of_year
       end_time = start_time + 1.send(unit) - 1.second
 
       # If there's an existing time range of a different type, assume that's a plan and track it.
