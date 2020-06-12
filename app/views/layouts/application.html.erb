@@ -21,12 +21,14 @@
 
 <body>
 
-  <header>
+  <nav class="navbar sticky-top flex-md-nowrap">
     <a href='/'>Job Plan Stats</a>
-  </header>
+  </nav>
 
   <main>
-    <%= yield %>
+    <div class='container-fluid'>
+      <%= yield %>
+    </div>
   </main>
 
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
