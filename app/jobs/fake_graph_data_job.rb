@@ -68,7 +68,7 @@ class FakeGraphDataJob < ApplicationJob
 
   # Randomly choose dip or spike.
   def dip_or_spike
-    %i[dip spike variable].sample
+    %i[dip spike].sample
   end
 
   # Adjust a value according to a given volatility between 0 and 1.0.
