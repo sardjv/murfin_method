@@ -10,14 +10,14 @@ class FakeGraphDataJob < ApplicationJob
       graph_end_time: graph_end_time,
       unit: unit
     )
+    direction = dip_or_spike
 
     case story
     when :static
       time_ranges.each do |time_range|
-        time_range.value = adjust(value: time_range.value, volatility: volatility)
+        time_range.value = adjust(value: time_range.value, volatility: volatility, direction: direction)
       end
     when :seasonal_summer_and_christmas
-      direction = dip_or_spike
       months = %w[June July December]
 
       time_ranges.each do |time_range|
@@ -63,12 +63,12 @@ class FakeGraphDataJob < ApplicationJob
 
   # Randomly choose dip or spike.
   def dip_or_spike
-    [true, false].sample ? :dip : :spike
+    [:dip, :spike, :variable].sample
   end
 
   # Adjust a value according to a given volatility between 0 and 1.0.
   # From: https://stackoverflow.com/questions/8597731/are-there-known-techniques-to-generate-realistic-looking-fake-stock-data
-  def adjust(value:, volatility:, direction: :random)
+  def adjust(value:, volatility:, direction:)
     change_percent = 2 * volatility * rand
     if (change_percent > volatility)
       change_percent -= (2 * volatility)
