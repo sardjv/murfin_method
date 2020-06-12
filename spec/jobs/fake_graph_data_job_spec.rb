@@ -81,16 +81,30 @@ describe FakeGraphDataJob, type: :job do
           graph_start_time: DateTime.new(2020).beginning_of_year,
           graph_end_time: DateTime.new(2020).end_of_year,
           unit: :week,
-          volatility: 0
+          volatility: actuals_volatility
         )
       end
 
-      it 'tracks closely to the job plan' do
-        differences = plan.time_ranges.map do |plan|
-          (plan.value - actuals.time_ranges.find_by(start_time: plan.start_time).value).abs
-        end
+      context 'with 0% volatility' do
+        let(:actuals_volatility) { 0.0 }
+        it 'matches the job plan exactly' do
+          differences = plan.time_ranges.map do |plan|
+            (plan.value - actuals.time_ranges.find_by(start_time: plan.start_time).value).abs
+          end
 
-        expect(differences.uniq).to eq([0])
+          expect(differences.uniq).to eq([0])
+        end
+      end
+
+      context 'with 2% volatility' do
+        let(:actuals_volatility) { 0.02 }
+        it 'tracks the job plan closely' do
+          differences = plan.time_ranges.map do |plan|
+            (plan.value - actuals.time_ranges.find_by(start_time: plan.start_time).value).abs
+          end
+
+          expect(differences.max < 3).to eq(true)
+        end
       end
     end
   end
