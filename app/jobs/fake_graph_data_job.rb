@@ -14,14 +14,15 @@ class FakeGraphDataJob < ApplicationJob
       time_ranges: build_static(
         user_id: user_id,
         time_range_type_id: time_range_type_id,
-        start: start
+        start: start,
+        random_value: rand(1..100)
       ),
-      volatility: volatility,
-      direction: dip_or_spike
+      volatility: volatility
     )
   end
 
-  def static(time_ranges:, volatility:, direction:)
+  def static(time_ranges:, volatility:)
+    direction = dip_or_spike
     time_ranges.each do |time_range|
       time_range.value = adjust(
         value: time_range.value,
@@ -32,7 +33,8 @@ class FakeGraphDataJob < ApplicationJob
     end
   end
 
-  def seasonal_summer_and_christmas(time_ranges:, volatility:, direction:)
+  def seasonal_summer_and_christmas(time_ranges:, volatility:)
+    direction = dip_or_spike
     time_ranges.each do |time_range|
       summer_or_christmas = overlaps?(time_range, %w[June July December])
       time_range.value = adjust(
@@ -49,37 +51,49 @@ class FakeGraphDataJob < ApplicationJob
   end
 
   # A flat graph - the same value in each time_range.
-  def build_static(user_id:, time_range_type_id:, start:)
-    user = User.find(user_id)
-    time_range_type = TimeRangeType.find(time_range_type_id)
-    result = []
-    start_time = start.beginning_of_year
-    value = rand(1..100)
-    unit = :week
-
-    while start_time < start.end_of_year
-      end_time = start_time + 1.send(unit) - 1.second
-
-      # If there's an existing time range of a different type, assume that's a plan and track it.
-      plan = TimeRange.where.not(
-        time_range_type: time_range_type
-      ).where(
-        user: user,
-        start_time: start_time
-      ).first
-
-      result << FactoryBot.build(
-        :time_range,
-        user_id: user.id,
-        time_range_type_id: time_range_type.id,
-        value: plan.try(:value) || value,
+  def build_static(user_id:, time_range_type_id:, start:, random_value:)
+    mondays_in_year(start: start).map do |start_time|
+      value = get_value(
+        time_range_type_id: time_range_type_id,
+        user_id: user_id,
         start_time: start_time,
-        end_time: end_time
+        random_value: random_value
       )
-
-      start_time = end_time + 1.second
+      build_time_range(
+        start_time: start_time,
+        user_id: user_id,
+        time_range_type_id: time_range_type_id,
+        value: value
+      )
     end
-    result
+  end
+
+  def build_time_range(start_time:, user_id:, time_range_type_id:, value:)
+    FactoryBot.build(
+      :time_range,
+      user_id: user_id,
+      time_range_type_id: time_range_type_id,
+      value: value,
+      start_time: start_time,
+      end_time: start_time + 1.send(:week) - 1.second
+    )
+  end
+
+  def mondays_in_year(start:)
+    (start.beginning_of_year..start.end_of_year).to_a.select { |d| d.wday == 1 }
+  end
+
+  def get_value(time_range_type_id:, user_id:, start_time:, random_value:)
+    if (existing_plan = TimeRange.where.not(
+      time_range_type_id: time_range_type_id
+    ).where(
+      user_id: user_id,
+      start_time: start_time
+    ).first)
+      existing_plan.value
+    else
+      random_value
+    end
   end
 
   # Randomly choose dip or spike.
@@ -92,16 +106,20 @@ class FakeGraphDataJob < ApplicationJob
   def adjust(value:, volatility:, direction:)
     change_percent = 2 * volatility * rand
     change_percent -= (2 * volatility) if change_percent > volatility
-
-    case direction
-    when :dip
-      change_percent = -change_percent.abs
-    when :spike
-      change_percent = change_percent.abs
-    end
-
+    change_percent = set_direction(value: change_percent, direction: direction)
     change_amount = value * change_percent
     new_value = value + change_amount
     new_value.round
+  end
+
+  def set_direction(value:, direction:)
+    case direction
+    when :dip
+      -value.abs
+    when :spike
+      value.abs
+    else
+      value
+    end
   end
 end
