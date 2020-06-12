@@ -9,38 +9,45 @@ class FakeGraphDataJob < ApplicationJob
     start:,
     volatility:
   )
-    user = User.find(user_id)
-    time_range_type = TimeRangeType.find(time_range_type_id)
-
-    time_ranges = build_static(
-      user: user,
-      time_range_type: time_range_type,
-      start: start
+    send(
+      "create_#{story}".to_sym,
+      time_ranges: build_static(
+        user_id: user_id,
+        time_range_type_id: time_range_type_id,
+        start: start
+      ),
+      volatility: volatility,
+      direction: dip_or_spike
     )
-    direction = dip_or_spike
+  end
 
-    case story
-    when :static
-      time_ranges.each do |time_range|
-        time_range.value = adjust(value: time_range.value, volatility: volatility, direction: direction)
-      end
-    when :seasonal_summer_and_christmas
-      months = %w[June July December]
-
-      time_ranges.each do |time_range|
-        time_range.value = if months.include?(time_range.start_time.strftime('%B'))
-                             adjust(value: time_range.value, volatility: volatility, direction: direction)
-                           else
-                             adjust(value: time_range.value, volatility: 0.04, direction: :variable)
-                           end
-      end
+  def create_static(time_ranges:, volatility:, direction:)
+    time_ranges.each do |time_range|
+      time_range.value = adjust(
+        value: time_range.value,
+        volatility: volatility,
+        direction: direction
+      )
+      time_range.save
     end
+  end
 
-    time_ranges.each(&:save)
+  def create_seasonal_summer_and_christmas(time_ranges:, volatility:, direction:)
+    months = %w[June July December]
+    time_ranges.each do |time_range|
+      time_range.value = if months.include?(time_range.start_time.strftime('%B'))
+                           adjust(value: time_range.value, volatility: volatility, direction: direction)
+                         else
+                           adjust(value: time_range.value, volatility: 0.04, direction: :variable)
+                         end
+      time_range.save
+    end
   end
 
   # A flat graph - the same value in each time_range.
-  def build_static(user:, time_range_type:, start:)
+  def build_static(user_id:, time_range_type_id:, start:)
+    user = User.find(user_id)
+    time_range_type = TimeRangeType.find(time_range_type_id)
     result = []
     start_time = start.beginning_of_year
     value = rand(1..100)
