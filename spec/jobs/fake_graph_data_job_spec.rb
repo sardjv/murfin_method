@@ -8,7 +8,6 @@ describe FakeGraphDataJob, type: :job do
         time_range_type_id: create(:time_range_type).id,
         graph_start_time: DateTime.new(2020).beginning_of_year,
         graph_end_time: DateTime.new(2020).end_of_year,
-        unit: :week,
         volatility: volatility
       )
     end
@@ -41,7 +40,6 @@ describe FakeGraphDataJob, type: :job do
         time_range_type_id: create(:time_range_type).id,
         graph_start_time: DateTime.new(2020).beginning_of_year,
         graph_end_time: DateTime.new(2020).end_of_year,
-        unit: :week,
         volatility: 0.5
       )
     end
@@ -67,7 +65,6 @@ describe FakeGraphDataJob, type: :job do
         time_range_type_id: plan.id,
         graph_start_time: DateTime.new(2020).beginning_of_year,
         graph_end_time: DateTime.new(2020).end_of_year,
-        unit: :week,
         volatility: 0
       )
     end
@@ -80,7 +77,6 @@ describe FakeGraphDataJob, type: :job do
           time_range_type_id: actuals.id,
           graph_start_time: DateTime.new(2020).beginning_of_year,
           graph_end_time: DateTime.new(2020).end_of_year,
-          unit: :week,
           volatility: actuals_volatility
         )
       end
@@ -116,7 +112,6 @@ describe FakeGraphDataJob, type: :job do
           time_range_type_id: actuals.id,
           graph_start_time: DateTime.new(2020).beginning_of_year,
           graph_end_time: DateTime.new(2020).end_of_year,
-          unit: :week,
           volatility: actuals_volatility
         )
       end
