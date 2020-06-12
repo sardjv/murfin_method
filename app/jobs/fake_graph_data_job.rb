@@ -86,7 +86,7 @@ class FakeGraphDataJob < ApplicationJob
 
     case direction
     when :dip
-      change_percent = change_percent = -change_percent.abs
+      change_percent = -change_percent.abs
     when :spike
       change_percent = change_percent.abs
     end
