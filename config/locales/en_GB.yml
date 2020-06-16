@@ -1,6 +1,12 @@
 en:
+  auth:
+    log_in: Log in
+    log_out: Log out
   faker:
     time_range_type:
       name:
         - Job Plan sessions
         - RIO sessions
+  time:
+    formats:
+      iso8601_utc: '%Y-%m-%dT%H:%M:%S.000Z'
