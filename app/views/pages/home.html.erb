@@ -1,21 +1,25 @@
-<div class="nhsuk-grid-row">
-  <div class="nhsuk-grid-column-two-thirds">
-    <p>
-      You can use this service to:
-    </p>
-    <ul>
-      <li>
-        Compare job plans versus actual time spent with patients.
-      </li>
-      <li>
-        Quickly spot service and data collection problems.
-      </li>
-    </ul>
-    <% if user_authenticated? %>
-      <%= link_to 'Log out', auth_logout_path, class:'nhsuk-button nhsuk-u-margin-bottom-8' %>
-    <% else %>
-      <%= button_to 'Log in', root_url + 'auth/auth0', method: :post, class:'nhsuk-button nhsuk-u-margin-bottom-8' %>
-    <% end %>
+<div>
+  <p>
+    You can use this service to:
+  </p>
 
-  </div>
+  <ul>
+    <li>
+      Compare job plans versus actual time spent with patients.
+    </li>
+    <li>
+      Quickly spot service and data collection problems.
+    </li>
+  </ul>
+
+  <% if user_authenticated? %>
+    <%= link_to auth_logout_path do %>
+      <%= I18n.t('auth.log_out') %> <i class="far fa-arrow-alt-circle-right"></i>
+    <% end %>
+  <% else %>
+    <%= button_to root_url + 'auth/auth0', method: :post, type: 'button', class: 'btn btn-primary' do %>
+      <%= I18n.t('auth.log_in') %> <i class="far fa-arrow-alt-circle-right"></i>
+    <% end %>
+  <% end %>
+
 </div>
