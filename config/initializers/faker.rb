@@ -1,7 +1,7 @@
 module Faker::JpStats
-  class AbsenceRecord < Faker::Base
-    def self.absence_type
-      fetch('absence_record.absence_type')
+  class TimeRangeType < Faker::Base
+    def self.name
+      fetch('time_range_type.name')
     end
   end
 end
