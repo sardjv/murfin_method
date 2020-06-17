@@ -42,7 +42,7 @@ Core dependencies:
 
 The API documentation can be viewed at [http://localhost:3000/api_docs](http://localhost:3000/api_docs).
 
-The Swagger docs are generated from the RSpec tests in `spec/controllers/api` To rebuild the swagger docs:
+The Swagger docs are generated from the RSpec tests in `spec/api` To rebuild the swagger docs:
 
 ```
 docker-compose run app bundle exec rails rswag
