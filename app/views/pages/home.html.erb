@@ -10,6 +10,8 @@
     <li>
       Quickly spot service and data collection problems.
     </li>
+    <li id='d3-test'>
+    </li>
   </ul>
 
   <% if user_authenticated? %>
@@ -23,3 +25,5 @@
   <% end %>
 
 </div>
+
+<%= javascript_pack_tag 'd3_test', 'data-turbolinks-track': 'reload' %>
