@@ -1,14 +1,16 @@
 <div>
   <p>
-    You can use this service to:
+    <%= I18n.t('home.you_can') %>
   </p>
 
   <ul>
     <li>
-      Compare job plans versus actual time spent with patients.
+      <%= I18n.t('home.compare_plan_with_actuals') %>
     </li>
     <li>
-      Quickly spot service and data collection problems.
+      <%= I18n.t('home.drill_down') %>
+    </li>
+    <li id='d3-test'>
     </li>
   </ul>
 
@@ -23,3 +25,5 @@
   <% end %>
 
 </div>
+
+<%= javascript_pack_tag 'd3_test', 'data-turbolinks-track': 'reload' %>
