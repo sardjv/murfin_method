@@ -10,14 +10,14 @@ class Api::V1::Swagger::Core
                         <a href="https://github.com/sardjv/job_plan_statistics">
                         github.com/sardjv/job_plan_statistics</a>.'
         },
-        # securityDefinitions: {
-        #   JWT: {
-        #     description: 'The JSON Web Token from Auth0 for authentication.',
-        #     type: :apiKey,
-        #     name: 'Authorization',
-        #     in: :header
-        #   }
-        # },
+        securityDefinitions: {
+          JWT: {
+            description: 'The JSON Web Token from Auth0 for authentication.',
+            type: :apiKey,
+            name: 'Authorization',
+            in: :header
+          }
+        },
         paths: {},
         definitions: definitions.inject(&:merge)
       }
