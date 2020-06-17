@@ -12,7 +12,7 @@
   <meta name="description" content="">
 
   <title>
-    NHS JP Stats
+    <%= I18n.t('app.name') %>
   </title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
@@ -22,7 +22,7 @@
 <body>
 
   <nav class="navbar sticky-top flex-md-nowrap">
-    <a href='/'>Job Plan Stats</a>
+    <a href='/'><%= I18n.t('app.name') %></a>
   </nav>
 
   <main>
