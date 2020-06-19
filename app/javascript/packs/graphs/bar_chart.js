@@ -1,7 +1,7 @@
 import { selectAll } from 'd3'
 
 window.addEventListener('turbolinks:load', () => {
-  selectAll('#d3-test')
+  selectAll('#bar-chart')
     .append('p')
     .text('D3 is working!')
 })
