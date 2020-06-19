@@ -4,72 +4,74 @@ window.addEventListener('turbolinks:load', () => {
   // From https://bl.ocks.org/d3noob/8952219
   // MIT License
 
-  // var margin = {top: 20, right: 20, bottom: 70, left: 40},
-  //     width = 600 - margin.left - margin.right,
-  //     height = 300 - margin.top - margin.bottom;
+  // set the dimensions and margins of the graph
+  var margin = {top: 20, right: 20, bottom: 30, left: 40},
+      width = 960 - margin.left - margin.right,
+      height = 500 - margin.top - margin.bottom;
 
-  // // Parse the date / time
-  // var	parseDate = d3.time.format("%Y-%m").parse;
+  // set the ranges
+  var x = d3.scaleBand()
+            .range([0, width])
+            .padding(0.1);
+  var y = d3.scaleLinear()
+            .range([height, 0]);
 
-  // var x = d3.scale.ordinal().rangeRoundBands([0, width], .05);
+  // append the svg object to the body of the page
+  // append a 'group' element to 'svg'
+  // moves the 'group' element to the top left margin
+  var svg = d3.select("body").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")");
 
-  // var y = d3.scale.linear().range([height, 0]);
+  // get the data
+  // d3.csv("sales.csv").then(function(data) {
+    var data = [
+      { "salesperson": "Bob", "sales": "33"},
+      { "salesperson": "Robin", "sales": "12" },
+      { "salesperson": "Anne", "sales": "41" },
+      { "salesperson": "Mark", "sales": "16" },
+      { "salesperson": "Joe", "sales": "59" },
+      { "salesperson": "Eve", "sales": "38" },
+      { "salesperson": "Karen", "sales": "21" },
+      { "salesperson": "Kirsty", "sales": "25" },
+      { "salesperson": "Chris", "sales": "30" },
+      { "salesperson": "Lisa", "sales": "47" },
+      { "salesperson": "Tom", "sales": "5" },
+      { "salesperson": "Stacy", "sales": "20" },
+      { "salesperson": "Charles", "sales": "13" },
+      { "salesperson": "Mary", "sales": "29" },
+    ]
 
-  // var xAxis = d3.svg.axis()
-  //     .scale(x)
-  //     .orient("bottom")
-  //     .tickFormat(d3.time.format("%Y-%m"));
+    // format the data
+    data.forEach(function(d) {
+      d.sales = +d.sales;
+    });
 
-  // var yAxis = d3.svg.axis()
-  //     .scale(y)
-  //     .orient("left")
-  //     .ticks(10);
+    // Scale the range of the data in the domains
+    x.domain(data.map(function(d) { return d.salesperson; }));
+    y.domain([0, d3.max(data, function(d) { return d.sales; })]);
 
-  // var svg = d3.select("body").append("svg")
-  //     .attr("width", width + margin.left + margin.right)
-  //     .attr("height", height + margin.top + margin.bottom)
-  //   .append("g")
-  //     .attr("transform",
-  //           "translate(" + margin.left + "," + margin.top + ")");
+    // append the rectangles for the bar chart
+    svg.selectAll(".bar")
+        .data(data)
+      .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", function(d) { return x(d.salesperson); })
+        .attr("width", x.bandwidth())
+        .attr("y", function(d) { return y(d.sales); })
+        .attr("height", function(d) { return height - y(d.sales); });
 
-  // d3.csv("bar-data.csv", function(error, data) {
+    // add the x Axis
+    svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x));
 
-  //     data.forEach(function(d) {
-  //         d.date = parseDate(d.date);
-  //         d.value = +d.value;
-  //     });
-
-  //   x.domain(data.map(function(d) { return d.date; }));
-  //   y.domain([0, d3.max(data, function(d) { return d.value; })]);
-
-  //   svg.append("g")
-  //       .attr("class", "x axis")
-  //       .attr("transform", "translate(0," + height + ")")
-  //       .call(xAxis)
-  //     .selectAll("text")
-  //       .style("text-anchor", "end")
-  //       .attr("dx", "-.8em")
-  //       .attr("dy", "-.55em")
-  //       .attr("transform", "rotate(-90)" );
-
-  //   svg.append("g")
-  //       .attr("class", "y axis")
-  //       .call(yAxis)
-  //     .append("text")
-  //       .attr("transform", "rotate(-90)")
-  //       .attr("y", 6)
-  //       .attr("dy", ".71em")
-  //       .style("text-anchor", "end")
-  //       .text("Value ($)");
-
-  //   svg.selectAll("bar")
-  //       .data(data)
-  //     .enter().append("rect")
-  //       .style("fill", "steelblue")
-  //       .attr("x", function(d) { return x(d.date); })
-  //       .attr("width", x.rangeBand())
-  //       .attr("y", function(d) { return y(d.value); })
-  //       .attr("height", function(d) { return height - y(d.value); });
+    // add the y Axis
+    svg.append("g")
+        .call(d3.axisLeft(y));
 
   // });
-})
+});
