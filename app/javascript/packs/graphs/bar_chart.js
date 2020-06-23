@@ -1,42 +1,27 @@
-import * as d3 from 'd3'
 import * as c3 from 'c3'
 
 window.addEventListener('turbolinks:load', () => {
-  var values = [
-    'Actual vs Plan',
-    "88",
-    "87",
-    "82",
-    "79",
-    "72",
-    "68",
-    "64",
-    "60",
-    "53",
-    "53",
-    "53",
+  var data = [
+    { "name": "Skylar Assaqd", "value": "88" },
+    { "name": "Angel George", "value": "87" },
+    { "name": "Gretchen Botosh", "value": "82" },
+    { "name": "Marcus Bator", "value": "79" },
+    { "name": "Brandon Vetrovs", "value": "72"},
+    { "name": "Philip Philips", "value": "68" },
+    { "name": "Jordyn Korsgaard", "value": "64" },
+    { "name": "Mira Korsgaard", "value": "60" },
+    { "name": "Ann Herwitz", "value": "53" },
+    { "name": "Jaylon Dokidis", "value": "53" },
+    { "name": "Chance Torff", "value": "53" },
   ]
 
-  var names = [
-    "Skylar Assaqd",
-    "Angel George",
-    "Gretchen Botosh",
-    "Marcus Bator",
-    "Brandon Vetrov",
-    "Philip Philips",
-    "Jordyn Korsgaard",
-    "Mira Korsgaard",
-    "Ann Herwitz",
-    "Jaylon Dokidis",
-    "Chance Torff",
-  ]
-
-  var chart = c3.generate({
+  c3.generate({
     bindto: '#bar-chart',
     data: {
-      columns: [
-        values
-      ],
+      json: data,
+      keys: {
+        value: ['value']
+      },
       type: 'bar'
     },
     bar: {
@@ -50,7 +35,7 @@ window.addEventListener('turbolinks:load', () => {
     axis: {
       x: {
         type: 'category',
-        categories: names
+        categories: data.map(function(o){return o['name']})
       }
     }
   });
