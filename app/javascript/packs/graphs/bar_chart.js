@@ -21,6 +21,9 @@ window.addEventListener('turbolinks:load', () => {
       top: 20,
       bottom: 100
     },
+    tooltip: {
+      show: false
+    },
     data: {
       json: data,
       keys: {
