@@ -17,6 +17,10 @@ window.addEventListener('turbolinks:load', () => {
 
   c3.generate({
     bindto: '#bar-chart',
+    padding: {
+      top: 20,
+      bottom: 100
+    },
     data: {
       json: data,
       keys: {
