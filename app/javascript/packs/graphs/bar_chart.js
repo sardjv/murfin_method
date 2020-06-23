@@ -51,7 +51,7 @@ window.addEventListener('turbolinks:load', () => {
     data: {
       labels: labels,
       datasets: [{
-        barPercentage: 0.5,
+        barPercentage: 0.4,
         data: values,
         backgroundColor: colors,
         borderColor: colors,
@@ -61,6 +61,18 @@ window.addEventListener('turbolinks:load', () => {
     options: {
       legend: {
         display: false
+      },
+      scales: {
+        xAxes: [{
+          gridLines: {
+            display:false
+          }
+        }],
+        yAxes: [{
+          gridLines: {
+            borderDash: [7, 7],
+          }
+        }]
       }
     }
   });
