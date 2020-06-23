@@ -51,6 +51,7 @@ window.addEventListener('turbolinks:load', () => {
     data: {
       labels: labels,
       datasets: [{
+        barPercentage: 0.5,
         data: values,
         backgroundColor: colors,
         borderColor: colors,
