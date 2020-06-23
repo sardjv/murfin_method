@@ -62,6 +62,13 @@ window.addEventListener('turbolinks:load', () => {
       legend: {
         display: false
       },
+      tooltips: {
+        callbacks: {
+          label: function(tooltipItem, data) {
+            return tooltipItem.value + '%';
+          }
+        }
+      },
       scales: {
         xAxes: [{
           gridLines: {
@@ -74,7 +81,10 @@ window.addEventListener('turbolinks:load', () => {
             drawBorder: false
           },
           ticks: {
-            stepSize: 10
+            stepSize: 10,
+            callback: function(value) {
+              return value + "%"
+            }
           }
         }]
       }
