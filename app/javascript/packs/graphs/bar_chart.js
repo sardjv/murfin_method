@@ -20,54 +20,61 @@ window.addEventListener('turbolinks:load', () => {
   // append a 'group' element to 'svg'
   // moves the 'group' element to the top left margin
   var svg = d3.select("#bar-chart").append("svg")
-    .attr("viewBox", `0 0 960 500`)
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")");
 
   // get the data
-  // d3.csv("sales.csv").then(function(data) {
-    var data = [
-      { "salesperson": "Bob", "sales": "33"},
-      { "salesperson": "Robin", "sales": "12" },
-      { "salesperson": "Anne", "sales": "41" },
-      { "salesperson": "Mark", "sales": "16" },
-      { "salesperson": "Joe", "sales": "59" },
-      { "salesperson": "Eve", "sales": "38" },
-      { "salesperson": "Karen", "sales": "21" },
-      { "salesperson": "Kirsty", "sales": "25" },
-      { "salesperson": "Chris", "sales": "30" },
-      { "salesperson": "Lisa", "sales": "47" },
-      { "salesperson": "Tom", "sales": "5" },
-      { "salesperson": "Stacy", "sales": "20" },
-      { "salesperson": "Charles", "sales": "13" },
-      { "salesperson": "Mary", "sales": "29" },
-    ]
+  // d3.csv("value.csv").then(function(data) {
+  var data = [
+    { "name": "Skylar Assaqd", "value": "88" },
+    { "name": "Angel George", "value": "87" },
+    { "name": "Gretchen Botosh", "value": "82" },
+    { "name": "Marcus Bator", "value": "79" },
+    { "name": "Brandon Vetrovs", "value": "72"},
+    { "name": "Philip Philips", "value": "68" },
+    { "name": "Jordyn Korsgaard", "value": "64" },
+    { "name": "Mira Korsgaard", "value": "60" },
+    { "name": "Ann Herwitz", "value": "53" },
+    { "name": "Jaylon Dokidis", "value": "53" },
+    { "name": "Chance Torff", "value": "53" },
+  ]
 
-    // format the data
-    data.forEach(function(d) {
-      d.sales = +d.sales;
-    });
+  // format the data
+  data.forEach(function(d) {
+    d.value = +d.value;
+  });
 
-    // Scale the range of the data in the domains
-    x.domain(data.map(function(d) { return d.salesperson; }));
-    y.domain([0, d3.max(data, function(d) { return d.sales; })]);
+  // Scale the range of the data in the domains
+  x.domain(data.map(function(d) { return d.name; }));
+  y.domain([0, d3.max(data, function(d) { return d.value; })]);
 
-    // append the rectangles for the bar chart
-    svg.selectAll(".bar")
-        .data(data)
-      .enter().append("rect")
-        .attr("class", "bar")
-        .attr("x", function(d) { return x(d.salesperson); })
-        .attr("width", x.bandwidth())
-        .attr("y", function(d) { return y(d.sales); })
-        .attr("height", function(d) { return height - y(d.sales); });
+  // append the rectangles for the bar chart
+  svg.selectAll(".bar")
+      .data(data)
+    .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d) { return x(d.name); })
+      .attr("width", x.bandwidth())
+      .attr("y", function(d) { return y(d.value); })
+      .attr("height", function(d) { return height - y(d.value); });
 
-    // add the x Axis
-    svg.append("g")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x));
+  // add the x Axis
+  svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
 
-    // add the y Axis
-    svg.append("g")
-        .call(d3.axisLeft(y));
+  // add the y Axis
+  svg.append("g")
+      .call(d3.axisLeft(y));
 
-  // });
+  // text label for the y axis
+  svg.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0 - margin.left)
+    .attr("x",0 - (height / 2))
+    .attr("dy", "1em")
+    .style("text-anchor", "middle")
 });
