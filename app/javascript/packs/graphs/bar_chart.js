@@ -19,12 +19,8 @@ window.addEventListener('turbolinks:load', () => {
   // append the svg object to the body of the page
   // append a 'group' element to 'svg'
   // moves the 'group' element to the top left margin
-  var svg = d3.select("body").append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-      .attr("transform",
-            "translate(" + margin.left + "," + margin.top + ")");
+  var svg = d3.select("#bar-chart").append("svg")
+    .attr("viewBox", `0 0 960 500`)
 
   // get the data
   // d3.csv("sales.csv").then(function(data) {

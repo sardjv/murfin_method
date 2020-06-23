@@ -10,17 +10,21 @@
     <li>
       <%= I18n.t('home.drill_down') %>
     </li>
-    <li id='bar-chart'>
-    </li>
   </ul>
+
+  <div class='container'>
+    <div class='row'>
+      <div class='col-lg-10' id='bar-chart'></div>
+    </div>
+  </div>
 
   <% if user_authenticated? %>
     <%= link_to auth_logout_path do %>
-      <%= I18n.t('auth.log_out') %> <i class="far fa-arrow-alt-circle-right"></i>
+      <%= I18n.t('auth.log_out') %> <i class='far fa-arrow-alt-circle-right'></i>
     <% end %>
   <% else %>
     <%= button_to root_url + 'auth/auth0', method: :post, type: 'button', class: 'btn btn-primary' do %>
-      <%= I18n.t('auth.log_in') %> <i class="far fa-arrow-alt-circle-right"></i>
+      <%= I18n.t('auth.log_in') %> <i class='far fa-arrow-alt-circle-right'></i>
     <% end %>
   <% end %>
 
