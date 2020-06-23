@@ -65,12 +65,16 @@ window.addEventListener('turbolinks:load', () => {
       scales: {
         xAxes: [{
           gridLines: {
-            display:false
+            display: false
           }
         }],
         yAxes: [{
           gridLines: {
             borderDash: [7, 7],
+            drawBorder: false
+          },
+          ticks: {
+            stepSize: 10
           }
         }]
       }
