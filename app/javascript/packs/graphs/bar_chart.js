@@ -44,6 +44,9 @@ window.addEventListener('turbolinks:load', () => {
         ratio: 0.75 // this makes bar width 75% of length between ticks
       }
     },
+    legend: {
+      show: false
+    },
     axis: {
       x: {
         type: 'category',
