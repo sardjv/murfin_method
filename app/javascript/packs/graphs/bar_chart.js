@@ -29,11 +29,35 @@ window.addEventListener('turbolinks:load', () => {
       keys: {
         value: ['value']
       },
-      type: 'bar'
+      type: 'bar',
+      colors: {
+        value: function(d) {
+          var val = d.value;
+          if (val == null) {
+            // Unknown.
+            return '#F6E6EE'
+          } else if (val > 120) {
+            // Over.
+            return '#F9DDCE'
+          } else if (val >= 80) {
+            // About right.
+            return '#DBE9C4'
+          } else if (val >= 70) {
+            // Slightly under.
+            return '#E2F1FC'
+          } else if (val >= 60) {
+            // Under.
+            return '#FDF2AA'
+          } else {
+            // Really under.
+            return '#AE4C1A'
+          }
+        }
+      },
     },
     bar: {
       width: {
-        ratio: 0.75 // this makes bar width 75% of length between ticks
+        ratio: 0.30 // this makes bar width 75% of length between ticks
       }
     },
     legend: {
