@@ -1,4 +1,4 @@
-import * as c3 from 'c3'
+import Chart from 'chart.js'
 
 window.addEventListener('turbolinks:load', () => {
   var data = [
@@ -15,51 +15,51 @@ window.addEventListener('turbolinks:load', () => {
     { "name": "Chance Torff", "value": "53" },
   ]
 
-  c3.generate({
-    bindto: '#bar-chart',
+  var ctx = document.getElementById('bar-chart');
+  var colors = data.map(function(e) {
+    var val = e.value;
+
+    if (val == null) {
+      // Unknown.
+      return '#F6E6EE'
+    } else if (val > 120) {
+      // Over.
+      return '#F9DDCE'
+    } else if (val >= 80) {
+      // About right.
+      return '#DBE9C4'
+    } else if (val >= 70) {
+      // Slightly under.
+      return '#E2F1FC'
+    } else if (val >= 60) {
+      // Under.
+      return '#FDF2AA'
+    } else {
+      // Really under.
+      return '#AE4C1A'
+    }
+  });
+  var labels = data.map(function(e) {
+    return e.name;
+  });
+  var values = data.map(function(e) {
+    return e.value;
+  });
+
+  new Chart(ctx, {
+    type: 'bar',
     data: {
-      json: data,
-      keys: {
-        value: ['value']
-      },
-      type: 'bar',
-      colors: {
-        value: function(d) {
-          var val = d.value;
-          if (val == null) {
-            // Unknown.
-            return '#F6E6EE'
-          } else if (val > 120) {
-            // Over.
-            return '#F9DDCE'
-          } else if (val >= 80) {
-            // About right.
-            return '#DBE9C4'
-          } else if (val >= 70) {
-            // Slightly under.
-            return '#E2F1FC'
-          } else if (val >= 60) {
-            // Under.
-            return '#FDF2AA'
-          } else {
-            // Really under.
-            return '#AE4C1A'
-          }
-        }
-      },
+      labels: labels,
+      datasets: [{
+        data: values,
+        backgroundColor: colors,
+        borderColor: colors,
+        borderWidth: 1
+      }]
     },
-    bar: {
-      width: {
-        ratio: 0.30 // this makes bar width 75% of length between ticks
-      }
-    },
-    legend: {
-      show: false
-    },
-    axis: {
-      x: {
-        type: 'category',
-        categories: data.map(function(o){return o['name']})
+    options: {
+      legend: {
+        display: false
       }
     }
   });
