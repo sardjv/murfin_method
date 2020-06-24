@@ -1,6 +1,6 @@
 en:
   app:
-    name: NHS Job Plan Stats
+    name: NHS Contact Dashboard
   auth:
     log_in: Log in
     log_out: Log out
