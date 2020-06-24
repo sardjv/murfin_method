@@ -10,20 +10,30 @@
     <li>
       <%= I18n.t('home.drill_down') %>
     </li>
-    <li id='d3-test'>
-    </li>
   </ul>
+
+  <div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="bar-chart"></canvas>
+                </div>
+            </div>
+        </div>
+     </div>
+  </div>
 
   <% if user_authenticated? %>
     <%= link_to auth_logout_path do %>
-      <%= I18n.t('auth.log_out') %> <i class="far fa-arrow-alt-circle-right"></i>
+      <%= I18n.t('auth.log_out') %> <i class='far fa-arrow-alt-circle-right'></i>
     <% end %>
   <% else %>
     <%= button_to root_url + 'auth/auth0', method: :post, type: 'button', class: 'btn btn-primary' do %>
-      <%= I18n.t('auth.log_in') %> <i class="far fa-arrow-alt-circle-right"></i>
+      <%= I18n.t('auth.log_in') %> <i class='far fa-arrow-alt-circle-right'></i>
     <% end %>
   <% end %>
 
 </div>
 
-<%= javascript_pack_tag 'd3_test', 'data-turbolinks-track': 'reload' %>
+<%= javascript_pack_tag 'graphs/bar_chart', 'data-turbolinks-track': 'reload' %>
