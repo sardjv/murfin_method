@@ -10,4 +10,10 @@ module ApplicationHelper
   def heading(page_heading)
     content_for(:heading) { page_heading }
   end
+
+  def current_user_name
+    return unless session[:userinfo]
+
+    session[:userinfo].dig('extra', 'raw_info', 'name')
+  end
 end
