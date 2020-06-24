@@ -49,7 +49,8 @@ window.addEventListener('turbolinks:load', () => {
         data: values,
         backgroundColor: colors,
         borderColor: colors,
-        borderWidth: 1
+        borderWidth: 1,
+        fill: false
       }]
     },
     options: {
