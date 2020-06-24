@@ -2,12 +2,12 @@ import Chart from 'chart.js'
 
 window.addEventListener('turbolinks:load', () => {
   var data = [
-    { "name": "May", "value": "23" },
-    { "name": "June", "value": "50" },
-    { "name": "July", "value": "75" },
-    { "name": "August", "value": "48" },
-    { "name": "September", "value": "95"},
-    { "name": "October", "value": "22" },
+    { "name": "May", "value": "50" },
+    { "name": "June", "value": "60" },
+    { "name": "July", "value": "70" },
+    { "name": "August", "value": "80" },
+    { "name": "September", "value": "80"},
+    { "name": "October", "value": "120" },
   ]
 
   var ctx = document.getElementById('line-graph');
@@ -41,16 +41,30 @@ window.addEventListener('turbolinks:load', () => {
     return e.value;
   });
 
+  // Set colors of line based on values.
+  var width = window.innerWidth || document.body.clientWidth;
+  var gradientStroke = ctx.getContext('2d').createLinearGradient(0, 0, width, 0);
+  var fraction = 1.0 / (values.length - 1)
+  var location = 0
+  var i;
+  for (i = 0; i < colors.length; i++) {
+    gradientStroke.addColorStop(location, colors[i]);
+    location += fraction;
+  }
+
   new Chart(ctx, {
     type: 'line',
     data: {
       labels: labels,
       datasets: [{
         data: values,
-        backgroundColor: colors,
-        borderColor: colors,
         borderWidth: 1,
-        fill: false
+        fill: false,
+        borderColor:               gradientStroke,
+        pointBorderColor:          gradientStroke,
+        pointBackgroundColor:      gradientStroke,
+        pointHoverBackgroundColor: gradientStroke,
+        pointHoverBorderColor:     gradientStroke
       }]
     },
     options: {
