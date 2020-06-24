@@ -12,3 +12,15 @@ $primary: #005EB8;
 
 @import 'bootstrap';
 @import '@fortawesome/fontawesome-free';
+
+.navbar {
+  .nav-link {
+    color: $white;
+
+    @include hover-focus() {
+      color: darken($white, 15%);
+      text-decoration: underline;
+    }
+
+  }
+}
