@@ -22,8 +22,16 @@
 
 <body>
 
-  <nav class="navbar sticky-top flex-md-nowrap">
+  <nav class='navbar sticky-top flex-md-nowrap'>
     <a href='/'><%= I18n.t('app.name') %></a>
+    <div class='navbar-text'>
+      <%= current_user_name %>
+    </div>
+    <% if user_authenticated? %>
+      <%= link_to auth_logout_path do %>
+        <%= I18n.t('auth.log_out') %> <i class='far fa-arrow-alt-circle-right'></i>
+      <% end %>
+    <% end %>
   </nav>
 
   <main>
@@ -32,7 +40,7 @@
     </div>
   </main>
 
-  <footer class="page-footer font-small blue pt-4">
+  <footer class="page-footer fixed-bottom font-small blue pt-4">
     <div class="text-center py-3">
       <a href="/api_docs"><%= I18n.t('footer.api_docs') %></a>
     </div>
