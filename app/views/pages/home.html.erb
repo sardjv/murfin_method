@@ -17,8 +17,14 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <canvas id="bar-chart"></canvas>
+                  <canvas id="bar-chart"></canvas>
                 </div>
+            </div>
+
+            <div class="card">
+              <div class="card-body">
+                <canvas id="line-graph"></canvas>
+              </div>
             </div>
         </div>
      </div>
@@ -33,3 +39,4 @@
 </div>
 
 <%= javascript_pack_tag 'graphs/bar_chart', 'data-turbolinks-track': 'reload' %>
+<%= javascript_pack_tag 'graphs/line_graph', 'data-turbolinks-track': 'reload' %>
