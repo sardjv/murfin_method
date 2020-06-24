@@ -11,46 +11,13 @@ window.addEventListener('turbolinks:load', () => {
   ]
 
   var ctx = document.getElementById('line-graph');
-  var colors = data.map(function(e) {
-    var val = e.value;
 
-    if (val == null) {
-      // Unknown.
-      return '#F6E6EE'
-    } else if (val > 120) {
-      // Over.
-      return '#F9DDCE'
-    } else if (val >= 80) {
-      // About right.
-      return '#DBE9C4'
-    } else if (val >= 70) {
-      // Slightly under.
-      return '#E2F1FC'
-    } else if (val >= 60) {
-      // Under.
-      return '#FDF2AA'
-    } else {
-      // Really under.
-      return '#AE4C1A'
-    }
-  });
   var labels = data.map(function(e) {
     return e.name;
   });
   var values = data.map(function(e) {
     return e.value;
   });
-
-  // Set colors of line based on values.
-  var width = window.innerWidth || document.body.clientWidth;
-  var gradientStroke = ctx.getContext('2d').createLinearGradient(0, 0, width, 0);
-  var fraction = 1.0 / (values.length - 1)
-  var location = 0
-  var i;
-  for (i = 0; i < colors.length; i++) {
-    gradientStroke.addColorStop(location, colors[i]);
-    location += fraction;
-  }
 
   new Chart(ctx, {
     type: 'line',
@@ -60,11 +27,12 @@ window.addEventListener('turbolinks:load', () => {
         data: values,
         borderWidth: 1,
         fill: false,
-        borderColor:               gradientStroke,
-        pointBorderColor:          gradientStroke,
-        pointBackgroundColor:      gradientStroke,
-        pointHoverBackgroundColor: gradientStroke,
-        pointHoverBorderColor:     gradientStroke
+        borderColor: '#8CC6F4',
+        borderWidth: 5,
+        pointRadius: 0.0001,
+        pointHitRadius: 200,
+        lineTension: 0.3,
+        borderCapStyle: 'round'
       }]
     },
     options: {
