@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<!--[if lt IE 9]><html class="ie8" lang="en"><![endif]-->
-<!--[if IE 9]><html class="ie9" lang="en"><![endif]-->
+<!--[if lt IE 9]><html class='ie8' lang='en'><![endif]-->
+<!--[if IE 9]><html class='ie9' lang='en'><![endif]-->
 <!--[if gt IE 9]><!-->
-<html lang="en" style="">
+<html lang='en' style=''>
 <!--<![endif]-->
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+  <meta name='description' content=''>
 
   <title>
     <%= I18n.t('app.name') %>
@@ -25,13 +25,9 @@
   <nav class='navbar flex-md-nowrap bg-primary'>
     <%= image_pack_tag 'media/images/logos/nhs.svg', width: '100 px' %>
 
-    <div class='navbar-text'>
-      <%= current_user_name %>
-    </div>
-
     <% if user_authenticated? %>
-      <%= link_to auth_logout_path do %>
-        <%= I18n.t('auth.log_out') %> <i class='far fa-arrow-alt-circle-right'></i>
+      <%= link_to auth_logout_path, class: 'nav-link' do %>
+        <%= I18n.t('auth.log_out') %> <%= current_user_name %> <i class='far fa-arrow-alt-circle-right'></i>
       <% end %>
     <% else %>
       <%= button_to root_url + 'auth/auth0', method: :post, type: 'button', class: 'btn btn-primary' do %>
@@ -44,9 +40,11 @@
     <%= yield %>
   </main>
 
-  <footer class="page-footer font-small blue pt-4">
-    <div class="text-center py-3">
-      <a href="/api_docs"><%= I18n.t('footer.api_docs') %></a>
+  <footer class='page-footer font-small blue pt-4'>
+    <div class='d-flex justify-content-start'>
+      <div class='text-center m-4'>
+        <a href='/api_docs'><%= I18n.t('footer.api_docs') %></a>
+      </div>
     </div>
   </footer>
 
