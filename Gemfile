@@ -19,7 +19,7 @@ gem 'factory_bot', '~> 6.0.2'
 
 # Generate fake data such as names, addresses, and phone numbers.
 # https://github.com/faker-ruby/faker
-gem 'faker', '~> 2.11.0'
+gem 'faker', '~> 2.13.0'
 
 # A resource-focused Rails library for developing JSON:API compliant servers.
 # https://github.com/cerebris/jsonapi-resources
