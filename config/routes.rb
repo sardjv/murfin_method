@@ -21,5 +21,8 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
+  resources :pages, only: [:home], controller: 'pages' do
+    get :home, on: :collection
+  end
   resource :dashboard, only: [:show], controller: 'dashboard'
 end

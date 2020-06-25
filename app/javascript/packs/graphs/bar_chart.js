@@ -3,7 +3,7 @@ import Rails from '@rails/ujs'
 
 window.addEventListener('turbolinks:load', () => {
   Rails.ajax({
-    url: window.location.pathname + '.json',
+    url: data_url(),
     type: 'GET',
     success: function(data) {
       data = data.bar_chart
@@ -85,3 +85,12 @@ window.addEventListener('turbolinks:load', () => {
     }
   });
 });
+
+function data_url() {
+  if (window.location.pathname == '/') {
+    // Can't call root/.json.
+    return '/pages/home.json'
+  } else {
+    return window.location.pathname + '.json'
+  }
+}
