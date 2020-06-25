@@ -1,10 +1,6 @@
-class DashboardPresenter
+class HomepagePresenter
   def initialize(args)
     @params = args[:params]
-  end
-
-  def paginated_users
-    User.page(@params[:page])
   end
 
   def bar_chart
