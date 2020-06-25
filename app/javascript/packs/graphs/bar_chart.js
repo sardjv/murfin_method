@@ -36,7 +36,11 @@ function bar_chart(context, data) {
     }
   });
   var labels = data.map(function(e) {
-    return e.name;
+    if (e.value) {
+      return e.name;
+    } else {
+      return e.name + ' ?'
+    }
   });
 
   var fallback = missingDataVal(data);
