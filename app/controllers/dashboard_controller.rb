@@ -4,7 +4,7 @@ class DashboardController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: @presenter.graph_data.to_json }
+      format.json { render json: @presenter.to_json }
     end
   end
 end
