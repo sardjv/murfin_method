@@ -22,7 +22,7 @@
 
 <body>
 
-  <nav class='navbar flex-md-nowrap bg-primary'>
+  <nav class='navbar flex-md-nowrap bg-primary p-4'>
     <%= image_pack_tag 'media/images/logos/nhs.svg', width: '100 px' %>
 
     <% if user_authenticated? %>
@@ -40,7 +40,7 @@
     <%= yield %>
   </main>
 
-  <footer class='page-footer font-small blue pt-4'>
+  <footer class='page-footer font-small blue'>
     <div class='d-flex justify-content-start'>
       <div class='text-center m-4'>
         <a href='/api_docs'><%= I18n.t('footer.api_docs') %></a>
