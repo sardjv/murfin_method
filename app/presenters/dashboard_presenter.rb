@@ -7,22 +7,32 @@ class DashboardPresenter
     User.page(@params[:page])
   end
 
-  def bar_chart
-    [
-      { 'name': 'Skylar Assaqd', 'value': '88' },
-      { 'name': 'Gretchen Botosh', 'value': '82' },
-      { 'name': 'Marcus Bator', 'value': '79' },
-      { 'name': 'Brandon Vetrovs', 'value': '72' },
-      { 'name': 'Jordyn Korsgaard', 'value': '64' },
-      { 'name': 'Mira Korsgaard', 'value': '60' },
-      { 'name': 'Ann Herwitz', 'value': '53' },
-      { 'name': 'Chance Torff', 'value': '53' }
-    ]
+  def bar_chart(user_ids:, plan_id:, actual_id:)
+    User.find(user_ids).map do |user|
+      {
+        'name': user.name,
+        'value': bar_chart_value(user: user, plan_id: plan_id, actual_id: actual_id)
+      }
+    end
   end
 
   def to_json(*_args)
     {
-      bar_chart: bar_chart
+      bar_chart: bar_chart(
+        user_ids: User.pluck(:id),
+        plan_id: TimeRangeType.find_by(name: 'Job Plan').id,
+        actual_id: TimeRangeType.find_by(name: 'RIO Data').id
+      )
     }.to_json
+  end
+
+  private
+
+  def bar_chart_value(user:, plan_id:, actual_id:)
+    return if user.time_ranges.none?
+
+    plan_total = user.time_ranges.where(time_range_type_id: plan_id).sum(&:value)
+    actual_total = user.time_ranges.where(time_range_type_id: actual_id).sum(&:value)
+    ((actual_total.to_f / plan_total) * 100).to_i
   end
 end
