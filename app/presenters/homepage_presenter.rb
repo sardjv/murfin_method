@@ -22,7 +22,7 @@ class HomepagePresenter
       { 'name': 'June', 'value': '60' },
       { 'name': 'July', 'value': '70' },
       { 'name': 'August', 'value': '80' },
-      { 'name': 'September', 'value': '80'},
+      { 'name': 'September', 'value': '80' },
       { 'name': 'October', 'value': '120' }
     ]
   end
