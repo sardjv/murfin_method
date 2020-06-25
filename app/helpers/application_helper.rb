@@ -22,10 +22,12 @@ module ApplicationHelper
     file = File.read("node_modules/bootstrap-icons/icons/#{icon}.svg")
     doc = Nokogiri::HTML::DocumentFragment.parse file
     svg = doc.at_css 'svg'
-    svg['class'] += ' ' + options[:class] if options[:class].present?
-    svg['width'] = '2em'
-    svg['height'] = '2em'
-
-    doc.to_html.html_safe
+    svg['class'] += " #{options[:class]}" if options[:class].present?
+    svg['width'] = svg['height'] = '2em'
+    sanitize(
+      doc.to_html,
+      tags: %w[svg path],
+      attributes: %w[class width height viewbox fill xmlns fill-rule d]
+    )
   end
 end
