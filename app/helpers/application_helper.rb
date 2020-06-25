@@ -16,4 +16,18 @@ module ApplicationHelper
 
     session[:userinfo].dig('extra', 'raw_info', 'name')
   end
+
+  # From https://github.com/twbs/icons/issues/79
+  def icon(icon, options = {})
+    file = File.read("node_modules/bootstrap-icons/icons/#{icon}.svg")
+    doc = Nokogiri::HTML::DocumentFragment.parse file
+    svg = doc.at_css 'svg'
+    svg['class'] += " #{options[:class]}" if options[:class].present?
+    svg['width'] = svg['height'] = '2em'
+    sanitize(
+      doc.to_html,
+      tags: %w[svg path],
+      attributes: %w[class width height viewbox fill xmlns fill-rule d]
+    )
+  end
 end

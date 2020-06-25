@@ -27,11 +27,13 @@
 
     <% if user_authenticated? %>
       <%= link_to auth_logout_path, class: 'nav-link' do %>
-        <%= I18n.t('auth.log_out') %> <%= current_user_name %> <i class='far fa-arrow-alt-circle-right'></i>
+        <%= I18n.t('auth.log_out') %> <%= current_user_name %>
+        <%= icon('arrow-right-square', class: 'mx-2') %>
       <% end %>
     <% else %>
       <%= button_to root_url + 'auth/auth0', method: :post, type: 'button', class: 'btn btn-primary' do %>
-        <%= I18n.t('auth.log_in') %> <i class='far fa-arrow-alt-circle-right'></i>
+        <%= I18n.t('auth.log_in') %>
+        <%= icon('arrow-right-square', class: 'mx-2') %>
       <% end %>
     <% end %>
   </nav>
