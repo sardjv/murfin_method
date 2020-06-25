@@ -43,6 +43,14 @@ function bar_chart(context, data) {
     }
   });
 
+  var toolTips = data.map(function(e) {
+    if (e.value) {
+      return e.value + '%';
+    } else {
+      return 'No data';
+    }
+  });
+
   var fallback = missingDataVal(data);
   var values = data.map(function(e) {
     return e.value || fallback;
@@ -66,8 +74,8 @@ function bar_chart(context, data) {
       },
       tooltips: {
         callbacks: {
-          label: function(tooltipItem, data) {
-            return tooltipItem.value + '%';
+          label: function(tooltipItem, _data) {
+            return toolTips[tooltipItem.index];
           }
         }
       },
