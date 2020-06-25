@@ -13,8 +13,7 @@ User.pluck(:id).each do |user_id|
     story: :static,
     user_id: user_id,
     time_range_type_id: plan_id,
-    graph_start_time: DateTime.now.beginning_of_year,
-    graph_end_time: DateTime.now.end_of_year,
+    start: DateTime.now.beginning_of_year,
     volatility: 0.05 # 5% weekly variation
   )
 
@@ -22,8 +21,7 @@ User.pluck(:id).each do |user_id|
     story: :seasonal_summer_and_christmas,
     user_id: user_id,
     time_range_type_id: actuals_id,
-    graph_start_time: DateTime.now.beginning_of_year,
-    graph_end_time: DateTime.now.end_of_year,
+    start: DateTime.now.beginning_of_year,
     volatility: 0.5  # 50% seasonal variation
   )
 end
