@@ -6,6 +6,7 @@ window.addEventListener('turbolinks:load', () => {
     url: window.location.pathname + '.json',
     type: 'GET',
     success: function(data) {
+      data = data.bar_chart
       var ctx = document.getElementById('bar-chart');
       var colors = data.map(function(e) {
         var val = e.value;
