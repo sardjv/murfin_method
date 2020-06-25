@@ -11,4 +11,8 @@
 #
 class User < ApplicationRecord
   has_many :time_ranges, dependent: :destroy
+
+  def name
+    "#{first_name} #{last_name}"
+  end
 end
