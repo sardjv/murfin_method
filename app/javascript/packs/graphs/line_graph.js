@@ -1,17 +1,17 @@
 import Chart from 'chart.js'
+import Rails from '@rails/ujs'
 
 window.addEventListener('turbolinks:load', () => {
-  var data = [
-    { "name": "May", "value": "50" },
-    { "name": "June", "value": "60" },
-    { "name": "July", "value": "70" },
-    { "name": "August", "value": "80" },
-    { "name": "September", "value": "80"},
-    { "name": "October", "value": "120" },
-  ]
+  Rails.ajax({
+    url: data_url(),
+    type: 'GET',
+    success: function(data) {
+      line_graph(document.getElementById('line-graph'), data.line_graph)
+    }
+  });
+});
 
-  var ctx = document.getElementById('line-graph');
-
+function line_graph(context, data) {
   var labels = data.map(function(e) {
     return e.name;
   });
@@ -19,7 +19,7 @@ window.addEventListener('turbolinks:load', () => {
     return e.value;
   });
 
-  new Chart(ctx, {
+  new Chart(context, {
     type: 'line',
     data: {
       labels: labels,
@@ -67,4 +67,13 @@ window.addEventListener('turbolinks:load', () => {
       }
     }
   });
-});
+}
+
+function data_url() {
+  if (window.location.pathname == '/') {
+    // Can't call root/.json.
+    return '/pages/home.json'
+  } else {
+    return window.location.pathname + '.json'
+  }
+}
