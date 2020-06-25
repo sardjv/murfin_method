@@ -20,4 +20,6 @@ Rails.application.routes.draw do
   constraints ->(request) { request.session[:userinfo].present? } do
     mount Sidekiq::Web => '/sidekiq'
   end
+
+  resource :dashboard, only: [:show], controller: 'dashboard'
 end
