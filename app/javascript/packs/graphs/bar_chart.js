@@ -17,7 +17,7 @@ function bar_chart(context, data) {
 
     if (val == null) {
       // Unknown.
-      return '#EDE2F0'
+      return '#F5F5F5'
     } else if (val > 120) {
       // Over.
       return '#F9DDCE'
