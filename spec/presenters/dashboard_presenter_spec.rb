@@ -10,17 +10,17 @@ describe DashboardPresenter do
   describe 'bar_chart' do
     it 'returns the actuals as a percentage of plan delivered' do
       expect(subject.bar_chart(
-        user_ids: [user.id],
-        plan_id: plan_id,
-        actual_id: actual_id
-      )).to eq(
-        [
-          {
-            name: user.name,
-            value: 50
-          }
-        ]
-      )
+               user_ids: [user.id],
+               plan_id: plan_id,
+               actual_id: actual_id
+             )).to eq(
+               [
+                 {
+                   name: user.name,
+                   value: 50
+                 }
+               ]
+             )
     end
   end
 end
