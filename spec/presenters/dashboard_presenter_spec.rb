@@ -4,8 +4,24 @@ describe DashboardPresenter do
   let(:user) { create(:user) }
   let(:plan_id) { create(:time_range_type, name: 'Job Plan').id }
   let(:actual_id) { create(:time_range_type, name: 'RIO Data').id }
-  let!(:plan_ranges) { create_list(:time_range, 10, user_id: user.id, time_range_type_id: plan_id, value: 10) }
-  let!(:actual_ranges) { create_list(:time_range, 10, user_id: user.id, time_range_type_id: actual_id, value: 5) }
+  let!(:plan_ranges) do
+    create_list(
+      :time_range,
+      10,
+      user_id: user.id,
+      time_range_type_id: plan_id,
+      value: 10
+    )
+  end
+  let!(:actual_ranges) do
+    create_list(
+      :time_range,
+      10,
+      user_id: user.id,
+      time_range_type_id: actual_id,
+      value: 5
+    )
+  end
 
   describe 'bar_chart' do
     it 'returns the actuals as a percentage of plan delivered' do
