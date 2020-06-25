@@ -17,7 +17,7 @@ function bar_chart(context, data) {
 
     if (val == null) {
       // Unknown.
-      return '#F6E6EE'
+      return '#EDE2F0'
     } else if (val > 120) {
       // Over.
       return '#F9DDCE'
@@ -38,8 +38,10 @@ function bar_chart(context, data) {
   var labels = data.map(function(e) {
     return e.name;
   });
+
+  var fallback = missingDataVal(data);
   var values = data.map(function(e) {
-    return e.value;
+    return e.value || fallback;
   });
 
   new Chart(context, {
@@ -95,4 +97,33 @@ function data_url() {
   } else {
     return window.location.pathname + '.json'
   }
+}
+
+// Value for missing data.
+// Based on min and max data (so it shows up), not too
+// small, but also not too big.
+function missingDataVal(data) {
+  var min = getMinimum(data)
+  var max = getMaximum(data)
+  return ((max - min) * 0.25) + min
+}
+
+function getMinimum(data) {
+  var min = null;
+  data.forEach(function(e) {
+    if (e.value != null && (min == null || e.value < min)) {
+      min = e.value;
+    }
+  });
+  return min;
+}
+
+function getMaximum(data) {
+  var max = null;
+  data.forEach(function(e) {
+    if (e.value != null && (max == null || e.value > max)) {
+      max = e.value;
+    }
+  });
+  return max;
 }
