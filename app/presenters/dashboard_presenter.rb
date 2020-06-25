@@ -29,10 +29,10 @@ class DashboardPresenter
   private
 
   def bar_chart_value(user:, plan_id:, actual_id:)
-    if user.time_ranges.any?
-      plan_total = user.time_ranges.where(time_range_type_id: plan_id).sum(&:value)
-      actual_total = user.time_ranges.where(time_range_type_id: actual_id).sum(&:value)
-      ((actual_total.to_f / plan_total) * 100).to_i
-    end
+    return if user.time_ranges.none?
+
+    plan_total = user.time_ranges.where(time_range_type_id: plan_id).sum(&:value)
+    actual_total = user.time_ranges.where(time_range_type_id: actual_id).sum(&:value)
+    ((actual_total.to_f / plan_total) * 100).to_i
   end
 end
