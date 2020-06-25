@@ -29,6 +29,10 @@ gem 'jsonapi-resources', '~> 0.10.2'
 # https://github.com/jwt/ruby-jwt
 gem 'jwt', '~> 2.2.1'
 
+# paginator for modern web app frameworks and ORMs
+# https://github.com/kaminari/kaminari
+gem 'kaminari'
+
 # Data processing & ETL framework for Ruby.
 # https://github.com/thbar/kiba
 gem 'kiba', '~> 3.0.0'

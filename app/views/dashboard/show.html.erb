@@ -1,0 +1,60 @@
+<div>
+  <div class='container my-5'>
+
+    <div class='row'>
+      <div class='col-12'>
+          <h5>
+            Percentage achievement against job plan
+          </h5>
+          <p>
+            Showing
+            <%= @presenter.paginated_users.total_count %>
+            users
+          </p>
+          <div class='card my-4'>
+              <div class='card-body'>
+                <canvas id='bar-chart'></canvas>
+              </div>
+          </div>
+      </div>
+    </div>
+
+    <div class='row'>
+        <div class='col-12'>
+          <p>
+            Showing
+            <%= @presenter.paginated_users.count %>
+            users
+          </p>
+          <table class='table'>
+            <thead>
+              <tr>
+                <th scope='col'>Name</th>
+                <th scope='col'>Logged</th>
+                <th scope='col'>Planned</th>
+                <th scope='col'>Delivered</th>
+                <th scope='col'>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @presenter.paginated_users.each do |user| %>
+                <tr>
+                  <td>
+                    <%= user.first_name %> <%= user.last_name %>
+                  </td>
+                  <td>60</td>
+                  <td>60</td>
+                  <td>100%</td>
+                  <td>About right</td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <%= paginate @presenter.paginated_users %>
+        </div>
+     </div>
+  </div>
+  </div>
+</div>
+
+<%= javascript_pack_tag 'graphs/bar_chart', 'data-turbolinks-track': 'reload' %>
