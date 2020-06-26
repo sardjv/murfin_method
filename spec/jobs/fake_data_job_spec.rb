@@ -1,5 +1,5 @@
 describe FakeDataJob, type: :job do
-  let(:classes) { %w[User TimeRangeType TimeRange] }
+  let(:classes) { %w[User TimeRange] }
   let(:quantity) { 1 }
 
   subject(:job) do
