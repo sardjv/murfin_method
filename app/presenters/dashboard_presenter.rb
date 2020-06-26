@@ -34,7 +34,11 @@ class DashboardPresenter
         plan_id: TimeRangeType.plan_type.id,
         actual_id: TimeRangeType.actual_type.id
       ),
-      line_graph: line_graph
+      line_graph: line_chart(
+        user_ids: User.pluck(:id),
+        plan_id: TimeRangeType.plan_type.id,
+        actual_id: TimeRangeType.actual_type.id
+      )
     }.to_json
   end
 

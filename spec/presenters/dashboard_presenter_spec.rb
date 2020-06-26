@@ -46,7 +46,7 @@ describe DashboardPresenter do
 
   describe 'line_graph' do
     it 'returns the actuals as a percentage of plan delivered, per month, for the team' do
-      expect(subject.bar_chart(
+      expect(subject.line_graph(
                user_ids: [user.id],
                plan_id: plan_id,
                actual_id: actual_id
