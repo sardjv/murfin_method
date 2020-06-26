@@ -1,8 +1,20 @@
 <ul class='nav nav-tabs my-4'>
   <li class='nav-item'>
-    <%= link_to I18n.t('dashboard.nav.team'), teams_dashboard_path, class: 'nav-link' %>
+    <%=
+      link_to(
+        I18n.t('dashboard.nav.team'),
+        teams_dashboard_path,
+        class: "nav-link#{' active' if current_page?(teams_dashboard_path)}"
+      )
+    %>
   </li>
   <li class='nav-item'>
-    <%= link_to I18n.t('dashboard.nav.individuals'), individuals_dashboard_path, class: 'nav-link active' %>
+    <%=
+      link_to(
+        I18n.t('dashboard.nav.individuals'),
+        individuals_dashboard_path,
+        class: "nav-link#{' active' if current_page?(individuals_dashboard_path)}"
+      )
+    %>
   </li>
 </ul>
