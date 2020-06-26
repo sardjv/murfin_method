@@ -1,0 +1,80 @@
+<%= render 'tabs' %>
+
+<div class='container my-5'>
+
+  <div class='row'>
+    <div class='col-12'>
+      <h5>
+        <%= I18n.t('individuals.chart_title') %>
+      </h5>
+      <p>
+        Showing
+        <%= @presenter.paginated_users.total_count %>
+        users
+      </p>
+      <div class='card my-4'>
+          <div class='card-body'>
+            <canvas id='bar-chart'></canvas>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class='row'>
+    <div class='col-12'>
+      <p>
+        Showing
+        <%= @presenter.paginated_users.count %>
+        users
+      </p>
+      <table class='table'>
+        <thead>
+          <thead>
+            <tr>
+              <th scope='col'>
+                <%= I18n.t('user.name') %>
+              </th>
+              <th scope='col'>
+                <%= TimeRangeType.plan_type.name %>
+              </th>
+              <th scope='col'>
+                <%= TimeRangeType.actual_type.name %>
+              </th>
+              <th scope='col'>
+                <%= I18n.t('user.percentage_delivered') %>
+              </th>
+              <th scope='col'>
+                <%= I18n.t('user.status') %>
+              </th>
+            </tr>
+        </thead>
+        <tbody>
+          <% @presenter.paginated_users.each do |user| %>
+            <% user_presenter = UserStatsPresenter.new(user: user, plan_id: TimeRangeType.plan_type.id, actual_id: TimeRangeType.actual_type.id) %>
+            <tr>
+              <td>
+                <%= user.first_name %> <%= user.last_name %>
+              </td>
+              <th>
+                <%= user_presenter.average_weekly_planned %>
+              </th>
+                <th>
+                  <%= user_presenter.average_weekly_actual %>
+                </th>
+              <td>
+                <%= user_presenter.percentage_delivered%>%
+              </td>
+              <td>
+                <%= user_presenter.status%>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= paginate @presenter.paginated_users %>
+    </div>
+  </div>
+
+</div>
+
+<%= javascript_pack_tag 'graphs/bar_chart', 'data-turbolinks-track': 'reload' %>

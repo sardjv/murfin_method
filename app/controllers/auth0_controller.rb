@@ -1,7 +1,7 @@
 class Auth0Controller < ApplicationController
   def callback
     session[:userinfo] = request.env['omniauth.auth']
-    redirect_to dashboard_path
+    redirect_to teams_dashboard_path
   end
 
   def failure
