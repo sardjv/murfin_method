@@ -59,5 +59,4 @@ class TimeRange < ApplicationRecord
   def intersects_to_end?(segment_start:)
     (segment_start >= start_time) && (segment_start <= end_time)
   end
-
 end
