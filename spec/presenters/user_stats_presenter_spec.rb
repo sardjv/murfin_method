@@ -54,13 +54,13 @@ describe UserStatsPresenter do
 
     context 'within filter time range' do
       describe 'average_weekly_planned' do
-        it 'returns avergae weekly planned values for the time range' do
-          expect(subject.average_weekly_planned).to eq 29
+        it 'returns average weekly planned values for the time range' do
+          expect(subject.average_weekly_planned).to eq 28.6
         end
       end
 
       describe 'average_weekly_actual' do
-        it 'returns avergae weekly actual values for the time range' do
+        it 'returns average weekly actual values for the time range' do
           expect(subject.average_weekly_actual).to eq 12
         end
       end
@@ -73,12 +73,11 @@ describe UserStatsPresenter do
     end
 
     context 'when no filter defaults to last 12 months' do
-      let(:filter_start_date) {}
-      let(:filter_end_date) {}
+      let(:args) { { user: user } }
 
       describe 'average_weekly_planned' do
         it 'returns 0' do
-          expect(subject.average_weekly_planned).to eq 29
+          expect(subject.average_weekly_planned).to eq 28.6
         end
       end
 
@@ -100,13 +99,13 @@ describe UserStatsPresenter do
       let(:plan_end_time) { 1.year.ago - 1.day }
 
       describe 'average_weekly_planned' do
-        it 'returns avergae weekly planned values for the time range' do
+        it 'returns average weekly planned values for the time range' do
           expect(subject.average_weekly_planned).to eq 0
         end
       end
 
       describe 'average_weekly_actual' do
-        it 'returns avergae weekly actual values for the time range' do
+        it 'returns average weekly actual values for the time range' do
           expect(subject.average_weekly_actual).to eq 12
         end
       end
@@ -123,13 +122,13 @@ describe UserStatsPresenter do
       let(:actual_end_time) { Time.zone.tomorrow }
 
       describe 'average_weekly_planned' do
-        it 'returns avergae weekly planned values for the time range' do
-          expect(subject.average_weekly_planned).to eq 29
+        it 'returns average weekly planned values for the time range' do
+          expect(subject.average_weekly_planned).to eq 28.6
         end
       end
 
       describe 'average_weekly_actual' do
-        it 'returns avergae weekly actual values for the time range' do
+        it 'returns average weekly actual values for the time range' do
           expect(subject.average_weekly_actual).to eq 0
         end
       end
