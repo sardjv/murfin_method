@@ -1,0 +1,13 @@
+<ul class='nav nav-tabs my-4'>
+  <% tabs.each do |tab| %>
+    <li class='nav-item'>
+      <%=
+        link_to(
+          tab[:label],
+          tab[:path],
+          class: "nav-link#{' active' if current_page?(tab[:path])}"
+        )
+      %>
+    </li>
+  <% end %>
+</ul>

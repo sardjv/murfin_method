@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Dashboard', type: :feature do
+describe 'Dashboard Individuals', type: :feature do
   let(:user) { create(:user) }
 
   let(:plan_id) { TimeRangeType.plan_type.id }
@@ -29,7 +29,7 @@ describe 'Dashboard', type: :feature do
   end
 
   it 'has table with planned and actual data' do
-    visit dashboard_path
+    visit individuals_dashboard_path
     expect(page).to have_text 'Percentage achievement against job plan'
     within('.table') do
       expect(page).to have_text 'Job Plan'
