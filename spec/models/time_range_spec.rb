@@ -122,6 +122,29 @@ describe TimeRange, type: :model do
           it { expect(subject.segment_value(segment_start: segment_start, segment_end: segment_end)).to eq(10) }
         end
       end
+
+      context 'with a partial intersect from the middle' do
+        context 'when 25% is overlapped' do
+          let(:segment_start) { Time.zone.local(2020, 1, 1, 9, 45) }
+          let(:segment_end) { Time.zone.local(2020, 1, 1, 10, 15) }
+
+          it { expect(subject.segment_value(segment_start: segment_start, segment_end: segment_end)).to eq(2.5) }
+        end
+
+        context 'when 50% is overlapped' do
+          let(:segment_start) { Time.zone.local(2020, 1, 1, 9, 30) }
+          let(:segment_end) { Time.zone.local(2020, 1, 1, 10, 15) }
+
+          it { expect(subject.segment_value(segment_start: segment_start, segment_end: segment_end)).to eq(5) }
+        end
+
+        context 'when 100% is overlapped' do
+          let(:segment_start) { Time.zone.local(2020, 1, 1, 8, 45) }
+          let(:segment_end) { Time.zone.local(2020, 1, 1, 10, 15) }
+
+          it { expect(subject.segment_value(segment_start: segment_start, segment_end: segment_end)).to eq(10) }
+        end
+      end
     end
   end
 end

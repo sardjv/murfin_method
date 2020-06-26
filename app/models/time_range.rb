@@ -25,16 +25,39 @@ class TimeRange < ApplicationRecord
   end
 
   def segment_value(segment_start:, segment_end:)
-    proportion = if (segment_start >= start_time && segment_end <= end_time)
-      # Segment totally intersects time_range.
+    value * segment_proportion(segment_start: segment_start, segment_end: segment_end)
+  end
+
+  private
+
+  def segment_proportion(segment_start:, segment_end:)
+    if intersects_inside?(segment_start: segment_start, segment_end: segment_end)
       (segment_end - segment_start) / (end_time - start_time)
-    elsif (segment_end >= start_time && segment_end <= end_time)
-      # Segment partially intersects time_range, from the start.
+    elsif intersects_outside?(segment_start: segment_start, segment_end: segment_end)
+      1
+    elsif intersects_from_start?(segment_end: segment_end)
       (segment_end - start_time) / (end_time - start_time)
+    elsif intersects_to_end?(segment_start: segment_start)
+      (end_time - segment_start) / (end_time - start_time)
     else
-      # No overlap.
       0
     end
-    value * proportion
   end
+
+  def intersects_inside?(segment_start:, segment_end:)
+    (segment_start >= start_time) && (segment_end <= end_time)
+  end
+
+  def intersects_outside?(segment_start:, segment_end:)
+    (segment_start < start_time) && (segment_end > end_time)
+  end
+
+  def intersects_from_start?(segment_end:)
+    (segment_end >= start_time) && (segment_end <= end_time)
+  end
+
+  def intersects_to_end?(segment_start:)
+    (segment_start >= start_time) && (segment_start <= end_time)
+  end
+
 end
