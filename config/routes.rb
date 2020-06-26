@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   resources :pages, only: [:home], controller: 'pages' do
     get :home, on: :collection
   end
-  resource :dashboard, only: [:teams, :individuals], controller: 'dashboard' do
+  resource :dashboard, only: %i[teams individuals], controller: 'dashboard' do
     get :teams, on: :collection
     get :individuals, on: :collection
   end

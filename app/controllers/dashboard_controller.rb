@@ -1,6 +1,5 @@
 class DashboardController < ApplicationController
-  def teams
-  end
+  def teams; end
 
   def individuals
     @presenter = DashboardPresenter.new(params: params)
