@@ -25,7 +25,10 @@ class TimeRange < ApplicationRecord
   end
 
   def segment_value(segment_start:, segment_end:)
-    proportion = 1.0
+    proportion = if (segment_start >= start_time && segment_end <= end_time)
+      # Segment totally overlaps time_range.
+      (segment_end - segment_start) / (end_time - start_time)
+    end
     value * proportion
   end
 end
