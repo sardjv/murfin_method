@@ -20,8 +20,8 @@ class DashboardPresenter
     {
       bar_chart: bar_chart(
         user_ids: User.pluck(:id),
-        plan_id: TimeRangeType.find_by(name: 'Job Plan').id,
-        actual_id: TimeRangeType.find_by(name: 'RIO Data').id
+        plan_id: TimeRangeType.plan_type.id,
+        actual_id: TimeRangeType.actual_type.id
       )
     }.to_json
   end
@@ -31,8 +31,6 @@ class DashboardPresenter
   def bar_chart_value(user:, plan_id:, actual_id:)
     return if user.time_ranges.none?
 
-    plan_total = user.time_ranges.where(time_range_type_id: plan_id).sum(&:value)
-    actual_total = user.time_ranges.where(time_range_type_id: actual_id).sum(&:value)
-    ((actual_total.to_f / plan_total) * 100).to_i
+    UserStatsPresenter.new(user: user, plan_id: plan_id, actual_id: actual_id).percentage_delivered
   end
 end
