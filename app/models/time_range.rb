@@ -28,6 +28,9 @@ class TimeRange < ApplicationRecord
     proportion = if (segment_start >= start_time && segment_end <= end_time)
       # Segment totally overlaps time_range.
       (segment_end - segment_start) / (end_time - start_time)
+    else
+      # No overlap.
+      0
     end
     value * proportion
   end
