@@ -3,18 +3,34 @@ class TeamStatsPresenter
 
   def initialize(args)
     args = defaults.merge(args)
-    @users = args[:user]
+    @users = args[:users]
     @filter_start_time = args[:filter_start_date].to_time.in_time_zone.beginning_of_day
     @filter_end_time = args[:filter_end_date].to_time.in_time_zone.end_of_day
     @plan_id = args[:plan_id]
     @actual_id = args[:actual_id]
   end
 
-  def average_planned_per_month
+  def average_weekly_planned_per_month
+    first_days_of_months.map do |first_day_of_month|
+      {
+        'name': first_day_of_month.strftime('%B'),
+        'value': users.map { |user|
+          UserStatsPresenter.new(
+            user: user,
+            filter_start_date: first_day_of_month,
+            filter_end_date: first_day_of_month.end_of_month
+          ).average_weekly_planned
+        }.sum
+      }
+    end
+
+    # For each month
+      # sum the weekly planned for each user
+      # UserStatsPresenter.new()
     # average_per_month(plan_id)
   end
 
-  def average_actual_per_month
+  def average_weekly_actual_per_month
     # average_per_month(actual_id)
   end
 
@@ -33,17 +49,17 @@ class TeamStatsPresenter
     }
   end
 
-  # def average_weekly(time_range_type_id)
-  #   total = total(time_range_type_id)
-  #   result = (total.to_f / number_of_weeks)
-  #   return 0 if result.nan? || result.infinite?
+  def average_per_month(time_range_type_id)
+    total = total(time_range_type_id)
+    result = (total.to_f / number_of_weeks)
+    return 0 if result.nan? || result.infinite?
 
-  #   result.round(1)
-  # end
+    result.round(1)
+  end
 
-  # def total(time_range_type_id)
-  #   filtered_time_ranges(time_range_type_id).sum(&:value)
-  # end
+  def total(time_range_type_id)
+    filtered_time_ranges(time_range_type_id).sum(&:value)
+  end
 
   # def filtered_time_ranges(time_range_type_id)
   #   time_range_scope = user.time_ranges.where(time_range_type_id: time_range_type_id)
@@ -62,4 +78,9 @@ class TeamStatsPresenter
 
   #   result.round(0)
   # end
+
+  def first_days_of_months
+    days = (@filter_start_time.to_date..@filter_end_time.to_date)
+    @first_days_of_months ||= days.map(&:beginning_of_month).uniq
+  end
 end
