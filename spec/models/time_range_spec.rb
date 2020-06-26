@@ -59,5 +59,44 @@ describe TimeRange, type: :model do
       it { expect(job_plan_periods).to be_valid }
       it { expect(rio_appointments).to be_valid }
     end
+
+    describe '#segment_value' do
+      subject do
+        create(
+          :time_range,
+          start_time: Time.zone.local(2020, 1, 1, 9),
+          end_time: Time.zone.local(2020, 1, 1, 10),
+          value: 10
+        )
+      end
+
+      context 'when 0% overlapping' do
+        let(:segment_start) { Time.zone.local(2020, 1, 1, 10, 1) }
+        let(:segment_end) { Time.zone.local(2020, 1, 1, 11) }
+
+        it { expect(subject.segment_value(segment_start: segment_start, segment_end: segment_end)).to eq(0) }
+      end
+
+      context 'when 25% overlapping' do
+        let(:segment_start) { Time.zone.local(2020, 1, 1, 9) }
+        let(:segment_end) { Time.zone.local(2020, 1, 1, 9, 15) }
+
+        it { expect(subject.segment_value(segment_start: segment_start, segment_end: segment_end)).to eq(2.5) }
+      end
+
+      context 'when 50% overlapping' do
+        let(:segment_start) { Time.zone.local(2020, 1, 1, 9) }
+        let(:segment_end) { Time.zone.local(2020, 1, 1, 9, 30) }
+
+        it { expect(subject.segment_value(segment_start: segment_start, segment_end: segment_end)).to eq(5) }
+      end
+
+      context 'when 100% overlapping' do
+        let(:segment_start) { Time.zone.local(2020, 1, 1, 9) }
+        let(:segment_end) { Time.zone.local(2020, 1, 1, 10) }
+
+        it { expect(subject.segment_value(segment_start: segment_start, segment_end: segment_end)).to eq(10) }
+      end
+    end
   end
 end

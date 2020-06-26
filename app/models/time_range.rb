@@ -23,4 +23,9 @@ class TimeRange < ApplicationRecord
 
     errors.add :end_time, 'must occur after start time'
   end
+
+  def segment_value(segment_start:, segment_end:)
+    proportion = 1.0
+    value * proportion
+  end
 end
