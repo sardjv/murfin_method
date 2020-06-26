@@ -4,7 +4,7 @@
     <div class='row'>
       <div class='col-12'>
           <h5>
-            Percentage achievement against job plan
+            <%= I18n.t('dashboard.chart_title') %>
           </h5>
           <p>
             Showing
@@ -30,22 +30,35 @@
             <thead>
               <tr>
                 <th scope='col'>Name</th>
-                <th scope='col'>Logged</th>
-                <th scope='col'>Planned</th>
-                <th scope='col'>Delivered</th>
+                <th scope='col'>
+                  <%= TimeRangeType.plan_type.name %>
+                </th>
+                <th scope='col'>
+                  <%= TimeRangeType.actual_type.name %>
+                </th>
+                <th scope='col'>Percentage delivered</th>
                 <th scope='col'>Status</th>
               </tr>
             </thead>
             <tbody>
               <% @presenter.paginated_users.each do |user| %>
+                <% user_presenter = UserStatsPresenter.new(user: user, plan_id: TimeRangeType.plan_type.id, actual_id: TimeRangeType.actual_type.id) %>
                 <tr>
                   <td>
                     <%= user.first_name %> <%= user.last_name %>
                   </td>
-                  <td>60</td>
-                  <td>60</td>
-                  <td>100%</td>
-                  <td>About right</td>
+                  <th>
+                    <%= user_presenter.average_weekly_planned %>
+                  </th>
+                    <th>
+                      <%= user_presenter.average_weekly_actual %>
+                    </th>
+                  <td>
+                    <%= user_presenter.percentage_delivered%>%
+                  </td>
+                  <td>
+                    <%= user_presenter.status%>
+                  </td>
                 </tr>
               <% end %>
             </tbody>

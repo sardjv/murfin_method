@@ -14,7 +14,8 @@ en:
     drill_down: Drill down to find service and data collection problems.
     you_can: 'You can use this service to:'
   dashboard:
-    title: 'Dashboard'
+    chart_title: 'Percentage achievement against job plan'
+
   footer:
     api_docs: 'API Docs'
   time:

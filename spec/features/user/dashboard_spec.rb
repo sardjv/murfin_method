@@ -1,7 +1,8 @@
-describe DashboardPresenter do
-  subject { DashboardPresenter.new(params: {}) }
+require 'rails_helper'
 
+describe 'Dashboard', type: :feature do
   let(:user) { create(:user) }
+
   let(:plan_id) { TimeRangeType.plan_type.id }
   let(:actual_id) { TimeRangeType.actual_type.id }
   let!(:plan_ranges) do
@@ -27,20 +28,17 @@ describe DashboardPresenter do
     )
   end
 
-  describe 'bar_chart' do
-    it 'returns the actuals as a percentage of plan delivered' do
-      expect(subject.bar_chart(
-               user_ids: [user.id],
-               plan_id: plan_id,
-               actual_id: actual_id
-             )).to eq(
-               [
-                 {
-                   name: user.name,
-                   value: 50
-                 }
-               ]
-             )
+  it 'has table with planned and actual data' do
+    visit dashboard_path
+    expect(page).to have_text 'Percentage achievement against job plan'
+    within('.table') do
+      expect(page).to have_text 'Job Plan'
+      expect(page).to have_text '1.9'
+      expect(page).to have_text 'RIO Data'
+      expect(page).to have_text '1.0'
+      expect(page).to have_text 'Percentage delivered'
+      expect(page).to have_text '50%'
+      expect(page).to have_text 'Status'
     end
   end
 end
