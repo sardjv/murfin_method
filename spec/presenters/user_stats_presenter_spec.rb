@@ -47,10 +47,14 @@ describe UserStatsPresenter do
              end_time: actual_end_time,
              value: 630)
     end
-    let(:plan_start_time) { 1.year.ago }
-    let(:plan_end_time) { Time.zone.now }
-    let(:actual_start_time) { 1.year.ago }
-    let(:actual_end_time) { Time.zone.now }
+
+    let(:a_year_ago) { Time.zone.local(2019, 6, 26, 14, 31, 12) }
+    let(:now) { Time.zone.local(2020, 6, 26, 14, 31, 12) }
+
+    let(:plan_start_time) { a_year_ago }
+    let(:plan_end_time) { now }
+    let(:actual_start_time) { a_year_ago }
+    let(:actual_end_time) { now }
 
     context 'within filter time range' do
       describe 'average_weekly_planned' do
