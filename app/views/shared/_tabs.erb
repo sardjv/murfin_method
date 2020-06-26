@@ -1,20 +1,20 @@
+<%
+  tabs = [
+    { label: I18n.t('dashboard.nav.team'), path: teams_dashboard_path },
+    { label: I18n.t('dashboard.nav.individuals'), path: individuals_dashboard_path },
+  ]
+%>
+
 <ul class='nav nav-tabs my-4'>
-  <li class='nav-item'>
-    <%=
-      link_to(
-        I18n.t('dashboard.nav.team'),
-        teams_dashboard_path,
-        class: "nav-link#{' active' if current_page?(teams_dashboard_path)}"
-      )
-    %>
-  </li>
-  <li class='nav-item'>
-    <%=
-      link_to(
-        I18n.t('dashboard.nav.individuals'),
-        individuals_dashboard_path,
-        class: "nav-link#{' active' if current_page?(individuals_dashboard_path)}"
-      )
-    %>
-  </li>
+  <% tabs.each do |tab| %>
+    <li class='nav-item'>
+      <%=
+        link_to(
+          tab[:label],
+          tab[:path],
+          class: "nav-link#{' active' if current_page?(tab[:path])}"
+        )
+      %>
+    </li>
+  <% end %>
 </ul>
