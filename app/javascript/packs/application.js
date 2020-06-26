@@ -1,8 +1,7 @@
-require('turbolinks').start();
+require('@rails/ujs').start()
+require('turbolinks').start()
+
+import 'bootstrap'
+import '../stylesheets/application'
+
 require.context('../images', true)
-
-import Rails from '@rails/ujs'
-Rails.start()
-
-import 'bootstrap';
-import '../stylesheets/application';
