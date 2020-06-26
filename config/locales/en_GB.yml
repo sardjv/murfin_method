@@ -14,9 +14,12 @@ en:
     drill_down: Drill down to find service and data collection problems.
     you_can: 'You can use this service to:'
   dashboard:
-    title: 'Dashboard'
+    title: Dashboard
+    nav:
+      team: Team dashboard
+      individuals: Individuals
   footer:
-    api_docs: 'API Docs'
+    api_docs: API Docs
   time:
     formats:
       iso8601_utc: '%Y-%m-%dT%H:%M:%S.000Z'

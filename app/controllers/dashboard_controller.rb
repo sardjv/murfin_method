@@ -1,5 +1,7 @@
 class DashboardController < ApplicationController
-  def show
+  def teams; end
+
+  def individuals
     @presenter = DashboardPresenter.new(params: params)
 
     respond_to do |format|
