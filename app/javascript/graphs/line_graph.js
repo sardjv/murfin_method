@@ -2,13 +2,16 @@ import Chart from 'chart.js'
 import Rails from '@rails/ujs'
 
 window.addEventListener('turbolinks:load', () => {
-  Rails.ajax({
-    url: data_url(),
-    type: 'GET',
-    success: function(data) {
-      line_graph(document.getElementById('line-graph'), data.line_graph)
-    }
-  });
+  var context;
+  if (context = document.getElementById('line-graph')) {
+    Rails.ajax({
+      url: data_url(),
+      type: 'GET',
+      success: function(data) {
+        line_graph(context, data.line_graph)
+      }
+    });
+  }
 });
 
 function line_graph(context, data) {
