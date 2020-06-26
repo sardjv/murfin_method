@@ -2,8 +2,8 @@ describe DashboardPresenter do
   subject { DashboardPresenter.new(params: {}) }
 
   let(:user) { create(:user) }
-  let(:plan_id) { create(:time_range_type, name: 'Job Plan').id }
-  let(:actual_id) { create(:time_range_type, name: 'RIO Data').id }
+  let(:plan_id) { TimeRangeType.plan_type.id }
+  let(:actual_id) { TimeRangeType.actual_type.id }
   let!(:plan_ranges) do
     create_list(
       :time_range,
