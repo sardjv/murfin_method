@@ -16,13 +16,25 @@ class DashboardPresenter
     end
   end
 
+  def line_graph
+    [
+      { 'name': 'May', 'value': '50' },
+      { 'name': 'June', 'value': '60' },
+      { 'name': 'July', 'value': '70' },
+      { 'name': 'August', 'value': '80' },
+      { 'name': 'September', 'value': '80' },
+      { 'name': 'October', 'value': '120' }
+    ]
+  end
+
   def to_json(*_args)
     {
       bar_chart: bar_chart(
         user_ids: User.pluck(:id),
         plan_id: TimeRangeType.plan_type.id,
         actual_id: TimeRangeType.actual_type.id
-      )
+      ),
+      line_graph: line_graph
     }.to_json
   end
 
