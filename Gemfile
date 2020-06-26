@@ -1,18 +1,5 @@
 source 'https://rubygems.org'
 
-# Use SQL Server as the database for Active Record.
-# https://github.com/rails-sqlserver/activerecord-sqlserver-adapter
-# gem 'activerecord-sqlserver-adapter', '~> 6.0.0'
-
-# A Rails engine that helps you put together a super-flexible admin dashboard.
-# https://github.com/thoughtbot/administrate
-# Use master branch until 0.14.0 is available, for https://github.com/thoughtbot/administrate/pull/1574.
-gem 'administrate', github: 'thoughtbot/administrate', branch: 'master'
-
-# Simple plugin to add CSV export feature to Administrate.
-# https://github.com/SourceLabsLLC/administrate_exportable
-gem 'administrate_exportable', '~> 0.2.0'
-
 # Fixtures replacement with a straightforward definition syntax.
 # https://github.com/thoughtbot/factory_bot
 gem 'factory_bot', '~> 6.0.2'
@@ -33,14 +20,6 @@ gem 'jwt', '~> 2.2.1'
 # https://github.com/kaminari/kaminari
 gem 'kaminari'
 
-# Data processing & ETL framework for Ruby.
-# https://github.com/thbar/kiba
-gem 'kiba', '~> 3.0.0'
-
-# Kiba companion gem for commonly-used helpers.
-# https://github.com/thbar/kiba-common
-gem 'kiba-common', '~> 1.0.0'
-
 # Use MySQL as the database for Active Record.
 # https://github.com/brianmario/mysql2
 gem 'mysql2', '~> 0.5.3'
@@ -52,10 +31,6 @@ gem 'omniauth-auth0', '~> 2.3.1'
 # Provides CSRF protection on OmniAuth request endpoint on Rails application.
 # https://github.com/cookpad/omniauth-rails_csrf_protection
 gem 'omniauth-rails_csrf_protection', '~> 0.1.2'
-
-# Use PostgreSQL as the database for Active Record.
-# https://github.com/ged/ruby-pg
-# gem 'pg', '~> 1.2.3'
 
 # A Ruby/Rack web server built for concurrency.
 # https://github.com/puma/puma
@@ -77,12 +52,6 @@ gem 'rswag-ui', '~> 2.3.1'
 # Simple, efficient background processing for Ruby.
 # https://github.com/mperham/sidekiq
 gem 'sidekiq', '~> 6.0.7'
-
-# FreeTDS bindings for Ruby, required for SQL Server.
-# https://github.com/rails-sqlserver/tiny_tds
-# Ruby 2.6/2.7 compatibility under development, bump the version when merged:
-# https://github.com/rails-sqlserver/tiny_tds/pull/462
-# gem 'tiny_tds', '~> 2.1.3-pre'
 
 # Bundle zoneinfo files which are not included in Windows.
 # https://github.com/tzinfo/tzinfo-data

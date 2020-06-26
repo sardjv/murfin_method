@@ -45,6 +45,9 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation, except: %w[ar_internal_metadata])
 
     Webpacker.compile
+
+    FactoryBot.create(:time_range_type, name: 'Job Plan')
+    FactoryBot.create(:time_range_type, name: 'RIO Data')
   end
 
   config.around(:each) do |example|
