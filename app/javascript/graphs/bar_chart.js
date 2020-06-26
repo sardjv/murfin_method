@@ -2,13 +2,16 @@ import Chart from 'chart.js'
 import Rails from '@rails/ujs'
 
 window.addEventListener('turbolinks:load', () => {
-  Rails.ajax({
-    url: data_url(),
-    type: 'GET',
-    success: function(data) {
-      bar_chart(document.getElementById('bar-chart'), data.bar_chart)
-    }
-  });
+  var context
+  if (context = document.getElementById('bar-chart')) {
+    Rails.ajax({
+      url: data_url(),
+      type: 'GET',
+      success: function(data) {
+        bar_chart(context, data.bar_chart)
+      }
+    });
+  }
 });
 
 function bar_chart(context, data) {
