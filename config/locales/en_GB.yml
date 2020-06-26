@@ -14,10 +14,15 @@ en:
     drill_down: Drill down to find service and data collection problems.
     you_can: 'You can use this service to:'
   dashboard:
-    title: Dashboard
     nav:
       team: Team dashboard
       individuals: Individuals
+  individuals:
+    chart_title: Percentage achievement against job plan
+  user:
+    name: Name
+    percentage_delivered: Percentage delivered
+    status: Status
   footer:
     api_docs: API Docs
   time:
