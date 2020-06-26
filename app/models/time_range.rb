@@ -26,8 +26,11 @@ class TimeRange < ApplicationRecord
 
   def segment_value(segment_start:, segment_end:)
     proportion = if (segment_start >= start_time && segment_end <= end_time)
-      # Segment totally overlaps time_range.
+      # Segment totally intersects time_range.
       (segment_end - segment_start) / (end_time - start_time)
+    elsif (segment_end >= start_time && segment_end <= end_time)
+      # Segment partially intersects time_range, from the start.
+      (segment_end - start_time) / (end_time - start_time)
     else
       # No overlap.
       0
