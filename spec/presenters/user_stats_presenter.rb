@@ -37,7 +37,7 @@ describe UserStatsPresenter do
              time_range_type_id: TimeRangeType.plan_type.id,
              start_time: plan_start_time,
              end_time: plan_end_time,
-             value: 1500)
+             value: plan_value)
     end
     let!(:actual_activity) do
       create(:time_range,
@@ -45,12 +45,52 @@ describe UserStatsPresenter do
              time_range_type_id: TimeRangeType.actual_type.id,
              start_time: actual_start_time,
              end_time: actual_end_time,
-             value: 630)
+             value: actual_value)
     end
+    let(:plan_value) { 1500 }
+    let(:actual_value) { 630 }
     let(:plan_start_time) { 1.year.ago }
     let(:plan_end_time) { Time.zone.now }
     let(:actual_start_time) { 1.year.ago }
     let(:actual_end_time) { Time.zone.now }
+
+    describe 'status' do
+      context 'when 0' do
+        let(:plan_value) { 100 }
+        let(:actual_value) { 0 }
+        it 'returns Really Under' do
+          expect(subject.status).to eq 'Unknown'
+        end
+      end
+      context 'when 1 to 49' do
+        let(:plan_value) { 100 }
+        let(:actual_value) { 49 }
+        it 'returns Really Under' do
+          expect(subject.status).to eq 'Really Under'
+        end
+      end
+      context 'when 50 to 79' do
+        let(:plan_value) { 100 }
+        let(:actual_value) { 50 }
+        it 'returns Under' do
+          expect(subject.status).to eq 'Under'
+        end
+      end
+      context 'when 80 to 119' do
+        let(:plan_value) { 100 }
+        let(:actual_value) { 80 }
+        it 'returns About Right' do
+          expect(subject.status).to eq 'About Right'
+        end
+      end
+      context 'when 120+' do
+        let(:plan_value) { 100 }
+        let(:actual_value) { 120 }
+        it 'returns Over' do
+          expect(subject.status).to eq 'Over'
+        end
+      end
+    end
 
     context 'within filter time range' do
       describe 'average_weekly_planned' do
