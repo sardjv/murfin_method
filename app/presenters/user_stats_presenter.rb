@@ -15,25 +15,36 @@ class UserStatsPresenter
   end
 
   def average_weekly_planned
+    return nil if no_planned_data?
+
     average_weekly(plan_id)
   end
 
   def average_weekly_actual
+    return nil if no_actual_data?
+
     average_weekly(actual_id)
   end
 
   def percentage_delivered
+    return nil if no_planned_data? || no_actual_data?
+
     percentage(total(actual_id), total(plan_id))
   end
 
   def status
     percentage = percentage_delivered
+    # no planned or actual data - Unknown
+    return I18n.t('status.unknown') if percentage.nil?
+    # 120+ - Over
     return I18n.t('status.over') if percentage >= OVER_MIN_PERCENTAGE
+    # 80 to 119 - About Right
     return I18n.t('status.about_right') if percentage >= OK_MIN_PERCENTAGE
+    # 50 to 79 - Under
     return I18n.t('status.under') if percentage >= UNDER_MIN_PERCENTAGE
-    return I18n.t('status.really_under') if percentage.positive?
 
-    I18n.t('status.unknown')
+    # 0 to 49 - Really Under
+    I18n.t('status.really_under')
   end
 
   private
@@ -75,5 +86,13 @@ class UserStatsPresenter
     return 0 if result.nan? || result.infinite?
 
     result.round(0)
+  end
+
+  def no_planned_data?
+    filtered_time_ranges(plan_id).empty?
+  end
+
+  def no_actual_data?
+    filtered_time_ranges(actual_id).empty?
   end
 end
