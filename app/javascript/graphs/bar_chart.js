@@ -20,22 +20,22 @@ function bar_chart(context, data) {
 
     if (val == null) {
       // Unknown.
-      return '#F5F5F5'
+      return '#EDE2F0'
     } else if (val > 120) {
       // Over.
       return '#F9DDCE'
     } else if (val >= 80) {
       // About right.
-      return '#DBE9C4'
-    } else if (val >= 70) {
-      // Slightly under.
-      return '#E2F1FC'
-    } else if (val >= 60) {
+      return '#F0F7E7'
+    } else if (val >= 50) {
       // Under.
       return '#FDF2AA'
+    } else if (val > 0) {
+      // Really Under.
+      return '#E2F1FC'
     } else {
-      // Really under.
-      return '#AE4C1A'
+      // Unknown.
+      return '#EDE2F0'
     }
   });
   var labels = data.map(function(e) {

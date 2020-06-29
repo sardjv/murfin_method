@@ -1,5 +1,5 @@
 // Override bootstrap variables BEFORE importing bootstrap.
-$primary: #005EB8;
+@import 'colours';
 
 // Override the defaults as needed.
 // $secondary:     $gray-600;
@@ -12,18 +12,5 @@ $primary: #005EB8;
 
 @import 'bootstrap';
 
-.navbar {
-  .nav-link {
-    color: $white;
-
-    @include hover-focus() {
-      color: darken($white, 15%);
-      text-decoration: underline;
-    }
-
-  }
-}
-
-.page-footer {
-  border-top: 2px solid $primary;
-}
+@import 'nav';
+@import 'tables';
