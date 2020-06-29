@@ -27,8 +27,8 @@
         <%= @presenter.paginated_users.count %>
         users
       </p>
-      <table class='table'>
-        <thead>
+      <div class='table-responsive'>
+        <table class='table table-bordered'>
           <thead>
             <tr>
               <th scope='col'>
@@ -47,30 +47,31 @@
                 <%= I18n.t('user.status') %>
               </th>
             </tr>
-        </thead>
-        <tbody>
-          <% @presenter.paginated_users.each do |user| %>
-            <% user_presenter = UserStatsPresenter.new(user: user, plan_id: TimeRangeType.plan_type.id, actual_id: TimeRangeType.actual_type.id) %>
-            <tr>
-              <td>
-                <%= user.first_name %> <%= user.last_name %>
-              </td>
-              <th>
-                <%= user_presenter.average_weekly_planned %>
-              </th>
-                <th>
+          </thead>
+          <tbody>
+            <% @presenter.paginated_users.each do |user| %>
+              <% user_presenter = UserStatsPresenter.new(user: user, plan_id: TimeRangeType.plan_type.id, actual_id: TimeRangeType.actual_type.id) %>
+              <tr>
+                <td>
+                  <%= user.first_name %> <%= user.last_name %>
+                </td>
+                <td>
+                  <%= user_presenter.average_weekly_planned %>
+                </td>
+                <td>
                   <%= user_presenter.average_weekly_actual %>
-                </th>
-              <td>
-                <%= user_presenter.percentage_delivered%>%
-              </td>
-              <td>
-                <%= user_presenter.status%>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+                </td>
+                <td>
+                  <%= user_presenter.percentage_delivered%>%
+                </td>
+                <td class="<%= user_presenter.status.parameterize.underscore %>">
+                  <%= user_presenter.status%>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
       <%= paginate @presenter.paginated_users %>
     </div>
   </div>
