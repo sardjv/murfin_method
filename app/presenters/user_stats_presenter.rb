@@ -1,6 +1,10 @@
 class UserStatsPresenter
   attr_accessor :user, :filter_start_time, :filter_end_time, :plan_id, :actual_id
 
+  OVER_MIN_PERCENTAGE = 120
+  OK_MIN_PERCENTAGE = 80
+  UNDER_MIN_PERCENTAGE = 50
+
   def initialize(args)
     args = defaults.merge(args)
     @user = args[:user]
@@ -22,7 +26,15 @@ class UserStatsPresenter
     percentage(total(actual_id), total(plan_id))
   end
 
-  def status; end
+  def status
+    percentage = percentage_delivered
+    return I18n.t('status.over') if percentage >= OVER_MIN_PERCENTAGE
+    return I18n.t('status.about_right') if percentage >= OK_MIN_PERCENTAGE
+    return I18n.t('status.under') if percentage >= UNDER_MIN_PERCENTAGE
+    return I18n.t('status.really_under') if percentage.positive?
+
+    I18n.t('status.unknown')
+  end
 
   private
 
