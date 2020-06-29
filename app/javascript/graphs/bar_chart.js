@@ -21,7 +21,7 @@ function bar_chart(context, data) {
     if (val == null) {
       // Unknown.
       return '#EDE2F0'
-    } else if (val > 120) {
+    } else if (val >= 120) {
       // Over.
       return '#F9DDCE'
     } else if (val >= 80) {
@@ -30,12 +30,9 @@ function bar_chart(context, data) {
     } else if (val >= 50) {
       // Under.
       return '#FDF2AA'
-    } else if (val > 0) {
+    } else {
       // Really Under.
       return '#E2F1FC'
-    } else {
-      // Unknown.
-      return '#EDE2F0'
     }
   });
   var labels = data.map(function(e) {
