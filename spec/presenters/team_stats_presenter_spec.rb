@@ -160,19 +160,19 @@ describe TeamStatsPresenter do
           # Approx 630/1500 == 0.42.
           expect(subject.weekly_percentage_delivered_per_month).to eq(
             [
-              { 'name': 'June', 'value': 0.42857142857142855 },
-              { 'name': 'July', 'value': 0.4181184668989547 },
-              { 'name': 'August', 'value': 0.4181184668989547 },
-              { 'name': 'September', 'value': 0.4181184668989547 },
-              { 'name': 'October', 'value': 0.4181184668989547 },
-              { 'name': 'November', 'value': 0.4181184668989547 },
-              { 'name': 'December', 'value': 0.4181184668989547 },
-              { 'name': 'January', 'value': 0.4181184668989547 },
-              { 'name': 'February', 'value': 0.4181184668989547 },
-              { 'name': 'March', 'value': 0.4181184668989547 },
-              { 'name': 'April', 'value': 0.4181184668989547 },
-              { 'name': 'May', 'value': 0.4181184668989547 },
-              { 'name': 'June', 'value': 0.4204081632653061 }
+              { 'name': 'June', 'value': 42.857142857142855 },
+              { 'name': 'July', 'value': 41.81184668989547 },
+              { 'name': 'August', 'value': 41.81184668989547 },
+              { 'name': 'September', 'value': 41.81184668989547 },
+              { 'name': 'October', 'value': 41.81184668989547 },
+              { 'name': 'November', 'value': 41.81184668989547 },
+              { 'name': 'December', 'value': 41.81184668989547 },
+              { 'name': 'January', 'value': 41.81184668989547 },
+              { 'name': 'February', 'value': 41.81184668989547 },
+              { 'name': 'March', 'value': 41.81184668989547 },
+              { 'name': 'April', 'value': 41.81184668989547 },
+              { 'name': 'May', 'value': 41.81184668989547 },
+              { 'name': 'June', 'value': 42.04081632653061 }
             ]
           )
         end
