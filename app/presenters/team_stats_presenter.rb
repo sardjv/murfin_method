@@ -14,13 +14,13 @@ class TeamStatsPresenter
     first_days_of_months.map do |first_day_of_month|
       {
         'name': first_day_of_month.strftime('%B'),
-        'value': users.sum { |user|
+        'value': users.sum do |user|
           UserStatsPresenter.new(
             user: user,
             filter_start_date: first_day_of_month,
             filter_end_date: first_day_of_month.end_of_month
           ).average_weekly_planned || 0
-        }
+        end
       }
     end
   end
@@ -29,18 +29,18 @@ class TeamStatsPresenter
     first_days_of_months.map do |first_day_of_month|
       {
         'name': first_day_of_month.strftime('%B'),
-        'value': users.sum { |user|
+        'value': users.sum do |user|
           UserStatsPresenter.new(
             user: user,
             filter_start_date: first_day_of_month,
             filter_end_date: first_day_of_month.end_of_month
           ).average_weekly_actual || 0
-        }
+        end
       }
     end
   end
 
-  def percentage_delivered_per_month
+  def weekly_percentage_delivered_per_month
     first_days_of_months.map.with_index do |first_day_of_month, index|
       actual = average_weekly_actual_per_month[index][:value]
       plan = average_weekly_planned_per_month[index][:value]
