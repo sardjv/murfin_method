@@ -64,36 +64,6 @@ class TeamStatsPresenter
     }
   end
 
-  def average_per_month(time_range_type_id)
-    total = total(time_range_type_id)
-    result = (total.to_f / number_of_weeks)
-    return 0 if result.nan? || result.infinite?
-
-    result.round(1)
-  end
-
-  def total(time_range_type_id)
-    filtered_time_ranges(time_range_type_id).sum(&:value)
-  end
-
-  # def filtered_time_ranges(time_range_type_id)
-  #   time_range_scope = user.time_ranges.where(time_range_type_id: time_range_type_id)
-  #   time_range_scope = time_range_scope.where('start_time > ?', filter_start_time)
-  #   time_range_scope.where('end_time < ?', filter_end_time)
-  # end
-
-  # def number_of_weeks
-  #   filter_duration = filter_end_time - filter_start_time
-  #   (filter_duration / 1.week)
-  # end
-
-  # def percentage(numerator, denominator)
-  #   result = ((numerator.to_f / denominator) * 100)
-  #   return 0 if result.nan? || result.infinite?
-
-  #   result.round(0)
-  # end
-
   def first_days_of_months
     days = (@filter_start_time.to_date..@filter_end_time.to_date)
     @first_days_of_months ||= days.map(&:beginning_of_month).uniq
