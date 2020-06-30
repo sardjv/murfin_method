@@ -80,7 +80,7 @@ describe TeamStatsPresenter do
       end
 
       describe 'percentage_delivered_per_month' do
-        it 'returns the percentage delievered over the time range' do
+        it 'returns the percentage delivered over the time range' do
           expect(subject.percentage_delivered_per_month).to eq 42
         end
       end
@@ -126,7 +126,7 @@ describe TeamStatsPresenter do
   #     end
 
   #     describe 'percentage_delivered_per_month' do
-  #       it 'returns the percentage delievered over the time range' do
+  #       it 'returns the percentage delivered over the time range' do
   #         expect(subject.percentage_delivered_per_month).to eq 0
   #       end
   #     end
@@ -149,7 +149,7 @@ describe TeamStatsPresenter do
   #     end
 
   #     describe 'percentage_delivered_per_month' do
-  #       it 'returns the percentage delievered over the time range' do
+  #       it 'returns the percentage delivered over the time range' do
   #         expect(subject.percentage_delivered_per_month).to eq 0
   #       end
   #     end
