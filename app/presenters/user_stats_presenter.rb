@@ -77,13 +77,13 @@ class UserStatsPresenter
   end
 
   def filtered_time_ranges(time_range_type_id)
-    time_range_scope = user.time_ranges.where(time_range_type_id: time_range_type_id)
-    time_range_scope.where(
+    scope = user.time_ranges.where(time_range_type_id: time_range_type_id)
+    scope.where(
       'start_time BETWEEN ? AND ?',
       filter_start_time,
       filter_end_time
     ).or(
-      time_range_scope.where(
+      scope.where(
         'end_time BETWEEN ? AND ?',
         filter_start_time,
         filter_end_time
