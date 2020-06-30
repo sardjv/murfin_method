@@ -70,33 +70,35 @@ describe TimeRange, type: :model do
         )
       end
 
+      let(:result) { subject.segment_value(segment_start: segment_start, segment_end: segment_end) }
+
       context 'with a total intersection' do
         context 'when 0% is overlapped' do
           let(:segment_start) { Time.zone.local(2020, 1, 1, 10, 1) }
           let(:segment_end) { Time.zone.local(2020, 1, 1, 11) }
 
-          it { expect(subject.segment_value(segment_start: segment_start, segment_end: segment_end)).to eq(0) }
+          it { expect(result).to eq(0) }
         end
 
         context 'when 25% is overlapped' do
           let(:segment_start) { Time.zone.local(2020, 1, 1, 9) }
           let(:segment_end) { Time.zone.local(2020, 1, 1, 9, 15) }
 
-          it { expect(subject.segment_value(segment_start: segment_start, segment_end: segment_end)).to eq(2.5) }
+          it { expect(result).to eq(2.5) }
         end
 
         context 'when 50% is overlapped' do
           let(:segment_start) { Time.zone.local(2020, 1, 1, 9) }
           let(:segment_end) { Time.zone.local(2020, 1, 1, 9, 30) }
 
-          it { expect(subject.segment_value(segment_start: segment_start, segment_end: segment_end)).to eq(5) }
+          it { expect(result).to eq(5) }
         end
 
         context 'when 100% is overlapped' do
           let(:segment_start) { Time.zone.local(2020, 1, 1, 9) }
           let(:segment_end) { Time.zone.local(2020, 1, 1, 10) }
 
-          it { expect(subject.segment_value(segment_start: segment_start, segment_end: segment_end)).to eq(10) }
+          it { expect(result).to eq(10) }
         end
       end
 
@@ -105,21 +107,21 @@ describe TimeRange, type: :model do
           let(:segment_start) { Time.zone.local(2020, 1, 1, 8) }
           let(:segment_end) { Time.zone.local(2020, 1, 1, 9, 15) }
 
-          it { expect(subject.segment_value(segment_start: segment_start, segment_end: segment_end)).to eq(2.5) }
+          it { expect(result).to eq(2.5) }
         end
 
         context 'when 50% is overlapped' do
           let(:segment_start) { Time.zone.local(2020, 1, 1, 8) }
           let(:segment_end) { Time.zone.local(2020, 1, 1, 9, 30) }
 
-          it { expect(subject.segment_value(segment_start: segment_start, segment_end: segment_end)).to eq(5) }
+          it { expect(result).to eq(5) }
         end
 
         context 'when 100% is overlapped' do
           let(:segment_start) { Time.zone.local(2020, 1, 1, 8) }
           let(:segment_end) { Time.zone.local(2020, 1, 1, 10) }
 
-          it { expect(subject.segment_value(segment_start: segment_start, segment_end: segment_end)).to eq(10) }
+          it { expect(result).to eq(10) }
         end
       end
 
@@ -128,21 +130,21 @@ describe TimeRange, type: :model do
           let(:segment_start) { Time.zone.local(2020, 1, 1, 9, 45) }
           let(:segment_end) { Time.zone.local(2020, 1, 1, 10, 15) }
 
-          it { expect(subject.segment_value(segment_start: segment_start, segment_end: segment_end)).to eq(2.5) }
+          it { expect(result).to eq(2.5) }
         end
 
         context 'when 50% is overlapped' do
           let(:segment_start) { Time.zone.local(2020, 1, 1, 9, 30) }
           let(:segment_end) { Time.zone.local(2020, 1, 1, 10, 15) }
 
-          it { expect(subject.segment_value(segment_start: segment_start, segment_end: segment_end)).to eq(5) }
+          it { expect(result).to eq(5) }
         end
 
         context 'when 100% is overlapped' do
           let(:segment_start) { Time.zone.local(2020, 1, 1, 8, 45) }
           let(:segment_end) { Time.zone.local(2020, 1, 1, 10, 15) }
 
-          it { expect(subject.segment_value(segment_start: segment_start, segment_end: segment_end)).to eq(10) }
+          it { expect(result).to eq(10) }
         end
       end
     end
