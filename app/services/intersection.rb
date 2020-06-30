@@ -1,4 +1,13 @@
 class Intersection
+  def self.call(a_start:, a_end:, b_start:, b_end:)
+    proportion(
+      a_start: a_start,
+      a_end: a_end,
+      b_start: b_start,
+      b_end: b_end
+    ) || 0
+  end
+
   def self.proportion(a_start:, a_end:, b_start:, b_end:)
     if intersects_inside?(a_start: a_start, a_end: a_end, b_start: b_start, b_end: b_end)
       (b_end - b_start) / (a_end - a_start)
@@ -8,8 +17,6 @@ class Intersection
       (b_end - a_start) / (a_end - a_start)
     elsif intersects_to_end?(a_start: a_start, a_end: a_end, b_start: b_start)
       (a_end - b_start) / (a_end - a_start)
-    else
-      0
     end
   end
 

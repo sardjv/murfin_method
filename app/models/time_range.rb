@@ -25,7 +25,7 @@ class TimeRange < ApplicationRecord
   end
 
   def segment_value(segment_start:, segment_end:)
-    value * Intersection.proportion(
+    value * Intersection.call(
       a_start: start_time,
       a_end: end_time,
       b_start: segment_start,
