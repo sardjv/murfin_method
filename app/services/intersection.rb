@@ -8,6 +8,8 @@ class Intersection
     ) || 0
   end
 
+  private
+
   def self.proportion(a_start:, a_end:, b_start:, b_end:)
     if intersects_inside?(a_start: a_start, a_end: a_end, b_start: b_start, b_end: b_end)
       (b_end - b_start) / (a_end - a_start)
