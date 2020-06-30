@@ -67,20 +67,28 @@ class UserStatsPresenter
   end
 
   def total(time_range_type_id)
-    user.time_ranges
-        .where(time_range_type_id: time_range_type_id)
-        .sum do |t|
-          t.segment_value(
-            segment_start: filter_start_time,
-            segment_end: filter_end_time
-          )
-        end
+    filtered_time_ranges(time_range_type_id)
+      .sum do |t|
+        t.segment_value(
+          segment_start: filter_start_time,
+          segment_end: filter_end_time
+        )
+      end
   end
 
   def filtered_time_ranges(time_range_type_id)
     time_range_scope = user.time_ranges.where(time_range_type_id: time_range_type_id)
-    time_range_scope = time_range_scope.where('start_time > ?', filter_start_time)
-    time_range_scope.where('end_time < ?', filter_end_time)
+    time_range_scope.where(
+      'start_time BETWEEN ? AND ?',
+      filter_start_time,
+      filter_end_time
+    ).or(
+      time_range_scope.where(
+        'end_time BETWEEN ? AND ?',
+        filter_start_time,
+        filter_end_time
+      )
+    )
   end
 
   def number_of_weeks
