@@ -123,7 +123,7 @@ describe UserStatsPresenter do
       end
 
       describe 'percentage_delivered' do
-        it 'returns the percentage delievered over the time range' do
+        it 'returns the percentage delivered over the time range' do
           expect(subject.percentage_delivered).to eq 42
         end
       end
@@ -133,19 +133,19 @@ describe UserStatsPresenter do
       let(:args) { { user: user } }
 
       describe 'average_weekly_planned' do
-        it 'returns 0' do
+        it 'returns the percentage delivered over the time range' do
           expect(subject.average_weekly_planned).to eq 28.6
         end
       end
 
       describe 'average_weekly_actual' do
-        it 'returns 0' do
+        it 'returns the percentage delivered over the time range' do
           expect(subject.average_weekly_actual).to eq 12
         end
       end
 
       describe 'percentage_delivered' do
-        it 'returns 0' do
+        it 'returns the percentage delivered over the time range' do
           expect(subject.percentage_delivered).to eq 42
         end
       end
