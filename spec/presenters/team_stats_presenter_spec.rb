@@ -55,9 +55,9 @@ describe TeamStatsPresenter do
       end
     end
 
-    describe 'percentage_delivered_per_month' do
+    describe 'weekly_percentage_delivered_per_month' do
       it 'returns 0 per month' do
-        expect(subject.percentage_delivered_per_month).to eq(
+        expect(subject.weekly_percentage_delivered_per_month).to eq(
           [
             { 'name': 'June', 'value': 0 },
             { 'name': 'July', 'value': 0 },
@@ -82,21 +82,21 @@ describe TeamStatsPresenter do
     let!(:planned_activity) do
       users.each do |user|
         create(:time_range,
-              user_id: user.id,
-              time_range_type_id: TimeRangeType.plan_type.id,
-              start_time: plan_start_time,
-              end_time: plan_end_time,
-              value: 1500)
+               user_id: user.id,
+               time_range_type_id: TimeRangeType.plan_type.id,
+               start_time: plan_start_time,
+               end_time: plan_end_time,
+               value: 1500)
       end
     end
     let!(:actual_activity) do
       users.each do |user|
         create(:time_range,
-              user_id: user.id,
-              time_range_type_id: TimeRangeType.actual_type.id,
-              start_time: actual_start_time,
-              end_time: actual_end_time,
-              value: 630)
+               user_id: user.id,
+               time_range_type_id: TimeRangeType.actual_type.id,
+               start_time: actual_start_time,
+               end_time: actual_end_time,
+               value: 630)
       end
     end
 
@@ -155,10 +155,10 @@ describe TeamStatsPresenter do
         end
       end
 
-      describe 'percentage_delivered_per_month' do
+      describe 'weekly_percentage_delivered_per_month' do
         it 'returns the percentage delivered over the time range' do
           # Approx 630/1500 == 0.42.
-          expect(subject.percentage_delivered_per_month).to eq(
+          expect(subject.weekly_percentage_delivered_per_month).to eq(
             [
               { 'name': 'June', 'value': 0.42857142857142855 },
               { 'name': 'July', 'value': 0.4181184668989547 },
