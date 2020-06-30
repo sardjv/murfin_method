@@ -32,36 +32,4 @@ class TimeRange < ApplicationRecord
       b_end: segment_end
     )
   end
-
-  private
-
-  def segment_proportion(segment_start:, segment_end:)
-    if intersects_inside?(segment_start: segment_start, segment_end: segment_end)
-      (segment_end - segment_start) / (end_time - start_time)
-    elsif intersects_outside?(segment_start: segment_start, segment_end: segment_end)
-      1
-    elsif intersects_from_start?(segment_end: segment_end)
-      (segment_end - start_time) / (end_time - start_time)
-    elsif intersects_to_end?(segment_start: segment_start)
-      (end_time - segment_start) / (end_time - start_time)
-    else
-      0
-    end
-  end
-
-  def intersects_inside?(segment_start:, segment_end:)
-    (segment_start >= start_time) && (segment_end <= end_time)
-  end
-
-  def intersects_outside?(segment_start:, segment_end:)
-    (segment_start < start_time) && (segment_end > end_time)
-  end
-
-  def intersects_from_start?(segment_end:)
-    (segment_end >= start_time) && (segment_end <= end_time)
-  end
-
-  def intersects_to_end?(segment_start:)
-    (segment_start >= start_time) && (segment_start <= end_time)
-  end
 end
