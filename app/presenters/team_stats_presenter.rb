@@ -44,7 +44,7 @@ class TeamStatsPresenter
     first_days_of_months.map.with_index do |first_day_of_month, index|
       actual = average_weekly_actual_per_month[index][:value]
       plan = average_weekly_planned_per_month[index][:value]
-      value = (plan.zero? ? 0 : actual / plan)
+      value = (plan.zero? ? 0 : (actual / plan) * 100)
 
       {
         'name': first_day_of_month.strftime('%B'),
