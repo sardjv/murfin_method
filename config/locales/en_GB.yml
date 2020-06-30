@@ -23,6 +23,12 @@ en:
     name: Name
     percentage_delivered: Percentage delivered
     status: Status
+  status:
+    over: Over
+    about_right: About Right
+    under: Under
+    really_under: Really Under
+    unknown: Unknown
   footer:
     api_docs: API Docs
   time:
