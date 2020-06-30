@@ -17,14 +17,11 @@ class DashboardPresenter
   end
 
   def line_graph(user_ids:, plan_id:, actual_id:)
-    [
-      { 'name': 'May', 'value': '50' },
-      { 'name': 'June', 'value': '60' },
-      { 'name': 'July', 'value': '70' },
-      { 'name': 'August', 'value': '80' },
-      { 'name': 'September', 'value': '80' },
-      { 'name': 'October', 'value': '120' }
-    ]
+    TeamStatsPresenter.new(
+      users: User.find(user_ids),
+      plan_id: plan_id,
+      actual_id: actual_id
+    ).weekly_percentage_delivered_per_month
   end
 
   def to_json(*_args)
