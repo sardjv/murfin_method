@@ -48,7 +48,7 @@ class TeamStatsPresenter
 
       {
         'name': first_day_of_month.strftime('%B'),
-        'value': value
+        'value': value.round(2)
       }
     end
   end

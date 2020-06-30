@@ -73,7 +73,7 @@ describe DashboardPresenter do
                  { name: 'March', value: 0 },
                  { name: 'April', value: 0 },
                  { name: 'May', value: 0 },
-                 { name: 'June', value: 50.214592274678104 }
+                 { name: 'June', value: 50.21 }
                ]
              )
     end
