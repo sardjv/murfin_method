@@ -12,20 +12,68 @@ describe TeamStatsPresenter do
 
   context 'when users have no time range values' do
     describe 'average_weekly_planned_per_month' do
-      it 'returns 0' do
-        expect(subject.average_weekly_planned_per_month).to eq 0
+      it 'returns 0 per month' do
+        expect(subject.average_weekly_planned_per_month).to eq(
+          [
+            { 'name': 'June', 'value': 0 },
+            { 'name': 'July', 'value': 0 },
+            { 'name': 'August', 'value': 0 },
+            { 'name': 'September', 'value': 0 },
+            { 'name': 'October', 'value': 0 },
+            { 'name': 'November', 'value': 0 },
+            { 'name': 'December', 'value': 0 },
+            { 'name': 'January', 'value': 0 },
+            { 'name': 'February', 'value': 0 },
+            { 'name': 'March', 'value': 0 },
+            { 'name': 'April', 'value': 0 },
+            { 'name': 'May', 'value': 0 },
+            { 'name': 'June', 'value': 0 }
+          ]
+        )
       end
     end
 
     describe 'average_weekly_actual_per_month' do
-      it 'returns 0' do
-        expect(subject.average_weekly_actual_per_month).to eq 0
+      it 'returns 0 per month' do
+        expect(subject.average_weekly_actual_per_month).to eq(
+          [
+            { 'name': 'June', 'value': 0 },
+            { 'name': 'July', 'value': 0 },
+            { 'name': 'August', 'value': 0 },
+            { 'name': 'September', 'value': 0 },
+            { 'name': 'October', 'value': 0 },
+            { 'name': 'November', 'value': 0 },
+            { 'name': 'December', 'value': 0 },
+            { 'name': 'January', 'value': 0 },
+            { 'name': 'February', 'value': 0 },
+            { 'name': 'March', 'value': 0 },
+            { 'name': 'April', 'value': 0 },
+            { 'name': 'May', 'value': 0 },
+            { 'name': 'June', 'value': 0 }
+          ]
+        )
       end
     end
 
     describe 'percentage_delivered_per_month' do
-      it 'returns 0' do
-        expect(subject.percentage_delivered_per_month).to eq 0
+      it 'returns 0 per month' do
+        expect(subject.percentage_delivered_per_month).to eq(
+          [
+            { 'name': 'June', 'value': 0 },
+            { 'name': 'July', 'value': 0 },
+            { 'name': 'August', 'value': 0 },
+            { 'name': 'September', 'value': 0 },
+            { 'name': 'October', 'value': 0 },
+            { 'name': 'November', 'value': 0 },
+            { 'name': 'December', 'value': 0 },
+            { 'name': 'January', 'value': 0 },
+            { 'name': 'February', 'value': 0 },
+            { 'name': 'March', 'value': 0 },
+            { 'name': 'April', 'value': 0 },
+            { 'name': 'May', 'value': 0 },
+            { 'name': 'June', 'value': 0 }
+          ]
+        )
       end
     end
   end
@@ -66,7 +114,8 @@ describe TeamStatsPresenter do
           expect(subject.average_weekly_planned_per_month).to eq(
             [
               {
-                'June': 23
+                'name': 'June',
+                'value': 23
               }
             ]
           )

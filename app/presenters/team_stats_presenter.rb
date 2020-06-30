@@ -19,23 +19,38 @@ class TeamStatsPresenter
             user: user,
             filter_start_date: first_day_of_month,
             filter_end_date: first_day_of_month.end_of_month
-          ).average_weekly_planned
+          ).average_weekly_planned || 0
         }.sum
       }
     end
-
-    # For each month
-      # sum the weekly planned for each user
-      # UserStatsPresenter.new()
-    # average_per_month(plan_id)
   end
 
   def average_weekly_actual_per_month
-    # average_per_month(actual_id)
+    first_days_of_months.map do |first_day_of_month|
+      {
+        'name': first_day_of_month.strftime('%B'),
+        'value': users.map { |user|
+          UserStatsPresenter.new(
+            user: user,
+            filter_start_date: first_day_of_month,
+            filter_end_date: first_day_of_month.end_of_month
+          ).average_weekly_actual || 0
+        }.sum
+      }
+    end
   end
 
   def percentage_delivered_per_month
-    # percentage_per_month(total(actual_id), total(plan_id))
+    first_days_of_months.map.with_index do |first_day_of_month, index|
+      actual = average_weekly_actual_per_month[index][:value]
+      plan = average_weekly_planned_per_month[index][:value]
+      value = (plan.zero? ? 0 : actual / plan)
+
+      {
+        'name': first_day_of_month.strftime('%B'),
+        'value': value
+      }
+    end
   end
 
   private
