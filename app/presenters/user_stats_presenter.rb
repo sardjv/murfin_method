@@ -67,7 +67,14 @@ class UserStatsPresenter
   end
 
   def total(time_range_type_id)
-    filtered_time_ranges(time_range_type_id).sum(&:value)
+    user.time_ranges
+        .where(time_range_type_id: time_range_type_id)
+        .sum do |t|
+          t.segment_value(
+            segment_start: filter_start_time,
+            segment_end: filter_end_time
+          )
+        end
   end
 
   def filtered_time_ranges(time_range_type_id)
