@@ -111,12 +111,22 @@ describe TeamStatsPresenter do
     context 'within filter time range' do
       describe 'average_weekly_planned_per_month' do
         it 'returns average weekly planned values for the time range' do
+          # Approx 1500 (value per user for year) * 10 users / 52 weeks = 288.46.
           expect(subject.average_weekly_planned_per_month).to eq(
             [
-              {
-                'name': 'June',
-                'value': 23
-              }
+              { 'name': 'June', 'value': 42 },
+              { 'name': 'July', 'value': 287 },
+              { 'name': 'August', 'value': 287 },
+              { 'name': 'September', 'value': 287 },
+              { 'name': 'October', 'value': 287 },
+              { 'name': 'November', 'value': 287 },
+              { 'name': 'December', 'value': 287 },
+              { 'name': 'January', 'value': 287 },
+              { 'name': 'February', 'value': 287 },
+              { 'name': 'March', 'value': 287 },
+              { 'name': 'April', 'value': 287 },
+              { 'name': 'May', 'value': 287 },
+              { 'name': 'June', 'value': 245 }
             ]
           )
         end
@@ -124,84 +134,49 @@ describe TeamStatsPresenter do
 
       describe 'average_weekly_actual_per_month' do
         it 'returns average weekly actual values for the time range' do
-          expect(subject.average_weekly_actual_per_month).to eq 12
+          # Approx 630 (value per user for year) * 10 users / 52 weeks = 121.15.
+          expect(subject.average_weekly_actual_per_month).to eq(
+            [
+              { 'name': 'June', 'value': 18 },
+              { 'name': 'July', 'value': 120 },
+              { 'name': 'August', 'value': 120 },
+              { 'name': 'September', 'value': 120 },
+              { 'name': 'October', 'value': 120 },
+              { 'name': 'November', 'value': 120 },
+              { 'name': 'December', 'value': 120 },
+              { 'name': 'January', 'value': 120 },
+              { 'name': 'February', 'value': 120 },
+              { 'name': 'March', 'value': 120 },
+              { 'name': 'April', 'value': 120 },
+              { 'name': 'May', 'value': 120 },
+              { 'name': 'June', 'value': 103 }
+            ]
+          )
         end
       end
 
       describe 'percentage_delivered_per_month' do
         it 'returns the percentage delivered over the time range' do
-          expect(subject.percentage_delivered_per_month).to eq 42
+          # Approx 630/1500 == 0.42.
+          expect(subject.percentage_delivered_per_month).to eq(
+            [
+              { 'name': 'June', 'value': 0.42857142857142855 },
+              { 'name': 'July', 'value': 0.4181184668989547 },
+              { 'name': 'August', 'value': 0.4181184668989547 },
+              { 'name': 'September', 'value': 0.4181184668989547 },
+              { 'name': 'October', 'value': 0.4181184668989547 },
+              { 'name': 'November', 'value': 0.4181184668989547 },
+              { 'name': 'December', 'value': 0.4181184668989547 },
+              { 'name': 'January', 'value': 0.4181184668989547 },
+              { 'name': 'February', 'value': 0.4181184668989547 },
+              { 'name': 'March', 'value': 0.4181184668989547 },
+              { 'name': 'April', 'value': 0.4181184668989547 },
+              { 'name': 'May', 'value': 0.4181184668989547 },
+              { 'name': 'June', 'value': 0.4204081632653061 }
+            ]
+          )
         end
       end
     end
-
-  #   context 'when no filter defaults to last 12 months' do
-  #     let(:filter_start_date) {}
-  #     let(:filter_end_date) {}
-
-  #     describe 'average_weekly_planned_per_month' do
-  #       it 'returns 0' do
-  #         expect(subject.average_weekly_planned_per_month).to eq 29
-  #       end
-  #     end
-
-  #     describe 'average_weekly_actual_per_month' do
-  #       it 'returns 0' do
-  #         expect(subject.average_weekly_actual_per_month).to eq 12
-  #       end
-  #     end
-
-  #     describe 'percentage_delivered_per_month' do
-  #       it 'returns 0' do
-  #         expect(subject.percentage_delivered_per_month).to eq 42
-  #       end
-  #     end
-  #   end
-
-  #   context 'when planned is outside filter time range' do
-  #     let(:plan_start_time) { 1.year.ago - 1.day }
-  #     let(:plan_end_time) { 1.year.ago - 1.day }
-
-  #     describe 'average_weekly_planned_per_month' do
-  #       it 'returns average weekly planned values for the time range' do
-  #         expect(subject.average_weekly_planned_per_month).to eq 0
-  #       end
-  #     end
-
-  #     describe 'average_weekly_actual_per_month' do
-  #       it 'returns average weekly actual values for the time range' do
-  #         expect(subject.average_weekly_actual_per_month).to eq 12
-  #       end
-  #     end
-
-  #     describe 'percentage_delivered_per_month' do
-  #       it 'returns the percentage delivered over the time range' do
-  #         expect(subject.percentage_delivered_per_month).to eq 0
-  #       end
-  #     end
-  #   end
-
-  #   context 'actual is outside filter time range' do
-  #     let(:actual_start_time) { Time.zone.tomorrow }
-  #     let(:actual_end_time) { Time.zone.tomorrow }
-
-  #     describe 'average_weekly_planned_per_month' do
-  #       it 'returns average weekly planned values for the time range' do
-  #         expect(subject.average_weekly_planned_per_month).to eq 29
-  #       end
-  #     end
-
-  #     describe 'average_weekly_actual_per_month' do
-  #       it 'returns average weekly actual values for the time range' do
-  #         expect(subject.average_weekly_actual_per_month).to eq 0
-  #       end
-  #     end
-
-  #     describe 'percentage_delivered_per_month' do
-  #       it 'returns the percentage delivered over the time range' do
-  #         expect(subject.percentage_delivered_per_month).to eq 0
-  #       end
-  #     end
-  #   end
   end
 end

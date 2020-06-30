@@ -83,7 +83,7 @@ class UserStatsPresenter
     ).or(
       scope.where('end_time BETWEEN ? AND ?', filter_start_time, filter_end_time)
     ).or(
-      scope.where('start_time < ? AND end_time > ?', filter_start_time, filter_end_time)
+      scope.where('start_time <= ? AND end_time >= ?', filter_start_time, filter_end_time)
     )
   end
 
