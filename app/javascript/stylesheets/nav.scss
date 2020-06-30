@@ -1,0 +1,15 @@
+.navbar {
+  .nav-link {
+    color: $white;
+
+    @include hover-focus() {
+      color: darken($white, 15%);
+      text-decoration: underline;
+    }
+
+  }
+}
+
+.page-footer {
+  border-top: 2px solid $primary;
+}
