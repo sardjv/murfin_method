@@ -16,7 +16,7 @@ class DashboardPresenter
     end
   end
 
-  def line_graph
+  def line_graph(user_ids:, plan_id:, actual_id:)
     [
       { 'name': 'May', 'value': '50' },
       { 'name': 'June', 'value': '60' },
@@ -34,7 +34,7 @@ class DashboardPresenter
         plan_id: TimeRangeType.plan_type.id,
         actual_id: TimeRangeType.actual_type.id
       ),
-      line_graph: line_chart(
+      line_graph: line_graph(
         user_ids: User.pluck(:id),
         plan_id: TimeRangeType.plan_type.id,
         actual_id: TimeRangeType.actual_type.id
