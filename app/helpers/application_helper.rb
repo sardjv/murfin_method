@@ -23,7 +23,7 @@ module ApplicationHelper
     doc = Nokogiri::HTML::DocumentFragment.parse file
     svg = doc.at_css 'svg'
     svg['class'] += " #{options[:class]}" if options[:class].present?
-    svg['width'] = svg['height'] = '2em'
+    svg['width'] = svg['height'] = options[:width] || options[:height] || '1em'
     sanitize(
       doc.to_html,
       tags: %w[svg path],
