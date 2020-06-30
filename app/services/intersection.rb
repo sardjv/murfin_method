@@ -8,9 +8,7 @@ class Intersection
     ) || 0
   end
 
-  private
-
-  def self.proportion(a_start:, a_end:, b_start:, b_end:)
+  private_class_method def self.proportion(a_start:, a_end:, b_start:, b_end:)
     if intersects_inside?(a_start: a_start, a_end: a_end, b_start: b_start, b_end: b_end)
       (b_end - b_start) / (a_end - a_start)
     elsif intersects_outside?(a_start: a_start, a_end: a_end, b_start: b_start, b_end: b_end)
@@ -22,19 +20,19 @@ class Intersection
     end
   end
 
-  def self.intersects_inside?(a_start:, a_end:, b_start:, b_end:)
+  private_class_method def self.intersects_inside?(a_start:, a_end:, b_start:, b_end:)
     (b_start >= a_start) && (b_end <= a_end)
   end
 
-  def self.intersects_outside?(a_start:, a_end:, b_start:, b_end:)
+  private_class_method def self.intersects_outside?(a_start:, a_end:, b_start:, b_end:)
     (b_start < a_start) && (b_end > a_end)
   end
 
-  def self.intersects_from_start?(a_start:, a_end:, b_end:)
+  private_class_method def self.intersects_from_start?(a_start:, a_end:, b_end:)
     (b_end >= a_start) && (b_end <= a_end)
   end
 
-  def self.intersects_to_end?(a_start:, a_end:, b_start:)
+  private_class_method def self.intersects_to_end?(a_start:, a_end:, b_start:)
     (b_start >= a_start) && (b_start <= a_end)
   end
 end
