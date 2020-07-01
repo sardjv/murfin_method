@@ -23,4 +23,13 @@ class TimeRange < ApplicationRecord
 
     errors.add :end_time, 'must occur after start time'
   end
+
+  def segment_value(segment_start:, segment_end:)
+    value * Intersection.call(
+      a_start: start_time,
+      a_end: end_time,
+      b_start: segment_start,
+      b_end: segment_end
+    )
+  end
 end
