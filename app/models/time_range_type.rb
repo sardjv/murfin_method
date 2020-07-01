@@ -13,10 +13,10 @@ class TimeRangeType < ApplicationRecord
   validates :name, presence: true, uniqueness: true
 
   def self.plan_type
-    TimeRangeType.find_by(name: 'Job Plan')
+    @@plan_type ||= TimeRangeType.find_by(name: 'Job Plan')
   end
 
   def self.actual_type
-    TimeRangeType.find_by(name: 'RIO Data')
+    @@actual_type ||= TimeRangeType.find_by(name: 'RIO Data')
   end
 end
