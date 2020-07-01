@@ -302,6 +302,7 @@ GEM
       sprockets (>= 3.0.0)
     thor (1.0.1)
     thread_safe (0.3.6)
+    timecop (0.9.1)
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
     tzinfo-data (1.2020.1)
@@ -350,6 +351,7 @@ DEPENDENCIES
   shoulda-matchers (~> 4.3.0)
   sidekiq (~> 6.0.7)
   simplecov (~> 0.18.5)
+  timecop (~> 0.9.1)
   tzinfo-data (~> 1.2020.1)
   webpacker (~> 5.1.1)
 
