@@ -104,12 +104,11 @@ use jp_stats_development;
 SELECT * FROM users;
 ```
 
-## Profiling memory usage
+## Profiling performance
+
+To print a report of time, memory and database calls:
 
 ```
-  report = MemoryProfiler.report do
-    expect(subject.percentage_delivered).to eq 42
-  end
-
-  report.pretty_print
+  require 'performance'
+  Performance.test { object.method }
 ```
