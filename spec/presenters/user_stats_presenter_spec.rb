@@ -174,7 +174,7 @@ describe UserStatsPresenter do
       end
     end
 
-    context 'actual is outside filter time range' do
+    context 'when actual is outside filter time range' do
       let(:actual_start_time) { Time.zone.tomorrow }
       let(:actual_end_time) { Time.zone.tomorrow }
 
