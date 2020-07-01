@@ -87,6 +87,10 @@ group :development do
   # A static code analyzer and formatter, based on the community style guide.
   # https://github.com/rubocop-hq/rubocop-rails
   gem 'rubocop-rails', '~> 2.6.0'
+
+  # A memory profiler for Ruby.
+  # https://github.com/SamSaffron/memory_profiler
+  gem 'memory_profiler', '~> 0.9.14'
 end
 
 group :test do
