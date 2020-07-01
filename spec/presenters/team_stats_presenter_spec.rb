@@ -1,5 +1,10 @@
 describe TeamStatsPresenter do
   subject { TeamStatsPresenter.new(args) }
+
+  before :all do
+    Timecop.freeze(Time.zone.local(2020, 6, 26, 14))
+  end
+
   let(:args) do
     { users: users,
       filter_start_date: filter_start_date,
