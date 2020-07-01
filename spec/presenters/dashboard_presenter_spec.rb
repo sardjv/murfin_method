@@ -1,17 +1,18 @@
 describe DashboardPresenter do
   subject { DashboardPresenter.new(params: {}) }
 
+  before :all do
+    Timecop.freeze(Time.zone.local(2020, 6, 26, 14))
+  end
+
   let(:user) { create(:user) }
   let(:plan_id) { TimeRangeType.plan_type.id }
   let(:actual_id) { TimeRangeType.actual_type.id }
 
-  let(:a_week_ago) { Time.zone.local(2020, 6, 19, 14, 31, 12) }
-  let(:now) { Time.zone.local(2020, 6, 26, 14, 31, 12) }
-
-  let(:plan_start_time) { a_week_ago }
-  let(:plan_end_time) { now }
-  let(:actual_start_time) { a_week_ago }
-  let(:actual_end_time) { now }
+  let(:plan_start_time) { 1.week.ago }
+  let(:plan_end_time) { Time.zone.now }
+  let(:actual_start_time) { 1.week.ago }
+  let(:actual_end_time) { Time.zone.now }
 
   let!(:plan_ranges) do
     create_list(
@@ -20,7 +21,7 @@ describe DashboardPresenter do
       user_id: user.id,
       time_range_type_id: plan_id,
       start_time: plan_start_time,
-      end_time: now,
+      end_time: Time.zone.now,
       value: 10
     )
   end
@@ -31,7 +32,7 @@ describe DashboardPresenter do
       user_id: user.id,
       time_range_type_id: actual_id,
       start_time: plan_start_time,
-      end_time: now,
+      end_time: Time.zone.now,
       value: 5
     )
   end
