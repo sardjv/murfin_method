@@ -73,6 +73,10 @@ group :development, :test do
   # A memory profiler for Ruby.
   # https://github.com/SamSaffron/memory_profiler
   gem 'memory_profiler', '~> 0.9.14'
+
+  # Rails SQL Query Tracker.
+  # https://github.com/steventen/sql_tracker
+  gem 'sql_tracker', '~> 1.3.1'
 end
 
 group :development do
