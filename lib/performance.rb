@@ -8,34 +8,31 @@ class Performance
   end
 
   def self.time
-    log "TIME: #{Benchmark.realtime { yield }.round(2)} seconds"
-    line_break
+    log 'TIME:'
+
+    log "#{Benchmark.realtime { yield }.round(2)} seconds"
+
+    log line_break
   end
 
   def self.memory
     log 'MEMORY:'
 
-    report = MemoryProfiler.report do
-      yield
-    end
-
-    report.pretty_print(
+    MemoryProfiler.report { yield }.pretty_print(
       scale_bytes: true,
       color_output: true,
-      detailed_report: false
+      detailed_report: false,
+      allocated_strings: 0, # How many allocated strings to list in report.
+      retained_strings: 0 # How many retained strings to list in report.
     )
 
-    line_break
+    log line_break
   end
 
   def self.database
     log 'DATABASE:'
 
-    report = SqlTracker.track do
-      yield
-    end
-
-    log report.values.map { |query|
+    log SqlTracker.track { yield }.values.map { |query|
       {
         sql: query[:sql],
         count: query[:count],
@@ -44,11 +41,11 @@ class Performance
       }
     }.to_yaml
 
-    line_break
+    log line_break
   end
 
   def self.line_break
-    Rails.logger.info '---------------------------------------'
+    '---------------------------------------'
   end
 
   def self.log(string)
