@@ -106,7 +106,7 @@ SELECT * FROM users;
 
 ## Profiling performance
 
-This will print a report of the time and memory used by running the block you pass it.
+To print a report of time, memory and database calls:
 
 ```
   require 'performance'
