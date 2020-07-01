@@ -1,9 +1,14 @@
 describe DashboardPresenter do
   subject { DashboardPresenter.new(params: {}) }
 
+  before :all do
+    Timecop.freeze(Time.zone.local(2020, 6, 26, 14))
+  end
+
   let(:user) { create(:user) }
   let(:plan_id) { TimeRangeType.plan_type.id }
   let(:actual_id) { TimeRangeType.actual_type.id }
+
   let!(:plan_ranges) do
     create_list(
       :time_range,
