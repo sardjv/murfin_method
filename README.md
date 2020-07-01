@@ -48,17 +48,6 @@ The Swagger docs are generated from the RSpec tests in `spec/api` To rebuild the
 docker-compose run app bundle exec rails rswag
 ```
 
-## ETL and Kiba
-
-This project uses the [Kiba](https://github.com/thbar/kiba) gem for scalable and maintainable data processing.
-
-[This talk](https://www.youtube.com/watch?v=fxVtbog7pIQ) contains a short, clear explanation of how Kiba works.
-
-### Tips
-- Don't insert rows one by one - use bulk insert.
-- Skip activerecord validations because they are too slow, find other ways to validate data.
-- Fail fast; raise an exception and stop on failure rather than trying to carry on and creating bad data.
-
 ## Specs
 
 To run Rubocop, and listen for file changes:
@@ -113,4 +102,14 @@ mysql -u root -p
 show databases;
 use jp_stats_development;
 SELECT * FROM users;
+```
+
+## Profiling memory usage
+
+```
+  report = MemoryProfiler.report do
+    expect(subject.percentage_delivered).to eq 42
+  end
+
+  report.pretty_print
 ```
