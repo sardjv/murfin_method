@@ -25,17 +25,12 @@ class DashboardPresenter
   end
 
   def to_json(*_args)
+    user_ids = User.pluck(:id)
+    plan_id = TimeRangeType.plan_type.id
+    actual_id = TimeRangeType.actual_type.id
     {
-      bar_chart: bar_chart(
-        user_ids: User.pluck(:id),
-        plan_id: TimeRangeType.plan_type.id,
-        actual_id: TimeRangeType.actual_type.id
-      ),
-      line_graph: line_graph(
-        user_ids: User.pluck(:id),
-        plan_id: TimeRangeType.plan_type.id,
-        actual_id: TimeRangeType.actual_type.id
-      )
+      bar_chart: bar_chart(user_ids: user_ids, plan_id: plan_id, actual_id: actual_id),
+      line_graph: bar_chart(user_ids: user_ids, plan_id: plan_id, actual_id: actual_id)
     }.to_json
   end
 
