@@ -104,12 +104,11 @@ use jp_stats_development;
 SELECT * FROM users;
 ```
 
-## Profiling memory usage
+## Profiling performance
+
+This will print a report of the time and memory used by running the block you pass it.
 
 ```
-  report = MemoryProfiler.report do
-    expect(subject.percentage_delivered).to eq 42
-  end
-
-  report.pretty_print
+  require 'performance'
+  Performance.test { object.method }
 ```
