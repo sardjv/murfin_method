@@ -32,7 +32,7 @@ class Performance
     Rails.logger.info '---------------------------------------'
   end
 
-  def self.log
-    ActiveSupport::Logger.new(STDOUT)
+  def self.log string
+    ActiveSupport::Logger.new(STDOUT).info string
   end
 end
