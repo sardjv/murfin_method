@@ -69,6 +69,10 @@ group :development, :test do
   # Generate Swagger docs from RSpec tests.
   # https://github.com/rswag/rswag
   gem 'rswag-specs', '~> 2.3.1'
+
+  # A memory profiler for Ruby.
+  # https://github.com/SamSaffron/memory_profiler
+  gem 'memory_profiler', '~> 0.9.14'
 end
 
 group :development do
@@ -87,10 +91,6 @@ group :development do
   # A static code analyzer and formatter, based on the community style guide.
   # https://github.com/rubocop-hq/rubocop-rails
   gem 'rubocop-rails', '~> 2.6.0'
-
-  # A memory profiler for Ruby.
-  # https://github.com/SamSaffron/memory_profiler
-  gem 'memory_profiler', '~> 0.9.14'
 end
 
 group :test do
