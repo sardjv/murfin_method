@@ -1,0 +1,13 @@
+<ul class='navbar-nav mr-auto'>
+  <% navs.each do |nav| %>
+    <li class='nav-item'>
+      <%=
+        link_to(
+          nav[:label],
+          nav[:path],
+          class: "nav-link#{' active' if current_page?(nav[:path])}"
+        )
+      %>
+    </li>
+  <% end %>
+</ul>
