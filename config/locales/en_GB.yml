@@ -19,13 +19,8 @@ en:
     compare_plan_with_actuals: Compare job plans versus actual time spent with patients.
     drill_down: Drill down to find service and data collection problems.
     you_can: 'You can use this service to:'
-  individuals:
-    chart_title: Percentage delivered against job plan
-    showing_users:
-      one: Showing 1 user
-      other: Showing %{count} users
-  teams:
-    chart_title: Percentage delivered against job plan
+  graph:
+    title: Percentage delivered against job plan
     showing_users:
       one: Showing 1 user
       other: Showing %{count} users
