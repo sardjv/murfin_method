@@ -21,30 +21,40 @@
 </head>
 
 <body>
-
-  <nav class='navbar flex-md-nowrap bg-primary p-4'>
-    <div class='container'>
+  <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <a class="navbar-brand" href="#">
       <%= image_pack_tag 'media/images/logos/nhs.svg', width: '100 px' %>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-      <%= link_to admin_dashboard_path, class: 'nav-link' do %>
-        <%= I18n.t('nav.admin_dashboard') %>
-      <% end %>
-
-      <%= link_to teams_dashboard_path, class: 'nav-link' do %>
-        <%= I18n.t('nav.team_dashboard') %>
-      <% end %>
-
-      <% if user_authenticated? %>
-        <%= link_to auth_logout_path, class: 'nav-link' do %>
-          <%= I18n.t('auth.log_out') %> <%= current_user_name %>
-          <%= icon('arrow-right-square', class: 'mx-2', width: '2em') %>
-        <% end %>
-      <% else %>
-        <%= button_to root_url + 'auth/auth0', method: :post, type: 'button', class: 'btn btn-primary' do %>
-          <%= I18n.t('auth.log_in') %>
-          <%= icon('arrow-right-square', class: 'mx-2', width: '2em') %>
-        <% end %>
-      <% end %>
+    <div class='collapse navbar-collapse' id='navbarSupportedContent'>
+      <ul class='navbar-nav mr-auto'>
+        <li class='nav-item active'>
+          <%= link_to admin_dashboard_path, class: 'nav-link' do %>
+            <%= I18n.t('nav.admin_dashboard') %>
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to teams_dashboard_path, class: 'nav-link' do %>
+            <%= I18n.t('nav.team_dashboard') %>
+          <% end %>
+        </li>
+        <li class='nav-item'>
+          <% if user_authenticated? %>
+            <%= link_to auth_logout_path, class: 'nav-link' do %>
+              <%= I18n.t('auth.log_out') %> <%= current_user_name %>
+              <%= icon('arrow-right-square', class: 'mx-2', width: '2em') %>
+            <% end %>
+          <% else %>
+            <%= button_to root_url + 'auth/auth0', method: :post, type: 'button', class: 'btn btn-primary' do %>
+              <%= I18n.t('auth.log_in') %>
+              <%= icon('arrow-right-square', class: 'mx-2', width: '2em') %>
+            <% end %>
+          <% end %>
+        </li>
+      </ul>
     </div>
   </nav>
 
