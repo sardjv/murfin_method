@@ -6,7 +6,7 @@ class DashboardController < ApplicationController
       format.html
       format.json do
         render json: @presenter.to_json(
-          graphs: [:multi_line_graph]
+          graphs: [{ type: :line_graph, data: :admin_data }]
         )
       end
     end
@@ -19,7 +19,7 @@ class DashboardController < ApplicationController
       format.html
       format.json do
         render json: @presenter.to_json(
-          graphs: [:line_graph]
+          graphs: [{ type: :line_graph, data: :team_data }]
         )
       end
     end
@@ -32,7 +32,7 @@ class DashboardController < ApplicationController
       format.html
       format.json do
         render json: @presenter.to_json(
-          graphs: [:bar_chart]
+          graphs: [{ type: :bar_chart, data: :individual_data }]
         )
       end
     end

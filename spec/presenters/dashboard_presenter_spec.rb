@@ -41,62 +41,15 @@ describe DashboardPresenter do
   end
 
   describe 'to_json' do
-    context 'with bar_chart argument' do
-      it 'returns a bar chart' do
+    context 'with :admin data' do
+      it 'returns a multi-line graph' do
         expect(
           subject.to_json(
-            graphs: [:bar_chart]
-          )
-        ).to eq(
-          {
-            bar_chart: [
-              {
-                name: user.name,
-                value: 50
-              }
-            ]
-          }.to_json
-        )
-      end
-    end
-
-    context 'with line_graph argument' do
-      it 'returns a line graph' do
-        expect(
-          subject.to_json(
-            graphs: [:line_graph]
+            graphs: [{ type: :line_graph, data: :admin_data }]
           )
         ).to eq(
           {
             line_graph: [
-              { name: 'June', value: 0 },
-              { name: 'July', value: 0 },
-              { name: 'August', value: 0 },
-              { name: 'September', value: 0 },
-              { name: 'October', value: 0 },
-              { name: 'November', value: 0 },
-              { name: 'December', value: 0 },
-              { name: 'January', value: 0 },
-              { name: 'February', value: 0 },
-              { name: 'March', value: 0 },
-              { name: 'April', value: 0 },
-              { name: 'May', value: 0 },
-              { name: 'June', value: 50.21 }
-            ]
-          }.to_json
-        )
-      end
-    end
-
-    context 'with :multi_line_graph argument' do
-      it 'returns a multi-line graph' do
-        expect(
-          subject.to_json(
-            graphs: [:multi_line_graph]
-          )
-        ).to eq(
-          {
-            multi_line_graph: [
               [
                 { name: 'June', value: 0 },
                 { name: 'July', value: 0 },
@@ -127,6 +80,53 @@ describe DashboardPresenter do
                 { name: 'May', value: 41.81 },
                 { name: 'June', value: 42.04 }
               ]
+            ]
+          }.to_json
+        )
+      end
+    end
+
+    context 'with :team data' do
+      it 'returns a line graph' do
+        expect(
+          subject.to_json(
+            graphs: [{ type: :line_graph, data: :team_data }]
+          )
+        ).to eq(
+          {
+            line_graph: [[
+              { name: 'June', value: 0 },
+              { name: 'July', value: 0 },
+              { name: 'August', value: 0 },
+              { name: 'September', value: 0 },
+              { name: 'October', value: 0 },
+              { name: 'November', value: 0 },
+              { name: 'December', value: 0 },
+              { name: 'January', value: 0 },
+              { name: 'February', value: 0 },
+              { name: 'March', value: 0 },
+              { name: 'April', value: 0 },
+              { name: 'May', value: 0 },
+              { name: 'June', value: 50.21 }
+            ]]
+          }.to_json
+        )
+      end
+    end
+
+    context 'with :individual data' do
+      it 'returns a bar chart' do
+        expect(
+          subject.to_json(
+            graphs: [{ type: :bar_chart, data: :individual_data }]
+          )
+        ).to eq(
+          {
+            bar_chart: [
+              {
+                name: user.name,
+                value: 50
+              }
             ]
           }.to_json
         )

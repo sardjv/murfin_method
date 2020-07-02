@@ -8,7 +8,7 @@ class DashboardPresenter
     User.page(@params[:page])
   end
 
-  def bar_chart
+  def individual_data
     User.find(@params[:user_ids]).map do |user|
       {
         'name': user.name,
@@ -17,7 +17,7 @@ class DashboardPresenter
     end
   end
 
-  def line_graph
+  def team_data
     [
       TeamStatsPresenter.new(
         users: User.find(@params[:user_ids]),
@@ -27,7 +27,7 @@ class DashboardPresenter
     ]
   end
 
-  def multi_line_graph
+  def admin_data
     [
       [
         { name: 'June', value: 0 },
@@ -64,7 +64,7 @@ class DashboardPresenter
 
   def to_json(args)
     args[:graphs].each_with_object({}) do |graph, hash|
-      hash[graph] = send(graph)
+      hash[graph[:type]] = send(graph[:data])
       hash
     end.to_json
   end
