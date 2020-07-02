@@ -5,7 +5,7 @@
         link_to(
           tab[:label],
           tab[:path],
-          class: "nav-link#{' active' if current_page?(tab[:path])}"
+          class: current_page?(tab[:path]) ? 'nav-link active' : 'nav-link'
         )
       %>
     </li>
