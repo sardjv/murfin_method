@@ -82,15 +82,6 @@ To annotate rails models with schema run
 docker-compose run app bundle exec annotate --models
 ```
 
-## Database
-
-To change database between MySQL, PostgreSQL and SQL Server:
-
-1) Uncomment the relevant line in Dockerfile
-2) Uncomment the relevant section in docker-compose.yml
-3) Uncomment the relevant config in database.yml
-4) Uncomment the relevant gem(s) in the Gemfile.
-
 ## Accessing the database console
 
 To access the MySQL database console:
