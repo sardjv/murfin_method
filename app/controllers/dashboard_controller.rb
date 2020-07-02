@@ -13,7 +13,7 @@ class DashboardController < ApplicationController
   end
 
   def individuals
-    @presenter = DashboardPresenter.new(params: params)
+    @presenter = DashboardPresenter.new(params: dashboard_params)
 
     respond_to do |format|
       format.html

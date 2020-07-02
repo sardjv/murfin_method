@@ -23,12 +23,12 @@ en:
     chart_title: Percentage delivered against job plan
   teams:
     chart_title: Percentage delivered against job plan
-    status:
-      about_right: About Right
-      over: Over
-      really_under: Really Under
-      under: Under
-      unknown: Unknown
+  status:
+    about_right: About Right
+    over: Over
+    really_under: Really Under
+    under: Under
+    unknown: Unknown
   time:
     formats:
       iso8601_utc: '%Y-%m-%dT%H:%M:%S.000Z'
