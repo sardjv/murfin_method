@@ -1,12 +1,15 @@
 .navbar {
-  .nav-link {
-    color: $white;
+  .navbar-nav {
+    .nav-item {
+      .nav-link {
+        color: $white;
 
-    @include hover-focus() {
-      color: darken($white, 15%);
-      text-decoration: underline;
+        @include hover-focus() {
+          color: darken($white, 15%);
+          text-decoration: underline;
+        }
+      }
     }
-
   }
 }
 
