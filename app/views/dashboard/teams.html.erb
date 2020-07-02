@@ -35,9 +35,7 @@
         <%= I18n.t('teams.chart_title') %>
       </h5>
       <p>
-        Showing
-        <%= @presenter.paginated_users.total_count %>
-        users
+        <%= I18n.t('teams.showing_users', count: @presenter.paginated_users.total_count) %>
       </p>
       <div class='card my-4'>
         <div class='card-body'>
