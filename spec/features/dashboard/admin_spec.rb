@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Team Dashboard ', type: :feature do
+describe 'Admin Dashboard ', type: :feature do
   let(:user) { create(:user) }
 
   let(:plan_id) { TimeRangeType.plan_type.id }
@@ -29,7 +29,7 @@ describe 'Team Dashboard ', type: :feature do
   end
 
   it 'has graph with planned and actual data' do
-    visit teams_dashboard_path
+    visit admin_dashboard_path
     expect(page).to have_text 'Percentage delivered against job plan'
   end
 end
