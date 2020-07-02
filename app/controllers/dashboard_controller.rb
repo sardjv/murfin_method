@@ -4,7 +4,11 @@ class DashboardController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: @presenter.to_json }
+      format.json do
+        render json: @presenter.to_json(
+          graphs: [:line_graph]
+        )
+      end
     end
   end
 
@@ -13,7 +17,11 @@ class DashboardController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: @presenter.to_json }
+      format.json do
+        render json: @presenter.to_json(
+          graphs: [:bar_chart]
+        )
+      end
     end
   end
 end
