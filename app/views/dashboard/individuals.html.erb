@@ -5,12 +5,10 @@
   <div class='row'>
     <div class='col-12'>
       <h5>
-        <%= I18n.t('individuals.chart_title') %>
+        <%= I18n.t('graph.title') %>
       </h5>
       <p>
-        Showing
-        <%= @presenter.paginated_users.total_count %>
-        users
+        <%= I18n.t('graph.showing_users', count: @presenter.paginated_users.total_count) %>
       </p>
       <div class='card my-4'>
         <div class='card-body'>
@@ -23,7 +21,7 @@
   <div class='row'>
     <div class='col-12'>
       <p>
-        <%= I18n.t('individuals.showing_users', count: @presenter.paginated_users.count) %>
+        <%= I18n.t('graph.showing_users', count: @presenter.paginated_users.count) %>
       </p>
       <div class='table-responsive'>
         <table class='table table-bordered'>
