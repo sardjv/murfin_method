@@ -30,7 +30,7 @@ describe 'Dashboard Individuals', type: :feature do
 
   it 'has table with planned and actual data' do
     visit individuals_dashboard_path
-    expect(page).to have_text 'Percentage achievement against job plan'
+    expect(page).to have_text 'Percentage delivered against job plan'
     within('.table') do
       expect(page).to have_text 'Job Plan'
       expect(page).to have_text '1.9'
