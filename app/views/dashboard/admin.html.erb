@@ -1,0 +1,46 @@
+<div class='container my-4'>
+
+  <div class='row'>
+    <div class='col-12'>
+      <h5>
+        <%= I18n.t('graph.title') %>
+      </h5>
+      <p>
+        <%= I18n.t('graph.showing_users', count: @presenter.paginated_users.total_count) %>
+      </p>
+      <div class='card my-4'>
+        <div class='card-body'>
+          <canvas id='line-graph'></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class='row'>
+    <div class='col-3'>
+      <div class='card my-4'>
+        <div class='card-body'>
+        </div>
+      </div>
+    </div>
+    <div class='col-3'>
+      <div class='card my-4'>
+        <div class='card-body'>
+        </div>
+      </div>
+    </div>
+    <div class='col-3'>
+      <div class='card my-4'>
+        <div class='card-body'>
+        </div>
+      </div>
+    </div>
+    <div class='col-3'>
+      <div class='card my-4'>
+        <div class='card-body'>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,29 @@
+<nav class='navbar navbar-expand-lg navbar-dark bg-primary'>
+  <div class='container'>
+    <a class='navbar-brand' href='#'>
+      <%= image_pack_tag 'media/images/logos/nhs.svg', width: '100 px' %>
+    </a>
+
+    <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
+      <span class='navbar-toggler-icon'></span>
+    </button>
+
+    <div class='collapse navbar-collapse pl-4' id='navbarSupportedContent'>
+      <ul class='navbar-nav mr-auto'>
+        <% navs.each do |nav| %>
+          <li class='nav-item pl-3'>
+            <%=
+              link_to(
+                nav[:label],
+                nav[:path],
+                class: "nav-link#{' active' if current_page?(nav[:path])}"
+              )
+            %>
+          </li>
+        <% end %>
+      </ul>
+
+      <%= render(partial: 'shared/auth') %>
+    </div>
+  </div>
+</nav>
