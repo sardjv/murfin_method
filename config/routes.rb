@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     get :home, on: :collection
   end
   resource :dashboard, only: %i[teams individuals], controller: 'dashboard' do
+    get :admin, on: :collection
     get :teams, on: :collection
     get :individuals, on: :collection
   end

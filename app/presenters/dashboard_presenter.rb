@@ -8,7 +8,7 @@ class DashboardPresenter
     User.page(@params[:page])
   end
 
-  def bar_chart
+  def individual_data
     User.find(@params[:user_ids]).map do |user|
       {
         'name': user.name,
@@ -17,17 +17,30 @@ class DashboardPresenter
     end
   end
 
-  def line_graph
-    TeamStatsPresenter.new(
-      users: User.find(@params[:user_ids]),
-      plan_id: @params[:plan_id],
-      actual_id: @params[:actual_id]
-    ).weekly_percentage_delivered_per_month
+  def team_data
+    [
+      TeamStatsPresenter.new(
+        users: User.find(@params[:user_ids]),
+        plan_id: @params[:plan_id],
+        actual_id: @params[:actual_id]
+      ).weekly_percentage_delivered_per_month
+    ]
+  end
+
+  def admin_data
+    4.times.map do
+      %w[May June July August September October].map do |month|
+        {
+          name: month,
+          value: rand(8.0..14.0)
+        }
+      end
+    end
   end
 
   def to_json(args)
     args[:graphs].each_with_object({}) do |graph, hash|
-      hash[graph] = send(graph)
+      hash[graph[:type]] = send(graph[:data])
       hash
     end.to_json
   end

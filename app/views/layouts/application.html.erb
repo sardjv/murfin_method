@@ -5,57 +5,43 @@
 <html lang='en' style=''>
 <!--<![endif]-->
 
-<head>
-  <meta charset='utf-8'>
-  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
-  <meta name='description' content=''>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+    <meta name='description' content=''>
 
-  <title>
-    <%= I18n.t('app.name') %>
-  </title>
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-</head>
+    <title>
+      <%= I18n.t('app.name') %>
+    </title>
 
-<body>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
 
-  <nav class='navbar flex-md-nowrap bg-primary p-4'>
-    <div class='container'>
-      <%= image_pack_tag 'media/images/logos/nhs.svg', width: '100 px' %>
+  <body>
+    <%=
+      render(
+        partial: 'shared/nav',
+        locals: {
+          navs: [
+            { label: I18n.t('nav.admin_dashboard'), path: admin_dashboard_path },
+            { label: I18n.t('nav.team_dashboard'), path: teams_dashboard_path }
+          ]
+        }
+      )
+    %>
 
-      <% if user_authenticated? %>
-        <%= link_to auth_logout_path, class: 'nav-link' do %>
-          <%= I18n.t('auth.log_out') %> <%= current_user_name %>
-          <%= icon('arrow-right-square', class: 'mx-2', width: '2em') %>
-        <% end %>
-      <% else %>
-        <%= button_to root_url + 'auth/auth0', method: :post, type: 'button', class: 'btn btn-primary' do %>
-          <%= I18n.t('auth.log_in') %>
-          <%= icon('arrow-right-square', class: 'mx-2', width: '2em') %>
-        <% end %>
-      <% end %>
-    </div>
-  </nav>
-
-  <main>
-    <div class='container'>
-      <%= yield %>
-    </div>
-  </main>
-
-  <footer class='page-footer font-small blue'>
-    <div class='container'>
-      <div class='d-flex justify-content-start'>
-        <div class='text-center m-4'>
-          <a href='/api_docs'><%= I18n.t('footer.api_docs') %></a>
-        </div>
+    <main>
+      <div class='container'>
+        <%= yield %>
       </div>
-    </div>
-  </footer>
+    </main>
 
-</body>
+    <%= render(partial: 'shared/footer') %>
+
+  </body>
 
 </html>

@@ -24,6 +24,12 @@ en:
     showing_users:
       one: Showing 1 user
       other: Showing %{count} users
+  nav:
+    admin_dashboard: Dashboard
+    team_dashboard: Team
+    tabs:
+      individuals: Individuals
+      team: Team dashboard
   status:
     about_right: About Right
     over: Over
