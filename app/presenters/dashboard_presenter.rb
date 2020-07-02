@@ -25,6 +25,41 @@ class DashboardPresenter
     ).weekly_percentage_delivered_per_month
   end
 
+  def multi_line_graph
+    [
+      [
+        { name: 'June', value: 0 },
+        { name: 'July', value: 0 },
+        { name: 'August', value: 0 },
+        { name: 'September', value: 0 },
+        { name: 'October', value: 0 },
+        { name: 'November', value: 0 },
+        { name: 'December', value: 0 },
+        { name: 'January', value: 0 },
+        { name: 'February', value: 0 },
+        { name: 'March', value: 0 },
+        { name: 'April', value: 0 },
+        { name: 'May', value: 0 },
+        { name: 'June', value: 50.21 }
+      ],
+      [
+        { name: 'June', value: 42.86 },
+        { name: 'July', value: 41.81 },
+        { name: 'August', value: 41.81 },
+        { name: 'September', value: 41.81 },
+        { name: 'October', value: 41.81 },
+        { name: 'November', value: 41.81 },
+        { name: 'December', value: 41.81 },
+        { name: 'January', value: 41.81 },
+        { name: 'February', value: 41.81 },
+        { name: 'March', value: 41.81 },
+        { name: 'April', value: 41.81 },
+        { name: 'May', value: 41.81 },
+        { name: 'June', value: 42.04 }
+      ]
+    ]
+  end
+
   def to_json(args)
     args[:graphs].each_with_object({}) do |graph, hash|
       hash[graph] = send(graph)
