@@ -18,11 +18,13 @@ class DashboardPresenter
   end
 
   def line_graph
-    TeamStatsPresenter.new(
-      users: User.find(@params[:user_ids]),
-      plan_id: @params[:plan_id],
-      actual_id: @params[:actual_id]
-    ).weekly_percentage_delivered_per_month
+    [
+      TeamStatsPresenter.new(
+        users: User.find(@params[:user_ids]),
+        plan_id: @params[:plan_id],
+        actual_id: @params[:actual_id]
+      ).weekly_percentage_delivered_per_month
+    ]
   end
 
   def multi_line_graph

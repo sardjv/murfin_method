@@ -14,29 +14,34 @@ window.addEventListener('turbolinks:load', () => {
   }
 });
 
-function line_graph(context, data) {
-  var labels = data.map(function(e) {
-    return e.name;
+function datasets(datas) {
+  return datas.map(function(data) {
+    return {
+      data: data.map(function(e) {
+        return e.value;
+      }),
+      borderWidth: 1,
+      fill: false,
+      borderColor: '#8CC6F4',
+      borderWidth: 5,
+      pointRadius: 0.0001,
+      pointHitRadius: 200,
+      lineTension: 0.3,
+      borderCapStyle: 'round'
+    }
   });
-  var values = data.map(function(e) {
-    return e.value;
+}
+
+function line_graph(context, datas) {
+  var labels = datas[0].map(function(e) {
+    return e.name;
   });
 
   new Chart(context, {
     type: 'line',
     data: {
       labels: labels,
-      datasets: [{
-        data: values,
-        borderWidth: 1,
-        fill: false,
-        borderColor: '#8CC6F4',
-        borderWidth: 5,
-        pointRadius: 0.0001,
-        pointHitRadius: 200,
-        lineTension: 0.3,
-        borderCapStyle: 'round'
-      }]
+      datasets: datasets(datas)
     },
     options: {
       legend: {
