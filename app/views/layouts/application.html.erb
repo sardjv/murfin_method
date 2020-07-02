@@ -5,66 +5,42 @@
 <html lang='en' style=''>
 <!--<![endif]-->
 
-<head>
-  <meta charset='utf-8'>
-  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
-  <meta name='description' content=''>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+    <meta name='description' content=''>
 
-  <title>
-    <%= I18n.t('app.name') %>
-  </title>
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-</head>
+    <title>
+      <%= I18n.t('app.name') %>
+    </title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
 
-<body>
-  <nav class='navbar navbar-expand-lg navbar-dark bg-primary'>
-    <div class='container'>
-      <a class='navbar-brand' href='#'>
-        <%= image_pack_tag 'media/images/logos/nhs.svg', width: '100 px' %>
-      </a>
+  <body>
+    <%=
+      render(
+        partial: 'shared/nav',
+        locals: {
+          navs: [
+            { label: I18n.t('nav.admin_dashboard'), path: admin_dashboard_path },
+            { label: I18n.t('nav.team_dashboard'), path: teams_dashboard_path }
+          ]
+        }
+      )
+    %>
 
-      <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
-        <span class='navbar-toggler-icon'></span>
-      </button>
-
-      <div class='collapse navbar-collapse' id='navbarSupportedContent'>
-        <%=
-          render(
-            partial: 'shared/nav',
-            locals: {
-              navs: [
-                { label: I18n.t('nav.admin_dashboard'), path: admin_dashboard_path },
-                { label: I18n.t('nav.team_dashboard'), path: teams_dashboard_path }
-              ]
-            }
-          )
-        %>
-
-        <%= render(partial: 'shared/auth') %>
+    <main>
+      <div class='container'>
+        <%= yield %>
       </div>
-    </div>
-  </nav>
+    </main>
 
-  <main>
-    <div class='container'>
-      <%= yield %>
-    </div>
-  </main>
+    <%= render(partial: 'shared/footer') %>
 
-  <footer class='page-footer font-small blue'>
-    <div class='container'>
-      <div class='d-flex justify-content-start'>
-        <div class='text-center m-4'>
-          <a href='/api_docs'><%= I18n.t('footer.api_docs') %></a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-</body>
+  </body>
 
 </html>
