@@ -1,4 +1,17 @@
 class DashboardController < ApplicationController
+  def admin
+    @presenter = DashboardPresenter.new(params: dashboard_params)
+
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: @presenter.to_json(
+          graphs: [:multi_line_graph]
+        )
+      end
+    end
+  end
+
   def teams
     @presenter = DashboardPresenter.new(params: dashboard_params)
 
