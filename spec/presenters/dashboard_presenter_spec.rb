@@ -48,4 +48,30 @@ describe DashboardPresenter do
              )
     end
   end
+
+  describe 'line_graph' do
+    it 'returns the actuals as a percentage of plan delivered, per month, for the team' do
+      expect(subject.line_graph(
+               user_ids: [user.id],
+               plan_id: plan_id,
+               actual_id: actual_id
+             )).to eq(
+               [
+                 { name: 'June', value: 0 },
+                 { name: 'July', value: 0 },
+                 { name: 'August', value: 0 },
+                 { name: 'September', value: 0 },
+                 { name: 'October', value: 0 },
+                 { name: 'November', value: 0 },
+                 { name: 'December', value: 0 },
+                 { name: 'January', value: 0 },
+                 { name: 'February', value: 0 },
+                 { name: 'March', value: 0 },
+                 { name: 'April', value: 0 },
+                 { name: 'May', value: 0 },
+                 { name: 'June', value: 50.21 }
+               ]
+             )
+    end
+  end
 end
