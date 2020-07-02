@@ -1,5 +1,13 @@
 describe DashboardPresenter do
-  subject { DashboardPresenter.new(params: {}) }
+  subject do
+    DashboardPresenter.new(
+      params: {
+        user_ids: [user.id],
+        plan_id: plan_id,
+        actual_id: actual_id
+      }
+    )
+  end
 
   before :all do
     Timecop.freeze(Time.zone.local(2020, 6, 26, 14))
@@ -32,46 +40,52 @@ describe DashboardPresenter do
     )
   end
 
-  describe 'bar_chart' do
-    it 'returns the actuals as a percentage of plan delivered' do
-      expect(subject.bar_chart(
-               user_ids: [user.id],
-               plan_id: plan_id,
-               actual_id: actual_id
-             )).to eq(
-               [
-                 {
-                   name: user.name,
-                   value: 50
-                 }
-               ]
-             )
+  describe 'to_json' do
+    context 'with bar_chart argument' do
+      it 'returns a bar chart' do
+        expect(
+          subject.to_json(
+            graphs: [:bar_chart]
+          )
+        ).to eq(
+          {
+            bar_chart: [
+              {
+                name: user.name,
+                value: 50
+              }
+            ]
+          }.to_json
+        )
+      end
     end
-  end
 
-  describe 'line_graph' do
-    it 'returns the actuals as a percentage of plan delivered, per month, for the team' do
-      expect(subject.line_graph(
-               user_ids: [user.id],
-               plan_id: plan_id,
-               actual_id: actual_id
-             )).to eq(
-               [
-                 { name: 'June', value: 0 },
-                 { name: 'July', value: 0 },
-                 { name: 'August', value: 0 },
-                 { name: 'September', value: 0 },
-                 { name: 'October', value: 0 },
-                 { name: 'November', value: 0 },
-                 { name: 'December', value: 0 },
-                 { name: 'January', value: 0 },
-                 { name: 'February', value: 0 },
-                 { name: 'March', value: 0 },
-                 { name: 'April', value: 0 },
-                 { name: 'May', value: 0 },
-                 { name: 'June', value: 50.21 }
-               ]
-             )
+    context 'with line_graph argument' do
+      it 'returns a line graph' do
+        expect(
+          subject.to_json(
+            graphs: [:line_graph]
+          )
+        ).to eq(
+          {
+            line_graph: [
+              { name: 'June', value: 0 },
+              { name: 'July', value: 0 },
+              { name: 'August', value: 0 },
+              { name: 'September', value: 0 },
+              { name: 'October', value: 0 },
+              { name: 'November', value: 0 },
+              { name: 'December', value: 0 },
+              { name: 'January', value: 0 },
+              { name: 'February', value: 0 },
+              { name: 'March', value: 0 },
+              { name: 'April', value: 0 },
+              { name: 'May', value: 0 },
+              { name: 'June', value: 50.21 }
+            ]
+          }.to_json
+        )
+      end
     end
   end
 end
