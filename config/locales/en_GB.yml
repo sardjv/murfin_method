@@ -4,33 +4,35 @@ en:
   auth:
     log_in: Log in
     log_out: Log out
+  dashboard:
+    nav:
+      individuals: Individuals
+      team: Team dashboard
   faker:
     time_range_type:
       name:
         - Job Plan sessions
         - RIO sessions
+  footer:
+    api_docs: API Docs
   home:
     compare_plan_with_actuals: Compare job plans versus actual time spent with patients.
     drill_down: Drill down to find service and data collection problems.
     you_can: 'You can use this service to:'
-  dashboard:
-    nav:
-      team: Team dashboard
-      individuals: Individuals
   individuals:
-    chart_title: Percentage achievement against job plan
+    chart_title: Percentage delivered against job plan
+  teams:
+    chart_title: Percentage delivered against job plan
+    status:
+      about_right: About Right
+      over: Over
+      really_under: Really Under
+      under: Under
+      unknown: Unknown
+  time:
+    formats:
+      iso8601_utc: '%Y-%m-%dT%H:%M:%S.000Z'
   user:
     name: Name
     percentage_delivered: Percentage delivered
     status: Status
-  status:
-    over: Over
-    about_right: About Right
-    under: Under
-    really_under: Really Under
-    unknown: Unknown
-  footer:
-    api_docs: API Docs
-  time:
-    formats:
-      iso8601_utc: '%Y-%m-%dT%H:%M:%S.000Z'

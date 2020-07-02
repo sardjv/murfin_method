@@ -1,6 +1,6 @@
 class DashboardController < ApplicationController
   def teams
-    @presenter = DashboardPresenter.new(params: params)
+    @presenter = DashboardPresenter.new(params: dashboard_params)
 
     respond_to do |format|
       format.html
@@ -23,5 +23,11 @@ class DashboardController < ApplicationController
         )
       end
     end
+  end
+
+  private
+
+  def dashboard_params
+    params.permit(:user_ids, :plan_id, :actual_id)
   end
 end
