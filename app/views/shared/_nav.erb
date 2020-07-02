@@ -9,19 +9,21 @@
     </button>
 
     <div class='collapse navbar-collapse pl-4' id='navbarSupportedContent'>
-      <ul class='navbar-nav mr-auto'>
-        <% navs.each do |nav| %>
-          <li class='nav-item pl-3'>
-            <%=
-              link_to(
-                nav[:label],
-                nav[:path],
-                class: "nav-link#{' active' if current_page?(nav[:path])}"
-              )
-            %>
-          </li>
-        <% end %>
-      </ul>
+      <% if user_authenticated? %>
+        <ul class='navbar-nav mr-auto'>
+          <% navs.each do |nav| %>
+            <li class='nav-item pl-3'>
+              <%=
+                link_to(
+                  nav[:label],
+                  nav[:path],
+                  class: "nav-link#{' active' if current_page?(nav[:path])}"
+                )
+              %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
 
       <%= render(partial: 'shared/auth') %>
     </div>
