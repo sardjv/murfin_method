@@ -41,6 +41,8 @@
             <%= I18n.t('nav.team_dashboard') %>
           <% end %>
         </li>
+      </ul>
+      <ul class='navbar-nav ml-auto'>
         <li class='nav-item'>
           <% if user_authenticated? %>
             <%= link_to auth_logout_path, class: 'nav-link' do %>
