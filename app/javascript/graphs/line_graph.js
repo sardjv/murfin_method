@@ -16,22 +16,31 @@ window.addEventListener('turbolinks:load', () => {
   }
 });
 
+function getColour(number) {
+  const exclude = ['#000000', '#FFFFFF']
+  const colours = Object.values(SCSSColours).filter((colour) => !exclude.includes(colour));
+  return colours[number]
+}
+
 function datasets(datas) {
+  let index = 0;
   return datas.map(function(data) {
-    return {
+    const dataset = {
       data: data.map(function(e) {
         return e.value;
       }),
       borderWidth: 1,
       fill: false,
-      backgroundColor: SCSSColours['blue200'],
-      borderColor: SCSSColours['blue200'],
+      backgroundColor: getColour(index),
+      borderColor: getColour(index),
       borderWidth: 5,
       pointRadius: 0.0001,
       pointHitRadius: 200,
       lineTension: 0.3,
       borderCapStyle: 'round'
     }
+    index += 1;
+    return dataset;
   });
 }
 
