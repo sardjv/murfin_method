@@ -2,7 +2,7 @@ import Chart from 'chart.js'
 import Rails from '@rails/ujs'
 import { API } from './api'
 import { MissingData } from './missing_data'
-import * as SCSSColours from '!!sass-variable-loader!../stylesheets/colours.scss';
+import * as SCSSColours from '!!sass-variable-loader!../stylesheets/variables/colours.scss';
 
 window.addEventListener('turbolinks:load', () => {
   const context = document.getElementById('bar-chart');
@@ -22,19 +22,19 @@ function bar_chart(context, data) {
     const val = e.value;
 
     if (val == null) {
-      return SCSSColours['purple50'];
+      return SCSSColours['unknown'];
     } else if (val >= 120) {
       // Over.
-      return SCSSColours['red50'];
+      return SCSSColours['over'];
     } else if (val >= 80) {
       // About right.
-      return SCSSColours['green50'];
+      return SCSSColours['aboutRight'];
     } else if (val >= 50) {
       // Under.
-      return SCSSColours['yellow200'];
+      return SCSSColours['under'];
     } else {
       // Really Under.
-      return SCSSColours['blue50'];
+      return SCSSColours['reallyUnder'];
     }
   });
   const labels = data.map(function(e) {

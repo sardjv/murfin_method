@@ -1,26 +1,26 @@
 // Statuses.
 .about-right {
-  background-color: $green-50;
-  color: $green-900;
+  background-color: $about-right;
+  color: $about-right-font;
 }
 .over {
-  background-color: $red-50;
-  color: $red-900;
+  background-color: $over;
+  color: $over-font;
 }
 .under {
-  background-color: $yellow-200;
-  color: $yellow-900;
+  background-color: $under;
+  color: $under-font;
 }
 .really-under {
-  background-color: $blue-50;
-  color: $blue-900;
+  background-color: $really-under;
+  color: $really-under-font;
 }
 .unknown {
   background-color: $purple-50;
-  color: $purple-900;
+  color: $unknown-font;
 }
 
 // Icons.
 .bi-question-circle {
-  color: $purple-900;
+  color: $unknown-font;
 }
