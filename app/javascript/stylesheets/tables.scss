@@ -2,27 +2,8 @@
   thead{
     background-color: $grey-50;
   }
-  td.over{
-    background-color: $over;
-    color: $over_font;
-  }
-  td.about_right{
-    background-color: $about_right;
-    color: $about_right_font;
-  }
-  td.under{
-    background-color: $under;
-    color: $under_font;
-  }
-  td.really_under{
-    background-color: $really_under;
-    // color: $really_under_font;
-  }
-  td.unknown{
-    background-color: $unknown;
-    color: $unknown_font;
-  }
+
   .bi-question-circle{
-    color: $unknown_font;
+    color: $purple-900;
   }
 }
