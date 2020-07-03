@@ -3,8 +3,8 @@ import Rails from '@rails/ujs'
 import { API } from './api'
 
 window.addEventListener('turbolinks:load', () => {
-  var context;
-  if (context = document.getElementById('line-graph')) {
+  const context = document.getElementById('line-graph');
+  if (context) {
     Rails.ajax({
       url: API.url(),
       type: 'GET',
@@ -35,7 +35,7 @@ function datasets(datas) {
 }
 
 function line_graph(context, datas) {
-  var labels = datas[0].map(function(e) {
+  const labels = datas[0].map(function(e) {
     return e.name;
   });
 
