@@ -1,11 +1,13 @@
 import Chart from 'chart.js'
 import Rails from '@rails/ujs'
+import { API } from './api'
+import * as SCSSColours from '!!sass-variable-loader!../stylesheets/variables/colours.scss';
 
 window.addEventListener('turbolinks:load', () => {
-  var context;
-  if (context = document.getElementById('line-graph')) {
+  const context = document.getElementById('line-graph');
+  if (context) {
     Rails.ajax({
-      url: data_url(),
+      url: API.url(),
       type: 'GET',
       success: function(data) {
         line_graph(context, data.line_graph)
@@ -14,27 +16,36 @@ window.addEventListener('turbolinks:load', () => {
   }
 });
 
+function getColour(number) {
+  const exclude = ['#000000', '#FFFFFF']
+  const colours = Object.values(SCSSColours).filter((colour) => !exclude.includes(colour));
+  return colours[number]
+}
+
 function datasets(datas) {
+  let index = 0;
   return datas.map(function(data) {
-    return {
+    const dataset = {
       data: data.map(function(e) {
         return e.value;
       }),
       borderWidth: 1,
       fill: false,
-      backgroundColor: '#8CC6F4',
-      borderColor: '#8CC6F4',
+      backgroundColor: getColour(index),
+      borderColor: getColour(index),
       borderWidth: 5,
       pointRadius: 0.0001,
       pointHitRadius: 200,
       lineTension: 0.3,
       borderCapStyle: 'round'
     }
+    index += 1;
+    return dataset;
   });
 }
 
 function line_graph(context, datas) {
-  var labels = datas[0].map(function(e) {
+  const labels = datas[0].map(function(e) {
     return e.name;
   });
 
@@ -76,13 +87,4 @@ function line_graph(context, datas) {
       }
     }
   });
-}
-
-function data_url() {
-  if (window.location.pathname == '/') {
-    // Can't call root/.json.
-    return '/pages/home.json'
-  } else {
-    return window.location.pathname + '.json'
-  }
 }
