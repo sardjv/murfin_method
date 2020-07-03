@@ -1,6 +1,7 @@
 import Chart from 'chart.js'
 import Rails from '@rails/ujs'
 import { API } from './api'
+import * as SCSSColours from '!!sass-variable-loader!../stylesheets/colours.scss';
 
 window.addEventListener('turbolinks:load', () => {
   const context = document.getElementById('line-graph');
@@ -23,8 +24,8 @@ function datasets(datas) {
       }),
       borderWidth: 1,
       fill: false,
-      backgroundColor: '#8CC6F4',
-      borderColor: '#8CC6F4',
+      backgroundColor: SCSSColours['blue200'],
+      borderColor: SCSSColours['blue200'],
       borderWidth: 5,
       pointRadius: 0.0001,
       pointHitRadius: 200,
