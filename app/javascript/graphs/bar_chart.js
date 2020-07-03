@@ -1,11 +1,14 @@
 import Chart from 'chart.js'
 import Rails from '@rails/ujs'
+import { API } from './api'
+import { MissingData } from './missing_data'
+import * as SCSSColours from '!!sass-variable-loader!../stylesheets/variables/colours.scss';
 
 window.addEventListener('turbolinks:load', () => {
-  var context
-  if (context = document.getElementById('bar-chart')) {
+  const context = document.getElementById('bar-chart');
+  if (context) {
     Rails.ajax({
-      url: data_url(),
+      url: API.url(),
       type: 'GET',
       success: function(data) {
         bar_chart(context, data.bar_chart)
@@ -15,27 +18,26 @@ window.addEventListener('turbolinks:load', () => {
 });
 
 function bar_chart(context, data) {
-  var colors = data.map(function(e) {
-    var val = e.value;
+  const colours = data.map(function(e) {
+    const val = e.value;
 
     if (val == null) {
-      // Unknown.
-      return '#EDE2F0'
+      return SCSSColours['unknown'];
     } else if (val >= 120) {
       // Over.
-      return '#F9DDCE'
+      return SCSSColours['over'];
     } else if (val >= 80) {
       // About right.
-      return '#F0F7E7'
+      return SCSSColours['aboutRight'];
     } else if (val >= 50) {
       // Under.
-      return '#FDF2AA'
+      return SCSSColours['under'];
     } else {
       // Really Under.
-      return '#E2F1FC'
+      return SCSSColours['reallyUnder'];
     }
   });
-  var labels = data.map(function(e) {
+  const labels = data.map(function(e) {
     if (e.value) {
       return e.name;
     } else {
@@ -43,7 +45,7 @@ function bar_chart(context, data) {
     }
   });
 
-  var toolTips = data.map(function(e) {
+  const toolTips = data.map(function(e) {
     if (e.value) {
       return e.value + '%';
     } else {
@@ -51,8 +53,8 @@ function bar_chart(context, data) {
     }
   });
 
-  var fallback = missingDataVal(data);
-  var values = data.map(function(e) {
+  const fallback = MissingData.generate(data);
+  const values = data.map(function(e) {
     return e.value || fallback;
   });
 
@@ -63,8 +65,8 @@ function bar_chart(context, data) {
       datasets: [{
         barPercentage: 0.4,
         data: values,
-        backgroundColor: colors,
-        borderColor: colors,
+        backgroundColor: colours,
+        borderColor: colours,
         borderWidth: 1
       }]
     },
@@ -100,42 +102,4 @@ function bar_chart(context, data) {
       }
     }
   });
-}
-
-function data_url() {
-  if (window.location.pathname == '/') {
-    // Can't call root/.json.
-    return '/pages/home.json'
-  } else {
-    return window.location.pathname + '.json'
-  }
-}
-
-// Value for missing data.
-// Based on min and max data (so it shows up), not too
-// small, but also not too big.
-function missingDataVal(data) {
-  var min = getMinimum(data)
-  var max = getMaximum(data)
-  return ((max - min) * 0.25) + min
-}
-
-function getMinimum(data) {
-  var min = null;
-  data.forEach(function(e) {
-    if (e.value != null && (min == null || e.value < min)) {
-      min = e.value;
-    }
-  });
-  return min;
-}
-
-function getMaximum(data) {
-  var max = null;
-  data.forEach(function(e) {
-    if (e.value != null && (max == null || e.value > max)) {
-      max = e.value;
-    }
-  });
-  return max;
 }
