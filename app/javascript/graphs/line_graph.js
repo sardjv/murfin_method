@@ -17,9 +17,22 @@ window.addEventListener('turbolinks:load', () => {
 });
 
 function getColour(number) {
-  const exclude = ['#000000', '#FFFFFF']
-  const colours = Object.values(SCSSColours).filter((colour) => !exclude.includes(colour));
-  return colours[number]
+  const colours = [
+    'blue400',
+    'purple200',
+    'orange600',
+    'yellow500',
+    'green400',
+    'red600',
+    'blue800',
+    'purple600',
+    'orange200',
+    'yellow200',
+    'green800',
+    'red200'
+  ]
+
+  return SCSSColours[colours[number]]
 }
 
 function datasets(datas) {
