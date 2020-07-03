@@ -10,5 +10,6 @@ require.context('../images', true)
 // It's possible to do this better, either conditionally, or with separate packs,
 // but there are lots of gotchas for potentially minimal performance gain.
 // Currently on step 1 of this: https://stackoverflow.com/a/59495659/4741698
+import '../graphs/shared'
 import '../graphs/bar_chart'
 import '../graphs/line_graph'
