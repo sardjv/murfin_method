@@ -22,6 +22,7 @@ function datasets(datas) {
       }),
       borderWidth: 1,
       fill: false,
+      backgroundColor: '#8CC6F4',
       borderColor: '#8CC6F4',
       borderWidth: 5,
       pointRadius: 0.0001,
