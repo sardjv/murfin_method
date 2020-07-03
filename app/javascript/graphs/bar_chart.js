@@ -5,8 +5,8 @@ import { MissingData } from './missing_data'
 import * as SCSSColours from '!!sass-variable-loader!../stylesheets/colours.scss';
 
 window.addEventListener('turbolinks:load', () => {
-  var context
-  if (context = document.getElementById('bar-chart')) {
+  const context = document.getElementById('bar-chart');
+  if (context) {
     Rails.ajax({
       url: API.url(),
       type: 'GET',
@@ -18,10 +18,8 @@ window.addEventListener('turbolinks:load', () => {
 });
 
 function bar_chart(context, data) {
-  var style = getComputedStyle(document.body);
-
-  var colours = data.map(function(e) {
-    var val = e.value;
+  const colours = data.map(function(e) {
+    const val = e.value;
 
     if (val == null) {
       return SCSSColours['purple50'];
@@ -39,7 +37,7 @@ function bar_chart(context, data) {
       return SCSSColours['blue50'];
     }
   });
-  var labels = data.map(function(e) {
+  const labels = data.map(function(e) {
     if (e.value) {
       return e.name;
     } else {
@@ -47,7 +45,7 @@ function bar_chart(context, data) {
     }
   });
 
-  var toolTips = data.map(function(e) {
+  const toolTips = data.map(function(e) {
     if (e.value) {
       return e.value + '%';
     } else {
@@ -55,8 +53,8 @@ function bar_chart(context, data) {
     }
   });
 
-  var fallback = MissingData.generate(data);
-  var values = data.map(function(e) {
+  const fallback = MissingData.generate(data);
+  const values = data.map(function(e) {
     return e.value || fallback;
   });
 
