@@ -8,10 +8,10 @@
     "chart.js": "^2.9.3",
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1",
-    "turbolinks": "^5.2.0"
+    "turbolinks": "^5.2.0",
+    "sass-variable-loader": "^0.1.2"
   },
   "devDependencies": {
-    "sass-variable-loader": "^0.1.2",
     "webpack-dev-server": "^3.10.3"
   }
 }
