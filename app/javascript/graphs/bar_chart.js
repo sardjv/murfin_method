@@ -2,7 +2,6 @@ import Chart from 'chart.js'
 import Rails from '@rails/ujs'
 import { API } from './api'
 import { MissingData } from './missing_data'
-import status_colours from 'status.scss';
 
 window.addEventListener('turbolinks:load', () => {
   var context
