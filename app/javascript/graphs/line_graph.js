@@ -1,11 +1,12 @@
 import Chart from 'chart.js'
 import Rails from '@rails/ujs'
+import { API } from './api'
 
 window.addEventListener('turbolinks:load', () => {
   var context;
   if (context = document.getElementById('line-graph')) {
     Rails.ajax({
-      url: data_url(),
+      url: API.url(),
       type: 'GET',
       success: function(data) {
         line_graph(context, data.line_graph)

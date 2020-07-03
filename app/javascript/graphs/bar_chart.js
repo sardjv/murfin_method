@@ -1,11 +1,14 @@
 import Chart from 'chart.js'
 import Rails from '@rails/ujs'
+import { API } from './api'
+import { MissingData } from './missing_data'
+import status_colours from 'status.scss';
 
 window.addEventListener('turbolinks:load', () => {
   var context
   if (context = document.getElementById('bar-chart')) {
     Rails.ajax({
-      url: data_url(),
+      url: API.url(),
       type: 'GET',
       success: function(data) {
         bar_chart(context, data.bar_chart)
@@ -51,7 +54,7 @@ function bar_chart(context, data) {
     }
   });
 
-  var fallback = missingDataVal(data);
+  var fallback = MissingData.generate(data);
   var values = data.map(function(e) {
     return e.value || fallback;
   });
