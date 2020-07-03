@@ -2,8 +2,8 @@ export class MissingData {
   // Generate a 'mid-point' value for bars representing missing data.
   // Based on min and max data so it shows up on the graph.
   static generate(data) {
-    var min = getMinimum(data)
-    var max = getMaximum(data)
+    var min = this.getMinimum(data)
+    var max = this.getMaximum(data)
     return ((max - min) * 0.25) + min
   }
 
