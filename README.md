@@ -1,4 +1,4 @@
-# Job Plan Stats: a Ruby on Rails app for comparing NHS job plans to actual time spent
+# The Murfin Method: a Ruby on Rails app for building NHS data dashboards
 
 ## .env file
 
