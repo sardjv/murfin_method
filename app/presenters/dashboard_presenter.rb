@@ -38,10 +38,6 @@ class DashboardPresenter
     end
   end
 
-  def chppd_data
-    admin_data
-  end
-
   def to_json(args)
     args[:graphs].each_with_object({}) do |graph, hash|
       hash[graph[:type]] = send(graph[:data])
