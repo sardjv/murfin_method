@@ -2,17 +2,18 @@
   border-top: 2px solid $primary;
 }
 
-.nav {
-  .nav-link {
-    &.active {
-      background-color: $blue-900;
-    }
-  }
-}
-
 .rootnav {
-  .active {
-    background-color: $blue-900;
+  padding-top: 0px;
+  padding-bottom: 0px;
+
+  .navbar-nav {
+    .nav-link {
+      padding: 20px;
+
+      &.active {
+        background-color: $blue-900;
+      }
+    }
   }
 }
 
