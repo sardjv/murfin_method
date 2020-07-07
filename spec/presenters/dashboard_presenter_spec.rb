@@ -48,7 +48,7 @@ describe DashboardPresenter do
             subject.to_json(
               graphs: [{ type: :line_graph, data: :admin_data }]
             )
-          )['line_graph'].count
+          )['line_graph']['data'].count
         ).to eq(4)
       end
     end
@@ -57,25 +57,28 @@ describe DashboardPresenter do
       it 'returns a line graph' do
         expect(
           subject.to_json(
-            graphs: [{ type: :line_graph, data: :team_data }]
+            graphs: [{ type: :line_graph, data: :team_data, units: '%' }]
           )
         ).to eq(
           {
-            line_graph: [[
-              { name: 'June', value: 0 },
-              { name: 'July', value: 0 },
-              { name: 'August', value: 0 },
-              { name: 'September', value: 0 },
-              { name: 'October', value: 0 },
-              { name: 'November', value: 0 },
-              { name: 'December', value: 0 },
-              { name: 'January', value: 0 },
-              { name: 'February', value: 0 },
-              { name: 'March', value: 0 },
-              { name: 'April', value: 0 },
-              { name: 'May', value: 0 },
-              { name: 'June', value: 50.21 }
-            ]]
+            line_graph: {
+              data: [[
+                { name: 'June', value: 0 },
+                { name: 'July', value: 0 },
+                { name: 'August', value: 0 },
+                { name: 'September', value: 0 },
+                { name: 'October', value: 0 },
+                { name: 'November', value: 0 },
+                { name: 'December', value: 0 },
+                { name: 'January', value: 0 },
+                { name: 'February', value: 0 },
+                { name: 'March', value: 0 },
+                { name: 'April', value: 0 },
+                { name: 'May', value: 0 },
+                { name: 'June', value: 50.21 }
+              ]],
+              units: '%'
+            }
           }.to_json
         )
       end
@@ -85,16 +88,19 @@ describe DashboardPresenter do
       it 'returns a bar chart' do
         expect(
           subject.to_json(
-            graphs: [{ type: :bar_chart, data: :individual_data }]
+            graphs: [{ type: :bar_chart, data: :individual_data, units: '%' }]
           )
         ).to eq(
           {
-            bar_chart: [
-              {
-                name: user.name,
-                value: 50
-              }
-            ]
+            bar_chart: {
+              data: [
+                {
+                  name: user.name,
+                  value: 50
+                }
+              ],
+              units: '%'
+            }
           }.to_json
         )
       end

@@ -3,11 +3,14 @@
   <div class='row'>
     <div class='col-12'>
       <h5>
-        <%= I18n.t('graph.title') %>
+        <%= I18n.t('graph.title.admin') %>
       </h5>
       <p>
         <%= I18n.t('graph.showing_users', count: @presenter.paginated_users.total_count) %>
       </p>
+
+      <%= render 'graph_tabs' %>
+
       <div class='card my-4'>
         <div class='card-body'>
           <canvas id='line-graph'></canvas>
