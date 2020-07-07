@@ -8,6 +8,9 @@
       <p>
         <%= I18n.t('graph.showing_users', count: @presenter.paginated_users.total_count) %>
       </p>
+
+      <%= render 'graph_tabs' %>
+
       <div class='card my-4'>
         <div class='card-body'>
           <canvas id='line-graph'></canvas>
