@@ -20,7 +20,10 @@ en:
     drill_down: Drill down to find service and data collection problems.
     you_can: 'You can use this service to:'
   graph:
-    title: Percentage delivered against job plan
+    title:
+      admin: CHPPD Data
+      individuals: Percentage delivered against job plan
+      teams: Percentage delivered against job plan
     showing_users:
       one: Showing 1 user
       other: Showing %{count} users
