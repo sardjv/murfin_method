@@ -29,11 +29,15 @@
           navs: [
             {
               label: I18n.t('nav.admin_dashboard'),
-              paths: [admin_dashboard_path]
+              path: admin_dashboard_path
             },
             {
               label: I18n.t('nav.team_dashboard'),
-              paths: [teams_dashboard_path, individuals_dashboard_path]
+              path: teams_dashboard_path,
+              subnavs: [
+                { label: I18n.t('nav.tabs.team'), path: teams_dashboard_path },
+                { label: I18n.t('nav.tabs.individuals'), path: individuals_dashboard_path }
+              ]
             }
           ]
         }

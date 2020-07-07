@@ -16,8 +16,8 @@
               <%=
                 link_to(
                   nav[:label],
-                  nav[:paths].first,
-                  class: "nav-link#{' active' if nav[:paths].any? { |p| current_page?(p) } }"
+                  nav[:path],
+                  class: "nav-link#{' active' if current_page?(nav[:path]) || nav[:subnavs]&.any? { |s| current_page?(s[:path]) } }"
                 )
               %>
             </li>
@@ -29,3 +29,29 @@
     </div>
   </div>
 </nav>
+
+<% navs.each do |nav| %>
+  <% if nav[:subnavs]&.any? { |s| current_page?(s[:path]) }%>
+    <nav class='subnav navbar navbar-expand-lg'>
+      <div class='container'>
+        <div class='collapse navbar-collapse pl-4' id='navbarSupportedContent'>
+          <% if user_authenticated? %>
+            <ul class='navbar-nav mr-auto'>
+              <% nav[:subnavs].each do |subnav| %>
+                <li class='nav-item pl-3'>
+                  <%=
+                    link_to(
+                      subnav[:label],
+                      subnav[:path],
+                      class: "nav-link#{' active' if current_page?(subnav[:path]) }"
+                    )
+                  %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
+      </div>
+    </nav>
+  <% end %>
+<% end %>

@@ -1,3 +1,15 @@
 .page-footer {
   border-top: 2px solid $primary;
 }
+
+.subnav {
+  background-color: $grey-50;
+
+  .nav-link {
+    color: $grey-600;
+
+    &.active {
+      font-weight: bold;
+    }
+  }
+}
