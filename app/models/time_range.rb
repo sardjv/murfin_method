@@ -12,7 +12,7 @@
 #  updated_at         :datetime         not null
 #
 class TimeRange < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, touch: true
   belongs_to :time_range_type
 
   validates :start_time, :end_time, :value, :time_range_type_id, :user_id, presence: true
