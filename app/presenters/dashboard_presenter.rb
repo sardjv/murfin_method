@@ -5,7 +5,7 @@ class DashboardPresenter
   end
 
   def paginated_users
-    User.page(@params[:page])
+    User.page(@params['page'])
   end
 
   def individual_data
