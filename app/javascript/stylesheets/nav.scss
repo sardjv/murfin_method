@@ -2,6 +2,20 @@
   border-top: 2px solid $primary;
 }
 
+.nav {
+  .nav-link {
+    &.active {
+      background-color: $blue-900;
+    }
+  }
+}
+
+.rootnav {
+  .active {
+    background-color: $blue-900;
+  }
+}
+
 .subnav {
   background-color: $grey-50;
 
