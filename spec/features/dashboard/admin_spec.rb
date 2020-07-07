@@ -30,6 +30,6 @@ describe 'Admin Dashboard ', type: :feature do
 
   it 'has graph with planned and actual data' do
     visit admin_dashboard_path
-    expect(page).to have_text 'Percentage delivered against job plan'
+    expect(page).to have_text 'CHPPD Data'
   end
 end
