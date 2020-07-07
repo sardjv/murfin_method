@@ -31,6 +31,7 @@ en:
     admin_dashboard: Dashboard
     team_dashboard: Team
     tabs:
+      combined_data: Combined data
       individuals: Individuals
       team: Team dashboard
   status:
