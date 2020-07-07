@@ -46,36 +46,38 @@
           </thead>
           <tbody>
             <% @presenter.paginated_users.each do |user| %>
-              <% user_presenter = UserStatsPresenter.new(user: user, plan_id: TimeRangeType.plan_type.id, actual_id: TimeRangeType.actual_type.id) %>
-              <tr>
-                <td>
-                  <%= user.first_name %> <%= user.last_name %>
-                </td>
-                <td>
-                  <% if user_presenter.average_weekly_planned.nil? %>
-                    <%= icon('question-circle') %>
-                  <% else %>
-                    <%= user_presenter.average_weekly_planned%>%
-                  <% end %>
-                </td>
-                <td>
-                  <% if user_presenter.average_weekly_actual.nil? %>
-                    <%= icon('question-circle') %>
-                  <% else %>
-                    <%= user_presenter.average_weekly_actual%>%
-                  <% end %>
-                </td>
-                <td>
-                  <% if user_presenter.percentage_delivered.nil? %>
-                    <%= icon('question-circle') %>
-                  <% else %>
-                    <%= user_presenter.percentage_delivered%>%
-                  <% end %>
-                </td>
-                <td class="<%= user_presenter.status.parameterize %>">
-                  <%= user_presenter.status%>
-                </td>
-              </tr>
+              <% cache user do %>
+                <% user_presenter = UserStatsPresenter.new(user: user, plan_id: TimeRangeType.plan_type.id, actual_id: TimeRangeType.actual_type.id) %>
+                <tr>
+                  <td>
+                    <%= user.first_name %> <%= user.last_name %>
+                  </td>
+                  <td>
+                    <% if user_presenter.average_weekly_planned.nil? %>
+                      <%= icon('question-circle') %>
+                    <% else %>
+                      <%= user_presenter.average_weekly_planned%>%
+                    <% end %>
+                  </td>
+                  <td>
+                    <% if user_presenter.average_weekly_actual.nil? %>
+                      <%= icon('question-circle') %>
+                    <% else %>
+                      <%= user_presenter.average_weekly_actual%>%
+                    <% end %>
+                  </td>
+                  <td>
+                    <% if user_presenter.percentage_delivered.nil? %>
+                      <%= icon('question-circle') %>
+                    <% else %>
+                      <%= user_presenter.percentage_delivered%>%
+                    <% end %>
+                  </td>
+                  <td class="<%= user_presenter.status.parameterize %>">
+                    <%= user_presenter.status%>
+                  </td>
+                </tr>
+              <% end %>
             <% end %>
           </tbody>
         </table>
