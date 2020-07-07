@@ -30,6 +30,7 @@ describe 'Dashboard Individuals', type: :feature do
 
   context 'with 1 user' do
     let(:users) { [create(:user)] }
+    let(:user) { users.first }
 
     it 'has table with planned and actual data' do
       expect(page).to have_text 'Percentage delivered against job plan'
@@ -41,6 +42,21 @@ describe 'Dashboard Individuals', type: :feature do
         expect(page).to have_text 'Percentage delivered'
         expect(page).to have_text '50%'
         expect(page).to have_text 'Status'
+      end
+    end
+
+    describe 'caching' do
+      context 'when a time range is updated' do
+        before do
+          user.time_ranges.each { |tr| tr.update(value: 0) }
+          visit current_path
+        end
+
+        it 'updates the values' do
+          within('.table') do
+            expect(page).to have_text 'Really Under'
+          end
+        end
       end
     end
   end
