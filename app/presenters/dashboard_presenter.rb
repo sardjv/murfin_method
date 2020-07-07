@@ -32,7 +32,7 @@ class DashboardPresenter
       %w[May June July August September October].map do |month|
         {
           name: month,
-          value: rand(8.0..14.0)
+          value: rand(8.0..14.0).round(2)
         }
       end
     end
@@ -40,7 +40,10 @@ class DashboardPresenter
 
   def to_json(args)
     args[:graphs].each_with_object({}) do |graph, hash|
-      hash[graph[:type]] = send(graph[:data])
+      hash[graph[:type]] = {
+        data: send(graph[:data]),
+        units: graph[:units]
+      }
       hash
     end.to_json
   end

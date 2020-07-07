@@ -1,4 +1,4 @@
-<nav class='navbar navbar-expand-lg navbar-dark bg-primary'>
+<nav class='rootnav navbar navbar-expand-lg navbar-dark bg-primary'>
   <div class='container'>
     <a class='navbar-brand' href='#'>
       <%= image_pack_tag 'media/images/logos/nhs.svg', width: '100 px' %>
@@ -12,12 +12,12 @@
       <% if user_authenticated? %>
         <ul class='navbar-nav mr-auto'>
           <% navs.each do |nav| %>
-            <li class='nav-item pl-3'>
+            <li class='nav-item'>
               <%=
                 link_to(
                   nav[:label],
                   nav[:path],
-                  class: "nav-link#{' active' if current_page?(nav[:path])}"
+                  class: "nav-link #{' active' if current_page?(nav[:path]) || nav[:subnavs]&.any? { |s| current_page?(s[:path]) } }"
                 )
               %>
             </li>
@@ -29,3 +29,29 @@
     </div>
   </div>
 </nav>
+
+<% navs.each do |nav| %>
+  <% if nav[:subnavs]&.any? { |s| current_page?(s[:path]) }%>
+    <nav class='subnav navbar navbar-expand-lg'>
+      <div class='container'>
+        <div class='collapse navbar-collapse pl-4' id='navbarSupportedContent'>
+          <% if user_authenticated? %>
+            <ul class='navbar-nav mr-auto'>
+              <% nav[:subnavs].each do |subnav| %>
+                <li class='nav-item pl-3'>
+                  <%=
+                    link_to(
+                      subnav[:label],
+                      subnav[:path],
+                      class: "nav-link#{' active' if current_page?(subnav[:path]) }"
+                    )
+                  %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
+      </div>
+    </nav>
+  <% end %>
+<% end %>
