@@ -16,8 +16,8 @@
               <%=
                 link_to(
                   nav[:label],
-                  nav[:path],
-                  class: "nav-link#{' active' if current_page?(nav[:path])}"
+                  nav[:paths].first,
+                  class: "nav-link#{' active' if nav[:paths].any? { |p| current_page?(p) } }"
                 )
               %>
             </li>
