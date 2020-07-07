@@ -10,6 +10,7 @@ window.addEventListener('turbolinks:load', () => {
       url: API.url(),
       type: 'GET',
       success: function(data) {
+        const units = data.line_graph.units
         line_graph(context, data.line_graph)
       }
     });
@@ -57,16 +58,19 @@ function datasets(datas) {
   });
 }
 
-function line_graph(context, datas) {
-  const labels = datas[0].map(function(e) {
+function line_graph(context, line_graph) {
+  const labels = line_graph.data[0].map(function(e) {
     return e.name;
   });
+
+  var units = line_graph.units || ''
 
   new Chart(context, {
     type: 'line',
     data: {
       labels: labels,
-      datasets: datasets(datas)
+      datasets: datasets(line_graph.data),
+      units: units
     },
     options: {
       legend: {
@@ -75,7 +79,7 @@ function line_graph(context, datas) {
       tooltips: {
         callbacks: {
           label: function(tooltipItem, data) {
-            return tooltipItem.value + '%';
+            return tooltipItem.value + data.units;
           }
         }
       },
@@ -93,7 +97,7 @@ function line_graph(context, datas) {
           ticks: {
             stepSize: 10,
             callback: function(value) {
-              return value + "%"
+              return value + units
             }
           }
         }]
