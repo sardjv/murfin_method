@@ -11,7 +11,7 @@ window.addEventListener('turbolinks:load', () => {
       url: API.url(),
       type: 'GET',
       success: function(data) {
-        bar_chart(context, data.bar_chart)
+        bar_chart(context, data.bar_chart.data)
       }
     });
   }
