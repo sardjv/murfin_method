@@ -1,40 +1,39 @@
-<div class='container my-4'>
+<div class='container my-4 xs-row-reverse'>
 
-  <div class='row'>
-    <div class='col-3'>
-      <div class='card my-4'>
-        <div class='card-body'>
-        </div>
-      </div>
-    </div>
-    <div class='col-3'>
-      <div class='card my-4'>
-        <div class='card-body'>
-        </div>
-      </div>
-    </div>
-    <div class='col-3'>
-      <div class='card my-4'>
-        <div class='card-body'>
-        </div>
-      </div>
-    </div>
-    <div class='col-3'>
-      <div class='card my-4'>
-        <div class='card-body'>
-        </div>
-      </div>
-    </div>
-  </div>
+  <%= render(
+    partial: 'shared/highlights',
+    locals: {
+      highlights: [
+        {
+          icon: 'people',
+          colour: 'purple',
+          label: 'Members',
+          value: @presenter.paginated_users.total_count
+        },
+        {
+          icon: 'bar-chart',
+          colour: 'green',
+          label: 'Average delivery',
+          value: '90%'
+        },
+        {
+          icon: 'compass',
+          colour: 'yellow',
+          label: 'People under 80%',
+          value: '4'
+        },
+        {
+          icon: 'flag',
+          colour: 'red',
+          label: 'Average team delivery',
+          value: '< 1%'
+        }
+      ]
+    }
+  ) %>
 
   <div class='row'>
     <div class='col-12'>
-      <h5>
-        <%= I18n.t('graph.title.teams') %>
-      </h5>
-      <p>
-        <%= I18n.t('graph.showing_users', count: @presenter.paginated_users.total_count) %>
-      </p>
       <div class='card my-4'>
         <div class='card-body'>
           <canvas id='line-graph'></canvas>
