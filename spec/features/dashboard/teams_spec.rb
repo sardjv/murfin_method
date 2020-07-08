@@ -28,8 +28,8 @@ describe 'Team Dashboard ', type: :feature do
     )
   end
 
-  it 'has graph with planned and actual data' do
+  it 'renders' do
     visit teams_dashboard_path
-    expect(page).to have_text 'Percentage delivered against job plan'
+    expect(page).to have_text 'Team dashboard'
   end
 end
