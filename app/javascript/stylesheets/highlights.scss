@@ -1,0 +1,21 @@
+.highlight {
+  .card-icon {
+    height: 2em;
+    width: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+
+    &.purple {
+      background-color: $purple-50;
+      color: $purple-700;
+    }
+  }
+
+  h2 {
+    padding-top: 0.15em;
+  }
+}
