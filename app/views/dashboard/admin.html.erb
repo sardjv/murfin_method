@@ -5,45 +5,46 @@
       <h5>
         <%= I18n.t('graph.title.admin') %>
       </h5>
-      <p>
-        <%= I18n.t('graph.showing_users', count: @presenter.paginated_users.total_count) %>
-      </p>
+
+      <%= render(
+        partial: 'shared/highlights',
+        locals: {
+          highlights: [
+            {
+              icon: 'people',
+              colour: 'purple',
+              label: 'People',
+              value: @presenter.paginated_users.total_count
+            },
+            {
+              icon: 'pie-chart',
+              colour: 'green',
+              label: 'Professional Groups',
+              value: '14'
+            },
+            {
+              icon: 'compass',
+              colour: 'yellow',
+              label: 'Average flex. hours delivered',
+              value: '8.9'
+            },
+            {
+              icon: 'flag',
+              colour: 'red',
+              label: 'Teams under 6 hours',
+              value: '4'
+            }
+          ]
+        }
+      ) %>
 
       <%= render 'graph_tabs' %>
 
-      <div class='card my-4'>
+      <div class='card mt-4'>
         <div class='card-body'>
           <canvas id='line-graph'></canvas>
         </div>
       </div>
     </div>
   </div>
-
-  <div class='row'>
-    <div class='col-3'>
-      <div class='card my-4'>
-        <div class='card-body'>
-        </div>
-      </div>
-    </div>
-    <div class='col-3'>
-      <div class='card my-4'>
-        <div class='card-body'>
-        </div>
-      </div>
-    </div>
-    <div class='col-3'>
-      <div class='card my-4'>
-        <div class='card-body'>
-        </div>
-      </div>
-    </div>
-    <div class='col-3'>
-      <div class='card my-4'>
-        <div class='card-body'>
-        </div>
-      </div>
-    </div>
-  </div>
-
 </div>
