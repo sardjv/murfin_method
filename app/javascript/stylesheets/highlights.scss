@@ -1,0 +1,47 @@
+.highlight {
+  padding: 0.85em;
+
+  .card-icon {
+    height: 2em;
+    width: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+
+    &.blue {
+      background-color: $blue-50;
+      color: $blue-700;
+    }
+    &.yellow {
+      background-color: $yellow-50;
+      color: $yellow-700;
+    }
+    &.purple {
+      background-color: $purple-50;
+      color: $purple-700;
+    }
+    &.green {
+      background-color: $green-50;
+      color: $green-700;
+    }
+    &.orange {
+      background-color: $orange-50;
+      color: $orange-700;
+    }
+    &.red {
+      background-color: $red-50;
+      color: $red-700;
+    }
+  }
+
+  h2 {
+    padding-top: 0.15em;
+  }
+
+  .highlight-label {
+    color: $grey-400;
+  }
+}
