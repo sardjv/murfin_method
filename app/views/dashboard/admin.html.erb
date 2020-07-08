@@ -21,16 +21,48 @@
 
   <div class='row'>
     <div class='col-3'>
-      <%= render 'shared/card' %>
+      <%= render(
+        partial: 'shared/card',
+        locals: {
+          icon: 'little_man',
+          colour: 'purple',
+          label: 'People',
+          value: @presenter.paginated_users.total_count
+        }
+      ) %>
     </div>
     <div class='col-3'>
-      <%= render 'shared/card' %>
+      <%= render(
+        partial: 'shared/card',
+        locals: {
+          icon: 'little_man',
+          colour: 'purple',
+          label: 'People',
+          value: @presenter.paginated_users.total_count
+        }
+      ) %>
     </div>
     <div class='col-3'>
-      <%= render 'shared/card' %>
+      <%= render(
+        partial: 'shared/card',
+        locals: {
+          icon: 'little_man',
+          colour: 'purple',
+          label: 'People',
+          value: @presenter.paginated_users.total_count
+        }
+      ) %>
     </div>
     <div class='col-3'>
-      <%= render 'shared/card' %>
+      <%= render(
+        partial: 'shared/card',
+        locals: {
+          icon: 'little_man',
+          colour: 'purple',
+          label: 'People',
+          value: @presenter.paginated_users.total_count
+        }
+      ) %>
     </div>
   </div>
 
