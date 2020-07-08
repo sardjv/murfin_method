@@ -19,51 +19,36 @@
     </div>
   </div>
 
-  <div class='row'>
-    <div class='col-3'>
-      <%= render(
-        partial: 'shared/card',
-        locals: {
+  <%= render(
+    partial: 'shared/highlights',
+    locals: {
+      highlights: [
+        {
           icon: 'people',
           colour: 'purple',
           label: 'People',
           value: @presenter.paginated_users.total_count
-        }
-      ) %>
-    </div>
-    <div class='col-3'>
-      <%= render(
-        partial: 'shared/card',
-        locals: {
+        },
+        {
+          icon: 'people',
+          colour: 'purple',
+          label: 'People',
+          value: @presenter.paginated_users.total_count
+        },
+        {
+          icon: 'people',
+          colour: 'purple',
+          label: 'People',
+          value: @presenter.paginated_users.total_count
+        },
+        {
           icon: 'person-circle',
           colour: 'purple',
           label: 'People',
           value: @presenter.paginated_users.total_count
         }
-      ) %>
-    </div>
-    <div class='col-3'>
-      <%= render(
-        partial: 'shared/card',
-        locals: {
-          icon: 'person-circle',
-          colour: 'purple',
-          label: 'People',
-          value: @presenter.paginated_users.total_count
-        }
-      ) %>
-    </div>
-    <div class='col-3'>
-      <%= render(
-        partial: 'shared/card',
-        locals: {
-          icon: 'person-circle',
-          colour: 'purple',
-          label: 'People',
-          value: @presenter.paginated_users.total_count
-        }
-      ) %>
-    </div>
-  </div>
+      ]
+    }
+  ) %>
 
 </div>

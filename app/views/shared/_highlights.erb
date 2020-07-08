@@ -1,0 +1,15 @@
+<div class='row'>
+  <% highlights.each do |highlight| %>
+    <div class='col-3'>
+      <%= render(
+        partial: 'shared/highlight',
+        locals: {
+          icon: highlight[:icon],
+          colour: highlight[:colour],
+          label: highlight[:label],
+          value: highlight[:value]
+        }
+      ) %>
+    </div>
+  <% end %>
+</div>
