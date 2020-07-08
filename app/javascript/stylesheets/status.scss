@@ -24,3 +24,16 @@
 .bi-question-circle {
   color: $unknown-font;
 }
+
+.card-icon {
+  width: 3em;
+  padding: 8px;
+  border-radius:50%;
+  -moz-border-radius:50%;
+  -webkit-border-radius:50%;
+
+  &.purple {
+    background-color: $purple-50;
+    color: $purple-700;
+  }
+}

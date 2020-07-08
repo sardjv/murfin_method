@@ -1,7 +1,8 @@
 <div class='card my-4'>
   <div class='card-body'>
-    <%= icon(icon) %>
-    <%= colour %>
+    <div class='card-icon <%= colour %>'>
+      <%= icon(icon, width: '2em') %>
+    </div>
     <%= value %>
     <%= label %>
   </div>
