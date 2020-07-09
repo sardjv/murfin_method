@@ -15,4 +15,5 @@ describe User, type: :model do
   it { expect(subject).to be_valid }
   it { should have_many(:time_ranges).dependent(:destroy) }
   it { should have_many(:notes_written).dependent(:restrict_with_exception) }
+  it { should have_many(:notes).dependent(:destroy) }
 end
