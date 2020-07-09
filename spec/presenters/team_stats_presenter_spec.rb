@@ -24,19 +24,19 @@ describe TeamStatsPresenter do
       it 'returns 0 per month' do
         expect(subject.average_weekly_planned_per_month).to eq(
           [
-            { 'name': 'June', 'value': 0 },
-            { 'name': 'July', 'value': 0 },
-            { 'name': 'August', 'value': 0 },
-            { 'name': 'September', 'value': 0 },
-            { 'name': 'October', 'value': 0 },
-            { 'name': 'November', 'value': 0 },
-            { 'name': 'December', 'value': 0 },
-            { 'name': 'January', 'value': 0 },
-            { 'name': 'February', 'value': 0 },
-            { 'name': 'March', 'value': 0 },
-            { 'name': 'April', 'value': 0 },
-            { 'name': 'May', 'value': 0 },
-            { 'name': 'June', 'value': 0 }
+            { 'name': '2019-06-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2019-07-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2019-08-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2019-09-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2019-10-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2019-11-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2019-12-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2020-01-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2020-02-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2020-03-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2020-04-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2020-05-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2020-06-01T00:00:00.000Z', 'value': 0 }
           ]
         )
       end
@@ -46,19 +46,19 @@ describe TeamStatsPresenter do
       it 'returns 0 per month' do
         expect(subject.average_weekly_actual_per_month).to eq(
           [
-            { 'name': 'June', 'value': 0 },
-            { 'name': 'July', 'value': 0 },
-            { 'name': 'August', 'value': 0 },
-            { 'name': 'September', 'value': 0 },
-            { 'name': 'October', 'value': 0 },
-            { 'name': 'November', 'value': 0 },
-            { 'name': 'December', 'value': 0 },
-            { 'name': 'January', 'value': 0 },
-            { 'name': 'February', 'value': 0 },
-            { 'name': 'March', 'value': 0 },
-            { 'name': 'April', 'value': 0 },
-            { 'name': 'May', 'value': 0 },
-            { 'name': 'June', 'value': 0 }
+            { 'name': '2019-06-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2019-07-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2019-08-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2019-09-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2019-10-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2019-11-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2019-12-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2020-01-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2020-02-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2020-03-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2020-04-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2020-05-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2020-06-01T00:00:00.000Z', 'value': 0 }
           ]
         )
       end
@@ -68,19 +68,19 @@ describe TeamStatsPresenter do
       it 'returns 0 per month' do
         expect(subject.weekly_percentage_delivered_per_month).to eq(
           [
-            { 'name': 'June', 'value': 0 },
-            { 'name': 'July', 'value': 0 },
-            { 'name': 'August', 'value': 0 },
-            { 'name': 'September', 'value': 0 },
-            { 'name': 'October', 'value': 0 },
-            { 'name': 'November', 'value': 0 },
-            { 'name': 'December', 'value': 0 },
-            { 'name': 'January', 'value': 0 },
-            { 'name': 'February', 'value': 0 },
-            { 'name': 'March', 'value': 0 },
-            { 'name': 'April', 'value': 0 },
-            { 'name': 'May', 'value': 0 },
-            { 'name': 'June', 'value': 0 }
+            { 'name': '2019-06-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2019-07-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2019-08-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2019-09-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2019-10-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2019-11-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2019-12-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2020-01-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2020-02-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2020-03-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2020-04-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2020-05-01T00:00:00.000Z', 'value': 0 },
+            { 'name': '2020-06-01T00:00:00.000Z', 'value': 0 }
           ]
         )
       end
@@ -123,19 +123,19 @@ describe TeamStatsPresenter do
           # Approx 1500 (value per user for year) * 10 users / 52 weeks = 288.46.
           expect(subject.average_weekly_planned_per_month).to eq(
             [
-              { 'name': 'June', 'value': 42 },
-              { 'name': 'July', 'value': 287 },
-              { 'name': 'August', 'value': 287 },
-              { 'name': 'September', 'value': 287 },
-              { 'name': 'October', 'value': 287 },
-              { 'name': 'November', 'value': 287 },
-              { 'name': 'December', 'value': 287 },
-              { 'name': 'January', 'value': 287 },
-              { 'name': 'February', 'value': 287 },
-              { 'name': 'March', 'value': 287 },
-              { 'name': 'April', 'value': 287 },
-              { 'name': 'May', 'value': 287 },
-              { 'name': 'June', 'value': 245 }
+              { 'name': '2019-06-01T00:00:00.000Z', 'value': 42 },
+              { 'name': '2019-07-01T00:00:00.000Z', 'value': 287 },
+              { 'name': '2019-08-01T00:00:00.000Z', 'value': 287 },
+              { 'name': '2019-09-01T00:00:00.000Z', 'value': 287 },
+              { 'name': '2019-10-01T00:00:00.000Z', 'value': 287 },
+              { 'name': '2019-11-01T00:00:00.000Z', 'value': 287 },
+              { 'name': '2019-12-01T00:00:00.000Z', 'value': 287 },
+              { 'name': '2020-01-01T00:00:00.000Z', 'value': 287 },
+              { 'name': '2020-02-01T00:00:00.000Z', 'value': 287 },
+              { 'name': '2020-03-01T00:00:00.000Z', 'value': 287 },
+              { 'name': '2020-04-01T00:00:00.000Z', 'value': 287 },
+              { 'name': '2020-05-01T00:00:00.000Z', 'value': 287 },
+              { 'name': '2020-06-01T00:00:00.000Z', 'value': 245 }
             ]
           )
         end

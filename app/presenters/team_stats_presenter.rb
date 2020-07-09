@@ -13,7 +13,7 @@ class TeamStatsPresenter
   def average_weekly_planned_per_month
     @average_weekly_planned_per_month ||= bounds_of_months.map do |from, to|
       {
-        'name': from.strftime('%B'),
+        'name': from.strftime(I18n.t('time.formats.iso8601_utc')),
         'value': total(users: users, from: from, to: to, method: :average_weekly_planned)
       }
     end
@@ -22,7 +22,7 @@ class TeamStatsPresenter
   def average_weekly_actual_per_month
     @average_weekly_actual_per_month ||= bounds_of_months.map do |from, to|
       {
-        'name': from.strftime('%B'),
+        'name': from.strftime(I18n.t('time.formats.iso8601_utc')),
         'value': total(users: users, from: from, to: to, method: :average_weekly_actual)
       }
     end
