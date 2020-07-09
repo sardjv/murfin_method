@@ -13,6 +13,7 @@
 #
 class Note < ApplicationRecord
   enum state: { info: 0, action: 1, resolved: 2 }
+  belongs_to :author, class_name: 'User'
 
   validates :state, :content, :start_time, :end_time, :author_id, presence: true
 end
