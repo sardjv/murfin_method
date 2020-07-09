@@ -63,19 +63,19 @@ describe DashboardPresenter do
           {
             line_graph: {
               data: [[
-                { name: 'June', value: 0 },
-                { name: 'July', value: 0 },
-                { name: 'August', value: 0 },
-                { name: 'September', value: 0 },
-                { name: 'October', value: 0 },
-                { name: 'November', value: 0 },
-                { name: 'December', value: 0 },
-                { name: 'January', value: 0 },
-                { name: 'February', value: 0 },
-                { name: 'March', value: 0 },
-                { name: 'April', value: 0 },
-                { name: 'May', value: 0 },
-                { name: 'June', value: 50.21 }
+                { name: '2019-06-01T00:00:00.000Z', value: 0 },
+                { name: '2019-07-01T00:00:00.000Z', value: 0 },
+                { name: '2019-08-01T00:00:00.000Z', value: 0 },
+                { name: '2019-09-01T00:00:00.000Z', value: 0 },
+                { name: '2019-10-01T00:00:00.000Z', value: 0 },
+                { name: '2019-11-01T00:00:00.000Z', value: 0 },
+                { name: '2019-12-01T00:00:00.000Z', value: 0 },
+                { name: '2020-01-01T00:00:00.000Z', value: 0 },
+                { name: '2020-02-01T00:00:00.000Z', value: 0 },
+                { name: '2020-03-01T00:00:00.000Z', value: 0 },
+                { name: '2020-04-01T00:00:00.000Z', value: 0 },
+                { name: '2020-05-01T00:00:00.000Z', value: 0 },
+                { name: '2020-06-01T00:00:00.000Z', value: 50.21 }
               ]],
               units: '%'
             }
