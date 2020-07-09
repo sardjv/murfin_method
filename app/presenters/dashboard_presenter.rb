@@ -29,7 +29,7 @@ class DashboardPresenter
 
   def admin_data
     4.times.map do
-      %w[May June July August September October].map do |month|
+      admin_x_axis.map do |month|
         {
           name: month,
           value: rand(8.0..14.0).round(2)
@@ -66,5 +66,11 @@ class DashboardPresenter
       plan_id: TimeRangeType.plan_type.id,
       actual_id: TimeRangeType.actual_type.id
     }
+  end
+
+  def admin_x_axis
+    (5..10).map do |month|
+      Time.zone.local(2020, month, 1).strftime(I18n.t('time.formats.iso8601_utc'))
+    end
   end
 end

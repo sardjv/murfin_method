@@ -31,7 +31,7 @@ class TeamStatsPresenter
   def weekly_percentage_delivered_per_month
     bounds_of_months.map.with_index do |bounds, index|
       {
-        'name': bounds.first.strftime('%B'),
+        'name': bounds.first.strftime(I18n.t('time.formats.iso8601_utc')),
         'value': percentage(index)
       }
     end
