@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 # Fixtures replacement with a straightforward definition syntax.
 # https://github.com/thoughtbot/factory_bot
-gem 'factory_bot', '~> 6.0.2'
+gem 'factory_bot', '~> 6.1.0'
 
 # Generate fake data such as names, addresses, and phone numbers.
 # https://github.com/faker-ruby/faker
