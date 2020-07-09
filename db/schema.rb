@@ -17,8 +17,8 @@ ActiveRecord::Schema.define(version: 2020_07_09_154101) do
     t.integer "state", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.timestamp "start_time"
-    t.timestamp "end_time"
+    t.timestamp "start_time", null: false
+    t.timestamp "end_time", null: false
     t.bigint "author_id"
     t.index ["author_id"], name: "index_notes_on_author_id"
   end
