@@ -60,7 +60,7 @@ function datasets(datas) {
 
 function line_graph(context, line_graph) {
   const labels = line_graph.data[0].map(function(e) {
-    return e.name;
+    return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][new Date(Date.parse(e.name)).getMonth()];
   });
 
   var units = line_graph.units || ''
