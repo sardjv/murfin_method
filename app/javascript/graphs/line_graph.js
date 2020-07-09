@@ -49,7 +49,7 @@ function datasets(datas) {
       borderColor: getColour(index),
       borderWidth: 5,
       pointRadius: 0.0001,
-      pointHitRadius: 200,
+      pointHitRadius: 20,
       lineTension: 0.3,
       borderCapStyle: 'round'
     }
@@ -59,7 +59,10 @@ function datasets(datas) {
 }
 
 function line_graph(context, line_graph) {
-  const labels = line_graph.data[0].map(function(e) {
+  const originalLabels = line_graph.data[0].map(function(e) {
+    return e.name;
+  });
+  const formattedLabels = line_graph.data[0].map(function(e) {
     return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][new Date(Date.parse(e.name)).getMonth()];
   });
 
@@ -68,7 +71,8 @@ function line_graph(context, line_graph) {
   new Chart(context, {
     type: 'line',
     data: {
-      labels: labels,
+      labels: formattedLabels,
+      originalLabels: originalLabels,
       datasets: datasets(line_graph.data),
       units: units
     },
@@ -101,6 +105,11 @@ function line_graph(context, line_graph) {
             }
           }
         }]
+      },
+      onClick: (_event, elements) => {
+        if(elements[0]) {
+          console.log(elements[0]._chart.data.originalLabels[elements[0]._index])
+        }
       }
     }
   });
