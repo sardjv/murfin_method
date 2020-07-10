@@ -35,8 +35,8 @@ en:
       individuals: Individuals
       team: Team dashboard
   notes:
-    save: Save
-    close: Close
+    add: Add note
+    cancel: Cancel
   status:
     about_right: About Right
     over: Over
