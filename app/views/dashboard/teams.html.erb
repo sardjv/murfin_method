@@ -44,4 +44,9 @@
 
 </div>
 
-<%= render('shared/modal') %>
+<%= render(
+  partial: 'shared/modal',
+  locals: {
+    template: 'notes/form'
+  }
+) %>
