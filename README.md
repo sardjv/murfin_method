@@ -91,7 +91,7 @@ docker-compose exec db bash
 mysql -u root -p
 (enter root password)
 show databases;
-use jp_stats_development;
+use murfin_method_development;
 SELECT * FROM users;
 ```
 
