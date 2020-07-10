@@ -32,4 +32,11 @@ describe 'Team Dashboard ', type: :feature do
     visit teams_dashboard_path
     expect(page).to have_text 'Team dashboard'
   end
+
+  describe 'notes' do
+    context 'when clicking a point on the graph' do
+      it 'renders a note form' do
+      end
+    end
+  end
 end
