@@ -4,11 +4,11 @@ class Api::V1::Swagger::Core
       'v1/swagger.json' => {
         swagger: '2.0',
         info: {
-          title: 'Job Plan Statistics API',
+          title: 'Murfin Method API',
           version: 'v1',
-          description: 'This is the Job Plan Statistics API. For more information visit
-                        <a href="https://github.com/sardjv/job_plan_statistics">
-                        github.com/sardjv/job_plan_statistics</a>.'
+          description: 'This is the Murfin Method API. For more information visit
+                        <a href="https://github.com/sardjv/murfin_method">
+                        github.com/sardjv/murfin_method</a>.'
         },
         securityDefinitions: {
           JWT: {
