@@ -69,7 +69,8 @@ services:
       # We cache the bundle so that we don't re-download every gem on any change to the Gemfile.
       - bundle_cache:/bundle
     environment:
-      - SELENIUM_REMOTE_URL=http://webdriver_chrome:4444/wd/hub
+      - SELENIUM_HEADLESS_URL=http://webdriver_chrome:4444/wd/hub
+      - SELENIUM_VISIBLE_URL=http://webdriver_chrome_debug:4444/wd/hub
       - SELENIUM_APP_HOST=http://app:3000
       - BUNDLE_PATH=/bundle/vendor
       - WEBPACKER_DEV_SERVER_HOST=webpacker
@@ -78,6 +79,14 @@ services:
 
   webdriver_chrome:
     image: selenium/standalone-chrome:3.141.0
+    volumes:
+      - '.:/app'
+      - bundle_cache:/bundle
+
+  webdriver_chrome_debug:
+    image: selenium/standalone-chrome-debug:3.141.0
+    ports:
+      - 5900:5900
     volumes:
       - '.:/app'
       - bundle_cache:/bundle

@@ -99,7 +99,17 @@ Capybara.register_driver :headless_chrome do |app|
   chrome_capabilities = ::Selenium::WebDriver::Remote::Capabilities.chrome(options)
   Capybara::Selenium::Driver.new(app,
                                  browser: :remote,
-                                 url: ENV['SELENIUM_REMOTE_URL'],
+                                 url: ENV['SELENIUM_HEADLESS_URL'],
+                                 desired_capabilities: chrome_capabilities)
+end
+
+Capybara.register_driver :visible_chrome do |app|
+  args = %w[no-sandbox window-size=1400,1400]
+  options = { 'goog:chromeOptions' => { 'args': args } }
+  chrome_capabilities = ::Selenium::WebDriver::Remote::Capabilities.chrome(options)
+  Capybara::Selenium::Driver.new(app,
+                                 browser: :remote,
+                                 url: ENV['SELENIUM_VISIBLE_URL'],
                                  desired_capabilities: chrome_capabilities)
 end
 
@@ -107,4 +117,8 @@ Capybara.configure do |c|
   c.app_host = ENV['SELENIUM_APP_HOST']
   c.default_normalize_ws = true
   c.javascript_driver = :headless_chrome
+  # Uncomment the below to render on a visible copy of Chrome.
+  # You can access it on a mac using `open vnc://0.0.0.0:5900`.
+  # Run a test with js:true to watch it play out, and add byebug to pause and interact.
+  # c.javascript_driver = :visible_chrome
 end
