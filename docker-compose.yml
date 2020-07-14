@@ -70,13 +70,14 @@ services:
       - bundle_cache:/bundle
     environment:
       - SELENIUM_REMOTE_URL=http://webdriver_chrome:4444/wd/hub
+      - SELENIUM_APP_HOST=http://app:3000
       - BUNDLE_PATH=/bundle/vendor
       - WEBPACKER_DEV_SERVER_HOST=webpacker
     env_file:
       - '.env'
 
   webdriver_chrome:
-    image: selenium/standalone-chrome
+    image: selenium/standalone-chrome:3.141.0
     volumes:
       - '.:/app'
       - bundle_cache:/bundle

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Team Dashboard ', type: :feature do
+describe 'Team Dashboard ', type: :feature, js: true do
   let(:user) { create(:user) }
 
   let(:plan_id) { TimeRangeType.plan_type.id }
@@ -28,15 +28,21 @@ describe 'Team Dashboard ', type: :feature do
     )
   end
 
+  before { visit teams_dashboard_path }
+
   it 'renders' do
-    visit teams_dashboard_path
     expect(page).to have_text 'Team dashboard'
   end
 
   describe 'notes' do
     context 'when clicking a point on the graph' do
       it 'renders a note form' do
+        click_graph(x: 1, y: 1)
       end
     end
   end
+end
+
+def click_graph(x:, y:)
+  page.find('#line-graph').click(x: x, y: y)
 end

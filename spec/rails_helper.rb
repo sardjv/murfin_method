@@ -104,6 +104,7 @@ Capybara.register_driver :headless_chrome do |app|
 end
 
 Capybara.configure do |c|
+  c.app_host = ENV['SELENIUM_APP_HOST']
   c.default_normalize_ws = true
   c.javascript_driver = :headless_chrome
 end
