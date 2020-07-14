@@ -117,7 +117,7 @@ group :test do
 
   # A browser automation framework and ecosystem.
   # https://github.com/SeleniumHQ/selenium
-  gem 'selenium-webdriver', '~> 3.142.5'
+  gem 'selenium-webdriver', '3.141.0'
 
   # Simple one-liner tests for common Rails functionality.
   # https://github.com/thoughtbot/shoulda-matchers
