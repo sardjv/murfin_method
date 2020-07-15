@@ -1,6 +1,7 @@
 import Chart from 'chart.js'
 import Rails from '@rails/ujs'
 import { API } from './api'
+import { FormHelpers } from './form_helpers'
 import * as SCSSColours from '!!sass-variable-loader!../stylesheets/variables/colours.scss';
 
 window.addEventListener('turbolinks:load', () => {
@@ -109,13 +110,7 @@ function line_graph(context, line_graph) {
       onClick: (_event, elements) => {
         if(elements[0]) {
           $('#modal').modal()
-
-          var clicked = new Date(elements[0]._chart.data.originalLabels[elements[0]._index])
-          var day = ('0' + clicked.getDate()).slice(-2);
-          var month = ('0' + (clicked.getMonth() + 1)).slice(-2);
-          var start_time_string = clicked.getFullYear()+'-'+(month)+'-'+(day) ;
-
-          $('#note_start_time').val(start_time_string)
+          FormHelpers.setDatepicker('#note_start_time', new Date(elements[0]._chart.data.originalLabels[elements[0]._index]))
         }
       }
     }
