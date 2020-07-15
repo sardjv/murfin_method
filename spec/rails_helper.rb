@@ -123,5 +123,5 @@ Capybara.configure do |c|
   # You can access it on a mac using `open vnc://0.0.0.0:5900`. The password is 'secret'.
   # Run a test with js:true to watch it play out, and use byebug to pause and interact.
   c.javascript_driver = :chrome_headless
-  # c.javascript_driver = :chrome_visible
+  c.javascript_driver = :chrome_visible
 end
