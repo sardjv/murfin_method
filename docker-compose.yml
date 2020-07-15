@@ -86,7 +86,7 @@ services:
   webdriver_chrome_debug:
     image: selenium/standalone-chrome-debug:3.141.0
     ports:
-      - 5900:5900
+      - 5900:5900 # Port for remote connection via vnc.
     volumes:
       - '.:/app'
       - bundle_cache:/bundle
