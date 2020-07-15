@@ -68,7 +68,6 @@ services:
       # We cache the bundle so that we don't re-download every gem on any change to the Gemfile.
       - bundle_cache:/bundle
     environment:
-      - CAPYBARA_DRIVER=chrome_headless
       - HEADLESS_CHROME_URL=http://chrome_headless:4444/wd/hub
       - VISIBLE_CHROME_URL=http://chrome_visible:4444/wd/hub
       - SELENIUM_APP_HOST=http://app:3000
