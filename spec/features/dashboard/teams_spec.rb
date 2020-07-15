@@ -34,9 +34,14 @@ describe 'Team Dashboard ', type: :feature, js: true do
 
   describe 'notes' do
     context 'when clicking a point on the graph' do
+      before { click_graph }
+
       it 'renders a note form' do
-        click_graph
-        expect(page).to have_selector('#modal', visible: true)
+        within '#modal' do
+          expect(page).to have_select('Note type', options: Note.states.keys)
+          expect(page).to have_field('Time period', type: 'date')
+          expect(page).to have_field('Add note', type: 'textarea')
+        end
       end
     end
   end
