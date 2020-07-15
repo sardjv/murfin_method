@@ -55,7 +55,6 @@ services:
       - db
       - redis
       - webpacker
-      - webdriver_chrome
     build: .
     # 1) Remove any existing server process in case of dirty shutdown, with -f in case the file doesn't exist.
     # 2) if `bundle check` indicates it's needed, `bundle install` here rather than in Dockerfile,
@@ -69,14 +68,24 @@ services:
       # We cache the bundle so that we don't re-download every gem on any change to the Gemfile.
       - bundle_cache:/bundle
     environment:
-      - SELENIUM_REMOTE_URL=http://webdriver_chrome:4444/wd/hub
+      - CAPYBARA_APP_HOST=http://app:3001
+      - HEADLESS_CHROME_URL=http://chrome_headless:4444/wd/hub
+      - VISIBLE_CHROME_URL=http://chrome_visible:4444/wd/hub
       - BUNDLE_PATH=/bundle/vendor
       - WEBPACKER_DEV_SERVER_HOST=webpacker
     env_file:
       - '.env'
 
-  webdriver_chrome:
-    image: selenium/standalone-chrome
+  chrome_headless:
+    image: selenium/standalone-chrome:3.141.0
+    volumes:
+      - '.:/app'
+      - bundle_cache:/bundle
+
+  chrome_visible:
+    image: selenium/standalone-chrome-debug:3.141.0
+    ports:
+      - 5900:5900 # Port for remote connection via `open vnc://0.0.0.0:5900`.
     volumes:
       - '.:/app'
       - bundle_cache:/bundle

@@ -56,4 +56,5 @@ Rails.application.configure do
   # Whitelist example.com for tests.
   # https://www.fngtps.com/2019/rails6-blocked-host/
   config.hosts << 'www.example.com'
+  config.hosts << 'app'
 end
