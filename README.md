@@ -70,7 +70,7 @@ This exposes a [VNC](https://en.wikipedia.org/wiki/Virtual_Network_Computing) se
 open vnc://0.0.0.0:5900
 ```
 
-Run a feature spec with that window open and you should see the test running.
+The password is 'secret'. Run a feature spec with that window open and you should see the test running.
 
 ## Code Coverage
 
