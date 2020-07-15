@@ -109,7 +109,13 @@ function line_graph(context, line_graph) {
       onClick: (_event, elements) => {
         if(elements[0]) {
           $('#modal').modal()
-          console.log(elements[0]._chart.data.originalLabels[elements[0]._index])
+
+          var clicked = new Date(elements[0]._chart.data.originalLabels[elements[0]._index])
+          var day = ('0' + clicked.getDate()).slice(-2);
+          var month = ('0' + (clicked.getMonth() + 1)).slice(-2);
+          var start_time_string = clicked.getFullYear()+'-'+(month)+'-'+(day) ;
+
+          $('#note_start_time').val(start_time_string)
         }
       }
     }
