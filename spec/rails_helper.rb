@@ -116,7 +116,7 @@ end
 Capybara.configure do |c|
   c.server_host = '0.0.0.0'
   c.server_port = 3001
-  c.app_host = 'http://app:3001'
+  c.app_host = ENV['CAPYBARA_APP_HOST']
   c.default_normalize_ws = true
   c.default_max_wait_time = 10
   # Set c.javascript_driver = :chrome_visible to render on a visible copy of Chrome.
