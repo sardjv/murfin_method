@@ -5,7 +5,7 @@ describe 'Team Dashboard ', type: :feature, js: true do
 
   let(:plan_id) { TimeRangeType.plan_type.id }
   let(:actual_id) { TimeRangeType.actual_type.id }
-  let!(:time_ranges) do
+  let!(:diagonal_graph) do
     (1..12).each do |index|
       create(
         :time_range,
