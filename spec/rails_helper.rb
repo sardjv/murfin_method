@@ -114,11 +114,13 @@ Capybara.register_driver :visible_chrome do |app|
 end
 
 Capybara.configure do |c|
-  c.app_host = ENV['SELENIUM_APP_HOST']
+  c.server_host = '0.0.0.0'
+  c.server_port = 3001
+  c.app_host = 'http://app:3001'
   c.default_normalize_ws = true
-  c.javascript_driver = :headless_chrome
+  # c.javascript_driver = :headless_chrome
   # Uncomment the below to render on a visible copy of Chrome.
-  # You can access it on a mac using `open vnc://0.0.0.0:5900`.
+  # You can access it on a mac using `open vnc://0.0.0.0:5900`. The password is 'secret'.
   # Run a test with js:true to watch it play out, and add byebug to pause and interact.
-  # c.javascript_driver = :visible_chrome
+  c.javascript_driver = :visible_chrome
 end
