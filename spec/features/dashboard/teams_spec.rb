@@ -36,10 +36,10 @@ describe 'Team Dashboard ', type: :feature, js: true do
     context 'when clicking a point on the graph' do
       before { click_graph }
 
-      it 'renders a note form' do
+      it 'renders a note form prefilled to the clicked-on date' do
         within '#modal' do
           expect(page).to have_select('Note type', options: Note.states.keys)
-          expect(page).to have_field('Time period', type: 'date')
+          expect(page).to have_field('Time period', type: 'date', with: '2020-01-01')
           expect(page).to have_field('Add note', type: 'textarea')
         end
       end
