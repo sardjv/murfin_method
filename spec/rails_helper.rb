@@ -94,12 +94,12 @@ end
 Selenium::WebDriver.logger.level = :error
 
 Capybara.register_driver :headless_chrome do |app|
-  args = %w[no-sandbox headless disable-gpu window-size=1400,1400]
+  args = %w[no-sandbox headless window-size=1400,1400]
   options = { 'goog:chromeOptions' => { 'args': args } }
   chrome_capabilities = ::Selenium::WebDriver::Remote::Capabilities.chrome(options)
   Capybara::Selenium::Driver.new(app,
                                  browser: :remote,
-                                 url: ENV['SELENIUM_HEADLESS_URL'],
+                                 url: ENV['HEADLESS_CHROME_URL'],
                                  desired_capabilities: chrome_capabilities)
 end
 
@@ -109,7 +109,7 @@ Capybara.register_driver :visible_chrome do |app|
   chrome_capabilities = ::Selenium::WebDriver::Remote::Capabilities.chrome(options)
   Capybara::Selenium::Driver.new(app,
                                  browser: :remote,
-                                 url: ENV['SELENIUM_VISIBLE_URL'],
+                                 url: ENV['VISIBLE_CHROME_URL'],
                                  desired_capabilities: chrome_capabilities)
 end
 
@@ -118,9 +118,9 @@ Capybara.configure do |c|
   c.server_port = 3001
   c.app_host = 'http://app:3001'
   c.default_normalize_ws = true
-  # c.javascript_driver = :headless_chrome
+  c.javascript_driver = :headless_chrome
   # Uncomment the below to render on a visible copy of Chrome.
   # You can access it on a mac using `open vnc://0.0.0.0:5900`. The password is 'secret'.
   # Run a test with js:true to watch it play out, and add byebug to pause and interact.
-  c.javascript_driver = :visible_chrome
+  # c.javascript_driver = :visible_chrome
 end
