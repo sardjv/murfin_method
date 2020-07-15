@@ -26,6 +26,14 @@ describe 'Team Dashboard ', type: :feature, js: true do
     end
   end
 
+  before :all do
+    Timecop.freeze(Time.zone.local(2020, 7, 15))
+  end
+
+  after :all do
+    Timecop.return
+  end
+
   before { visit teams_dashboard_path }
 
   it 'renders' do
