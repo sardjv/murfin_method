@@ -58,7 +58,7 @@ docker-compose run app bundle exec guard
 
 Just press enter to run the whole test suite straight away.
 
-To view and interactive with a visible Chrome browser in feature tests, uncomment this line in `rail_helper.rb`:
+To view and interact with a visible Chrome browser in feature tests, uncomment this line in `rail_helper.rb`:
 
 ```
 c.javascript_driver = :visible_chrome
