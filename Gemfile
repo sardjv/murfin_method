@@ -1,5 +1,9 @@
 source 'https://rubygems.org'
 
+# Make it easy to create beautiful-looking forms using Bootstrap 4.
+# https://github.com/bootstrap-ruby/bootstrap_form
+gem 'bootstrap_form', '~> 4.0'
+
 # Fixtures replacement with a straightforward definition syntax.
 # https://github.com/thoughtbot/factory_bot
 gem 'factory_bot', '~> 6.1.0'
@@ -60,10 +64,6 @@ gem 'tzinfo-data', '~> 1.2020.1'
 # Use Webpack to manage app-like JavaScript modules in Rails.
 # https://github.com/rails/webpacker
 gem 'webpacker', '~> 5.1.1'
-
-# Make it easy to create beautiful-looking forms using Bootstrap 4.
-# https://github.com/bootstrap-ruby/bootstrap_form
-gem 'bootstrap_form', '~> 4.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in your code to drop into a debugger console.
