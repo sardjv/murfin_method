@@ -118,6 +118,7 @@ Capybara.configure do |c|
   c.server_port = 3001
   c.app_host = 'http://app:3001'
   c.default_normalize_ws = true
+  c.default_max_wait_time = 10
   c.javascript_driver = :headless_chrome
   # Uncomment the below to render on a visible copy of Chrome.
   # You can access it on a mac using `open vnc://0.0.0.0:5900`. The password is 'secret'.
