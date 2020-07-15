@@ -61,7 +61,7 @@ Just press enter to run the whole test suite straight away.
 To view and interact with a visible Chrome browser in feature tests, uncomment this line in `rail_helper.rb`:
 
 ```
-c.javascript_driver = :visible_chrome
+c.javascript_driver = :chrome_visible
 ```
 
 This exposes a [VNC](https://en.wikipedia.org/wiki/Virtual_Network_Computing) server on port `5900`. You can access it on MacOS with:
