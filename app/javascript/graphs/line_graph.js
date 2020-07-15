@@ -108,6 +108,7 @@ function line_graph(context, line_graph) {
       },
       onClick: (_event, elements) => {
         if(elements[0]) {
+          $('#modal').modal()
           console.log(elements[0]._chart.data.originalLabels[elements[0]._index])
         }
       }

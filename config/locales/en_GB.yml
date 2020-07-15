@@ -34,6 +34,9 @@ en:
       combined_data: Combined data
       individuals: Individuals
       team: Team dashboard
+  notes:
+    add: Add note
+    cancel: Cancel
   status:
     about_right: About Right
     over: Over

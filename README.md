@@ -58,6 +58,20 @@ docker-compose run app bundle exec guard
 
 Just press enter to run the whole test suite straight away.
 
+To view and interact with a visible Chrome browser in feature tests, uncomment this line in `rail_helper.rb`:
+
+```
+c.javascript_driver = :chrome_visible
+```
+
+This exposes a [VNC](https://en.wikipedia.org/wiki/Virtual_Network_Computing) server on port `5900`. You can access it on MacOS with:
+
+```
+open vnc://0.0.0.0:5900
+```
+
+The password is 'secret'. Run a feature spec with that window open and you should see the test running.
+
 ## Code Coverage
 
 After running the test suite, open the coverage/index.html file in a web browser to check what code is covered by the tests.

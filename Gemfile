@@ -61,6 +61,10 @@ gem 'tzinfo-data', '~> 1.2020.1'
 # https://github.com/rails/webpacker
 gem 'webpacker', '~> 5.1.1'
 
+# Make it easy to create beautiful-looking forms using Bootstrap 4.
+# https://github.com/bootstrap-ruby/bootstrap_form
+gem 'bootstrap_form', '~> 4.0'
+
 group :development, :test do
   # Call 'byebug' anywhere in your code to drop into a debugger console.
   # https://github.com/deivid-rodriguez/byebug
@@ -113,7 +117,7 @@ group :test do
 
   # A browser automation framework and ecosystem.
   # https://github.com/SeleniumHQ/selenium
-  gem 'selenium-webdriver', '~> 3.142.5'
+  gem 'selenium-webdriver', '3.141.0'
 
   # Simple one-liner tests for common Rails functionality.
   # https://github.com/thoughtbot/shoulda-matchers
