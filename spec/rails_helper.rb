@@ -113,16 +113,6 @@ Capybara.register_driver :chrome_visible do |app|
                                  desired_capabilities: chrome_capabilities)
 end
 
-# Set CAPYBARA_DRIVER=chrome_circle_ci as an environment variable on CircleCI to use this.
-Capybara.register_driver :chrome_circle_ci do |app|
-  args = %w[no-sandbox headless window-size=1400,1400]
-  options = { 'goog:chromeOptions' => { 'args': args } }
-  chrome_capabilities = ::Selenium::WebDriver::Remote::Capabilities.chrome(options)
-  Capybara::Selenium::Driver.new(app,
-                                 browser: :chrome,
-                                 desired_capabilities: chrome_capabilities)
-end
-
 Capybara.configure do |c|
   c.server_host = '0.0.0.0'
   c.server_port = 3001
@@ -132,6 +122,6 @@ Capybara.configure do |c|
   # Set c.javascript_driver = :chrome_visible to render on a visible copy of Chrome.
   # You can access it on a mac using `open vnc://0.0.0.0:5900`. The password is 'secret'.
   # Run a test with js:true to watch it play out, and use byebug to pause and interact.
-  c.javascript_driver = ENV['CAPYBARA_DRIVER'].to_sym
+  c.javascript_driver = :chrome_headless
   # c.javascript_driver = :chrome_visible
 end
