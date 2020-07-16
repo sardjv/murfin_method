@@ -1,6 +1,6 @@
 <%= bootstrap_form_for(note) do |f| %>
   <div class='modal-body  '>
-    <%= f.select :state, Note.states, label: I18n.t('notes.labels.state') %>
+    <%= f.select :state, note_states_for_select, label: I18n.t('notes.labels.state') %>
     <%= f.date_field :start_time, label: I18n.t('notes.labels.start_time') %>
     <%= f.text_area :content, label: I18n.t('notes.labels.content') %>
   </div>
