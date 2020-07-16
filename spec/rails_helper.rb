@@ -12,7 +12,6 @@ require 'rspec/rails'
 require 'database_cleaner/active_record'
 require 'database_cleaner/redis'
 Dir[File.join(__dir__, 'support/', '*.rb')].sort.each { |file| require file }
-Dir[File.join(__dir__, 'support/expectations/', '*.rb')].sort.each { |file| require file }
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -88,6 +87,8 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include ActiveJob::TestHelper, type: :job
+
+  config.include CapybaraHelpers, type: :feature
 end
 
 # Turn off deprecation notices
