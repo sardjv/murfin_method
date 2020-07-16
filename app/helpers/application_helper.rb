@@ -29,8 +29,8 @@ module ApplicationHelper
     # to the sanitize parameters below so they get through.
     sanitize(
       doc.to_html,
-      tags: %w[svg path circle],
-      attributes: %w[class width height viewbox fill xmlns fill-rule d cx cy r]
+      tags: %w[svg path circle ellipse rect],
+      attributes: %w[class width height viewBox fill xmlns fill-rule d x y cx cy r rx ry]
     )
   end
 end
