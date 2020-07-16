@@ -37,6 +37,10 @@ en:
   notes:
     add: Add note
     cancel: Cancel
+    labels:
+      content: Add note
+      start_time: Time period
+      state: Note type
   status:
     about_right: About Right
     over: Over
