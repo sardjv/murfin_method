@@ -2,6 +2,7 @@ require('@rails/ujs').start()
 require('turbolinks').start()
 
 import 'bootstrap'
+import 'bootstrap-select';
 import '../stylesheets/application'
 
 require.context('../images', true)
@@ -11,6 +12,7 @@ require.context('../images', true)
 // but there are lots of gotchas for potentially minimal performance gain.
 // Currently on step 1 of this: https://stackoverflow.com/a/59495659/4741698
 import '../graphs/api'
+import '../helpers/bootstrap_select'
 import '../graphs/form_helpers'
 import '../graphs/missing_data'
 import '../graphs/bar_chart'
