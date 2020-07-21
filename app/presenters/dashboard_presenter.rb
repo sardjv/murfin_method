@@ -62,7 +62,7 @@ class DashboardPresenter
 
   def defaults
     {
-      user_ids: User.pluck(:id),
+      user_ids: User.ids,
       plan_id: TimeRangeType.plan_type.id,
       actual_id: TimeRangeType.actual_type.id
     }

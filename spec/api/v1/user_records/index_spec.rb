@@ -8,7 +8,7 @@ describe 'Api::V1::User', type: :request, swagger_doc: 'v1/swagger.json' do
   path '/api/v1/users' do
     get 'user records' do
       tags 'User'
-      security [JWT: {}]
+      security [{ JWT: {} }]
       produces 'application/vnd.api+json'
       parameter name: 'page[size]', in: :query, type: :integer, required: false
       parameter name: 'page[number]', in: :query, type: :integer, required: false
