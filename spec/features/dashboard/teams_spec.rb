@@ -46,7 +46,7 @@ describe 'Team Dashboard ', type: :feature, js: true do
 
       it 'renders a note form prefilled to the clicked-on date' do
         within '#modal' do
-          expect(page).to have_select('Note type', options: Note.states.keys)
+          expect(page).to have_bootstrap_select('Note type', options: %w[Info Action Resolved])
           expect(page).to have_field('Time period', type: 'date', with: '2020-01-01')
           expect(page).to have_field('Add note', type: 'textarea')
         end
