@@ -55,7 +55,7 @@ gem 'rswag-ui', '~> 2.3.1'
 
 # Simple, efficient background processing for Ruby.
 # https://github.com/mperham/sidekiq
-gem 'sidekiq', '~> 6.1.0'
+gem 'sidekiq', '~> 6.1.1'
 
 # Bundle zoneinfo files which are not included in Windows.
 # https://github.com/tzinfo/tzinfo-data
