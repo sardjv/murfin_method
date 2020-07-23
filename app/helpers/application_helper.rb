@@ -30,7 +30,7 @@ module ApplicationHelper
     sanitize(
       doc.to_html,
       tags: %w[circle ellipse path rect svg],
-      attributes: %w[class cx cy d fill fill-rule height r rx ry viewBox width x xmlns y]
+      attributes: %w[class cx cy d fill fill-rule height r rx ry viewbox width x xmlns y]
     )
   end
 end
