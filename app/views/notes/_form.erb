@@ -5,7 +5,7 @@
     <%= f.text_area :content, label: I18n.t('notes.labels.content') %>
   </div>
   <div class='modal-footer'>
-    <button type='button' class='btn btn-secondary' data-dismiss='modal'><%= I18n.t('notes.cancel') %></button>
     <%= f.primary I18n.t('notes.add') %>
+    <button type='button' class='btn btn-secondary mr-auto' data-dismiss='modal'><%= I18n.t('notes.cancel') %></button>
   </div>
 <% end %>
