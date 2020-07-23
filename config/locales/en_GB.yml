@@ -42,7 +42,7 @@ en:
       start_time: Time period
       state: Note type
     placeholders:
-      content: Add some detail here about the note
+      content: Add some detail about the note here
   status:
     about_right: About Right
     over: Over
