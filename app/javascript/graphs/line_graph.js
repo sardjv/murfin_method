@@ -79,7 +79,17 @@ function line_graph(context, line_graph) {
     },
     options: {
       legend: {
-        display: false
+        display: false,
+        onHover: function(e) {
+          e.target.style.cursor = 'pointer';
+        }
+      },
+      hover: {
+        onHover: function(e) {
+           var point = this.getElementAtEvent(e);
+           if (point.length) e.target.style.cursor = 'pointer';
+           else e.target.style.cursor = 'default';
+        }
       },
       tooltips: {
         callbacks: {
