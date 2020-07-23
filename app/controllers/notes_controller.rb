@@ -1,3 +1,5 @@
 class NotesController < ApplicationController
-  def create; end
+  def create
+    FactoryBot.create(:note)
+  end
 end
