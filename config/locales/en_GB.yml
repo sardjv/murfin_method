@@ -41,6 +41,8 @@ en:
       content: Add note
       start_time: Time period
       state: Note type
+    placeholders:
+      content: Add some detail here about the note
   status:
     about_right: About Right
     over: Over
