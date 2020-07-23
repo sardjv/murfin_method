@@ -1,4 +1,6 @@
 class Auth0Controller < ApplicationController
+  skip_before_action :authenticate_user!
+
   def callback
     session[:userinfo] = request.env['omniauth.auth']
     redirect_to admin_dashboard_path
