@@ -2,7 +2,7 @@
   <div class='modal-body'>
     <%= f.select :state, note_states_for_select, label: I18n.t('notes.labels.state') %>
     <%= f.date_field :start_time, label: I18n.t('notes.labels.start_time') %>
-    <%= f.text_area :content, label: I18n.t('notes.labels.content') %>
+    <%= f.text_area :content, label: I18n.t('notes.labels.content'), placeholder: I18n.t('notes.placeholders.content') %>
   </div>
   <div class='modal-footer'>
     <%= f.primary I18n.t('notes.add') %>
