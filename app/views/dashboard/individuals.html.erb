@@ -48,7 +48,7 @@
                 <% user_presenter = UserStatsPresenter.new(user: user, plan_id: TimeRangeType.plan_type.id, actual_id: TimeRangeType.actual_type.id) %>
                 <tr>
                   <td>
-                    <%= user.first_name %> <%= user.last_name %>
+                    <%= user.name %>
                   </td>
                   <td>
                     <% if user_presenter.average_weekly_planned.nil? %>

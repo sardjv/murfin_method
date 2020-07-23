@@ -11,12 +11,6 @@ module ApplicationHelper
     content_for(:heading) { page_heading }
   end
 
-  def current_user_name
-    return unless session[:userinfo]
-
-    session[:userinfo].dig('extra', 'raw_info', 'name')
-  end
-
   # From https://github.com/twbs/icons/issues/79
   # To view available icons: `ls node_modules/bootstrap-icons/icons/`
   def icon(icon, options = {})
