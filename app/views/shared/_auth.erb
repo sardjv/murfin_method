@@ -2,7 +2,7 @@
   <li class='nav-item'>
     <% if user_authenticated? %>
       <%= link_to auth_logout_path, class: 'nav-link p-3' do %>
-        <%= I18n.t('auth.log_out') %> <%= current_user_name %>
+        <%= I18n.t('auth.log_out') %>
         <%= icon('arrow-right-square', class: 'mx-2', width: '2em') %>
       <% end %>
     <% else %>
