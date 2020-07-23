@@ -1,2 +1,10 @@
 $primary: $blue-800;
 $navbar-dark-color: $white;
+
+button.btn {
+  &.btn-secondary {
+    background-color: $white;
+    color: $grey-500;
+    border-color: $grey-500;
+  }
+}
