@@ -7,12 +7,15 @@ RSpec.describe 'Notes', type: :request do
       let(:content) { note.content }
       let(:start_time) { note.start_time }
       let(:end_time) { note.end_time }
+      let(:state) { 'action' }
+
       let(:params) do
         {
           note: {
             content: content,
             start_time: start_time,
-            end_time: end_time
+            end_time: end_time,
+            state: state
           }
         }
       end
@@ -31,6 +34,7 @@ RSpec.describe 'Notes', type: :request do
         expect(Note.last.content).to eq(content)
         expect(Note.last.start_time).to eq(start_time)
         expect(Note.last.end_time).to eq(end_time)
+        expect(Note.last.state).to eq(state)
       end
     end
   end
