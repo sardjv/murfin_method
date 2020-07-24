@@ -13,10 +13,13 @@ class NotesController < ApplicationController
     note.author_id = current_user.id
     note.subject_id = current_user.id
     note.subject_type = 'User'
-    return unless note.save
 
-    respond_to do |format|
-      format.js
+    if note.save!
+      respond_to do |format|
+        format.js
+      end
+    else
+      render :new
     end
   end
 
