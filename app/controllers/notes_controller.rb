@@ -8,13 +8,7 @@ class NotesController < ApplicationController
   end
 
   def create
-    note = Note.new(note_params)
-    note.end_time = note.start_time
-    note.author_id = current_user.id
-    note.subject_id = current_user.id
-    note.subject_type = 'User'
-
-    if note.save!
+    if build_note.save!
       respond_to do |format|
         format.js { render partial: 'hide_modal.js.erb', status: :created }
       end
@@ -35,5 +29,14 @@ class NotesController < ApplicationController
       :subject_id,
       :subject_type
     )
+  end
+
+  def build_note
+    note = Note.new(note_params)
+    note.end_time = note.start_time
+    note.author_id = current_user.id
+    note.subject_id = current_user.id
+    note.subject_type = 'User'
+    note
   end
 end

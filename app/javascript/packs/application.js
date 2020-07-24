@@ -1,4 +1,4 @@
-// jQuery is needed globally for the JS views like 'app/views/notes/new.js.erb'.
+// jQuery is needed globally for JS views like 'app/views/notes/new.js.erb'.
 global.$ = jQuery;
 
 require('@rails/ujs').start()
