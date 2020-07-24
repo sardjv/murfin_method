@@ -124,7 +124,6 @@ function line_graph(context, line_graph) {
           Rails.ajax({
             url: '/notes/new',
             type: 'GET',
-            dataType: 'json',
             data: 'note[start_time]=' + date_clicked.toISOString()
           });
         }
