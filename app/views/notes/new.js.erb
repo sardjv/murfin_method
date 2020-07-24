@@ -1,1 +1,2 @@
-document.getElementById('modal-root').innerHTML = "<%= j render(partial: 'shared/modal', locals: { template: 'notes/form', template_locals: { note: @note } }) %>"
+$('#modal-root').html("<%= j render(partial: 'shared/modal', locals: { template: 'notes/form', template_locals: { note: @note } }) %>")
+$('#modal').modal()
