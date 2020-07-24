@@ -55,5 +55,12 @@ module JpStats
     config.active_job.queue_adapter = :sidekiq
     config.active_job.queue_name_prefix =
       "#{ENV['ACTIVE_JOB_QUEUE_PREFIX']}_#{Rails.env}"
+
+    # Use RSpec as the test framework when generating code.
+    config.generators do |g|
+      g.test_framework :rspec, fixture: true
+      g.fixture_replacement :factory_bot, dir: 'spec/factories'
+      g.view_specs false
+    end
   end
 end
