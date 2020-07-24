@@ -1,9 +1,10 @@
 class NotesController < ApplicationController
   def create
     note = Note.new(note_params)
+    note.end_time = note.start_time
     note.author_id = current_user.id
-    note.subject_type = 'User'
     note.subject_id = current_user.id
+    note.subject_type = 'User'
     note.save
   end
 
