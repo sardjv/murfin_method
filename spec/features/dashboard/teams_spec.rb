@@ -51,6 +51,22 @@ describe 'Team Dashboard ', type: :feature, js: true do
           expect(page).to have_field('Add note', type: 'textarea')
         end
       end
+
+      context 'with valid input' do
+        before { fill_in 'note[content]', with: 'Decline due to a reduction of hours over the year.' }
+
+        describe 'clicking add' do
+          before { click_on('Add note') }
+
+          it 'closes the modal' do
+            expect(page).not_to have_selector('#modal', visible: true)
+          end
+
+          it 'renders a success message' do
+            expect(page).to have_content('Note added!')
+          end
+        end
+      end
     end
   end
 end
