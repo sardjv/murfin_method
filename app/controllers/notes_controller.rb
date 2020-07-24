@@ -5,7 +5,9 @@ class NotesController < ApplicationController
     note.author_id = current_user.id
     note.subject_id = current_user.id
     note.subject_type = 'User'
-    note.save
+    return unless note.save
+
+    render json: {}, status: :created
   end
 
   private

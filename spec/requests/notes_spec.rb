@@ -18,9 +18,9 @@ RSpec.describe 'Notes', type: :request do
         }
       end
 
-      it 'returns http success' do
+      it 'returns http created' do
         post '/notes', params: params
-        expect(response).to have_http_status(:success)
+        expect(response).to have_http_status(:created)
       end
 
       it 'creates a new note' do
