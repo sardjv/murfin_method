@@ -61,10 +61,6 @@ describe 'Team Dashboard ', type: :feature, js: true do
           it 'closes the modal' do
             expect(page).not_to have_selector('#modal', visible: true)
           end
-
-          it 'renders a success message' do
-            expect(page).to have_content('Note added!')
-          end
         end
       end
     end
