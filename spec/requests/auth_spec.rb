@@ -5,6 +5,8 @@ RSpec.describe 'Auth', type: :request do
     context 'when authenticated' do
       # Users are authenticated by default in specs via spec/support/secured_with_oauth_override.rb.
       let(:session) { Class.new.extend(SecuredWithOauth).session }
+      let(:given_name) { session.dig(:userinfo, 'extra', 'raw_info', 'given_name') }
+      let(:family_name) { session.dig(:userinfo, 'extra', 'raw_info', 'family_name') }
 
       it 'returns http success' do
         get admin_dashboard_path
@@ -17,8 +19,8 @@ RSpec.describe 'Auth', type: :request do
 
       it 'sets the user name and email' do
         get admin_dashboard_path
-        expect(User.last.first_name).to eq(session.dig(:userinfo, 'extra', 'raw_info', 'given_name'))
-        expect(User.last.last_name).to eq(session.dig(:userinfo, 'extra', 'raw_info', 'family_name'))
+        expect(User.last.first_name).to eq(given_name)
+        expect(User.last.last_name).to eq(family_name)
         expect(User.last.email).to eq(session.dig(:userinfo, 'info', 'email'))
       end
     end
