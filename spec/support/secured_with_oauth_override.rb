@@ -8,6 +8,12 @@ module SecuredWithOauth
         'info' => {
           'name' => 'John Smith',
           'email' => 'john@example.com'
+        },
+        'extra' => {
+          'raw_info' => {
+            'given_name' => 'John',
+            'family_name' => 'Smith',
+          }
         }
       }
     }
