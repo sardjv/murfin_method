@@ -6,7 +6,8 @@
 #  email      :string(255)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  name       :string(255)      not null
+#  last_name  :string(255)      not null
+#  first_name :string(255)      not null
 #
 class User < ApplicationRecord
   has_many :time_ranges, dependent: :destroy
@@ -20,5 +21,6 @@ class User < ApplicationRecord
   )
 
   validates :email, presence: true
-  validates :name, presence: true
+  validates :first_name, presence: true
+  validates :last_name, presence: true
 end

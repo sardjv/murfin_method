@@ -3,5 +3,5 @@ class Api::V1::UserResource < JSONAPI::Resource
 
   model_name 'User'
 
-  attributes :name, :email
+  attributes :first_name, :last_name, :email
 end
