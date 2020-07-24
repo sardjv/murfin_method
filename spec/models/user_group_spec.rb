@@ -16,5 +16,5 @@ describe UserGroup, type: :model do
   it { expect(subject).to be_valid }
   it { should validate_presence_of(:name) }
   it { should belong_to(:group_type) }
-  it { should validate_presence_of(:group_type_id) }
+  it { expect(build(:user_group, group_type_id: nil)).to_not be_valid }
 end

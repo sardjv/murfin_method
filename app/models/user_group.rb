@@ -11,5 +11,5 @@
 class UserGroup < ApplicationRecord
   belongs_to :group_type
 
-  validates :name, :group_type_id, presence: true
+  validates :name, presence: true
 end
