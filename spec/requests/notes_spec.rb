@@ -29,6 +29,8 @@ RSpec.describe 'Notes', type: :request do
       it 'persists values' do
         post '/notes', params: params
         expect(Note.last.content).to eq(content)
+        expect(Note.last.start_time).to eq(start_time)
+        expect(Note.last.end_time).to eq(end_time)
       end
     end
   end
