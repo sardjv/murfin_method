@@ -13,7 +13,6 @@ require.context('../images', true)
 // Currently on step 1 of this: https://stackoverflow.com/a/59495659/4741698
 import '../graphs/api'
 import '../helpers/bootstrap_select'
-import '../graphs/form_helpers'
 import '../graphs/missing_data'
 import '../graphs/bar_chart'
 import '../graphs/line_graph'

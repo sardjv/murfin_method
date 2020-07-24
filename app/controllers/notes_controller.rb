@@ -1,4 +1,12 @@
 class NotesController < ApplicationController
+  def new
+    @note = Note.new(note_params)
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def create
     note = Note.new(note_params)
     note.end_time = note.start_time
@@ -7,7 +15,9 @@ class NotesController < ApplicationController
     note.subject_type = 'User'
     return unless note.save
 
-    render json: {}, status: :created
+    respond_to do |format|
+      format.js
+    end
   end
 
   private
