@@ -16,7 +16,7 @@ class NotesController < ApplicationController
 
     if note.save!
       respond_to do |format|
-        format.js
+        format.js { render partial: 'hide_modal.js.erb', status: :created }
       end
     else
       render :new
