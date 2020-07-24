@@ -10,7 +10,8 @@ module SecuredWithOauth
       user = User.find_or_initialize_by(email: session[:userinfo]['info']['email'])
 
       unless user.persisted?
-        user.name = session[:userinfo]['info']['name']
+        user.first_name = session.dig(:userinfo, 'extra', 'raw_info', 'given_name')
+        user.last_name = session.dig(:userinfo, 'extra', 'raw_info', 'family_name')
         user.save!
       end
 
