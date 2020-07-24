@@ -17,7 +17,8 @@ RSpec.describe 'Auth', type: :request do
 
       it 'sets the user name and email' do
         get admin_dashboard_path
-        expect(User.last.name).to eq(session.dig(:userinfo, 'info', 'name'))
+        expect(User.last.first_name).to eq(session.dig(:userinfo, 'info', 'name'))
+        expect(User.last.last_name).to eq(session.dig(:userinfo, 'info', 'name'))
         expect(User.last.email).to eq(session.dig(:userinfo, 'info', 'email'))
       end
     end
