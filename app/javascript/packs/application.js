@@ -7,6 +7,7 @@ require('turbolinks').start()
 import 'bootstrap'
 import 'bootstrap-select';
 import '../stylesheets/application'
+import * as _ from 'lodash';
 
 require.context('../images', true)
 
