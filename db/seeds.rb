@@ -1,7 +1,6 @@
 # Create some dummy data for demonstration purposes.
 
-# Create Bands
-
+# Create Bands 1, 2, 3, 4, 5, 6, 7, 8a, 8b, 8c, 8d, 9
 band = FactoryBot.create(:group_type, name: 'Band')
 (1..7).each do |band_number|
   FactoryBot.create(:user_group, group_type: band, name: "Band #{band_number}")
@@ -11,8 +10,13 @@ end
 end
 FactoryBot.create(:user_group, group_type: band, name: 'Band 9')
 
-# Create Users.
-10.times { FactoryBot.create(:user) }
+# Create Users
+UserGroup.all.each do |band|
+  2.times do
+    user = FactoryBot.create(:user)
+    FactoryBot.create(:membership, user_group: band, user: user)
+  end
+end
 
 # Create TimeRangeTypes
 plan_id = FactoryBot.create(:time_range_type, name: 'Job Plan').id
