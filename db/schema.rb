@@ -10,12 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_24_132702) do
+ActiveRecord::Schema.define(version: 2020_07_27_070331) do
 
   create_table "group_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "role", default: "member", null: false
+    t.bigint "user_group_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_group_id", "user_id"], name: "index_memberships_on_user_group_id_and_user_id", unique: true
+    t.index ["user_group_id"], name: "index_memberships_on_user_group_id"
+    t.index ["user_id"], name: "index_memberships_on_user_id"
   end
 
   create_table "notes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -67,5 +78,7 @@ ActiveRecord::Schema.define(version: 2020_07_24_132702) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "memberships", "user_groups"
+  add_foreign_key "memberships", "users"
   add_foreign_key "user_groups", "group_types"
 end
