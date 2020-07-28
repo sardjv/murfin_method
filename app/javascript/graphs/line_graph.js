@@ -48,10 +48,14 @@ function datasets(datas) {
       backgroundColor: getColour(index),
       borderColor: getColour(index),
       borderWidth: 5,
-      pointRadius: 0.0001,
-      pointHitRadius: 20,
       lineTension: 0.3,
-      borderCapStyle: 'round'
+      borderCapStyle: 'round',
+      pointHitRadius: 20,
+      pointBackgroundColor: SCSSColours['red200'],
+      pointBorderColor: SCSSColours['red200'],
+      pointHoverBackgroundColor: SCSSColours['red200'],
+      pointHoverBorderColor: SCSSColours['red200'],
+      pointHoverRadius: 10
     }
     index += 1;
     return dataset;
@@ -97,6 +101,11 @@ function line_graph(context, line_graph) {
           }
         }
       },
+      elements: {
+        point: {
+          radius: customRadius
+        }
+      },
       scales: {
         xAxes: [{
           gridLines: {
@@ -137,3 +146,12 @@ function getNoteForm(date) {
 const debouncedGetNoteForm = _.debounce(getNoteForm, 1000, {
   'leading': true
 })
+
+function customRadius( context ) {
+  return 0.001;
+  // const index = context.dataIndex;
+  // const value = context.dataset.data[ index ];
+  // return index === 3 || value >= 8 ?
+  //   8 :
+  //   0.001;
+}
