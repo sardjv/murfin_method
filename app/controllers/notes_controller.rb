@@ -7,7 +7,7 @@ class NotesController < ApplicationController
     end
   end
 
-  def show
+  def edit
     @note = Note.find(params[:id])
 
     respond_to do |format|
