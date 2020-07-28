@@ -7,6 +7,16 @@ class NotesController < ApplicationController
     end
   end
 
+  def create
+    if build_note.save!
+      respond_to do |format|
+        format.js { render partial: 'hide_modal.js.erb', status: :created }
+      end
+    else
+      render :new
+    end
+  end
+
   def edit
     @note = Note.find(params[:id])
 
@@ -15,13 +25,15 @@ class NotesController < ApplicationController
     end
   end
 
-  def create
-    if build_note.save!
+  def update
+    @note = Note.find(params[:id])
+
+    if @note.update!(note_params)
       respond_to do |format|
-        format.js { render partial: 'hide_modal.js.erb', status: :created }
+        format.js { render partial: 'hide_modal.js.erb' }
       end
     else
-      render :new
+      render :edit
     end
   end
 

@@ -64,4 +64,28 @@ RSpec.describe 'Notes', type: :request do
       end
     end
   end
+
+  describe 'PUT /notes/:id/edit' do
+    context 'with a note' do
+      let!(:note) { create(:note) }
+      let(:new_content) { Faker::Lorem.sentences.to_s }
+      let(:params) do
+        {
+          'note' => {
+            'content' => new_content
+          }
+        }
+      end
+
+      it 'returns http ok' do
+        put "/notes/#{note.id}", params: params, xhr: true
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'updates note' do
+        put "/notes/#{note.id}", params: params, xhr: true
+        expect(note.reload.content).to eq(new_content)
+      end
+    end
+  end
 end
