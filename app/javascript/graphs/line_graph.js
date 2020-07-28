@@ -152,8 +152,8 @@ const debouncedGetNoteForm = _.debounce(getNoteForm, 1000, {
 
 function customRadius( context ) {
   const index = context.dataIndex;
-  const note = context.dataset.note_ids[ index ];
-  if (note && note.length > 0) {
+  const note_id = context.dataset.note_ids[ index ];
+  if (note_id) {
     return 8;
   } else {
     return 0.001;

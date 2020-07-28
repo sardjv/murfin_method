@@ -15,13 +15,10 @@ class DashboardController < ApplicationController
 
   def teams
     @presenter = DashboardPresenter.new(params: dashboard_params)
-
     respond_to do |format|
       format.html
       format.json do
-        json = Rails.cache.fetch('teams') do
-          @presenter.to_json(graphs: [{ type: :line_graph, data: :team_data, units: '%' }])
-        end
+        json = @presenter.to_json(graphs: [{ type: :line_graph, data: :team_data, units: '%' }])
         render json: json
       end
     end

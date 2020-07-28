@@ -75,6 +75,6 @@ class TeamStatsPresenter
 
   def relevant_note(from:, _to:)
     # TODO: Filter by subject, and later viewer permissions.
-    Note.find_by(start_time: from)&.id
+    Note.find_by(start_time: from.to_time)&.id
   end
 end
