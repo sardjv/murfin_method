@@ -1,6 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe 'Notes', type: :request do
+  describe 'GET /notes/new' do
+    context 'with valid params' do
+      let(:start_time) { DateTime.now }
+      let(:params) do
+        {
+          note: {
+            start_time: start_time
+          }
+        }
+      end
+
+      it 'returns http ok' do
+        get '/notes/new', params: params, xhr: true
+        expect(response).to have_http_status(:ok)
+      end
+    end
+  end
+
   describe 'POST /notes' do
     context 'with valid params' do
       let(:note) { build(:note) }
