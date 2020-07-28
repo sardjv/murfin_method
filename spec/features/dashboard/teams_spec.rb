@@ -69,10 +69,5 @@ end
 
 def click_graph
   sleep(1)
-  Timeout.timeout(Capybara.default_max_wait_time) do
-    loop do
-      page.find('#line-graph').click(x: 540, y: 240)
-      break if page.find('#modal', visible: false).visible?
-    end
-  end
+  page.find('#line-graph').click(x: 540, y: 240)
 end
