@@ -185,6 +185,30 @@ describe TeamStatsPresenter do
             ]
           )
         end
+
+        context 'with a relevant note' do
+          let!(:note) { create(:note, start_time: DateTime.new(2019, 11, 1)) }
+
+          it 'includes the note' do
+            expect(subject.weekly_percentage_delivered_per_month).to eq(
+              [
+                { 'name': '2019-06-01T00:00:00.000Z', 'value': 42.86, 'note_id': nil },
+                { 'name': '2019-07-01T00:00:00.000Z', 'value': 41.81, 'note_id': nil },
+                { 'name': '2019-08-01T00:00:00.000Z', 'value': 41.81, 'note_id': nil },
+                { 'name': '2019-09-01T00:00:00.000Z', 'value': 41.81, 'note_id': nil },
+                { 'name': '2019-10-01T00:00:00.000Z', 'value': 41.81, 'note_id': nil },
+                { 'name': '2019-11-01T00:00:00.000Z', 'value': 41.81, 'note_id': note.id },
+                { 'name': '2019-12-01T00:00:00.000Z', 'value': 41.81, 'note_id': nil },
+                { 'name': '2020-01-01T00:00:00.000Z', 'value': 41.81, 'note_id': nil },
+                { 'name': '2020-02-01T00:00:00.000Z', 'value': 41.81, 'note_id': nil },
+                { 'name': '2020-03-01T00:00:00.000Z', 'value': 41.81, 'note_id': nil },
+                { 'name': '2020-04-01T00:00:00.000Z', 'value': 41.81, 'note_id': nil },
+                { 'name': '2020-05-01T00:00:00.000Z', 'value': 41.81, 'note_id': nil },
+                { 'name': '2020-06-01T00:00:00.000Z', 'value': 42.04, 'note_id': nil }
+              ]
+            )
+          end
+        end
       end
     end
   end

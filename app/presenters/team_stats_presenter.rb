@@ -15,7 +15,7 @@ class TeamStatsPresenter
       {
         'name': from.strftime(I18n.t('time.formats.iso8601_utc')),
         'value': total(users: users, from: from, to: to, method: :average_weekly_planned),
-        'note_id': nil
+        'note_id': relevant_note(from: from, _to: to)
       }
     end
   end
@@ -25,7 +25,7 @@ class TeamStatsPresenter
       {
         'name': from.strftime(I18n.t('time.formats.iso8601_utc')),
         'value': total(users: users, from: from, to: to, method: :average_weekly_actual),
-        'note_id': nil
+        'note_id': relevant_note(from: from, _to: to)
       }
     end
   end
@@ -35,7 +35,7 @@ class TeamStatsPresenter
       {
         'name': bounds.first.strftime(I18n.t('time.formats.iso8601_utc')),
         'value': percentage(index),
-        'note_id': nil
+        'note_id': relevant_note(from: bounds.first, _to: bounds.last)
       }
     end
   end
@@ -71,5 +71,10 @@ class TeamStatsPresenter
     plan = average_weekly_planned_per_month[index][:value]
     value = (plan.zero? ? 0 : (actual / plan) * 100)
     value.round(2)
+  end
+
+  def relevant_note(from:, _to:)
+    # TODO: Filter by subject, and later viewer permissions.
+    Note.find_by(start_time: from)&.id
   end
 end
