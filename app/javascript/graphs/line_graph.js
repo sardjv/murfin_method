@@ -178,11 +178,20 @@ function customRadius( context ) {
 }
 
 function addNotePoint(date, id) {
-  const index = _.findIndex(chart.data.originalLabels, (l) => { return l === date })
+  const index = _.findIndex(chart.data.originalLabels, (el) => { return el === date })
 
   chart.data.datasets.forEach((dataset) => {
     let note_ids = dataset.note_ids
+
+    // If the note already exists, remove it (in case the date has changed).
+    const existingIndex = _.findIndex(note_ids, (el) => { return el === id })
+    if (existingIndex) {
+      note_ids[existingIndex] = null
+    }
+
+    // Add the note.
     note_ids[index] = id
+
     dataset.note_ids = note_ids
   });
   chart.update();
