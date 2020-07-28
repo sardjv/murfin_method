@@ -43,6 +43,9 @@ function datasets(datas) {
       data: data.map(function(e) {
         return e.value;
       }),
+      note_ids: data.map(function(e) {
+        return '1';
+      }),
       borderWidth: 1,
       fill: false,
       backgroundColor: getColour(index),
@@ -148,10 +151,11 @@ const debouncedGetNoteForm = _.debounce(getNoteForm, 1000, {
 })
 
 function customRadius( context ) {
-  return 0.001;
-  // const index = context.dataIndex;
-  // const value = context.dataset.data[ index ];
-  // return index === 3 || value >= 8 ?
-  //   8 :
-  //   0.001;
+  const index = context.dataIndex;
+  const note = context.dataset.note_ids[ index ];
+  if (note.length > 0) {
+    return 8;
+  } else {
+    return 0.001;
+  }
 }
