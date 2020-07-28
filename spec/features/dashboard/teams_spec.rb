@@ -65,7 +65,7 @@ describe 'Team Dashboard ', type: :feature, js: true do
 
           it 'adds the note to the graph' do
             click_graph
-            expect(page).to have_field('Add note', type: 'textarea', with: note_content)
+            expect(page).to have_content(note_content)
           end
         end
       end

@@ -131,19 +131,27 @@ function line_graph(context, line_graph) {
       onClick: (_event, elements) => {
         if(elements[0]) {
           const date_clicked = new Date(elements[0]._chart.data.originalLabels[elements[0]._index])
-          debouncedGetNoteForm(date_clicked)
+          const note_id = elements[0]._chart.data.datasets[0].note_ids[elements[0]._index]
+          debouncedGetNoteForm(date_clicked, note_id)
         }
       }
     }
   });
 }
 
-function getNoteForm(date) {
-  Rails.ajax({
-    url: '/notes/new',
-    type: 'GET',
-    data: 'note[start_time]=' + date.toISOString()
-  });
+function getNoteForm(date, note_id) {
+  if (note_id) {
+    Rails.ajax({
+      url: '/notes/' + note_id,
+      type: 'GET'
+    });
+  } else {
+    Rails.ajax({
+      url: '/notes/new',
+      type: 'GET',
+      data: 'note[start_time]=' + date.toISOString()
+    });
+  }
 }
 
 const debouncedGetNoteForm = _.debounce(getNoteForm, 1000, {
