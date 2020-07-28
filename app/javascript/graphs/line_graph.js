@@ -44,7 +44,7 @@ function datasets(datas) {
         return e.value;
       }),
       note_ids: data.map(function(e) {
-        return '1';
+        return e.note_id;
       }),
       borderWidth: 1,
       fill: false,
@@ -153,7 +153,7 @@ const debouncedGetNoteForm = _.debounce(getNoteForm, 1000, {
 function customRadius( context ) {
   const index = context.dataIndex;
   const note = context.dataset.note_ids[ index ];
-  if (note.length > 0) {
+  if (note && note.length > 0) {
     return 8;
   } else {
     return 0.001;
