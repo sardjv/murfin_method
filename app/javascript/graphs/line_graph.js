@@ -4,18 +4,30 @@ import { API } from './api'
 import * as SCSSColours from '!!sass-variable-loader!../stylesheets/variables/colours.scss';
 
 window.addEventListener('turbolinks:load', () => {
+  renderLineGraph();
+});
+
+window.addEventListener('ajax:success', (event) => {
+  const [_data, _status, xhr] = event.detail;
+  const response = JSON.parse(xhr.response)
+
+  addNotePoint(response.start_time, response.id)
+
+  $('#modal').modal('hide')
+});
+
+function renderLineGraph() {
   const context = document.getElementById('line-graph');
   if (context) {
     Rails.ajax({
       url: API.url(),
       type: 'GET',
       success: function(data) {
-        const units = data.line_graph.units
-        line_graph(context, data.line_graph)
+        global.chart = line_graph(context, data.line_graph)
       }
     });
   }
-});
+}
 
 function getColour(number) {
   const colours = [
@@ -75,7 +87,7 @@ function line_graph(context, line_graph) {
 
   var units = line_graph.units || ''
 
-  new Chart(context, {
+  return new Chart(context, {
     type: 'line',
     data: {
       labels: formattedLabels,
@@ -133,18 +145,14 @@ function line_graph(context, line_graph) {
           const date_clicked = new Date(elements[0]._chart.data.originalLabels[elements[0]._index])
           const note_id = elements[0]._chart.data.datasets[0].note_ids[elements[0]._index]
 
-          if (!note_id) {
-            addNotePoint(elements[0]._chart, elements[0]._index)
-          }
-
-          debouncedGetNoteForm(date_clicked, note_id)
+          debouncedGetNote(date_clicked, note_id)
         }
       }
     }
   });
 }
 
-function getNoteForm(date, note_id) {
+function getNote(date, note_id) {
   if (note_id) {
     Rails.ajax({
       url: '/notes/' + note_id + '/edit',
@@ -159,16 +167,7 @@ function getNoteForm(date, note_id) {
   }
 }
 
-function addNotePoint(chart, index) {
-  chart.data.datasets.forEach((dataset) => {
-    let note_ids = dataset.note_ids
-    note_ids[index] = 'test'
-    dataset.note_ids = note_ids
-  });
-  chart.update();
-}
-
-const debouncedGetNoteForm = _.debounce(getNoteForm, 1000, {
+const debouncedGetNote = _.debounce(getNote, 1000, {
   'leading': true
 })
 
@@ -180,4 +179,15 @@ function customRadius( context ) {
   } else {
     return 0.001;
   }
+}
+
+function addNotePoint(date, id) {
+  const index = _.findIndex(chart.data.originalLabels, (l) => { return l === date })
+
+  chart.data.datasets.forEach((dataset) => {
+    let note_ids = dataset.note_ids
+    note_ids[index] = id
+    dataset.note_ids = note_ids
+  });
+  chart.update();
 }
