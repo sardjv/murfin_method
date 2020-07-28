@@ -1,11 +1,2 @@
 $('#modal-root').html("<%= j render(partial: 'shared/modal', locals: { template: 'notes/form', template_locals: { note: @note } }) %>")
 $('#modal').modal()
-
-document.querySelector('.edit_note').addEventListener('ajax:success', (event) => {
-  const [_data, _status, xhr] = event.detail;
-  const response = JSON.parse(xhr.response)
-  const note_id = response.id
-  const note_start_time = response.start_time
-
-  $('#modal').modal('hide')
-});
