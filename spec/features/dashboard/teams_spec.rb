@@ -54,6 +54,7 @@ describe 'Team Dashboard ', type: :feature, js: true do
 
       context 'with valid input' do
         let(:note_content) { 'Decline due to a reduction of hours' }
+        let(:updated_note_content) { 'Expected decline due to a reduction of hours' }
         before { fill_in 'note[content]', with: note_content }
 
         describe 'clicking add' do
@@ -63,9 +64,18 @@ describe 'Team Dashboard ', type: :feature, js: true do
             expect(page).not_to have_selector('#modal', visible: true)
           end
 
-          it 'adds the note to the graph' do
+          it 'can be edited' do
             click_graph
-            expect(page).to have_content(note_content)
+            within '#modal' do
+              expect(page).to have_field('Add note', type: 'textarea', with: note_content)
+              fill_in 'note[content]', with: updated_note_content
+              click_on('Save')
+            end
+
+            click_graph
+            within '#modal' do
+              expect(page).to have_field('Add note', type: 'textarea', with: updated_note_content)
+            end
           end
         end
       end
