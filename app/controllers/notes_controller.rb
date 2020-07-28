@@ -8,9 +8,11 @@ class NotesController < ApplicationController
   end
 
   def create
-    if build_note.save!
+    @note = build_note
+
+    if @note.save!
       respond_to do |format|
-        format.js { render partial: 'hide_modal.js.erb', status: :created }
+        format.json { render json: @note.to_json(only: %i[id start_time end_time]), status: :created }
       end
     else
       render :new
@@ -30,7 +32,7 @@ class NotesController < ApplicationController
 
     if @note.update!(note_params)
       respond_to do |format|
-        format.js { render partial: 'hide_modal.js.erb' }
+        format.json { render json: @note.to_json(only: %i[id start_time end_time]), status: :ok }
       end
     else
       render :edit
