@@ -5,7 +5,11 @@
     <%= f.text_area :content, label: I18n.t('notes.labels.content'), placeholder: I18n.t('notes.placeholders.content') %>
   </div>
   <div class='modal-footer'>
-    <%= f.primary I18n.t('notes.add') %>
+    <% if note.persisted? %>
+      <%= f.primary I18n.t('notes.save') %>
+    <% else %>
+      <%= f.primary I18n.t('notes.add') %>
+    <% end %>
     <button type='button' class='btn btn-secondary mr-auto' data-dismiss='modal'><%= I18n.t('notes.cancel') %></button>
   </div>
 <% end %>
