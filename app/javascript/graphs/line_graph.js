@@ -132,6 +132,11 @@ function line_graph(context, line_graph) {
         if(elements[0]) {
           const date_clicked = new Date(elements[0]._chart.data.originalLabels[elements[0]._index])
           const note_id = elements[0]._chart.data.datasets[0].note_ids[elements[0]._index]
+
+          if (!note_id) {
+            addNotePoint(elements[0]._chart, elements[0]._index)
+          }
+
           debouncedGetNoteForm(date_clicked, note_id)
         }
       }
@@ -152,6 +157,15 @@ function getNoteForm(date, note_id) {
       data: 'note[start_time]=' + date.toISOString()
     });
   }
+}
+
+function addNotePoint(chart, index) {
+  chart.data.datasets.forEach((dataset) => {
+    let note_ids = dataset.note_ids
+    note_ids[index] = 'test'
+    dataset.note_ids = note_ids
+  });
+  chart.update();
 }
 
 const debouncedGetNoteForm = _.debounce(getNoteForm, 1000, {
