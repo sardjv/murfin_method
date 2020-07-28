@@ -4,19 +4,6 @@ import { API } from './api'
 import * as SCSSColours from '!!sass-variable-loader!../stylesheets/variables/colours.scss';
 
 window.addEventListener('turbolinks:load', () => {
-  renderLineGraph();
-});
-
-window.addEventListener('ajax:success', (event) => {
-  const [_data, _status, xhr] = event.detail;
-  const response = JSON.parse(xhr.response)
-
-  addNotePoint(response.start_time, response.id)
-
-  $('#modal').modal('hide')
-});
-
-function renderLineGraph() {
   const context = document.getElementById('line-graph');
   if (context) {
     Rails.ajax({
@@ -27,7 +14,16 @@ function renderLineGraph() {
       }
     });
   }
-}
+});
+
+window.addEventListener('ajax:success', (event) => {
+  const [_data, _status, xhr] = event.detail;
+  const response = JSON.parse(xhr.response)
+
+  addNotePoint(response.start_time, response.id)
+
+  $('#modal').modal('hide')
+});
 
 function getColour(number) {
   const colours = [
