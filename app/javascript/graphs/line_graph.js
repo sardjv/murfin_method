@@ -142,7 +142,7 @@ function line_graph(context, line_graph) {
 function getNoteForm(date, note_id) {
   if (note_id) {
     Rails.ajax({
-      url: '/notes/' + note_id,
+      url: '/notes/' + note_id + '/edit',
       type: 'GET'
     });
   } else {

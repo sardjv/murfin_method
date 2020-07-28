@@ -19,17 +19,6 @@ RSpec.describe 'Notes', type: :request do
     end
   end
 
-  describe 'GET /notes/:id' do
-    context 'with a note' do
-      let!(:note) { create(:note) }
-
-      it 'returns http ok' do
-        get "/notes/#{note.id}", xhr: true
-        expect(response).to have_http_status(:ok)
-      end
-    end
-  end
-
   describe 'POST /notes' do
     context 'with valid params' do
       let(:note) { build(:note) }
@@ -61,6 +50,17 @@ RSpec.describe 'Notes', type: :request do
         expect(Note.last.content).to eq(content)
         expect(Note.last.start_time).to eq(start_time)
         expect(Note.last.state).to eq(state)
+      end
+    end
+  end
+
+  describe 'GET /notes/:id/edit' do
+    context 'with a note' do
+      let!(:note) { create(:note) }
+
+      it 'returns http ok' do
+        get "/notes/#{note.id}/edit", xhr: true
+        expect(response).to have_http_status(:ok)
       end
     end
   end
