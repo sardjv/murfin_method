@@ -7,6 +7,14 @@ class NotesController < ApplicationController
     end
   end
 
+  def show
+    @note = Note.find(params[:id])
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def create
     if build_note.save!
       respond_to do |format|

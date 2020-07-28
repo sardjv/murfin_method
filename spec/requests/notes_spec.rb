@@ -19,6 +19,18 @@ RSpec.describe 'Notes', type: :request do
     end
   end
 
+  describe 'GET /notes/:id' do
+    context 'with a note' do
+      let!(:note) { create(:note) }
+
+      it 'returns http ok' do
+        get "/notes/#{note.id}", xhr: true
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+  end
+
   describe 'POST /notes' do
     context 'with valid params' do
       let(:note) { build(:note) }
