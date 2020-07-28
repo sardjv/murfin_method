@@ -43,6 +43,7 @@ en:
       state: Note type
     placeholders:
       content: Add some detail about the note here
+    save: Save
   status:
     about_right: About Right
     over: Over
