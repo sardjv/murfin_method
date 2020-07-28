@@ -53,7 +53,7 @@ describe 'Team Dashboard ', type: :feature, js: true do
       end
 
       context 'with valid input' do
-        before { fill_in 'note[content]', with: 'Decline due to a reduction of hours over the year.' }
+        before { fill_in 'note[content]', with: 'Decline due to a reduction of hours' }
 
         describe 'clicking add' do
           before { click_on('Add note') }
@@ -68,6 +68,7 @@ describe 'Team Dashboard ', type: :feature, js: true do
 end
 
 def click_graph
+  sleep(1)
   Timeout.timeout(Capybara.default_max_wait_time) do
     loop do
       page.find('#line-graph').click(x: 540, y: 240)

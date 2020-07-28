@@ -119,7 +119,7 @@ function line_graph(context, line_graph) {
       onClick: (_event, elements) => {
         if(elements[0]) {
           const date_clicked = new Date(elements[0]._chart.data.originalLabels[elements[0]._index])
-          throttledGetNoteForm(date_clicked)
+          debouncedGetNoteForm(date_clicked)
         }
       }
     }
@@ -134,4 +134,6 @@ function getNoteForm(date) {
   });
 }
 
-const throttledGetNoteForm = _.throttle(getNoteForm, 10000)
+const debouncedGetNoteForm = _.debounce(getNoteForm, 1000, {
+  'leading': true
+})
