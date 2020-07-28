@@ -14,7 +14,8 @@ class TeamStatsPresenter
     @average_weekly_planned_per_month ||= bounds_of_months.map do |from, to|
       {
         'name': from.strftime(I18n.t('time.formats.iso8601_utc')),
-        'value': total(users: users, from: from, to: to, method: :average_weekly_planned)
+        'value': total(users: users, from: from, to: to, method: :average_weekly_planned),
+        'note_id': nil
       }
     end
   end
@@ -23,7 +24,8 @@ class TeamStatsPresenter
     @average_weekly_actual_per_month ||= bounds_of_months.map do |from, to|
       {
         'name': from.strftime(I18n.t('time.formats.iso8601_utc')),
-        'value': total(users: users, from: from, to: to, method: :average_weekly_actual)
+        'value': total(users: users, from: from, to: to, method: :average_weekly_actual),
+        'note_id': nil
       }
     end
   end
@@ -32,7 +34,8 @@ class TeamStatsPresenter
     bounds_of_months.map.with_index do |bounds, index|
       {
         'name': bounds.first.strftime(I18n.t('time.formats.iso8601_utc')),
-        'value': percentage(index)
+        'value': percentage(index),
+        'note_id': nil
       }
     end
   end
