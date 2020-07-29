@@ -17,12 +17,22 @@ window.addEventListener('turbolinks:load', () => {
 });
 
 window.addEventListener('ajax:success', (event) => {
-  const [_data, _status, xhr] = event.detail;
-  const response = JSON.parse(xhr.response)
+  const [_data, status, xhr] = event.detail;
+  if (status === 'Created') {
+    const response = JSON.parse(xhr.response)
 
-  addNotePoint(response.start_time, response.id)
+    addNotePoint(response.start_time, response.id)
 
-  $('#modal').modal('hide')
+    $('#modal').modal('hide')
+  }
+});
+
+window.addEventListener('prev', (event) => {
+  getEditNote(getPrevNoteId(event.note_id))
+});
+
+window.addEventListener('next', (event) => {
+  getEditNote(getNextNoteId(event.note_id))
 });
 
 function getColour(number) {
@@ -148,31 +158,34 @@ function line_graph(context, line_graph) {
   });
 }
 
-function getNote(date, note_id) {
-  const id = note_id
-  if (id) {
-    Rails.ajax({
-      url: '/notes/' + id + '/edit',
-      type: 'GET',
-      success: function(data, response, request) {
-        $('#prev_note').attr('href', getPrevNoteUrl(id))
-        $('#next_note').attr('href', getNextNoteUrl(id))
-      }
-    });
-  } else {
-    Rails.ajax({
-      url: '/notes/new',
-      type: 'GET',
-      data: 'note[start_time]=' + date.toISOString()
-    });
-  }
-}
-
 const debouncedGetNote = _.debounce(getNote, 1000, {
   'leading': true
 })
+function getNote(date, note_id) {
+  if (note_id) {
+    getEditNote(note_id)
+  } else {
+    getNewNote(date)
+  }
+}
 
-function getPrevNoteUrl(note_id) {
+function getNewNote(date) {
+  Rails.ajax({
+    url: '/notes/new',
+    type: 'GET',
+    data: 'note[start_time]=' + date.toISOString()
+  });
+}
+
+function getEditNote(note_id) {
+  Rails.ajax({
+    url: '/notes/' + note_id + '/edit',
+    type: 'GET',
+    dataType: 'html'
+  });
+}
+
+function getPrevNoteId(note_id) {
   let prev
   global.chart.data.datasets.forEach((dataset) => {
     const ids = _.flatten(dataset.note_ids)
@@ -185,10 +198,10 @@ function getPrevNoteUrl(note_id) {
       prev = ids[prev_index]
     }
   });
-  return '/notes/' + prev + '/edit'
+  return prev
 }
 
-function getNextNoteUrl(note_id) {
+function getNextNoteId(note_id) {
   let next
   global.chart.data.datasets.forEach((dataset) => {
     const ids = _.flatten(dataset.note_ids)
@@ -201,7 +214,7 @@ function getNextNoteUrl(note_id) {
       next = ids[next_index]
     }
   });
-  return '/notes/' + next + '/edit'
+  return next
 }
 
 function customRadius( context ) {
