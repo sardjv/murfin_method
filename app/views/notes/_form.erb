@@ -11,7 +11,14 @@
       <%= f.primary I18n.t('notes.add') %>
     <% end %>
     <button type='button' class='btn btn-secondary mr-auto' data-dismiss='modal'><%= I18n.t('notes.cancel') %></button>
-    <div id='prev_note' class='ml-auto'><%= icon('chevron-left', width: '2em') %></div>
-    <div id='next_note'><%= icon('chevron-right', width: '2em') %></div>
+
+    <% if note.persisted? %>
+      <%= link_to 'replace_using_js', id: 'prev_note', class: 'ml-auto', remote: true do %>
+        <%= icon('chevron-left', width: '2em') %>
+      <% end %>
+      <%= link_to 'replace_using_js', id: 'next_note', remote: true do %>
+        <%= icon('chevron-right', width: '2em') %>
+      <% end %>
+    <% end %>
   </div>
 <% end %>
