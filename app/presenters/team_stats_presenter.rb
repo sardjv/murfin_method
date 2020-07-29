@@ -75,6 +75,6 @@ class TeamStatsPresenter
 
   def relevant_notes(from:, to:)
     # TODO: Filter by subject, and later viewer permissions.
-    Note.where(start_time: from..to).pluck(:id)
+    Note.where(start_time: from..to).ids
   end
 end
