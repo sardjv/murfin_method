@@ -34,15 +34,18 @@ describe 'Team Dashboard ', type: :feature, js: true do
     Timecop.return
   end
 
-  before { visit teams_dashboard_path }
-
   it 'renders' do
+    visit teams_dashboard_path
     expect(page).to have_text 'Team dashboard'
   end
 
   describe 'notes' do
     context 'when clicking a point on the graph' do
-      before { click_graph }
+      let(:content) { 'a' }
+      before do
+        visit teams_dashboard_path
+        click_graph
+      end
 
       it 'renders a note form prefilled to the clicked-on date' do
         within '#modal' do
@@ -53,33 +56,16 @@ describe 'Team Dashboard ', type: :feature, js: true do
       end
 
       context 'with valid input' do
-        let(:content) { 'a' }
-        let(:updated_content) { 'b' }
         before do
           fill_in 'note[content]', with: content
+          click_on('Add note')
           wait_for_ajax
         end
 
-        describe 'clicking add' do
-          before do
-            click_on('Add note')
-            wait_for_ajax
-          end
-
-          it 'allows editing' do
-            click_graph
-            within '#modal' do
-              expect(page).to have_field('Add note', type: 'textarea', with: content)
-              fill_in 'note[content]', with: updated_content, fill_options: { clear: :backspace }
-              wait_for_ajax
-              click_on('Save')
-              wait_for_ajax
-            end
-
-            click_graph
-            within '#modal' do
-              expect(page).to have_field('Add note', type: 'textarea', with: updated_content)
-            end
+        it 'persists the note' do
+          click_graph
+          within '#modal' do
+            expect(page).to have_field('Add note', type: 'textarea', with: content)
           end
         end
       end

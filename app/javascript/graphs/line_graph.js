@@ -141,17 +141,17 @@ function line_graph(context, line_graph) {
           const date_clicked = new Date(elements[0]._chart.data.originalLabels[elements[0]._index])
           const note_ids = elements[0]._chart.data.datasets[0].note_ids[elements[0]._index]
 
-          debouncedGetNote(date_clicked, note_ids)
+          debouncedGetNote(date_clicked, note_ids[0])
         }
       }
     }
   });
 }
 
-function getNote(date, note_ids) {
-  if (note_ids.length > 0) {
+function getNote(date, note_id) {
+  if (note_id) {
     Rails.ajax({
-      url: '/notes/' + note_ids[0] + '/edit',
+      url: '/notes/' + note_id + '/edit',
       type: 'GET'
     });
   } else {
