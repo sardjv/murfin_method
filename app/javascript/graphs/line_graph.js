@@ -149,10 +149,15 @@ function line_graph(context, line_graph) {
 }
 
 function getNote(date, note_id) {
-  if (note_id) {
+  const id = note_id
+  if (id) {
     Rails.ajax({
-      url: '/notes/' + note_id + '/edit',
-      type: 'GET'
+      url: '/notes/' + id + '/edit',
+      type: 'GET',
+      success: function(data, response, request) {
+        $('#prev_note').attr('href', getPrevNoteUrl(id))
+        $('#next_note').attr('href', getNextNoteUrl(id))
+      }
     });
   } else {
     Rails.ajax({
@@ -166,6 +171,38 @@ function getNote(date, note_id) {
 const debouncedGetNote = _.debounce(getNote, 1000, {
   'leading': true
 })
+
+function getPrevNoteUrl(note_id) {
+  let prev
+  global.chart.data.datasets.forEach((dataset) => {
+    const ids = _.flatten(dataset.note_ids)
+    const index = _.findIndex(ids, (el) => { return el === note_id })
+    if (index) {
+      let prev_index = index - 1
+      if (prev_index < 0) {
+        prev_index = ids.length - 1
+      }
+      prev = ids[prev_index]
+    }
+  });
+  return '/notes/' + prev + '/edit'
+}
+
+function getNextNoteUrl(note_id) {
+  let next
+  global.chart.data.datasets.forEach((dataset) => {
+    const ids = _.flatten(dataset.note_ids)
+    const index = _.findIndex(ids, (el) => { return el === note_id })
+    if (index) {
+      let next_index = index + 1
+      if (next_index >= ids.length) {
+        next_index = 0
+      }
+      next = ids[next_index]
+    }
+  });
+  return '/notes/' + next + '/edit'
+}
 
 function customRadius( context ) {
   const index = context.dataIndex;
