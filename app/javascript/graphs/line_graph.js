@@ -28,11 +28,11 @@ window.addEventListener('ajax:success', (event) => {
 });
 
 window.addEventListener('prev', (event) => {
-  getEditNote(getPrevNoteId(event.note_id))
+  getEditNote(getPrevNoteId(event.detail.note_id))
 });
 
 window.addEventListener('next', (event) => {
-  getEditNote(getNextNoteId(event.note_id))
+  getEditNote(getNextNoteId(event.detail.note_id))
 });
 
 function getColour(number) {
