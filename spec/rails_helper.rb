@@ -11,6 +11,7 @@ require 'rspec/rails'
 
 require 'database_cleaner/active_record'
 require 'database_cleaner/redis'
+Dir[File.join(__dir__, 'fixtures/', '*.rb')].sort.each { |file| require file }
 Dir[File.join(__dir__, 'support/', '*.rb')].sort.each { |file| require file }
 
 # Requires supporting ruby files with custom matchers and macros, etc, in

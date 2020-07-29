@@ -1,11 +1,17 @@
-<%= bootstrap_form_for(note) do |f| %>
+<%= bootstrap_form_for(note, remote: true) do |f| %>
   <div class='modal-body'>
     <%= f.select :state, note_states_for_select, label: I18n.t('notes.labels.state') %>
     <%= f.date_field :start_time, label: I18n.t('notes.labels.start_time') %>
     <%= f.text_area :content, label: I18n.t('notes.labels.content'), placeholder: I18n.t('notes.placeholders.content') %>
   </div>
   <div class='modal-footer'>
-    <%= f.primary I18n.t('notes.add') %>
+    <% if note.persisted? %>
+      <%= f.primary I18n.t('notes.save') %>
+    <% else %>
+      <%= f.primary I18n.t('notes.add') %>
+    <% end %>
     <button type='button' class='btn btn-secondary mr-auto' data-dismiss='modal'><%= I18n.t('notes.cancel') %></button>
+    <div id='prev_note' class='ml-auto'><%= icon('chevron-left', width: '2em') %></div>
+    <div id='next_note'><%= icon('chevron-right', width: '2em') %></div>
   </div>
 <% end %>
