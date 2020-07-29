@@ -66,11 +66,7 @@ describe 'Team Dashboard ', type: :feature, js: true do
             wait_for_ajax
           end
 
-          it 'closes the modal' do
-            expect(page).not_to have_selector('#modal', visible: true)
-          end
-
-          it 'can be edited' do
+          it 'allows editing' do
             click_graph
             within '#modal' do
               expect(page).to have_field('Add note', type: 'textarea', with: content)
