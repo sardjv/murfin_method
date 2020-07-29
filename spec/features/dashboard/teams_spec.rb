@@ -53,12 +53,18 @@ describe 'Team Dashboard ', type: :feature, js: true do
       end
 
       context 'with valid input' do
-        let(:note_content) { 'Decline due to a reduction of hours' }
-        let(:updated_note_content) { 'Expected decline due to a reduction of hours' }
-        before { fill_in 'note[content]', with: note_content }
+        let(:content) { 'Reduction of hours' }
+        let(:updated_content) { 'Expected reduction of hours' }
+        before do
+          fill_in 'note[content]', with: content
+          wait_for_ajax
+        end
 
         describe 'clicking add' do
-          before { click_on('Add note') }
+          before do
+            click_on('Add note')
+            wait_for_ajax
+          end
 
           it 'closes the modal' do
             expect(page).not_to have_selector('#modal', visible: true)
@@ -67,14 +73,16 @@ describe 'Team Dashboard ', type: :feature, js: true do
           it 'can be edited' do
             click_graph
             within '#modal' do
-              expect(page).to have_field('Add note', type: 'textarea', with: note_content)
-              fill_in 'note[content]', with: updated_note_content
+              expect(page).to have_field('Add note', type: 'textarea', with: content)
+              fill_in 'note[content]', with: updated_content, fill_options: { clear: :backspace }
+              wait_for_ajax
               click_on('Save')
+              wait_for_ajax
             end
 
             click_graph
             within '#modal' do
-              expect(page).to have_field('Add note', type: 'textarea', with: updated_note_content)
+              expect(page).to have_field('Add note', type: 'textarea', with: updated_content)
             end
           end
         end
