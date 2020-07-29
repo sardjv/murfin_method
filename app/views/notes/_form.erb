@@ -13,10 +13,10 @@
     <button type='button' class='btn btn-secondary mr-auto' data-dismiss='modal'><%= I18n.t('notes.cancel') %></button>
 
     <% if note.persisted? %>
-      <%= link_to '', id: 'prev_note', class: 'ml-auto', remote: true, onclick: "window.dispatchEvent(new CustomEvent('prev', { note_id: #{note.id} }))" do %>
+      <%= link_to '', id: 'prev_note', class: 'ml-auto', remote: true, onclick: "window.dispatchEvent(new CustomEvent('prev', { detail: { note_id: #{note.id} } }))" do %>
         <%= icon('chevron-left', width: '2em') %>
       <% end %>
-      <%= link_to '', id: 'next_note', remote: true, onclick: "window.dispatchEvent(new CustomEvent('next', { note_id: #{note.id} }))" do %>
+      <%= link_to '', id: 'next_note', remote: true, onclick: "window.dispatchEvent(new CustomEvent('next', { detail: { note_id: #{note.id} } }))" do %>
         <%= icon('chevron-right', width: '2em') %>
       <% end %>
     <% end %>
