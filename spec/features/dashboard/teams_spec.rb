@@ -64,7 +64,6 @@ describe 'Team Dashboard ', type: :feature, js: true do
           before do
             click_on('Add note')
             wait_for_ajax
-            expect(page).not_to have_field('Add note', type: 'textarea', with: content)
           end
 
           it 'allows editing' do
