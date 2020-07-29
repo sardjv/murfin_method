@@ -1,7 +1,6 @@
 import Chart from 'chart.js'
 import Rails from '@rails/ujs'
 import { API } from './api'
-import { FormHelpers } from './form_helpers'
 import * as SCSSColours from '!!sass-variable-loader!../stylesheets/variables/colours.scss';
 
 window.addEventListener('turbolinks:load', () => {
@@ -11,11 +10,19 @@ window.addEventListener('turbolinks:load', () => {
       url: API.url(),
       type: 'GET',
       success: function(data) {
-        const units = data.line_graph.units
-        line_graph(context, data.line_graph)
+        global.chart = line_graph(context, data.line_graph)
       }
     });
   }
+});
+
+window.addEventListener('ajax:success', (event) => {
+  const [_data, _status, xhr] = event.detail;
+  const response = JSON.parse(xhr.response)
+
+  addNotePoint(response.start_time, response.id)
+
+  $('#modal').modal('hide')
 });
 
 function getColour(number) {
@@ -44,15 +51,22 @@ function datasets(datas) {
       data: data.map(function(e) {
         return e.value;
       }),
+      note_ids: data.map(function(e) {
+        return e.note_ids;
+      }),
       borderWidth: 1,
       fill: false,
       backgroundColor: getColour(index),
       borderColor: getColour(index),
       borderWidth: 5,
-      pointRadius: 0.0001,
-      pointHitRadius: 20,
       lineTension: 0.3,
-      borderCapStyle: 'round'
+      borderCapStyle: 'round',
+      pointHitRadius: 20,
+      pointBackgroundColor: SCSSColours['red200'],
+      pointBorderColor: SCSSColours['red200'],
+      pointHoverBackgroundColor: SCSSColours['red200'],
+      pointHoverBorderColor: SCSSColours['red200'],
+      pointHoverRadius: 10
     }
     index += 1;
     return dataset;
@@ -69,7 +83,7 @@ function line_graph(context, line_graph) {
 
   var units = line_graph.units || ''
 
-  new Chart(context, {
+  return new Chart(context, {
     type: 'line',
     data: {
       labels: formattedLabels,
@@ -98,6 +112,11 @@ function line_graph(context, line_graph) {
           }
         }
       },
+      elements: {
+        point: {
+          radius: customRadius
+        }
+      },
       scales: {
         xAxes: [{
           gridLines: {
@@ -119,10 +138,73 @@ function line_graph(context, line_graph) {
       },
       onClick: (_event, elements) => {
         if(elements[0]) {
-          $('#modal').modal()
-          FormHelpers.setDatepicker('#note_start_time', new Date(elements[0]._chart.data.originalLabels[elements[0]._index]))
+          const date_clicked = new Date(elements[0]._chart.data.originalLabels[elements[0]._index])
+          const note_ids = elements[0]._chart.data.datasets[0].note_ids[elements[0]._index]
+
+          debouncedGetNote(date_clicked, note_ids[0])
         }
       }
     }
   });
+}
+
+function getNote(date, note_id) {
+  if (note_id) {
+    Rails.ajax({
+      url: '/notes/' + note_id + '/edit',
+      type: 'GET'
+    });
+  } else {
+    Rails.ajax({
+      url: '/notes/new',
+      type: 'GET',
+      data: 'note[start_time]=' + date.toISOString()
+    });
+  }
+}
+
+const debouncedGetNote = _.debounce(getNote, 1000, {
+  'leading': true
+})
+
+function customRadius( context ) {
+  const index = context.dataIndex;
+  const note_ids = context.dataset.note_ids[ index ];
+  if (note_ids.length > 0) {
+    return 8;
+  } else {
+    return 0.001;
+  }
+}
+
+function addNotePoint(date, id) {
+  const index = nearestLabel(chart.data.originalLabels, date)
+
+  chart.data.datasets.forEach((dataset) => {
+    // An array of arrays of note_ids like [[], [], [1,2], []].
+    let note_ids = dataset.note_ids
+
+    // If the note already exists, remove it (in case the date has changed).
+    const existingIndex = _.findIndex(note_ids, (ids) => { return _.includes(ids, id) })
+    if (existingIndex != -1) {
+      note_ids[existingIndex].pop(id)
+    }
+
+    // Add the new note.
+    note_ids[index].push(id)
+
+    dataset.note_ids = note_ids
+  });
+  chart.update();
+}
+
+function nearestLabel(labels, date) {
+  // Assume labels are sorted chronologically.
+  let index = 0
+  let nextLabel = labels[index + 1]
+  while (index <= labels.length && date >= nextLabel) {
+    index++
+    nextLabel = labels[index + 1]
+  }
+  return index
 }
