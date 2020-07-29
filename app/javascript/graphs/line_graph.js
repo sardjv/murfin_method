@@ -52,7 +52,7 @@ function datasets(datas) {
         return e.value;
       }),
       note_ids: data.map(function(e) {
-        return e.note_id;
+        return e.note_ids;
       }),
       borderWidth: 1,
       fill: false,
@@ -139,19 +139,19 @@ function line_graph(context, line_graph) {
       onClick: (_event, elements) => {
         if(elements[0]) {
           const date_clicked = new Date(elements[0]._chart.data.originalLabels[elements[0]._index])
-          const note_id = elements[0]._chart.data.datasets[0].note_ids[elements[0]._index]
+          const note_ids = elements[0]._chart.data.datasets[0].note_ids[elements[0]._index]
 
-          debouncedGetNote(date_clicked, note_id)
+          debouncedGetNote(date_clicked, note_ids)
         }
       }
     }
   });
 }
 
-function getNote(date, note_id) {
-  if (note_id) {
+function getNote(date, note_ids) {
+  if (note_ids.length > 0) {
     Rails.ajax({
-      url: '/notes/' + note_id + '/edit',
+      url: '/notes/' + note_ids[0] + '/edit',
       type: 'GET'
     });
   } else {
@@ -169,8 +169,8 @@ const debouncedGetNote = _.debounce(getNote, 1000, {
 
 function customRadius( context ) {
   const index = context.dataIndex;
-  const note_id = context.dataset.note_ids[ index ];
-  if (note_id) {
+  const note_ids = context.dataset.note_ids[ index ];
+  if (note_ids.length > 0) {
     return 8;
   } else {
     return 0.001;
@@ -178,21 +178,33 @@ function customRadius( context ) {
 }
 
 function addNotePoint(date, id) {
-  const index = _.findIndex(chart.data.originalLabels, (el) => { return el === date })
+  const index = nearestLabel(chart.data.originalLabels, date)
 
   chart.data.datasets.forEach((dataset) => {
+    // An array of arrays of note_ids like [[], [], [1,2], []].
     let note_ids = dataset.note_ids
 
     // If the note already exists, remove it (in case the date has changed).
-    const existingIndex = _.findIndex(note_ids, (el) => { return el === id })
-    if (existingIndex) {
-      note_ids[existingIndex] = null
+    const existingIndex = _.findIndex(note_ids, (ids) => { return _.includes(ids, id) })
+    if (existingIndex != -1) {
+      note_ids[existingIndex].pop(id)
     }
 
-    // Add the note.
-    note_ids[index] = id
+    // Add the new note.
+    note_ids[index].push(id)
 
     dataset.note_ids = note_ids
   });
   chart.update();
+}
+
+function nearestLabel(labels, date) {
+  // Assume labels are sorted chronologically.
+  let index = 0
+  let nextLabel = labels[index + 1]
+  while (index <= labels.length && date >= nextLabel) {
+    index++
+    nextLabel = labels[index + 1]
+  }
+  return index
 }

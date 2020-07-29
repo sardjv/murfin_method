@@ -53,8 +53,8 @@ describe 'Team Dashboard ', type: :feature, js: true do
       end
 
       context 'with valid input' do
-        let(:content) { 'Reduction of hours' }
-        let(:updated_content) { 'Expected reduction of hours' }
+        let(:content) { 'a' }
+        let(:updated_content) { 'b' }
         before do
           fill_in 'note[content]', with: content
           wait_for_ajax
@@ -64,6 +64,7 @@ describe 'Team Dashboard ', type: :feature, js: true do
           before do
             click_on('Add note')
             wait_for_ajax
+            expect(page).not_to have_field('Add note', type: 'textarea', with: content)
           end
 
           it 'allows editing' do
