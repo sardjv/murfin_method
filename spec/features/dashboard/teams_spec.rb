@@ -59,11 +59,11 @@ describe 'Team Dashboard ', type: :feature, js: true do
         before do
           fill_in 'note[content]', with: content
           click_on('Add note')
-          wait_for_ajax
+          visit teams_dashboard_path
+          click_graph
         end
 
         it 'persists the note' do
-          click_graph
           within '#modal' do
             expect(page).to have_field('Add note', type: 'textarea', with: content)
             expect(page).to have_content("Subject: #{AuthTestUser::USERINFO['info']['name']}")
