@@ -2,6 +2,7 @@ import Chart from 'chart.js'
 import Rails from '@rails/ujs'
 import { API } from './api'
 import * as SCSSColours from '!!sass-variable-loader!../stylesheets/variables/colours.scss';
+import { Note } from './note'
 
 window.addEventListener('turbolinks:load', () => {
   const context = document.getElementById('line-graph');
@@ -14,26 +15,6 @@ window.addEventListener('turbolinks:load', () => {
       }
     });
   }
-});
-
-window.addEventListener('ajax:success', (event) => {
-  const [data, _status, xhr] = event.detail;
-
-  if (data.constructor !== HTMLDocument) {
-    const response = JSON.parse(xhr.response)
-
-    addNotePoint(response.start_time, response.id)
-
-    $('#modal').modal('hide')
-  }
-});
-
-window.addEventListener('prev', (event) => {
-  getEditNote(getPrevNoteId(event.detail.note_id))
-});
-
-window.addEventListener('next', (event) => {
-  getEditNote(getNextNoteId(event.detail.note_id))
 });
 
 function getColour(number) {
@@ -149,69 +130,14 @@ function line_graph(context, line_graph) {
       },
       onClick: (_event, elements) => {
         if(elements[0]) {
-          const date_clicked = new Date(elements[0]._chart.data.originalLabels[elements[0]._index])
-          const note_ids = elements[0]._chart.data.datasets[0].note_ids[elements[0]._index]
+          const date_clicked = new Date(global.chart.data.originalLabels[elements[0]._index])
+          const note_ids = global.chart.data.datasets[0].note_ids[elements[0]._index]
 
-          debouncedGetNote(date_clicked, note_ids[0])
+          Note.debouncedGetNote(date_clicked, note_ids[0])
         }
       }
     }
   });
-}
-
-const debouncedGetNote = _.debounce(getNote, 1000, {
-  'leading': true
-})
-function getNote(date, note_id) {
-  if (note_id) {
-    getEditNote(note_id)
-  } else {
-    getNewNote(date)
-  }
-}
-
-function getNewNote(date) {
-  Rails.ajax({
-    url: '/notes/new',
-    type: 'GET',
-    data: 'note[start_time]=' + date.toISOString()
-  });
-}
-
-function getEditNote(note_id) {
-  Rails.ajax({
-    url: '/notes/' + note_id + '/edit',
-    type: 'GET',
-    dataType: 'html'
-  });
-}
-
-function getPrevNoteId(note_id) {
-  let prev
-  global.chart.data.datasets.forEach((dataset) => {
-    const ids = _.flatten(dataset.note_ids)
-    const currentIndex = ids.indexOf(note_id);
-    if (currentIndex === 0) {
-      prev = ids.pop()
-    } else if (currentIndex > 0) {
-      prev = ids[currentIndex - 1]
-    }
-  });
-  return prev
-}
-
-function getNextNoteId(note_id) {
-  let next
-  global.chart.data.datasets.forEach((dataset) => {
-    const ids = _.flatten(dataset.note_ids)
-    const currentIndex = ids.indexOf(note_id);
-    if (currentIndex === ids.length - 1) {
-      next = ids[0]
-    } else if (currentIndex > -1) {
-      next = ids[currentIndex + 1]
-    }
-  });
-  return next
 }
 
 function customRadius(context) {
@@ -222,36 +148,4 @@ function customRadius(context) {
   } else {
     return 0.001;
   }
-}
-
-function addNotePoint(date, id) {
-  const index = nearestLabel(chart.data.originalLabels, date)
-
-  chart.data.datasets.forEach((dataset) => {
-    // An array of arrays of note_ids like [[], [], [1,2], []].
-    let note_ids = dataset.note_ids
-
-    // If the note already exists, remove it (in case the date has changed).
-    const existingIndex = _.findIndex(note_ids, (ids) => { return _.includes(ids, id) })
-    if (existingIndex != -1) {
-      note_ids[existingIndex].pop(id)
-    }
-
-    // Add the new note.
-    note_ids[index].push(id)
-
-    dataset.note_ids = note_ids
-  });
-  chart.update();
-}
-
-function nearestLabel(labels, date) {
-  // Assume labels are sorted chronologically.
-  let index = 0
-  let nextLabel = labels[index + 1]
-  while (index <= labels.length && date >= nextLabel) {
-    index++
-    nextLabel = labels[index + 1]
-  }
-  return index
 }
