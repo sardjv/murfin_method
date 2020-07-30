@@ -19,4 +19,8 @@ class Note < ApplicationRecord
   belongs_to :subject, polymorphic: true
 
   validates :state, :content, :start_time, :end_time, :author_id, :subject_id, presence: true
+
+  def ever_updated?
+    created_at != updated_at
+  end
 end

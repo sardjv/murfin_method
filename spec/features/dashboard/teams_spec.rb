@@ -66,6 +66,9 @@ describe 'Team Dashboard ', type: :feature, js: true do
           click_graph
           within '#modal' do
             expect(page).to have_field('Add note', type: 'textarea', with: content)
+            expect(page).to have_content("Subject: #{AuthTestUser::USERINFO['info']['name']}")
+            expect(page).to have_content("Author: #{AuthTestUser::USERINFO['info']['name']}")
+            expect(page).to have_content('Created less than a minute ago')
           end
         end
       end

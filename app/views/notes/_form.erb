@@ -3,6 +3,20 @@
     <%= f.select :state, note_states_for_select, label: I18n.t('notes.labels.state') %>
     <%= f.date_field :start_time, label: I18n.t('notes.labels.start_time') %>
     <%= f.text_area :content, label: I18n.t('notes.labels.content'), placeholder: I18n.t('notes.placeholders.content') %>
+    <% if note.persisted? %>
+      <div>
+        <label><%= I18n.t('notes.labels.subject') %>:</label>
+        <%= note.subject.name %>
+      </div>
+      <div>
+        <label><%= I18n.t('notes.labels.author') %>:</label>
+        <%= note.author.name %>
+      </div>
+      <label><%= I18n.t('notes.labels.created_at', when: time_ago_in_words(note.created_at)) %></label>
+      <% if note.ever_updated? %>
+        <label><%= I18n.t('notes.labels.updated_at', when: time_ago_in_words(note.updated_at)) %></label>
+      <% end %>
+    <% end %>
   </div>
   <div class='modal-footer'>
     <% if note.persisted? %>
