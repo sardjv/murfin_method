@@ -1,5 +1,5 @@
 import Rails from '@rails/ujs'
-import iconPath from '!!svg-url-loader!../../../node_modules/bootstrap-icons/icons/sticky.svg';
+import iconPath from '!!svg-url-loader!../../../node_modules/bootstrap-icons/icons/envelope.svg';
 
 window.addEventListener('prev', (event) => {
   Note.getEditNote(Note.getPrevNoteId(event.detail.note_id))
