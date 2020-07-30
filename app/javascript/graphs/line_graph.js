@@ -17,12 +17,23 @@ window.addEventListener('turbolinks:load', () => {
 });
 
 window.addEventListener('ajax:success', (event) => {
-  const [_data, _status, xhr] = event.detail;
-  const response = JSON.parse(xhr.response)
+  const [data, _status, xhr] = event.detail;
 
-  addNotePoint(response.start_time, response.id)
+  if (data.constructor !== HTMLDocument) {
+    const response = JSON.parse(xhr.response)
 
-  $('#modal').modal('hide')
+    addNotePoint(response.start_time, response.id)
+
+    $('#modal').modal('hide')
+  }
+});
+
+window.addEventListener('prev', (event) => {
+  getEditNote(getPrevNoteId(event.detail.note_id))
+});
+
+window.addEventListener('next', (event) => {
+  getEditNote(getNextNoteId(event.detail.note_id))
 });
 
 function getColour(number) {
@@ -148,26 +159,62 @@ function line_graph(context, line_graph) {
   });
 }
 
-function getNote(date, note_id) {
-  if (note_id) {
-    Rails.ajax({
-      url: '/notes/' + note_id + '/edit',
-      type: 'GET'
-    });
-  } else {
-    Rails.ajax({
-      url: '/notes/new',
-      type: 'GET',
-      data: 'note[start_time]=' + date.toISOString()
-    });
-  }
-}
-
 const debouncedGetNote = _.debounce(getNote, 1000, {
   'leading': true
 })
+function getNote(date, note_id) {
+  if (note_id) {
+    getEditNote(note_id)
+  } else {
+    getNewNote(date)
+  }
+}
 
-function customRadius( context ) {
+function getNewNote(date) {
+  Rails.ajax({
+    url: '/notes/new',
+    type: 'GET',
+    data: 'note[start_time]=' + date.toISOString()
+  });
+}
+
+function getEditNote(note_id) {
+  Rails.ajax({
+    url: '/notes/' + note_id + '/edit',
+    type: 'GET',
+    dataType: 'html'
+  });
+}
+
+function getPrevNoteId(note_id) {
+  let prev
+  global.chart.data.datasets.forEach((dataset) => {
+    const ids = _.flatten(dataset.note_ids)
+    const currentIndex = ids.indexOf(note_id);
+    if (currentIndex === 0) {
+      prev = ids.pop()
+    } else if (currentIndex > 0) {
+      prev = ids[currentIndex - 1]
+    }
+  });
+  return prev
+}
+
+function getNextNoteId(note_id) {
+  let next
+  global.chart.data.datasets.forEach((dataset) => {
+    const ids = _.flatten(dataset.note_ids)
+    const currentIndex = ids.indexOf(note_id);
+    if (currentIndex === ids.length - 1) {
+      next = ids[0]
+    } else if (currentIndex > -1) {
+      next = ids[currentIndex + 1]
+    }
+  });
+  return next
+}
+
+function customRadius(context) {
   const index = context.dataIndex;
   const note_ids = context.dataset.note_ids[ index ];
   if (note_ids.length > 0) {
