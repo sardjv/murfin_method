@@ -130,8 +130,8 @@ function line_graph(context, line_graph) {
       },
       onClick: (_event, elements) => {
         if(elements[0]) {
-          const date_clicked = new Date(elements[0]._chart.data.originalLabels[elements[0]._index])
-          const note_ids = elements[0]._chart.data.datasets[0].note_ids[elements[0]._index]
+          const date_clicked = new Date(global.chart.data.originalLabels[elements[0]._index])
+          const note_ids = global.chart.data.datasets[0].note_ids[elements[0]._index]
 
           Note.debouncedGetNote(date_clicked, note_ids[0])
         }

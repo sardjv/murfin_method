@@ -49,9 +49,9 @@ export class Note {
   }
 
   static addNotePoint(date, id) {
-    const index = Note.nearestLabel(chart.data.originalLabels, date)
+    const index = Note.nearestLabel(global.chart.data.originalLabels, date)
 
-    chart.data.datasets.forEach((dataset) => {
+    global.chart.data.datasets.forEach((dataset) => {
       // An array of arrays of note_ids like [[], [], [1,2], []].
       let note_ids = dataset.note_ids
 
@@ -66,7 +66,7 @@ export class Note {
 
       dataset.note_ids = note_ids
     });
-    chart.update();
+    global.chart.update();
   }
 
   static getPrevNoteId(note_id) {
