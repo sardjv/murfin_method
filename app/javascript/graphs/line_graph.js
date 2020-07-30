@@ -17,8 +17,9 @@ window.addEventListener('turbolinks:load', () => {
 });
 
 window.addEventListener('ajax:success', (event) => {
-  const [_data, status, xhr] = event.detail;
-  if (status === 'Created') {
+  const [data, _status, xhr] = event.detail;
+
+  if (data.constructor !== HTMLDocument) {
     const response = JSON.parse(xhr.response)
 
     addNotePoint(response.start_time, response.id)
@@ -189,13 +190,11 @@ function getPrevNoteId(note_id) {
   let prev
   global.chart.data.datasets.forEach((dataset) => {
     const ids = _.flatten(dataset.note_ids)
-    const index = _.findIndex(ids, (el) => { return el === note_id })
-    if (index) {
-      let prev_index = index - 1
-      if (prev_index < 0) {
-        prev_index = ids.length - 1
-      }
-      prev = ids[prev_index]
+    const currentIndex = ids.indexOf(note_id);
+    if (currentIndex === 0) {
+      prev = ids.pop()
+    } else if (currentIndex > 0) {
+      prev = ids[currentIndex - 1]
     }
   });
   return prev
@@ -205,19 +204,17 @@ function getNextNoteId(note_id) {
   let next
   global.chart.data.datasets.forEach((dataset) => {
     const ids = _.flatten(dataset.note_ids)
-    const index = _.findIndex(ids, (el) => { return el === note_id })
-    if (index) {
-      let next_index = index + 1
-      if (next_index >= ids.length) {
-        next_index = 0
-      }
-      next = ids[next_index]
+    const currentIndex = ids.indexOf(note_id);
+    if (currentIndex === ids.length - 1) {
+      next = ids[0]
+    } else if (currentIndex > -1) {
+      next = ids[currentIndex + 1]
     }
   });
   return next
 }
 
-function customRadius( context ) {
+function customRadius(context) {
   const index = context.dataIndex;
   const note_ids = context.dataset.note_ids[ index ];
   if (note_ids.length > 0) {
