@@ -1,5 +1,16 @@
 # Create some dummy data for demonstration purposes.
 
+# Create Bands
+
+band = FactoryBot.create(:group_type, name: 'Band')
+(1..7).each do |band_number|
+  FactoryBot.create(:user_group, group_type: band, name: "Band #{band_number}")
+end
+%w(a b c d).each do |band_8_letter|
+  FactoryBot.create(:user_group, group_type: band, name: "Band 8#{band_8_letter}")
+end
+FactoryBot.create(:user_group, group_type: band, name: 'Band 9')
+
 # Create Users.
 10.times { FactoryBot.create(:user) }
 
