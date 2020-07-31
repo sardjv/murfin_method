@@ -1,4 +1,5 @@
 import Rails from '@rails/ujs'
+import iconPath from '!!svg-url-loader!../../../node_modules/bootstrap-icons/icons/envelope.svg';
 
 window.addEventListener('prev', (event) => {
   Note.getEditNote(Note.getPrevNoteId(event.detail.note_id))
@@ -21,6 +22,13 @@ window.addEventListener('ajax:success', (event) => {
 });
 
 export class Note {
+  static icon() {
+    let noteIcon = new Image();
+    noteIcon.width = noteIcon.height = '30';
+    noteIcon.src = iconPath;
+    return noteIcon;
+  }
+
   static debouncedGetNote = _.debounce(Note.getNote, 1000, {
     'leading': true
   })
