@@ -21,9 +21,16 @@
   <div class='modal-footer'>
     <% if note.persisted? %>
       <%= f.primary I18n.t('notes.save') %>
+      <%= link_to note, method: :delete, remote: true, data: { confirm: I18n.t('notes.confirm') }, 'data-type' => 'json' do %>
+        <div class=''>
+          <i class=''></i>
+          <%= I18n.t('notes.delete') %>
+        </div>
+      <% end %>
     <% else %>
       <%= f.primary I18n.t('notes.add') %>
     <% end %>
+
     <button type='button' class='btn btn-secondary mr-auto' data-dismiss='modal'><%= I18n.t('notes.cancel') %></button>
 
     <% if note.persisted? %>

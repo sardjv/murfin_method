@@ -93,13 +93,13 @@ RSpec.describe 'Notes', type: :request do
     context 'with a note' do
       let!(:note) { create(:note) }
 
-      it 'returns http ok' do
+      it 'returns http no_content' do
         delete "/notes/#{note.id}", xhr: true
-        expect(response).to have_http_status(:ok)
+        expect(response).to have_http_status(:no_content)
       end
 
       it 'deletes note' do
-        expect { delete "/notes/#{note.id}", xhr: true }.to change{ Note.count }.by(-1)
+        expect { delete "/notes/#{note.id}", xhr: true }.to change { Note.count }.by(-1)
       end
     end
   end

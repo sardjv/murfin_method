@@ -37,6 +37,8 @@ en:
   notes:
     add: Add note
     cancel: Cancel
+    confirm: Are you sure?
+    delete: Delete
     labels:
       author: Author
       content: Add note
