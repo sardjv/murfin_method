@@ -15,7 +15,7 @@ window.addEventListener('ajax:success', (event) => {
   if (data.constructor !== HTMLDocument) {
     const response = JSON.parse(xhr.response)
 
-    Note.addNotePoint(response.start_time, response.id)
+    Note.addNotePoint(response.start_time, response)
 
     $('#modal').modal('hide')
   }
@@ -29,17 +29,9 @@ export class Note {
     return noteIcon;
   }
 
-  static debouncedGetNote = _.debounce(Note.getNote, 1000, {
+  static debouncedGetNewNote = _.debounce(Note.getNewNote, 1000, {
     'leading': true
   })
-  static getNote(date, note_id) {
-    if (note_id) {
-      Note.getEditNote(note_id)
-    } else {
-      Note.getNewNote(date)
-    }
-  }
-
   static getNewNote(date) {
     Rails.ajax({
       url: '/notes/new',
@@ -48,6 +40,9 @@ export class Note {
     });
   }
 
+  static debouncedGetEditNote = _.debounce(Note.getEditNote, 1000, {
+    'leading': true
+  })
   static getEditNote(note_id) {
     Rails.ajax({
       url: '/notes/' + note_id + '/edit',
@@ -56,23 +51,26 @@ export class Note {
     });
   }
 
-  static addNotePoint(date, id) {
+  static addNotePoint(date, new_note) {
     const index = Note.nearestLabel(global.chart.data.originalLabels, date)
 
     global.chart.data.datasets.forEach((dataset) => {
-      // An array of arrays of note_ids like [[], [], [1,2], []].
-      let note_ids = dataset.note_ids
+      // An array of arrays of notes, grouped by date, like [[], [{id: 1,...},{id: 2,...}]].
+      let all_notes = dataset.notes
 
       // If the note already exists, remove it (in case the date has changed).
-      const existingIndex = _.findIndex(note_ids, (ids) => { return _.includes(ids, id) })
-      if (existingIndex != -1) {
-        note_ids[existingIndex].pop(id)
-      }
+      all_notes = _.map(all_notes, (date_notes) => {
+        return _.compact(_.map(date_notes, (note) => {
+          if (note.id != new_note.id) {
+            return note
+          }
+        }));
+      });
 
-      // Add the new note.
-      note_ids[index].push(id)
+      // Add the new/moved note on the right date.
+      all_notes[index].push(new_note)
 
-      dataset.note_ids = note_ids
+      dataset.notes = all_notes
     });
     global.chart.update();
   }
@@ -80,29 +78,29 @@ export class Note {
   static getPrevNoteId(note_id) {
     let prev
     global.chart.data.datasets.forEach((dataset) => {
-      const ids = _.flatten(dataset.note_ids)
-      const currentIndex = ids.indexOf(note_id);
+      const notes = _.flatten(dataset.notes)
+      const currentIndex = _.findIndex(notes, (note) => { return note.id === note_id });
       if (currentIndex === 0) {
-        prev = ids.pop()
+        prev = notes.pop()
       } else if (currentIndex > 0) {
-        prev = ids[currentIndex - 1]
+        prev = notes[currentIndex - 1]
       }
     });
-    return prev
+    return prev.id
   }
 
   static getNextNoteId(note_id) {
     let next
     global.chart.data.datasets.forEach((dataset) => {
-      const ids = _.flatten(dataset.note_ids)
-      const currentIndex = ids.indexOf(note_id);
-      if (currentIndex === ids.length - 1) {
-        next = ids[0]
+      const notes = _.flatten(dataset.notes)
+      const currentIndex = _.findIndex(notes, (note) => { return note.id === note_id });
+      if (currentIndex === notes.length - 1) {
+        next = notes[0]
       } else if (currentIndex > -1) {
-        next = ids[currentIndex + 1]
+        next = notes[currentIndex + 1]
       }
     });
-    return next
+    return next.id
   }
 
   static nearestLabel(labels, date) {
