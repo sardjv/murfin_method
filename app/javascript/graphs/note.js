@@ -146,16 +146,16 @@ export class Note {
     return index
   }
 
-  static toMultilineArray(notes, wordsPerLine) {
+  static toMultilineArray(notes, charsPerLine) {
     let lines = []
     _.each(notes, (note) => {
       lines.push('')
-      let line = ''
+      let line = Note.capitalise(note.state) + ':'
       _.each(_.split(note.content, ' '), (word) => {
-        if (line.split(' ').length > wordsPerLine) {
+        if (line.length > charsPerLine) {
           lines.push(line)
           line = ''
-        } else if (line === '') {
+        } else if (line == '') {
           line = word
         } else {
           line = line + ' ' + word
@@ -166,4 +166,9 @@ export class Note {
     });
     return lines
   }
+
+  static capitalise(word){
+    return word[0].toUpperCase() + word.slice(1).toLowerCase();
+  }
+
 }
