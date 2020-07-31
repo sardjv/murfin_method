@@ -113,4 +113,23 @@ export class Note {
     }
     return index
   }
+
+  static toMultilineArray(notes, wordsPerLine) {
+    let lines = []
+    _.each(notes, (note) => {
+      lines.push('')
+      let line = ''
+      _.each(_.split(note.content, ' '), (word) => {
+        if (line.split(' ').length > wordsPerLine) {
+          lines.push(line)
+          line = ''
+        } else {
+          line = line + ' ' + word
+        }
+      })
+      lines.push(line)
+      lines.push(note.author.name + ', ' + note.updated_at_readable)
+    });
+    return lines
+  }
 }
