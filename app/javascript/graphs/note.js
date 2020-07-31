@@ -123,6 +123,8 @@ export class Note {
         if (line.split(' ').length > wordsPerLine) {
           lines.push(line)
           line = ''
+        } else if (line === '') {
+          line = word
         } else {
           line = line + ' ' + word
         }

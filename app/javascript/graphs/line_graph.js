@@ -98,6 +98,9 @@ function line_graph(context, line_graph) {
         }
       },
       tooltips: {
+        displayColors: false,
+        xPadding: 12,
+        yPadding: 12,
         callbacks: {
           label: (tooltipItem, data) => {
             let tooltip = []
