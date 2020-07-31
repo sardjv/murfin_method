@@ -24,7 +24,7 @@ class Note < ApplicationRecord
     created_at != updated_at
   end
 
-  def extra
+  def with_author
     attributes.merge(
       author: { name: author.name },
       updated_at_readable: updated_at.strftime(I18n.t('time.formats.readable'))

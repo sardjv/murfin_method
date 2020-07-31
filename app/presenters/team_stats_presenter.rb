@@ -75,6 +75,6 @@ class TeamStatsPresenter
 
   def relevant_notes(from:, to:)
     # TODO: Filter by subject, and later viewer permissions.
-    Note.where(start_time: from..to).map(&:extra).to_json
+    Note.where(start_time: from..to).map(&:with_author).to_json
   end
 end

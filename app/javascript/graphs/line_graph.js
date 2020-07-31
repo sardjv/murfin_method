@@ -105,8 +105,7 @@ function line_graph(context, line_graph) {
           label: (tooltipItem, data) => {
             let tooltip = []
             tooltip.push(tooltipItem.value + data.units)
-
-            const notes = data.notes[tooltipItem.datasetIndex][tooltipItem.index]
+            const notes = global.chart.data.datasets[tooltipItem.datasetIndex].notes[tooltipItem.index]
             _.each(Note.toMultilineArray(notes, 10), (note) => {
               tooltip.push(note)
             });
