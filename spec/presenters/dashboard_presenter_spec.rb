@@ -63,19 +63,19 @@ describe DashboardPresenter do
           {
             line_graph: {
               data: [[
-                { name: '2019-06-01T00:00:00.000Z', value: 0, note_ids: [] },
-                { name: '2019-07-01T00:00:00.000Z', value: 0, note_ids: [] },
-                { name: '2019-08-01T00:00:00.000Z', value: 0, note_ids: [] },
-                { name: '2019-09-01T00:00:00.000Z', value: 0, note_ids: [] },
-                { name: '2019-10-01T00:00:00.000Z', value: 0, note_ids: [] },
-                { name: '2019-11-01T00:00:00.000Z', value: 0, note_ids: [] },
-                { name: '2019-12-01T00:00:00.000Z', value: 0, note_ids: [] },
-                { name: '2020-01-01T00:00:00.000Z', value: 0, note_ids: [] },
-                { name: '2020-02-01T00:00:00.000Z', value: 0, note_ids: [] },
-                { name: '2020-03-01T00:00:00.000Z', value: 0, note_ids: [] },
-                { name: '2020-04-01T00:00:00.000Z', value: 0, note_ids: [] },
-                { name: '2020-05-01T00:00:00.000Z', value: 0, note_ids: [] },
-                { name: '2020-06-01T00:00:00.000Z', value: 50.21, note_ids: [] }
+                { name: '2019-06-01T00:00:00.000Z', value: 0, notes: '[]' },
+                { name: '2019-07-01T00:00:00.000Z', value: 0, notes: '[]' },
+                { name: '2019-08-01T00:00:00.000Z', value: 0, notes: '[]' },
+                { name: '2019-09-01T00:00:00.000Z', value: 0, notes: '[]' },
+                { name: '2019-10-01T00:00:00.000Z', value: 0, notes: '[]' },
+                { name: '2019-11-01T00:00:00.000Z', value: 0, notes: '[]' },
+                { name: '2019-12-01T00:00:00.000Z', value: 0, notes: '[]' },
+                { name: '2020-01-01T00:00:00.000Z', value: 0, notes: '[]' },
+                { name: '2020-02-01T00:00:00.000Z', value: 0, notes: '[]' },
+                { name: '2020-03-01T00:00:00.000Z', value: 0, notes: '[]' },
+                { name: '2020-04-01T00:00:00.000Z', value: 0, notes: '[]' },
+                { name: '2020-05-01T00:00:00.000Z', value: 0, notes: '[]' },
+                { name: '2020-06-01T00:00:00.000Z', value: 50.21, notes: '[]' }
               ]],
               units: '%'
             }
