@@ -192,7 +192,11 @@ describe TeamStatsPresenter do
 
           it 'includes the note' do
             expect(subject.weekly_percentage_delivered_per_month).to include(
-              { 'name': '2019-11-01T00:00:00.000Z', 'value': 41.81, 'notes': [n1, n2].to_json }
+              {
+                'name': '2019-11-01T00:00:00.000Z',
+                'value': 41.81,
+                'notes': [n1, n2].map(&:with_author).to_json
+              }
             )
           end
         end
