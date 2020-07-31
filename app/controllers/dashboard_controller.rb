@@ -18,7 +18,9 @@ class DashboardController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        json = @presenter.to_json(graphs: [{ type: :line_graph, data: :team_data, units: '%' }])
+        json = Rails.cache.fetch('teams') do
+          @presenter.to_json(graphs: [{ type: :line_graph, data: :team_data, units: '%' }])
+        end
         render json: json
       end
     end
