@@ -1,5 +1,7 @@
 import Rails from '@rails/ujs'
-import iconPath from '!!svg-url-loader!../../../node_modules/bootstrap-icons/icons/envelope.svg';
+import actionIcon from '!!svg-url-loader!../../../node_modules/bootstrap-icons/icons/exclamation-circle.svg';
+import infoIcon from '!!svg-url-loader!../../../node_modules/bootstrap-icons/icons/info-square.svg';
+import resolvedIcon from '!!svg-url-loader!../../../node_modules/bootstrap-icons/icons/clipboard-check.svg';
 
 window.addEventListener('prev', (event) => {
   Note.getEditNote(Note.getPrevNoteId(event.detail.note_id))
@@ -12,20 +14,31 @@ window.addEventListener('next', (event) => {
 window.addEventListener('ajax:success', (event) => {
   const [data, _status, xhr] = event.detail;
 
-  if (data.constructor !== HTMLDocument) {
+  if (xhr.status == 204) {
+    Note.removeNotePoint(xhr.responseURL.split('/').pop())
+  } else if (data.constructor !== HTMLDocument) {
     const response = JSON.parse(xhr.response)
-
     Note.addNotePoint(response.start_time, response)
-
-    $('#modal').modal('hide')
   }
+
+  $('#modal').modal('hide')
 });
 
 export class Note {
-  static icon() {
+  static icon(state) {
     let noteIcon = new Image();
     noteIcon.width = noteIcon.height = '30';
-    noteIcon.src = iconPath;
+    switch (state) {
+      case 'action':
+        noteIcon.src = actionIcon;
+        break;
+      case 'info':
+        noteIcon.src = infoIcon;
+        break;
+      case 'resolved':
+        noteIcon.src = resolvedIcon;
+        break;
+    }
     return noteIcon;
   }
 
@@ -75,6 +88,25 @@ export class Note {
     global.chart.update();
   }
 
+  static removeNotePoint(note_id) {
+    global.chart.data.datasets.forEach((dataset) => {
+      // An array of arrays of notes, grouped by date, like [[], [{id: 1,...},{id: 2,...}]].
+      let all_notes = dataset.notes
+
+      // If the note already exists, remove it (in case the date has changed).
+      all_notes = _.map(all_notes, (date_notes) => {
+        return _.compact(_.map(date_notes, (note) => {
+          if (note.id != note_id) {
+            return note
+          }
+        }));
+      });
+      dataset.notes = all_notes
+    });
+
+    global.chart.update();
+  }
+
   static getPrevNoteId(note_id) {
     let prev
     global.chart.data.datasets.forEach((dataset) => {
@@ -113,4 +145,30 @@ export class Note {
     }
     return index
   }
+
+  static toMultilineArray(notes, charsPerLine) {
+    let lines = []
+    _.each(notes, (note) => {
+      lines.push('')
+      let line = Note.capitalise(note.state) + ':'
+      _.each(_.split(note.content, ' '), (word) => {
+        if (line.length > charsPerLine) {
+          lines.push(line)
+          line = ''
+        } else if (line == '') {
+          line = word
+        } else {
+          line = line + ' ' + word
+        }
+      })
+      lines.push(line)
+      lines.push(note.author.name + ', ' + note.updated_at_readable)
+    });
+    return lines
+  }
+
+  static capitalise(word){
+    return word[0].toUpperCase() + word.slice(1).toLowerCase();
+  }
+
 }

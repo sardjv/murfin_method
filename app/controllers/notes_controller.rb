@@ -12,7 +12,7 @@ class NotesController < ApplicationController
 
     if @note.save!
       respond_to do |format|
-        format.json { render json: @note.to_json, status: :created }
+        format.json { render json: @note.with_author.to_json, status: :created }
       end
     else
       render :new
@@ -32,7 +32,19 @@ class NotesController < ApplicationController
 
     if @note.update!(note_params)
       respond_to do |format|
-        format.json { render json: @note.to_json, status: :ok }
+        format.json { render json: @note.with_author.to_json, status: :ok }
+      end
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @note = Note.find(params[:id])
+
+    if @note.destroy!
+      respond_to do |format|
+        format.js { head :no_content }
       end
     else
       render :edit
