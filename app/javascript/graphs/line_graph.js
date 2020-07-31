@@ -43,8 +43,8 @@ function datasets(datas) {
       data: data.map(function(e) {
         return e.value;
       }),
-      note_ids: data.map(function(e) {
-        return e.note_ids;
+      notes: data.map(function(e) {
+        return JSON.parse(e.notes);
       }),
       borderWidth: 1,
       fill: false,
@@ -103,8 +103,8 @@ function line_graph(context, line_graph) {
       elements: {
         point: {
           pointStyle: (context) => {
-            const note_ids = context.dataset.note_ids[ context.dataIndex ];
-            if (note_ids.length > 0) {
+            const notes = context.dataset.notes[ context.dataIndex ];
+            if (notes.length > 0) {
               return Note.icon();
             } else {
               return null;
@@ -133,10 +133,13 @@ function line_graph(context, line_graph) {
       },
       onClick: (_event, elements) => {
         if(elements[0]) {
-          const date_clicked = new Date(global.chart.data.originalLabels[elements[0]._index])
-          const note_ids = global.chart.data.datasets[0].note_ids[elements[0]._index]
-
-          Note.debouncedGetNote(date_clicked, note_ids[0])
+          const notes = global.chart.data.datasets[0].notes[elements[0]._index]
+          if (notes.length > 0) {
+            Note.debouncedGetEditNote(notes[0].id)
+          } else {
+            const date_clicked = new Date(global.chart.data.originalLabels[elements[0]._index])
+            Note.debouncedGetNewNote(date_clicked)
+          }
         }
       }
     }

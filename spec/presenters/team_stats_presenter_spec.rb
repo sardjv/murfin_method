@@ -24,19 +24,19 @@ describe TeamStatsPresenter do
       it 'returns 0 per month' do
         expect(subject.average_weekly_planned_per_month).to eq(
           [
-            { 'name': '2019-06-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2019-07-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2019-08-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2019-09-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2019-10-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2019-11-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2019-12-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2020-01-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2020-02-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2020-03-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2020-04-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2020-05-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2020-06-01T00:00:00.000Z', 'value': 0, 'note_ids': [] }
+            { 'name': '2019-06-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2019-07-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2019-08-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2019-09-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2019-10-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2019-11-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2019-12-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2020-01-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2020-02-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2020-03-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2020-04-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2020-05-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2020-06-01T00:00:00.000Z', 'value': 0, 'notes': '[]' }
           ]
         )
       end
@@ -46,19 +46,19 @@ describe TeamStatsPresenter do
       it 'returns 0 per month' do
         expect(subject.average_weekly_actual_per_month).to eq(
           [
-            { 'name': '2019-06-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2019-07-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2019-08-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2019-09-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2019-10-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2019-11-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2019-12-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2020-01-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2020-02-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2020-03-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2020-04-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2020-05-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2020-06-01T00:00:00.000Z', 'value': 0, 'note_ids': [] }
+            { 'name': '2019-06-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2019-07-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2019-08-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2019-09-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2019-10-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2019-11-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2019-12-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2020-01-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2020-02-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2020-03-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2020-04-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2020-05-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2020-06-01T00:00:00.000Z', 'value': 0, 'notes': '[]' }
           ]
         )
       end
@@ -68,19 +68,19 @@ describe TeamStatsPresenter do
       it 'returns 0 per month' do
         expect(subject.weekly_percentage_delivered_per_month).to eq(
           [
-            { 'name': '2019-06-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2019-07-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2019-08-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2019-09-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2019-10-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2019-11-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2019-12-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2020-01-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2020-02-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2020-03-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2020-04-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2020-05-01T00:00:00.000Z', 'value': 0, 'note_ids': [] },
-            { 'name': '2020-06-01T00:00:00.000Z', 'value': 0, 'note_ids': [] }
+            { 'name': '2019-06-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2019-07-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2019-08-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2019-09-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2019-10-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2019-11-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2019-12-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2020-01-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2020-02-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2020-03-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2020-04-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2020-05-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+            { 'name': '2020-06-01T00:00:00.000Z', 'value': 0, 'notes': '[]' }
           ]
         )
       end
@@ -123,19 +123,19 @@ describe TeamStatsPresenter do
           # Approx 1500 (value per user for year) * 10 users / 52 weeks = 288.46.
           expect(subject.average_weekly_planned_per_month).to eq(
             [
-              { 'name': '2019-06-01T00:00:00.000Z', 'value': 42, 'note_ids': [] },
-              { 'name': '2019-07-01T00:00:00.000Z', 'value': 287, 'note_ids': [] },
-              { 'name': '2019-08-01T00:00:00.000Z', 'value': 287, 'note_ids': [] },
-              { 'name': '2019-09-01T00:00:00.000Z', 'value': 287, 'note_ids': [] },
-              { 'name': '2019-10-01T00:00:00.000Z', 'value': 287, 'note_ids': [] },
-              { 'name': '2019-11-01T00:00:00.000Z', 'value': 287, 'note_ids': [] },
-              { 'name': '2019-12-01T00:00:00.000Z', 'value': 287, 'note_ids': [] },
-              { 'name': '2020-01-01T00:00:00.000Z', 'value': 287, 'note_ids': [] },
-              { 'name': '2020-02-01T00:00:00.000Z', 'value': 287, 'note_ids': [] },
-              { 'name': '2020-03-01T00:00:00.000Z', 'value': 287, 'note_ids': [] },
-              { 'name': '2020-04-01T00:00:00.000Z', 'value': 287, 'note_ids': [] },
-              { 'name': '2020-05-01T00:00:00.000Z', 'value': 287, 'note_ids': [] },
-              { 'name': '2020-06-01T00:00:00.000Z', 'value': 245, 'note_ids': [] }
+              { 'name': '2019-06-01T00:00:00.000Z', 'value': 42, 'notes': '[]' },
+              { 'name': '2019-07-01T00:00:00.000Z', 'value': 287, 'notes': '[]' },
+              { 'name': '2019-08-01T00:00:00.000Z', 'value': 287, 'notes': '[]' },
+              { 'name': '2019-09-01T00:00:00.000Z', 'value': 287, 'notes': '[]' },
+              { 'name': '2019-10-01T00:00:00.000Z', 'value': 287, 'notes': '[]' },
+              { 'name': '2019-11-01T00:00:00.000Z', 'value': 287, 'notes': '[]' },
+              { 'name': '2019-12-01T00:00:00.000Z', 'value': 287, 'notes': '[]' },
+              { 'name': '2020-01-01T00:00:00.000Z', 'value': 287, 'notes': '[]' },
+              { 'name': '2020-02-01T00:00:00.000Z', 'value': 287, 'notes': '[]' },
+              { 'name': '2020-03-01T00:00:00.000Z', 'value': 287, 'notes': '[]' },
+              { 'name': '2020-04-01T00:00:00.000Z', 'value': 287, 'notes': '[]' },
+              { 'name': '2020-05-01T00:00:00.000Z', 'value': 287, 'notes': '[]' },
+              { 'name': '2020-06-01T00:00:00.000Z', 'value': 245, 'notes': '[]' }
             ]
           )
         end
@@ -146,19 +146,19 @@ describe TeamStatsPresenter do
           # Approx 630 (value per user for year) * 10 users / 52 weeks = 121.15.
           expect(subject.average_weekly_actual_per_month).to eq(
             [
-              { 'name': '2019-06-01T00:00:00.000Z', 'value': 18, 'note_ids': [] },
-              { 'name': '2019-07-01T00:00:00.000Z', 'value': 120, 'note_ids': [] },
-              { 'name': '2019-08-01T00:00:00.000Z', 'value': 120, 'note_ids': [] },
-              { 'name': '2019-09-01T00:00:00.000Z', 'value': 120, 'note_ids': [] },
-              { 'name': '2019-10-01T00:00:00.000Z', 'value': 120, 'note_ids': [] },
-              { 'name': '2019-11-01T00:00:00.000Z', 'value': 120, 'note_ids': [] },
-              { 'name': '2019-12-01T00:00:00.000Z', 'value': 120, 'note_ids': [] },
-              { 'name': '2020-01-01T00:00:00.000Z', 'value': 120, 'note_ids': [] },
-              { 'name': '2020-02-01T00:00:00.000Z', 'value': 120, 'note_ids': [] },
-              { 'name': '2020-03-01T00:00:00.000Z', 'value': 120, 'note_ids': [] },
-              { 'name': '2020-04-01T00:00:00.000Z', 'value': 120, 'note_ids': [] },
-              { 'name': '2020-05-01T00:00:00.000Z', 'value': 120, 'note_ids': [] },
-              { 'name': '2020-06-01T00:00:00.000Z', 'value': 103, 'note_ids': [] }
+              { 'name': '2019-06-01T00:00:00.000Z', 'value': 18, 'notes': '[]' },
+              { 'name': '2019-07-01T00:00:00.000Z', 'value': 120, 'notes': '[]' },
+              { 'name': '2019-08-01T00:00:00.000Z', 'value': 120, 'notes': '[]' },
+              { 'name': '2019-09-01T00:00:00.000Z', 'value': 120, 'notes': '[]' },
+              { 'name': '2019-10-01T00:00:00.000Z', 'value': 120, 'notes': '[]' },
+              { 'name': '2019-11-01T00:00:00.000Z', 'value': 120, 'notes': '[]' },
+              { 'name': '2019-12-01T00:00:00.000Z', 'value': 120, 'notes': '[]' },
+              { 'name': '2020-01-01T00:00:00.000Z', 'value': 120, 'notes': '[]' },
+              { 'name': '2020-02-01T00:00:00.000Z', 'value': 120, 'notes': '[]' },
+              { 'name': '2020-03-01T00:00:00.000Z', 'value': 120, 'notes': '[]' },
+              { 'name': '2020-04-01T00:00:00.000Z', 'value': 120, 'notes': '[]' },
+              { 'name': '2020-05-01T00:00:00.000Z', 'value': 120, 'notes': '[]' },
+              { 'name': '2020-06-01T00:00:00.000Z', 'value': 103, 'notes': '[]' }
             ]
           )
         end
@@ -169,19 +169,19 @@ describe TeamStatsPresenter do
           # Approx 630/1500 == 0.42.
           expect(subject.weekly_percentage_delivered_per_month).to eq(
             [
-              { 'name': '2019-06-01T00:00:00.000Z', 'value': 42.86, 'note_ids': [] },
-              { 'name': '2019-07-01T00:00:00.000Z', 'value': 41.81, 'note_ids': [] },
-              { 'name': '2019-08-01T00:00:00.000Z', 'value': 41.81, 'note_ids': [] },
-              { 'name': '2019-09-01T00:00:00.000Z', 'value': 41.81, 'note_ids': [] },
-              { 'name': '2019-10-01T00:00:00.000Z', 'value': 41.81, 'note_ids': [] },
-              { 'name': '2019-11-01T00:00:00.000Z', 'value': 41.81, 'note_ids': [] },
-              { 'name': '2019-12-01T00:00:00.000Z', 'value': 41.81, 'note_ids': [] },
-              { 'name': '2020-01-01T00:00:00.000Z', 'value': 41.81, 'note_ids': [] },
-              { 'name': '2020-02-01T00:00:00.000Z', 'value': 41.81, 'note_ids': [] },
-              { 'name': '2020-03-01T00:00:00.000Z', 'value': 41.81, 'note_ids': [] },
-              { 'name': '2020-04-01T00:00:00.000Z', 'value': 41.81, 'note_ids': [] },
-              { 'name': '2020-05-01T00:00:00.000Z', 'value': 41.81, 'note_ids': [] },
-              { 'name': '2020-06-01T00:00:00.000Z', 'value': 42.04, 'note_ids': [] }
+              { 'name': '2019-06-01T00:00:00.000Z', 'value': 42.86, 'notes': '[]' },
+              { 'name': '2019-07-01T00:00:00.000Z', 'value': 41.81, 'notes': '[]' },
+              { 'name': '2019-08-01T00:00:00.000Z', 'value': 41.81, 'notes': '[]' },
+              { 'name': '2019-09-01T00:00:00.000Z', 'value': 41.81, 'notes': '[]' },
+              { 'name': '2019-10-01T00:00:00.000Z', 'value': 41.81, 'notes': '[]' },
+              { 'name': '2019-11-01T00:00:00.000Z', 'value': 41.81, 'notes': '[]' },
+              { 'name': '2019-12-01T00:00:00.000Z', 'value': 41.81, 'notes': '[]' },
+              { 'name': '2020-01-01T00:00:00.000Z', 'value': 41.81, 'notes': '[]' },
+              { 'name': '2020-02-01T00:00:00.000Z', 'value': 41.81, 'notes': '[]' },
+              { 'name': '2020-03-01T00:00:00.000Z', 'value': 41.81, 'notes': '[]' },
+              { 'name': '2020-04-01T00:00:00.000Z', 'value': 41.81, 'notes': '[]' },
+              { 'name': '2020-05-01T00:00:00.000Z', 'value': 41.81, 'notes': '[]' },
+              { 'name': '2020-06-01T00:00:00.000Z', 'value': 42.04, 'notes': '[]' }
             ]
           )
         end
@@ -192,7 +192,7 @@ describe TeamStatsPresenter do
 
           it 'includes the note' do
             expect(subject.weekly_percentage_delivered_per_month).to include(
-              { 'name': '2019-11-01T00:00:00.000Z', 'value': 41.81, 'note_ids': [n1.id, n2.id] }
+              { 'name': '2019-11-01T00:00:00.000Z', 'value': 41.81, 'notes': [n1, n2].to_json }
             )
           end
         end
