@@ -36,7 +36,7 @@ function getColour(number) {
   return SCSSColours[colours[number]]
 }
 
-function datasets(datas) {
+function buildDatasets(datas) {
   let index = 0;
   return datas.map(function(data) {
     const dataset = {
@@ -68,16 +68,20 @@ function line_graph(context, line_graph) {
   const formattedLabels = line_graph.data[0].map(function(e) {
     return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][new Date(Date.parse(e.name)).getMonth()];
   });
-
-  var units = line_graph.units || ''
+  const units = line_graph.units || ''
+  const datasets = buildDatasets(line_graph.data)
+  const notes = datasets.map(function(dataset) {
+    return dataset.notes
+  });
 
   return new Chart(context, {
     type: 'line',
     data: {
       labels: formattedLabels,
       originalLabels: originalLabels,
-      datasets: datasets(line_graph.data),
-      units: units
+      datasets: datasets,
+      units: units,
+      notes: notes
     },
     options: {
       legend: {
@@ -95,8 +99,23 @@ function line_graph(context, line_graph) {
       },
       tooltips: {
         callbacks: {
-          label: function(tooltipItem, data) {
-            return tooltipItem.value + data.units;
+          label: (tooltipItem, data) => {
+            let tooltip = []
+            tooltip.push(tooltipItem.value + data.units)
+            const notes = data.notes[tooltipItem.datasetIndex][tooltipItem.index]
+            _.each(notes, (note) => {
+              let line = ''
+              _.each(_.split(note.content, ' '), (word) => {
+                if (line.split(' ').length > 10) {
+                  tooltip.push(line)
+                  line = ''
+                } else {
+                  line = line + ' ' + word
+                }
+              })
+              tooltip.push(line)
+            });
+            return tooltip;
           }
         }
       },
