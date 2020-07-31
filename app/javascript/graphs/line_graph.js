@@ -119,7 +119,7 @@ function line_graph(context, line_graph) {
           pointStyle: (context) => {
             const notes = context.dataset.notes[ context.dataIndex ];
             if (notes.length > 0) {
-              return Note.icon();
+              return Note.icon(notes[0].state);
             } else {
               return null;
             }
