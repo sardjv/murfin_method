@@ -1,8 +1,8 @@
 <%= bootstrap_form_for(note, remote: true) do |f| %>
   <div class='modal-body'>
     <%= f.select :state, note_states_for_select, label: I18n.t('notes.labels.state') %>
-    <%= f.date_field :start_time, label: I18n.t('notes.labels.start_time') %>
-    <%= f.text_area :content, label: I18n.t('notes.labels.content'), placeholder: I18n.t('notes.placeholders.content') %>
+    <%= f.date_field :start_time, label: I18n.t('notes.labels.start_time'), required: true %>
+    <%= f.text_area :content, label: I18n.t('notes.labels.content'), placeholder: I18n.t('notes.placeholders.content'), required: true %>
     <% if note.persisted? %>
       <div>
         <label><%= I18n.t('notes.labels.subject') %>:</label>
@@ -24,9 +24,13 @@
     <% else %>
       <%= f.primary I18n.t('notes.add') %>
     <% end %>
+
     <button type='button' class='btn btn-secondary mr-auto' data-dismiss='modal'><%= I18n.t('notes.cancel') %></button>
 
     <% if note.persisted? %>
+      <%= link_to note, type: 'button', class: 'btn btn-danger', method: :delete, remote: true, data: { confirm: I18n.t('notes.confirm') } do %>
+        <%= I18n.t('notes.delete') %>
+      <% end %>
       <%= link_to '', id: 'prev_note', class: 'ml-auto', remote: true, onclick: "window.dispatchEvent(new CustomEvent('prev', { detail: { note_id: #{note.id} } }))" do %>
         <%= icon('chevron-left', width: '2em') %>
       <% end %>
