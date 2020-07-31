@@ -102,19 +102,12 @@ function line_graph(context, line_graph) {
           label: (tooltipItem, data) => {
             let tooltip = []
             tooltip.push(tooltipItem.value + data.units)
+
             const notes = data.notes[tooltipItem.datasetIndex][tooltipItem.index]
-            _.each(notes, (note) => {
-              let line = ''
-              _.each(_.split(note.content, ' '), (word) => {
-                if (line.split(' ').length > 10) {
-                  tooltip.push(line)
-                  line = ''
-                } else {
-                  line = line + ' ' + word
-                }
-              })
-              tooltip.push(line)
+            _.each(Note.toMultilineArray(notes, 10), (note) => {
+              tooltip.push(note)
             });
+
             return tooltip;
           }
         }

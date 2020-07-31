@@ -57,6 +57,7 @@ en:
   time:
     formats:
       iso8601_utc: '%Y-%m-%dT%H:%M:%S.000Z'
+      readable: '%H:%M on %d %b %Y'
   user:
     name: Name
     percentage_delivered: Percentage delivered

@@ -23,4 +23,11 @@ class Note < ApplicationRecord
   def ever_updated?
     created_at != updated_at
   end
+
+  def extra
+    attributes.merge(
+      author: { name: author.name },
+      updated_at_readable: updated_at.strftime(I18n.t('time.formats.readable'))
+    )
+  end
 end
