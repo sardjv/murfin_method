@@ -53,12 +53,8 @@ function datasets(datas) {
       borderWidth: 5,
       lineTension: 0.3,
       borderCapStyle: 'round',
+      pointRadius: 0,
       pointHitRadius: 20,
-      pointBackgroundColor: SCSSColours['red200'],
-      pointBorderColor: SCSSColours['red200'],
-      pointHoverBackgroundColor: SCSSColours['red200'],
-      pointHoverBorderColor: SCSSColours['red200'],
-      pointHoverRadius: 10
     }
     index += 1;
     return dataset;
@@ -106,7 +102,14 @@ function line_graph(context, line_graph) {
       },
       elements: {
         point: {
-          radius: customRadius
+          pointStyle: (context) => {
+            const note_ids = context.dataset.note_ids[ context.dataIndex ];
+            if (note_ids.length > 0) {
+              return Note.icon();
+            } else {
+              return null;
+            }
+          }
         }
       },
       scales: {
@@ -138,14 +141,4 @@ function line_graph(context, line_graph) {
       }
     }
   });
-}
-
-function customRadius(context) {
-  const index = context.dataIndex;
-  const note_ids = context.dataset.note_ids[ index ];
-  if (note_ids.length > 0) {
-    return 8;
-  } else {
-    return 0.001;
-  }
 }

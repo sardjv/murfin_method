@@ -38,9 +38,13 @@ en:
     add: Add note
     cancel: Cancel
     labels:
+      author: Author
       content: Add note
+      created_at: Created %{when} ago
       start_time: Time period
       state: Note type
+      subject: Subject
+      updated_at: Updated %{when} ago
     placeholders:
       content: Add some detail about the note here
     save: Save
