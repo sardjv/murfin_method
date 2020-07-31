@@ -39,6 +39,18 @@ class NotesController < ApplicationController
     end
   end
 
+  def destroy
+    @note = Note.find(params[:id])
+
+    if @note.destroy!
+      respond_to do |format|
+        format.json { render json: @note.with_author.to_json, status: :ok }
+      end
+    else
+      render :edit
+    end
+  end
+
   private
 
   # Only allow a trusted parameter "white list" through.
