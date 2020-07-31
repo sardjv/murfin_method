@@ -12,13 +12,14 @@ window.addEventListener('next', (event) => {
 window.addEventListener('ajax:success', (event) => {
   const [data, _status, xhr] = event.detail;
 
-  if (data.constructor !== HTMLDocument) {
+  if (xhr.status == 204) {
+    Note.removeNotePoint(xhr.responseURL.split('/').pop())
+  } else if (data.constructor !== HTMLDocument) {
     const response = JSON.parse(xhr.response)
-
     Note.addNotePoint(response.start_time, response)
-
-    $('#modal').modal('hide')
   }
+
+  $('#modal').modal('hide')
 });
 
 export class Note {
@@ -72,6 +73,25 @@ export class Note {
 
       dataset.notes = all_notes
     });
+    global.chart.update();
+  }
+
+  static removeNotePoint(note_id) {
+    global.chart.data.datasets.forEach((dataset) => {
+      // An array of arrays of notes, grouped by date, like [[], [{id: 1,...},{id: 2,...}]].
+      let all_notes = dataset.notes
+
+      // If the note already exists, remove it (in case the date has changed).
+      all_notes = _.map(all_notes, (date_notes) => {
+        return _.compact(_.map(date_notes, (note) => {
+          if (note.id != note_id) {
+            return note
+          }
+        }));
+      });
+      dataset.notes = all_notes
+    });
+
     global.chart.update();
   }
 

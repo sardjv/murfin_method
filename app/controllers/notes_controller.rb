@@ -44,7 +44,7 @@ class NotesController < ApplicationController
 
     if @note.destroy!
       respond_to do |format|
-        format.json { render json: @note.with_author.to_json, status: :ok }
+        format.js { head :no_content }
       end
     else
       render :edit
