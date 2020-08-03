@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2020_07_27_070331) do
   end
 
   create_table "memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.string "role", default: "member", null: false
+    t.integer "role", default: 0, null: false
     t.bigint "user_group_id", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false

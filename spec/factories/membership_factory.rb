@@ -3,7 +3,7 @@
 # Table name: memberships
 #
 #  id            :bigint           not null, primary key
-#  role          :string(255)      default("member"), not null
+#  role          :integer          default("member"), not null
 #  user_group_id :bigint           not null
 #  user_id       :bigint           not null
 #  created_at    :datetime         not null

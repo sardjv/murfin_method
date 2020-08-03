@@ -1,7 +1,7 @@
 class CreateMembership < ActiveRecord::Migration[6.0]
   def change
     create_table :memberships do |t|
-      t.string :role, default: 'member', null: false
+      t.integer :role, null: false, default: 0
       t.references :user_group, null: false, foreign_key: true
       t.references :user, null: false, foreign_key: true
 
