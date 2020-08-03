@@ -10,7 +10,7 @@
 #  updated_at    :datetime         not null
 #
 class Membership < ApplicationRecord
-  ROLES = %w[member lead].freeze
+  enum role: { member: 0, lead: 1 }
 
   belongs_to :user_group
   belongs_to :user
