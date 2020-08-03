@@ -15,7 +15,6 @@ class DashboardController < ApplicationController
 
   def teams
     @presenter = DashboardPresenter.new(params: dashboard_params)
-
     respond_to do |format|
       format.html
       format.json do
