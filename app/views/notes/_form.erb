@@ -1,11 +1,42 @@
-<%= bootstrap_form_for(note) do |f| %>
+<%= bootstrap_form_for(note, remote: true) do |f| %>
   <div class='modal-body'>
     <%= f.select :state, note_states_for_select, label: I18n.t('notes.labels.state') %>
-    <%= f.date_field :start_time, label: I18n.t('notes.labels.start_time') %>
-    <%= f.text_area :content, label: I18n.t('notes.labels.content'), placeholder: I18n.t('notes.placeholders.content') %>
+    <%= f.date_field :start_time, label: I18n.t('notes.labels.start_time'), required: true %>
+    <%= f.text_area :content, label: I18n.t('notes.labels.content'), placeholder: I18n.t('notes.placeholders.content'), required: true %>
+    <% if note.persisted? %>
+      <div>
+        <label><%= I18n.t('notes.labels.subject') %>:</label>
+        <%= note.subject.name %>
+      </div>
+      <div>
+        <label><%= I18n.t('notes.labels.author') %>:</label>
+        <%= note.author.name %>
+      </div>
+      <label><%= I18n.t('notes.labels.created_at', when: time_ago_in_words(note.created_at)) %></label>
+      <% if note.ever_updated? %>
+        <label><%= I18n.t('notes.labels.updated_at', when: time_ago_in_words(note.updated_at)) %></label>
+      <% end %>
+    <% end %>
   </div>
   <div class='modal-footer'>
-    <%= f.primary I18n.t('notes.add') %>
+    <% if note.persisted? %>
+      <%= f.primary I18n.t('notes.save') %>
+    <% else %>
+      <%= f.primary I18n.t('notes.add') %>
+    <% end %>
+
     <button type='button' class='btn btn-secondary mr-auto' data-dismiss='modal'><%= I18n.t('notes.cancel') %></button>
+
+    <% if note.persisted? %>
+      <%= link_to note, type: 'button', class: 'btn btn-danger', method: :delete, remote: true, data: { confirm: I18n.t('notes.confirm') } do %>
+        <%= I18n.t('notes.delete') %>
+      <% end %>
+      <%= link_to '', id: 'prev_note', class: 'ml-auto', remote: true, onclick: "window.dispatchEvent(new CustomEvent('prev', { detail: { note_id: #{note.id} } }))" do %>
+        <%= icon('chevron-left', width: '2em') %>
+      <% end %>
+      <%= link_to '', id: 'next_note', remote: true, onclick: "window.dispatchEvent(new CustomEvent('next', { detail: { note_id: #{note.id} } }))" do %>
+        <%= icon('chevron-right', width: '2em') %>
+      <% end %>
+    <% end %>
   </div>
 <% end %>

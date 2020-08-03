@@ -36,6 +36,15 @@ RSpec.describe 'Auth', type: :request do
         get admin_dashboard_path
         expect(response).to redirect_to(root_path)
       end
+
+      after do
+        # Reset Auth after test.
+        module SecuredWithOauth
+          def session
+            { userinfo: AuthTestUser::USERINFO }
+          end
+        end
+      end
     end
   end
 end

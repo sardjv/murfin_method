@@ -1,8 +1,8 @@
 import Chart from 'chart.js'
 import Rails from '@rails/ujs'
 import { API } from './api'
-import { FormHelpers } from './form_helpers'
 import * as SCSSColours from '!!sass-variable-loader!../stylesheets/variables/colours.scss';
+import { Note } from './note'
 
 window.addEventListener('turbolinks:load', () => {
   const context = document.getElementById('line-graph');
@@ -11,8 +11,7 @@ window.addEventListener('turbolinks:load', () => {
       url: API.url(),
       type: 'GET',
       success: function(data) {
-        const units = data.line_graph.units
-        line_graph(context, data.line_graph)
+        global.chart = line_graph(context, data.line_graph)
       }
     });
   }
@@ -37,22 +36,25 @@ function getColour(number) {
   return SCSSColours[colours[number]]
 }
 
-function datasets(datas) {
+function buildDatasets(datas) {
   let index = 0;
   return datas.map(function(data) {
     const dataset = {
       data: data.map(function(e) {
         return e.value;
       }),
+      notes: data.map(function(e) {
+        return JSON.parse(e.notes);
+      }),
       borderWidth: 1,
       fill: false,
       backgroundColor: getColour(index),
       borderColor: getColour(index),
       borderWidth: 5,
-      pointRadius: 0.0001,
-      pointHitRadius: 20,
       lineTension: 0.3,
-      borderCapStyle: 'round'
+      borderCapStyle: 'round',
+      pointRadius: 0,
+      pointHitRadius: 20,
     }
     index += 1;
     return dataset;
@@ -66,16 +68,20 @@ function line_graph(context, line_graph) {
   const formattedLabels = line_graph.data[0].map(function(e) {
     return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][new Date(Date.parse(e.name)).getMonth()];
   });
+  const units = line_graph.units || ''
+  const datasets = buildDatasets(line_graph.data)
+  const notes = datasets.map(function(dataset) {
+    return dataset.notes
+  });
 
-  var units = line_graph.units || ''
-
-  new Chart(context, {
+  return new Chart(context, {
     type: 'line',
     data: {
       labels: formattedLabels,
       originalLabels: originalLabels,
-      datasets: datasets(line_graph.data),
-      units: units
+      datasets: datasets,
+      units: units,
+      notes: notes
     },
     options: {
       legend: {
@@ -92,9 +98,31 @@ function line_graph(context, line_graph) {
         }
       },
       tooltips: {
+        displayColors: false,
+        xPadding: 12,
+        yPadding: 12,
         callbacks: {
-          label: function(tooltipItem, data) {
-            return tooltipItem.value + data.units;
+          label: (tooltipItem, data) => {
+            let tooltip = []
+            tooltip.push(tooltipItem.value + data.units)
+            const notes = global.chart.data.datasets[tooltipItem.datasetIndex].notes[tooltipItem.index]
+            _.each(Note.toMultilineArray(notes, 50), (note) => {
+              tooltip.push(note)
+            });
+
+            return tooltip;
+          }
+        }
+      },
+      elements: {
+        point: {
+          pointStyle: (context) => {
+            const notes = context.dataset.notes[ context.dataIndex ];
+            if (notes.length > 0) {
+              return Note.icon(notes[0].state);
+            } else {
+              return null;
+            }
           }
         }
       },
@@ -119,8 +147,13 @@ function line_graph(context, line_graph) {
       },
       onClick: (_event, elements) => {
         if(elements[0]) {
-          $('#modal').modal()
-          FormHelpers.setDatepicker('#note_start_time', new Date(elements[0]._chart.data.originalLabels[elements[0]._index]))
+          const notes = global.chart.data.datasets[0].notes[elements[0]._index]
+          if (notes.length > 0) {
+            Note.debouncedGetEditNote(notes[0].id)
+          } else {
+            const date_clicked = new Date(global.chart.data.originalLabels[elements[0]._index])
+            Note.debouncedGetNewNote(date_clicked)
+          }
         }
       }
     }

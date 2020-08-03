@@ -37,12 +37,19 @@ en:
   notes:
     add: Add note
     cancel: Cancel
+    confirm: Are you sure?
+    delete: Delete
     labels:
+      author: Author
       content: Add note
+      created_at: Created %{when} ago
       start_time: Time period
       state: Note type
+      subject: Subject
+      updated_at: Updated %{when} ago
     placeholders:
       content: Add some detail about the note here
+    save: Save
   status:
     about_right: About Right
     over: Over
@@ -52,6 +59,7 @@ en:
   time:
     formats:
       iso8601_utc: '%Y-%m-%dT%H:%M:%S.000Z'
+      readable: '%H:%M on %d %b %Y'
   user:
     name: Name
     percentage_delivered: Percentage delivered

@@ -34,15 +34,18 @@ describe 'Team Dashboard ', type: :feature, js: true do
     Timecop.return
   end
 
-  before { visit teams_dashboard_path }
-
   it 'renders' do
+    visit teams_dashboard_path
     expect(page).to have_text 'Team dashboard'
   end
 
   describe 'notes' do
     context 'when clicking a point on the graph' do
-      before { click_graph }
+      let(:content) { 'a' }
+      before do
+        visit teams_dashboard_path
+        click_graph
+      end
 
       it 'renders a note form prefilled to the clicked-on date' do
         within '#modal' do
@@ -51,15 +54,29 @@ describe 'Team Dashboard ', type: :feature, js: true do
           expect(page).to have_field('Add note', type: 'textarea')
         end
       end
+
+      context 'with valid input' do
+        before do
+          fill_in 'note[content]', with: content
+          click_on('Add note')
+          visit teams_dashboard_path
+          click_graph
+        end
+
+        it 'persists the note' do
+          within '#modal' do
+            expect(page).to have_field('Add note', type: 'textarea', with: content)
+            expect(page).to have_content("Subject: #{AuthTestUser::USERINFO['info']['name']}")
+            expect(page).to have_content("Author: #{AuthTestUser::USERINFO['info']['name']}")
+            expect(page).to have_content('Created less than a minute ago')
+          end
+        end
+      end
     end
   end
 end
 
 def click_graph
-  Timeout.timeout(Capybara.default_max_wait_time) do
-    loop do
-      page.find('#line-graph').click(x: 540, y: 240)
-      break if page.find('#modal', visible: false).visible?
-    end
-  end
+  sleep(1)
+  page.find('#line-graph').click(x: 540, y: 240)
 end

@@ -1,9 +1,13 @@
+// jQuery is needed globally for JS views like 'app/views/notes/new.js.erb'.
+global.$ = jQuery;
+
 require('@rails/ujs').start()
 require('turbolinks').start()
 
 import 'bootstrap'
 import 'bootstrap-select';
 import '../stylesheets/application'
+import * as _ from 'lodash';
 
 require.context('../images', true)
 
@@ -13,7 +17,7 @@ require.context('../images', true)
 // Currently on step 1 of this: https://stackoverflow.com/a/59495659/4741698
 import '../graphs/api'
 import '../helpers/bootstrap_select'
-import '../graphs/form_helpers'
 import '../graphs/missing_data'
 import '../graphs/bar_chart'
 import '../graphs/line_graph'
+import '../graphs/note'
