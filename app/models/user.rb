@@ -19,6 +19,8 @@ class User < ApplicationRecord
     dependent: :restrict_with_exception,
     inverse_of: 'author'
   )
+  has_many :memberships, dependent: :destroy
+  has_many :user_groups, through: :memberships
 
   validates :email, presence: true
   validates :first_name, presence: true

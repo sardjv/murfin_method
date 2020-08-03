@@ -10,6 +10,8 @@
 #
 class UserGroup < ApplicationRecord
   belongs_to :group_type
+  has_many :memberships, dependent: :destroy
+  has_many :users, through: :memberships
 
   validates :name, presence: true
 end
