@@ -63,7 +63,7 @@ gem 'tzinfo-data', '~> 1.2020.1'
 
 # Use Webpack to manage app-like JavaScript modules in Rails.
 # https://github.com/rails/webpacker
-gem 'webpacker', '~> 5.1.1'
+gem 'webpacker', '~> 5.2.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in your code to drop into a debugger console.
