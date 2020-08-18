@@ -126,7 +126,7 @@ GEM
       activerecord (>= 4.1)
       concurrent-ruby
       railties (>= 4.1)
-    jwt (2.2.1)
+    jwt (2.2.2)
     kaminari (1.2.1)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.2.1)
@@ -337,7 +337,7 @@ DEPENDENCIES
   guard-rspec (~> 4.7.3)
   guard-rubocop (~> 1.3.0)
   jsonapi-resources (~> 0.10.2)
-  jwt (~> 2.2.1)
+  jwt (~> 2.2.2)
   kaminari
   memory_profiler (~> 0.9.14)
   mysql2 (~> 0.5.3)
