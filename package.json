@@ -4,7 +4,7 @@
     "@rails/ujs": "6.0.3-2",
     "@rails/webpacker": "5.1.1",
     "bootstrap": "^4.5.2",
-    "bootstrap-icons": "1.0.0-alpha5",
+    "bootstrap-icons": "1.0.0",
     "bootstrap-select": "^1.13.18",
     "chart.js": "^2.9.3",
     "jquery": "^3.5.1",
