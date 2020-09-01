@@ -1,5 +1,7 @@
 # The Murfin Method: a Ruby on Rails app for building NHS data dashboards
 
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/sardjv/murfin_method/blob/master/LICENSE)
+
 ## .env file
 
 To get started, you need a `.env` file with secrets. For testing there is a `.env.example` file included in the repo that you can use, just remove the `.example` from the filename. Make sure to change all these secrets before running in production!
