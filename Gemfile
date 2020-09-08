@@ -46,7 +46,7 @@ gem 'rails', '~> 6.0.3'
 
 # A very fast key-value store to hold jobs until they are run.
 # https://github.com/redis/redis-rb
-gem 'redis', '~> 4.2.1'
+gem 'redis', '~> 4.2.2'
 
 # Serve Swagger documentation generated from RSpec tests.
 # https://github.com/rswag/rswag
