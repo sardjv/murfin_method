@@ -1,24 +1,24 @@
 class Performance
   # Pass a block to get data on its performance:
   # Performance.test { object.method }
-  def self.test
-    time { yield }
-    memory { yield }
-    database { yield }
+  def self.test(&block)
+    time(&block)
+    memory(&block)
+    database(&block)
   end
 
-  def self.time
+  def self.time(&block)
     log 'TIME:'
 
-    log "#{Benchmark.realtime { yield }.round(2)} seconds"
+    log "#{Benchmark.realtime(&block).round(2)} seconds"
 
     log line_break
   end
 
-  def self.memory
+  def self.memory(&block)
     log 'MEMORY:'
 
-    MemoryProfiler.report { yield }.pretty_print(
+    MemoryProfiler.report(&block).pretty_print(
       scale_bytes: true,
       color_output: true,
       detailed_report: false,
@@ -29,10 +29,10 @@ class Performance
     log line_break
   end
 
-  def self.database
+  def self.database(&block)
     log 'DATABASE:'
 
-    log SqlTracker.track { yield }.values.map { |query|
+    log SqlTracker.track(&block).values.map { |query|
       {
         sql: query[:sql],
         count: query[:count],
@@ -49,6 +49,6 @@ class Performance
   end
 
   def self.log(string)
-    ActiveSupport::Logger.new(STDOUT).info string
+    ActiveSupport::Logger.new($stdout).info string
   end
 end

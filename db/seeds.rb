@@ -10,28 +10,36 @@ end
 end
 FactoryBot.create(:user_group, group_type: band, name: 'Band 9')
 
-# Create Users
-UserGroup.all.each do |band|
-  2.times do
-    user = FactoryBot.create(:user)
-    FactoryBot.create(:membership, user_group: band, user: user)
-  end
-end
-
 # Create TimeRangeTypes
 plan_id = FactoryBot.create(:time_range_type, name: 'Job Plan').id
 actuals_id = FactoryBot.create(:time_range_type, name: 'RIO Data').id
 
+# Health Visitors Team
+team = FactoryBot.create(:group_type, name: 'Team')
+health_visitors = FactoryBot.create(:user_group, group_type: team, name: "Health Visitors")
+# Team Lead
+manager = FactoryBot.create(:user, first_name: 'Reta', last_name: 'Lang', email: 'reta@example.com')
+FactoryBot.create(:membership, user_group: health_visitors, user: manager, role: 1)
+# Team Members
+user = FactoryBot.create(:user, first_name: 'Rodger', last_name: 'Steuber', email: 'rodger@example.com')
+FactoryBot.create(:membership, user_group: health_visitors, user: user)
+10.times do
+  user = FactoryBot.create(:user)
+  user.user_groups << band.user_groups.sample
+  FactoryBot.create(:membership, user_group: health_visitors, user: user)
+end
+# Admin
+user = FactoryBot.create(:user, first_name: 'Bella', last_name: 'Owen', email: 'bella@example.com', admin: true)
+
 # For each User, create a static job plan and a set of seasonal actuals.
-User.pluck(:id).each do |user_id|
+health_visitors.users.pluck(:id).each do |user_id|
   FakeGraphDataJob.perform_later(
     story: :static,
     user_id: user_id,
     time_range_type_id: plan_id,
-    start: DateTime.now.beginning_of_year,
-    volatility: 0.05 # 5% weekly variation
-  )
-
+        start: DateTime.now.beginning_of_year,
+        volatility: 0.05 # 5% weekly variation
+      )
   FakeGraphDataJob.perform_later(
     story: :seasonal_summer_and_christmas,
     user_id: user_id,

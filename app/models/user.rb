@@ -8,6 +8,7 @@
 #  email      :string(255)      not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  admin      :boolean          default(FALSE)
 #
 class User < ApplicationRecord
   has_many :time_ranges, dependent: :destroy
