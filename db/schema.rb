@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(version: 2020_09_09_085226) do
     t.string "email", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "admin", default: false
+    t.boolean "admin", default: false, null: false
   end
 
   add_foreign_key "memberships", "user_groups"
