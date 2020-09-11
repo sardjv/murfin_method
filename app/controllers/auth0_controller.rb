@@ -1,5 +1,6 @@
 class Auth0Controller < ApplicationController
   skip_before_action :authenticate_user!
+  include LogoutHelper
 
   def callback
     session[:userinfo] = request.env['omniauth.auth']
@@ -14,6 +15,6 @@ class Auth0Controller < ApplicationController
   def destroy
     reset_session
     flash.notice = 'You have been logged out.'
-    redirect_to root_path
+    redirect_to logout_url.to_s
   end
 end
