@@ -31,4 +31,8 @@ class User < ApplicationRecord
   def name
     "#{first_name} #{last_name}"
   end
+
+  def lead?
+    memberships.where(role: 1).any?
+  end
 end

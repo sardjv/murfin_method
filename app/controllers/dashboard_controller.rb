@@ -1,4 +1,10 @@
 class DashboardController < ApplicationController
+  def user
+    respond_to do |format|
+      format.html
+    end
+  end
+
   def admin
     @presenter = DashboardPresenter.new(params: dashboard_params)
 

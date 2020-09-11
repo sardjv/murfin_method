@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 describe 'Team Dashboard ', type: :feature, js: true do
-  let(:user) { create(:user) }
+  let(:manager) { create(:user, first_name: 'John', last_name: 'Smith', email: 'john@example.com') }
+  let(:user) { create(:user, first_name: 'Lekisha', last_name: 'Sporer') }
+  let!(:user_group) { create(:user_group) }
+  let!(:membership) { create(:membership, user_group: user_group, user: manager, role: 1) }
 
   let(:plan_id) { TimeRangeType.plan_type.id }
   let(:actual_id) { TimeRangeType.actual_type.id }

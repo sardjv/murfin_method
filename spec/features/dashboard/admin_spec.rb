@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Admin Dashboard ', type: :feature do
-  let(:user) { create(:user) }
+  let(:user) { create(:admin) }
 
   let(:plan_id) { TimeRangeType.plan_type.id }
   let(:actual_id) { TimeRangeType.actual_type.id }
@@ -30,6 +30,6 @@ describe 'Admin Dashboard ', type: :feature do
 
   it 'has graph with planned and actual data' do
     visit admin_dashboard_path
-    expect(page).to have_text 'CHPPD Data'
+    expect(page).to have_text 'Percentage delivered against job plan'
   end
 end
