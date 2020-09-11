@@ -8,6 +8,7 @@
 #  email      :string(255)      not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  admin      :boolean          default(FALSE)
 #
 class User < ApplicationRecord
   has_many :time_ranges, dependent: :destroy
@@ -25,6 +26,7 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates :first_name, presence: true
   validates :last_name, presence: true
+  validates :admin, inclusion: { in: [true, false] }
 
   def name
     "#{first_name} #{last_name}"
