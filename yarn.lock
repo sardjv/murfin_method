@@ -921,10 +921,10 @@
   dependencies:
     mkdirp "^1.0.4"
 
-"@rails/ujs@6.0.3-2":
-  version "6.0.3-2"
-  resolved "https://registry.yarnpkg.com/@rails/ujs/-/ujs-6.0.3-2.tgz#e14c1f29086858215ce7ccd9ad6d8888c458b4a3"
-  integrity sha512-WcpIEftNCfGDEgk6KerOugiet75Mir5q/HT1yt3dDhpBI91BaZ15lfSQIsZwMw2nyeDz9A9QBz8dAFAd4gXIzg==
+"@rails/ujs@6.0.3-3":
+  version "6.0.3-3"
+  resolved "https://registry.yarnpkg.com/@rails/ujs/-/ujs-6.0.3-3.tgz#5cf1e99c6fa1beaf73d4bcac6ab9b05702e92713"
+  integrity sha512-bXCbtpSwCtqhBXxxoD5FGiyeqJU1smf4DS15SCXRzzSaoee2Kk+lVV5q2dEIBdj0NBDiK/G1ShoM2wlPy7Tu5w==
 
 "@rails/webpacker@5.2.1":
   version "5.2.1"
@@ -4306,7 +4306,7 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-lodash@^4.0.0, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.20, lodash@^4.17.5, lodash@~4.17.10:
+lodash@^4.0.0, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.5, lodash@~4.17.10:
   version "4.17.20"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
   integrity sha512-PlhdFcillOINfeV7Ni6oF1TAEayyZBoZ8bcshTHqOYJYlrqzRK5hagpagky5o4HfCzzd1TRkXPMFq6cKk9rGmA==
