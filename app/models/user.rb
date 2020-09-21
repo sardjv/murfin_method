@@ -8,7 +8,7 @@
 #  email      :string(255)      not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  admin      :boolean          default(FALSE)
+#  admin      :boolean          default(FALSE), not null
 #
 class User < ApplicationRecord
   has_many :time_ranges, dependent: :destroy
@@ -23,7 +23,7 @@ class User < ApplicationRecord
   has_many :memberships, dependent: :destroy
   has_many :user_groups, through: :memberships
 
-  validates :email, presence: true
+  validates :email, presence: true, uniqueness: true
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :admin, inclusion: { in: [true, false] }
@@ -33,6 +33,6 @@ class User < ApplicationRecord
   end
 
   def lead?
-    memberships.where(role: 1).any?
+    memberships.where(role: 'lead').any?
   end
 end

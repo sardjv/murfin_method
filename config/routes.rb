@@ -32,4 +32,8 @@ Rails.application.routes.draw do
     get :teams, on: :collection
     get :individuals, on: :collection
   end
+
+  namespace :admin do
+    resources :users, except: :show
+  end
 end

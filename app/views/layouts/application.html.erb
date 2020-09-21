@@ -44,6 +44,10 @@
             {
               label: I18n.t('nav.admin_dashboard'),
               path: admin_dashboard_path,
+              subnavs: [
+                { label: I18n.t('nav.tabs.admin_dashboard'), path: admin_dashboard_path },
+                { label: I18n.t('nav.tabs.admin_users'), path: admin_users_path }
+              ],
               enabled: @current_user&.admin?
             },
           ]
@@ -53,6 +57,7 @@
 
     <main>
       <div class='container'>
+        <%= render(partial: 'shared/flash') %>
         <%= yield %>
       </div>
 
