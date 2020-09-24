@@ -2,10 +2,9 @@ require 'rails_helper'
 
 describe 'Admin creates a user', type: :feature do
   let(:admin) do
-    create(:user, first_name: 'John',
-                  last_name: 'Smith',
-                  email: 'john@example.com',
-                  admin: true)
+    create(:admin, first_name: 'John',
+                   last_name: 'Smith',
+                   email: 'john@example.com')
   end
 
   it 'creates user' do

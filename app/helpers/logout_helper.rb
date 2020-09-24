@@ -7,7 +7,9 @@ module LogoutHelper
       client_id: ENV['AUTH0_CLIENT_ID']
     }
 
-    URI::HTTPS.build(host: ENV['AUTH0_CLIENT_DOMAIN'], path: '/v2/logout', query: to_query(request_params))
+    URI::HTTPS.build(host: ENV['AUTH0_CLIENT_DOMAIN'],
+                     path: '/v2/logout',
+                     query: to_query(request_params))
   end
 
   private

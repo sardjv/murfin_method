@@ -2,10 +2,9 @@ require 'rails_helper'
 
 describe 'Admin destroys a user', type: :feature, js: true do
   let(:admin) do
-    create(:user, first_name: 'John',
-                  last_name: 'Smith',
-                  email: 'john@example.com',
-                  admin: true)
+    create(:admin, first_name: 'John',
+                   last_name: 'Smith',
+                   email: 'john@example.com')
   end
   let!(:user) do
     create(:user, first_name: 'Jo',
@@ -13,7 +12,7 @@ describe 'Admin destroys a user', type: :feature, js: true do
                   email: 'joanne@example.com')
   end
 
-  it 'creates user' do
+  it 'destroys user' do
     visit admin_users_path
 
     accept_confirm do
