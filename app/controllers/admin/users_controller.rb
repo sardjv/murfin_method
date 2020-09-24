@@ -12,7 +12,6 @@ module Admin
     def create
       @user = User.new(user_params)
       if @user.save
-        Rails.cache.delete('users')
         redirect_to admin_users_path, notice: t('users.notice.successfully.created')
       else
         flash.now.alert = t('users.notice.could_not_be.created')
@@ -28,7 +27,6 @@ module Admin
       @user = User.find(params[:id])
 
       if @user.update(user_params)
-        Rails.cache.delete('users')
         redirect_to admin_users_path, notice: t('users.notice.successfully.updated')
       else
         flash.now.alert = t('users.notice.could_not_be.updated')
@@ -39,7 +37,6 @@ module Admin
     def destroy
       @user = User.find(params[:id])
       @user.destroy
-      Rails.cache.delete('users')
       redirect_to admin_users_path, notice: t('users.notice.successfully.destroyed')
     end
 
