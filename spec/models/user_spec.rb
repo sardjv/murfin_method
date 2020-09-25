@@ -8,7 +8,7 @@
 #  email      :string(255)      not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  admin      :boolean          default(FALSE)
+#  admin      :boolean          default(FALSE), not null
 #
 describe User, type: :model do
   subject { build(:user) }

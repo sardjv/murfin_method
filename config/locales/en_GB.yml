@@ -29,12 +29,38 @@ en:
       other: Showing %{count} users
   nav:
     dashboard: Dashboard
-    admin_dashboard: Admin
     team_dashboard: Team
+    admin_dashboard: Admin
     tabs:
       combined_data: Combined data
       individuals: Individuals
       team: Team dashboard
+      admin_dashboard: Admin dashboard
+      admin_users: Users
+  users:
+    add: Add user
+    cancel: Cancel
+    confirm: Are you sure?
+    delete: Delete
+    labels:
+      first_name: First name
+      last_name: Last name
+      email: Email
+      admin: Admin
+    save: Save
+    notice:
+      successfully:
+        created:
+          User successfully created
+        updated:
+          User successfully updated
+        destroyed:
+          User destroyed
+      could_not_be:
+        created:
+          User could not be created
+        updated:
+          User could not be updated
   notes:
     add: Add note
     cancel: Cancel
@@ -63,5 +89,6 @@ en:
       readable: '%H:%M on %d %b %Y'
   user:
     name: Name
+    email: Email
     percentage_delivered: Percentage delivered
     status: Status

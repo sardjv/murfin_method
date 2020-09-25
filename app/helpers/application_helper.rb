@@ -27,4 +27,11 @@ module ApplicationHelper
       attributes: %w[class cx cy d fill fill-rule height r rx ry viewbox width x xmlns y]
     )
   end
+
+  def flash_class(level)
+    case level
+    when 'notice' then 'alert alert-info'
+    when 'alert' then 'alert alert-danger'
+    end
+  end
 end

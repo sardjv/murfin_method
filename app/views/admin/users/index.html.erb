@@ -1,0 +1,58 @@
+<div class='container my-5'>
+  <div class='row'>
+    <div class='col-12'>
+
+      <%= link_to [:new, :admin, :user], class: 'btn btn-primary float-right mb-3' do %>
+        <%= icon('plus') %>
+        <%= I18n.t('users.add') %>
+      <% end %>
+
+      <div class='table-responsive'>
+        <table class='table table-bordered'>
+          <thead>
+            <tr>
+              <th>
+                <%= I18n.t('user.name') %>
+              </th>
+              <th>
+                <%= I18n.t('user.email') %>
+              </th>
+              <th style='width: 50px;'></th>
+              <th style='width: 50px;'></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @users.each do |user| %>
+              <% cache user do %>
+                <tr>
+                  <td>
+                    <%= user.name %>
+                    <% if user.admin? %>
+                      <br>
+                      Admin
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= user.email %>
+                  </td>
+                  <td>
+                    <%= link_to [:edit, :admin, user], class: 'btn btn-link' do %>
+                      <%= icon('pencil') %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to [:admin, user], method: :delete, data: { confirm: I18n.t('users.confirm') }, class: 'btn btn-link'  do %>
+                      <%= icon('trash') %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <%= paginate @users %>
+
+    </div>
+  </div>
+</div>
