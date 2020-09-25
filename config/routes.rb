@@ -35,5 +35,8 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :users, except: :show
+    resources :group_types, except: :show do
+      resources :user_groups, except: :show, shallow: true
+    end
   end
 end

@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_21_082419) do
+ActiveRecord::Schema.define(version: 2020_09_23_145703) do
 
   create_table "group_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_group_types_on_name", unique: true
   end
 
   create_table "memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -68,6 +69,7 @@ ActiveRecord::Schema.define(version: 2020_09_21_082419) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "group_type_id", null: false
     t.index ["group_type_id"], name: "index_user_groups_on_group_type_id"
+    t.index ["name", "group_type_id"], name: "index_user_groups_on_name_and_group_type_id", unique: true
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
