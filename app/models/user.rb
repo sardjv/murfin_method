@@ -33,6 +33,6 @@ class User < ApplicationRecord
   end
 
   def lead?
-    memberships.where(role: 'lead').any?
+    memberships.exists?(role: 'lead')
   end
 end
