@@ -17,11 +17,8 @@
               <th>
                 <%= I18n.t('user.email') %>
               </th>
-              <th style="width: 70px;">
-              <th style='width: 70px;'>
-              </th>
-              <th style='width: 70px;'>
-              </th>
+              <th style='width: 50px;'></th>
+              <th style='width: 50px;'></th>
             </tr>
           </thead>
           <tbody>
@@ -38,13 +35,6 @@
                   <td>
                     <%= user.email %>
                   </td>
-                  <td>
-                    <%= link_to [:edit, :admin, user] do %>
-                      <%= icon('pencil') %>
-                    <% end %>
-                    <%= link_to [:admin, user], method: :delete, data: { confirm: I18n.t('users.confirm') } do %>
-                      <%= icon('trash') %>
-                    <% end %>
                   <td>
                     <%= link_to [:edit, :admin, user], class: 'btn btn-link' do %>
                       <%= icon('pencil') %>
