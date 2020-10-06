@@ -57,7 +57,7 @@ en:
         updated:
           User successfully updated
         destroyed:
-          User destroyed
+          User deleted
       could_not_be:
         created:
           User could not be created
@@ -81,7 +81,7 @@ en:
         updated:
           Group type successfully updated
         destroyed:
-          Group type destroyed
+          Group type deleted
       could_not_be:
         created:
           Group type could not be created
@@ -105,7 +105,7 @@ en:
         updated:
           User group successfully updated
         destroyed:
-          User group destroyed
+          User group deleted
       could_not_be:
         created:
           User group could not be created
