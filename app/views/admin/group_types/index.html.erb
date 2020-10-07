@@ -11,9 +11,9 @@
 
   <div class='row'>
     <div class='col-12'>
-      <% @group_types.each do |group_type| %>
+      <% @group_types.each_with_index do |group_type, index| %>
         <div id='accordion'>
-          <%= render(partial: 'group_type_card', locals: { group_type: group_type}) %>
+          <%= render(partial: 'group_type_card', locals: { group_type: group_type, index: index }) %>
         </div>
       <% end %>
     </div>

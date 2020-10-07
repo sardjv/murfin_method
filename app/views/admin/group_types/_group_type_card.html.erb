@@ -1,7 +1,7 @@
 <div class='card'>
-  <div class='card-header'>
+  <div class='card-header' id='heading<%=index%>'>
     <h5 class='mb-0'>
-      <button class='btn btn-link' data-toggle='collapse' data-target='#<%= group_type.name.parameterize(separator: '_') %>' aria-expanded='true' aria-controls='collapseOne'>
+      <button class='btn btn-link' data-toggle='collapse' data-target='#collapse<%=index%>' aria-expanded='false' aria-controls='#collapse<%=index%>'>
         <%= group_type.name.pluralize %>
       </button>
       <%= link_to [:admin, group_type], method: :delete, data: { confirm: I18n.t('group_types.confirm') }, class: 'float-right' do %>
@@ -16,7 +16,7 @@
     </h5>
   </div>
 
-  <div id='<%= group_type.name.parameterize(separator: '_') %>' class='collapse' aria-labelledby='headingOne' data-parent='#accordion'>
+  <div id='collapse<%=index%>' class='collapse' aria-labelledby='heading<%=index%>' data-parent='#accordion'>
     <div class='card-body p-0'>
       <%= render(partial: 'group_type_table', locals: { group_type: group_type}) %>
     </div>
