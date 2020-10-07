@@ -13,5 +13,5 @@ class UserGroup < ApplicationRecord
   has_many :memberships, dependent: :destroy
   has_many :users, through: :memberships
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: { scope: :group_type }
 end

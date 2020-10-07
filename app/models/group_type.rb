@@ -10,5 +10,5 @@
 class GroupType < ApplicationRecord
   has_many :user_groups, dependent: :destroy
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
 end

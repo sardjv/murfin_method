@@ -37,8 +37,10 @@ en:
       team: Team dashboard
       admin_dashboard: Admin dashboard
       admin_users: Users
+      admin_group_types: Groups
   users:
     add: Add user
+    edit: Edit user
     cancel: Cancel
     confirm: Are you sure?
     delete: Delete
@@ -55,12 +57,60 @@ en:
         updated:
           User successfully updated
         destroyed:
-          User destroyed
+          User deleted
       could_not_be:
         created:
           User could not be created
         updated:
           User could not be updated
+  group_types:
+    add: Add group type
+    edit: Edit group type
+    cancel: Cancel
+    confirm: Are you sure?
+    delete: Delete
+    labels:
+      name: Name
+      name_help: Name should be singular
+      user_group: User groups
+    save: Save
+    notice:
+      successfully:
+        created:
+          Group type successfully created
+        updated:
+          Group type successfully updated
+        destroyed:
+          Group type deleted
+      could_not_be:
+        created:
+          Group type could not be created
+        updated:
+          Group type could not be updated
+  user_groups:
+    add: Add %{group_type_name} user group
+    edit: Edit user group
+    cancel: Cancel
+    confirm: Are you sure?
+    delete: Delete
+    labels:
+      name: Name
+      leaders: Leads
+      members: Members
+    save: Save
+    notice:
+      successfully:
+        created:
+          User group successfully created
+        updated:
+          User group successfully updated
+        destroyed:
+          User group deleted
+      could_not_be:
+        created:
+          User group could not be created
+        updated:
+          User group could not be updated
   notes:
     add: Add note
     cancel: Cancel

@@ -46,7 +46,8 @@
               path: admin_dashboard_path,
               subnavs: [
                 { label: I18n.t('nav.tabs.admin_dashboard'), path: admin_dashboard_path },
-                { label: I18n.t('nav.tabs.admin_users'), path: admin_users_path }
+                { label: I18n.t('nav.tabs.admin_users'), path: admin_users_path },
+                { label: I18n.t('nav.tabs.admin_group_types'), path: admin_group_types_path }
               ],
               enabled: @current_user&.admin?
             },
