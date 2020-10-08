@@ -95,7 +95,9 @@ en:
     delete: Delete
     labels:
       name: Name
+      lead: Lead
       leaders: Leads
+      member: Member
       members: Members
     save: Save
     notice:

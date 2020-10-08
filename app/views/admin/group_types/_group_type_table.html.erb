@@ -19,35 +19,33 @@
     </thead>
     <tbody>
       <% group_type.user_groups.each do |user_group| %>
-        <% cache user_group do %>
-          <tr>
-            <td>
-              <%= user_group.name %>
-            </td>
-            <td>
-              <% user_group.memberships.where(role: 'lead').each do |membership| %>
-                <%= membership.user.name %>
-                <br>
-              <% end %>
-            </td>
-            <td>
-              <% user_group.memberships.where(role: 'user').each do |membership| %>
-                <%= membership.user.name %>
-                <br>
-              <% end %>
-            </td>
-            <td>
-              <%= link_to [:edit, :admin, user_group], class: 'btn btn-link' do %>
-                <%= icon('pencil') %>
-              <% end %>
-            </td>
-            <td>
-              <%= link_to [:admin, user_group], class: 'btn btn-link', method: :delete, data: { confirm: I18n.t('user_groups.confirm') } do %>
-                <%= icon('trash') %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
+        <tr>
+          <td>
+            <%= user_group.name %>
+          </td>
+          <td>
+            <% user_group.memberships.where(role: 'lead').each do |membership| %>
+              <%= membership.user.name %>
+              <br>
+            <% end %>
+          </td>
+          <td>
+            <% user_group.memberships.where(role: 'user').each do |membership| %>
+              <%= membership.user.name %>
+              <br>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to [:edit, :admin, user_group], class: 'btn btn-link' do %>
+              <%= icon('pencil') %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to [:admin, user_group], class: 'btn btn-link', method: :delete, data: { confirm: I18n.t('user_groups.confirm') } do %>
+              <%= icon('trash') %>
+            <% end %>
+          </td>
+        </tr>
       <% end %>
     </tbody>
   </table>

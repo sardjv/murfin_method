@@ -19,6 +19,19 @@
         <%= f.text_field :last_name, label: I18n.t('users.labels.last_name'), placeholder: I18n.t('users.labels.last_name'), required: true %>
         <%= f.text_field :email, label: I18n.t('users.labels.email'), placeholder: I18n.t('users.labels.email'), required: true %>
         <%= f.check_box :admin, label: I18n.t('users.labels.admin'), placeholder: I18n.t('users.labels.admin') %>
+        <br>
+        <% GroupType.all.each do |group_type| %>
+          <% next unless group_type.user_groups.any? %>
+          <p>
+            <%= f.label group_type.name, for: "group_type_#{group_type.id}" %>
+            <br>
+            <%= select_tag 'user[user_group_ids][]',
+                  options_from_collection_for_select(group_type.user_groups, :id, :name, selected: @user.user_groups.pluck(:id)),
+                  id: "group_type_#{group_type.id}",
+                  include_blank: true %>
+            <br>
+          </p>
+        <% end %>
 
         <%= f.submit I18n.t('users.save'), class: 'btn btn-primary mt-2' %>
         <%= link_to I18n.t('users.cancel'), :back, class: 'btn btn-outline-secondary mt-2' %>
