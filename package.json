@@ -1,7 +1,7 @@
 {
   "license": "MIT",
   "dependencies": {
-    "@rails/ujs": "6.0.3-3",
+    "@rails/ujs": "6.0.3-4",
     "@rails/webpacker": "5.2.1",
     "bootstrap": "^4.5.2",
     "bootstrap-icons": "1.0.0",
