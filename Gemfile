@@ -59,7 +59,7 @@ gem 'sidekiq', '~> 6.1.2'
 
 # Bundle zoneinfo files which are not included in Windows.
 # https://github.com/tzinfo/tzinfo-data
-gem 'tzinfo-data', '~> 1.2020.1'
+gem 'tzinfo-data', '~> 1.2020.2'
 
 # Use Webpack to manage app-like JavaScript modules in Rails.
 # https://github.com/rails/webpacker
