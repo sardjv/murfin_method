@@ -46,7 +46,8 @@ module Admin
     def user_group_params
       params.require(:user_group).permit(
         :name,
-        :group_type_id
+        :group_type_id,
+        memberships_attributes: %i[role id]
       )
     end
   end

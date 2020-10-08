@@ -9,10 +9,10 @@ describe 'Admin edits a user group', type: :feature, js: true do
   let!(:group_type) do
     create(:group_type, name: 'Band')
   end
-  let!(:user_group) do
+  let!(:band1_group) do
     create(:user_group, group_type: group_type, name: 'Band 1')
   end
-  let!(:other_user_group) do
+  let!(:band2_group) do
     create(:user_group, group_type: group_type, name: 'Band 2')
   end
 
@@ -27,7 +27,7 @@ describe 'Admin edits a user group', type: :feature, js: true do
     click_button I18n.t('user_groups.save')
 
     expect(page).to have_content(I18n.t('user_groups.notice.successfully.updated'))
-    expect(user_group.reload.name).to eq 'NHS Band 1'
+    expect(band1_group.reload.name).to eq 'NHS Band 1'
   end
 
   context 'when enter non unique name' do
@@ -42,7 +42,7 @@ describe 'Admin edits a user group', type: :feature, js: true do
       click_button I18n.t('user_groups.save')
 
       expect(page).to have_content(I18n.t('user_groups.notice.could_not_be.updated'))
-      expect(user_group.reload.name).to eq 'Band 1'
+      expect(band1_group.reload.name).to eq 'Band 1'
     end
   end
 end

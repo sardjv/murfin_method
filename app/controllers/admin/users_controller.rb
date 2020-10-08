@@ -47,7 +47,8 @@ module Admin
         :first_name,
         :last_name,
         :email,
-        :admin
+        :admin,
+        user_group_ids: []
       )
     end
   end

@@ -11,6 +11,7 @@
 class UserGroup < ApplicationRecord
   belongs_to :group_type
   has_many :memberships, dependent: :destroy
+  accepts_nested_attributes_for :memberships
   has_many :users, through: :memberships
 
   validates :name, presence: true, uniqueness: { scope: :group_type }
