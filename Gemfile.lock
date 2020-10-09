@@ -176,7 +176,7 @@ GEM
     omniauth (1.9.1)
       hashie (>= 3.4.6)
       rack (>= 1.6.2, < 3)
-    omniauth-auth0 (2.4.0)
+    omniauth-auth0 (2.4.1)
       omniauth-oauth2 (~> 1.5)
     omniauth-oauth2 (1.7.0)
       oauth2 (~> 1.4)
@@ -341,7 +341,7 @@ DEPENDENCIES
   kaminari
   memory_profiler (~> 0.9.14)
   mysql2 (~> 0.5.3)
-  omniauth-auth0 (~> 2.4.0)
+  omniauth-auth0 (~> 2.4.1)
   omniauth-rails_csrf_protection (~> 0.1.2)
   puma (~> 5.0.2)
   rails (~> 6.0.3)
