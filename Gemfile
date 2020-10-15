@@ -129,5 +129,5 @@ group :test do
 
   # Provides 'time travel' capabilities, making it simple to test time-dependent code.
   # https://github.com/travisjeffery/timecop
-  gem 'timecop', '~> 0.9.1'
+  gem 'timecop', '~> 0.9.2'
 end
