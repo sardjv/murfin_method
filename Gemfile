@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.7.2'
 
 # Make it easy to create beautiful-looking forms using Bootstrap 4.
 # https://github.com/bootstrap-ruby/bootstrap_form
