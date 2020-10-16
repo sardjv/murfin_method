@@ -33,7 +33,7 @@ class DashboardPresenter
         {
           name: month,
           value: rand(8.0..14.0).round(2),
-          notes: []
+          notes: [].to_json
         }
       end
     end
