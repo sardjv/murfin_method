@@ -23,7 +23,7 @@ gem 'jwt', '~> 2.2.2'
 
 # paginator for modern web app frameworks and ORMs
 # https://github.com/kaminari/kaminari
-gem 'kaminari'
+gem 'kaminari', '~ 1.2.1'
 
 # Use MySQL as the database for Active Record.
 # https://github.com/brianmario/mysql2
