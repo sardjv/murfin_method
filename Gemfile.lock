@@ -338,7 +338,7 @@ DEPENDENCIES
   guard-rubocop (~> 1.3.0)
   jsonapi-resources (~> 0.10.2)
   jwt (~> 2.2.2)
-  kaminari
+  kaminari (~> 1.2.1)
   memory_profiler (~> 0.9.14)
   mysql2 (~> 0.5.3)
   omniauth-auth0 (~> 2.4.1)
