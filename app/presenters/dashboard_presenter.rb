@@ -32,7 +32,8 @@ class DashboardPresenter
       admin_x_axis.map do |month|
         {
           name: month,
-          value: rand(8.0..14.0).round(2)
+          value: rand(8.0..14.0).round(2),
+          notes: [].to_json
         }
       end
     end
