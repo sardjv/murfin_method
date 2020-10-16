@@ -43,13 +43,14 @@ describe DashboardPresenter do
   describe 'to_json' do
     context 'with :admin data' do
       it 'returns a multi-line graph' do
-        expect(
-          JSON.parse(
-            subject.to_json(
-              graphs: [{ type: :line_graph, data: :admin_data }]
-            )
-          )['line_graph']['data'].count
-        ).to eq(4)
+        data = JSON.parse(
+          subject.to_json(
+            graphs: [{ type: :line_graph, data: :admin_data }]
+          )
+        )['line_graph']['data']
+
+        expect(data.count).to eq(4)
+        expect(data.flatten.flat_map(&:keys).uniq).to match_array(%w[name value notes])
       end
     end
 
