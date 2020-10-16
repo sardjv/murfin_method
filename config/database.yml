@@ -1,6 +1,5 @@
 ---
 
-# MySQL option.
 default: &default
   adapter: mysql2
   encoding: utf8mb4
