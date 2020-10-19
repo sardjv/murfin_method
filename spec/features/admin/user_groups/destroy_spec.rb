@@ -1,17 +1,13 @@
 require 'rails_helper'
 
 describe 'Admin destroys a user group', type: :feature, js: true do
-  let(:admin) do
-    create(:admin, first_name: 'John',
-                   last_name: 'Smith',
-                   email: 'john@example.com')
-  end
   let!(:group_type) do
     create(:group_type, name: 'Band')
   end
   let!(:user_group) do
     create(:user_group, group_type: group_type, name: 'Band 1')
   end
+  before { log_in create(:admin) }
 
   it 'destroys user' do
     visit admin_group_types_path

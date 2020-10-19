@@ -1,16 +1,13 @@
 require 'rails_helper'
 
 describe 'Admin edits a user', type: :feature, js: true do
-  let(:admin) do
-    create(:admin, first_name: 'John',
-                   last_name: 'Smith',
-                   email: 'john@example.com')
-  end
   let!(:user) do
     create(:user, first_name: 'Jo',
                   last_name: 'Anne',
                   email: 'joanne@example.com')
   end
+
+  before { log_in create(:admin) }
 
   it 'updates user' do
     visit admin_users_path
@@ -24,6 +21,8 @@ describe 'Admin edits a user', type: :feature, js: true do
   end
 
   context 'when enter non unique email' do
+    let!(:existing_user) { create(:user, email: 'john@example.com') }
+
     it 'does not update user' do
       visit admin_users_path
 

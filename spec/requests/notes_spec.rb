@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Notes', type: :request do
+  before do
+    allow_any_instance_of(ApplicationController).to receive(:session).and_return(userinfo: mock_valid_auth_hash(build(:user)))
+  end
+
   describe 'GET /notes/new' do
     context 'with valid params' do
       let(:start_time) { DateTime.now }

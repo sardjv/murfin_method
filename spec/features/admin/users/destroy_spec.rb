@@ -1,16 +1,13 @@
 require 'rails_helper'
 
 describe 'Admin destroys a user', type: :feature, js: true do
-  let(:admin) do
-    create(:admin, first_name: 'John',
-                   last_name: 'Smith',
-                   email: 'john@example.com')
-  end
   let!(:user) do
     create(:user, first_name: 'Jo',
                   last_name: 'Anne',
                   email: 'joanne@example.com')
   end
+
+  before { log_in create(:admin) }
 
   it 'destroys user' do
     visit admin_users_path

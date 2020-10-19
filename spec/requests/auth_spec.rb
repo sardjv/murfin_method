@@ -2,11 +2,16 @@ require 'rails_helper'
 
 RSpec.describe 'Auth', type: :request do
   describe 'GET admin_dashboard_path' do
+    let(:user) do
+      build(:user,
+            first_name: 'John',
+            last_name: 'Smith',
+            email: 'john@example.com')
+    end
     context 'when authenticated' do
-      # Users are authenticated by default in specs via spec/support/secured_with_oauth_override.rb.
-      let(:session) { Class.new.extend(SecuredWithOauth).session }
-      let(:given_name) { session.dig(:userinfo, 'extra', 'raw_info', 'given_name') }
-      let(:family_name) { session.dig(:userinfo, 'extra', 'raw_info', 'family_name') }
+      before do
+        allow_any_instance_of(ApplicationController).to receive(:session).and_return(userinfo: mock_valid_auth_hash(user))
+      end
 
       it 'returns http success' do
         get admin_dashboard_path
@@ -19,31 +24,16 @@ RSpec.describe 'Auth', type: :request do
 
       it 'sets the user name and email' do
         get admin_dashboard_path
-        expect(User.last.first_name).to eq(given_name)
-        expect(User.last.last_name).to eq(family_name)
-        expect(User.last.email).to eq(session.dig(:userinfo, 'info', 'email'))
+        expect(User.last.first_name).to eq('John')
+        expect(User.last.last_name).to eq('Smith')
+        expect(User.last.email).to eq('john@example.com')
       end
     end
 
     context 'when not authenticated' do
-      before do
-        module SecuredWithOauth
-          def session; end
-        end
-      end
-
       it 'redirects to root_path' do
         get admin_dashboard_path
         expect(response).to redirect_to(root_path)
-      end
-
-      after do
-        # Reset Auth after test.
-        module SecuredWithOauth
-          def session
-            { userinfo: AuthTestUser::USERINFO }
-          end
-        end
       end
     end
   end

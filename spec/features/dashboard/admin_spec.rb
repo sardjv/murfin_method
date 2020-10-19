@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Admin Dashboard ', type: :feature do
-  let(:user) { create(:admin) }
+  let(:user) { create(:user) }
 
   let(:plan_id) { TimeRangeType.plan_type.id }
   let(:actual_id) { TimeRangeType.actual_type.id }
@@ -27,6 +27,8 @@ describe 'Admin Dashboard ', type: :feature do
       value: 5
     )
   end
+
+  before { log_in create(:admin) }
 
   it 'has graph with planned and actual data' do
     visit admin_dashboard_path

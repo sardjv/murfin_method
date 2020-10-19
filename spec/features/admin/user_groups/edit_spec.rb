@@ -1,11 +1,6 @@
 require 'rails_helper'
 
 describe 'Admin edits a user group', type: :feature, js: true do
-  let(:admin) do
-    create(:admin, first_name: 'John',
-                   last_name: 'Smith',
-                   email: 'john@example.com')
-  end
   let!(:group_type) do
     create(:group_type, name: 'Band')
   end
@@ -15,6 +10,8 @@ describe 'Admin edits a user group', type: :feature, js: true do
   let!(:band2_group) do
     create(:user_group, group_type: group_type, name: 'Band 2')
   end
+
+  before { log_in create(:admin) }
 
   it 'updates user group' do
     visit admin_group_types_path

@@ -1,11 +1,7 @@
 require 'rails_helper'
 
 describe 'Admin creates a user', type: :feature do
-  let(:admin) do
-    create(:admin, first_name: 'John',
-                   last_name: 'Smith',
-                   email: 'john@example.com')
-  end
+  before { log_in create(:admin) }
 
   it 'creates user' do
     visit admin_users_path
@@ -21,6 +17,8 @@ describe 'Admin creates a user', type: :feature do
   end
 
   context 'when enter non unique email' do
+    let!(:existing_user) { create(:user, email: 'john@example.com') }
+
     it 'does not create user' do
       visit admin_users_path
 
@@ -31,7 +29,7 @@ describe 'Admin creates a user', type: :feature do
       click_button I18n.t('users.save')
 
       expect(page).to have_content(I18n.t('users.notice.could_not_be.created'))
-      expect(User.all.count).to eq 1
+      expect(User.all.count).to eq 2
     end
   end
 end
