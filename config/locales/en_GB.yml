@@ -91,10 +91,12 @@ en:
       readable: '%H:%M on %d %b %Y'
   time_range:
     add: Add Data
+    cancel: Cancel
+    edit: Edit Data
     labels:
       end_time: End time
       start_time: Start time
-      type: Type
+      time_range_type: Type
       user: User
       value: Value
     notice:
@@ -110,6 +112,7 @@ en:
           Time range could not be created
         updated:
           Time range could not be updated
+    save: Save
   user:
     name: Name
     email: Email
