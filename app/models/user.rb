@@ -41,7 +41,7 @@ class User < ApplicationRecord
   def bust_caches
     return unless saved_changes_include?(%w[first_name last_name])
 
-    time_ranges.touch_all
+    CacheBusterJob.perform_later(klass: 'TimeRange', ids: time_ranges.pluck(:id))
   end
 
   def saved_changes_include?(attrs)
