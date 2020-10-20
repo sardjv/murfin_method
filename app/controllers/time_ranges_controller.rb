@@ -12,7 +12,7 @@ class TimeRangesController < ApplicationController
     @time_range = TimeRange.new(time_range_params)
     @time_range.user_id = @current_user.id
     if @time_range.save
-      redirect_to admin_time_ranges_path, notice: t('time_range.notice.successfully.created')
+      redirect_to time_ranges_path, notice: t('time_range.notice.successfully.created')
     else
       flash.now.alert = t('time_range.notice.could_not_be.created')
       render :edit
@@ -27,7 +27,7 @@ class TimeRangesController < ApplicationController
     @time_range = TimeRange.find(params[:id])
 
     if @time_range.update(time_range_params)
-      redirect_to admin_time_ranges_path, notice: t('time_range.notice.successfully.updated')
+      redirect_to time_ranges_path, notice: t('time_range.notice.successfully.updated')
     else
       flash.now.alert = t('time_range.notice.could_not_be.updated')
       render :edit
@@ -37,7 +37,7 @@ class TimeRangesController < ApplicationController
   def destroy
     @time_range = TimeRange.find(params[:id])
     @time_range.destroy
-    redirect_to admin_time_ranges_path, notice: t('time_range.notice.successfully.destroyed')
+    redirect_to time_ranges_path, notice: t('time_range.notice.successfully.destroyed')
   end
 
   private
