@@ -51,3 +51,6 @@ Metrics/BlockLength:
     - 'Rakefile'
     - '**/*.rake'
     - 'spec/**/*.rb'
+
+Rails/SkipsModelValidations:
+  Enabled: false
