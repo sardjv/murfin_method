@@ -5,7 +5,7 @@ describe 'Admin edits a time_range', type: :feature, js: true do
   let(:input_value) { 1234 }
 
   before do
-    log_in create(:admin)
+    log_in create(:user)
     visit time_ranges_path
     first('.bi-pencil').click
   end
