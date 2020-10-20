@@ -1,17 +1,25 @@
 require 'rails_helper'
 
 describe 'Time range index', type: :feature, js: true do
-  let!(:time_range) { create(:time_range) }
-  let(:new_name) { 'Hirthe'.freeze }
+  let(:current_user) { create(:user) }
+  let!(:time_range) { create(:time_range, user: current_user) }
+  let!(:other_time_range) { create(:time_range, user: create(:user)) }
 
-  before { log_in create(:admin) }
+  before do
+    log_in current_user
+    visit time_ranges_path
+  end
+
+  it 'shows only time_ranges for the current_user' do
+    expect(page).to have_content(current_user.name)
+    expect(page).not_to have_content(other_time_range.user.name)
+  end
 
   context 'when a user name is updated' do
+    let(:new_name) { 'Hirthe'.freeze }
+
     before do
-      visit time_ranges_path # Set any caches.
-
       time_range.user.update(last_name: new_name)
-
       visit time_ranges_path
     end
 

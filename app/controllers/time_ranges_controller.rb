@@ -1,6 +1,6 @@
 class TimeRangesController < ApplicationController
   def index
-    @time_ranges = TimeRange.order(updated_at: :desc).page(params[:page])
+    @time_ranges = TimeRange.where(user_id: @current_user.id).order(updated_at: :desc).page(params[:page])
   end
 
   def new
