@@ -97,6 +97,19 @@ en:
       type: Type
       user: User
       value: Value
+    notice:
+      successfully:
+        created:
+          Time range successfully created
+        destroyed:
+          Time range deleted
+        updated:
+          Time range successfully updated
+      could_not_be:
+        created:
+          Time range could not be created
+        updated:
+          Time range could not be updated
   user:
     name: Name
     email: Email
