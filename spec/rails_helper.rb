@@ -40,6 +40,7 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 RSpec.configure do |config|
+  config.include OmniauthMacros
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation, except: %w[ar_internal_metadata])
@@ -90,10 +91,13 @@ RSpec.configure do |config|
   config.include ActiveJob::TestHelper, type: :job
 
   config.include CapybaraHelpers, type: :feature
+  config.include SessionHelpers, type: :feature
 end
 
 # Turn off deprecation notices
 Selenium::WebDriver.logger.level = :error
+
+OmniAuth.config.test_mode = true
 
 Capybara.register_driver :chrome_headless do |app|
   args = %w[no-sandbox headless window-size=1400,1400]

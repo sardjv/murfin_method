@@ -25,6 +25,7 @@ describe 'Dashboard Individuals', type: :feature do
         value: 5
       )
     end
+    log_in users.first
     visit individuals_dashboard_path
   end
 

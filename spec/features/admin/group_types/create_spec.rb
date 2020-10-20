@@ -1,11 +1,7 @@
 require 'rails_helper'
 
 describe 'Admin creates a group type', type: :feature, js: true do
-  let(:admin) do
-    create(:admin, first_name: 'John',
-                   last_name: 'Smith',
-                   email: 'john@example.com')
-  end
+  before { log_in create(:admin) }
 
   it 'creates group type' do
     visit admin_group_types_path

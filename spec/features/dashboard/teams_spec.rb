@@ -4,7 +4,8 @@ describe 'Team Dashboard ', type: :feature, js: true do
   let(:manager) { create(:user, first_name: 'John', last_name: 'Smith', email: 'john@example.com') }
   let(:user) { create(:user, first_name: 'Lekisha', last_name: 'Sporer') }
   let!(:user_group) { create(:user_group) }
-  let!(:membership) { create(:membership, user_group: user_group, user: manager, role: 1) }
+  let!(:user_membership) { create(:membership, user_group: user_group, user: user) }
+  let!(:lead_membership) { create(:membership, user_group: user_group, user: manager, role: 1) }
 
   let(:plan_id) { TimeRangeType.plan_type.id }
   let(:actual_id) { TimeRangeType.actual_type.id }
@@ -36,6 +37,8 @@ describe 'Team Dashboard ', type: :feature, js: true do
   after :all do
     Timecop.return
   end
+
+  before { log_in manager }
 
   it 'renders' do
     visit teams_dashboard_path
@@ -69,8 +72,8 @@ describe 'Team Dashboard ', type: :feature, js: true do
         it 'persists the note' do
           within '#modal' do
             expect(page).to have_field('Add note', type: 'textarea', with: content)
-            expect(page).to have_content("Subject: #{AuthTestUser::USERINFO['info']['name']}")
-            expect(page).to have_content("Author: #{AuthTestUser::USERINFO['info']['name']}")
+            expect(page).to have_content("Subject: #{manager.name}")
+            expect(page).to have_content("Author: #{manager.name}")
             expect(page).to have_content('Created less than a minute ago')
           end
         end
