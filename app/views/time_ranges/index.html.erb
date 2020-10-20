@@ -4,7 +4,7 @@
 
       <%= render 'dashboard/user_tabs' %>
 
-      <%= link_to [:new, :admin, :time_range], class: 'btn btn-primary float-right mb-3' do %>
+      <%= link_to [:new, :time_range], class: 'btn btn-primary float-right mb-3' do %>
         <%= icon('plus') %>
         <%= I18n.t('time_range.add') %>
       <% end %>
@@ -52,12 +52,12 @@
                     <%= time_range.user.name %>
                   </td>
                   <td>
-                    <%= link_to [:edit, :admin, time_range], class: 'btn btn-link' do %>
+                    <%= link_to [:edit, time_range], class: 'btn btn-link' do %>
                       <%= icon('pencil') %>
                     <% end %>
                   </td>
                   <td>
-                    <%= link_to [:admin, time_range], method: :delete, data: { confirm: I18n.t('time_ranges.confirm') }, class: 'btn btn-link'  do %>
+                    <%= link_to [time_range], method: :delete, data: { confirm: I18n.t('time_ranges.confirm') }, class: 'btn btn-link'  do %>
                       <%= icon('trash') %>
                     <% end %>
                   </td>

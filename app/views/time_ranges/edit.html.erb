@@ -14,7 +14,7 @@
 
   <div class='row'>
     <div class='col-12'>
-      <%= bootstrap_form_for [:admin, @time_range] do |f| %>
+      <%= bootstrap_form_for @time_range do |f| %>
         <%= f.select :time_range_type_id,
           options_for_select(TimeRangeType.all.map { |t| [t.name, t.id] }),
           label: I18n.t('time_range.labels.time_range_type')
@@ -32,11 +32,6 @@
           label: I18n.t('time_range.labels.value'),
           placeholder: I18n.t('time_range.labels.value'),
           required: true
-        %>
-
-        <%= f.select :user_id,
-          options_for_select(User.all.map { |t| [t.name, t.id] }),
-          label: I18n.t('time_range.labels.user')
         %>
 
         <%= f.submit I18n.t('time_range.save'), class: 'btn btn-primary mt-2' %>

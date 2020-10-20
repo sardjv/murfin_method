@@ -10,6 +10,7 @@ class TimeRangesController < ApplicationController
 
   def create
     @time_range = TimeRange.new(time_range_params)
+    @time_range.user_id = @current_user.id
     if @time_range.save
       redirect_to admin_time_ranges_path, notice: t('time_range.notice.successfully.created')
     else
