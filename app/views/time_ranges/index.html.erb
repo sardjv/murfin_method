@@ -1,0 +1,74 @@
+<div class='container my-5'>
+  <div class='row'>
+    <div class='col-12'>
+
+      <%= render 'dashboard/user_tabs' %>
+
+      <%= link_to [:new, :admin, :time_range], class: 'btn btn-primary float-right mb-3' do %>
+        <%= icon('plus') %>
+        <%= I18n.t('time_range.add') %>
+      <% end %>
+
+      <div class='table-responsive'>
+        <table class='table table-bordered'>
+          <thead>
+            <tr>
+              <th>
+                <%= I18n.t('time_range.labels.time_range_type') %>
+              </th>
+              <th>
+                <%= I18n.t('time_range.labels.start_time') %>
+              </th>
+              <th>
+                <%= I18n.t('time_range.labels.end_time') %>
+              </th>
+              <th>
+                <%= I18n.t('time_range.labels.value') %>
+              </th>
+              <th>
+                <%= I18n.t('time_range.labels.user') %>
+              </th>
+              <th style='width: 50px;'></th>
+              <th style='width: 50px;'></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @time_ranges.each do |time_range| %>
+              <% cache time_range do %>
+                <tr>
+                  <td>
+                    <%= time_range.time_range_type.name %>
+                  </td>
+                  <td>
+                    <%= time_range.start_time.strftime(I18n.t('time.formats.readable')) %>
+                  </td>
+                  <td>
+                    <%= time_range.end_time.strftime(I18n.t('time.formats.readable')) %>
+                  </td>
+                  <td>
+                    <%= time_range.value %>
+                  </td>
+                  <td>
+                    <%= time_range.user.name %>
+                  </td>
+                  <td>
+                    <%= link_to [:edit, :admin, time_range], class: 'btn btn-link' do %>
+                      <%= icon('pencil') %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to [:admin, time_range], method: :delete, data: { confirm: I18n.t('time_ranges.confirm') }, class: 'btn btn-link'  do %>
+                      <%= icon('trash') %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <%= paginate @time_ranges %>
+
+    </div>
+  </div>
+</div>

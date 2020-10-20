@@ -7,8 +7,6 @@ Rails.application.routes.draw do
   get 'auth/failure' => 'auth0#failure'
   get 'auth_logout' => 'auth0#destroy'
 
-  resources :notes
-
   namespace :api do
     namespace :v1 do
       jsonapi_resources :users
@@ -26,6 +24,7 @@ Rails.application.routes.draw do
   resources :pages, only: [:home], controller: 'pages' do
     get :home, on: :collection
   end
+
   resource :dashboard, only: %i[admin individuals teams user], controller: 'dashboard' do
     get :admin, on: :collection
     get :individuals, on: :collection
@@ -40,4 +39,7 @@ Rails.application.routes.draw do
     resources :time_ranges, except: :show
     resources :users, except: :show
   end
+
+  resources :notes, except: :show
+  resources :time_ranges, except: :show
 end

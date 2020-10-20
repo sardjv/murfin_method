@@ -60,6 +60,7 @@ en:
       admin_users: Users
       combined_data: Combined data
       individuals: Individuals
+      summary: Summary
       team: Team dashboard
       time_ranges: Data
     team_dashboard: Team
