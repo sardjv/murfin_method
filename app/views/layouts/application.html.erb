@@ -26,32 +26,7 @@
       render(
         partial: 'shared/nav',
         locals: {
-          navs: [
-            {
-              label: I18n.t('nav.dashboard'),
-              path: user_dashboard_path,
-              enabled: true
-            },
-            {
-              label: I18n.t('nav.team_dashboard'),
-              path: teams_dashboard_path,
-              subnavs: [
-                { label: I18n.t('nav.tabs.team'), path: teams_dashboard_path },
-                { label: I18n.t('nav.tabs.individuals'), path: individuals_dashboard_path }
-              ],
-              enabled: @current_user&.lead?
-            },
-            {
-              label: I18n.t('nav.admin_dashboard'),
-              path: admin_dashboard_path,
-              subnavs: [
-                { label: I18n.t('nav.tabs.admin_dashboard'), path: admin_dashboard_path },
-                { label: I18n.t('nav.tabs.admin_users'), path: admin_users_path },
-                { label: I18n.t('nav.tabs.admin_group_types'), path: admin_group_types_path }
-              ],
-              enabled: @current_user&.admin?
-            },
-          ]
+          navs: @nav_presenter&.navs || []
         }
       )
     %>
