@@ -1,11 +1,12 @@
 require 'rails_helper'
 
-describe 'Admin edits a time_range', type: :feature, js: true do
-  let!(:time_range) { create(:time_range) }
+describe 'User edits a time_range', type: :feature, js: true do
+  let(:current_user) { create(:user) }
+  let!(:time_range) { create(:time_range, user: current_user) }
   let(:input_value) { 1234 }
 
   before do
-    log_in create(:user)
+    log_in current_user
     visit time_ranges_path
     first('.bi-pencil').click
   end

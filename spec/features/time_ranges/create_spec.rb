@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Admin creates a time_range', type: :feature, js: true do
+describe 'User creates a time_range', type: :feature, js: true do
   let(:current_user) { create(:user) }
   let(:input) { build(:time_range) }
 

@@ -1,9 +1,10 @@
 require 'rails_helper'
 
-describe 'Admin destroys a time range', type: :feature, js: true do
-  let!(:time_range) { create(:time_range) }
+describe 'User destroys a time range', type: :feature, js: true do
+  let(:current_user) { create(:user) }
+  let!(:time_range) { create(:time_range, user: current_user) }
 
-  before { log_in create(:user) }
+  before { log_in current_user }
 
   it 'destroys time range' do
     visit time_ranges_path

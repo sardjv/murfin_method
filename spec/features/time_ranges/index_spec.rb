@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Time range index', type: :feature, js: true do
+describe 'User indexes time ranges', type: :feature, js: true do
   let(:current_user) { create(:user) }
   let!(:time_range) { create(:time_range, user: current_user) }
   let!(:other_time_range) { create(:time_range, user: create(:user)) }
