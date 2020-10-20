@@ -24,7 +24,7 @@ describe 'Admin creates a time_range', type: :feature, js: true do
     end
 
     it 'does not save' do
-      expect { click_button I18n.t('time_range.save') }.not_to change { TimeRange.count }
+      expect { click_button I18n.t('time_range.save') }.not_to change(TimeRange, :count)
 
       expect(page).to have_content(I18n.t('time_range.notice.could_not_be.created'))
     end
