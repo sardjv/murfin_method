@@ -26,17 +26,18 @@ Rails.application.routes.draw do
   resources :pages, only: [:home], controller: 'pages' do
     get :home, on: :collection
   end
-  resource :dashboard, only: %i[teams individuals], controller: 'dashboard' do
-    get :user, on: :collection
+  resource :dashboard, only: %i[admin individuals teams user], controller: 'dashboard' do
     get :admin, on: :collection
-    get :teams, on: :collection
     get :individuals, on: :collection
+    get :teams, on: :collection
+    get :user, on: :collection
   end
 
   namespace :admin do
-    resources :users, except: :show
     resources :group_types, except: :show do
       resources :user_groups, except: :show, shallow: true
     end
+    resources :time_ranges, except: :show
+    resources :users, except: :show
   end
 end

@@ -61,6 +61,7 @@ en:
       combined_data: Combined data
       individuals: Individuals
       team: Team dashboard
+      time_ranges: Data
     team_dashboard: Team
   notes:
     add: Add note
@@ -88,6 +89,14 @@ en:
     formats:
       iso8601_utc: '%Y-%m-%dT%H:%M:%S.000Z'
       readable: '%H:%M on %d %b %Y'
+  time_range:
+    add: Add Data
+    labels:
+      end_time: End time
+      start_time: Start time
+      type: Type
+      user: User
+      value: Value
   user:
     name: Name
     email: Email
