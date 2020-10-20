@@ -49,4 +49,7 @@ Rails.application.configure do
 
   # Generate swagger docs.
   config.swagger_dry_run = false
+
+  # Run ActiveJobs inline for tests.
+  config.active_job.queue_adapter = :inline
 end

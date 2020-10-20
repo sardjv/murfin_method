@@ -93,6 +93,7 @@ en:
   time_range:
     add: Add Data
     cancel: Cancel
+    confirm: Are you sure?
     edit: Edit Data
     labels:
       end_time: End time
