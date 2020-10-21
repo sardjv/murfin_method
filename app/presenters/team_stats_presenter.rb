@@ -68,23 +68,7 @@ class TeamStatsPresenter
 
   def user_weekly_averages_per_month(data:)
     data.map do |user_time_ranges|
-      per_month = Hash.new(0)
-
-      # For each user, split time_range values across months,
-      # proportionally according to how they overlap the edges of months.
-      user_time_ranges.each do |t|
-        months = (t.start_time.to_date..t.end_time.to_date)
-                 .map(&:beginning_of_month)
-                 .uniq
-                 .map(&:to_time)
-
-        months.each do |m|
-          per_month[m] += t.segment_value(
-            segment_start: m,
-            segment_end: m.end_of_month
-          ).to_f
-        end
-      end
+      per_month = calculate_monthly_values(time_ranges: user_time_ranges)
 
       # For each month, transform to the average weekly value for that month,
       # based on the number of weeks in that month.
@@ -95,9 +79,24 @@ class TeamStatsPresenter
     end
   end
 
+  # Split time_range values across months, proportionally
+  # according to how they overlap the edges of months.
+  def calculate_monthly_values(time_ranges:)
+    time_ranges.each_with_object(Hash.new(0)) do |t, per_month|
+      months_between(from: t.start_time, to: t.end_time).each do |m|
+        per_month[m] += t.segment_value(
+          segment_start: m,
+          segment_end: m.end_of_month
+        ).to_f
+      end
+
+      per_month
+    end
+  end
+
   def total_weekly_averages_per_month(data:)
     # Sum to get totals of user weekly averages per month.
-    data.inject(Hash.new(0)) do |memo, user_averages|
+    data.each_with_object(Hash.new(0)) do |user_averages, memo|
       user_averages.each { |month, value| memo[month] += value }
       memo
     end
@@ -119,6 +118,13 @@ class TeamStatsPresenter
 
   def months
     (@filter_start_time.to_date..@filter_end_time.to_date).map(&:beginning_of_month).uniq
+  end
+
+  def months_between(from:, to:)
+    (from.to_date..to.to_date)
+      .map(&:beginning_of_month)
+      .uniq
+      .map(&:to_time)
   end
 
   def months_counter
