@@ -28,11 +28,23 @@ class User < ApplicationRecord
   validates :last_name, presence: true
   validates :admin, inclusion: { in: [true, false] }
 
+  after_update :bust_caches
+
   def name
     "#{first_name} #{last_name}"
   end
 
   def lead?
     memberships.exists?(role: 'lead')
+  end
+
+  def bust_caches
+    return unless saved_changes_include?(%w[first_name last_name])
+
+    CacheBusterJob.perform_later(klass: 'TimeRange', ids: time_range_ids)
+  end
+
+  def saved_changes_include?(attrs)
+    (saved_changes.keys & attrs).any?
   end
 end
