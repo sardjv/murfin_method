@@ -4,9 +4,9 @@ class Api::V1::Swagger::Core
       'v1/swagger.json' => {
         swagger: '2.0',
         info: {
-          title: 'Murfin Method API',
+          title: 'Murfin+ API',
           version: 'v1',
-          description: 'This is the Murfin Method API. For more information visit
+          description: 'This is the Murfin+ API. For more information visit
                         <a href="https://github.com/sardjv/murfin_method">
                         github.com/sardjv/murfin_method</a>.'
         },
