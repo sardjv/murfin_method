@@ -50,6 +50,12 @@ class TeamStatsPresenter
                                         user_averages.each { |month, value| memo[month.strftime('%Y-%m')] += value }
                                         memo
                                       end
+                                      # Round to 1 significant figure to hide floating point errors.
+                                      .transform_values { |v| v.round(1) }
+                                      # Add any missing months.
+                                      .merge(months_counter) do |_key, calculated, default|
+                                        calculated || default
+                                      end
   end
 
   def fetch_notes
@@ -109,7 +115,11 @@ class TeamStatsPresenter
   end
 
   def months
-    @months ||= (@filter_start_time.to_date..@filter_end_time.to_date).map(&:beginning_of_month).uniq
+    (@filter_start_time.to_date..@filter_end_time.to_date).map(&:beginning_of_month).uniq
+  end
+
+  def months_counter
+    Hash[months.map { |m| [m.strftime('%Y-%m'), 0] }]
   end
 
   def total_planned(month:)
