@@ -1,4 +1,4 @@
-<div class='container my-5'>
+<div class='container my-4'>
 
   <div class='row'>
     <div class='col-12'>
@@ -16,8 +16,9 @@
     <div class='col-12'>
       <%= bootstrap_form_for @time_range do |f| %>
         <%= f.select :time_range_type_id,
-          options_for_select(TimeRangeType.all.map { |t| [t.name, t.id] }),
-          label: I18n.t('time_range.labels.time_range_type')
+          options_for_select(TimeRangeType.all.map { |t| [t.name, t.id] }, selected: f.object.time_range_type_id),
+          { label: I18n.t('time_range.labels.time_range_type') },
+          required: true
         %>
 
         <%= f.datetime_select :start_time,
