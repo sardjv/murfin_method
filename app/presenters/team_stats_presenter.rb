@@ -8,34 +8,91 @@ class TeamStatsPresenter
     @filter_end_time = args[:filter_end_date].to_time.in_time_zone.end_of_day
     @plan_id = args[:plan_id]
     @actual_id = args[:actual_id]
+
+    fetch_data(time_range_type_id: @plan_id)
+    fetch_data(time_range_type_id: @actual_id)
+
+    fetch_notes
+  end
+
+  def fetch_data(time_range_type_id:)
+    @time_ranges ||= {}
+    @time_ranges[time_range_type_id] = relevant_time_ranges(time_range_type_id: time_range_type_id)
+                                      .group_by(&:user_id).values
+                                      .map do |user_time_ranges|
+                                        per_month = Hash.new(0)
+
+                                        # For each user, split time_range values across months,
+                                        # proportionally according to how they overlap the edges of months.
+                                        user_time_ranges.each do |t|
+                                          months = (t.start_time.to_date..t.end_time.to_date)
+                                                   .map(&:beginning_of_month)
+                                                   .uniq
+                                                   .map(&:to_time)
+
+                                          months.each do |m|
+                                            per_month[m] += t.segment_value(
+                                              segment_start: m,
+                                              segment_end: m.end_of_month
+                                            ).to_f
+                                          end
+                                        end
+
+                                        # For each month, transform to the average weekly value for that month,
+                                        # based on the number of weeks in that month.
+                                        per_month.update(per_month) do |month, value|
+                                          number_of_weeks = (month.end_of_month - month) / 1.week
+                                          (value / number_of_weeks).round(1)
+                                        end
+                                      end
+                                      # Sum to get totals of user weekly averages per month.
+                                      .inject(Hash.new(0)) { |memo, subhash|
+                                        subhash.each { |prod, value| memo[prod.strftime('%Y-%m')] += value }
+                                        memo
+                                      }
+  end
+
+  def fetch_notes
+    @notes ||= {}
+    @notes = Note.where(start_time: @filter_start_time..@filter_end_time)
+             .group_by { |n| n.start_time.strftime('%Y-%m') }
+  end
+
+  def relevant_time_ranges(time_range_type_id:)
+    scope = TimeRange.where(user_id: users, time_range_type_id: time_range_type_id)
+    scope.where('start_time BETWEEN ? AND ?', filter_start_time, filter_end_time).or(
+      scope.where('end_time BETWEEN ? AND ?', filter_start_time, filter_end_time)
+    ).or(
+      scope.where('start_time <= ? AND end_time >= ?', filter_start_time, filter_end_time)
+    ).to_a
   end
 
   def average_weekly_planned_per_month
-    @average_weekly_planned_per_month ||= bounds_of_months.map do |from, to|
+    @average_weekly_planned_per_month ||= months.map do |month|
       {
-        'name': from.strftime(I18n.t('time.formats.iso8601_utc')),
-        'value': total(users: users, from: from, to: to, method: :average_weekly_planned),
-        'notes': relevant_notes(from: from, to: to)
+        'name': month.strftime(I18n.t('time.formats.iso8601_utc')),
+        'value': total_planned(month: month.strftime('%Y-%m')),
+        'notes': relevant_notes(month: month.strftime('%Y-%m'))
       }
     end
   end
 
   def average_weekly_actual_per_month
-    @average_weekly_actual_per_month ||= bounds_of_months.map do |from, to|
+    @average_weekly_actual_per_month ||= months.map do |month|
       {
-        'name': from.strftime(I18n.t('time.formats.iso8601_utc')),
-        'value': total(users: users, from: from, to: to, method: :average_weekly_actual),
-        'notes': relevant_notes(from: from, to: to)
+        'name': month.strftime(I18n.t('time.formats.iso8601_utc')),
+        'value': total_actual(month: month.strftime('%Y-%m')),
+        'notes': relevant_notes(month: month.strftime('%Y-%m'))
       }
     end
   end
 
   def weekly_percentage_delivered_per_month
-    bounds_of_months.map.with_index do |bounds, index|
+    months.map.with_index do |month, index|
       {
-        'name': bounds.first.strftime(I18n.t('time.formats.iso8601_utc')),
+        'name': month.strftime(I18n.t('time.formats.iso8601_utc')),
         'value': percentage(index),
-        'notes': relevant_notes(from: bounds.first, to: bounds.last)
+        'notes': relevant_notes(month: month.strftime('%Y-%m'))
       }
     end
   end
@@ -51,19 +108,16 @@ class TeamStatsPresenter
     }
   end
 
-  def bounds_of_months
-    days = (@filter_start_time.to_date..@filter_end_time.to_date)
-    @bounds_of_months ||= days.map { |d| [d.beginning_of_month, d.end_of_month] }.uniq
+  def months
+    @months ||= (@filter_start_time.to_date..@filter_end_time.to_date).map(&:beginning_of_month).uniq
   end
 
-  def total(users:, from:, to:, method:)
-    users.sum do |user|
-      UserStatsPresenter.new(
-        user: user,
-        filter_start_date: from,
-        filter_end_date: to
-      ).send(method) || 0
-    end
+  def total_planned(month:)
+    @time_ranges[@plan_id][month]
+  end
+
+  def total_actual(month:)
+    @time_ranges[@actual_id][month]
   end
 
   def percentage(index)
@@ -73,8 +127,12 @@ class TeamStatsPresenter
     value.round(2)
   end
 
-  def relevant_notes(from:, to:)
+  def relevant_notes(month:)
     # TODO: Filter by subject, and later viewer permissions.
-    Note.where(start_time: from..to).map(&:with_author).to_json
+    (@notes[month] || []).map(&:with_author).to_json
+  end
+
+  def number_of_weeks
+    (@filter_end_time - @filter_start_time) / 1.week
   end
 end
