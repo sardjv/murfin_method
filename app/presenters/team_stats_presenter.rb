@@ -90,13 +90,13 @@ class TeamStatsPresenter
                    .group_by { |n| n.start_time.strftime('%Y-%m') }
   end
 
-  # Indexes used:
+  # Indexes hit:
   # 1 user: index_time_ranges_on_user_id
   # Up to 50% of users: index_time_range_team_stats
   # >50% of users: index_time_ranges_on_time_range_type_id
   def relevant_time_ranges(time_range_type_id:, user_ids:)
     scope = TimeRange.select(:time_range_type_id, :user_id, :start_time, :end_time, :value)
-             .where(time_range_type_id: time_range_type_id, user_id: user_ids)
+                     .where(time_range_type_id: time_range_type_id, user_id: user_ids)
 
     scope.where('start_time BETWEEN ? AND ?', filter_start_time, filter_end_time).or(
       scope.where('end_time BETWEEN ? AND ?', filter_start_time, filter_end_time)
