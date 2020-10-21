@@ -46,10 +46,10 @@ class TeamStatsPresenter
                                         end
                                       end
                                       # Sum to get totals of user weekly averages per month.
-                                      .inject(Hash.new(0)) { |memo, subhash|
-                                        subhash.each { |prod, value| memo[prod.strftime('%Y-%m')] += value }
+                                      .inject(Hash.new(0)) do |memo, user_averages|
+                                        user_averages.each { |month, value| memo[month.strftime('%Y-%m')] += value }
                                         memo
-                                      }
+                                      end
   end
 
   def fetch_notes
