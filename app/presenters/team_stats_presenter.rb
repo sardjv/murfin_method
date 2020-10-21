@@ -16,6 +16,47 @@ class TeamStatsPresenter
     @notes = fetch_notes
   end
 
+  def average_weekly_planned_per_month
+    @time_ranges[@plan_id].map do |month, value|
+      {
+        'name': month.strftime(I18n.t('time.formats.iso8601_utc')),
+        'value': value,
+        'notes': relevant_notes(month: month.strftime('%Y-%m'))
+      }
+    end
+  end
+
+  def average_weekly_actual_per_month
+    @time_ranges[@actual_id].map do |month, value|
+      {
+        'name': month.strftime(I18n.t('time.formats.iso8601_utc')),
+        'value': value,
+        'notes': relevant_notes(month: month.strftime('%Y-%m'))
+      }
+    end
+  end
+
+  def weekly_percentage_delivered_per_month
+    months.map.with_index do |month, index|
+      {
+        'name': month.strftime(I18n.t('time.formats.iso8601_utc')),
+        'value': percentage(index),
+        'notes': relevant_notes(month: month.strftime('%Y-%m'))
+      }
+    end
+  end
+
+  private
+
+  def defaults
+    {
+      filter_start_date: 1.year.ago,
+      filter_end_date: Time.zone.today,
+      plan_id: TimeRangeType.plan_type.id,
+      actual_id: TimeRangeType.actual_type.id
+    }
+  end
+
   def fetch_data(time_range_type_id:)
     relevant_time_ranges(time_range_type_id: time_range_type_id)
       .group_by(&:user_id).values
@@ -47,7 +88,7 @@ class TeamStatsPresenter
       end
       # Sum to get totals of user weekly averages per month.
       .inject(Hash.new(0)) do |memo, user_averages|
-        user_averages.each { |month, value| memo[month.strftime('%Y-%m')] += value }
+        user_averages.each { |month, value| memo[month] += value }
         memo
       end
       # Round to 1 significant figure to hide floating point errors.
@@ -72,61 +113,12 @@ class TeamStatsPresenter
     ).to_a
   end
 
-  def average_weekly_planned_per_month
-    @average_weekly_planned_per_month ||= months.map do |month|
-      {
-        'name': month.strftime(I18n.t('time.formats.iso8601_utc')),
-        'value': total_planned(month: month.strftime('%Y-%m')),
-        'notes': relevant_notes(month: month.strftime('%Y-%m'))
-      }
-    end
-  end
-
-  def average_weekly_actual_per_month
-    @average_weekly_actual_per_month ||= months.map do |month|
-      {
-        'name': month.strftime(I18n.t('time.formats.iso8601_utc')),
-        'value': total_actual(month: month.strftime('%Y-%m')),
-        'notes': relevant_notes(month: month.strftime('%Y-%m'))
-      }
-    end
-  end
-
-  def weekly_percentage_delivered_per_month
-    months.map.with_index do |month, index|
-      {
-        'name': month.strftime(I18n.t('time.formats.iso8601_utc')),
-        'value': percentage(index),
-        'notes': relevant_notes(month: month.strftime('%Y-%m'))
-      }
-    end
-  end
-
-  private
-
-  def defaults
-    {
-      filter_start_date: 1.year.ago,
-      filter_end_date: Time.zone.today,
-      plan_id: TimeRangeType.plan_type.id,
-      actual_id: TimeRangeType.actual_type.id
-    }
-  end
-
   def months
     (@filter_start_time.to_date..@filter_end_time.to_date).map(&:beginning_of_month).uniq
   end
 
   def months_counter
-    Hash[months.map { |m| [m.strftime('%Y-%m'), 0] }]
-  end
-
-  def total_planned(month:)
-    @time_ranges[@plan_id][month]
-  end
-
-  def total_actual(month:)
-    @time_ranges[@actual_id][month]
+    Hash[months.map { |m| [m.to_time, 0] }]
   end
 
   def percentage(index)
@@ -139,9 +131,5 @@ class TeamStatsPresenter
   def relevant_notes(month:)
     # TODO: Filter by subject, and later viewer permissions.
     (@notes[month] || []).map(&:with_author).to_json
-  end
-
-  def number_of_weeks
-    (@filter_end_time - @filter_start_time) / 1.week
   end
 end
