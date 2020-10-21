@@ -33,10 +33,10 @@ class TeamStatsPresenter
   end
 
   def weekly_percentage_delivered_per_month
-    @months.map.with_index do |month, index|
+    @months.map do |month|
       {
         'name': month.strftime(I18n.t('time.formats.iso8601_utc')),
-        'value': percentage(index),
+        'value': percentage(month: month),
         'notes': relevant_notes(month: month.strftime('%Y-%m'))
       }
     end
@@ -118,11 +118,10 @@ class TeamStatsPresenter
       .map { |m| m.to_time.in_time_zone }
   end
 
-  def percentage(index)
-    actual = average_weekly_actual_per_month[index][:value]
-    plan = average_weekly_planned_per_month[index][:value]
-    value = (plan.zero? ? 0 : (actual / plan) * 100)
-    value.round(2)
+  def percentage(month:)
+    return 0 if @plan[month].nil? || @plan[month].zero?
+
+    ((@actual[month] / @plan[month]) * 100).round(2)
   end
 
   def relevant_notes(month:)
