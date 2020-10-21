@@ -13,36 +13,26 @@ class TeamStatsPresenter
   end
 
   def average_weekly_planned_per_month
-    @months.map do |month|
-      {
-        'name': month.strftime(I18n.t('time.formats.iso8601_utc')),
-        'value': @plan[month] || 0,
-        'notes': relevant_notes(month: month.strftime('%Y-%m'))
-      }
-    end
+    @months.map { |month| response(month: month, value: @plan[month] || 0) }
   end
 
   def average_weekly_actual_per_month
-    @months.map do |month|
-      {
-        'name': month.strftime(I18n.t('time.formats.iso8601_utc')),
-        'value': @actual[month] || 0,
-        'notes': relevant_notes(month: month.strftime('%Y-%m'))
-      }
-    end
+    @months.map { |month| response(month: month, value: @actual[month] || 0) }
   end
 
   def weekly_percentage_delivered_per_month
-    @months.map do |month|
-      {
-        'name': month.strftime(I18n.t('time.formats.iso8601_utc')),
-        'value': percentage(month: month),
-        'notes': relevant_notes(month: month.strftime('%Y-%m'))
-      }
-    end
+    @months.map { |month| response(month: month, value: percentage(month: month)) }
   end
 
   private
+
+  def response(month:, value:)
+    {
+      'name': month.strftime(I18n.t('time.formats.iso8601_utc')),
+      'value': value,
+      'notes': relevant_notes(month: month.strftime('%Y-%m'))
+    }
+  end
 
   def defaults
     {
