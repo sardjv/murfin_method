@@ -9,59 +9,58 @@ class TeamStatsPresenter
     @plan_id = args[:plan_id]
     @actual_id = args[:actual_id]
 
-    fetch_data(time_range_type_id: @plan_id)
-    fetch_data(time_range_type_id: @actual_id)
+    @time_ranges = {}
+    @time_ranges[@plan_id] = fetch_data(time_range_type_id: @plan_id)
+    @time_ranges[@actual_id] = fetch_data(time_range_type_id: @actual_id)
 
-    fetch_notes
+    @notes = fetch_notes
   end
 
   def fetch_data(time_range_type_id:)
-    @time_ranges ||= {}
-    @time_ranges[time_range_type_id] = relevant_time_ranges(time_range_type_id: time_range_type_id)
-                                      .group_by(&:user_id).values
-                                      .map do |user_time_ranges|
-                                        per_month = Hash.new(0)
+    relevant_time_ranges(time_range_type_id: time_range_type_id)
+      .group_by(&:user_id).values
+      .map do |user_time_ranges|
+        per_month = Hash.new(0)
 
-                                        # For each user, split time_range values across months,
-                                        # proportionally according to how they overlap the edges of months.
-                                        user_time_ranges.each do |t|
-                                          months = (t.start_time.to_date..t.end_time.to_date)
-                                                   .map(&:beginning_of_month)
-                                                   .uniq
-                                                   .map(&:to_time)
+        # For each user, split time_range values across months,
+        # proportionally according to how they overlap the edges of months.
+        user_time_ranges.each do |t|
+          months = (t.start_time.to_date..t.end_time.to_date)
+                    .map(&:beginning_of_month)
+                    .uniq
+                    .map(&:to_time)
 
-                                          months.each do |m|
-                                            per_month[m] += t.segment_value(
-                                              segment_start: m,
-                                              segment_end: m.end_of_month
-                                            ).to_f
-                                          end
-                                        end
+          months.each do |m|
+            per_month[m] += t.segment_value(
+              segment_start: m,
+              segment_end: m.end_of_month
+            ).to_f
+          end
+        end
 
-                                        # For each month, transform to the average weekly value for that month,
-                                        # based on the number of weeks in that month.
-                                        per_month.update(per_month) do |month, value|
-                                          number_of_weeks = (month.end_of_month - month) / 1.week
-                                          (value / number_of_weeks).round(1)
-                                        end
-                                      end
-                                      # Sum to get totals of user weekly averages per month.
-                                      .inject(Hash.new(0)) do |memo, user_averages|
-                                        user_averages.each { |month, value| memo[month.strftime('%Y-%m')] += value }
-                                        memo
-                                      end
-                                      # Round to 1 significant figure to hide floating point errors.
-                                      .transform_values { |v| v.round(1) }
-                                      # Add any missing months.
-                                      .merge(months_counter) do |_key, calculated, default|
-                                        calculated || default
-                                      end
+        # For each month, transform to the average weekly value for that month,
+        # based on the number of weeks in that month.
+        per_month.update(per_month) do |month, value|
+          number_of_weeks = (month.end_of_month - month) / 1.week
+          (value / number_of_weeks).round(1)
+        end
+      end
+      # Sum to get totals of user weekly averages per month.
+      .inject(Hash.new(0)) do |memo, user_averages|
+        user_averages.each { |month, value| memo[month.strftime('%Y-%m')] += value }
+        memo
+      end
+      # Round to 1 significant figure to hide floating point errors.
+      .transform_values { |v| v.round(1) }
+      # Add any missing months.
+      .merge(months_counter) do |_key, calculated, default|
+        calculated || default
+      end
   end
 
   def fetch_notes
-    @notes ||= {}
-    @notes = Note.where(start_time: @filter_start_time..@filter_end_time)
-             .group_by { |n| n.start_time.strftime('%Y-%m') }
+    Note.where(start_time: @filter_start_time..@filter_end_time)
+        .group_by { |n| n.start_time.strftime('%Y-%m') }
   end
 
   def relevant_time_ranges(time_range_type_id:)
