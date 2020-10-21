@@ -3,41 +3,37 @@ class TeamStatsPresenter
 
   def initialize(args)
     args = defaults.merge(args)
-    @users = args[:users]
+
     @filter_start_time = args[:filter_start_date].to_time.in_time_zone.beginning_of_day
     @filter_end_time = args[:filter_end_date].to_time.in_time_zone.end_of_day
-    @plan_id = args[:plan_id]
-    @actual_id = args[:actual_id]
-
-    @time_ranges = {}
-    @time_ranges[@plan_id] = fetch_data(time_range_type_id: @plan_id)
-    @time_ranges[@actual_id] = fetch_data(time_range_type_id: @actual_id)
-
+    @plan = fetch_data(time_range_type_id: args[:plan_id], user_ids: args[:user_ids])
+    @actual = fetch_data(time_range_type_id: args[:actual_id], user_ids: args[:user_ids])
+    @months = months_between(from: filter_start_time, to: filter_end_time)
     @notes = fetch_notes
   end
 
   def average_weekly_planned_per_month
-    @time_ranges[@plan_id].map do |month, value|
+    @months.map do |month|
       {
         'name': month.strftime(I18n.t('time.formats.iso8601_utc')),
-        'value': value,
+        'value': @plan[month] || 0,
         'notes': relevant_notes(month: month.strftime('%Y-%m'))
       }
     end
   end
 
   def average_weekly_actual_per_month
-    @time_ranges[@actual_id].map do |month, value|
+    @months.map do |month|
       {
         'name': month.strftime(I18n.t('time.formats.iso8601_utc')),
-        'value': value,
+        'value': @actual[month] || 0,
         'notes': relevant_notes(month: month.strftime('%Y-%m'))
       }
     end
   end
 
   def weekly_percentage_delivered_per_month
-    months.map.with_index do |month, index|
+    @months.map.with_index do |month, index|
       {
         'name': month.strftime(I18n.t('time.formats.iso8601_utc')),
         'value': percentage(index),
@@ -57,13 +53,12 @@ class TeamStatsPresenter
     }
   end
 
-  def fetch_data(time_range_type_id:)
-    data = relevant_time_ranges(time_range_type_id: time_range_type_id)
+  def fetch_data(time_range_type_id:, user_ids:)
+    data = relevant_time_ranges(time_range_type_id: time_range_type_id, user_ids: user_ids)
     data = data.group_by(&:user_id).values
     data = user_weekly_averages_per_month(data: data)
     data = total_weekly_averages_per_month(data: data)
-    data = data.transform_values { |v| v.round(1) } # Hide floating point errors.
-    data.merge(months_counter) { |_key, calculated, default| calculated || default } # Add empty months.
+    data.transform_values { |v| v.round(1) } # Hide floating point errors.
   end
 
   def user_weekly_averages_per_month(data:)
@@ -103,12 +98,12 @@ class TeamStatsPresenter
   end
 
   def fetch_notes
-    Note.where(start_time: @filter_start_time..@filter_end_time)
+    Note.where(start_time: filter_start_time..filter_end_time)
         .group_by { |n| n.start_time.strftime('%Y-%m') }
   end
 
-  def relevant_time_ranges(time_range_type_id:)
-    scope = TimeRange.where(user_id: users, time_range_type_id: time_range_type_id)
+  def relevant_time_ranges(time_range_type_id:, user_ids:)
+    scope = TimeRange.where(time_range_type_id: time_range_type_id, user_id: user_ids)
     scope.where('start_time BETWEEN ? AND ?', filter_start_time, filter_end_time).or(
       scope.where('end_time BETWEEN ? AND ?', filter_start_time, filter_end_time)
     ).or(
@@ -116,19 +111,11 @@ class TeamStatsPresenter
     ).to_a
   end
 
-  def months
-    (@filter_start_time.to_date..@filter_end_time.to_date).map(&:beginning_of_month).uniq
-  end
-
   def months_between(from:, to:)
     (from.to_date..to.to_date)
       .map(&:beginning_of_month)
       .uniq
-      .map(&:to_time)
-  end
-
-  def months_counter
-    Hash[months.map { |m| [m.to_time, 0] }]
+      .map { |m| m.to_time.in_time_zone }
   end
 
   def percentage(index)

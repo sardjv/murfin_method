@@ -20,7 +20,7 @@ class DashboardPresenter
   def team_data
     [
       TeamStatsPresenter.new(
-        users: User.find(@params[:user_ids]),
+        users: @params[:user_ids],
         plan_id: @params[:plan_id],
         actual_id: @params[:actual_id]
       ).weekly_percentage_delivered_per_month
