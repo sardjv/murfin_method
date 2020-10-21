@@ -140,9 +140,7 @@ describe FakeGraphDataJob, type: :job do
           plan.time_ranges.each do |plan|
             difference = plan.value - actuals.time_ranges.find_by(start_time: plan.start_time).value
 
-            unless %w[June July December].include?(plan.start_time.strftime('%B'))
-              expect(difference.abs < 5).to eq(true)
-            end
+            expect(difference.abs < 5).to eq(true) unless %w[June July December].include?(plan.start_time.strftime('%B'))
           end
         end
       end

@@ -43,7 +43,7 @@ Style/MixinUsage:
   Enabled: false
 
 Layout/LineLength:
-  Max: 120
+  Max: 130
 
 Metrics/BlockLength:
   Exclude:

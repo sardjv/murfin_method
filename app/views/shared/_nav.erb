@@ -18,7 +18,7 @@
                   link_to(
                     nav[:label],
                     nav[:path],
-                    class: "nav-link #{' active' if current_page?(nav[:path]) || nav[:subnavs]&.any? { |subnav| @nav_presenter.subnav_active?(subnav) } }"
+                    class: "nav-link #{' active' if current_page?(nav[:path]) || @nav_presenter.any_subnavs_active?(nav) }"
                   )
                 %>
               </li>
@@ -33,7 +33,7 @@
 </nav>
 
 <% navs.each do |nav| %>
-  <% if nav[:subnavs]&.any? { |subnav| @nav_presenter.subnav_active?(subnav) } %>
+  <% if @nav_presenter.any_subnavs_active?(nav) %>
     <% if nav[:enabled] %>
       <nav class='subnav navbar navbar-expand-lg'>
         <div class='container'>
