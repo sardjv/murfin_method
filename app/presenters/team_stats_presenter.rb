@@ -1,5 +1,5 @@
 class TeamStatsPresenter
-  attr_accessor :users, :filter_start_time, :filter_end_time, :plan_id, :actual_id
+  attr_accessor :filter_start_time, :filter_end_time, :plan, :actual
 
   def initialize(args)
     args = defaults.merge(args)
@@ -11,11 +11,11 @@ class TeamStatsPresenter
   end
 
   def average_weekly_planned_per_month
-    months.map { |month| response(month: month, value: @plan[month] || 0) }
+    months.map { |month| response(month: month, value: plan[month] || 0) }
   end
 
   def average_weekly_actual_per_month
-    months.map { |month| response(month: month, value: @actual[month] || 0) }
+    months.map { |month| response(month: month, value: actual[month] || 0) }
   end
 
   def weekly_percentage_delivered_per_month
