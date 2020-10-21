@@ -8,20 +8,18 @@ class TeamStatsPresenter
     @filter_end_time = args[:filter_end_date].to_time.in_time_zone.end_of_day
     @plan = fetch_data(time_range_type_id: args[:plan_id], user_ids: args[:user_ids])
     @actual = fetch_data(time_range_type_id: args[:actual_id], user_ids: args[:user_ids])
-    @months = months_between(from: filter_start_time, to: filter_end_time)
-    @notes = fetch_notes
   end
 
   def average_weekly_planned_per_month
-    @months.map { |month| response(month: month, value: @plan[month] || 0) }
+    months.map { |month| response(month: month, value: @plan[month] || 0) }
   end
 
   def average_weekly_actual_per_month
-    @months.map { |month| response(month: month, value: @actual[month] || 0) }
+    months.map { |month| response(month: month, value: @actual[month] || 0) }
   end
 
   def weekly_percentage_delivered_per_month
-    @months.map { |month| response(month: month, value: percentage(month: month)) }
+    months.map { |month| response(month: month, value: percentage(month: month)) }
   end
 
   private
@@ -87,9 +85,9 @@ class TeamStatsPresenter
     end
   end
 
-  def fetch_notes
-    Note.where(start_time: filter_start_time..filter_end_time)
-        .group_by { |n| n.start_time.strftime('%Y-%m') }
+  def notes
+    @notes ||= Note.where(start_time: filter_start_time..filter_end_time)
+                   .group_by { |n| n.start_time.strftime('%Y-%m') }
   end
 
   def relevant_time_ranges(time_range_type_id:, user_ids:)
@@ -99,6 +97,10 @@ class TeamStatsPresenter
     ).or(
       scope.where('start_time <= ? AND end_time >= ?', filter_start_time, filter_end_time)
     ).to_a
+  end
+
+  def months
+    @months ||= months_between(from: filter_start_time, to: filter_end_time)
   end
 
   def months_between(from:, to:)
@@ -116,6 +118,6 @@ class TeamStatsPresenter
 
   def relevant_notes(month:)
     # TODO: Filter by subject, and later viewer permissions.
-    (@notes[month] || []).map(&:with_author).to_json
+    (notes[month] || []).map(&:with_author).to_json
   end
 end
