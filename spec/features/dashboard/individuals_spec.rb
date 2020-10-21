@@ -26,7 +26,7 @@ describe 'Dashboard Individuals', type: :feature do
       )
     end
     log_in users.first
-    visit individuals_dashboard_path
+    visit individuals_teams_path
   end
 
   context 'with 1 user' do
