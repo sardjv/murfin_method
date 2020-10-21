@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Dashboard Individuals', type: :feature do
+describe 'Team Individuals', type: :feature do
   let(:plan_id) { TimeRangeType.plan_type.id }
   let(:actual_id) { TimeRangeType.actual_type.id }
 
@@ -26,7 +26,7 @@ describe 'Dashboard Individuals', type: :feature do
       )
     end
     log_in users.first
-    visit individuals_dashboard_path
+    visit individuals_teams_path
   end
 
   context 'with 1 user' do

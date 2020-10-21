@@ -25,14 +25,15 @@ Rails.application.routes.draw do
     get :home, on: :collection
   end
 
-  resource :dashboard, only: %i[admin individuals teams user], controller: 'dashboard' do
-    get :admin, on: :collection
+  resource :dashboard, only: :show, controller: 'dashboard'
+
+  resources :teams, only: %i[dashboard individuals] do
+    get :dashboard, on: :collection
     get :individuals, on: :collection
-    get :teams, on: :collection
-    get :user, on: :collection
   end
 
   namespace :admin do
+    resource :dashboard, only: :show, controller: 'dashboard'
     resources :group_types, except: :show do
       resources :user_groups, except: :show, shallow: true
     end

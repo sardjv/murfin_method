@@ -41,7 +41,7 @@ describe 'Team Dashboard ', type: :feature, js: true do
   before { log_in manager }
 
   it 'renders' do
-    visit teams_dashboard_path
+    visit dashboard_teams_path
     expect(page).to have_text 'Team dashboard'
   end
 
@@ -49,7 +49,7 @@ describe 'Team Dashboard ', type: :feature, js: true do
     context 'when clicking a point on the graph' do
       let(:content) { 'a' }
       before do
-        visit teams_dashboard_path
+        visit dashboard_teams_path
         click_graph
       end
 
@@ -65,7 +65,7 @@ describe 'Team Dashboard ', type: :feature, js: true do
         before do
           fill_in 'note[content]', with: content
           click_on('Add note')
-          visit teams_dashboard_path
+          visit dashboard_teams_path
           click_graph
         end
 
