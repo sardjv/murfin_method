@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_23_145703) do
+ActiveRecord::Schema.define(version: 2020_10_21_180800) do
 
   create_table "group_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 2020_09_23_145703) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["time_range_type_id", "user_id", "start_time", "end_time", "value"], name: "index_time_range_team_stats"
     t.index ["time_range_type_id"], name: "index_time_ranges_on_time_range_type_id"
     t.index ["user_id"], name: "index_time_ranges_on_user_id"
   end
