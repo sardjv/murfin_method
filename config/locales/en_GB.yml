@@ -4,10 +4,6 @@ en:
   auth:
     log_in: Log in
     log_out: Log out
-  dashboard:
-    nav:
-      individuals: Individuals
-      team: Team dashboard
   faker:
     time_range_type:
       name:
@@ -61,7 +57,7 @@ en:
       combined_data: Combined data
       individuals: Individuals
       summary: Summary
-      team: Team dashboard
+      team: '%{team_name} dashboard'
       time_ranges: Data
     team_dashboard: Team
   notes:

@@ -1,8 +1,11 @@
 require 'rails_helper'
 
-describe 'Team Individuals', type: :feature do
+describe 'Team Individuals', type: :feature, js: true do
   let(:plan_id) { TimeRangeType.plan_type.id }
   let(:actual_id) { TimeRangeType.actual_type.id }
+  let(:manager) { create(:user, first_name: 'John', last_name: 'Smith', email: 'john@example.com') }
+  let!(:user_group) { create(:user_group) }
+  let!(:lead_membership) { create(:membership, user_group: user_group, user: manager, role: 'lead') }
 
   before :each do
     users.each do |user|
@@ -24,9 +27,10 @@ describe 'Team Individuals', type: :feature do
         end_time: Time.zone.now,
         value: 5
       )
+      create(:membership, user_group: user_group, user: user)
     end
-    log_in users.first
-    visit individuals_teams_path
+    log_in manager
+    visit individuals_team_path(user_group)
   end
 
   context 'with 1 user' do
@@ -71,7 +75,6 @@ describe 'Team Individuals', type: :feature do
           expect(page).to have_text 'Job Plan'
           expect(page).not_to have_text users.last.name
         end
-
         click_on 'Next'
 
         within('.table') do

@@ -15,17 +15,8 @@ class NavPresenter
       },
       {
         label: I18n.t('nav.team_dashboard'),
-        path: %i[dashboard teams],
-        subnavs: [
-          { label: I18n.t('nav.tabs.team'),
-            path: %i[dashboard teams],
-            controllers: ['teams'],
-            actions: 'dashboard' },
-          { label: I18n.t('nav.tabs.individuals'),
-            path: %i[individuals teams],
-            controllers: ['teams'],
-            actions: 'individuals' }
-        ],
+        path: [:dashboard, :team, { id: first_team }],
+        subnavs: teams.map { |team| team_subnav(team) },
         enabled: @current_user&.lead?
       },
       {
@@ -50,6 +41,15 @@ class NavPresenter
     ]
   end
 
+  def team_subnav(team)
+    {
+      label: team.name,
+      path: [:dashboard, :team, { id: team }],
+      controllers: ['teams'],
+      actions: %w[dashboard individuals]
+    }
+  end
+
   def any_subnavs_active?(nav)
     nav[:subnavs]&.any? { |subnav| subnav_active?(subnav) }
   end
@@ -62,5 +62,15 @@ class NavPresenter
     return true unless subnav[:actions]
 
     subnav[:actions].include?(@params[:action])
+  end
+
+  def first_team
+    teams.first
+  end
+
+  def teams
+    return [] unless @current_user
+
+    @current_user.memberships.where(role: 'lead').map(&:user_group)
   end
 end

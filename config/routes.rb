@@ -28,8 +28,8 @@ Rails.application.routes.draw do
   resource :dashboard, only: :show, controller: 'dashboard'
 
   resources :teams, only: %i[dashboard individuals] do
-    get :dashboard, on: :collection
-    get :individuals, on: :collection
+    get :dashboard, on: :member
+    get :individuals, on: :member
   end
 
   namespace :admin do
