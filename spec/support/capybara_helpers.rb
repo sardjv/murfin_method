@@ -5,7 +5,7 @@ module CapybaraHelpers
 
   def bootstrap_select(value, attrs)
     within find('label', text: attrs[:from].to_s).find(:xpath, '..') do
-      find('button.dropdown-toggle').click
+      first('button.dropdown-toggle').click
       find('.dropdown-menu li', text: value).click
     end
   end
