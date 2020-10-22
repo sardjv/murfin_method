@@ -16,7 +16,7 @@ class UserGroup < ApplicationRecord
 
   validates :name, presence: true, uniqueness: { scope: :group_type }
 
-  def diplay_name
+  def display_name
     name.titleize
   end
 end
