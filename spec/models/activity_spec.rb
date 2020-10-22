@@ -13,7 +13,6 @@ describe Activity, type: :model do
 
   it { expect(subject).to be_valid }
 
-  it { should validate_presence_of(:schedule) }
   it { should belong_to(:plan) }
 
   describe 'schedule' do

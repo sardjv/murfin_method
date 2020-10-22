@@ -10,7 +10,7 @@
 #
 FactoryBot.define do
   factory :activity do
-    schedule { 'abc' }
+    schedule { IceCube::Schedule.new(Time.current) }
     plan_id { Plan.all.sample.try(:id) || create(:plan).id }
   end
 end
