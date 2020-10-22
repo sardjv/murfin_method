@@ -12,4 +12,14 @@ class Activity < ApplicationRecord
   belongs_to :plan, touch: true
 
   validates :schedule, :plan_id, presence: true
+
+  # Deserialize from YAML storage.
+  def schedule
+    IceCube::Schedule.from_yaml(super)
+  end
+
+  # Serialize to YAML for storage.
+  def schedule=(ice_cube_schedule)
+    super(ice_cube_schedule.to_yaml)
+  end
 end

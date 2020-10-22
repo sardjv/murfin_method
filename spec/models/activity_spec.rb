@@ -15,4 +15,19 @@ describe Activity, type: :model do
 
   it { should validate_presence_of(:schedule) }
   it { should belong_to(:plan) }
+
+  describe 'schedule' do
+    let(:schedule) do
+      IceCube::Schedule.new(Time.current) do |s|
+        s.add_recurrence_rule(IceCube::Rule.weekly)
+      end
+    end
+
+    subject { create(:activity, schedule: schedule) }
+
+    it 'can be set' do
+      byebug
+      expect(IceCube::Schedule.from_yaml(subject.schedule)).to be_an(IceCube::Schedule)
+    end
+  end
 end
