@@ -26,8 +26,7 @@ describe Activity, type: :model do
     subject { create(:activity, schedule: schedule) }
 
     it 'can be set' do
-      byebug
-      expect(IceCube::Schedule.from_yaml(subject.schedule)).to be_an(IceCube::Schedule)
+      expect(subject.reload.schedule).to eq(schedule)
     end
   end
 end
