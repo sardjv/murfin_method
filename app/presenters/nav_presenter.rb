@@ -71,6 +71,6 @@ class NavPresenter
   def teams
     return [] unless @current_user
 
-    @current_user.memberships.where(role: 'lead').map(&:user_group)
+    @current_user.user_groups.merge(Membership.lead)
   end
 end
