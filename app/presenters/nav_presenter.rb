@@ -43,7 +43,7 @@ class NavPresenter
 
   def team_subnav(team)
     {
-      label: team.name,
+      label: team.display_name,
       path: [:dashboard, :team, { id: team }],
       controllers: ['teams'],
       actions: %w[dashboard individuals]
