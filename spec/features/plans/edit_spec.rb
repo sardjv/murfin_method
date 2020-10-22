@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'User edits a plan', type: :feature, js: true do
   let(:current_user) { create(:user) }
-  let!(:plan) { create(:plan, user: current_user, activities: create(:activity)) }
+  let!(:plan) { create(:plan, user: current_user, activities: [create(:activity)]) }
   let(:input) { plan.end_time.year + 2 }
 
   before do
