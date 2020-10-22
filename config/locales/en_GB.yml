@@ -84,8 +84,10 @@ en:
     edit: Edit Plan
     labels:
       end_time: End time
+      name: Name
       start_time: Start time
       user: User
+    name: Plan
     notice:
       successfully:
         created:

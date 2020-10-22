@@ -14,13 +14,13 @@
           <thead>
             <tr>
               <th>
+                <%= I18n.t('plan.labels.name') %>
+              </th>
+              <th>
                 <%= I18n.t('plan.labels.start_time') %>
               </th>
               <th>
                 <%= I18n.t('plan.labels.end_time') %>
-              </th>
-              <th>
-                <%= I18n.t('plan.labels.user') %>
               </th>
               <th style='width: 50px;'></th>
               <th style='width: 50px;'></th>
@@ -31,13 +31,13 @@
               <% cache plan do %>
                 <tr>
                   <td>
+                    <%= plan.name %>
+                  </td>
+                  <td>
                     <%= plan.start_time.strftime(I18n.t('time.formats.readable')) %>
                   </td>
                   <td>
                     <%= plan.end_time.strftime(I18n.t('time.formats.readable')) %>
-                  </td>
-                  <td>
-                    <%= plan.user.name %>
                   </td>
                   <td>
                     <%= link_to [:edit, plan], class: 'btn btn-link' do %>

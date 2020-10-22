@@ -20,4 +20,8 @@ class Plan < ApplicationRecord
 
     errors.add :end_time, 'must occur after start time'
   end
+
+  def name
+    "#{user.name}'s #{start_time.year} #{I18n.t('plan.name')}"
+  end
 end

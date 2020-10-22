@@ -26,4 +26,8 @@ describe Plan, type: :model do
 
     it { expect(subject).not_to be_valid }
   end
+
+  describe '#name' do
+    it { expect(subject.name).to eq("#{plan.user.name}'s #{plan.start_time.year} #{I18n.t('plan.name')}") }
+  end
 end
