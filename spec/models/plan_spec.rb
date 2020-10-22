@@ -5,6 +5,7 @@
 #  id                 :bigint           not null, primary key
 #  start_time         :datetime         not null
 #  end_time           :datetime         not null
+#  user_id            :bigint           not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #
@@ -15,6 +16,8 @@ describe Plan, type: :model do
 
   it { should validate_presence_of(:start_time) }
   it { should validate_presence_of(:end_time) }
+  it { should validate_presence_of(:user_id) }
+  it { should belong_to(:user) }
 
   context 'with end_time before start_time' do
     subject { build(:plan) }

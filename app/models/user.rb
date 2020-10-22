@@ -22,6 +22,7 @@ class User < ApplicationRecord
   )
   has_many :memberships, dependent: :destroy
   has_many :user_groups, through: :memberships
+  has_many :plans, dependent: :destroy
 
   validates :email, presence: true, uniqueness: true
   validates :first_name, presence: true

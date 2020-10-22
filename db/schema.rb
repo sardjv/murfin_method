@@ -47,8 +47,10 @@ ActiveRecord::Schema.define(version: 2020_10_22_104000) do
   create_table "plans", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.timestamp "start_time", null: false
     t.timestamp "end_time", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_plans_on_user_id"
   end
 
   create_table "time_range_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|

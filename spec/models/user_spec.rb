@@ -17,6 +17,7 @@ describe User, type: :model do
   it { should have_many(:time_ranges).dependent(:destroy) }
   it { should have_many(:notes_written).dependent(:restrict_with_exception) }
   it { should have_many(:notes).dependent(:destroy) }
+  it { should have_many(:plans).dependent(:destroy) }
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:first_name) }
   it { should validate_presence_of(:last_name) }

@@ -3,6 +3,7 @@ class CreatePlans < ActiveRecord::Migration[6.0]
     create_table :plans do |t|
       t.timestamp :start_time, null: false
       t.timestamp :end_time, null: false
+      t.references :user, null: false
 
       t.timestamps
     end
