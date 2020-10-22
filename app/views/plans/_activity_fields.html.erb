@@ -1,17 +1,15 @@
-<label class="required" for="activity_schedule">
-  <%= I18n.t('activity.labels.schedule') %>
-</label>
-
-<%= f.select_recurring :schedule,
-  [
-    IceCube::Rule.weekly.day(:monday),
-    IceCube::Rule.weekly.day(:tuesday),
-    IceCube::Rule.weekly.day(:wednesday),
-    IceCube::Rule.weekly.day(:thursday),
-    IceCube::Rule.weekly.day(:friday),
-    IceCube::Rule.weekly.day(:saturday),
-    IceCube::Rule.weekly.day(:sunday)
-  ]
+<%
+  options = options_for_select([
+    [IceCube::Rule.weekly.day(:monday), IceCube::Rule.weekly.day(:monday).to_yaml],
+    [IceCube::Rule.weekly.day(:tuesday), IceCube::Rule.weekly.day(:tuesday).to_yaml],
+    [IceCube::Rule.weekly.day(:wednesday), IceCube::Rule.weekly.day(:wednesday).to_yaml],
+    [IceCube::Rule.weekly.day(:thursday), IceCube::Rule.weekly.day(:thursday).to_yaml],
+    [IceCube::Rule.weekly.day(:friday), IceCube::Rule.weekly.day(:friday).to_yaml],
+    [IceCube::Rule.weekly.day(:saturday), IceCube::Rule.weekly.day(:saturday).to_yaml],
+    [IceCube::Rule.weekly.day(:sunday), IceCube::Rule.weekly.day(:sunday).to_yaml]
+  ])
 %>
+
+<%= f.select :schedule, options, label: I18n.t('activity.labels.schedule') %>
 
 <%= link_to_remove_association I18n.t('activity.remove'), f %>

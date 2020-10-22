@@ -27,11 +27,12 @@ class PlansController < ApplicationController
     @plan = Plan.find(params[:id])
 
     if @plan.update(plan_params)
-      redirect_to plans_path, notice: t('plan.notice.successfully.updated')
+      flash.now.notice = t('plan.notice.successfully.updated')
     else
       flash.now.alert = t('plan.notice.could_not_be.updated')
-      render :edit
     end
+
+    render :edit
   end
 
   def destroy
@@ -46,7 +47,8 @@ class PlansController < ApplicationController
     params.require(:plan).permit(
       :start_time,
       :end_time,
-      :user_id
+      :user_id,
+      activities_attributes: %i[id schedule _destroy]
     )
   end
 end

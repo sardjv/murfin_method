@@ -3,6 +3,7 @@ en:
     add: Add Activity
     labels:
       schedule: Schedule
+    name: Activity
     remove: Remove Activity
   app:
     name: Murfin+
@@ -88,6 +89,7 @@ en:
     confirm: Are you sure?
     edit: Edit Plan
     labels:
+      activities: Activities
       end_time: End time
       name: Name
       start_time: Start time

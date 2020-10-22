@@ -11,11 +11,14 @@ describe 'User creates a plan', type: :feature, js: true do
   end
 
   it 'creates plan for the current_user' do
+    wait_for_ajax
     click_link I18n.t('activity.add')
+    bootstrap_select 'Weekly on Tuesdays', from: I18n.t('activity.labels.schedule')
 
     expect { click_button I18n.t('plan.save') }.to change { Plan.count }.by(1)
 
     expect(Plan.last.user_id).to eq(current_user.id)
+    expect(Plan.last.activities.count).to eq(1)
     expect(page).to have_content(I18n.t('plan.notice.successfully.created'))
   end
 

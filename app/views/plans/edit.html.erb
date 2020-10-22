@@ -23,6 +23,8 @@
           label: I18n.t('plan.labels.end_time')
         %>
 
+        <%= I18n.t('plan.labels.activities') %>
+
         <div class='row'>
           <%= f.fields_for :activities do |activity_form| %>
             <%= render 'activity_fields', f: activity_form %>

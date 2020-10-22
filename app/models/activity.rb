@@ -9,9 +9,9 @@
 #  updated_at         :datetime         not null
 #
 class Activity < ApplicationRecord
-  belongs_to :plan, touch: true
+  belongs_to :plan
 
-  validates :schedule, :plan_id, presence: true
+  validates :schedule, presence: true
 
   # Deserialize from YAML storage.
   def schedule
@@ -22,6 +22,10 @@ class Activity < ApplicationRecord
 
   # Serialize to YAML for storage.
   def schedule=(ice_cube_schedule)
-    super(ice_cube_schedule.to_yaml)
+    if ice_cube_schedule.is_a?(IceCube::Schedule)
+      super(ice_cube_schedule.to_yaml)
+    else
+      super(ice_cube_schedule)
+    end
   end
 end
