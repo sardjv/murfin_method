@@ -10,7 +10,7 @@
 #  updated_at         :datetime         not null
 #
 class Plan < ApplicationRecord
-  belongs_to :user, touch: true
+  belongs_to :user
 
   validates :start_time, :end_time, :user_id, presence: true
   validate :validate_end_time_after_start_time
