@@ -28,6 +28,6 @@ describe Plan, type: :model do
   end
 
   describe '#name' do
-    it { expect(subject.name).to eq("#{plan.user.name}'s #{plan.start_time.year} #{I18n.t('plan.name')}") }
+    it { expect(subject.name).to eq("#{subject.user.name}'s #{subject.start_time.year} #{I18n.t('plan.name')}") }
   end
 end
