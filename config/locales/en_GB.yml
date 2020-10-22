@@ -95,7 +95,7 @@ en:
         destroyed:
           Plan deleted
         updated:
-          Time range successfully updated
+          Plan successfully updated
       could_not_be:
         created:
           Plan could not be created
