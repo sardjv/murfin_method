@@ -43,6 +43,7 @@ class User < ApplicationRecord
     return unless saved_changes_include?(%w[first_name last_name])
 
     CacheBusterJob.perform_later(klass: 'TimeRange', ids: time_range_ids)
+    CacheBusterJob.perform_later(klass: 'Plan', ids: plan_ids)
   end
 
   def saved_changes_include?(attrs)

@@ -77,7 +77,7 @@ en:
     placeholders:
       content: Add some detail about the note here
     save: Save
-  plans:
+  plan:
     add: Add Plan
     cancel: Cancel
     confirm: Are you sure?
@@ -99,6 +99,7 @@ en:
           Plan could not be created
         updated:
           Plan could not be updated
+    save: Save
   status:
     about_right: About Right
     over: Over
@@ -110,10 +111,10 @@ en:
       iso8601_utc: '%Y-%m-%dT%H:%M:%S.000Z'
       readable: '%H:%M on %d %b %Y'
   time_range:
-    add: Add
+    add: Add Actual
     cancel: Cancel
     confirm: Are you sure?
-    edit: Edit
+    edit: Edit Actual
     labels:
       end_time: End time
       start_time: Start time

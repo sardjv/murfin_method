@@ -43,4 +43,5 @@ Rails.application.routes.draw do
 
   resources :notes, except: :show
   resources :time_ranges, except: :show
+  resources :plans, except: :show
 end

@@ -1,0 +1,62 @@
+<div class='container my-4'>
+  <div class='row'>
+    <div class='col-12'>
+
+      <%= render 'dashboard/user_tabs' %>
+
+      <%= link_to [:new, :plan], class: 'btn btn-primary float-right mb-3' do %>
+        <%= icon('plus') %>
+        <%= I18n.t('plan.add') %>
+      <% end %>
+
+      <div class='table-responsive'>
+        <table class='table table-bordered'>
+          <thead>
+            <tr>
+              <th>
+                <%= I18n.t('plan.labels.start_time') %>
+              </th>
+              <th>
+                <%= I18n.t('plan.labels.end_time') %>
+              </th>
+              <th>
+                <%= I18n.t('plan.labels.user') %>
+              </th>
+              <th style='width: 50px;'></th>
+              <th style='width: 50px;'></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @plans.each do |plan| %>
+              <% cache plan do %>
+                <tr>
+                  <td>
+                    <%= plan.start_time.strftime(I18n.t('time.formats.readable')) %>
+                  </td>
+                  <td>
+                    <%= plan.end_time.strftime(I18n.t('time.formats.readable')) %>
+                  </td>
+                  <td>
+                    <%= plan.user.name %>
+                  </td>
+                  <td>
+                    <%= link_to [:edit, plan], class: 'btn btn-link' do %>
+                      <%= icon('pencil') %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to [plan], method: :delete, data: { confirm: I18n.t('plan.confirm') }, class: 'btn btn-link'  do %>
+                      <%= icon('trash') %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <%= paginate @plans %>
+
+    </div>
+  </div>
+</div>
