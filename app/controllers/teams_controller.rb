@@ -4,10 +4,7 @@ class TeamsController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        json = Rails.cache.fetch('teams') do
-          @presenter.to_json(graphs: [{ type: :line_graph, data: :team_data, units: '%' }])
-        end
-        render json: json
+        render json: @presenter.to_json(graphs: [{ type: :line_graph, data: :team_data, units: '%' }])
       end
     end
   end
@@ -18,10 +15,7 @@ class TeamsController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        json = Rails.cache.fetch('individuals') do
-          @presenter.to_json(graphs: [{ type: :bar_chart, data: :individual_data, units: '%' }])
-        end
-        render json: json
+        render json: @presenter.to_json(graphs: [{ type: :bar_chart, data: :individual_data, units: '%' }])
       end
     end
   end

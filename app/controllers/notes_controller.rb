@@ -11,7 +11,6 @@ class NotesController < ApplicationController
     @note = build_note
 
     if @note.save!
-      Rails.cache.delete('teams')
       respond_to do |format|
         format.json { render json: @note.with_author.to_json, status: :created }
       end
@@ -32,7 +31,6 @@ class NotesController < ApplicationController
     @note = Note.find(params[:id])
 
     if @note.update!(note_params)
-      Rails.cache.delete('teams')
       respond_to do |format|
         format.json { render json: @note.with_author.to_json, status: :ok }
       end
@@ -45,7 +43,6 @@ class NotesController < ApplicationController
     @note = Note.find(params[:id])
 
     if @note.destroy!
-      Rails.cache.delete('teams')
       respond_to do |format|
         format.js { head :no_content }
       end

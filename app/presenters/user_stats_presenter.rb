@@ -12,6 +12,7 @@ class UserStatsPresenter
     @filter_end_time = args[:filter_end_date].to_time.in_time_zone.end_of_day
     @plan_id = args[:plan_id]
     @actual_id = args[:actual_id]
+    @cache = {}
   end
 
   def average_weekly_planned
@@ -77,13 +78,7 @@ class UserStatsPresenter
   end
 
   def filtered_time_ranges(time_range_type_id)
-    scope = user.time_ranges.where(time_range_type_id: time_range_type_id)
-
-    scope.where('start_time BETWEEN ? AND ?', filter_start_time, filter_end_time).or(
-      scope.where('end_time BETWEEN ? AND ?', filter_start_time, filter_end_time)
-    ).or(
-      scope.where('start_time <= ? AND end_time >= ?', filter_start_time, filter_end_time)
-    )
+    @cache[time_range_type_id] ||= calculate_filtered_time_ranges(time_range_type_id)
   end
 
   def number_of_weeks
@@ -104,5 +99,15 @@ class UserStatsPresenter
 
   def no_actual_data?
     filtered_time_ranges(actual_id).empty?
+  end
+
+  def calculate_filtered_time_ranges(time_range_type_id)
+    scope = user.time_ranges.where(time_range_type_id: time_range_type_id)
+
+    scope.where('start_time BETWEEN ? AND ?', filter_start_time, filter_end_time).or(
+      scope.where('end_time BETWEEN ? AND ?', filter_start_time, filter_end_time)
+    ).or(
+      scope.where('start_time <= ? AND end_time >= ?', filter_start_time, filter_end_time)
+    ).to_a
   end
 end

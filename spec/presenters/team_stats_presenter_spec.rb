@@ -10,7 +10,7 @@ describe TeamStatsPresenter do
   end
 
   let(:args) do
-    { users: users,
+    { user_ids: users.pluck(:id),
       filter_start_date: filter_start_date,
       filter_end_date: filter_end_date }
   end

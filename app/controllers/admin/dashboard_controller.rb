@@ -6,10 +6,7 @@ module Admin
       respond_to do |format|
         format.html
         format.json do
-          json = Rails.cache.fetch('admin') do
-            @presenter.to_json(graphs: [{ type: :line_graph, data: :admin_data }])
-          end
-          render json: json
+          render json: @presenter.to_json(graphs: [{ type: :line_graph, data: :admin_data }])
         end
       end
     end
