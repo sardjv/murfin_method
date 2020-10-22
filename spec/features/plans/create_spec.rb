@@ -11,6 +11,8 @@ describe 'User creates a plan', type: :feature, js: true do
   end
 
   it 'creates plan for the current_user' do
+    click_link I18n.t('activity.add')
+
     expect { click_button I18n.t('plan.save') }.to change { Plan.count }.by(1)
 
     expect(Plan.last.user_id).to eq(current_user.id)

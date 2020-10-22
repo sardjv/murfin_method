@@ -15,6 +15,8 @@ class Activity < ApplicationRecord
 
   # Deserialize from YAML storage.
   def schedule
+    return unless super
+
     IceCube::Schedule.from_yaml(super)
   end
 

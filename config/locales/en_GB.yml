@@ -1,4 +1,9 @@
 en:
+  activity:
+    add: Add Activity
+    labels:
+      schedule: Schedule
+    remove: Remove Activity
   app:
     name: Murfin+
   auth:

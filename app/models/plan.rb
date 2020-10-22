@@ -11,7 +11,7 @@
 #
 class Plan < ApplicationRecord
   belongs_to :user
-  has_many :activities, dependent: :destroy
+  has_many :activities, dependent: :destroy, inverse_of: :plan
   accepts_nested_attributes_for :activities, allow_destroy: true
 
   validates :start_time, :end_time, :user_id, presence: true

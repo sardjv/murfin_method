@@ -5,6 +5,10 @@ ruby '2.7.2'
 # https://github.com/bootstrap-ruby/bootstrap_form
 gem 'bootstrap_form', '~> 4.0'
 
+# Dynamic nested forms using jQuery made easy.
+# https://github.com/nathanvda/cocoon
+gem 'cocoon', '~> 1.2.15'
+
 # Fixtures replacement with a straightforward definition syntax.
 # https://github.com/thoughtbot/factory_bot
 gem 'factory_bot', '~> 6.1.0'
@@ -48,6 +52,10 @@ gem 'puma', '~> 5.0.2'
 # Create database-backed web applications using the MVC pattern.
 # https://github.com/rails/rails
 gem 'rails', '~> 6.0.3'
+
+# A gem for adding selectors for setting recurring events.
+# https://github.com/GetJobber/recurring_select
+gem 'recurring_select', '~> 3.0.0'
 
 # A very fast key-value store to hold jobs until they are run.
 # https://github.com/redis/redis-rb

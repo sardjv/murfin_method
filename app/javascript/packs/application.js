@@ -3,6 +3,7 @@ global.$ = jQuery;
 
 require('@rails/ujs').start()
 require('turbolinks').start()
+require('@nathanvda/cocoon')
 
 import 'bootstrap'
 import 'bootstrap-select';
