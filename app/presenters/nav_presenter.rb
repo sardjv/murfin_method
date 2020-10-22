@@ -43,7 +43,7 @@ class NavPresenter
 
   def team_subnav(team)
     {
-      label: team.name,
+      label: team.display_name,
       path: [:dashboard, :team, { id: team }],
       controllers: ['teams'],
       actions: %w[dashboard individuals]
@@ -71,6 +71,6 @@ class NavPresenter
   def teams
     return [] unless @current_user
 
-    @current_user.memberships.where(role: 'lead').map(&:user_group)
+    @current_user.user_groups.merge(Membership.lead)
   end
 end
