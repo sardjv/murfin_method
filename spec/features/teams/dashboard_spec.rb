@@ -1,14 +1,16 @@
 require 'rails_helper'
 
 describe 'Team Dashboard ', type: :feature, js: true do
-  let(:manager) { create(:user, first_name: 'John', last_name: 'Smith', email: 'john@example.com') }
   let(:user) { create(:user, first_name: 'Lekisha', last_name: 'Sporer') }
-  let!(:user_group) { create(:user_group) }
+  let(:manager) { create(:user, first_name: 'John', last_name: 'Smith', email: 'john@example.com') }
+
+  let!(:user_group) { create(:user_group, name: 'CAHMS') }
   let!(:user_membership) { create(:membership, user_group: user_group, user: user) }
-  let!(:lead_membership) { create(:membership, user_group: user_group, user: manager, role: 1) }
+  let!(:lead_membership) { create(:membership, user_group: user_group, user: manager, role: 'lead') }
 
   let(:plan_id) { TimeRangeType.plan_type.id }
   let(:actual_id) { TimeRangeType.actual_type.id }
+
   let!(:diagonal_graph) do
     (1..12).each do |index|
       create(
@@ -41,15 +43,15 @@ describe 'Team Dashboard ', type: :feature, js: true do
   before { log_in manager }
 
   it 'renders' do
-    visit dashboard_teams_path
-    expect(page).to have_text 'Team dashboard'
+    visit dashboard_team_path(user_group)
+    expect(page).to have_text 'CAHMS dashboard'
   end
 
   describe 'notes' do
     context 'when clicking a point on the graph' do
       let(:content) { 'a' }
       before do
-        visit dashboard_teams_path
+        visit dashboard_team_path(user_group)
         click_graph
       end
 
@@ -65,7 +67,7 @@ describe 'Team Dashboard ', type: :feature, js: true do
         before do
           fill_in 'note[content]', with: content
           click_on('Add note')
-          visit dashboard_teams_path
+          visit dashboard_team_path(user_group)
           click_graph
         end
 

@@ -1,11 +1,11 @@
 class DashboardPresenter
   def initialize(args)
-    args[:params] = defaults.merge(args[:params])
+    args[:params] = defaults.merge(args[:params].to_hash.symbolize_keys)
     @params = args[:params]
   end
 
   def paginated_users
-    User.page(@params['page'])
+    User.where(id: @params[:user_ids]).page(@params[:page])
   end
 
   def individual_data
