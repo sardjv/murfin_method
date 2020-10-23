@@ -17,10 +17,10 @@
                 <%= I18n.t('plan.labels.name') %>
               </th>
               <th>
-                <%= I18n.t('plan.labels.start_time') %>
+                <%= I18n.t('plan.labels.start_date') %>
               </th>
               <th>
-                <%= I18n.t('plan.labels.end_time') %>
+                <%= I18n.t('plan.labels.end_date') %>
               </th>
               <th style='width: 50px;'></th>
               <th style='width: 50px;'></th>
@@ -34,10 +34,10 @@
                     <%= plan.name %>
                   </td>
                   <td>
-                    <%= plan.start_time.strftime(I18n.t('time.formats.readable')) %>
+                    <%= plan.start_date.strftime(I18n.t('date.formats.readable')) %>
                   </td>
                   <td>
-                    <%= plan.end_time.strftime(I18n.t('time.formats.readable')) %>
+                    <%= plan.end_date.strftime(I18n.t('date.formats.readable')) %>
                   </td>
                   <td>
                     <%= link_to [:edit, plan], class: 'btn btn-link' do %>

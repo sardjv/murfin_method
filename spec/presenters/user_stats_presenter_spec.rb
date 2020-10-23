@@ -152,7 +152,7 @@ describe UserStatsPresenter do
     end
 
     context 'when planned is outside filter time range' do
-      let(:plan_start_time) { 1.year.ago - 1.day }
+      let(:plan_start_time) { 1.year.ago - 2.days }
       let(:plan_end_time) { 1.year.ago - 1.day }
 
       describe 'average_weekly_planned' do
@@ -176,7 +176,7 @@ describe UserStatsPresenter do
 
     context 'when actual is outside filter time range' do
       let(:actual_start_time) { Time.zone.tomorrow }
-      let(:actual_end_time) { Time.zone.tomorrow }
+      let(:actual_end_time) { Time.zone.tomorrow + 1.day }
 
       describe 'average_weekly_planned' do
         it 'returns average weekly planned values for the time range' do

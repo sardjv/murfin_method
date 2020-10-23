@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'User edits a plan', type: :feature, js: true do
   let(:current_user) { create(:user) }
   let!(:plan) { create(:plan, user: current_user, activities: [create(:activity)]) }
-  let(:input) { plan.end_time.year + 2 }
+  let(:input) { plan.start_date.year + 2 }
 
   before do
     log_in current_user
@@ -12,13 +12,13 @@ describe 'User edits a plan', type: :feature, js: true do
   end
 
   it 'updates plan' do
-    bootstrap_select input, from: I18n.t('plan.labels.end_time')
+    bootstrap_select input, from: I18n.t('plan.labels.end_date')
     bootstrap_select 'Weekly on Tuesdays', from: I18n.t('activity.labels.schedule')
     click_button I18n.t('plan.save')
 
     expect(page).to have_content(I18n.t('plan.notice.successfully.updated'))
     expect(page).to have_bootstrap_select(I18n.t('activity.labels.schedule'), selected: 'Weekly on Tuesdays')
-    expect(plan.reload.end_time.year).to eq input
+    expect(plan.reload.end_date.year).to eq input
 
     click_link I18n.t('activity.remove')
     click_button I18n.t('plan.save')
@@ -27,10 +27,10 @@ describe 'User edits a plan', type: :feature, js: true do
   end
 
   context 'with end before start' do
-    let(:input) { plan.start_time.year - 2 }
+    let(:input) { plan.start_date.year - 1 }
 
     before do
-      bootstrap_select input, from: I18n.t('plan.labels.end_time')
+      bootstrap_select input, from: I18n.t('plan.labels.end_date')
     end
 
     it 'does not save' do

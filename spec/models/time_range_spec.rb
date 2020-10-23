@@ -32,6 +32,14 @@ describe TimeRange, type: :model do
     it { expect(subject).not_to be_valid }
   end
 
+  context 'with end_time equal to start_time' do
+    subject { build(:time_range) }
+
+    before { subject.end_time = subject.start_time }
+
+    it { expect(subject).not_to be_valid }
+  end
+
   context 'with a couple of example types' do
     let(:jp_type) { create(:time_range_type, name: 'Job Plan Periods') }
     let(:rio_type) { create(:time_range_type, name: 'RIO Appointments') }

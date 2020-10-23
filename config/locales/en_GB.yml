@@ -10,6 +10,9 @@ en:
   auth:
     log_in: Log in
     log_out: Log out
+  date:
+    formats:
+      readable: '%-d %B %Y'
   faker:
     time_range_type:
       name:
@@ -90,9 +93,9 @@ en:
     edit: Edit Plan
     labels:
       activities: Activities
-      end_time: End time
+      end_date: End date
       name: Name
-      start_time: Start time
+      start_date: Start date
       user: User
     name: Plan
     notice:

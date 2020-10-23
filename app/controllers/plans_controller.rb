@@ -11,6 +11,7 @@ class PlansController < ApplicationController
   def create
     @plan = Plan.new(plan_params)
     @plan.user_id = @current_user.id
+    @plan.end_date = @plan.start_date + Plan.default_length
     if @plan.save
       redirect_to plans_path, notice: t('plan.notice.successfully.created')
     else
@@ -45,8 +46,8 @@ class PlansController < ApplicationController
 
   def plan_params
     params.require(:plan).permit(
-      :start_time,
-      :end_time,
+      :start_date,
+      :end_date,
       :user_id,
       activities_attributes: %i[id schedule _destroy]
     )

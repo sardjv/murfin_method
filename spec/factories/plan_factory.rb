@@ -2,21 +2,21 @@
 #
 # Table name: plans
 #
-#  id                 :bigint           not null, primary key
-#  start_time         :datetime         not null
-#  end_time           :datetime         not null
-#  user_id            :bigint           not null
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
+#  id         :bigint           not null, primary key
+#  start_date :date             not null
+#  end_date   :date             not null
+#  user_id    :bigint           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 FactoryBot.define do
   factory :plan do
-    start_time { Faker::Time.between(from: DateTime.now - 1.year, to: DateTime.now + 1.year) }
+    start_date { Faker::Date.between(from: Date.today - 1.year, to: Date.today + 1.year) }
     user_id { User.all.sample.try(:id) || create(:user).id }
 
     after(:build) do |plan|
-      # Set end_time to be after start_time.
-      plan.end_time = plan.start_time + 1.week - 1.second unless plan.end_time
+      # Set end_date to be after start_date.
+      plan.end_date = plan.start_date + 1.week unless plan.end_date
     end
   end
 end

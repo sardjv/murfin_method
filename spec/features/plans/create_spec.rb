@@ -19,18 +19,7 @@ describe 'User creates a plan', type: :feature, js: true do
 
     expect(Plan.last.user_id).to eq(current_user.id)
     expect(Plan.last.activities.count).to eq(1)
+    expect(Plan.last.end_date).to eq(Plan.last.start_date + 1.year - 1.day)
     expect(page).to have_content(I18n.t('plan.notice.successfully.created'))
-  end
-
-  context 'with end before start' do
-    before do
-      bootstrap_select input.start_time.year - 2, from: I18n.t('plan.labels.end_time')
-    end
-
-    it 'does not save' do
-      expect { click_button I18n.t('plan.save') }.not_to change(Plan, :count)
-
-      expect(page).to have_content(I18n.t('plan.notice.could_not_be.created'))
-    end
   end
 end
