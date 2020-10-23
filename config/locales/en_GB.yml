@@ -56,9 +56,10 @@ en:
       admin_users: Users
       combined_data: Combined data
       individuals: Individuals
+      plans: Plans
       summary: Summary
       team: '%{team_name} dashboard'
-      time_ranges: Data
+      time_ranges: Actuals
     team_dashboard: Team
   notes:
     add: Add note
@@ -76,6 +77,31 @@ en:
     placeholders:
       content: Add some detail about the note here
     save: Save
+  plan:
+    add: Add Plan
+    cancel: Cancel
+    confirm: Are you sure?
+    edit: Edit Plan
+    labels:
+      end_date: End date
+      name: Name
+      start_date: Start date
+      user: User
+    name: Plan
+    notice:
+      successfully:
+        created:
+          Plan successfully created
+        destroyed:
+          Plan deleted
+        updated:
+          Plan successfully updated
+      could_not_be:
+        created:
+          Plan could not be created
+        updated:
+          Plan could not be updated
+    save: Save
   status:
     about_right: About Right
     over: Over
@@ -87,10 +113,10 @@ en:
       iso8601_utc: '%Y-%m-%dT%H:%M:%S.000Z'
       readable: '%H:%M on %d %b %Y'
   time_range:
-    add: Add Data
+    add: Add Actual
     cancel: Cancel
     confirm: Are you sure?
-    edit: Edit Data
+    edit: Edit Actual
     labels:
       end_time: End time
       start_time: Start time

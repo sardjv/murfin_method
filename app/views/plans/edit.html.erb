@@ -1,0 +1,34 @@
+<div class='container my-4'>
+
+  <div class='row'>
+    <div class='col-12'>
+      <h5>
+        <% if @plan.persisted? %>
+          <%= I18n.t('plan.edit') %>
+        <% else %>
+          <%= I18n.t('plan.add') %>
+        <% end %>
+      </h5>
+    </div>
+  </div>
+
+  <div class='row'>
+    <div class='col-12'>
+      <%= bootstrap_form_for @plan do |f| %>
+        <%= f.date_select :start_date,
+          label: I18n.t('plan.labels.start_date')
+        %>
+
+        <% if @plan.persisted? %>
+          <%= f.date_select :end_date,
+            label: I18n.t('plan.labels.end_date')
+          %>
+        <% end %>
+
+        <%= f.submit I18n.t('plan.save'), class: 'btn btn-primary mt-2' %>
+        <%= link_to I18n.t('plan.cancel'), :back, class: 'btn btn-outline-secondary mt-2' %>
+      <% end %>
+    </div>
+  </div>
+
+</div>

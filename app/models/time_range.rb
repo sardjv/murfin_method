@@ -19,7 +19,7 @@ class TimeRange < ApplicationRecord
   validate :validate_end_time_after_start_time
 
   def validate_end_time_after_start_time
-    return unless start_time && end_time && end_time < start_time
+    return unless start_time && end_time && end_time <= start_time
 
     errors.add :end_time, 'must occur after start time'
   end

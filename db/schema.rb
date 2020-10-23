@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_21_180800) do
+ActiveRecord::Schema.define(version: 2020_10_22_120800) do
+
+  create_table "activities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.text "schedule", size: :medium, null: false
+    t.bigint "plan_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["plan_id"], name: "index_activities_on_plan_id"
+  end
 
   create_table "group_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
@@ -42,6 +50,15 @@ ActiveRecord::Schema.define(version: 2020_10_21_180800) do
     t.bigint "subject_id"
     t.index ["author_id"], name: "index_notes_on_author_id"
     t.index ["subject_type", "subject_id"], name: "index_notes_on_subject_type_and_subject_id"
+  end
+
+  create_table "plans", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.date "start_date", null: false
+    t.date "end_date", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_plans_on_user_id"
   end
 
   create_table "time_range_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|

@@ -22,6 +22,7 @@ class User < ApplicationRecord
   )
   has_many :memberships, dependent: :destroy
   has_many :user_groups, through: :memberships
+  has_many :plans, dependent: :destroy
 
   validates :email, presence: true, uniqueness: true
   validates :first_name, presence: true
@@ -42,6 +43,7 @@ class User < ApplicationRecord
     return unless saved_changes_include?(%w[first_name last_name])
 
     CacheBusterJob.perform_later(klass: 'TimeRange', ids: time_range_ids)
+    CacheBusterJob.perform_later(klass: 'Plan', ids: plan_ids)
   end
 
   def saved_changes_include?(attrs)

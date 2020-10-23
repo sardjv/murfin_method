@@ -13,6 +13,10 @@ gem 'factory_bot', '~> 6.1.0'
 # https://github.com/faker-ruby/faker
 gem 'faker', '~> 2.14.0'
 
+# Allows easy creation of recurrence rules and fast querying.
+# https://github.com/seejohnrun/ice_cube
+gem 'ice_cube', '~> 0.16.3'
+
 # A resource-focused Rails library for developing JSON:API compliant servers.
 # https://github.com/cerebris/jsonapi-resources
 gem 'jsonapi-resources', '~> 0.10.2'
