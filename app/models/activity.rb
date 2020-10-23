@@ -13,7 +13,12 @@ class Activity < ApplicationRecord
 
   validates :schedule, presence: true
 
-  attr_accessor :day
+  def day
+    return unless schedule
+
+    # Only handle 1 rule per activity for now.
+    ScheduleParser.call(schedule: schedule)[:rules].first[:day]
+  end
 
   # Deserialize from YAML storage.
   def schedule
