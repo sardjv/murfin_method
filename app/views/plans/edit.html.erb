@@ -19,9 +19,11 @@
           label: I18n.t('plan.labels.start_date')
         %>
 
-        <%= f.date_select :end_date,
-          label: I18n.t('plan.labels.end_date')
-        %>
+        <% if @plan.persisted? %>
+          <%= f.date_select :end_date,
+            label: I18n.t('plan.labels.end_date')
+          %>
+        <% end %>
 
         <%= f.submit I18n.t('plan.save'), class: 'btn btn-primary mt-2' %>
         <%= link_to I18n.t('plan.cancel'), :back, class: 'btn btn-outline-secondary mt-2' %>

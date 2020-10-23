@@ -11,7 +11,8 @@ class PlansController < ApplicationController
   def create
     @plan = Plan.new(plan_params)
     @plan.user_id = @current_user.id
-    if @plan.save
+    @plan.end_date = @plan.start_date + Plan.default_length
+    if @plan.save!
       redirect_to plans_path, notice: t('plan.notice.successfully.created')
     else
       flash.now.alert = t('plan.notice.could_not_be.created')

@@ -24,4 +24,8 @@ class Plan < ApplicationRecord
   def name
     "#{user.name}'s #{start_date.year} #{I18n.t('plan.name')}"
   end
+
+  def self.default_length
+    1.year - 1.day
+  end
 end

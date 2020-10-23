@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'User edits a plan', type: :feature, js: true do
   let(:current_user) { create(:user) }
   let!(:plan) { create(:plan, user: current_user) }
-  let(:input) { plan.end_date.year + 2 }
+  let(:input) { plan.start_date.year + 2 }
 
   before do
     log_in current_user
@@ -20,7 +20,7 @@ describe 'User edits a plan', type: :feature, js: true do
   end
 
   context 'with end before start' do
-    let(:input) { plan.start_date.year - 2 }
+    let(:input) { plan.start_date.year - 1 }
 
     before do
       bootstrap_select input, from: I18n.t('plan.labels.end_date')
