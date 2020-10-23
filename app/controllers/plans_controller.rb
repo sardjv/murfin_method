@@ -44,8 +44,8 @@ class PlansController < ApplicationController
 
   def plan_params
     params.require(:plan).permit(
-      :start_time,
-      :end_time,
+      :start_date,
+      :end_date,
       :user_id
     )
   end

@@ -19,7 +19,7 @@ describe 'User creates a plan', type: :feature, js: true do
 
   context 'with end before start' do
     before do
-      bootstrap_select input.start_time.year - 2, from: I18n.t('plan.labels.end_time')
+      bootstrap_select input.start_date.year - 2, from: I18n.t('plan.labels.end_date')
     end
 
     it 'does not save' do
