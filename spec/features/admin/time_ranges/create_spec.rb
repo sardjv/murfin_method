@@ -8,6 +8,7 @@ describe 'Admin creates a time_range', type: :feature, js: true do
     visit admin_time_ranges_path
     click_link I18n.t('time_range.add')
     bootstrap_select input.time_range_type.name, from: I18n.t('time_range.labels.time_range_type')
+    bootstrap_select input.start_time.year + 1, from: I18n.t('time_range.labels.end_time')
     fill_in I18n.t('time_range.labels.value'), with: input.value
     bootstrap_select input.user.name, from: I18n.t('time_range.labels.user')
   end
