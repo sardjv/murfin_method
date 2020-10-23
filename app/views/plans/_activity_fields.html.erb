@@ -6,8 +6,8 @@
     [IceCube::Rule.weekly.day(:thursday), IceCube::Rule.weekly.day(:thursday).to_yaml],
     [IceCube::Rule.weekly.day(:friday), IceCube::Rule.weekly.day(:friday).to_yaml],
     [IceCube::Rule.weekly.day(:saturday), IceCube::Rule.weekly.day(:saturday).to_yaml],
-    [IceCube::Rule.weekly.day(:sunday), IceCube::Rule.weekly.day(:sunday).to_yaml]
-  ])
+    [IceCube::Rule.weekly.day(:sunday), IceCube::Rule.weekly.day(:sunday).to_yaml],
+  ], selected: f.object.schedule.to_s)
 %>
 
 <%= f.select :schedule, options, label: I18n.t('activity.labels.schedule') %>

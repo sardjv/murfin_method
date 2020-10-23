@@ -13,11 +13,16 @@ describe 'User edits a plan', type: :feature, js: true do
 
   it 'updates plan' do
     bootstrap_select input, from: I18n.t('plan.labels.end_time')
-    click_link I18n.t('activity.remove')
+    bootstrap_select 'Weekly on Tuesdays', from: I18n.t('activity.labels.schedule')
     click_button I18n.t('plan.save')
 
     expect(page).to have_content(I18n.t('plan.notice.successfully.updated'))
+    expect(page).to have_bootstrap_select(I18n.t('activity.labels.schedule'), selected: 'Weekly on Tuesdays')
     expect(plan.reload.end_time.year).to eq input
+
+    click_link I18n.t('activity.remove')
+    click_button I18n.t('plan.save')
+    expect(page).to have_content(I18n.t('plan.notice.successfully.updated'))
     expect(plan.activities.count).to eq 0
   end
 
