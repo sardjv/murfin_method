@@ -53,10 +53,6 @@ gem 'puma', '~> 5.0.2'
 # https://github.com/rails/rails
 gem 'rails', '~> 6.0.3'
 
-# A gem for adding selectors for setting recurring events.
-# https://github.com/GetJobber/recurring_select
-gem 'recurring_select', '~> 3.0.0'
-
 # A very fast key-value store to hold jobs until they are run.
 # https://github.com/redis/redis-rb
 gem 'redis', '~> 4.2.2'
