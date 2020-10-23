@@ -13,6 +13,8 @@ class Activity < ApplicationRecord
 
   validates :schedule, presence: true
 
+  attr_accessor :day
+
   # Deserialize from YAML storage.
   def schedule
     return unless super

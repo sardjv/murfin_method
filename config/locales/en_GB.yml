@@ -2,6 +2,7 @@ en:
   activity:
     add: Add Activity
     labels:
+      day: Day
       schedule: Schedule
     name: Activity
     remove: Remove Activity

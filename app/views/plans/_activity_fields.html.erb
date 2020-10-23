@@ -1,15 +1,10 @@
 <%
-  options = options_for_select([
-    [IceCube::Rule.weekly.day(:monday), IceCube::Rule.weekly.day(:monday).to_yaml],
-    [IceCube::Rule.weekly.day(:tuesday), IceCube::Rule.weekly.day(:tuesday).to_yaml],
-    [IceCube::Rule.weekly.day(:wednesday), IceCube::Rule.weekly.day(:wednesday).to_yaml],
-    [IceCube::Rule.weekly.day(:thursday), IceCube::Rule.weekly.day(:thursday).to_yaml],
-    [IceCube::Rule.weekly.day(:friday), IceCube::Rule.weekly.day(:friday).to_yaml],
-    [IceCube::Rule.weekly.day(:saturday), IceCube::Rule.weekly.day(:saturday).to_yaml],
-    [IceCube::Rule.weekly.day(:sunday), IceCube::Rule.weekly.day(:sunday).to_yaml],
-  ], selected: f.object.schedule.to_s)
+  options = options_for_select(
+    [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday].map{ |d| [d.to_s.capitalize, d] },
+    selected: f.object.day
+  )
 %>
 
-<%= f.select :schedule, options, label: I18n.t('activity.labels.schedule') %>
+<%= f.select :day, options, label: I18n.t('activity.labels.day') %>
 
 <%= link_to_remove_association I18n.t('activity.remove'), f %>
