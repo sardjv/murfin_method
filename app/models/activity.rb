@@ -20,6 +20,10 @@ class Activity < ApplicationRecord
     ScheduleParser.call(schedule: schedule)[:rules].first[:day]
   end
 
+  def day=(day_string)
+    self.schedule = ScheduleBuilder.call(rules: [{ type: :weekly, day: day_string }])
+  end
+
   # Deserialize from YAML storage.
   def schedule
     return unless super

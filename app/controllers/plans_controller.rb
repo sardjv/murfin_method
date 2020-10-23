@@ -47,9 +47,6 @@ class PlansController < ApplicationController
     Plan.new(plan_params) do |plan|
       plan.user_id = @current_user.id
       plan.end_date = plan.start_date + Plan.default_length
-      plan.activities.each do |activity|
-        activity.schedule = ScheduleBuilder.call(rules: [{ type: :weekly, day: activity.day }])
-      end
     end
   end
 

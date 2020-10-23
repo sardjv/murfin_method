@@ -10,7 +10,11 @@
 #
 FactoryBot.define do
   factory :activity do
-    schedule { IceCube::Schedule.new(Time.current) }
+    schedule do
+      IceCube::Schedule.new do |s|
+        s.add_recurrence_rule(IceCube::Rule.weekly.day(:monday))
+      end
+    end
     plan_id { Plan.all.sample.try(:id) || create(:plan).id }
   end
 end
