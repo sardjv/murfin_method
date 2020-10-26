@@ -130,7 +130,7 @@ group :test do
 
   # Generate code coverage documentation.
   # https://github.com/colszowka/simplecov
-  gem 'simplecov', '~> 0.19.0'
+  gem 'simplecov', '~> 0.19.1'
 
   # Provides 'time travel' capabilities, making it simple to test time-dependent code.
   # https://github.com/travisjeffery/timecop
