@@ -1,12 +1,14 @@
 <div class='nested-fields'>
   <%
-    options = options_for_select(
-      [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday].map{ |d| [d.to_s.capitalize, d] },
+    day_options = options_for_select(
+      [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday].map { |d| [d.to_s.capitalize, d] },
       selected: f.object.day
     )
   %>
 
-  <%= f.select :day, options, label: I18n.t('activity.labels.day') %>
+  <%= f.select :day, day_options, label: I18n.t('activity.labels.day') %>
+  <%= f.time_select :start_time, label: I18n.t('activity.labels.start_time'), ignore_date: true %>
+  <%= f.time_select :end_time, label: I18n.t('activity.labels.end_time'), ignore_date: true %>
 
   <%= link_to_remove_association I18n.t('activity.remove'), f %>
 </div>

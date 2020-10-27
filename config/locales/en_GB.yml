@@ -3,7 +3,9 @@ en:
     add: Add Activity
     labels:
       day: Day
+      end_time: End time
       schedule: Schedule
+      start_time: Start time
     name: Activity
     remove: Remove Activity
   app:

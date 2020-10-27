@@ -33,12 +33,9 @@ class Activity < ApplicationRecord
   end
 
   def start_time=(time)
+    time = time_value(time)
     self.schedule = ScheduleBuilder.call(
-      start_time: time.change(
-        year: plan.start_date.year,
-        month: plan.start_date.month,
-        day: plan.start_date.day
-      ),
+      start_time: time,
       end_time: end_time,
       rules: ScheduleParser.call(schedule: schedule)[:rules]
     )
@@ -49,13 +46,10 @@ class Activity < ApplicationRecord
   end
 
   def end_time=(time)
+    time = time_value(time)
     self.schedule = ScheduleBuilder.call(
       start_time: start_time,
-      end_time: time.change(
-        year: plan.end_date.year,
-        month: plan.end_date.month,
-        day: plan.end_date.day
-      ),
+      end_time: time,
       rules: ScheduleParser.call(schedule: schedule)[:rules]
     )
   end
@@ -71,5 +65,9 @@ class Activity < ApplicationRecord
   # Pass an IceCube::Schedule.
   def schedule=(ice_cube_schedule)
     super(ice_cube_schedule.to_yaml)
+  end
+
+  def time_value(hash)
+    Time.zone.local(1, 1, 1, hash[4], hash[5])
   end
 end

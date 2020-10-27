@@ -27,10 +27,13 @@
 
         <%= I18n.t('plan.labels.activities') %>
 
-        <div class='row'>
+        <div>
           <%= f.fields_for :activities do |activity_form| %>
-            <%= render 'activity_fields', f: activity_form %>
+            <%= render 'activity_fields', plan_form: f, f: activity_form %>
           <% end %>
+        </div>
+
+        <div>
           <%= link_to_add_association I18n.t('activity.add'), f, :activities %>
         </div>
 
