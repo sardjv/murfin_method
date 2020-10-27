@@ -16,7 +16,7 @@ describe Activity, type: :model do
   it { should belong_to(:plan) }
 
   context 'with a day and start_time' do
-    let(:day) { 'monday' }
+    let(:day) { 'wednesday' }
     let(:start_time) { { 4 => '09', 5 => '00' } }
     let(:end_time) { { 4 => '13', 5 => '00' } }
 
@@ -24,14 +24,24 @@ describe Activity, type: :model do
       subject.update(day: day, start_time: start_time, end_time: end_time)
     end
 
-    it 'sets the attributes based on the plan' do
-      expect(subject.day).to eq(day)
-      expect(subject.start_time).to eq(subject.plan.start_date.to_time.in_time_zone + 9.hours)
-      expect(subject.end_time).to eq(subject.plan.end_date.to_time.in_time_zone + 13.hours)
+    context 'when updating all' do
+      it 'sets the attributes based on the plan' do
+        expect(subject.day).to eq(day)
+        expect(subject.start_time).to eq(subject.plan.start_date.to_time.in_time_zone + 9.hours)
+        expect(subject.end_time).to eq(subject.plan.end_date.to_time.in_time_zone + 13.hours)
+      end
     end
-  end
 
-  context 'with end before start' do
+    context 'with end equals start' do
+      let(:end_time) { start_time }
 
+      it { expect(subject).not_to be_valid }
+    end
+
+    context 'with end before start' do
+      let(:end_time) { { 4 => '08', 5 => '00' } }
+
+      it { expect(subject).not_to be_valid }
+    end
   end
 end

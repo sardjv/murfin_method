@@ -12,6 +12,7 @@ class Activity < ApplicationRecord
   belongs_to :plan
 
   validates :schedule, presence: true
+  validate :validate_end_time_after_start_time
 
   before_save :set_bounds
 
@@ -93,4 +94,11 @@ class Activity < ApplicationRecord
       }
     )
   end
+
+  def validate_end_time_after_start_time
+    return unless start_time && end_time && end_time <= start_time
+
+    errors.add :end_time, 'must occur after start time'
+  end
+
 end
