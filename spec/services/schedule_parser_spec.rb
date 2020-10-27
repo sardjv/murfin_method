@@ -1,5 +1,8 @@
 describe ScheduleParser do
-  let(:schedule) { ScheduleBuilder.call(rules: [{ type: 'weekly', day: 'monday' }]) }
+  let(:schedule) { ScheduleBuilder.call(
+    start_time: Time.current,
+    rules: [{ type: 'weekly', day: 'monday' }])
+  }
 
   subject { ScheduleParser.call(schedule: schedule) }
 
