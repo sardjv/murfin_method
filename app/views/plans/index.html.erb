@@ -34,7 +34,7 @@
                     <%= plan.name %>
                   </td>
                   <td>
-                    <%= plan.start_date.strftime(I18n.t('date.formats.readable')) %>
+                    <%= I18n.l(plan.start_date, format: :readable) %>
                   </td>
                   <td>
                     <%= plan.end_date.strftime(I18n.t('date.formats.readable')) %>
