@@ -1,9 +1,19 @@
 en:
+  activity:
+    add: Add Activity
+    labels:
+      day: Day
+      schedule: Schedule
+    name: Activity
+    remove: Remove Activity
   app:
     name: Murfin+
   auth:
     log_in: Log in
     log_out: Log out
+  date:
+    formats:
+      readable: '%-d %B %Y'
   faker:
     time_range_type:
       name:
@@ -83,6 +93,7 @@ en:
     confirm: Are you sure?
     edit: Edit Plan
     labels:
+      activities: Activities
       end_date: End date
       name: Name
       start_date: Start date
@@ -111,7 +122,7 @@ en:
   time:
     formats:
       iso8601_utc: '%Y-%m-%dT%H:%M:%S.000Z'
-      readable: '%H:%M on %d %b %Y'
+      readable: '%H:%M on %d %B %Y'
   time_range:
     add: Add Actual
     cancel: Cancel

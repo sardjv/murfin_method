@@ -9,12 +9,25 @@
 #  updated_at :datetime         not null
 #
 class Activity < ApplicationRecord
-  belongs_to :plan, touch: true
+  belongs_to :plan
 
-  validates :schedule, :plan_id, presence: true
+  validates :schedule, presence: true
+
+  def day
+    return unless schedule
+
+    # Only handle 1 rule per activity for now.
+    ScheduleParser.call(schedule: schedule)[:rules].first[:day]
+  end
+
+  def day=(day_string)
+    self.schedule = ScheduleBuilder.call(rules: [{ type: :weekly, day: day_string }])
+  end
 
   # Deserialize from YAML storage.
   def schedule
+    return if super.nil? # schedule can be nil sometimes, e.g. before the object is saved.
+
     IceCube::Schedule.from_yaml(super)
   end
 

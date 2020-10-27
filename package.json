@@ -1,6 +1,7 @@
 {
   "license": "MIT",
   "dependencies": {
+    "@nathanvda/cocoon": "^1.2.14",
     "@rails/ujs": "6.0.3-4",
     "@rails/webpacker": "5.2.1",
     "bootstrap": "^4.5.3",

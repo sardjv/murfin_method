@@ -9,10 +9,9 @@ class PlansController < ApplicationController
   end
 
   def create
-    @plan = Plan.new(plan_params)
-    @plan.user_id = @current_user.id
-    @plan.end_date = @plan.start_date + Plan.default_length
-    if @plan.save!
+    @plan = build_plan
+
+    if @plan.save
       redirect_to plans_path, notice: t('plan.notice.successfully.created')
     else
       flash.now.alert = t('plan.notice.could_not_be.created')
@@ -28,11 +27,12 @@ class PlansController < ApplicationController
     @plan = Plan.find(params[:id])
 
     if @plan.update(plan_params)
-      redirect_to plans_path, notice: t('plan.notice.successfully.updated')
+      flash.now.notice = t('plan.notice.successfully.updated')
     else
       flash.now.alert = t('plan.notice.could_not_be.updated')
-      render :edit
     end
+
+    render :edit
   end
 
   def destroy
@@ -43,11 +43,19 @@ class PlansController < ApplicationController
 
   private
 
+  def build_plan
+    Plan.new(plan_params) do |plan|
+      plan.user_id = @current_user.id
+      plan.end_date = plan.start_date + Plan.default_length
+    end
+  end
+
   def plan_params
     params.require(:plan).permit(
       :start_date,
       :end_date,
-      :user_id
+      :user_id,
+      activities_attributes: %i[id day _destroy]
     )
   end
 end
