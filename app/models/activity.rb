@@ -26,7 +26,7 @@ class Activity < ApplicationRecord
 
   # Deserialize from YAML storage.
   def schedule
-    return unless super
+    return if super.nil? # schedule can be nil sometimes, e.g. before the object is saved.
 
     IceCube::Schedule.from_yaml(super)
   end
