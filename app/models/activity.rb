@@ -21,7 +21,25 @@ class Activity < ApplicationRecord
   end
 
   def day=(day_string)
-    self.schedule = ScheduleBuilder.call(rules: [{ type: :weekly, day: day_string }])
+    self.schedule = ScheduleBuilder.call(
+      start_time: start_time,
+      rules: [{ type: :weekly, day: day_string }]
+    )
+  end
+
+  def start_time
+    schedule&.start_time
+  end
+
+  def start_time=(time)
+    self.schedule = ScheduleBuilder.call(
+      start_time: time.change(
+        year: plan.start_date.year,
+        month: plan.start_date.month,
+        day: plan.start_date.day
+      ),
+      rules: ScheduleParser.call(schedule: schedule)[:rules]
+    )
   end
 
   # Deserialize from YAML storage.

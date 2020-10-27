@@ -1,7 +1,8 @@
 describe ScheduleBuilder do
+  let(:start_time) { Time.current }
   let(:rules) { [{ type: 'weekly', day: 'monday' }] }
 
-  subject { ScheduleBuilder.call(rules: rules) }
+  subject { ScheduleBuilder.call(start_time: start_time, rules: rules) }
 
   it 'builds a schedule' do
     expect(subject).to be_an(IceCube::Schedule)
