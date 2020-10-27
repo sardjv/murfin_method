@@ -120,6 +120,10 @@ group :test do
   # https://github.com/rspec/rspec
   gem 'rspec-rails', '~> 4.0.1'
 
+  # Retry flaky specs to reduce time spent on random failures.
+  # https://github.com/noredink/rspec-retry
+  gem 'rspec-retry', '~> 0.6.2'
+
   # A browser automation framework and ecosystem.
   # https://github.com/SeleniumHQ/selenium
   gem 'selenium-webdriver', '3.142.7'

@@ -14,6 +14,8 @@ require 'database_cleaner/redis'
 Dir[File.join(__dir__, 'fixtures/', '*.rb')].sort.each { |file| require file }
 Dir[File.join(__dir__, 'support/', '*.rb')].sort.each { |file| require file }
 
+require 'rspec/retry'
+
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -92,6 +94,24 @@ RSpec.configure do |config|
 
   config.include CapybaraHelpers, type: :feature
   config.include SessionHelpers, type: :feature
+
+  # Show retry status in spec process.
+  config.verbose_retry = true
+  # Show exception that triggers a retry if verbose_retry is set to true
+  config.display_try_failure_messages = true
+
+  # Run retry only on features.
+  config.around :each, :js do |ex|
+    ex.run_with_retry retry: 3
+  end
+
+  # Callback to be run between retries
+  config.retry_callback = proc do |ex|
+    # Run an additional clean up task in between retries to try and fix the flakiness.
+    if ex.metadata[:js]
+      Capybara.reset!
+    end
+  end
 end
 
 # Turn off deprecation notices
