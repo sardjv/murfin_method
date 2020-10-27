@@ -1,14 +1,22 @@
 describe ScheduleParser do
-  let(:schedule) { ScheduleBuilder.call(
-    start_time: Time.current,
-    rules: [{ type: 'weekly', day: 'monday' }])
-  }
+  let(:start_time) { Time.current }
+  let(:end_time) { start_time + 1.hour }
+  let(:rules) { [{ type: 'weekly', day: 'monday' }] }
+  let(:schedule) do
+    ScheduleBuilder.call(
+      start_time: start_time,
+      end_time: end_time,
+      rules: rules
+    )
+  end
 
   subject { ScheduleParser.call(schedule: schedule) }
 
   it 'parses a schedule' do
+    expect(subject[:start_time]).to eq(start_time)
+    expect(subject[:end_time]).to eq(end_time)
     expect(subject[:rules].count).to eq(1)
-    expect(subject[:rules].first[:type]).to eq('weekly')
-    expect(subject[:rules].first[:day]).to eq('monday')
+    expect(subject[:rules].first[:type]).to eq(rules.first[:type])
+    expect(subject[:rules].first[:day]).to eq(rules.first[:day])
   end
 end

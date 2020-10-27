@@ -23,6 +23,7 @@ class Activity < ApplicationRecord
   def day=(day_string)
     self.schedule = ScheduleBuilder.call(
       start_time: start_time,
+      end_time: end_time,
       rules: [{ type: :weekly, day: day_string }]
     )
   end
@@ -38,6 +39,23 @@ class Activity < ApplicationRecord
         month: plan.start_date.month,
         day: plan.start_date.day
       ),
+      end_time: end_time,
+      rules: ScheduleParser.call(schedule: schedule)[:rules]
+    )
+  end
+
+  def end_time
+    schedule&.end_time
+  end
+
+  def end_time=(time)
+    self.schedule = ScheduleBuilder.call(
+      start_time: start_time,
+      end_time: time.change(
+        year: plan.end_date.year,
+        month: plan.end_date.month,
+        day: plan.end_date.day
+      ),
       rules: ScheduleParser.call(schedule: schedule)[:rules]
     )
   end
@@ -50,6 +68,7 @@ class Activity < ApplicationRecord
   end
 
   # Serialize to YAML for storage.
+  # Pass an IceCube::Schedule.
   def schedule=(ice_cube_schedule)
     super(ice_cube_schedule.to_yaml)
   end
