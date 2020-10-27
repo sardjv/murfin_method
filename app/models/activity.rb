@@ -25,8 +25,7 @@ class Activity < ApplicationRecord
 
   def day=(day_string)
     self.schedule = ScheduleBuilder.call(
-      start_time: start_time,
-      end_time: end_time,
+      schedule: schedule,
       rules: [{ type: :weekly, day: day_string }]
     )
   end
@@ -37,11 +36,9 @@ class Activity < ApplicationRecord
 
   # Pass a time_select hash, eg. { 1 => 2020, 2 => 10, 3 => 31, 4 => 9, 5 => 30 }
   def start_time=(time)
-    time = time_value(time)
     self.schedule = ScheduleBuilder.call(
-      start_time: time,
-      end_time: end_time,
-      rules: ScheduleParser.call(schedule: schedule)[:rules]
+      schedule: schedule,
+      start_time: time_value(time)
     )
   end
 
@@ -51,11 +48,9 @@ class Activity < ApplicationRecord
 
   # Pass a time_select hash, eg. { 1 => 2020, 2 => 10, 3 => 31, 4 => 9, 5 => 30 }
   def end_time=(time)
-    time = time_value(time)
     self.schedule = ScheduleBuilder.call(
-      start_time: start_time,
-      end_time: time,
-      rules: ScheduleParser.call(schedule: schedule)[:rules]
+      schedule: schedule,
+      end_time: time_value(time)
     )
   end
 
@@ -100,5 +95,4 @@ class Activity < ApplicationRecord
 
     errors.add :end_time, 'must occur after start time'
   end
-
 end
