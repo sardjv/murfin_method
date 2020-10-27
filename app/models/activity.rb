@@ -33,10 +33,6 @@ class Activity < ApplicationRecord
 
   # Serialize to YAML for storage.
   def schedule=(ice_cube_schedule)
-    if ice_cube_schedule.is_a?(IceCube::Schedule)
-      super(ice_cube_schedule.to_yaml)
-    else
-      super(ice_cube_schedule)
-    end
+    super(ice_cube_schedule.to_yaml)
   end
 end
