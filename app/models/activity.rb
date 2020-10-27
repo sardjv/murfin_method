@@ -13,6 +13,8 @@ class Activity < ApplicationRecord
 
   validates :schedule, presence: true
 
+  before_save :set_bounds
+
   def day
     return unless schedule
 
@@ -32,6 +34,7 @@ class Activity < ApplicationRecord
     schedule&.start_time
   end
 
+  # Pass a time_select hash, eg. { 1 => 2020, 2 => 10, 3 => 31, 4 => 9, 5 => 30 }
   def start_time=(time)
     time = time_value(time)
     self.schedule = ScheduleBuilder.call(
@@ -45,6 +48,7 @@ class Activity < ApplicationRecord
     schedule&.end_time
   end
 
+  # Pass a time_select hash, eg. { 1 => 2020, 2 => 10, 3 => 31, 4 => 9, 5 => 30 }
   def end_time=(time)
     time = time_value(time)
     self.schedule = ScheduleBuilder.call(
@@ -67,7 +71,26 @@ class Activity < ApplicationRecord
     super(ice_cube_schedule.to_yaml)
   end
 
+  private
+
   def time_value(hash)
-    Time.zone.local(1, 1, 1, hash[4], hash[5])
+    Time.zone.local(hash[1] || 1, hash[2] || 1, hash[3] || 1, hash[4], hash[5])
+  end
+
+  def set_bounds
+    set_time_to_date(field: :start_time, date: plan.start_date)
+    set_time_to_date(field: :end_time, date: plan.end_date)
+  end
+
+  def set_time_to_date(field:, date:)
+    assign_attributes(
+      field => {
+        1 => date.year,
+        2 => date.month,
+        3 => date.day,
+        4 => send(field).strftime('%H'),
+        5 => send(field).strftime('%M')
+      }
+    )
   end
 end
