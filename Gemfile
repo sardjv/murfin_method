@@ -47,7 +47,7 @@ gem 'omniauth-rails_csrf_protection', '~> 0.1.2'
 
 # A Ruby/Rack web server built for concurrency.
 # https://github.com/puma/puma
-gem 'puma', '~> 5.0.2'
+gem 'puma', '~> 5.0.3'
 
 # Create database-backed web applications using the MVC pattern.
 # https://github.com/rails/rails
@@ -103,7 +103,7 @@ group :development do
 
   # Automatically check Ruby code style with RuboCop when files are modified.
   # https://github.com/yujinakayama/guard-rubocop
-  gem 'guard-rubocop', '~> 1.3.0'
+  gem 'guard-rubocop', '~> 1.4.0'
 
   # A static code analyzer and formatter, based on the community style guide.
   # https://github.com/rubocop-hq/rubocop-rails
@@ -124,6 +124,10 @@ group :test do
   # https://github.com/rspec/rspec
   gem 'rspec-rails', '~> 4.0.1'
 
+  # Retry flaky specs to reduce time spent on random failures.
+  # https://github.com/noredink/rspec-retry
+  gem 'rspec-retry', '~> 0.6.2'
+
   # A browser automation framework and ecosystem.
   # https://github.com/SeleniumHQ/selenium
   gem 'selenium-webdriver', '3.142.7'
@@ -134,7 +138,7 @@ group :test do
 
   # Generate code coverage documentation.
   # https://github.com/colszowka/simplecov
-  gem 'simplecov', '~> 0.19.0'
+  gem 'simplecov', '~> 0.19.1'
 
   # Provides 'time travel' capabilities, making it simple to test time-dependent code.
   # https://github.com/travisjeffery/timecop
