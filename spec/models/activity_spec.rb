@@ -27,8 +27,8 @@ describe Activity, type: :model do
     context 'when updating all' do
       it 'sets the attributes' do
         expect(subject.day).to eq(day)
-        expect(subject.start_time).to eq(Time.new(1,1,1,9,0))
-        expect(subject.end_time).to eq(Time.new(1,1,1,13,0))
+        expect(subject.start_time).to eq(Time.zone.local(1, 1, 1, 9, 0))
+        expect(subject.end_time).to eq(Time.zone.local(1, 1, 1, 13, 0))
       end
     end
 
