@@ -20,16 +20,7 @@ Style/FrozenStringLiteralComment:
   Enabled: false
 
 Style/ClassAndModuleChildren:
-  # Force nested module style for consistency and so that modules don't need to be declared separately.
-  # Good
-  # module Foo
-  #   class Bar
-  #   end
-  # end
-
-  # Bad
-  # class Foo::Bar
-  # end
+  # Use nested module style for consistency and so that modules don't need to be declared separately.
   EnforcedStyle: nested
 
 Style/MixinUsage:
@@ -44,6 +35,11 @@ Metrics/BlockLength:
     - 'Rakefile'
     - '**/*.rake'
     - 'spec/**/*.rb'
+
+Metrics/MethodLength:
+  Exclude:
+    - 'spec/support/omniauth_macros.rb'
+    - 'app/presenters/nav_presenter.rb'
 
 Rails/SkipsModelValidations:
   Enabled: false
