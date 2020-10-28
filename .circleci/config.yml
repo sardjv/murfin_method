@@ -16,7 +16,7 @@ jobs:
       - run:
           name: Run Rubocop
           command: bundle exec rubocop
-test:
+  test:
     parallelism: 1
     docker:
       - image: cimg/ruby:2.7.2-node
