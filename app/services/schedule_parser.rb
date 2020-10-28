@@ -2,6 +2,8 @@ class ScheduleParser
   # Pass an IceCube::Schedule.
   def self.call(schedule:)
     {
+      start_time: schedule.start_time,
+      end_time: schedule.end_time,
       rules: schedule.rrules.map do |rule|
         { type: type(rule), day: day(rule) }
       end
