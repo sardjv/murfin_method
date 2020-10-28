@@ -68,7 +68,13 @@ class Activity < ApplicationRecord
   end
 
   def to_time_ranges
-    schedule.occurrences
+    schedule.occurrences(end_time).map do |o|
+      TimeRange.new(
+        start_time: o.start_time,
+        end_time: o.end_time,
+        value: o.duration
+      )
+    end
   end
 
   private

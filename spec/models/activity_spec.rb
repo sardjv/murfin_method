@@ -45,7 +45,7 @@ describe Activity, type: :model do
     end
 
     describe 'to_time_ranges' do
-      expect(subject.to_time_ranges.first).to be_a(TimeRange)
+      it { expect(subject.to_time_ranges.first).to be_a(TimeRange) }
     end
   end
 end
