@@ -28,10 +28,10 @@
         <%= I18n.t('plan.labels.activities') %>
 
         <div class='row'>
-          <div class='col-md-3'><%= I18n.t('activity.labels.day') %></div>
-          <div class='col-md-3'><%= I18n.t('activity.labels.start_time') %></div>
-          <div class='col-md-3'><%= I18n.t('activity.labels.end_time') %></div>
-          <div class='col-md-3'></div>
+          <div class='col-md'><%= I18n.t('activity.labels.day') %></div>
+          <div class='col-md'><%= I18n.t('activity.labels.start_time') %></div>
+          <div class='col-md'><%= I18n.t('activity.labels.end_time') %></div>
+          <div class='col-md'></div>
         </div>
         <%= f.fields_for :activities do |activity_form| %>
           <%= render 'activity_fields', plan_form: f, f: activity_form %>
