@@ -67,6 +67,10 @@ class Activity < ApplicationRecord
     super(ice_cube_schedule.to_yaml)
   end
 
+  def to_time_ranges
+    schedule.occurrences
+  end
+
   private
 
   def time_value(hash)
