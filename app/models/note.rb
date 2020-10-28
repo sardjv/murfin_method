@@ -30,4 +30,5 @@ class Note < ApplicationRecord
       updated_at_readable: updated_at.strftime(I18n.t('time.formats.readable'))
     )
   end
+
 end
