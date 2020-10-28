@@ -7,7 +7,7 @@ orbs:
 
 jobs:
   rubocop:
-    parallelism: 1
+    parallelism: 3
     docker:
       - image: cimg/ruby:2.7.2-node
     steps:
@@ -17,7 +17,7 @@ jobs:
           name: Run Rubocop
           command: bundle exec rubocop
   test:
-    parallelism: 1
+    parallelism: 3
     docker:
       - image: cimg/ruby:2.7.2-node
       - image: circleci/mysql:8.0.19
