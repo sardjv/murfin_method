@@ -1,11 +1,15 @@
 window.addEventListener('turbolinks:load', () => {
-  $('select').selectpicker();
-  $('.rails-bootstrap-forms-datetime-select').addClass('form-inline');
-  $('.rails-bootstrap-forms-date-select').addClass('form-inline');
+  styleSelects()
 });
 
 // For nested forms.
 $(document).on('cocoon:after-insert', () => {
+  styleSelects()
+});
+
+function styleSelects() {
   $('select').selectpicker();
   $('.rails-bootstrap-forms-datetime-select').addClass('form-inline');
-});
+  $('.rails-bootstrap-forms-date-select').addClass('form-inline');
+  $('.rails-bootstrap-forms-time-select').addClass('form-inline');
+}
