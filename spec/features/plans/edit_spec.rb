@@ -19,7 +19,7 @@ describe 'User edits a plan', type: :feature, js: true do
     click_button I18n.t('plan.save')
 
     expect(page).to have_content(I18n.t('plan.notice.successfully.updated'))
-    expect(page).to have_bootstrap_select(I18n.t('activity.labels.day'), selected: 'Tuesday')
+    expect(page).to have_bootstrap_select(nil, selected: 'Tuesday')
     expect(page).to have_bootstrap_select(nil, selected: '09')
     expect(page).to have_bootstrap_select(nil, selected: '13')
     expect(plan.reload.end_date.year).to eq input
