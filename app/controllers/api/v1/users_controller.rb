@@ -1,2 +1,6 @@
-class Api::V1::UsersController < Api::V1::ApiResourceController
+module Api
+  module V1
+    class UsersController < Api::V1::ApiResourceController
+    end
+  end
 end

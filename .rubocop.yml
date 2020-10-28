@@ -20,7 +20,17 @@ Style/FrozenStringLiteralComment:
   Enabled: false
 
 Style/ClassAndModuleChildren:
-  EnforcedStyle: compact
+  # Force nested module style for consistency and so that modules don't need to be declared separately.
+  # Good
+  # module Foo
+  #   class Bar
+  #   end
+  # end
+
+  # Bad
+  # class Foo::Bar
+  # end
+  EnforcedStyle: nested
 
 Style/MixinUsage:
   Enabled: false
@@ -37,3 +47,7 @@ Metrics/BlockLength:
 
 Rails/SkipsModelValidations:
   Enabled: false
+
+Rails/LexicallyScopedActionFilter:
+  Exclude:
+    - 'app/controllers/application_controller.rb'
