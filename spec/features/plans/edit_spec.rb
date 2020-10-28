@@ -13,22 +13,11 @@ describe 'User edits a plan', type: :feature, js: true do
 
   it 'updates plan' do
     bootstrap_select input, from: I18n.t('plan.labels.end_date')
-    bootstrap_select 'Tuesday', from: I18n.t('activity.labels.day')
-    bootstrap_select '09', from: I18n.t('activity.labels.start_time')
-    bootstrap_select '13', from: I18n.t('activity.labels.end_time')
-    click_button I18n.t('plan.save')
-
-    expect(page).to have_content(I18n.t('plan.notice.successfully.updated'))
-    expect(page).to have_bootstrap_select(nil, selected: 'Tuesday')
-    expect(page).to have_bootstrap_select(nil, selected: '09')
-    expect(page).to have_bootstrap_select(nil, selected: '13')
-    expect(plan.reload.end_date.year).to eq input
-    expect(plan.activities.first.start_time.hour).to eq 9
-    expect(plan.activities.first.end_time.hour).to eq 13
-
     click_link I18n.t('activity.remove')
     click_button I18n.t('plan.save')
+
     expect(page).to have_content(I18n.t('plan.notice.successfully.updated'))
+    expect(plan.reload.end_date.year).to eq input
     expect(plan.activities.count).to eq 0
   end
 
