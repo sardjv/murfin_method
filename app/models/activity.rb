@@ -72,7 +72,8 @@ class Activity < ApplicationRecord
       TimeRange.new(
         start_time: o.start_time,
         end_time: o.end_time,
-        value: o.duration
+        value: o.duration,
+        user_id: plan.user_id
       )
     end
   end

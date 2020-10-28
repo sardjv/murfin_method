@@ -46,6 +46,7 @@ describe Activity, type: :model do
 
     describe 'to_time_ranges' do
       it { expect(subject.to_time_ranges.first).to be_a(TimeRange) }
+      it { expect(subject.to_time_ranges.first.user_id).to eq(subject.plan.user_id) }
     end
   end
 end
