@@ -14,8 +14,8 @@ jobs:
       - checkout
       - ruby/install-deps
       - run:
-        name: Run Rubocop
-        command: bundle exec rubocop
+          name: Run Rubocop
+          command: bundle exec rubocop
 test:
     parallelism: 1
     docker:
