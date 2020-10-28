@@ -2,20 +2,11 @@ version: 2.1
 
 orbs:
   ruby: circleci/ruby@1.0
+  rubocop: hanachin/rubocop@0.0.6
   node: circleci/node@2
   heroku: circleci/heroku@1.0.1
 
 jobs:
-  rubocop:
-    parallelism: 1
-    docker:
-      - image: cimg/ruby:2.7.2-node
-    steps:
-      - checkout
-      - ruby/install-deps
-      - run:
-          name: Run Rubocop
-          command: bundle exec rubocop
   test:
     parallelism: 1
     docker:
@@ -55,11 +46,11 @@ workflows:
   version: 2
   checks:
     jobs:
-      - rubocop
+      - rubocop/rubocop
       - test
       - heroku/deploy-via-git:
           requires:
-            - rubocop
+            - rubocop/rubocop
             - test
           filters:
             branches:
