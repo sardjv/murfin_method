@@ -11,6 +11,7 @@ AllCops:
     - 'node_modules/**/*'
     - 'bin/*'
     - 'app/definitions/**/*'
+    - 'vendor/**/*' # For CircleCI.
 
 Style/Documentation:
   # Skips checking to make sure top level modules / classes have a comment.

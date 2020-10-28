@@ -13,8 +13,10 @@ jobs:
     steps:
       - checkout
       - ruby/install-deps
-      - ruby/rubocop-check
-  test:
+      - run:
+        name: Run Rubocop
+        command: bundle exec rubocop
+test:
     parallelism: 1
     docker:
       - image: cimg/ruby:2.7.2-node
