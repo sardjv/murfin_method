@@ -7,8 +7,14 @@
   %>
 
   <%= f.select :day, day_options, label: I18n.t('activity.labels.day') %>
-  <%= f.time_select :start_time, label: I18n.t('activity.labels.start_time'), ignore_date: true %>
-  <%= f.time_select :end_time, label: I18n.t('activity.labels.end_time'), ignore_date: true %>
+  <div class='row'>
+    <div class='col-2'>
+      <%= f.time_select :start_time, label: I18n.t('activity.labels.start_time'), ignore_date: true, default: { hour: '09', minute: '00' } %>
+    </div>
+    <div class='col-2'>
+      <%= f.time_select :end_time, label: I18n.t('activity.labels.end_time'), ignore_date: true, default: { hour: '17', minute: '00' } %>
+    </div>
+  </div>
 
   <%= link_to_remove_association I18n.t('activity.remove'), f %>
 </div>
