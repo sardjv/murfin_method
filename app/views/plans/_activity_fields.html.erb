@@ -3,19 +3,18 @@
     [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday].map { |d| [d.to_s.capitalize, d] },
     selected: f.object.day
   )
-  blank_label = '<span></span>'.html_safe
 %>
 
 <div class='nested-fields'>
   <div class='row'>
     <div class='col-md'>
-      <%= f.select :day, day_options, label: blank_label %>
+      <%= f.select :day, day_options, hide_label: true %>
     </div>
     <div class='col-md'>
-      <%= f.time_select :start_time, label: blank_label, ignore_date: true, default: { hour: '09', minute: '00' } %>
+      <%= f.time_select :start_time, hide_label: true, ignore_date: true, default: { hour: '09', minute: '00' } %>
     </div>
     <div class='col-md'>
-      <%= f.time_select :end_time, label: blank_label, ignore_date: true, default: { hour: '17', minute: '00' } %>
+      <%= f.time_select :end_time, hide_label: true, ignore_date: true, default: { hour: '17', minute: '00' } %>
     </div>
     <div class='col-md'>
       <%= link_to_remove_association I18n.t('activity.remove'), f %>
