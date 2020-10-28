@@ -108,9 +108,7 @@ RSpec.configure do |config|
   # Callback to be run between retries
   config.retry_callback = proc do |ex|
     # Run an additional clean up task in between retries to try and fix the flakiness.
-    if ex.metadata[:js]
-      Capybara.reset!
-    end
+    Capybara.reset! if ex.metadata[:js]
   end
 end
 

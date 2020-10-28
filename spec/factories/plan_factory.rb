@@ -11,7 +11,7 @@
 #
 FactoryBot.define do
   factory :plan do
-    start_date { Faker::Date.between(from: Date.today - 1.year, to: Date.today + 1.year) }
+    start_date { Faker::Date.between(from: Time.zone.today - 1.year, to: Time.zone.today + 1.year) }
     user_id { User.all.sample.try(:id) || create(:user).id }
 
     after(:build) do |plan|

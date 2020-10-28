@@ -47,7 +47,7 @@ gem 'omniauth-rails_csrf_protection', '~> 0.1.2'
 
 # A Ruby/Rack web server built for concurrency.
 # https://github.com/puma/puma
-gem 'puma', '~> 5.0.3'
+gem 'puma', '~> 5.0.4'
 
 # Create database-backed web applications using the MVC pattern.
 # https://github.com/rails/rails
