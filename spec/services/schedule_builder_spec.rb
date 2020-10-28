@@ -3,13 +3,13 @@ describe ScheduleBuilder do
   let(:end_time) { start_time + 1.hour }
   let(:rules) { [{ type: 'weekly', day: 'monday' }] }
 
-  subject {
+  subject do
     ScheduleBuilder.call(
       start_time: start_time,
       end_time: end_time,
       rules: rules
     )
-  }
+  end
 
   it 'builds a schedule' do
     expect(subject).to be_an(IceCube::Schedule)
