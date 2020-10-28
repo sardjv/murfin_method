@@ -20,8 +20,10 @@ Style/FrozenStringLiteralComment:
   Enabled: false
 
 Style/ClassAndModuleChildren:
-  # Use nested module style for consistency and so that modules don't need to be declared separately.
-  EnforcedStyle: nested
+  # Use compact module style for consistency and better indendation.
+  EnforcedStyle: compact
+  Exclude:
+    - 'config/application.rb'
 
 Style/MixinUsage:
   Enabled: false
