@@ -27,16 +27,15 @@
 
         <%= I18n.t('plan.labels.activities') %>
 
-        <table>
-          <tr>
-            <th><%= I18n.t('activity.labels.day') %></th>
-            <th><%= I18n.t('activity.labels.start_time') %></th>
-            <th><%= I18n.t('activity.labels.end_time') %></th>
-          </tr>
-          <%= f.fields_for :activities do |activity_form| %>
-            <%= render 'activity_fields', plan_form: f, f: activity_form %>
-          <% end %>
-        </table>
+        <div class='row'>
+          <div class='col-md-3'><%= I18n.t('activity.labels.day') %></div>
+          <div class='col-md-3'><%= I18n.t('activity.labels.start_time') %></div>
+          <div class='col-md-3'><%= I18n.t('activity.labels.end_time') %></div>
+          <div class='col-md-3'></div>
+        </div>
+        <%= f.fields_for :activities do |activity_form| %>
+          <%= render 'activity_fields', plan_form: f, f: activity_form %>
+        <% end %>
 
         <div>
           <%= link_to_add_association I18n.t('activity.add'), f, :activities %>

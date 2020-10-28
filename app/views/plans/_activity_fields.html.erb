@@ -6,9 +6,19 @@
   blank_label = '<span></span>'.html_safe
 %>
 
-<tr class='nested-fields'>
-  <td><%= f.select :day, day_options, label: blank_label %></td>
-  <td><%= f.time_select :start_time, label: blank_label, ignore_date: true, default: { hour: '09', minute: '00' } %></td>
-  <td><%= f.time_select :end_time, label: blank_label, ignore_date: true, default: { hour: '17', minute: '00' } %></td>
-  <td><%= link_to_remove_association I18n.t('activity.remove'), f %></td>
-</tr>
+<div class='nested-fields'>
+  <div class='row'>
+    <div class='col-md-3'>
+      <%= f.select :day, day_options, label: blank_label %>
+    </div>
+    <div class='col-md-3'>
+      <%= f.time_select :start_time, label: blank_label, ignore_date: true, default: { hour: '09', minute: '00' } %>
+    </div>
+    <div class='col-md-3'>
+      <%= f.time_select :end_time, label: blank_label, ignore_date: true, default: { hour: '17', minute: '00' } %>
+    </div>
+    <div class='col-md-3'>
+      <%= link_to_remove_association I18n.t('activity.remove'), f %>
+    </div>
+  </div>
+</div>
