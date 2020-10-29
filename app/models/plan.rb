@@ -30,4 +30,8 @@ class Plan < ApplicationRecord
   def self.default_length
     1.year - 1.day
   end
+
+  def to_time_ranges
+    activities.flat_map(&:to_time_ranges)
+  end
 end

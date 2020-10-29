@@ -6,7 +6,7 @@ class TeamStatsPresenter
 
     @filter_start_time = args[:filter_start_date].to_time.in_time_zone.beginning_of_day
     @filter_end_time = args[:filter_end_date].to_time.in_time_zone.end_of_day
-    @plan = fetch_data(time_range_type_id: args[:plan_id], user_ids: args[:user_ids])
+    @plan = fetch_plans(user_ids: args[:user_ids])
     @actual = fetch_data(time_range_type_id: args[:actual_id], user_ids: args[:user_ids])
   end
 
@@ -39,6 +39,14 @@ class TeamStatsPresenter
       plan_id: TimeRangeType.plan_type.id,
       actual_id: TimeRangeType.actual_type.id
     }
+  end
+
+  def fetch_plans(user_ids:)
+    data = Plan.where(user_id: user_ids).flat_map(&:to_time_ranges)
+    data = data.group_by(&:user_id).values
+    data = user_weekly_averages_per_month(data: data)
+    data = total_weekly_averages_per_month(data: data)
+    data.transform_values { |v| v.round(1) } # Hide floating point errors.
   end
 
   def fetch_data(time_range_type_id:, user_ids:)
