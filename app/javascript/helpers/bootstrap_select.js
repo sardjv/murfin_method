@@ -8,8 +8,7 @@ $(document).on('cocoon:after-insert', () => {
 });
 
 function styleSelects() {
-  $('select').selectpicker();
+  $('select').selectpicker({ width: 'fit' });
   $('.rails-bootstrap-forms-datetime-select').addClass('form-inline');
   $('.rails-bootstrap-forms-date-select').addClass('form-inline');
-  $('.rails-bootstrap-forms-time-select').addClass('form-inline');
 }
