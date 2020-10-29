@@ -3,11 +3,14 @@ class TeamStatsPresenter
 
   def initialize(args)
     args = defaults.merge(args)
+    calculate_variables(args)
+  end
 
+  def calculate_variables(args)
     @filter_start_time = args[:filter_start_date].to_time.in_time_zone.beginning_of_day
     @filter_end_time = args[:filter_end_date].to_time.in_time_zone.end_of_day
-    @plan = fetch_plans(user_ids: args[:user_ids])
-    @actual = fetch_data(time_range_type_id: args[:actual_id], user_ids: args[:user_ids])
+    @plan = weekly_averages(time_ranges: plan_time_ranges(user_ids: args[:user_ids]))
+    @actual = weekly_averages(time_ranges: actual_time_ranges(time_range_type_id: args[:actual_id], user_ids: args[:user_ids]))
   end
 
   def average_weekly_planned_per_month
@@ -41,17 +44,12 @@ class TeamStatsPresenter
     }
   end
 
-  def fetch_plans(user_ids:)
-    data = Plan.where(user_id: user_ids).flat_map(&:to_time_ranges)
-    data = data.group_by(&:user_id).values
-    data = user_weekly_averages_per_month(data: data)
-    data = total_weekly_averages_per_month(data: data)
-    data.transform_values { |v| v.round(1) } # Hide floating point errors.
+  def plan_time_ranges(user_ids:)
+    Plan.where(user_id: user_ids).flat_map(&:to_time_ranges)
   end
 
-  def fetch_data(time_range_type_id:, user_ids:)
-    data = relevant_time_ranges(time_range_type_id: time_range_type_id, user_ids: user_ids)
-    data = data.group_by(&:user_id).values
+  def weekly_averages(time_ranges:)
+    data = time_ranges.group_by(&:user_id).values
     data = user_weekly_averages_per_month(data: data)
     data = total_weekly_averages_per_month(data: data)
     data.transform_values { |v| v.round(1) } # Hide floating point errors.
@@ -102,7 +100,7 @@ class TeamStatsPresenter
   # 1 user: index_time_ranges_on_user_id
   # Up to 50% of users: index_time_range_team_stats
   # >50% of users: index_time_ranges_on_time_range_type_id
-  def relevant_time_ranges(time_range_type_id:, user_ids:)
+  def actual_time_ranges(time_range_type_id:, user_ids:)
     scope = TimeRange.select(:time_range_type_id, :user_id, :start_time, :end_time, :value)
                      .where(time_range_type_id: time_range_type_id, user_id: user_ids)
 

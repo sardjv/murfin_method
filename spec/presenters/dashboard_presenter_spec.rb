@@ -18,14 +18,12 @@ describe DashboardPresenter do
   let(:actual_id) { TimeRangeType.actual_type.id }
 
   let!(:plan_ranges) do
-    create_list(
-      :time_range,
-      10,
+    create(
+      :plan,
       user_id: user.id,
-      time_range_type_id: plan_id,
-      start_time: 1.week.ago,
-      end_time: Time.zone.now,
-      value: 10
+      start_date: 1.week.ago,
+      end_date: Time.zone.now,
+      activities: [create(:activity)]
     )
   end
   let!(:actual_ranges) do
@@ -36,7 +34,7 @@ describe DashboardPresenter do
       time_range_type_id: actual_id,
       start_time: 1.week.ago,
       end_time: Time.zone.now,
-      value: 5
+      value: 12
     )
   end
 
@@ -76,7 +74,7 @@ describe DashboardPresenter do
                 { name: '2020-03-01T00:00:00.000Z', value: 0, notes: '[]' },
                 { name: '2020-04-01T00:00:00.000Z', value: 0, notes: '[]' },
                 { name: '2020-05-01T00:00:00.000Z', value: 0, notes: '[]' },
-                { name: '2020-06-01T00:00:00.000Z', value: 50.21, notes: '[]' }
+                { name: '2020-06-01T00:00:00.000Z', value: 50.0, notes: '[]' }
               ]],
               units: '%'
             }
