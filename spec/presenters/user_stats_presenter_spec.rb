@@ -35,8 +35,8 @@ describe UserStatsPresenter do
       create(
         :plan,
         user_id: user.id,
-        start_date: 1.week.ago,
-        end_date: Time.zone.now,
+        start_date: plan_start_time,
+        end_date: plan_end_time,
         activities: [create(:activity)]
       )
     end
@@ -48,7 +48,7 @@ describe UserStatsPresenter do
              end_time: actual_end_time,
              value: actual_value)
     end
-    let(:actual_value) { 6240 }
+    let(:actual_value) { 6240 } # 2 hours * 52 weeks in minutes.
     let(:plan_start_time) { 1.year.ago }
     let(:plan_end_time) { Time.zone.now }
     let(:actual_start_time) { 1.year.ago }
@@ -59,12 +59,6 @@ describe UserStatsPresenter do
         let!(:planned_activity) { nil }
         it 'returns Unknown' do
           expect(subject.status).to eq 'Unknown'
-        end
-      end
-      context 'when planned data with 0 value' do
-        let(:plan_value) { 0 }
-        it 'returns Really Under' do
-          expect(subject.status).to eq 'Really Under'
         end
       end
       context 'when no actual data' do
@@ -80,29 +74,25 @@ describe UserStatsPresenter do
         end
       end
       context 'when 1 to 49' do
-        let(:plan_value) { 100 }
-        let(:actual_value) { 49 }
+        let(:actual_value) { 6115 } # 49%
         it 'returns Really Under' do
           expect(subject.status).to eq 'Really Under'
         end
       end
       context 'when 50 to 79' do
-        let(:plan_value) { 100 }
-        let(:actual_value) { 50 }
+        let(:actual_value) { 6240 } # 50%
         it 'returns Under' do
           expect(subject.status).to eq 'Under'
         end
       end
       context 'when 80 to 119' do
-        let(:plan_value) { 100 }
-        let(:actual_value) { 80 }
+        let(:actual_value) { 9984 } # 80%
         it 'returns About Right' do
           expect(subject.status).to eq 'About Right'
         end
       end
       context 'when 120+' do
-        let(:plan_value) { 100 }
-        let(:actual_value) { 120 }
+        let(:actual_value) { 14_976 } # 120%
         it 'returns Over' do
           expect(subject.status).to eq 'Over'
         end
@@ -112,19 +102,19 @@ describe UserStatsPresenter do
     context 'within filter time range' do
       describe 'average_weekly_planned' do
         it 'returns average weekly planned values for the time range' do
-          expect(subject.average_weekly_planned).to eq 28.6
+          expect(subject.average_weekly_planned).to eq 238.0
         end
       end
 
       describe 'average_weekly_actual' do
         it 'returns average weekly actual values for the time range' do
-          expect(subject.average_weekly_actual).to eq 12
+          expect(subject.average_weekly_actual).to eq 119.0
         end
       end
 
       describe 'percentage_delivered' do
         it 'returns the percentage delivered over the time range' do
-          expect(subject.percentage_delivered).to eq 42
+          expect(subject.percentage_delivered).to eq 50
         end
       end
     end
@@ -134,19 +124,19 @@ describe UserStatsPresenter do
 
       describe 'average_weekly_planned' do
         it 'returns the percentage delivered over the time range' do
-          expect(subject.average_weekly_planned).to eq 28.6
+          expect(subject.average_weekly_planned).to eq 238.0
         end
       end
 
       describe 'average_weekly_actual' do
         it 'returns the percentage delivered over the time range' do
-          expect(subject.average_weekly_actual).to eq 12
+          expect(subject.average_weekly_actual).to eq 119.0
         end
       end
 
       describe 'percentage_delivered' do
         it 'returns the percentage delivered over the time range' do
-          expect(subject.percentage_delivered).to eq 42
+          expect(subject.percentage_delivered).to eq 50
         end
       end
     end
@@ -163,7 +153,7 @@ describe UserStatsPresenter do
 
       describe 'average_weekly_actual' do
         it 'returns average weekly actual values for the time range' do
-          expect(subject.average_weekly_actual).to eq 12
+          expect(subject.average_weekly_actual).to eq 119
         end
       end
 
@@ -180,7 +170,7 @@ describe UserStatsPresenter do
 
       describe 'average_weekly_planned' do
         it 'returns average weekly planned values for the time range' do
-          expect(subject.average_weekly_planned).to eq 28.6
+          expect(subject.average_weekly_planned).to eq 238.0
         end
       end
 
