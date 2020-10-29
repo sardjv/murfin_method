@@ -23,8 +23,6 @@ Style/FrozenStringLiteralComment:
 Style/ClassAndModuleChildren:
   # Use compact module style for consistency and better indendation.
   EnforcedStyle: compact
-  Exclude:
-    - 'config/application.rb'
 
 Style/MixinUsage:
   Enabled: false
@@ -39,14 +37,5 @@ Metrics/BlockLength:
     - '**/*.rake'
     - 'spec/**/*.rb'
 
-Metrics/MethodLength:
-  Exclude:
-    - 'spec/support/omniauth_macros.rb'
-    - 'app/presenters/nav_presenter.rb'
-
 Rails/SkipsModelValidations:
   Enabled: false
-
-Rails/LexicallyScopedActionFilter:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
