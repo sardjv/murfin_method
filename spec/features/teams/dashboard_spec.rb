@@ -76,7 +76,7 @@ describe 'Team Dashboard ', type: :feature, js: true do
             expect(page).to have_field('Add note', type: 'textarea', with: content)
             expect(page).to have_content("Subject: #{manager.name}")
             expect(page).to have_content("Author: #{manager.name}")
-            expect(page).to have_content('Created less than a minute ago')
+            expect(page).to have_content('Created less than 1 second ago')
           end
         end
       end
