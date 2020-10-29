@@ -9,6 +9,10 @@ gem 'bootstrap_form', '~> 4.0'
 # https://github.com/nathanvda/cocoon
 gem 'cocoon', '~> 1.2.15'
 
+# Better distance of time in words for Rails.
+# https://github.com/radar/distance_of_time_in_words
+gem 'dotiw', '~> 5.2.0'
+
 # Fixtures replacement with a straightforward definition syntax.
 # https://github.com/thoughtbot/factory_bot
 gem 'factory_bot', '~> 6.1.0'
