@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'Team Individuals', type: :feature, js: true do
-  let(:plan_id) { TimeRangeType.plan_type.id }
   let(:actual_id) { TimeRangeType.actual_type.id }
   let(:manager) { create(:user, first_name: 'John', last_name: 'Smith', email: 'john@example.com') }
   let!(:user_group) { create(:user_group) }
@@ -9,14 +8,12 @@ describe 'Team Individuals', type: :feature, js: true do
 
   before :each do
     users.each do |user|
-      create_list(
-        :time_range,
-        10,
+      create(
+        :plan,
         user_id: user.id,
-        time_range_type_id: plan_id,
-        start_time: 1.week.ago,
-        end_time: Time.zone.now,
-        value: 10
+        start_date: 1.week.ago,
+        end_date: Time.zone.now,
+        activities: [create(:activity)] # 240 minutes in 1 week.
       )
       create_list(
         :time_range,
@@ -25,7 +22,7 @@ describe 'Team Individuals', type: :feature, js: true do
         time_range_type_id: actual_id,
         start_time: 1.week.ago,
         end_time: Time.zone.now,
-        value: 5
+        value: 12 # 12 minutes * 10 = 120 minutes in 1 week.
       )
       create(:membership, user_group: user_group, user: user)
     end
@@ -41,9 +38,9 @@ describe 'Team Individuals', type: :feature, js: true do
       expect(page).to have_text 'Percentage delivered against job plan'
       within('.table') do
         expect(page).to have_text 'Job Plan'
-        expect(page).to have_text '1.9'
+        expect(page).to have_text '4.6' # 240 minutes / 52 weeks.
         expect(page).to have_text 'RIO Data'
-        expect(page).to have_text '1.0'
+        expect(page).to have_text '2.3' # 120 minutes / 52 weeks.
         expect(page).to have_text 'Percentage delivered'
         expect(page).to have_text '50%'
         expect(page).to have_text 'Status'
