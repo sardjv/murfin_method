@@ -114,6 +114,13 @@ class UserStatsPresenter
   end
 
   def calculate_planned_time_ranges
-    Plan.where(user_id: user.id).flat_map(&:to_time_ranges)
+    Plan.where(user_id: user.id).flat_map(&:to_time_ranges).select do |a|
+      Intersection.call(
+        a_start: a.start_time,
+        a_end: a.end_time,
+        b_start: filter_start_time,
+        b_end: filter_end_time
+      ).positive?
+    end
   end
 end
