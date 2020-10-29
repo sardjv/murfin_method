@@ -4,7 +4,7 @@ class NavPresenter
     @current_user = args[:current_user]
   end
 
-  def navs
+  def navs # rubocop:disable Metrics/MethodLength
     return [] unless @current_user
 
     [

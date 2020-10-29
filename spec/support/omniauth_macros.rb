@@ -1,5 +1,5 @@
 module OmniauthMacros
-  def mock_valid_auth_hash(user)
+  def mock_valid_auth_hash(user) # rubocop:disable Metrics/MethodLength
     opts = {
       'provider': 'auth0',
       'uid': 'auth0|12341234',

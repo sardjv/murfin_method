@@ -2,8 +2,8 @@ require:
   - rubocop-rails
 
 AllCops:
-  TargetRubyVersion: 2.7
-
+  NewCops: enable
+  TargetRubyVersion: 2.7.2
   Exclude:
     - 'db/**/*'
     - 'log/**/*'
@@ -11,8 +11,7 @@ AllCops:
     - 'node_modules/**/*'
     - 'bin/*'
     - 'app/definitions/**/*'
-
-  NewCops: enable
+    - 'vendor/**/*' # For CircleCI.
 
 Style/Documentation:
   # Skips checking to make sure top level modules / classes have a comment.
@@ -22,22 +21,8 @@ Style/FrozenStringLiteralComment:
   Enabled: false
 
 Style/ClassAndModuleChildren:
-  # Skips checking the style of children definitions at classes and modules.
-  #
-  # Basically there are two different styles:
-  #
-  # `nested` - have each child on a separate line
-  #   class Foo
-  #     class Bar
-  #     end
-  #   end
-  #
-  # `compact` - combine definitions as much as possible
-  #   class Foo::Bar
-  #   end
-  #
-  # With it disabled, either or is valid.
-  Enabled: false
+  # Use compact module style for consistency and better indendation.
+  EnforcedStyle: compact
 
 Style/MixinUsage:
   Enabled: false
