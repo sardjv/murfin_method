@@ -56,14 +56,14 @@
                     <% if user_presenter.average_weekly_planned.nil? %>
                       <%= icon('question-circle') %>
                     <% else %>
-                      <%= user_presenter.average_weekly_planned%>
+                      <%= duration_in_words(user_presenter.average_weekly_planned.minutes) %>
                     <% end %>
                   </td>
                   <td>
                     <% if user_presenter.average_weekly_actual.nil? %>
                       <%= icon('question-circle') %>
                     <% else %>
-                      <%= user_presenter.average_weekly_actual%>
+                      <%= duration_in_words(user_presenter.average_weekly_actual.minutes) %>
                     <% end %>
                   </td>
                   <td>

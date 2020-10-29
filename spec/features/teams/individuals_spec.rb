@@ -38,9 +38,9 @@ describe 'Team Individuals', type: :feature, js: true do
       expect(page).to have_text 'Percentage delivered against job plan'
       within('.table') do
         expect(page).to have_text 'Job Plan'
-        expect(page).to have_text '4.6' # 240 minutes / 52 weeks.
+        expect(page).to have_text '4 minutes' # 240 minutes / 52 weeks.
         expect(page).to have_text 'RIO Data'
-        expect(page).to have_text '2.3' # 120 minutes / 52 weeks.
+        expect(page).to have_text '2 minutes' # 120 minutes / 52 weeks.
         expect(page).to have_text 'Percentage delivered'
         expect(page).to have_text '50%'
         expect(page).to have_text 'Status'
