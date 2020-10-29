@@ -21,7 +21,7 @@
                 <%= I18n.t('time_range.labels.end_time') %>
               </th>
               <th>
-                <%= I18n.t('time_range.labels.value') %>
+                <%= I18n.t('time_range.labels.time_worked') %>
               </th>
               <th>
                 <%= I18n.t('time_range.labels.user') %>
@@ -44,7 +44,7 @@
                     <%= time_range.end_time.strftime(I18n.t('time.formats.readable')) %>
                   </td>
                   <td>
-                    <%= time_range.value %>
+                    <%= time_worked(time_range) %>
                   </td>
                   <td>
                     <%= time_range.user.name %>

@@ -135,7 +135,8 @@ en:
       start_time: Start time
       time_range_type: Type
       user: User
-      value: Worked minutes
+      value: Minutes worked
+      time_worked: Worked
     notice:
       successfully:
         created:
