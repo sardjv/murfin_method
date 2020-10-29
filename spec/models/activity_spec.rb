@@ -25,10 +25,10 @@ describe Activity, type: :model do
     end
 
     context 'when updating all' do
-      it 'sets the attributes based on the plan' do
+      it 'sets the attributes' do
         expect(subject.day).to eq(day)
-        expect(subject.start_time).to eq(subject.plan.start_date.to_time.in_time_zone + 9.hours)
-        expect(subject.end_time).to eq(subject.plan.end_date.to_time.in_time_zone + 13.hours)
+        expect(subject.start_time).to eq(Time.zone.local(1, 1, 1, 9, 0))
+        expect(subject.end_time).to eq(Time.zone.local(1, 1, 1, 13, 0))
       end
     end
 
@@ -42,6 +42,12 @@ describe Activity, type: :model do
       let(:end_time) { { 4 => '08', 5 => '00' } }
 
       it { expect(subject).not_to be_valid }
+    end
+
+    describe 'to_time_ranges' do
+      it { expect(subject.to_time_ranges.first).to be_a(TimeRange) }
+      it { expect(subject.to_time_ranges.first.value).to eq(240) } # Minutes in 4 hours.
+      it { expect(subject.to_time_ranges.first.user_id).to eq(subject.plan.user_id) }
     end
   end
 end

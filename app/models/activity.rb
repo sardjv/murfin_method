@@ -14,8 +14,6 @@ class Activity < ApplicationRecord
   validates :schedule, presence: true
   validate :validate_end_time_after_start_time
 
-  before_save :set_bounds
-
   def day
     return unless schedule
 
@@ -34,7 +32,7 @@ class Activity < ApplicationRecord
     schedule&.start_time
   end
 
-  # Pass a time_select hash, eg. { 1 => 2020, 2 => 10, 3 => 31, 4 => 9, 5 => 30 }
+  # Pass a time_select hash, eg. { 4 => 9, 5 => 30 }
   def start_time=(time)
     self.schedule = ScheduleBuilder.call(
       schedule: schedule,
@@ -46,7 +44,7 @@ class Activity < ApplicationRecord
     schedule&.end_time
   end
 
-  # Pass a time_select hash, eg. { 1 => 2020, 2 => 10, 3 => 31, 4 => 9, 5 => 30 }
+  # Pass a time_select hash, eg. { 4 => 17, 5 => 0 }
   def end_time=(time)
     self.schedule = ScheduleBuilder.call(
       schedule: schedule,
@@ -67,27 +65,22 @@ class Activity < ApplicationRecord
     super(ice_cube_schedule.to_yaml)
   end
 
+  def to_time_ranges
+    schedule.occurrences_between(plan.start_date.beginning_of_day, plan.end_date.end_of_day).map do |o|
+      TimeRange.new(
+        start_time: o.start_time,
+        end_time: o.end_time,
+        value: o.duration / 60, # Duration in minutes.
+        user_id: plan.user_id
+      )
+    end
+  end
+
   private
 
   def time_value(hash)
-    Time.zone.local(hash[1] || 1, hash[2] || 1, hash[3] || 1, hash[4], hash[5])
-  end
-
-  def set_bounds
-    set_time_to_date(field: :start_time, date: plan.start_date)
-    set_time_to_date(field: :end_time, date: plan.end_date)
-  end
-
-  def set_time_to_date(field:, date:)
-    assign_attributes(
-      field => {
-        1 => date.year,
-        2 => date.month,
-        3 => date.day,
-        4 => send(field).strftime('%H'),
-        5 => send(field).strftime('%M')
-      }
-    )
+    # Store time values on the same day so the duration of each occurrence is correct.
+    Time.zone.local(1, 1, 1, hash[4], hash[5])
   end
 
   def validate_end_time_after_start_time

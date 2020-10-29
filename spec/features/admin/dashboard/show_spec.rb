@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Admin Dashboard ', type: :feature do
+describe 'Admin Dashboard', type: :feature do
   let(:user) { create(:user) }
 
   let(:plan_id) { TimeRangeType.plan_type.id }
