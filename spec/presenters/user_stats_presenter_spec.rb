@@ -32,12 +32,13 @@ describe UserStatsPresenter do
 
   context 'when user has time range values' do
     let!(:planned_activity) do
-      create(:time_range,
-             user_id: user.id,
-             time_range_type_id: TimeRangeType.plan_type.id,
-             start_time: plan_start_time,
-             end_time: plan_end_time,
-             value: plan_value)
+      create(
+        :plan,
+        user_id: user.id,
+        start_date: 1.week.ago,
+        end_date: Time.zone.now,
+        activities: [create(:activity)]
+      )
     end
     let!(:actual_activity) do
       create(:time_range,
@@ -47,8 +48,7 @@ describe UserStatsPresenter do
              end_time: actual_end_time,
              value: actual_value)
     end
-    let(:plan_value) { 1500 }
-    let(:actual_value) { 630 }
+    let(:actual_value) { 6240 }
     let(:plan_start_time) { 1.year.ago }
     let(:plan_end_time) { Time.zone.now }
     let(:actual_start_time) { 1.year.ago }

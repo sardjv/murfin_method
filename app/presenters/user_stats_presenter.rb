@@ -10,7 +10,6 @@ class UserStatsPresenter
     @user = args[:user]
     @filter_start_time = args[:filter_start_date].to_time.in_time_zone.beginning_of_day
     @filter_end_time = args[:filter_end_date].to_time.in_time_zone.end_of_day
-    @plan_id = args[:plan_id]
     @actual_id = args[:actual_id]
     @cache = {}
   end
@@ -18,19 +17,19 @@ class UserStatsPresenter
   def average_weekly_planned
     return nil if no_planned_data?
 
-    average_weekly(plan_id)
+    average_weekly(planned_time_ranges)
   end
 
   def average_weekly_actual
     return nil if no_actual_data?
 
-    average_weekly(actual_id)
+    average_weekly(actual_time_ranges(actual_id))
   end
 
   def percentage_delivered
     return nil if no_planned_data? || no_actual_data?
 
-    percentage(total(actual_id), total(plan_id))
+    percentage(total(actual_time_ranges(actual_id)), total(planned_time_ranges))
   end
 
   def status
@@ -59,26 +58,29 @@ class UserStatsPresenter
     }
   end
 
-  def average_weekly(time_range_type_id)
-    total = total(time_range_type_id)
+  def average_weekly(time_ranges)
+    total = total(time_ranges)
     result = (total.to_f / number_of_weeks)
     return 0 if result.nan? || result.infinite?
 
     result.round(1)
   end
 
-  def total(time_range_type_id)
-    filtered_time_ranges(time_range_type_id)
-      .sum do |t|
-        t.segment_value(
-          segment_start: filter_start_time,
-          segment_end: filter_end_time
-        )
-      end
+  def total(time_ranges)
+    time_ranges.sum do |t|
+      t.segment_value(
+        segment_start: filter_start_time,
+        segment_end: filter_end_time
+      )
+    end
   end
 
-  def filtered_time_ranges(time_range_type_id)
-    @cache[time_range_type_id] ||= calculate_filtered_time_ranges(time_range_type_id)
+  def actual_time_ranges(time_range_type_id)
+    @cache[:actual_time_ranges] ||= calculate_actual_time_ranges(time_range_type_id)
+  end
+
+  def planned_time_ranges
+    @cache[:planned_time_ranges] ||= calculate_planned_time_ranges
   end
 
   def number_of_weeks
@@ -94,14 +96,14 @@ class UserStatsPresenter
   end
 
   def no_planned_data?
-    filtered_time_ranges(plan_id).empty?
+    planned_time_ranges.empty?
   end
 
   def no_actual_data?
-    filtered_time_ranges(actual_id).empty?
+    actual_time_ranges(actual_id).empty?
   end
 
-  def calculate_filtered_time_ranges(time_range_type_id)
+  def calculate_actual_time_ranges(time_range_type_id)
     scope = user.time_ranges.where(time_range_type_id: time_range_type_id)
 
     scope.where('start_time BETWEEN ? AND ?', filter_start_time, filter_end_time).or(
@@ -109,5 +111,9 @@ class UserStatsPresenter
     ).or(
       scope.where('start_time <= ? AND end_time >= ?', filter_start_time, filter_end_time)
     ).to_a
+  end
+
+  def calculate_planned_time_ranges
+    Plan.where(user_id: user.id).flat_map(&:to_time_ranges)
   end
 end
