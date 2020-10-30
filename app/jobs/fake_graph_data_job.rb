@@ -63,14 +63,16 @@ class FakeGraphDataJob < ApplicationJob
   end
 
   def build_time_range(start_time:, user_id:, time_range_type_id:, random_value:)
-    value = plan(time_range_type_id: time_range_type_id, user_id: user_id, start_time: start_time)
+    end_time = start_time + 1.send(:week) - 1.second
+    value = plan(user_id: user_id, start_time: start_time, end_time: end_time)
+
     FactoryBot.build(
       :time_range,
       user_id: user_id,
       time_range_type_id: time_range_type_id,
       value: value || random_value,
       start_time: start_time,
-      end_time: start_time + 1.send(:week) - 1.second
+      end_time: end_time
     )
   end
 
@@ -78,13 +80,18 @@ class FakeGraphDataJob < ApplicationJob
     (start.beginning_of_year..start.end_of_year).to_a.select { |d| d.wday == 1 }
   end
 
-  def plan(time_range_type_id:, user_id:, start_time:)
-    TimeRange.where.not(
-      time_range_type_id: time_range_type_id
-    ).where(
-      user_id: user_id,
-      start_time: start_time
-    ).first.try(:value)
+  def plan(user_id:, start_time:, end_time:)
+    @user_time_ranges ||= {}
+    @user_time_ranges[user_id] ||= Plan.where(user_id: user_id).flat_map(&:to_time_ranges)
+    relevant = @user_time_ranges[user_id].select do |a|
+      Intersection.call(
+        a_start: a.start_time,
+        a_end: a.end_time,
+        b_start: start_time,
+        b_end: end_time
+      ).positive?
+    end
+    relevant.any? ? relevant.sum(&:value) : nil
   end
 
   def dip_or_spike
