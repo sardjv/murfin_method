@@ -173,7 +173,7 @@ describe FakeGraphDataJob, type: :job do
               ).positive?
             end.sum(&:value).abs
 
-            expect(difference).to be <= 9 unless %w[June July December].include?(plan.start_time.strftime('%B'))
+            expect(difference).to be <= 10 unless %w[June July December].include?(plan.start_time.strftime('%B'))
           end
         end
       end

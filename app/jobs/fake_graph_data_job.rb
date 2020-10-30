@@ -2,13 +2,7 @@
 class FakeGraphDataJob < ApplicationJob
   queue_as :default
 
-  def perform(
-    story:,
-    user_id:,
-    time_range_type_id:,
-    start:,
-    volatility:
-  )
+  def perform(story:, user_id:, time_range_type_id:, start:, volatility:)
     send(
       story,
       time_ranges: build_static(
@@ -81,9 +75,7 @@ class FakeGraphDataJob < ApplicationJob
   end
 
   def plan(user_id:, start_time:, end_time:)
-    @user_time_ranges ||= {}
-    @user_time_ranges[user_id] ||= Plan.where(user_id: user_id).flat_map(&:to_time_ranges)
-    relevant = @user_time_ranges[user_id].select do |a|
+    relevant = user_plan(user_id: user_id).select do |a|
       Intersection.call(
         a_start: a.start_time,
         a_end: a.end_time,
@@ -92,6 +84,11 @@ class FakeGraphDataJob < ApplicationJob
       ).positive?
     end
     relevant.any? ? relevant.sum(&:value) : nil
+  end
+
+  def user_plan(user_id:)
+    @user_time_ranges ||= {}
+    @user_time_ranges[user_id] ||= Plan.where(user_id: user_id).flat_map(&:to_time_ranges)
   end
 
   def dip_or_spike
