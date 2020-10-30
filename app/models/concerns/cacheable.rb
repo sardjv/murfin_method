@@ -13,6 +13,8 @@ module Cacheable
     end
   end
 
+  private
+
   def saved_changes_include?(attrs)
     (saved_changes.keys & attrs).any?
   end
