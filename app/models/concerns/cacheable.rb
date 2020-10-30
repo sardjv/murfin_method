@@ -2,14 +2,19 @@ module Cacheable
   extend ActiveSupport::Concern
 
   included do
-    after_save :bust_caches
+    after_save :bust_caches_if_watched
+    after_destroy :bust_caches
   end
 
   private
 
-  def bust_caches
+  def bust_caches_if_watched
     return unless saved_changes_include?(self.class.watch)
 
+    bust_caches
+  end
+
+  def bust_caches
     self.class.bust.each do |bustable|
       CacheBusterJob.perform_later(klass: bustable[:klass], ids: send_chain(bustable[:ids]))
     end

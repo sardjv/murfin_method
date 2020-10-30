@@ -24,15 +24,15 @@ describe 'Team Individuals', type: :feature, js: true do
         end_time: Time.zone.now,
         value: 12 # 12 minutes * 10 = 120 minutes in 1 week.
       )
-      create(:membership, user_group: user_group, user: user)
+      create(:membership, user_group: user_group, user: user) unless user == manager
     end
     log_in manager
     visit individuals_team_path(user_group)
   end
 
   context 'with 1 user' do
-    let(:users) { [create(:user)] }
-    let(:user) { users.first }
+    let(:users) { [manager] }
+    let(:user) { manager }
 
     it 'has table with planned and actual data' do
       expect(page).to have_text 'Percentage delivered against job plan'
