@@ -62,9 +62,41 @@ describe 'Team Individuals', type: :feature, js: true do
         end
       end
 
-      context 'when an activity is updated' do
+      context 'when another plan is created' do
+        before do
+          create(
+            :plan,
+            user_id: user.id,
+            start_date: 1.week.ago,
+            end_date: Time.zone.now,
+            activities: [create(:activity)] # 240 minutes in 1 week.
+          )
+          visit current_path
+        end
+
+        it 'updates the values' do
+          within('.table') do
+            expect(page).to have_text 'Really Under'
+          end
+        end
+      end
+
+      context 'when a plan is updated' do
         before do
           Activity.first.plan.update(start_date: 2.years.ago, end_date: 2.years.ago + 1.week)
+          visit current_path
+        end
+
+        it 'updates the values' do
+          within('.table') do
+            expect(page).to have_text 'Unknown'
+          end
+        end
+      end
+
+      context 'when a plan is deleted' do
+        before do
+          Activity.first.plan.destroy
           visit current_path
         end
 
