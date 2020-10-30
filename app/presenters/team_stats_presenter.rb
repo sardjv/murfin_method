@@ -39,7 +39,6 @@ class TeamStatsPresenter
     {
       filter_start_date: 1.year.ago,
       filter_end_date: Time.zone.today,
-      plan_id: TimeRangeType.plan_type.id,
       actual_id: TimeRangeType.actual_type.id
     }
   end
