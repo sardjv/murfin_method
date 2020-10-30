@@ -2,18 +2,13 @@ require 'rails_helper'
 
 describe 'Admin Dashboard', type: :feature do
   let(:user) { create(:user) }
-
-  let(:plan_id) { TimeRangeType.plan_type.id }
-  let(:actual_id) { TimeRangeType.actual_type.id }
-  let!(:plan_ranges) do
-    create_list(
-      :time_range,
-      10,
+  let!(:plan) do
+    create(
+      :plan,
       user_id: user.id,
-      time_range_type_id: plan_id,
-      start_time: 1.week.ago,
-      end_time: Time.zone.now,
-      value: 10
+      start_date: 1.week.ago,
+      end_date: Time.zone.now,
+      activities: [create(:activity, end_time: { 4 => '10', 5 => '40' })]
     )
   end
   let!(:actual_ranges) do
@@ -21,7 +16,7 @@ describe 'Admin Dashboard', type: :feature do
       :time_range,
       10,
       user_id: user.id,
-      time_range_type_id: actual_id,
+      time_range_type_id: TimeRangeType.actual_type.id,
       start_time: 1.week.ago,
       end_time: Time.zone.now,
       value: 5
