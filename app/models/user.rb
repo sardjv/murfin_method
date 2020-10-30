@@ -12,7 +12,10 @@
 #
 class User < ApplicationRecord
   include Cacheable
-  cacheable watch: %w[first_name last_name]
+  cacheable watch: %w[first_name last_name], bust: [
+    { klass: 'TimeRange', ids: :time_range_ids },
+    { klass: 'Plan', ids: :plan_ids }
+  ]
 
   has_many :time_ranges, dependent: :destroy
   has_many :notes, as: :subject, dependent: :destroy
@@ -38,12 +41,5 @@ class User < ApplicationRecord
 
   def lead?
     memberships.exists?(role: 'lead')
-  end
-
-  private
-
-  def bust_caches
-    CacheBusterJob.perform_later(klass: 'TimeRange', ids: time_range_ids)
-    CacheBusterJob.perform_later(klass: 'Plan', ids: plan_ids)
   end
 end

@@ -11,7 +11,7 @@
 #
 class Plan < ApplicationRecord
   include Cacheable
-  cacheable watch: %w[start_date end_date]
+  cacheable watch: %w[start_date end_date], bust: [{ klass: 'User', ids: :user_id }]
 
   belongs_to :user
   has_many :activities, dependent: :destroy
@@ -36,11 +36,5 @@ class Plan < ApplicationRecord
 
   def to_time_ranges
     activities.flat_map(&:to_time_ranges)
-  end
-
-  private
-
-  def bust_caches
-    CacheBusterJob.perform_later(klass: 'User', ids: [user_id])
   end
 end

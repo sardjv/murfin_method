@@ -2,26 +2,33 @@ module Cacheable
   extend ActiveSupport::Concern
 
   included do
-    after_update :bust
+    after_update :bust_caches
   end
 
-  def bust
+  def bust_caches
     return unless saved_changes_include?(self.class.watch)
 
-    bust_caches # Define this on the including model.
+    self.class.bust.each do |bustable|
+      CacheBusterJob.perform_later(klass: bustable[:klass], ids: send_chain(bustable[:ids]))
+    end
   end
 
   def saved_changes_include?(attrs)
     (saved_changes.keys & attrs).any?
   end
 
+  def send_chain(methods)
+    [*methods].inject(self) { |object, method| object.send(method) }
+  end
+
   module ClassMethods
-    attr_reader :watch
+    attr_reader :watch, :bust
 
     private
 
-    def cacheable(watch:)
+    def cacheable(watch:, bust:)
       @watch = watch
+      @bust = bust
     end
   end
 end

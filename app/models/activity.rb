@@ -10,7 +10,7 @@
 #
 class Activity < ApplicationRecord
   include Cacheable
-  cacheable watch: %w[schedule]
+  cacheable watch: %w[schedule], bust: [{ klass: 'User', ids: %i[plan user_id] }]
 
   belongs_to :plan
 
@@ -90,9 +90,5 @@ class Activity < ApplicationRecord
     return unless start_time && end_time && end_time <= start_time
 
     errors.add :end_time, 'must occur after start time'
-  end
-
-  def bust_caches
-    CacheBusterJob.perform_later(klass: 'User', ids: [plan.user_id])
   end
 end
