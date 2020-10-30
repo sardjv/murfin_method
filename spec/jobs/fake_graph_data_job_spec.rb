@@ -137,7 +137,7 @@ describe FakeGraphDataJob, type: :job do
             end.sum(&:value)).abs
           end
 
-          expect(differences.max).to be <= 9
+          expect(differences.max).to be <= 10
         end
       end
 
