@@ -8,25 +8,23 @@ describe 'Team Dashboard ', type: :feature, js: true do
   let!(:user_membership) { create(:membership, user_group: user_group, user: user) }
   let!(:lead_membership) { create(:membership, user_group: user_group, user: manager, role: 'lead') }
 
-  let(:plan_id) { TimeRangeType.plan_type.id }
   let(:actual_id) { TimeRangeType.actual_type.id }
 
   let!(:diagonal_graph) do
+    create(
+      :plan,
+      user_id: user.id,
+      start_date: 12.months.ago,
+      end_date: Time.zone.today,
+      activities: [create(:activity, end_time: { 4 => '09', 5 => '03' })]
+    )
     (1..12).each do |index|
-      create(
-        :time_range,
-        user_id: user.id,
-        time_range_type_id: plan_id,
-        start_time: index.months.ago,
-        end_time: index.months.ago + 1.week,
-        value: 12
-      )
       create(
         :time_range,
         user_id: user.id,
         time_range_type_id: actual_id,
         start_time: index.months.ago,
-        end_time: index.months.ago + 1.week,
+        end_time: index.months.ago + 1.month,
         value: index
       )
     end
