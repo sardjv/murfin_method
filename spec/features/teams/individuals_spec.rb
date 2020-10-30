@@ -44,13 +44,40 @@ describe 'Team Individuals', type: :feature, js: true do
         expect(page).to have_text 'Percentage delivered'
         expect(page).to have_text '50%'
         expect(page).to have_text 'Status'
+        expect(page).to have_text 'Under'
       end
     end
 
     describe 'caching' do
-      context 'when a time range is updated' do
+      context 'when actuals are updated' do
         before do
           user.time_ranges.each { |tr| tr.update(value: 0) }
+          visit current_path
+        end
+
+        it 'updates the values' do
+          within('.table') do
+            expect(page).to have_text 'Really Under'
+          end
+        end
+      end
+
+      context 'when an activity is updated' do
+        before do
+          Activity.first.plan.update(start_date: 2.years.ago, end_date: 2.years.ago + 1.week)
+          visit current_path
+        end
+
+        it 'updates the values' do
+          within('.table') do
+            expect(page).to have_text 'Unknown'
+          end
+        end
+      end
+
+      context 'when an activity is updated' do
+        before do
+          Activity.first.update(end_time: { 4 => '21', 5 => '00' })
           visit current_path
         end
 

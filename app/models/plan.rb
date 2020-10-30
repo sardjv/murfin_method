@@ -10,6 +10,8 @@
 #  updated_at :datetime         not null
 #
 class Plan < ApplicationRecord
+  include CacheBuster
+
   belongs_to :user
   has_many :activities, dependent: :destroy
   accepts_nested_attributes_for :activities, allow_destroy: true
@@ -33,5 +35,13 @@ class Plan < ApplicationRecord
 
   def to_time_ranges
     activities.flat_map(&:to_time_ranges)
+  end
+
+  private
+
+  def bust_caches
+    return unless saved_changes_include?(%w[start_date end_date])
+
+    CacheBusterJob.perform_later(klass: 'User', ids: [user_id])
   end
 end

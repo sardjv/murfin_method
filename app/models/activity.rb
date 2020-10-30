@@ -9,6 +9,8 @@
 #  updated_at :datetime         not null
 #
 class Activity < ApplicationRecord
+  include CacheBuster
+
   belongs_to :plan
 
   validates :schedule, presence: true
@@ -87,5 +89,11 @@ class Activity < ApplicationRecord
     return unless start_time && end_time && end_time <= start_time
 
     errors.add :end_time, 'must occur after start time'
+  end
+
+  def bust_caches
+    return unless saved_changes_include?(%w[schedule])
+
+    CacheBusterJob.perform_later(klass: 'User', ids: [plan.user_id])
   end
 end

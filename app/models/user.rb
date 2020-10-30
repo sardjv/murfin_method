@@ -11,6 +11,8 @@
 #  admin      :boolean          default(FALSE), not null
 #
 class User < ApplicationRecord
+  include CacheBuster
+
   has_many :time_ranges, dependent: :destroy
   has_many :notes, as: :subject, dependent: :destroy
   has_many(
@@ -29,8 +31,6 @@ class User < ApplicationRecord
   validates :last_name, presence: true
   validates :admin, inclusion: { in: [true, false] }
 
-  after_update :bust_caches
-
   def name
     "#{first_name} #{last_name}"
   end
@@ -44,9 +44,5 @@ class User < ApplicationRecord
 
     CacheBusterJob.perform_later(klass: 'TimeRange', ids: time_range_ids)
     CacheBusterJob.perform_later(klass: 'Plan', ids: plan_ids)
-  end
-
-  def saved_changes_include?(attrs)
-    (saved_changes.keys & attrs).any?
   end
 end
