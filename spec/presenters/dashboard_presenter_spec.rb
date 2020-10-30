@@ -3,7 +3,6 @@ describe DashboardPresenter do
     DashboardPresenter.new(
       params: {
         user_ids: [user.id],
-        plan_id: plan_id,
         actual_id: actual_id
       }
     )
@@ -14,7 +13,6 @@ describe DashboardPresenter do
   end
 
   let(:user) { create(:user) }
-  let(:plan_id) { TimeRangeType.plan_type.id }
   let(:actual_id) { TimeRangeType.actual_type.id }
 
   let!(:plan_ranges) do

@@ -55,7 +55,6 @@ class DashboardPresenter
 
     UserStatsPresenter.new(
       user: user,
-      plan_id: @params[:plan_id],
       actual_id: @params[:actual_id]
     ).percentage_delivered
   end
@@ -63,7 +62,6 @@ class DashboardPresenter
   def defaults
     {
       user_ids: User.ids,
-      plan_id: TimeRangeType.plan_type.id,
       actual_id: TimeRangeType.actual_type.id
     }
   end
