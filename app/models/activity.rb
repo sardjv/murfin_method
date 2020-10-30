@@ -9,7 +9,8 @@
 #  updated_at :datetime         not null
 #
 class Activity < ApplicationRecord
-  include CacheBuster
+  include Cacheable
+  cacheable watch: %w[schedule]
 
   belongs_to :plan
 
@@ -92,8 +93,6 @@ class Activity < ApplicationRecord
   end
 
   def bust_caches
-    return unless saved_changes_include?(%w[schedule])
-
     CacheBusterJob.perform_later(klass: 'User', ids: [plan.user_id])
   end
 end

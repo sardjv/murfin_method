@@ -11,7 +11,8 @@
 #  admin      :boolean          default(FALSE), not null
 #
 class User < ApplicationRecord
-  include CacheBuster
+  include Cacheable
+  cacheable watch: %w[first_name last_name]
 
   has_many :time_ranges, dependent: :destroy
   has_many :notes, as: :subject, dependent: :destroy
@@ -39,9 +40,9 @@ class User < ApplicationRecord
     memberships.exists?(role: 'lead')
   end
 
-  def bust_caches
-    return unless saved_changes_include?(%w[first_name last_name])
+  private
 
+  def bust_caches
     CacheBusterJob.perform_later(klass: 'TimeRange', ids: time_range_ids)
     CacheBusterJob.perform_later(klass: 'Plan', ids: plan_ids)
   end

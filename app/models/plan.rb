@@ -10,7 +10,8 @@
 #  updated_at :datetime         not null
 #
 class Plan < ApplicationRecord
-  include CacheBuster
+  include Cacheable
+  cacheable watch: %w[start_date end_date]
 
   belongs_to :user
   has_many :activities, dependent: :destroy
@@ -40,8 +41,6 @@ class Plan < ApplicationRecord
   private
 
   def bust_caches
-    return unless saved_changes_include?(%w[start_date end_date])
-
     CacheBusterJob.perform_later(klass: 'User', ids: [user_id])
   end
 end
