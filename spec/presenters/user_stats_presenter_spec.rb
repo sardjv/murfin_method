@@ -10,6 +10,14 @@ describe UserStatsPresenter do
   let(:filter_start_date) { Time.zone.today - 1.year }
   let(:filter_end_date) { Time.zone.today }
 
+  before :all do
+    Timecop.freeze(Time.zone.local(2020, 10, 30, 17))
+  end
+
+  after :all do
+    Timecop.return
+  end
+
   context 'when user has no time range values' do
     describe 'average_weekly_planned' do
       it 'returns nil' do
