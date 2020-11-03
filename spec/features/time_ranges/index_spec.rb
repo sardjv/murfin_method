@@ -19,7 +19,7 @@ describe 'User indexes time ranges', type: :feature, js: true do
     let(:new_name) { 'Hirthe'.freeze }
 
     before do
-      time_range.user.update(last_name: new_name)
+      time_range.user.reload.update(last_name: new_name)
       visit time_ranges_path
     end
 
