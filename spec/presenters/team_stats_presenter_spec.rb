@@ -164,7 +164,10 @@ describe TeamStatsPresenter do
       end
 
       describe 'weekly_percentage_delivered_per_month' do
-        it 'returns the percentage delivered over the time range' do
+        let!(:n1) { create(:note, start_time: DateTime.new(2019, 11, 1)) }
+        let!(:n2) { create(:note, start_time: DateTime.new(2019, 11, 14)) }
+
+        it 'returns the percentage delivered over the time range, with any notes' do
           # Approx 6240/12480 == 0.5.
           expect(subject.weekly_percentage_delivered_per_month).to eq(
             [
@@ -173,7 +176,7 @@ describe TeamStatsPresenter do
               { 'name': '2019-08-01T00:00:00.000Z', 'value': 55.03, 'notes': '[]' },
               { 'name': '2019-09-01T00:00:00.000Z', 'value': 42.61, 'notes': '[]' },
               { 'name': '2019-10-01T00:00:00.000Z', 'value': 55.03, 'notes': '[]' },
-              { 'name': '2019-11-01T00:00:00.000Z', 'value': 53.26, 'notes': '[]' },
+              { 'name': '2019-11-01T00:00:00.000Z', 'value': 53.26, 'notes': [n1, n2].map(&:with_author).to_json },
               { 'name': '2019-12-01T00:00:00.000Z', 'value': 44.02, 'notes': '[]' },
               { 'name': '2020-01-01T00:00:00.000Z', 'value': 55.03, 'notes': '[]' },
               { 'name': '2020-02-01T00:00:00.000Z', 'value': 51.49, 'notes': '[]' },
@@ -183,21 +186,6 @@ describe TeamStatsPresenter do
               { 'name': '2020-06-01T00:00:00.000Z', 'value': 45.49, 'notes': '[]' }
             ]
           )
-        end
-
-        context 'with a relevant note' do
-          let!(:n1) { create(:note, start_time: DateTime.new(2019, 11, 1)) }
-          let!(:n2) { create(:note, start_time: DateTime.new(2019, 11, 14)) }
-
-          it 'includes the note' do
-            expect(subject.weekly_percentage_delivered_per_month).to include(
-              {
-                'name': '2019-11-01T00:00:00.000Z',
-                'value': 53.26,
-                'notes': [n1, n2].map(&:with_author).to_json
-              }
-            )
-          end
         end
       end
     end
