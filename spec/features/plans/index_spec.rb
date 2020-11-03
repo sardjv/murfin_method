@@ -19,7 +19,7 @@ describe 'User indexes plans', type: :feature, js: true do
     let(:new_name) { 'Hirthe'.freeze }
 
     before do
-      plan.user.update(last_name: new_name)
+      plan.user.reload.update(last_name: new_name)
       visit plans_path
     end
 
