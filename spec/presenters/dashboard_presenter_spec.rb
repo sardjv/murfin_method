@@ -9,7 +9,11 @@ describe DashboardPresenter do
   end
 
   before :all do
-    Timecop.freeze(Time.zone.local(2020, 6, 26, 14))
+    Timecop.freeze(Time.zone.local(2020, 6, 30, 23, 59, 59))
+  end
+
+  after :all do
+    Timecop.return
   end
 
   let(:user) { create(:user) }
@@ -19,20 +23,19 @@ describe DashboardPresenter do
     create(
       :plan,
       user_id: user.id,
-      start_date: 1.week.ago,
+      start_date: Time.zone.now.beginning_of_month,
       end_date: Time.zone.now,
-      activities: [create(:activity)]
+      activities: [create(:activity)] # 4 hours per week.
     )
   end
   let!(:actual_ranges) do
-    create_list(
+    create(
       :time_range,
-      10,
       user_id: user.id,
       time_range_type_id: actual_id,
-      start_time: 1.week.ago,
+      start_time: Time.zone.now.beginning_of_month,
       end_time: Time.zone.now,
-      value: 12
+      value: 480 # About 2 hours per week.
     )
   end
 
@@ -72,7 +75,7 @@ describe DashboardPresenter do
                 { name: '2020-03-01T00:00:00.000Z', value: 0, notes: '[]' },
                 { name: '2020-04-01T00:00:00.000Z', value: 0, notes: '[]' },
                 { name: '2020-05-01T00:00:00.000Z', value: 0, notes: '[]' },
-                { name: '2020-06-01T00:00:00.000Z', value: 50.0, notes: '[]' }
+                { name: '2020-06-01T00:00:00.000Z', value: 40.0, notes: '[]' }
               ]],
               units: '%'
             }
@@ -93,7 +96,7 @@ describe DashboardPresenter do
               data: [
                 {
                   name: user.name,
-                  value: 50
+                  value: 40
                 }
               ],
               units: '%'
