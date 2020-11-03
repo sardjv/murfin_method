@@ -35,8 +35,14 @@ class Plan < ApplicationRecord
   end
 
   def to_time_ranges
-    Rails.cache.fetch("Plan##{id}#to_time_ranges##{updated_at.to_i}", expires_in: 1.week) do
+    Rails.cache.fetch(activities_cache_key, expires_in: 1.week) do
       activities.flat_map(&:to_time_ranges)
     end
+  end
+
+  private
+
+  def activities_cache_key
+    "Plan#to_time_ranges##{id}##{updated_at.to_f}"
   end
 end

@@ -75,11 +75,15 @@ class UserStatsPresenter
   end
 
   def actual_time_ranges(time_range_type_id)
-    @cache[:actual_time_ranges] ||= calculate_actual_time_ranges(time_range_type_id)
+    return @cache[:actual_time_ranges] if @cache[:actual_time_ranges].present?
+
+    @cache[:actual_time_ranges] = calculate_actual_time_ranges(time_range_type_id)
   end
 
   def planned_time_ranges
-    @cache[:planned_time_ranges] ||= calculate_planned_time_ranges
+    return @cache[:planned_time_ranges] if @cache[:planned_time_ranges].present?
+
+    @cache[:planned_time_ranges] = calculate_planned_time_ranges
   end
 
   def number_of_weeks
