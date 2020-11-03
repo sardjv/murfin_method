@@ -53,16 +53,14 @@ describe FakeGraphDataJob, type: :job do
 
   context 'with a static plan' do
     let(:user) { create(:user) }
-    let(:plan) { create(:time_range_type, name: 'plan') }
     let(:actuals) { create(:time_range_type, name: 'actuals') }
-
-    before do
-      FakeGraphDataJob.perform_now(
-        story: :static,
+    let!(:plan) do
+      create(
+        :plan,
         user_id: user.id,
-        time_range_type_id: plan.id,
-        start: DateTime.new(2020),
-        volatility: 0
+        start_date: DateTime.new(2020).beginning_of_year,
+        end_date: DateTime.new(2020).end_of_year,
+        activities: [create(:activity)]
       )
     end
 
@@ -80,8 +78,15 @@ describe FakeGraphDataJob, type: :job do
       context 'with 0% volatility' do
         let(:actuals_volatility) { 0.0 }
         it 'matches the job plan exactly' do
-          differences = plan.time_ranges.map do |plan|
-            (plan.value - actuals.time_ranges.find_by(start_time: plan.start_time).value).abs
+          differences = plan.to_time_ranges.map do |plan|
+            (plan.value - actuals.time_ranges.select do |a|
+              Intersection.call(
+                a_start: a.start_time,
+                a_end: a.end_time,
+                b_start: plan.start_time,
+                b_end: plan.end_time
+              ).positive?
+            end.sum(&:value)).abs
           end
 
           expect(differences.uniq).to eq([0])
@@ -91,11 +96,18 @@ describe FakeGraphDataJob, type: :job do
       context 'with 2% volatility' do
         let(:actuals_volatility) { 0.02 }
         it 'tracks the job plan closely' do
-          differences = plan.time_ranges.map do |plan|
-            (plan.value - actuals.time_ranges.find_by(start_time: plan.start_time).value).abs
+          differences = plan.to_time_ranges.map do |plan|
+            (plan.value - actuals.time_ranges.select do |a|
+              Intersection.call(
+                a_start: a.start_time,
+                a_end: a.end_time,
+                b_start: plan.start_time,
+                b_end: plan.end_time
+              ).positive?
+            end.sum(&:value)).abs
           end
 
-          expect(differences.max < 3).to eq(true)
+          expect(differences.max).to be <= 5
         end
       end
     end
@@ -114,22 +126,36 @@ describe FakeGraphDataJob, type: :job do
       context 'with 0% volatility' do
         let(:actuals_volatility) { 0.0 }
         it 'tracks the job plan very closely' do
-          differences = plan.time_ranges.map do |plan|
-            (plan.value - actuals.time_ranges.find_by(start_time: plan.start_time).value).abs
+          differences = plan.to_time_ranges.map do |plan|
+            (plan.value - actuals.time_ranges.select do |a|
+              Intersection.call(
+                a_start: a.start_time,
+                a_end: a.end_time,
+                b_start: plan.start_time,
+                b_end: plan.end_time
+              ).positive?
+            end.sum(&:value)).abs
           end
 
-          expect(differences.max < 5).to eq(true)
+          expect(differences.max).to be <= 10
         end
       end
 
       context 'with 20% volatility' do
         let(:actuals_volatility) { 0.20 }
         it 'tracks the job plan less closely' do
-          differences = plan.time_ranges.map do |plan|
-            (plan.value - actuals.time_ranges.find_by(start_time: plan.start_time).value).abs
+          differences = plan.to_time_ranges.map do |plan|
+            (plan.value - actuals.time_ranges.select do |a|
+              Intersection.call(
+                a_start: a.start_time,
+                a_end: a.end_time,
+                b_start: plan.start_time,
+                b_end: plan.end_time
+              ).positive?
+            end.sum(&:value)).abs
           end
 
-          expect(differences.max < 21).to eq(true)
+          expect(differences.max).to be <= 48
         end
       end
 
@@ -137,10 +163,17 @@ describe FakeGraphDataJob, type: :job do
         let(:actuals_volatility) { 0.5 }
 
         it 'has seasonality' do
-          plan.time_ranges.each do |plan|
-            difference = plan.value - actuals.time_ranges.find_by(start_time: plan.start_time).value
+          plan.to_time_ranges.each do |plan|
+            difference = plan.value - actuals.time_ranges.select do |a|
+              Intersection.call(
+                a_start: a.start_time,
+                a_end: a.end_time,
+                b_start: plan.start_time,
+                b_end: plan.end_time
+              ).positive?
+            end.sum(&:value).abs
 
-            expect(difference.abs < 5).to eq(true) unless %w[June July December].include?(plan.start_time.strftime('%B'))
+            expect(difference).to be <= 10 unless %w[June July December].include?(plan.start_time.strftime('%B'))
           end
         end
       end

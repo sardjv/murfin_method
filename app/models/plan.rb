@@ -10,6 +10,9 @@
 #  updated_at :datetime         not null
 #
 class Plan < ApplicationRecord
+  include Cacheable
+  cacheable watch: %w[start_date end_date], bust: [{ klass: 'User', ids: :user_id }]
+
   belongs_to :user
   has_many :activities, dependent: :destroy
   accepts_nested_attributes_for :activities, allow_destroy: true
@@ -29,5 +32,17 @@ class Plan < ApplicationRecord
 
   def self.default_length
     1.year - 1.day
+  end
+
+  def to_time_ranges
+    Rails.cache.fetch(activities_cache_key, expires_in: 1.week) do
+      activities.flat_map(&:to_time_ranges)
+    end
+  end
+
+  private
+
+  def activities_cache_key
+    "Plan#to_time_ranges##{id}##{updated_at.to_f}"
   end
 end

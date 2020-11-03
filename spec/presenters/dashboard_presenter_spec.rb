@@ -3,40 +3,39 @@ describe DashboardPresenter do
     DashboardPresenter.new(
       params: {
         user_ids: [user.id],
-        plan_id: plan_id,
         actual_id: actual_id
       }
     )
   end
 
   before :all do
-    Timecop.freeze(Time.zone.local(2020, 6, 26, 14))
+    Timecop.freeze(Time.zone.local(2020, 6, 30, 23, 59, 59))
+  end
+
+  after :all do
+    Timecop.return
   end
 
   let(:user) { create(:user) }
-  let(:plan_id) { TimeRangeType.plan_type.id }
   let(:actual_id) { TimeRangeType.actual_type.id }
 
   let!(:plan_ranges) do
-    create_list(
-      :time_range,
-      10,
+    create(
+      :plan,
       user_id: user.id,
-      time_range_type_id: plan_id,
-      start_time: 1.week.ago,
-      end_time: Time.zone.now,
-      value: 10
+      start_date: Time.zone.now.beginning_of_month,
+      end_date: Time.zone.now,
+      activities: [create(:activity)] # 4 hours per week.
     )
   end
   let!(:actual_ranges) do
-    create_list(
+    create(
       :time_range,
-      10,
       user_id: user.id,
       time_range_type_id: actual_id,
-      start_time: 1.week.ago,
+      start_time: Time.zone.now.beginning_of_month,
       end_time: Time.zone.now,
-      value: 5
+      value: 480 # About 2 hours per week.
     )
   end
 
@@ -76,7 +75,7 @@ describe DashboardPresenter do
                 { name: '2020-03-01T00:00:00.000Z', value: 0, notes: '[]' },
                 { name: '2020-04-01T00:00:00.000Z', value: 0, notes: '[]' },
                 { name: '2020-05-01T00:00:00.000Z', value: 0, notes: '[]' },
-                { name: '2020-06-01T00:00:00.000Z', value: 50.21, notes: '[]' }
+                { name: '2020-06-01T00:00:00.000Z', value: 40.0, notes: '[]' }
               ]],
               units: '%'
             }
@@ -97,7 +96,7 @@ describe DashboardPresenter do
               data: [
                 {
                   name: user.name,
-                  value: 50
+                  value: 40
                 }
               ],
               units: '%'

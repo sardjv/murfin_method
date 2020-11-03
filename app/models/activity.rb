@@ -9,7 +9,10 @@
 #  updated_at :datetime         not null
 #
 class Activity < ApplicationRecord
-  belongs_to :plan
+  include Cacheable
+  cacheable watch: %w[schedule], bust: [{ klass: 'User', ids: %i[plan user_id] }]
+
+  belongs_to :plan, touch: true
 
   validates :schedule, presence: true
   validate :validate_end_time_after_start_time
