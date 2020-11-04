@@ -10,7 +10,7 @@
 #
 FactoryBot.define do
   factory :activity do
-    day { 'monday' }
+    days { ['monday'] }
     start_time { { 4 => '09', 5 => '00' } }
     end_time { { 4 => '13', 5 => '00' } }
     plan_id { Plan.all.sample.try(:id) || create(:plan).id }
