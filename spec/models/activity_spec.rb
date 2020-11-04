@@ -16,17 +16,17 @@ describe Activity, type: :model do
   it { should belong_to(:plan) }
 
   context 'with a day and start_time' do
-    let(:day) { 'wednesday' }
+    let(:days) { ['wednesday'] }
     let(:start_time) { { 4 => '09', 5 => '00' } }
     let(:end_time) { { 4 => '13', 5 => '00' } }
 
     before do
-      subject.update(day: day, start_time: start_time, end_time: end_time)
+      subject.update(days: days, start_time: start_time, end_time: end_time)
     end
 
     context 'when updating all' do
       it 'sets the attributes' do
-        expect(subject.day).to eq(day)
+        expect(subject.days).to eq(days)
         expect(subject.start_time).to eq(Time.zone.local(1, 1, 1, 9, 0))
         expect(subject.end_time).to eq(Time.zone.local(1, 1, 1, 13, 0))
       end

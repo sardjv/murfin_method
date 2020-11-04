@@ -17,17 +17,17 @@ class Activity < ApplicationRecord
   validates :schedule, presence: true
   validate :validate_end_time_after_start_time
 
-  def day
+  def days
     return unless schedule
 
     # Only handle 1 rule per activity for now.
-    ScheduleParser.call(schedule: schedule)[:rules].first[:day]
+    ScheduleParser.call(schedule: schedule)[:rules].first[:days]
   end
 
-  def day=(day_string)
+  def days=(day_array)
     self.schedule = ScheduleBuilder.call(
       schedule: schedule,
-      rules: [{ type: :weekly, day: day_string }]
+      rules: [{ type: :weekly, days: day_array }]
     )
   end
 
