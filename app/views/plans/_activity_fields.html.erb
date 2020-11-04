@@ -1,20 +1,7 @@
-<%
-  day_options = options_for_select(
-    [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday].map { |d| [d.to_s.capitalize, d] },
-    selected: f.object.day
-  )
-%>
-
 <div class='nested-fields'>
   <div class='row pb-4 pb-md-0'>
     <div class='col-md'>
-      <%= f.select :day, day_options, hide_label: true %>
-    </div>
-    <div class='col-md'>
-      <%= f.time_select :start_time, hide_label: true, ignore_date: true, default: { hour: '09', minute: '00' } %>
-    </div>
-    <div class='col-md'>
-      <%= f.time_select :end_time, hide_label: true, ignore_date: true, default: { hour: '17', minute: '00' } %>
+      <%= f.number_field :minutes_per_week, hide_label: true %>
     </div>
     <div class='col-md'>
       <%= link_to_remove_association I18n.t('activity.remove'), f %>

@@ -55,7 +55,7 @@ class PlansController < ApplicationController
       :start_date,
       :end_date,
       :user_id,
-      activities_attributes: %i[id day start_time end_time _destroy]
+      activities_attributes: %i[id minutes_per_week _destroy]
     )
   end
 end
