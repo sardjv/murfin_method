@@ -29,31 +29,17 @@ describe ScheduleBuilder do
       )
     end
 
-    context 'when 8 hours' do
-      let(:minutes_per_week) { 8 * 60 }
+    context 'when 7 hours' do
+      let(:minutes_per_week) { 7 * 60 }
 
       it 'builds a schedule' do
         expect(subject).to be_an(IceCube::Schedule)
         expect(subject.start_time).to eq(Time.zone.local(1, 1, 1, 9, 0))
-        expect(subject.end_time).to eq(Time.zone.local(1, 1, 1, 17, 0))
+        expect(subject.end_time).to eq(Time.zone.local(1, 1, 1, 10, 0))
         expect(subject.rrules.count).to eq(1)
 
         subject.rrules.each do |rule|
-          expect(rule.to_s).to eq('Weekly on Mondays')
-        end
-      end
-    end
-
-    context 'when 12 hours' do
-      let(:minutes_per_week) { 12 * 60 }
-
-      it 'splits equally across 2 days' do
-        expect(subject.start_time).to eq(Time.zone.local(1, 1, 1, 9, 0))
-        expect(subject.end_time).to eq(Time.zone.local(1, 1, 1, 15, 0))
-        expect(subject.rrules.count).to eq(1)
-
-        subject.rrules.each do |rule|
-          expect(rule.to_s).to eq('Weekly on Mondays and Tuesdays')
+          expect(rule.to_s).to eq('Weekly on Sundays, Mondays, Tuesdays, Wednesdays, Thursdays, Fridays, and Saturdays')
         end
       end
     end
