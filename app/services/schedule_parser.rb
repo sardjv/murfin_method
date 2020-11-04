@@ -5,7 +5,7 @@ class ScheduleParser
       start_time: schedule.start_time,
       end_time: schedule.end_time,
       rules: schedule.rrules.map do |rule|
-        { type: type(rule), day: day(rule) }
+        { type: type(rule), days: days(rule) }
       end
     }
   end
@@ -16,7 +16,7 @@ class ScheduleParser
     end
   end
 
-  private_class_method def self.day(rule)
+  private_class_method def self.days(rule)
     %w[
       sunday
       monday
@@ -25,6 +25,6 @@ class ScheduleParser
       thursday
       friday
       saturday
-    ][rule.to_hash[:validations][:day].first]
+    ].values_at(*rule.to_hash[:validations][:day])
   end
 end

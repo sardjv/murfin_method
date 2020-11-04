@@ -1,7 +1,7 @@
 describe ScheduleParser do
   let(:start_time) { Time.current }
   let(:end_time) { start_time + 1.hour }
-  let(:rules) { [{ type: 'weekly', day: 'monday' }] }
+  let(:rules) { [{ type: 'weekly', days: ['monday'] }] }
   let(:schedule) do
     ScheduleBuilder.call(
       start_time: start_time,
@@ -17,6 +17,6 @@ describe ScheduleParser do
     expect(subject[:end_time]).to eq(end_time)
     expect(subject[:rules].count).to eq(1)
     expect(subject[:rules].first[:type]).to eq(rules.first[:type])
-    expect(subject[:rules].first[:day]).to eq(rules.first[:day])
+    expect(subject[:rules].first[:days]).to eq(rules.first[:days])
   end
 end
