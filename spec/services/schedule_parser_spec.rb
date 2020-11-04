@@ -20,4 +20,16 @@ describe ScheduleParser do
     expect(subject[:rules].first[:days]).to eq(rules.first[:days])
     expect(subject[:minutes_per_week]).to eq(60)
   end
+
+  context 'with a non-whole number of minutes per day' do
+    let(:schedule) do
+      ScheduleBuilder.call(
+        minutes_per_week: 60
+      )
+    end
+
+    it 'rounds to the nearest minute' do
+      expect(subject[:minutes_per_week]).to eq(60)
+    end
+  end
 end

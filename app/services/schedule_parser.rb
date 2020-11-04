@@ -34,7 +34,7 @@ class ScheduleParser
     schedule.rrules.sum do |rule|
       raise UnhandledRuleError unless type(rule: rule) == 'weekly'
 
-      days(rule: rule).count * (schedule.end_time - schedule.start_time) / 60
+      (days(rule: rule).count * (schedule.end_time - schedule.start_time) / 60).round
     end
   end
 end
