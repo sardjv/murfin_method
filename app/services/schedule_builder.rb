@@ -41,6 +41,7 @@ class ScheduleBuilder
   private_class_method def self.set_minutes_per_week(schedule:, value:)
     return schedule unless value
 
+    value = value.to_i
     max_minutes_per_day = 480.0 # 8 hours.
     number_of_days = 7
 

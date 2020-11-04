@@ -25,7 +25,7 @@ describe ScheduleBuilder do
   describe 'minutes_per_week' do
     subject do
       ScheduleBuilder.call(
-        minutes_per_week: minutes_per_week
+        minutes_per_week: minutes_per_week.to_s
       )
     end
 
