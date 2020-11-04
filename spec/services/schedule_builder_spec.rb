@@ -1,7 +1,7 @@
 describe ScheduleBuilder do
   let(:start_time) { Time.current }
   let(:end_time) { start_time + 1.hour }
-  let(:rules) { [{ type: 'weekly', day: 'monday' }] }
+  let(:rules) { [{ type: 'weekly', days: ['monday'] }] }
 
   subject do
     ScheduleBuilder.call(
@@ -71,5 +71,11 @@ describe ScheduleBuilder do
         end
       end
     end
+  end
+
+  context 'when more than 8 hours every day' do
+    let(:minutes_per_week) { (7 * 8 * 60) + 1 }
+
+    it { expect { ScheduleBuilder.call(minutes_per_week: minutes_per_week) }.to raise_error(MaxDurationError) }
   end
 end

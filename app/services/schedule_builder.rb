@@ -41,8 +41,12 @@ class ScheduleBuilder
   private_class_method def self.set_minutes_per_week(schedule:, value:)
     return schedule unless value
 
-    limit_per_day = 480.0 # Limit to 8 hours per day - arbitrary, but gives a hard limit to schedules.
-    number_of_days = (value / limit_per_day).round
+    max_minutes_per_day = 480.0 # 8 hours.
+
+    # Limit to 8 hours per day - arbitrary, but gives a hard limit to schedules.
+    raise MaxDurationError unless value <= (max_minutes_per_day * 7)
+
+    number_of_days = (value / max_duration_per_day).round
     minutes_per_day = value / number_of_days # Spread minutes evenly across the days.
     days = %w[monday tuesday wednesday thursday friday saturday sunday][0...number_of_days]
 
