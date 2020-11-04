@@ -18,5 +18,6 @@ describe ScheduleParser do
     expect(subject[:rules].count).to eq(1)
     expect(subject[:rules].first[:type]).to eq(rules.first[:type])
     expect(subject[:rules].first[:days]).to eq(rules.first[:days])
+    expect(subject[:minutes_per_week]).to eq(60)
   end
 end
