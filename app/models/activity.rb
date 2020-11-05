@@ -37,35 +37,12 @@ class Activity < ApplicationRecord
     ScheduleParser.call(schedule: schedule)[:rules].first[:days]
   end
 
-  def days=(day_array)
-    self.schedule = ScheduleBuilder.call(
-      schedule: schedule,
-      rules: [{ type: :weekly, days: day_array }]
-    )
-  end
-
   def start_time
     schedule&.start_time
   end
 
-  # Pass a time_select hash, eg. { 4 => 9, 5 => 30 }
-  def start_time=(time)
-    self.schedule = ScheduleBuilder.call(
-      schedule: schedule,
-      start_time: time_value(time)
-    )
-  end
-
   def end_time
     schedule&.end_time
-  end
-
-  # Pass a time_select hash, eg. { 4 => 17, 5 => 0 }
-  def end_time=(time)
-    self.schedule = ScheduleBuilder.call(
-      schedule: schedule,
-      end_time: time_value(time)
-    )
   end
 
   # Deserialize from YAML storage.

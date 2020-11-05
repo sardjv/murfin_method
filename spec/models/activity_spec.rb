@@ -29,43 +29,12 @@ describe Activity, type: :model do
         expect(subject.end_time).to eq(Time.zone.local(1, 1, 1, 10, 0))
         expect(subject.minutes_per_week).to eq(minutes_per_week)
       end
-    end
-  end
 
-  context 'with a day and start_time' do
-    let(:days) { ['wednesday'] }
-    let(:start_time) { { 4 => '09', 5 => '00' } }
-    let(:end_time) { { 4 => '13', 5 => '00' } }
-
-    before do
-      subject.update(days: days, start_time: start_time, end_time: end_time)
-    end
-
-    context 'when updating all' do
-      it 'sets the attributes' do
-        expect(subject.days).to eq(days)
-        expect(subject.start_time).to eq(Time.zone.local(1, 1, 1, 9, 0))
-        expect(subject.end_time).to eq(Time.zone.local(1, 1, 1, 13, 0))
-        expect(subject.minutes_per_week).to eq(240)
+      describe 'to_time_ranges' do
+        it { expect(subject.to_time_ranges.first).to be_a(TimeRange) }
+        it { expect(subject.to_time_ranges.first.value).to eq(60) } # Minutes in 1 hour.
+        it { expect(subject.to_time_ranges.first.user_id).to eq(subject.plan.user_id) }
       end
-    end
-
-    context 'with end equals start' do
-      let(:end_time) { start_time }
-
-      it { expect(subject).not_to be_valid }
-    end
-
-    context 'with end before start' do
-      let(:end_time) { { 4 => '08', 5 => '00' } }
-
-      it { expect(subject).not_to be_valid }
-    end
-
-    describe 'to_time_ranges' do
-      it { expect(subject.to_time_ranges.first).to be_a(TimeRange) }
-      it { expect(subject.to_time_ranges.first.value).to eq(240) } # Minutes in 4 hours.
-      it { expect(subject.to_time_ranges.first.user_id).to eq(subject.plan.user_id) }
     end
   end
 end
