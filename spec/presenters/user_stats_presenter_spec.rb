@@ -11,7 +11,7 @@ describe UserStatsPresenter do
   let(:filter_end_date) { Time.zone.today }
 
   before :all do
-    Timecop.freeze(Time.zone.local(2020, 10, 30, 17))
+    Timecop.freeze(Time.zone.local(2020, 10, 30, 17, 59, 59))
   end
 
   after :all do

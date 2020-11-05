@@ -2,7 +2,7 @@ describe TeamStatsPresenter do
   subject { TeamStatsPresenter.new(args) }
 
   before :all do
-    Timecop.freeze(Time.zone.local(2020, 6, 26, 14))
+    Timecop.freeze(Time.zone.local(2020, 6, 26, 14, 59, 59))
   end
 
   after :all do
