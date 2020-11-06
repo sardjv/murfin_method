@@ -119,14 +119,9 @@ describe FakeGraphDataJob, type: :job do
         let(:actuals_volatility) { 0.5 }
 
         it 'has seasonality' do
-          plan.to_time_ranges.each do |plan|
-            difference = plan.value - actuals.time_ranges.select do |a|
-              Intersection.call(
-                a_start: a.start_time,
-                a_end: a.end_time,
-                b_start: plan.start_time,
-                b_end: plan.end_time
-              ).positive?
+          plan.to_time_ranges.each do |p|
+            difference = p.value - actuals.time_ranges.select do |a|
+              intersection(actual: a, plan: p).positive?
             end.sum(&:value).abs
 
             expect(difference).to be <= 10 unless %w[June July December].include?(plan.start_time.strftime('%B'))
@@ -140,12 +135,16 @@ end
 def differences(actuals:, plan:)
   plan.to_time_ranges.map do |p|
     (p.value - actuals.time_ranges.sum do |a|
-      (a.value * Intersection.call(
-        a_start: a.start_time.beginning_of_day,
-        a_end: a.end_time.end_of_day,
-        b_start: p.start_time.beginning_of_day,
-        b_end: p.end_time.end_of_day
-      )).round
+      (a.value * intersection(actual: a, plan: p)).round
     end).abs
   end
+end
+
+def intersection(actual:, plan:)
+  Intersection.call(
+    a_start: actual.start_time.beginning_of_day,
+    a_end: actual.end_time.end_of_day,
+    b_start: plan.start_time.beginning_of_day,
+    b_end: plan.end_time.end_of_day
+  )
 end
