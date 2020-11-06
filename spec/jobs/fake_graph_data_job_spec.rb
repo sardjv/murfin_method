@@ -58,7 +58,7 @@ describe FakeGraphDataJob, type: :job do
       create(
         :plan,
         user_id: user.id,
-        start_date: DateTime.new(2020).beginning_of_year,
+        start_date: DateTime.new(2020, 1, 6), # First Monday of year.
         end_date: DateTime.new(2020).end_of_year,
         activities: [create(:activity)]
       )
@@ -78,36 +78,14 @@ describe FakeGraphDataJob, type: :job do
       context 'with 0% volatility' do
         let(:actuals_volatility) { 0.0 }
         it 'matches the job plan exactly' do
-          differences = plan.to_time_ranges.map do |plan|
-            (plan.value - actuals.time_ranges.select do |a|
-              Intersection.call(
-                a_start: a.start_time,
-                a_end: a.end_time,
-                b_start: plan.start_time,
-                b_end: plan.end_time
-              ).positive?
-            end.sum(&:value)).abs
-          end
-
-          expect(differences.uniq).to eq([0])
+          expect(differences(actuals: actuals, plan: plan).uniq).to eq([0])
         end
       end
 
       context 'with 2% volatility' do
         let(:actuals_volatility) { 0.02 }
         it 'tracks the job plan closely' do
-          differences = plan.to_time_ranges.map do |plan|
-            (plan.value - actuals.time_ranges.select do |a|
-              Intersection.call(
-                a_start: a.start_time,
-                a_end: a.end_time,
-                b_start: plan.start_time,
-                b_end: plan.end_time
-              ).positive?
-            end.sum(&:value)).abs
-          end
-
-          expect(differences.max).to be <= 5
+          expect(differences(actuals: actuals, plan: plan).max).to be <= 5
         end
       end
     end
@@ -126,36 +104,14 @@ describe FakeGraphDataJob, type: :job do
       context 'with 0% volatility' do
         let(:actuals_volatility) { 0.0 }
         it 'tracks the job plan very closely' do
-          differences = plan.to_time_ranges.map do |plan|
-            (plan.value - actuals.time_ranges.select do |a|
-              Intersection.call(
-                a_start: a.start_time,
-                a_end: a.end_time,
-                b_start: plan.start_time,
-                b_end: plan.end_time
-              ).positive?
-            end.sum(&:value)).abs
-          end
-
-          expect(differences.max).to be <= 10
+          expect(differences(actuals: actuals, plan: plan).max).to be <= 10
         end
       end
 
       context 'with 20% volatility' do
         let(:actuals_volatility) { 0.20 }
         it 'tracks the job plan less closely' do
-          differences = plan.to_time_ranges.map do |plan|
-            (plan.value - actuals.time_ranges.select do |a|
-              Intersection.call(
-                a_start: a.start_time,
-                a_end: a.end_time,
-                b_start: plan.start_time,
-                b_end: plan.end_time
-              ).positive?
-            end.sum(&:value)).abs
-          end
-
-          expect(differences.max).to be <= 48
+          expect(differences(actuals: actuals, plan: plan).max).to be <= 48
         end
       end
 
@@ -178,5 +134,18 @@ describe FakeGraphDataJob, type: :job do
         end
       end
     end
+  end
+end
+
+def differences(actuals:, plan:)
+  plan.to_time_ranges.map do |p|
+    (p.value - actuals.time_ranges.sum do |a|
+      (a.value * Intersection.call(
+        a_start: a.start_time.beginning_of_day,
+        a_end: a.end_time.end_of_day,
+        b_start: p.start_time.beginning_of_day,
+        b_end: p.end_time.end_of_day
+      )).round
+    end).abs
   end
 end

@@ -58,6 +58,7 @@ class FakeGraphDataJob < ApplicationJob
 
   def build_time_range(start_time:, user_id:, time_range_type_id:, random_value:)
     end_time = start_time + 1.send(:week) - 1.second
+    end_time = start_time.end_of_year if end_time > start_time.end_of_year
     value = plan(user_id: user_id, start_time: start_time, end_time: end_time)
 
     FactoryBot.build(
