@@ -4,6 +4,7 @@ en:
     labels:
       day: Day
       end_time: End time
+      minutes_per_week: Minutes per week
       schedule: Schedule
       start_time: Start time
     name: Activity

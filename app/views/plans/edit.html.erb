@@ -28,9 +28,7 @@
         <label><%= I18n.t('plan.labels.activities') %></label>
 
         <div class='row'>
-          <label class='col-md d-none d-md-block'><%= I18n.t('activity.labels.day') %></label>
-          <label class='col-md d-none d-md-block'><%= I18n.t('activity.labels.start_time') %></label>
-          <label class='col-md d-none d-md-block'><%= I18n.t('activity.labels.end_time') %></label>
+          <label class='col-md d-none d-md-block'><%= I18n.t('activity.labels.minutes_per_week') %></label>
           <label class='col-md d-none d-md-block'></label>
         </div>
         <%= f.fields_for :activities do |activity_form| %>

@@ -17,42 +17,32 @@ class Activity < ApplicationRecord
   validates :schedule, presence: true
   validate :validate_end_time_after_start_time
 
-  def day
+  def minutes_per_week
+    return unless schedule
+
+    ScheduleParser.call(schedule: schedule)[:minutes_per_week]
+  end
+
+  def minutes_per_week=(minutes)
+    self.schedule = ScheduleBuilder.call(
+      schedule: schedule,
+      minutes_per_week: minutes
+    )
+  end
+
+  def days
     return unless schedule
 
     # Only handle 1 rule per activity for now.
-    ScheduleParser.call(schedule: schedule)[:rules].first[:day]
-  end
-
-  def day=(day_string)
-    self.schedule = ScheduleBuilder.call(
-      schedule: schedule,
-      rules: [{ type: :weekly, day: day_string }]
-    )
+    ScheduleParser.call(schedule: schedule)[:rules].first[:days]
   end
 
   def start_time
     schedule&.start_time
   end
 
-  # Pass a time_select hash, eg. { 4 => 9, 5 => 30 }
-  def start_time=(time)
-    self.schedule = ScheduleBuilder.call(
-      schedule: schedule,
-      start_time: time_value(time)
-    )
-  end
-
   def end_time
     schedule&.end_time
-  end
-
-  # Pass a time_select hash, eg. { 4 => 17, 5 => 0 }
-  def end_time=(time)
-    self.schedule = ScheduleBuilder.call(
-      schedule: schedule,
-      end_time: time_value(time)
-    )
   end
 
   # Deserialize from YAML storage.

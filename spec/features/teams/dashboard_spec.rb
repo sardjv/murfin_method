@@ -16,7 +16,7 @@ describe 'Team Dashboard ', type: :feature, js: true do
       user_id: user.id,
       start_date: 12.months.ago,
       end_date: Time.zone.today,
-      activities: [create(:activity, end_time: { 4 => '09', 5 => '03' })]
+      activities: [create(:activity, minutes_per_week: 3)]
     )
     (1..12).each do |index|
       create(

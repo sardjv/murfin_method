@@ -11,18 +11,17 @@ describe 'Team Individuals', type: :feature, js: true do
       create(
         :plan,
         user_id: user.id,
-        start_date: 1.week.ago,
-        end_date: Time.zone.now,
+        start_date: (Time.zone.now - 1.week + 1.day).beginning_of_day,
+        end_date: Time.zone.now.end_of_day,
         activities: [create(:activity)] # 240 minutes in 1 week.
       )
-      create_list(
+      create(
         :time_range,
-        10,
         user_id: user.id,
         time_range_type_id: actual_id,
-        start_time: 1.week.ago,
-        end_time: Time.zone.now,
-        value: 12 # 12 minutes * 10 = 120 minutes in 1 week.
+        start_time: (Time.zone.now - 1.week + 1.day).beginning_of_day,
+        end_time: Time.zone.now.end_of_day,
+        value: 120 # 120 minutes in 1 week.
       )
       create(:membership, user_group: user_group, user: user) unless user == manager
     end
@@ -109,7 +108,7 @@ describe 'Team Individuals', type: :feature, js: true do
 
       context 'when an activity is updated' do
         before do
-          Activity.first.update(end_time: { 4 => '21', 5 => '00' })
+          Activity.first.update(minutes_per_week: 720)
           visit current_path
         end
 
