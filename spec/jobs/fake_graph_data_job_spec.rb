@@ -121,10 +121,10 @@ describe FakeGraphDataJob, type: :job do
         it 'has seasonality' do
           plan.to_time_ranges.each do |p|
             difference = p.value - actuals.time_ranges.select do |a|
-              intersection(actual: a, plan: p).positive?
+              intersection(a_range: a, b_range: p).positive?
             end.sum(&:value).abs
 
-            expect(difference).to be <= 10 unless %w[June July December].include?(plan.start_time.strftime('%B'))
+            expect(difference).to be <= 10 unless %w[June July December].include?(p.start_time.strftime('%B'))
           end
         end
       end
@@ -135,16 +135,16 @@ end
 def differences(actuals:, plan:)
   plan.to_time_ranges.map do |p|
     (p.value - actuals.time_ranges.sum do |a|
-      (a.value * intersection(actual: a, plan: p)).round
+      (a.value * intersection(a_range: a, b_range: p)).round
     end).abs
   end
 end
 
-def intersection(actual:, plan:)
+def intersection(a_range:, b_range:)
   Intersection.call(
-    a_start: actual.start_time.beginning_of_day,
-    a_end: actual.end_time.end_of_day,
-    b_start: plan.start_time.beginning_of_day,
-    b_end: plan.end_time.end_of_day
+    a_start: a_range.start_time.beginning_of_day,
+    a_end: a_range.end_time.end_of_day,
+    b_start: b_range.start_time.beginning_of_day,
+    b_end: b_range.end_time.end_of_day
   )
 end
