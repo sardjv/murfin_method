@@ -40,4 +40,24 @@ describe Plan, type: :model do
   describe '#name' do
     it { expect(subject.name).to eq("#{subject.user.name}'s #{subject.start_date.year} #{I18n.t('plan.name')}") }
   end
+
+  describe '#to_time_ranges' do
+    let(:subject) {
+      create(
+        :plan,
+        start_date: Time.zone.local(2019, 11, 5),
+        end_date: Time.zone.local(2020, 11, 4, 23, 59, 59),
+        activities: [create(:activity, minutes_per_week: 60)]
+      )
+    }
+
+    it 'counts the days correctly' do
+      days_in_year = 366
+      minutes_per_week = 60
+      days_per_week = 7
+      minutes_worked_in_year = (minutes_per_week.to_f / days_per_week) * days_in_year
+
+      expect(subject.to_time_ranges.sum(&:value)).to eq(minutes_worked_in_year)
+    end
+  end
 end
