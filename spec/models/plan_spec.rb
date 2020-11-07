@@ -52,12 +52,12 @@ describe Plan, type: :model do
     }
 
     it 'counts the days correctly' do
-      days_in_year = 366
+      days_in_leap_year = 366
       minutes_per_week = 60
       days_per_week = 7
-      minutes_worked_in_year = (minutes_per_week.to_f / days_per_week) * days_in_year
+      minutes_worked_in_year = (minutes_per_week.to_f / days_per_week) * days_in_leap_year
 
-      expect(subject.to_time_ranges.sum(&:value)).to eq(minutes_worked_in_year)
+      expect(subject.to_time_ranges.sum(&:value).round(7)).to eq(minutes_worked_in_year.round(7))
     end
   end
 end

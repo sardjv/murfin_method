@@ -48,11 +48,12 @@ class ScheduleBuilder
     # Limit to 8 hours per day - arbitrary, but gives a hard limit to schedules.
     raise MaxDurationError unless value <= (max_minutes_per_day * number_of_days)
 
-    minutes_per_day = value / number_of_days # Spread minutes evenly across the days.
+    seconds_per_day = (value / number_of_days) * 60 # Spread value evenly across the days.
+
     days = %w[monday tuesday wednesday thursday friday saturday sunday][0...number_of_days]
 
     schedule = set_start_time(schedule: schedule, value: Time.zone.local(1, 1, 1, 9, 0))
-    schedule = set_end_time(schedule: schedule, value: schedule.start_time + minutes_per_day.minutes)
+    schedule = set_end_time(schedule: schedule, value: schedule.start_time + seconds_per_day.seconds)
     set_rules(schedule: schedule, value: [{ type: 'weekly', days: days }])
   end
 end
