@@ -51,8 +51,8 @@ class UserStatsPresenter
 
   def defaults
     {
-      filter_start_date: 1.year.ago,
-      filter_end_date: Time.zone.today,
+      filter_start_date: (1.year.ago + 1.day).beginning_of_day,
+      filter_end_date: Time.zone.today.end_of_day,
       actual_id: TimeRangeType.actual_type.id
     }
   end
@@ -87,8 +87,7 @@ class UserStatsPresenter
   end
 
   def number_of_weeks
-    filter_duration = filter_end_time - filter_start_time
-    (filter_duration / 1.week)
+    (filter_end_time - filter_start_time) / 1.week
   end
 
   def percentage(numerator, denominator)
