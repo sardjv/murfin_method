@@ -75,7 +75,7 @@ describe DashboardPresenter do
                 { name: '2020-03-01T00:00:00.000Z', value: 0, notes: '[]' },
                 { name: '2020-04-01T00:00:00.000Z', value: 0, notes: '[]' },
                 { name: '2020-05-01T00:00:00.000Z', value: 0, notes: '[]' },
-                { name: '2020-06-01T00:00:00.000Z', value: 47.06, notes: '[]' }
+                { name: '2020-06-01T00:00:00.000Z', value: 46.67, notes: '[]' }
               ]],
               units: '%'
             }
