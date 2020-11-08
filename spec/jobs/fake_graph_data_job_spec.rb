@@ -16,7 +16,7 @@ describe FakeGraphDataJob, type: :job do
     it 'creates identical records' do
       expect(User.count).to eq(1)
       expect(TimeRange.count).to eq(52)
-      expect(TimeRange.first.value).to be_an(Integer)
+      expect(TimeRange.first.value).to be_a(Float)
       expect(TimeRange.distinct.pluck(:value).count).to eq(1)
     end
 
@@ -25,7 +25,7 @@ describe FakeGraphDataJob, type: :job do
 
       it 'creates varying records' do
         expect(TimeRange.count).to eq(52)
-        expect(TimeRange.first.value).to be_an(Integer)
+        expect(TimeRange.first.value).to be_a(Float)
         expect(TimeRange.distinct.pluck(:value).count > 1).to eq(true)
       end
     end
@@ -47,7 +47,7 @@ describe FakeGraphDataJob, type: :job do
     it 'creates records' do
       expect(User.count).to eq(1)
       expect(TimeRange.count).to eq(52)
-      expect(TimeRange.first.value).to be_an(Integer)
+      expect(TimeRange.first.value).to be_a(Float)
     end
   end
 
@@ -70,7 +70,7 @@ describe FakeGraphDataJob, type: :job do
           story: :static,
           user_id: user.id,
           time_range_type_id: actuals.id,
-          start: DateTime.new(2020),
+          start: DateTime.new(2020, 1, 6),
           volatility: actuals_volatility
         )
       end
@@ -135,8 +135,8 @@ end
 def differences(actuals:, plan:)
   plan.to_time_ranges.map do |p|
     (p.value - actuals.time_ranges.sum do |a|
-      (a.value * intersection(a_range: a, b_range: p)).round
-    end).abs
+      (a.value * intersection(a_range: a, b_range: p))
+    end).round(4)
   end
 end
 
