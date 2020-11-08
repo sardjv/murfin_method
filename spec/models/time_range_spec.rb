@@ -24,6 +24,15 @@ describe TimeRange, type: :model do
   it { should validate_presence_of(:user_id) }
   it { should belong_to(:user) }
 
+  describe '#value' do
+    context 'with a longer float' do
+      let(:value) { 3137.142857142857143 }
+      let(:subject) { create(:time_range, value: value) }
+
+      it { expect(subject.reload.value).to eq(value) }
+    end
+  end
+
   context 'with end_time before start_time' do
     subject { build(:time_range) }
 
