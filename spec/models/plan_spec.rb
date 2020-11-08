@@ -42,14 +42,14 @@ describe Plan, type: :model do
   end
 
   describe '#to_time_ranges' do
-    let(:subject) {
+    let(:subject) do
       create(
         :plan,
         start_date: Time.zone.local(2019, 11, 5),
         end_date: Time.zone.local(2020, 11, 4, 23, 59, 59),
         activities: [create(:activity, minutes_per_week: 60)]
       )
-    }
+    end
 
     it 'counts the days correctly' do
       days_in_leap_year = 366
