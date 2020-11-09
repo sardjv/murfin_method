@@ -4,6 +4,6 @@ module TimeRangeHelper
   end
 
   def duration_in_words(value)
-    time_ago_in_words(Time.current + value)
+    time_ago_in_words(Time.current + value + 1.second)
   end
 end
