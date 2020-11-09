@@ -96,7 +96,7 @@ describe DashboardPresenter do
               data: [
                 {
                   name: user.name,
-                  value: 47
+                  value: 47.0
                 }
               ],
               units: '%'

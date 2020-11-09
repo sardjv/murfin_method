@@ -16,7 +16,7 @@ describe FakeGraphDataJob, type: :job do
     it 'creates identical records' do
       expect(User.count).to eq(1)
       expect(TimeRange.count).to eq(52)
-      expect(TimeRange.first.value).to be_a(Float)
+      expect(TimeRange.first.value).to be_a(Decimal)
       expect(TimeRange.distinct.pluck(:value).count).to eq(1)
     end
 
@@ -25,7 +25,7 @@ describe FakeGraphDataJob, type: :job do
 
       it 'creates varying records' do
         expect(TimeRange.count).to eq(52)
-        expect(TimeRange.first.value).to be_a(Float)
+        expect(TimeRange.first.value).to be_a(Decimal)
         expect(TimeRange.distinct.pluck(:value).count > 1).to eq(true)
       end
     end
@@ -47,7 +47,7 @@ describe FakeGraphDataJob, type: :job do
     it 'creates records' do
       expect(User.count).to eq(1)
       expect(TimeRange.count).to eq(52)
-      expect(TimeRange.first.value).to be_a(Float)
+      expect(TimeRange.first.value).to be_a(Decimal)
     end
   end
 
