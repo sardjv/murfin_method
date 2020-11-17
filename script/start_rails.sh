@@ -12,7 +12,7 @@ else echo "Booting for the first time, installing libraries and creating databas
   bundle install
 
   # Yarn install here instead of in Dockerfile since it needs to come after bundle install.
-  yarn check || yarn install
+  yarn install
 
   # Perform any database tasks needed.
   bundle exec rails db:create db:migrate
