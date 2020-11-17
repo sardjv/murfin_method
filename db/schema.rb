@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_22_120800) do
+ActiveRecord::Schema.define(version: 2020_11_06_201944) do
 
   create_table "activities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.text "schedule", size: :medium, null: false
@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 2020_10_22_120800) do
   create_table "time_ranges", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.timestamp "start_time", null: false
     t.timestamp "end_time", null: false
-    t.integer "value", null: false
+    t.decimal "value", precision: 65, scale: 30, null: false
     t.bigint "time_range_type_id", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false

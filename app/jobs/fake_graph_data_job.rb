@@ -102,8 +102,7 @@ class FakeGraphDataJob < ApplicationJob
     change_percent -= (2 * volatility) if change_percent > volatility
     change_percent = set_direction(value: change_percent, direction: direction)
     change_amount = value * change_percent
-    new_value = value + change_amount
-    new_value.round
+    value + change_amount
   end
 
   def set_direction(value:, direction:)

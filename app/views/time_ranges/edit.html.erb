@@ -30,6 +30,7 @@
         %>
 
         <%= f.number_field :value,
+          step: :any,
           label: I18n.t('time_range.labels.value'),
           placeholder: I18n.t('time_range.labels.value'),
           required: true
