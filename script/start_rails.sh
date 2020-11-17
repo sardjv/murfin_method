@@ -7,9 +7,9 @@ FIRST_RUN_FLAG_FILE=script/first_run_complete.tmp
 if [ -f $FIRST_RUN_FLAG_FILE ]
 then echo "$FIRST_RUN_FLAG_FILE detected, skipping library installation..."
 else echo "Booting for the first time, installing libraries and creating database..."
-  # If `bundle check` indicates it's needed, `bundle install` here rather than in Dockerfile,
-  #    so that we can cache its result in the bundle_cache container.
-  bundle check || bundle install
+  # `bundle install` here rather than in Dockerfile,
+  # so that we can cache its result in the bundle_cache container.
+  bundle install
 
   # Yarn install here instead of in Dockerfile since it needs to come after bundle install.
   yarn check || yarn install
