@@ -29,12 +29,7 @@
           label: I18n.t('time_range.labels.end_time')
         %>
 
-        <%= f.number_field :value,
-          step: :any,
-          label: I18n.t('time_range.labels.value'),
-          placeholder: I18n.t('time_range.labels.value'),
-          required: true
-        %>
+        <%= f.number_field :seconds_worked, class: 'duration-picker', label: I18n.t('time_range.labels.value') %>
 
         <%= f.submit I18n.t('time_range.save'), class: 'btn btn-primary mt-2' %>
         <%= link_to I18n.t('time_range.cancel'), :back, class: 'btn btn-outline-secondary mt-2' %>

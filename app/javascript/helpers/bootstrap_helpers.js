@@ -21,6 +21,4 @@ function styleDurations() {
     showDays: false,
     showSeconds: false
   });
-  // $('.bdp-input').addClass('form-inline');
-  // $('.bdp-input .bdp-block').addClass('form-inline');
 }

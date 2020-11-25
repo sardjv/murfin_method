@@ -17,7 +17,6 @@ class Activity < ApplicationRecord
   validates :schedule, presence: true
   validate :validate_end_time_after_start_time
 
-
   def seconds_per_week=(seconds)
     self.schedule = ScheduleBuilder.call(
       schedule: schedule,
