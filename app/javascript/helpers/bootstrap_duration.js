@@ -1,5 +1,6 @@
 // From: https://github.com/koss-lebedev/bootstrap-duration-picker
 // MIT Licensed
+// Patched line 56 to reduce max hours.
 // Patched line 119 to add d-none for Bootstrap 4 compatibility.
 (function iife($) {
 
@@ -33,7 +34,7 @@
         class: 'bdp-input',
         html: [
           buildDisplayBlock('days', !plugin.settings.showDays),
-          buildDisplayBlock('hours', false, plugin.settings.showDays ? 23 : 99999),
+          buildDisplayBlock('hours', false, plugin.settings.showDays ? 23 : 56),
           buildDisplayBlock('minutes', false, 59),
           buildDisplayBlock('seconds', !plugin.settings.showSeconds, 59),
         ],

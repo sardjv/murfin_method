@@ -1,7 +1,7 @@
 <div class='nested-fields'>
-  <div class='row pb-4 pb-md-0'>
+  <div class='row pb-4 pb-md-0 form-inline'>
     <div class='col-md'>
-      <%= f.text_field :duration, class: 'duration-picker' %>
+      <%= f.text_field :duration, class: 'duration-picker', hide_label: true %>
     </div>
     <div class='col-md'>
       <%= link_to_remove_association I18n.t('activity.remove'), f %>

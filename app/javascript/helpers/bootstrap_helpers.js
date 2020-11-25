@@ -1,13 +1,13 @@
 // Initial render.
 window.addEventListener('turbolinks:load', () => {
   styleSelects()
-  addDurationPickers()
+  styleDurations()
 });
 
 // After nested form added.
 $(document).on('cocoon:after-insert', () => {
   styleSelects()
-  addDurationPickers()
+  styleDurations()
 });
 
 function styleSelects() {
@@ -16,9 +16,11 @@ function styleSelects() {
   $('.rails-bootstrap-forms-date-select').addClass('form-inline');
 }
 
-function addDurationPickers() {
+function styleDurations() {
   $('.duration-picker').durationPicker({
     showDays: false,
     showSeconds: false
   });
+  // $('.bdp-input').addClass('form-inline');
+  // $('.bdp-input .bdp-block').addClass('form-inline');
 }

@@ -4,3 +4,21 @@
     background-color: $white !important;
   }
 }
+
+// Bootstrap duration picker.
+.bdp-input input {
+  display: inline-block;
+  width: 60px;
+}
+
+// Bootstrap duration picker.
+.bdp-block {
+  display: inline-block;
+  line-height: 1;
+  text-align: center;
+  padding: 5px 3px;
+  div {
+    display: inline-block;
+    padding: 0px 3px
+  }
+}
