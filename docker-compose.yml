@@ -8,12 +8,12 @@ services:
       - 'db:/var/lib/mysql'
     env_file:
       - '.env'
-    ports:
-      - '3307:3306'
+    environment:
+      - MYSQL_DATABASE=murfin_method_production
 
   redis:
-    image: 'redis:6.0.1-alpine'
-    command: redis-server --requirepass yourpassword
+    image: 'redis:6.0.9-alpine'
+    command: redis-server --requirepass ${REDIS_PASSWORD}
     depends_on:
       - redis_helper
     sysctls:
@@ -22,12 +22,15 @@ services:
       net.core.somaxconn: '511'
     volumes:
       - 'redis:/data'
+    env_file:
+      - '.env'
+    restart: always
 
   # Fix Redis 'WARNING you have Transparent Huge Pages (THP) support'.
   # From: https://stackoverflow.com/a/58090841
   # More details: https://easyengine.io/tutorials/redis/
   redis_helper:
-    image: busybox
+    image: busybox:1.32.0
     command: sh -c "echo never > /sys/kernel/mm/transparent_hugepage/enabled"
     privileged: true
 
@@ -35,47 +38,25 @@ services:
     depends_on:
       - db
       - redis
-      - webpacker
     build: .
     # 1) Remove any existing server process in case of dirty shutdown, with -f in case the file doesn't exist.
     # 2) if `bundle check` indicates it's needed, `bundle install` here rather than in Dockerfile,
     #    so that we can cache its result in the bundle_cache container.
     # 3) Start server.
-    command: ./script/start_rails.sh
+    command: ./script/start_rails_production.sh
     ports:
       - '3000:3000'
     volumes:
       - '.:/app'
-      # We cache the bundle so that we don't re-download every gem on any change to the Gemfile.
-      - bundle_cache:/bundle
     environment:
-      - CAPYBARA_APP_HOST=http://app:3001
-      - HEADLESS_CHROME_URL=http://chrome_headless:4444/wd/hub
-      - VISIBLE_CHROME_URL=http://chrome_visible:4444/wd/hub
-      - BUNDLE_PATH=/bundle/vendor
-      - WEBPACKER_DEV_SERVER_HOST=webpacker
+      - NODE_ENV=production
+      - RAILS_ENV=production
+      - RAILS_MAX_THREADS=5 # See config/puma.rb for more info.
+      - WEB_CONCURRENCY=2 # See config/puma.rb for more info.
+      - RAILS_SERVE_STATIC_FILES=true
     env_file:
       - '.env'
-
-  chrome_headless:
-    image: selenium/standalone-chrome:3.141.0
-    volumes:
-      - '.:/app'
-      - bundle_cache:/bundle
-
-  chrome_visible:
-    image: selenium/standalone-chrome-debug:3.141.0
-    ports:
-      - 5900:5900 # Port for remote connection via `open vnc://0.0.0.0:5900`.
-    volumes:
-      - '.:/app'
-      - bundle_cache:/bundle
-
-  bundle_cache:
-    # BusyBox combines tiny versions of many common UNIX utilities into a single small executable.
-    image: busybox
-    volumes:
-      - '.:/bundle_cache'
+    restart: always
 
   sidekiq:
     depends_on:
@@ -85,27 +66,13 @@ services:
     command: ./script/start_sidekiq.sh
     volumes:
       - '.:/app'
-      - bundle_cache:/bundle
     environment:
-      - BUNDLE_PATH=/bundle/vendor
+      - NODE_ENV=production
+      - RAILS_ENV=production
     env_file:
       - '.env'
-
-  webpacker:
-    build: .
-    command: ./bin/webpack-dev-server
-    ports:
-      - '3035:3035'
-    volumes:
-      - '.:/app'
-      - bundle_cache:/bundle
-    environment:
-      - BUNDLE_PATH=/bundle/vendor
-      - WEBPACKER_DEV_SERVER_HOST=0.0.0.0
-    env_file:
-      - '.env'
+    restart: always
 
 volumes:
-  bundle_cache:
   redis:
   db:

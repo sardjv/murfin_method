@@ -5,7 +5,7 @@
 
 ## .env file
 
-To get started, you need a `.env` file with secrets. For testing there is a `.env.example` file included in the repo that you can use, just remove the `.example` from the filename. Make sure to change all these secrets before running in production!
+To get started, you need a `.env` file with secrets. For testing there is a `.env.example` file included in the repo that you can use, just remove the `.example` from the filename. Make sure to change all secrets marked with YOU_MUST_CHANGE_THIS_PASSWORD before running in production!
 
 ## Booting up
 
@@ -16,13 +16,6 @@ docker-compose up
 ```
 
 It can then be accessed at [http://localhost:3000/](http://localhost:3000/)
-
-On the first run you need to create, migrate and optionally seed the database:
-
-```
-docker-compose run app bundle exec rails db:create db:migrate db:seed
-docker-compose run app bundle exec rails db:migrate RAILS_ENV=test
-```
 
 ## Logging in
 
