@@ -30,7 +30,7 @@ class User < ApplicationRecord
   has_many :user_groups, through: :memberships
   has_many :plans, dependent: :destroy
 
-  validates :email, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :admin, inclusion: { in: [true, false] }

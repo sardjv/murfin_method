@@ -14,7 +14,7 @@ class UserGroup < ApplicationRecord
   accepts_nested_attributes_for :memberships
   has_many :users, through: :memberships
 
-  validates :name, presence: true, uniqueness: { scope: :group_type }
+  validates :name, presence: true, uniqueness: { scope: :group_type, case_sensitive: false }
 
   def display_name
     name.titleize

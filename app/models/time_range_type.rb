@@ -10,7 +10,7 @@
 class TimeRangeType < ApplicationRecord
   has_many :time_ranges, dependent: :destroy
 
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
 
   def self.actual_type
     @actual_type ||= TimeRangeType.find_by(name: 'RIO Data')
