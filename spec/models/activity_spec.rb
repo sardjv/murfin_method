@@ -27,7 +27,7 @@ describe Activity, type: :model do
         expect(subject.days).to eq(%w[monday tuesday wednesday thursday friday saturday sunday])
         expect(subject.start_time).to eq(Time.zone.local(1, 1, 1, 9, 0))
         expect(subject.end_time).to eq(Time.zone.local(1, 1, 1, 10, 0))
-        expect(subject.minutes_per_week).to eq(seconds_per_week)
+        expect(subject.seconds_per_week).to eq(seconds_per_week)
       end
 
       describe 'to_time_ranges' do
