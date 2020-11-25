@@ -11,7 +11,7 @@ describe 'Admin edits a time_range', type: :feature, js: true do
   end
 
   it 'updates time_range' do
-    fill_in I18n.t('time_range.labels.value'), with: input_value
+    find_field(type: 'number', match: :first).set(input_value)
     click_button I18n.t('time_range.save')
 
     expect(page).to have_content(I18n.t('time_range.notice.successfully.updated'))
