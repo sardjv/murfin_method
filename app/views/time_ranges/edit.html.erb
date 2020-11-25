@@ -17,7 +17,7 @@
       <%= bootstrap_form_for @time_range do |f| %>
         <%= f.select :time_range_type_id,
           options_for_select(TimeRangeType.all.map { |t| [t.name, t.id] }, selected: f.object.time_range_type_id),
-          { label: I18n.t('time_range.labels.time_range_type')},
+          { label: I18n.t('time_range.labels.time_range_type') },
           class: 'input-group-btn',
           required: true
         %>
