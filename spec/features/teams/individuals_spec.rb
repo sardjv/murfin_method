@@ -108,7 +108,7 @@ describe 'Team Individuals', type: :feature, js: true do
 
       context 'when an activity is updated' do
         before do
-          Activity.first.update(minutes_per_week: 720)
+          Activity.first.update(seconds_per_week: 12 * 60 * 60)
           visit current_path
         end
 

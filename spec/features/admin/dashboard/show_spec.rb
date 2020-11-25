@@ -8,7 +8,7 @@ describe 'Admin Dashboard', type: :feature do
       user_id: user.id,
       start_date: 1.week.ago,
       end_date: Time.zone.now,
-      activities: [create(:activity, minutes_per_week: 100)]
+      activities: [create(:activity, seconds_per_week: 6000)]
     )
   end
   let!(:actual_ranges) do
