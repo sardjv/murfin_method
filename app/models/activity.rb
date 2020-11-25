@@ -18,14 +18,14 @@ class Activity < ApplicationRecord
   validate :validate_end_time_after_start_time
 
 
-  def duration=(seconds)
+  def seconds_per_week=(seconds)
     self.schedule = ScheduleBuilder.call(
       schedule: schedule,
       minutes_per_week: seconds.to_f / 60
     )
   end
 
-  def duration
+  def seconds_per_week
     return unless schedule
 
     ScheduleParser.call(schedule: schedule)[:minutes_per_week] * 60.0
