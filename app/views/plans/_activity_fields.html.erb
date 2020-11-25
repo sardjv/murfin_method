@@ -1,7 +1,7 @@
 <div class='nested-fields'>
   <div class='row pb-4 pb-md-0'>
     <div class='col-md'>
-      <%= f.number_field :minutes_per_week, hide_label: true, required: true %>
+      <%= f.text_field :duration, class: 'duration-picker' %>
     </div>
     <div class='col-md'>
       <%= link_to_remove_association I18n.t('activity.remove'), f %>
