@@ -19,7 +19,7 @@ gem 'factory_bot', '~> 6.1.0'
 
 # Generate fake data such as names, addresses, and phone numbers.
 # https://github.com/faker-ruby/faker
-gem 'faker', '~> 2.14.0'
+gem 'faker', '~> 2.15.1'
 
 # Allows easy creation of recurrence rules and fast querying.
 # https://github.com/seejohnrun/ice_cube
