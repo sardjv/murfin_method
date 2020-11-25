@@ -12,7 +12,7 @@ describe TimeRangeType, type: :model do
 
   it { expect(subject).to be_valid }
   it { should validate_presence_of(:name) }
-  it { should validate_uniqueness_of(:name) }
+  it { should validate_uniqueness_of(:name).ignoring_case_sensitivity }
   it { should have_db_index(:name).unique }
   it { should have_many(:time_ranges).dependent(:destroy) }
 end
