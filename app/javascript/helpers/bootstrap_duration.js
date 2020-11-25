@@ -1,6 +1,7 @@
 // From: https://github.com/koss-lebedev/bootstrap-duration-picker
 // MIT Licensed
 // Patched line 119 to add d-none for Bootstrap 4 compatibility.
+// 33: Added form-inline.
 (function iife($) {
 
   $.DurationPicker = function DurationPicker(mainElement, options) {
@@ -30,7 +31,7 @@
       plugin.settings = $.extend({}, defaults, options);
 
       const mainInputReplacer = $('<div>', {
-        class: 'bdp-input',
+        class: 'bdp-input form-inline',
         html: [
           buildDisplayBlock('days', !plugin.settings.showDays),
           buildDisplayBlock('hours', false, plugin.settings.showDays ? 23 : 99999),
