@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-describe 'Admin edits a tag', type: :feature, js: true do†
+describe 'Admin edits a tag', type: :feature, js: true do
   let!(:tag_type) do
     create(:tag_type, name: 'Band')
   end
-  let!(:band1_group) do
+  let!(:band1_tag) do
     create(:tag, tag_type: tag_type, name: 'Band 1')
   end
-  let!(:band2_group) do
+  let!(:band2_tag) do
     create(:tag, tag_type: tag_type, name: 'Band 2')
   end
 
@@ -24,7 +24,7 @@ describe 'Admin edits a tag', type: :feature, js: true do†
     click_button I18n.t('tags.save')
 
     expect(page).to have_content(I18n.t('tags.notice.successfully.updated'))
-    expect(band1_group.reload.name).to eq 'NHS Band 1'
+    expect(band1_tag.reload.name).to eq 'NHS Band 1'
   end
 
   context 'when enter non unique name' do
@@ -39,7 +39,7 @@ describe 'Admin edits a tag', type: :feature, js: true do†
       click_button I18n.t('tags.save')
 
       expect(page).to have_content(I18n.t('tags.notice.could_not_be.updated'))
-      expect(band1_group.reload.name).to eq 'Band 1'
+      expect(band1_tag.reload.name).to eq 'Band 1'
     end
   end
 end
