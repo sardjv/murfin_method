@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Admin edits a tag', type: :feature, js: true do†
+describe 'Admin edits a tag', type: :feature, js: true do
   let!(:tag_type) do
     create(:tag_type, name: 'Band')
   end
