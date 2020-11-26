@@ -23,11 +23,13 @@
         %>
 
         <%= f.datetime_select :start_time,
-          label: I18n.t('time_range.labels.start_time')
+          label: I18n.t('time_range.labels.start_time'),
+          default: { hour: 9, minute: 0 }
         %>
 
         <%= f.datetime_select :end_time,
-          label: I18n.t('time_range.labels.end_time')
+          label: I18n.t('time_range.labels.end_time'),
+          default: { hour: 17, minute: 0 }
         %>
 
         <%= f.number_field :seconds_worked, class: 'duration-picker-time-range', label: I18n.t('time_range.labels.value'), step: :any %>
