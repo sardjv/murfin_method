@@ -17,8 +17,13 @@ function styleSelects() {
 }
 
 function styleDurations() {
-  $('.duration-picker').durationPicker({
+  $('.duration-picker-time-range').durationPicker({
     showDays: false,
     showSeconds: false
+  });
+  $('.duration-picker-activity').durationPicker({
+    showDays: false,
+    showSeconds: false,
+    maxHours: 99
   });
 }

@@ -34,7 +34,7 @@
         class: 'bdp-input form-inline',
         html: [
           buildDisplayBlock('days', !plugin.settings.showDays),
-          buildDisplayBlock('hours', false, plugin.settings.showDays ? 23 : 99999),
+          buildDisplayBlock('hours', false, plugin.settings.showDays ? 23 : (plugin.settings.maxHours || 99999)),
           buildDisplayBlock('minutes', false, 59),
           buildDisplayBlock('seconds', !plugin.settings.showSeconds, 59),
         ],
