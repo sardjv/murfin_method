@@ -11,7 +11,7 @@ describe 'User destroys a plan', type: :feature, js: true do
 
     accept_confirm { first('.bi-trash').click }
 
-    expect(page).to have_content(I18n.t('plan.notice.successfully.destroyed'))
+    expect(page).to have_content(I18n.t('notice.successfully.destroyed', model_name: Plan.model_name.human))
     refute(Plan.exists?)
   end
 end

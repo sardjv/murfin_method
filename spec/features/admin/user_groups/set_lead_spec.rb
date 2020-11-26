@@ -17,7 +17,7 @@ describe 'Admin edits a user group', type: :feature, js: true do
 
       choose(I18n.t('user_groups.labels.lead'))
       click_button I18n.t('user_groups.save')
-      expect(page).to have_content(I18n.t('user_groups.notice.successfully.updated'))
+      expect(page).to have_content(I18n.t('notice.successfully.updated', model_name: UserGroup.model_name.human))
       expect(user_group.reload.name).to eq 'Band 1'
     end
   end

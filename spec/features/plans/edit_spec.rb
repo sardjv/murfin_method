@@ -16,7 +16,7 @@ describe 'User edits a plan', type: :feature, js: true do
     click_link I18n.t('activity.remove')
     click_button I18n.t('plan.save')
 
-    expect(page).to have_content(I18n.t('plan.notice.successfully.updated'))
+    expect(page).to have_content(I18n.t('notice.successfully.updated', model_name: Plan.model_name.human))
     expect(plan.reload.end_date.year).to eq input
     expect(plan.activities.count).to eq 0
   end
@@ -31,7 +31,7 @@ describe 'User edits a plan', type: :feature, js: true do
     it 'does not save' do
       expect { click_button I18n.t('plan.save') }.not_to change(Plan, :count)
 
-      expect(page).to have_content(I18n.t('plan.notice.could_not_be.updated'))
+      expect(page).to have_content(I18n.t('notice.could_not_be.updated', model_name: Plan.model_name.human))
     end
   end
 end

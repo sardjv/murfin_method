@@ -11,9 +11,9 @@ class Admin::TimeRangesController < ApplicationController
   def create
     @time_range = TimeRange.new(time_range_params)
     if @time_range.save
-      redirect_to admin_time_ranges_path, notice: t('time_range.notice.successfully.created')
+      redirect_to admin_time_ranges_path, notice: notice('successfully.created')
     else
-      flash.now.alert = t('time_range.notice.could_not_be.created')
+      flash.now.alert = notice('could_not_be.created')
       render :edit
     end
   end
@@ -26,9 +26,9 @@ class Admin::TimeRangesController < ApplicationController
     @time_range = TimeRange.find(params[:id])
 
     if @time_range.update(time_range_params)
-      redirect_to admin_time_ranges_path, notice: t('time_range.notice.successfully.updated')
+      redirect_to admin_time_ranges_path, notice: notice('successfully.updated')
     else
-      flash.now.alert = t('time_range.notice.could_not_be.updated')
+      flash.now.alert = notice('could_not_be.updated')
       render :edit
     end
   end
@@ -36,10 +36,14 @@ class Admin::TimeRangesController < ApplicationController
   def destroy
     @time_range = TimeRange.find(params[:id])
     @time_range.destroy
-    redirect_to admin_time_ranges_path, notice: t('time_range.notice.successfully.destroyed')
+    redirect_to admin_time_ranges_path, notice: notice('successfully.destroyed')
   end
 
   private
+
+  def notice(action)
+    t("notice.#{action}", model_name: TimeRange.model_name.human)
+  end
 
   def time_range_params
     params.require(:time_range).permit(

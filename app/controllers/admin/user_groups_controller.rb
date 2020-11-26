@@ -12,9 +12,9 @@ class Admin::UserGroupsController < ApplicationController
     @group_type = GroupType.find(params[:group_type_id])
     @user_group = @group_type.user_groups.new(user_group_params)
     if @user_group.save
-      redirect_to admin_group_types_path, notice: t('user_groups.notice.successfully.created')
+      redirect_to admin_group_types_path, notice: notice('successfully.created')
     else
-      flash.now.alert = t('user_groups.notice.could_not_be.created')
+      flash.now.alert = notice('could_not_be.created')
       render :new
     end
   end
@@ -27,9 +27,9 @@ class Admin::UserGroupsController < ApplicationController
     @user_group = UserGroup.find(params[:id])
 
     if @user_group.update(user_group_params)
-      redirect_to admin_group_types_path, notice: t('user_groups.notice.successfully.updated')
+      redirect_to admin_group_types_path, notice: notice('successfully.updated')
     else
-      flash.now.alert = t('user_groups.notice.could_not_be.updated')
+      flash.now.alert = notice('could_not_be.updated')
       render :edit
     end
   end
@@ -37,10 +37,14 @@ class Admin::UserGroupsController < ApplicationController
   def destroy
     @user_group = UserGroup.find(params[:id])
     @user_group.destroy
-    redirect_to admin_group_types_path, notice: t('user_groups.notice.successfully.destroyed')
+    redirect_to admin_group_types_path, notice: notice('successfully.destroyed')
   end
 
   private
+
+  def notice(action)
+    t("notice.#{action}", model_name: UserGroup.model_name.human)
+  end
 
   def user_group_params
     params.require(:user_group).permit(
