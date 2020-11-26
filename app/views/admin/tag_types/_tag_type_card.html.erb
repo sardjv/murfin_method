@@ -1,0 +1,24 @@
+<div class='card'>
+  <div class='card-header' id='heading<%=index%>'>
+    <h5 class='mb-0'>
+      <button class='btn btn-link' data-toggle='collapse' data-target='#collapse<%=index%>' aria-expanded='false' aria-controls='#collapse<%=index%>'>
+        <%= tag_type.name.pluralize %>
+      </button>
+      <%= link_to [:admin, tag_type], method: :delete, data: { confirm: I18n.t('tag_types.confirm') }, class: 'float-right' do %>
+        <%= icon('trash') %>
+      <% end %>
+      <%= link_to [:edit, :admin, tag_type], class: 'float-right' do %>
+        <%= icon('pencil') %>
+      <% end %>
+      <%= link_to [:new, :admin, tag_type, :tag], class: 'float-right' do %>
+        <%= icon('plus') %>
+      <% end %>
+    </h5>
+  </div>
+
+  <div id='collapse<%=index%>' class='collapse' aria-labelledby='heading<%=index%>' data-parent='#accordion'>
+    <div class='card-body p-0'>
+      <%= render(partial: 'tag_type_table', locals: { tag_type: tag_type}) %>
+    </div>
+  </div>
+</div>

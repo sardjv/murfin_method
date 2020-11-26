@@ -37,6 +37,9 @@ Rails.application.routes.draw do
     resources :group_types, except: :show do
       resources :user_groups, except: :show, shallow: true
     end
+    resources :tag_types, except: :show do
+      resources :tags, except: :show, shallow: true
+    end
     resources :time_ranges, except: :show
     resources :users, except: :show
   end

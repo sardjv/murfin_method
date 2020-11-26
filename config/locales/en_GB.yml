@@ -61,6 +61,7 @@ en:
       individuals: Individuals
       plans: Plans
       summary: Summary
+      tags: Tags
       team: '%{team_name} dashboard'
       time_ranges: Actuals
     team_dashboard: Team
@@ -112,6 +113,52 @@ en:
     really_under: Really Under
     under: Under
     unknown: Unknown
+  tags:
+    add: Add %{tag_type_name} tag
+    cancel: Cancel
+    confirm: Are you sure?
+    delete: Delete
+    edit: Edit tag
+    labels:
+      name: Name
+    save: Save
+    notice:
+      successfully:
+        created:
+          Tag successfully created
+        destroyed:
+          Tag deleted
+        updated:
+          Tag successfully updated
+      could_not_be:
+        created:
+          Tag could not be created
+        updated:
+          Tag could not be updated
+  tag_types:
+    add: Add tag type
+    edit: Edit tag type
+    cancel: Cancel
+    confirm: Are you sure?
+    delete: Delete
+    labels:
+      name: Name
+      name_help: Name should be singular
+      tags: Tags
+    save: Save
+    notice:
+      could_not_be:
+        created:
+          Tag type could not be created
+        updated:
+          Tag type could not be updated
+      successfully:
+        created:
+          Tag type successfully created
+        destroyed:
+          Tag type deleted
+        updated:
+          Tag type successfully updated
   time:
     formats:
       iso8601_utc: '%Y-%m-%dT%H:%M:%S.000Z'
