@@ -10,7 +10,10 @@
 #  updated_at    :datetime         not null
 #
 class Tag < ApplicationRecord
-  belongs_to :taggable, polymorphic: true
+  belongs_to :tag_type
 
-  validates :content, :taggable_id, presence: true
+  has_many :activity_tags, dependent: :destroy
+
+  validates :name, :tag_type_id, presence: true
+  validates :name, uniqueness: { scope: :tag_type_id, case_sensitive: false }
 end

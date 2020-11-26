@@ -71,6 +71,7 @@ en:
       individuals: Individuals
       plans: Plans
       summary: Summary
+      tags: Tags
       team: '%{team_name} dashboard'
       time_ranges: Actuals
     team_dashboard: Team

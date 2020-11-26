@@ -10,8 +10,7 @@
 #  updated_at    :datetime         not null
 #
 FactoryBot.define do
-  factory :tag do
+  factory :tag_type do
     name { Faker::Company.industry }
-    tag_type_id { TagType.all.sample.try(:id) || create(:tag_type).id }
   end
 end

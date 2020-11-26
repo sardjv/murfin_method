@@ -9,9 +9,10 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #
-FactoryBot.define do
-  factory :tag do
-    name { Faker::Company.industry }
-    tag_type_id { TagType.all.sample.try(:id) || create(:tag_type).id }
-  end
+class ActivityTag < ApplicationRecord
+  belongs_to :tag
+  belongs_to :activity
+
+  validates :tag_id, :activity_id, presence: true
+  validates :activity_id, uniqueness: { scope: :tag_id }
 end

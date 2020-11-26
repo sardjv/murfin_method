@@ -34,7 +34,10 @@ class NavPresenter
             controllers: ['admin/group_types', 'admin/user_groups'] },
           { label: I18n.t('nav.tabs.time_ranges'),
             path: %i[admin time_ranges],
-            controllers: ['admin/time_ranges'] }
+            controllers: ['admin/time_ranges'] },
+          { label: I18n.t('nav.tabs.tags'),
+            path: %i[admin tags],
+            controllers: ['admin/tags'] }
         ],
         enabled: @current_user&.admin?
       }
