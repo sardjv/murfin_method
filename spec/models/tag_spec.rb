@@ -2,12 +2,11 @@
 #
 # Table name: tags
 #
-#  id            :bigint           not null, primary key
-#  content       :text(65535)      not null
-#  taggable_type :string(255)
-#  taggable_id   :bigint
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id          :bigint           not null, primary key
+#  name        :string(255)      not null
+#  tag_type_id :bigint           not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
 #
 describe Tag, type: :model do
   subject { build(:tag) }

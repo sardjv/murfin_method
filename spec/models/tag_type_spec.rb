@@ -1,11 +1,9 @@
 # == Schema Information
 #
-# Table name: plans
+# Table name: tag_types
 #
 #  id         :bigint           not null, primary key
-#  start_date :date             not null
-#  end_date   :date             not null
-#  user_id    :bigint           not null
+#  name       :string(255)      not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

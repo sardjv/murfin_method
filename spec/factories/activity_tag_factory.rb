@@ -1,13 +1,12 @@
 # == Schema Information
 #
-# Table name: tags
+# Table name: activity_tags
 #
-#  id            :bigint           not null, primary key
-#  content       :text(65535)      not null
-#  taggable_type :string(255)
-#  taggable_id   :bigint
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id          :bigint           not null, primary key
+#  tag_id      :bigint           not null
+#  activity_id :bigint           not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
 #
 FactoryBot.define do
   factory :activity_tag do
