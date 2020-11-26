@@ -17,7 +17,7 @@ describe 'User creates a time_range', type: :feature, js: true do
     expect { click_button I18n.t('time_range.save') }.to change { TimeRange.count }.by(1)
 
     expect(TimeRange.last.user_id).to eq(current_user.id)
-    expect(page).to have_content(I18n.t('time_range.notice.successfully.created'))
+    expect(page).to have_content(I18n.t('notice.successfully.created', model_name: TimeRange.model_name.human))
   end
 
   context 'with end before start' do
@@ -28,7 +28,7 @@ describe 'User creates a time_range', type: :feature, js: true do
     it 'does not save' do
       expect { click_button I18n.t('time_range.save') }.not_to change(TimeRange, :count)
 
-      expect(page).to have_content(I18n.t('time_range.notice.could_not_be.created'))
+      expect(page).to have_content(I18n.t('notice.could_not_be.created', model_name: TimeRange.model_name.human))
     end
   end
 end

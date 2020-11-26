@@ -16,7 +16,7 @@ describe 'Admin edits a group type', type: :feature, js: true do
     fill_in I18n.t('group_types.labels.name'), with: 'NHS Band'
     click_button I18n.t('group_types.save')
 
-    expect(page).to have_content(I18n.t('group_types.notice.successfully.updated'))
+    expect(page).to have_content(I18n.t('notice.successfully.updated', model_name: GroupType.model_name.human))
     expect(group_type.reload.name).to eq 'NHS Band'
   end
 
@@ -28,7 +28,7 @@ describe 'Admin edits a group type', type: :feature, js: true do
       fill_in I18n.t('group_types.labels.name'), with: 'Health Visitor'
       click_button I18n.t('group_types.save')
 
-      expect(page).to have_content(I18n.t('group_types.notice.could_not_be.updated'))
+      expect(page).to have_content(I18n.t('notice.could_not_be.updated', model_name: GroupType.model_name.human))
       expect(group_type.reload.name).to eq 'Band'
     end
   end

@@ -1,4 +1,7 @@
 en:
+  activerecord:
+    models:
+      time_range: Actual data
   activity:
     add: Add Activity
     labels:
@@ -43,19 +46,6 @@ en:
       name_help: Name should be singular
       user_group: User groups
     save: Save
-    notice:
-      could_not_be:
-        created:
-          Group type could not be created
-        updated:
-          Group type could not be updated
-      successfully:
-        created:
-          Group type successfully created
-        destroyed:
-          Group type deleted
-        updated:
-          Group type successfully updated
   home:
     compare_plan_with_actuals: Compare job plans versus actual time spent with patients.
     drill_down: Drill down to find service and data collection problems.
@@ -91,6 +81,19 @@ en:
     placeholders:
       content: Add some detail about the note here
     save: Save
+  notice:
+    could_not_be:
+      created:
+        "%{model_name} could not be created"
+      updated:
+        "%{model_name} could not be updated"
+    successfully:
+      created:
+        "%{model_name} successfully created"
+      destroyed:
+        "%{model_name} deleted"
+      updated:
+        "%{model_name} successfully updated"
   plan:
     add: Add Plan
     cancel: Cancel
@@ -103,19 +106,6 @@ en:
       start_date: Start date
       user: User
     name: Plan
-    notice:
-      successfully:
-        created:
-          Plan successfully created
-        destroyed:
-          Plan deleted
-        updated:
-          Plan successfully updated
-      could_not_be:
-        created:
-          Plan could not be created
-        updated:
-          Plan could not be updated
     save: Save
   status:
     about_right: About Right
@@ -185,19 +175,6 @@ en:
       user: User
       value: Duration worked
       time_worked: Worked
-    notice:
-      successfully:
-        created:
-          Time range successfully created
-        destroyed:
-          Time range deleted
-        updated:
-          Time range successfully updated
-      could_not_be:
-        created:
-          Time range could not be created
-        updated:
-          Time range could not be updated
     save: Save
   user:
     name: Name
@@ -217,19 +194,6 @@ en:
       member: Member
       members: Members
     save: Save
-    notice:
-      successfully:
-        created:
-          User group successfully created
-        destroyed:
-          User group deleted
-        updated:
-          User group successfully updated
-      could_not_be:
-        created:
-          User group could not be created
-        updated:
-          User group could not be updated
   users:
     add: Add user
     edit: Edit user
@@ -242,16 +206,3 @@ en:
       first_name: First name
       last_name: Last name
     save: Save
-    notice:
-      successfully:
-        created:
-          User successfully created
-        destroyed:
-          User deleted
-        updated:
-          User successfully updated
-      could_not_be:
-        created:
-          User could not be created
-        updated:
-          User could not be updated

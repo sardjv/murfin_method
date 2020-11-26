@@ -17,7 +17,7 @@ describe 'User creates a plan', type: :feature, js: true do
 
     expect { click_button I18n.t('plan.save') }.to change { Plan.count }.by(1)
 
-    expect(page).to have_content(I18n.t('plan.notice.successfully.created'))
+    expect(page).to have_content(I18n.t('notice.successfully.created', model_name: Plan.model_name.human))
     expect(Plan.last.user_id).to eq(current_user.id)
     expect(Plan.last.activities.count).to eq(1)
     expect(Plan.last.end_date).to eq(Plan.last.start_date + 1.year - 1.day)

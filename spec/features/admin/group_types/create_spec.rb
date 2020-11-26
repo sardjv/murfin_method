@@ -10,7 +10,7 @@ describe 'Admin creates a group type', type: :feature, js: true do
     fill_in I18n.t('group_types.labels.name'), with: 'Band'
     click_button I18n.t('group_types.save')
 
-    expect(page).to have_content(I18n.t('group_types.notice.successfully.created'))
+    expect(page).to have_content(I18n.t('notice.successfully.created', model_name: GroupType.model_name.human))
     expect(GroupType.all.count).to eq 1
   end
 
@@ -23,7 +23,7 @@ describe 'Admin creates a group type', type: :feature, js: true do
       fill_in I18n.t('group_types.labels.name'), with: 'Band'
       click_button I18n.t('group_types.save')
 
-      expect(page).to have_content(I18n.t('group_types.notice.could_not_be.created'))
+      expect(page).to have_content(I18n.t('notice.could_not_be.created', model_name: GroupType.model_name.human))
       expect(GroupType.all.count).to eq 1
     end
   end

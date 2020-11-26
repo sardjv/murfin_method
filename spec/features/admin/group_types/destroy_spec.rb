@@ -14,7 +14,7 @@ describe 'Admin destroys a group type', type: :feature, js: true do
       first('.bi-trash').click
     end
 
-    expect(page).to have_content(I18n.t('group_types.notice.successfully.destroyed'))
+    expect(page).to have_content(I18n.t('notice.successfully.destroyed', model_name: GroupType.model_name.human))
     expect(GroupType.all.count).to eq 0
   end
 end

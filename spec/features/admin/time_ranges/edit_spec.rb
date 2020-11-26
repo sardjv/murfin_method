@@ -14,7 +14,7 @@ describe 'Admin edits a time_range', type: :feature, js: true do
     find_field(type: 'number', match: :first).set(input_value)
     click_button I18n.t('time_range.save')
 
-    expect(page).to have_content(I18n.t('time_range.notice.successfully.updated'))
+    expect(page).to have_content(I18n.t('notice.successfully.updated', model_name: TimeRange.model_name.human))
     expect(time_range.reload.value).to eq input_value * 60
   end
 
@@ -26,7 +26,7 @@ describe 'Admin edits a time_range', type: :feature, js: true do
     it 'does not save' do
       expect { click_button I18n.t('time_range.save') }.not_to change(TimeRange, :count)
 
-      expect(page).to have_content(I18n.t('time_range.notice.could_not_be.updated'))
+      expect(page).to have_content(I18n.t('notice.could_not_be.updated', model_name: TimeRange.model_name.human))
     end
   end
 end
