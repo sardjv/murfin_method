@@ -5,7 +5,7 @@
 #  id                 :bigint           not null, primary key
 #  start_time         :datetime         not null
 #  end_time           :datetime         not null
-#  value              :integer          not null
+#  value              :decimal(65, 30)  not null
 #  time_range_type_id :bigint           not null
 #  user_id            :bigint           not null
 #  created_at         :datetime         not null
