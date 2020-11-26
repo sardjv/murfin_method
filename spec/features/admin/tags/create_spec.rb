@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Admin creates a tag', type: :feature, js: true do
   let!(:tag_type) do
-    create(:tag_type, name: 'Band')
+    create(:tag_type, name: 'Patient Contact')
   end
   before { log_in create(:admin) }
 
@@ -13,7 +13,7 @@ describe 'Admin creates a tag', type: :feature, js: true do
       first('.bi-plus').click
     end
 
-    fill_in I18n.t('tags.labels.name'), with: 'Band 1'
+    fill_in I18n.t('tags.labels.name'), with: '1'
     click_button I18n.t('tags.save')
 
     expect(page).to have_content(I18n.t('tags.notice.successfully.created'))
@@ -22,7 +22,7 @@ describe 'Admin creates a tag', type: :feature, js: true do
 
   context 'when enter non unique name' do
     let!(:tag) do
-      create(:tag, tag_type: tag_type, name: 'Band 1')
+      create(:tag, tag_type: tag_type, name: '1')
     end
     it 'does not create tag' do
       visit admin_tag_types_path
@@ -30,7 +30,7 @@ describe 'Admin creates a tag', type: :feature, js: true do
       within('.card-header') do
         first('.bi-plus').click
       end
-      fill_in I18n.t('tags.labels.name'), with: 'Band 1'
+      fill_in I18n.t('tags.labels.name'), with: '1'
       click_button I18n.t('tags.save')
 
       expect(page).to have_content(I18n.t('tags.notice.could_not_be.created'))
