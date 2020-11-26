@@ -23,7 +23,7 @@ describe 'Admin adds a user to a group', type: :feature, js: true do
     bootstrap_select 'Band 2', from: 'Band'
     click_button I18n.t('users.save')
 
-    expect(page).to have_content(I18n.t('users.notice.successfully.updated'))
+    expect(page).to have_content(I18n.t('notice.successfully.updated', model_name: User.model_name.human))
     expect(user.user_groups.first.name).to eq 'Band 2'
   end
 end

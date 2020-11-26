@@ -16,7 +16,7 @@ describe 'Admin destroys a user', type: :feature, js: true do
       first('.bi-trash').click
     end
 
-    expect(page).to have_content(I18n.t('users.notice.successfully.destroyed'))
+    expect(page).to have_content(I18n.t('notice.successfully.destroyed', model_name: User.model_name.human))
     expect(User.all.count).to eq 1
   end
 end

@@ -12,9 +12,9 @@ class PlansController < ApplicationController
     @plan = build_plan
 
     if @plan.save
-      redirect_to plans_path, notice: t('plan.notice.successfully.created')
+      redirect_to plans_path, notice: notice('successfully.created')
     else
-      flash.now.alert = t('plan.notice.could_not_be.created')
+      flash.now.alert = notice('could_not_be.created')
       render :edit
     end
   end
@@ -27,9 +27,9 @@ class PlansController < ApplicationController
     @plan = Plan.find(params[:id])
 
     if @plan.update(plan_params)
-      flash.now.notice = t('plan.notice.successfully.updated')
+      flash.now.notice = notice('successfully.updated')
     else
-      flash.now.alert = t('plan.notice.could_not_be.updated')
+      flash.now.alert = notice('could_not_be.updated')
     end
 
     render :edit
@@ -38,10 +38,14 @@ class PlansController < ApplicationController
   def destroy
     @plan = Plan.find(params[:id])
     @plan.destroy
-    redirect_to plans_path, notice: t('plan.notice.successfully.destroyed')
+    redirect_to plans_path, notice: notice('successfully.destroyed')
   end
 
   private
+
+  def notice(action)
+    t("notice.#{action}", model_name: Plan.model_name.human)
+  end
 
   def build_plan
     Plan.new(plan_params) do |plan|

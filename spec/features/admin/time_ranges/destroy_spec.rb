@@ -10,7 +10,7 @@ describe 'Admin destroys a time range', type: :feature, js: true do
 
     accept_confirm { first('.bi-trash').click }
 
-    expect(page).to have_content(I18n.t('time_range.notice.successfully.destroyed'))
+    expect(page).to have_content(I18n.t('notice.successfully.destroyed', model_name: TimeRange.model_name.human))
     refute(TimeRange.exists?)
   end
 end

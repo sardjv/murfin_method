@@ -19,7 +19,7 @@ describe 'Admin destroys a user group', type: :feature, js: true do
       end
     end
 
-    expect(page).to have_content(I18n.t('user_groups.notice.successfully.destroyed'))
+    expect(page).to have_content(I18n.t('notice.successfully.destroyed', model_name: UserGroup.model_name.human))
     expect(UserGroup.all.count).to eq 0
   end
 end
