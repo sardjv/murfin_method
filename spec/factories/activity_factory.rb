@@ -10,7 +10,7 @@
 #
 FactoryBot.define do
   factory :activity do
-    minutes_per_week { 4 * 60 }
+    seconds_per_week { 4 * 60 * 60 }
     plan_id { Plan.all.sample.try(:id) || create(:plan).id }
   end
 end

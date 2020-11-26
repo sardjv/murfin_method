@@ -17,17 +17,17 @@ class Activity < ApplicationRecord
   validates :schedule, presence: true
   validate :validate_end_time_after_start_time
 
-  def minutes_per_week
-    return unless schedule
-
-    ScheduleParser.call(schedule: schedule)[:minutes_per_week]
-  end
-
-  def minutes_per_week=(minutes)
+  def seconds_per_week=(seconds)
     self.schedule = ScheduleBuilder.call(
       schedule: schedule,
-      minutes_per_week: minutes
+      minutes_per_week: seconds.to_f / 60
     )
+  end
+
+  def seconds_per_week
+    return unless schedule
+
+    ScheduleParser.call(schedule: schedule)[:minutes_per_week] * 60.0
   end
 
   def days

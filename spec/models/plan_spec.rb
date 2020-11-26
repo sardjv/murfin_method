@@ -47,7 +47,7 @@ describe Plan, type: :model do
         :plan,
         start_date: Time.zone.local(2019, 11, 5),
         end_date: Time.zone.local(2020, 11, 4, 23, 59, 59),
-        activities: [create(:activity, minutes_per_week: 60)]
+        activities: [create(:activity, seconds_per_week: 60 * 60)]
       )
     end
 

@@ -15,19 +15,19 @@ describe Activity, type: :model do
 
   it { should belong_to(:plan) }
 
-  context 'with minutes_per_week' do
+  context 'with seconds_per_week' do
     before do
-      subject.update(minutes_per_week: minutes_per_week)
+      subject.update(seconds_per_week: seconds_per_week)
     end
 
     context 'with 7 hours' do
-      let(:minutes_per_week) { 7 * 60 }
+      let(:seconds_per_week) { 7 * 60 * 60 }
 
       it 'spreads it across the week' do
         expect(subject.days).to eq(%w[monday tuesday wednesday thursday friday saturday sunday])
         expect(subject.start_time).to eq(Time.zone.local(1, 1, 1, 9, 0))
         expect(subject.end_time).to eq(Time.zone.local(1, 1, 1, 10, 0))
-        expect(subject.minutes_per_week).to eq(minutes_per_week)
+        expect(subject.seconds_per_week).to eq(seconds_per_week)
       end
 
       describe 'to_time_ranges' do

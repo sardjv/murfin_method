@@ -42,11 +42,11 @@ class ScheduleBuilder
     return schedule unless value
 
     value = value.to_f
-    max_minutes_per_day = 480.0 # 8 hours.
     number_of_days = 7
 
-    # Limit to 8 hours per day - arbitrary, but gives a hard limit to schedules.
-    raise MaxDurationError unless value <= (max_minutes_per_day * number_of_days)
+    # Limit to 100 hours per week - arbitrary, but gives a hard limit to schedules.
+    # Frontend duration field must be limited to 99 hours and 59 minutes to match this.
+    raise MaxDurationError unless value <= (100 * 60)
 
     seconds_per_day = (value / number_of_days) * 60 # Spread value evenly across the days.
 

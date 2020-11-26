@@ -28,8 +28,7 @@
         <label><%= I18n.t('plan.labels.activities') %></label>
 
         <div class='row'>
-          <label class='col-md d-none d-md-block'><%= I18n.t('activity.labels.minutes_per_week') %></label>
-          <label class='col-md d-none d-md-block'></label>
+          <label class='col-md d-md-block'><%= I18n.t('activity.labels.duration') %></label>
         </div>
         <%= f.fields_for :activities do |activity_form| %>
           <%= render 'activity_fields', plan_form: f, f: activity_form %>

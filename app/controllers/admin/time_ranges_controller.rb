@@ -46,7 +46,7 @@ class Admin::TimeRangesController < ApplicationController
       :time_range_type_id,
       :start_time,
       :end_time,
-      :value,
+      :seconds_worked,
       :user_id
     )
   end

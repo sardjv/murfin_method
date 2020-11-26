@@ -18,6 +18,14 @@ class TimeRange < ApplicationRecord
   validates :start_time, :end_time, :value, :time_range_type_id, :user_id, presence: true
   validate :validate_end_time_after_start_time
 
+  def seconds_worked=(seconds)
+    self.value = seconds.to_f / 60
+  end
+
+  def seconds_worked
+    (value || 0) * 60.0
+  end
+
   def validate_end_time_after_start_time
     return unless start_time && end_time && end_time <= start_time
 
