@@ -16,10 +16,27 @@ describe Plan, type: :model do
 
   it { should validate_presence_of(:start_date) }
   it { should validate_presence_of(:end_date) }
-  it { should validate_presence_of(:user_id) }
   it { should belong_to(:user) }
   it { should have_many(:activities).dependent(:destroy) }
   it { should accept_nested_attributes_for(:activities).allow_destroy(true) }
+
+  context 'with nil user_id' do
+    subject { build(:plan, user_id: nil) }
+    it 'validates existence of user' do
+      expect(subject).not_to be_valid
+      messages = subject.errors.full_messages
+      expect(messages).to include('User must exist')
+    end
+  end
+
+  context 'with non existent user' do
+    subject { build(:plan, user_id: 123) }
+    it 'validates existence of user' do
+      expect(subject).not_to be_valid
+      messages = subject.errors.full_messages
+      expect(messages).to include('User must exist')
+    end
+  end
 
   context 'with end_date before start_date' do
     subject { build(:plan) }

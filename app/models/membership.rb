@@ -15,6 +15,6 @@ class Membership < ApplicationRecord
   belongs_to :user_group
   belongs_to :user
 
-  validates :user_group, presence: true, uniqueness: { scope: :user }
-  validates :user, :role, presence: true
+  validates :role, presence: true
+  validates :user_group, uniqueness: { scope: :user }
 end
