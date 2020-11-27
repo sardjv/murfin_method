@@ -7,11 +7,11 @@ describe 'Admin creates a tag type', type: :feature, js: true do
   it 'creates tag type' do
     visit admin_tag_types_path
 
-    click_link I18n.t('tag_types.add')
+    click_link I18n.t('actions.add', model_name: TagType.model_name.human)
     fill_in I18n.t('tag_types.labels.name'), with: name
-    click_button I18n.t('tag_types.save')
+    click_button I18n.t('actions.save')
 
-    expect(page).to have_content(I18n.t('tag_types.notice.successfully.created'))
+    expect(page).to have_content(I18n.t('notice.successfully.created', model_name: TagType.model_name.human))
     expect(TagType.all.count).to eq 1
   end
 
@@ -20,11 +20,11 @@ describe 'Admin creates a tag type', type: :feature, js: true do
     it 'does not create tag type' do
       visit admin_tag_types_path
 
-      click_link I18n.t('tag_types.add')
+      click_link I18n.t('actions.add', model_name: TagType.model_name.human)
       fill_in I18n.t('tag_types.labels.name'), with: name
-      click_button I18n.t('tag_types.save')
+      click_button I18n.t('actions.save')
 
-      expect(page).to have_content(I18n.t('tag_types.notice.could_not_be.created'))
+      expect(page).to have_content(I18n.t('notice.could_not_be.created', model_name: TagType.model_name.human))
       expect(TagType.all.count).to eq 1
     end
   end

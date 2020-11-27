@@ -4,9 +4,9 @@
     <div class='col-12'>
       <h5>
         <% if @tag_type.persisted? %>
-          <%= I18n.t('tag_types.edit') %>
+          <%= I18n.t('actions.edit', model_name: TagType.model_name.human) %>
         <% else %>
-          <%= I18n.t('tag_types.add') %>
+          <%= I18n.t('actions.add', model_name: TagType.model_name.human) %>
         <% end %>
       </h5>
     </div>
@@ -19,8 +19,8 @@
                                 placeholder: I18n.t('tag_types.labels.name'),
                                 help:  I18n.t('tag_types.labels.name_help'),
                                 required: true %>
-        <%= f.submit I18n.t('tag_types.save'), class: 'btn btn-primary', style: 'margin-top: 10px;' %>
-        <%= link_to I18n.t('tag_types.cancel'), :back, class: 'btn btn-outline-secondary mt-2' %>
+        <%= f.submit I18n.t('actions.save'), class: 'btn btn-primary', style: 'margin-top: 10px;' %>
+        <%= link_to I18n.t('actions.cancel'), :back, class: 'btn btn-outline-secondary mt-2' %>
       <% end %>
     </div>
   </div>

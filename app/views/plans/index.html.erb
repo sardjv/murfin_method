@@ -6,7 +6,7 @@
 
       <%= link_to [:new, :plan], class: 'btn btn-primary float-right mb-3' do %>
         <%= icon('plus') %>
-        <%= I18n.t('plan.add') %>
+        <%= I18n.t('actions.add', model_name: Plan.model_name.human) %>
       <% end %>
 
       <div class='table-responsive'>
@@ -45,7 +45,7 @@
                     <% end %>
                   </td>
                   <td>
-                    <%= link_to [plan], method: :delete, data: { confirm: I18n.t('plan.confirm') }, class: 'btn btn-link'  do %>
+                    <%= link_to [plan], method: :delete, data: { confirm: I18n.t('actions.confirm') }, class: 'btn btn-link'  do %>
                       <%= icon('trash') %>
                     <% end %>
                   </td>

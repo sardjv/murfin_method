@@ -14,7 +14,7 @@ describe 'Admin creates a user group', type: :feature, js: true do
     end
 
     fill_in I18n.t('user_groups.labels.name'), with: 'Band 1'
-    click_button I18n.t('user_groups.save')
+    click_button I18n.t('actions.save')
 
     expect(page).to have_content(I18n.t('notice.successfully.created', model_name: UserGroup.model_name.human))
     expect(UserGroup.all.count).to eq 1
@@ -31,7 +31,7 @@ describe 'Admin creates a user group', type: :feature, js: true do
         first('.bi-plus').click
       end
       fill_in I18n.t('user_groups.labels.name'), with: 'Band 1'
-      click_button I18n.t('user_groups.save')
+      click_button I18n.t('actions.save')
 
       expect(page).to have_content(I18n.t('notice.could_not_be.created', model_name: UserGroup.model_name.human))
       expect(UserGroup.all.count).to eq 1

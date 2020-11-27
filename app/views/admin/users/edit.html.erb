@@ -4,9 +4,9 @@
     <div class='col-12'>
       <h5>
         <% if @user.persisted? %>
-          <%= I18n.t('users.edit') %>
+          <%= I18n.t('actions.edit', model_name: User.model_name.human) %>
         <% else %>
-          <%= I18n.t('users.add') %>
+          <%= I18n.t('actions.add', model_name: User.model_name.human) %>
         <% end %>
       </h5>
     </div>
@@ -33,8 +33,8 @@
           </p>
         <% end %>
 
-        <%= f.submit I18n.t('users.save'), class: 'btn btn-primary mt-2' %>
-        <%= link_to I18n.t('users.cancel'), :back, class: 'btn btn-outline-secondary mt-2' %>
+        <%= f.submit I18n.t('actions.save'), class: 'btn btn-primary mt-2' %>
+        <%= link_to I18n.t('actions.cancel'), :back, class: 'btn btn-outline-secondary mt-2' %>
       <% end %>
     </div>
   </div>

@@ -4,9 +4,9 @@
     <div class='col-12'>
       <h5>
         <% if @time_range.persisted? %>
-          <%= I18n.t('time_range.edit') %>
+          <%= I18n.t('actions.edit', model_name: TimeRange.model_name.human) %>
         <% else %>
-          <%= I18n.t('time_range.add') %>
+          <%= I18n.t('actions.add', model_name: TimeRange.model_name.human) %>
         <% end %>
       </h5>
     </div>
@@ -39,8 +39,8 @@
           required: true
         %>
 
-        <%= f.submit I18n.t('time_range.save'), class: 'btn btn-primary mt-2' %>
-        <%= link_to I18n.t('time_range.cancel'), :back, class: 'btn btn-outline-secondary mt-2' %>
+        <%= f.submit I18n.t('actions.save'), class: 'btn btn-primary mt-2' %>
+        <%= link_to I18n.t('actions.cancel'), :back, class: 'btn btn-outline-secondary mt-2' %>
       <% end %>
     </div>
   </div>

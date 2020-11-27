@@ -4,7 +4,7 @@
 
       <%= link_to [:new, :admin, :time_range], class: 'btn btn-primary float-right mb-3' do %>
         <%= icon('plus') %>
-        <%= I18n.t('time_range.add') %>
+        <%= I18n.t('actions.add', model_name: TimeRange.model_name.human) %>
       <% end %>
 
       <div class='table-responsive'>
@@ -55,7 +55,7 @@
                     <% end %>
                   </td>
                   <td>
-                    <%= link_to [:admin, time_range], method: :delete, data: { confirm: I18n.t('time_range.confirm') }, class: 'btn btn-link'  do %>
+                    <%= link_to [:admin, time_range], method: :delete, data: { confirm: I18n.t('actions.confirm') }, class: 'btn btn-link'  do %>
                       <%= icon('trash') %>
                     <% end %>
                   </td>

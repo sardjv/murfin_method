@@ -6,7 +6,7 @@
     </div>
 
     <div class='col-md'>
-      <%= link_to_remove_association I18n.t('activity.remove'), f %>
+      <%= link_to_remove_association I18n.t('actions.remove', model_name: Activity.model_name.human), f %>
     </div>
   </div>
 </div>

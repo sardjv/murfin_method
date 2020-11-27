@@ -20,16 +20,16 @@
   </div>
   <div class='modal-footer'>
     <% if note.persisted? %>
-      <%= f.primary I18n.t('notes.save') %>
+      <%= f.primary I18n.t('actions.save') %>
     <% else %>
-      <%= f.primary I18n.t('notes.add') %>
+      <%= f.primary I18n.t('actions.add', model_name: Note.model_name.human) %>
     <% end %>
 
-    <button type='button' class='btn btn-secondary mr-auto' data-dismiss='modal'><%= I18n.t('notes.cancel') %></button>
+    <button type='button' class='btn btn-secondary mr-auto' data-dismiss='modal'><%= I18n.t('actions.cancel') %></button>
 
     <% if note.persisted? %>
-      <%= link_to note, type: 'button', class: 'btn btn-danger', method: :delete, remote: true, data: { confirm: I18n.t('notes.confirm') } do %>
-        <%= I18n.t('notes.delete') %>
+      <%= link_to note, type: 'button', class: 'btn btn-danger', method: :delete, remote: true, data: { confirm: I18n.t('actions.confirm') } do %>
+        <%= I18n.t('actions.delete') %>
       <% end %>
       <%= link_to '', id: 'prev_note', class: 'ml-auto', remote: true, onclick: "window.dispatchEvent(new CustomEvent('prev', { detail: { note_id: #{note.id} } }))" do %>
         <%= icon('chevron-left', width: '2em') %>

@@ -4,9 +4,9 @@
     <div class='col-12'>
       <h5>
         <% if @plan.persisted? %>
-          <%= I18n.t('plan.edit') %>
+          <%= I18n.t('actions.edit', model_name: Plan.model_name.human) %>
         <% else %>
-          <%= I18n.t('plan.add') %>
+          <%= I18n.t('actions.add', model_name: Plan.model_name.human) %>
         <% end %>
       </h5>
     </div>
@@ -28,18 +28,18 @@
         <label><%= I18n.t('plan.labels.activities') %></label>
 
         <div class='row'>
-          <label class='col-md d-md-block'><%= I18n.t('activity.labels.duration') %></label>
+          <label class='col-md d-md-block'><%= Activity.human_attribute_name('duration') %></label>
         </div>
         <%= f.fields_for :activities do |activity_form| %>
           <%= render 'activity_fields', plan_form: f, f: activity_form %>
         <% end %>
 
         <div>
-          <%= link_to_add_association I18n.t('activity.add'), f, :activities %>
+          <%= link_to_add_association I18n.t('actions.add', model_name: Activity.model_name.human), f, :activities %>
         </div>
 
-        <%= f.submit I18n.t('plan.save'), class: 'btn btn-primary mt-2' %>
-        <%= link_to I18n.t('plan.cancel'), plans_path, class: 'btn btn-outline-secondary mt-2' %>
+        <%= f.submit I18n.t('actions.save'), class: 'btn btn-primary mt-2' %>
+        <%= link_to I18n.t('actions.cancel'), plans_path, class: 'btn btn-outline-secondary mt-2' %>
       <% end %>
     </div>
   </div>

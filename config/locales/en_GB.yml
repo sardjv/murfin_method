@@ -1,17 +1,29 @@
 en:
   activerecord:
     models:
+      activity: Activity
+      group_type: Group type
+      user_group: User group
+      note: Note
+      plan: Job plan
+      tag: Tag
+      tag_type: Tag type
       time_range: Actual data
-  activity:
-    add: Add Activity
-    labels:
-      day: Day
-      end_time: End time
-      duration: Duration worked per week
-      schedule: Schedule
-      start_time: Start time
-    name: Activity
-    remove: Remove Activity
+      user: User
+      user_group: User group
+    attributes:
+      activity:
+        duration: Duration worked per week
+      group_type:
+        name: Name
+  actions:
+    add: Add %{model_name}
+    edit: Edit %{model_name}
+    remove: Remove %{model_name}
+    cancel: Cancel
+    confirm: Are you sure?
+    delete: Delete
+    save: Save
   app:
     name: Murfin+
   auth:
@@ -36,16 +48,8 @@ en:
       one: Showing 1 user
       other: Showing %{count} users
   group_types:
-    add: Add group type
-    edit: Edit group type
-    cancel: Cancel
-    confirm: Are you sure?
-    delete: Delete
     labels:
-      name: Name
       name_help: Name should be singular
-      user_group: User groups
-    save: Save
   home:
     compare_plan_with_actuals: Compare job plans versus actual time spent with patients.
     drill_down: Drill down to find service and data collection problems.
@@ -66,10 +70,6 @@ en:
       time_ranges: Actuals
     team_dashboard: Team
   notes:
-    add: Add note
-    cancel: Cancel
-    confirm: Are you sure?
-    delete: Delete
     labels:
       author: Author
       content: Add note
@@ -80,7 +80,6 @@ en:
       updated_at: Updated %{when} ago
     placeholders:
       content: Add some detail about the note here
-    save: Save
   notice:
     could_not_be:
       created:
@@ -95,18 +94,12 @@ en:
       updated:
         "%{model_name} successfully updated"
   plan:
-    add: Add Plan
-    cancel: Cancel
-    confirm: Are you sure?
-    edit: Edit Plan
     labels:
       activities: Activities
       end_date: End date
       name: Name
       start_date: Start date
       user: User
-    name: Plan
-    save: Save
   status:
     about_right: About Right
     over: Over
@@ -115,59 +108,18 @@ en:
     unknown: Unknown
   tags:
     add: Add %{tag_type_name} tag
-    cancel: Cancel
-    confirm: Are you sure?
-    delete: Delete
-    edit: Edit tag
     labels:
       name: Name
-    save: Save
-    notice:
-      successfully:
-        created:
-          Tag successfully created
-        destroyed:
-          Tag deleted
-        updated:
-          Tag successfully updated
-      could_not_be:
-        created:
-          Tag could not be created
-        updated:
-          Tag could not be updated
   tag_types:
-    add: Add tag type
-    edit: Edit tag type
-    cancel: Cancel
-    confirm: Are you sure?
-    delete: Delete
     labels:
       name: Name
       name_help: Name should be singular
       tags: Tags
-    save: Save
-    notice:
-      could_not_be:
-        created:
-          Tag type could not be created
-        updated:
-          Tag type could not be updated
-      successfully:
-        created:
-          Tag type successfully created
-        destroyed:
-          Tag type deleted
-        updated:
-          Tag type successfully updated
   time:
     formats:
       iso8601_utc: '%Y-%m-%dT%H:%M:%S.000Z'
       readable: '%H:%M on %d %B %Y'
   time_range:
-    add: Add Actual
-    cancel: Cancel
-    confirm: Are you sure?
-    edit: Edit Actual
     labels:
       end_time: End time
       start_time: Start time
@@ -175,7 +127,6 @@ en:
       user: User
       value: Duration worked
       time_worked: Worked
-    save: Save
   user:
     name: Name
     email: Email
@@ -183,26 +134,15 @@ en:
     status: Status
   user_groups:
     add: Add %{group_type_name} user group
-    cancel: Cancel
-    confirm: Are you sure?
-    delete: Delete
-    edit: Edit user group
     labels:
       name: Name
       lead: Lead
       leaders: Leads
       member: Member
       members: Members
-    save: Save
   users:
-    add: Add user
-    edit: Edit user
-    cancel: Cancel
-    confirm: Are you sure?
-    delete: Delete
     labels:
       admin: Admin
       email: Email
       first_name: First name
       last_name: Last name
-    save: Save

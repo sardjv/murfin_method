@@ -21,9 +21,9 @@ describe 'Admin edits a tag', type: :feature, js: true do
       first('.bi-pencil').click
     end
     fill_in I18n.t('tags.labels.name'), with: 'NHS 1'
-    click_button I18n.t('tags.save')
+    click_button I18n.t('actions.save')
 
-    expect(page).to have_content(I18n.t('tags.notice.successfully.updated'))
+    expect(page).to have_content(I18n.t('notice.successfully.updated', model_name: Tag.model_name.human))
     expect(band1_tag.reload.name).to eq 'NHS 1'
   end
 
@@ -36,9 +36,9 @@ describe 'Admin edits a tag', type: :feature, js: true do
         first('.bi-pencil').click
       end
       fill_in I18n.t('tags.labels.name'), with: '2'
-      click_button I18n.t('tags.save')
+      click_button I18n.t('actions.save')
 
-      expect(page).to have_content(I18n.t('tags.notice.could_not_be.updated'))
+      expect(page).to have_content(I18n.t('notice.could_not_be.updated', model_name: Tag.model_name.human))
       expect(band1_tag.reload.name).to eq '1'
     end
   end
