@@ -50,6 +50,7 @@ services:
       - redis
       - sidekiq
       - webpacker
+      - chrome_headless
     build: .
     # 1) Remove any existing server process in case of dirty shutdown, with -f in case the file doesn't exist.
     # 2) if `bundle check` indicates it's needed, `bundle install` here rather than in Dockerfile,
