@@ -4,9 +4,9 @@
     <div class='col-12'>
       <h5>
         <% if @time_range.persisted? %>
-          <%= I18n.t('time_range.edit') %>
+          <%= I18n.t('actions.edit', model_name: TimeRange.model_name.human.titleize) %>
         <% else %>
-          <%= I18n.t('time_range.add') %>
+          <%= I18n.t('actions.add', model_name: TimeRange.model_name.human.titleize) %>
         <% end %>
       </h5>
     </div>
@@ -17,25 +17,25 @@
       <%= bootstrap_form_for @time_range do |f| %>
         <%= f.select :time_range_type_id,
           options_for_select(TimeRangeType.all.map { |t| [t.name, t.id] }, selected: f.object.time_range_type_id),
-          { label: I18n.t('time_range.labels.time_range_type') },
+          { label: TimeRange.human_attribute_name('time_range_type') },
           class: 'input-group-btn',
           required: true
         %>
 
         <%= f.datetime_select :start_time,
-          label: I18n.t('time_range.labels.start_time'),
+          label: TimeRange.human_attribute_name('start_time'),
           default: { hour: 9, minute: 0 }
         %>
 
         <%= f.datetime_select :end_time,
-          label: I18n.t('time_range.labels.end_time'),
+          label: TimeRange.human_attribute_name('end_time'),
           default: { hour: 17, minute: 0 }
         %>
 
-        <%= f.number_field :seconds_worked, class: 'duration-picker-time-range', label: I18n.t('time_range.labels.value'), step: :any %>
+        <%= f.number_field :seconds_worked, class: 'duration-picker-time-range', label: TimeRange.human_attribute_name('value'), step: :any %>
 
-        <%= f.submit I18n.t('time_range.save'), class: 'btn btn-primary mt-2' %>
-        <%= link_to I18n.t('time_range.cancel'), :back, class: 'btn btn-outline-secondary mt-2' %>
+        <%= f.submit I18n.t('actions.save'), class: 'btn btn-primary mt-2' %>
+        <%= link_to I18n.t('actions.cancel'), :back, class: 'btn btn-outline-secondary mt-2' %>
       <% end %>
     </div>
   </div>

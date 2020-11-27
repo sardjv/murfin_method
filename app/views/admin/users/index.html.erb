@@ -4,7 +4,7 @@
 
       <%= link_to [:new, :admin, :user], class: 'btn btn-primary float-right mb-3' do %>
         <%= icon('plus') %>
-        <%= I18n.t('users.add') %>
+        <%= I18n.t('actions.add', model_name: User.model_name.human.titleize) %>
       <% end %>
 
       <div class='table-responsive'>
@@ -12,10 +12,10 @@
           <thead>
             <tr>
               <th>
-                <%= I18n.t('user.name') %>
+                <%= User.human_attribute_name('name') %>
               </th>
               <th>
-                <%= I18n.t('user.email') %>
+                <%= User.human_attribute_name('email') %>
               </th>
               <th style='width: 50px;'></th>
               <th style='width: 50px;'></th>
@@ -41,7 +41,7 @@
                     <% end %>
                   </td>
                   <td>
-                    <%= link_to [:admin, user], method: :delete, data: { confirm: I18n.t('users.confirm') }, class: 'btn btn-link'  do %>
+                    <%= link_to [:admin, user], method: :delete, data: { confirm: I18n.t('actions.confirm') }, class: 'btn btn-link'  do %>
                       <%= icon('trash') %>
                     <% end %>
                   </td>

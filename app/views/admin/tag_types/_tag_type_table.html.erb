@@ -3,7 +3,7 @@
     <thead>
       <tr>
         <th>
-          <%= I18n.t('tags.labels.name') %>
+          <%= Tag.human_attribute_name('leads') %>
         </th>
         <th style='width: 50px;'>
         </th>
@@ -23,7 +23,7 @@
             <% end %>
           </td>
           <td>
-            <%= link_to [:admin, tag], class: 'btn btn-link', method: :delete, data: { confirm: I18n.t('tags.confirm') } do %>
+            <%= link_to [:admin, tag], class: 'btn btn-link', method: :delete, data: { confirm: I18n.t('actions.confirm') } do %>
               <%= icon('trash') %>
             <% end %>
           </td>

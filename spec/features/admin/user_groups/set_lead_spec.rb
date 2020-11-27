@@ -15,8 +15,8 @@ describe 'Admin edits a user group', type: :feature, js: true do
     it 'can set a memebr to be a lead of the group' do
       visit edit_admin_user_group_path(user_group)
 
-      choose(I18n.t('user_groups.labels.lead'))
-      click_button I18n.t('user_groups.save')
+      choose(UserGroup.human_attribute_name('lead'))
+      click_button I18n.t('actions.save')
       expect(page).to have_content(I18n.t('notice.successfully.updated', model_name: UserGroup.model_name.human))
       expect(user_group.reload.name).to eq 'Band 1'
     end

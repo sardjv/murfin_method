@@ -3,13 +3,13 @@
     <thead>
       <tr>
         <th>
-          <%= I18n.t('user_groups.labels.name') %>
+          <%= UserGroup.human_attribute_name('name') %>
         </th>
         <th>
-          <%= I18n.t('user_groups.labels.leaders') %>
+          <%= UserGroup.human_attribute_name('leads') %>
         </th>
         <th>
-          <%= I18n.t('user_groups.labels.members') %>
+          <%= UserGroup.human_attribute_name('members') %>
         </th>
         <th style='width: 50px;'>
         </th>
@@ -41,7 +41,7 @@
             <% end %>
           </td>
           <td>
-            <%= link_to [:admin, user_group], class: 'btn btn-link', method: :delete, data: { confirm: I18n.t('user_groups.confirm') } do %>
+            <%= link_to [:admin, user_group], class: 'btn btn-link', method: :delete, data: { confirm: I18n.t('actions.confirm') } do %>
               <%= icon('trash') %>
             <% end %>
           </td>

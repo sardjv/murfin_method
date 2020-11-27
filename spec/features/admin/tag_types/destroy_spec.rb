@@ -14,7 +14,7 @@ describe 'Admin destroys a tag type', type: :feature, js: true do
       first('.bi-trash').click
     end
 
-    expect(page).to have_content(I18n.t('tag_types.notice.successfully.destroyed'))
+    expect(page).to have_content(I18n.t('notice.successfully.destroyed', model_name: TagType.model_name.human))
     expect(TagType.all.count).to eq 0
   end
 end

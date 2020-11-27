@@ -4,7 +4,7 @@
       <button class='btn btn-link' data-toggle='collapse' data-target='#collapse<%=index%>' aria-expanded='false' aria-controls='#collapse<%=index%>'>
         <%= tag_type.name.pluralize %>
       </button>
-      <%= link_to [:admin, tag_type], method: :delete, data: { confirm: I18n.t('tag_types.confirm') }, class: 'float-right' do %>
+      <%= link_to [:admin, tag_type], method: :delete, data: { confirm: I18n.t('actions.confirm') }, class: 'float-right' do %>
         <%= icon('trash') %>
       <% end %>
       <%= link_to [:edit, :admin, tag_type], class: 'float-right' do %>

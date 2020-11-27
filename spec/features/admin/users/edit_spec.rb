@@ -13,8 +13,8 @@ describe 'Admin edits a user', type: :feature, js: true do
     visit admin_users_path
 
     first('.bi-pencil').click
-    fill_in I18n.t('users.labels.first_name'), with: 'Joanne'
-    click_button I18n.t('users.save')
+    fill_in User.human_attribute_name('first_name'), with: 'Joanne'
+    click_button I18n.t('actions.save')
 
     expect(page).to have_content(I18n.t('notice.successfully.updated', model_name: User.model_name.human))
     expect(user.reload.first_name).to eq 'Joanne'
@@ -27,8 +27,8 @@ describe 'Admin edits a user', type: :feature, js: true do
       visit admin_users_path
 
       first('.bi-pencil').click
-      fill_in I18n.t('users.labels.email'), with: 'john@example.com'
-      click_button I18n.t('users.save')
+      fill_in User.human_attribute_name('email'), with: 'john@example.com'
+      click_button I18n.t('actions.save')
 
       expect(page).to have_content(I18n.t('notice.could_not_be.updated', model_name: User.model_name.human))
       expect(user.reload.email).to eq 'joanne@example.com'

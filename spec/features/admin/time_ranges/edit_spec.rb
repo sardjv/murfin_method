@@ -12,7 +12,7 @@ describe 'Admin edits a time_range', type: :feature, js: true do
 
   it 'updates time_range' do
     find_field(type: 'number', match: :first).set(input_value)
-    click_button I18n.t('time_range.save')
+    click_button I18n.t('actions.save')
 
     expect(page).to have_content(I18n.t('notice.successfully.updated', model_name: TimeRange.model_name.human))
     expect(time_range.reload.value).to eq input_value * 60
@@ -20,11 +20,11 @@ describe 'Admin edits a time_range', type: :feature, js: true do
 
   context 'with end before start' do
     before do
-      bootstrap_select time_range.start_time.year - 2, from: I18n.t('time_range.labels.end_time')
+      bootstrap_select time_range.start_time.year - 2, from: TimeRange.human_attribute_name('end_time')
     end
 
     it 'does not save' do
-      expect { click_button I18n.t('time_range.save') }.not_to change(TimeRange, :count)
+      expect { click_button I18n.t('actions.save') }.not_to change(TimeRange, :count)
 
       expect(page).to have_content(I18n.t('notice.could_not_be.updated', model_name: TimeRange.model_name.human))
     end
