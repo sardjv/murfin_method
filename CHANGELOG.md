@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Self join on Tag
+
+## [0.2.0] - 2020-11-27
+
+### Added
+
 - UI to add tags to activities
 
 ## [0.1.0] - 2020-11-26
