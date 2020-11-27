@@ -1,21 +1,21 @@
 en:
   activerecord:
     models:
-      activity: Activity
-      group_type: Group type
-      user_group: User group
-      note: Note
       plan: Job plan
-      tag: Tag
-      tag_type: Tag type
       time_range: Actual data
-      user: User
-      user_group: User group
     attributes:
       activity:
         duration: Duration worked per week
-      group_type:
-        name: Name
+      note:
+        content: Add note
+        created_at: Created %{when} ago
+        start_time: Time period
+        state: Note type
+        updated_at: Updated %{when} ago
+      time_range:
+        time_range_type: Type
+        value: Duration worked
+        time_worked: Worked
   actions:
     add: Add %{model_name}
     edit: Edit %{model_name}
@@ -70,14 +70,6 @@ en:
       time_ranges: Actuals
     team_dashboard: Team
   notes:
-    labels:
-      author: Author
-      content: Add note
-      created_at: Created %{when} ago
-      start_time: Time period
-      state: Note type
-      subject: Subject
-      updated_at: Updated %{when} ago
     placeholders:
       content: Add some detail about the note here
   notice:
@@ -93,13 +85,6 @@ en:
         "%{model_name} deleted"
       updated:
         "%{model_name} successfully updated"
-  plan:
-    labels:
-      activities: Activities
-      end_date: End date
-      name: Name
-      start_date: Start date
-      user: User
   status:
     about_right: About Right
     over: Over
@@ -108,41 +93,12 @@ en:
     unknown: Unknown
   tags:
     add: Add %{tag_type_name} tag
-    labels:
-      name: Name
   tag_types:
     labels:
-      name: Name
       name_help: Name should be singular
-      tags: Tags
   time:
     formats:
       iso8601_utc: '%Y-%m-%dT%H:%M:%S.000Z'
       readable: '%H:%M on %d %B %Y'
-  time_range:
-    labels:
-      end_time: End time
-      start_time: Start time
-      time_range_type: Type
-      user: User
-      value: Duration worked
-      time_worked: Worked
-  user:
-    name: Name
-    email: Email
-    percentage_delivered: Percentage delivered
-    status: Status
   user_groups:
     add: Add %{group_type_name} user group
-    labels:
-      name: Name
-      lead: Lead
-      leaders: Leads
-      member: Member
-      members: Members
-  users:
-    labels:
-      admin: Admin
-      email: Email
-      first_name: First name
-      last_name: Last name

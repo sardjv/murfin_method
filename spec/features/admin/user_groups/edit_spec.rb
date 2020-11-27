@@ -20,7 +20,7 @@ describe 'Admin edits a user group', type: :feature, js: true do
     within('.card-body') do
       first('.bi-pencil').click
     end
-    fill_in I18n.t('user_groups.labels.name'), with: 'NHS Band 1'
+    fill_in UserGroup.human_attribute_name('name'), with: 'NHS Band 1'
     click_button I18n.t('actions.save')
 
     expect(page).to have_content(I18n.t('notice.successfully.updated', model_name: UserGroup.model_name.human))
@@ -35,7 +35,7 @@ describe 'Admin edits a user group', type: :feature, js: true do
       within('.card-body') do
         first('.bi-pencil').click
       end
-      fill_in I18n.t('user_groups.labels.name'), with: 'Band 2'
+      fill_in UserGroup.human_attribute_name('name'), with: 'Band 2'
       click_button I18n.t('actions.save')
 
       expect(page).to have_content(I18n.t('notice.could_not_be.updated', model_name: UserGroup.model_name.human))

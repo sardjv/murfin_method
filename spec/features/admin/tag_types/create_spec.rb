@@ -8,7 +8,7 @@ describe 'Admin creates a tag type', type: :feature, js: true do
     visit admin_tag_types_path
 
     click_link I18n.t('actions.add', model_name: TagType.model_name.human.downcase)
-    fill_in I18n.t('tag_types.labels.name'), with: name
+    fill_in TagType.human_attribute_name('name'), with: name
     click_button I18n.t('actions.save')
 
     expect(page).to have_content(I18n.t('notice.successfully.created', model_name: TagType.model_name.human))
@@ -21,7 +21,7 @@ describe 'Admin creates a tag type', type: :feature, js: true do
       visit admin_tag_types_path
 
       click_link I18n.t('actions.add', model_name: TagType.model_name.human.downcase)
-      fill_in I18n.t('tag_types.labels.name'), with: name
+      fill_in TagType.human_attribute_name('name'), with: name
       click_button I18n.t('actions.save')
 
       expect(page).to have_content(I18n.t('notice.could_not_be.created', model_name: TagType.model_name.human))

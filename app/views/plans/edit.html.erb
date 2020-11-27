@@ -16,16 +16,16 @@
     <div class='col-12'>
       <%= bootstrap_form_for @plan do |f| %>
         <%= f.date_select :start_date,
-          label: I18n.t('plan.labels.start_date')
+          label: Plan.human_attribute_name('start_date')
         %>
 
         <% if @plan.persisted? %>
           <%= f.date_select :end_date,
-            label: I18n.t('plan.labels.end_date')
+            label: Plan.human_attribute_name('end_date')
           %>
         <% end %>
 
-        <label><%= I18n.t('plan.labels.activities') %></label>
+        <label><%= Plan.human_attribute_name('activities') %></label>
 
         <div class='row'>
           <label class='col-md d-md-block'><%= Activity.human_attribute_name('duration') %></label>

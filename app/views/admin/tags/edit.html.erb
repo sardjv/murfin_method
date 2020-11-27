@@ -11,7 +11,7 @@
   <div class='row'>
     <div class='col-12'>
       <%= bootstrap_form_for [:admin, @tag] do |f| %>
-        <%= f.text_field :name, label: I18n.t('tags.labels.name'), placeholder: I18n.t('tags.labels.name'), required: true %>
+        <%= f.text_field :name, label: Tag.human_attribute_name('name'), placeholder: Tag.human_attribute_name('name'), required: true %>
 
         <%= f.submit I18n.t('actions.save'), class: 'btn btn-primary', style: 'margin-top: 10px;' %>
         <%= link_to I18n.t('actions.cancel'), :back, class: 'btn btn-outline-secondary mt-2' %>

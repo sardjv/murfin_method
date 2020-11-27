@@ -15,8 +15,8 @@
   <div class='row'>
     <div class='col-12'>
       <%= bootstrap_form_for [:admin, @tag_type] do |f| %>
-        <%= f.text_field :name, label: I18n.t('tag_types.labels.name'),
-                                placeholder: I18n.t('tag_types.labels.name'),
+        <%= f.text_field :name, label: TagType.human_attribute_name('name'),
+                                placeholder: TagType.human_attribute_name('name'),
                                 help:  I18n.t('tag_types.labels.name_help'),
                                 required: true %>
         <%= f.submit I18n.t('actions.save'), class: 'btn btn-primary', style: 'margin-top: 10px;' %>

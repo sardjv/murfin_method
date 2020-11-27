@@ -21,7 +21,7 @@ describe 'User edits a time_range', type: :feature, js: true do
 
   context 'with end before start' do
     before do
-      bootstrap_select time_range.start_time.year - 2, from: I18n.t('time_range.labels.end_time')
+      bootstrap_select time_range.start_time.year - 2, from: TimeRange.human_attribute_name('end_time')
     end
 
     it 'does not save' do

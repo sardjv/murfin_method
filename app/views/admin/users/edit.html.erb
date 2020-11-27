@@ -15,10 +15,10 @@
   <div class='row'>
     <div class='col-12'>
       <%= bootstrap_form_for [:admin, @user] do |f| %>
-        <%= f.text_field :first_name, label: I18n.t('users.labels.first_name'), placeholder: I18n.t('users.labels.first_name'), required: true %>
-        <%= f.text_field :last_name, label: I18n.t('users.labels.last_name'), placeholder: I18n.t('users.labels.last_name'), required: true %>
-        <%= f.text_field :email, label: I18n.t('users.labels.email'), placeholder: I18n.t('users.labels.email'), required: true %>
-        <%= f.check_box :admin, label: I18n.t('users.labels.admin'), placeholder: I18n.t('users.labels.admin') %>
+        <%= f.text_field :first_name, label: User.human_attribute_name('first_name'), placeholder: User.human_attribute_name('first_name'), required: true %>
+        <%= f.text_field :last_name, label: User.human_attribute_name('last_name'), placeholder: User.human_attribute_name('last_name'), required: true %>
+        <%= f.text_field :email, label: User.human_attribute_name('email'), placeholder: User.human_attribute_name('email'), required: true %>
+        <%= f.check_box :admin, label: User.human_attribute_name('admin'), placeholder: User.human_attribute_name('admin') %>
         <br>
         <% GroupType.all.each do |group_type| %>
           <% next unless group_type.user_groups.any? %>

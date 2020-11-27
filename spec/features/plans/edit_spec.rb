@@ -12,7 +12,7 @@ describe 'User edits a plan', type: :feature, js: true do
   end
 
   it 'updates plan' do
-    bootstrap_select input, from: I18n.t('plan.labels.end_date')
+    bootstrap_select input, from: Plan.human_attribute_name('end_date')
     click_link I18n.t('actions.remove', model_name: Activity.model_name.human)
     click_button I18n.t('actions.save')
 
@@ -25,7 +25,7 @@ describe 'User edits a plan', type: :feature, js: true do
     let(:input) { plan.start_date.year - 1 }
 
     before do
-      bootstrap_select input, from: I18n.t('plan.labels.end_date')
+      bootstrap_select input, from: Plan.human_attribute_name('end_date')
     end
 
     it 'does not save' do

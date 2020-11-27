@@ -28,7 +28,7 @@
           <thead>
             <tr>
               <th>
-                <%= I18n.t('user.name') %>
+                <%= User.human_attribute_name('name') %>
               </th>
               <th>
                 <%= Plan.human_attribute_name('name') %>
@@ -37,10 +37,10 @@
                 <%= TimeRangeType.actual_type.name %>
               </th>
               <th>
-                <%= I18n.t('user.percentage_delivered') %>
+                <%= User.human_attribute_name('percentage_delivered') %>
               </th>
               <th>
-                <%= I18n.t('user.status') %>
+                <%= User.human_attribute_name('status') %>
               </th>
             </tr>
           </thead>
