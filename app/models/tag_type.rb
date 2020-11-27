@@ -14,9 +14,9 @@ class TagType < ApplicationRecord
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 
-  def name
-    return "#{parent.name} > #{super}" if parent
+  def name_with_parent
+    return "#{parent.name} > #{name}" if parent
 
-    super
+    name
   end
 end

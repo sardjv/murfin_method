@@ -4,7 +4,7 @@
       <% tag_type.tags.each do |tag| %>
         <tr>
           <td>
-            <%= tag.name %>
+            <%= tag.name_with_parent %>
           </td>
           <td>
             <%= link_to [:edit, :admin, tag], class: 'btn btn-link' do %>
