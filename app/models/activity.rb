@@ -13,6 +13,8 @@ class Activity < ApplicationRecord
   cacheable watch: %w[schedule], bust: [{ klass: 'User', ids: %i[plan user_id] }]
 
   belongs_to :plan, touch: true
+  has_many :activity_tags, dependent: :destroy
+  has_many :tags, through: :activity_tags
 
   validates :schedule, presence: true
   validate :validate_end_time_after_start_time

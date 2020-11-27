@@ -14,6 +14,7 @@ describe Activity, type: :model do
   it { expect(subject).to be_valid }
 
   it { should belong_to(:plan) }
+  it { should have_many(:tags).through(:activity_tags) }
 
   context 'with seconds_per_week' do
     before do
