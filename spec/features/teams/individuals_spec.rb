@@ -36,7 +36,7 @@ describe 'Team Individuals', type: :feature, js: true do
     it 'has table with planned and actual data' do
       expect(page).to have_text 'Percentage delivered against job plan'
       within('.table') do
-        expect(page).to have_text I18n.t('plan.name')
+        expect(page).to have_text Plan.human_attribute_name('name')
         expect(page).to have_text '4 minutes' # 240 minutes / 52 weeks.
         expect(page).to have_text TimeRangeType.actual_type.name
         expect(page).to have_text '2 minutes' # 120 minutes / 52 weeks.
@@ -127,7 +127,7 @@ describe 'Team Individuals', type: :feature, js: true do
     describe 'pagination' do
       it 'puts user #11 on the next page' do
         within('.table') do
-          expect(page).to have_text I18n.t('plan.name')
+          expect(page).to have_text Plan.human_attribute_name('name')
           expect(page).not_to have_text users.last.name
         end
         click_on 'Next'

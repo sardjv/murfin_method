@@ -64,7 +64,7 @@ describe 'Team Dashboard ', type: :feature, js: true do
       context 'with valid input' do
         before do
           fill_in 'note[content]', with: content
-          click_on('Add Note')
+          click_on('Add note')
           visit dashboard_team_path(user_group)
           click_graph
         end

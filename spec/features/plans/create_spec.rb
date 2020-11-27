@@ -7,12 +7,12 @@ describe 'User creates a plan', type: :feature, js: true do
   before do
     log_in current_user
     visit plans_path
-    click_link I18n.t('actions.add', model_name: Plan.model_name.human)
+    click_link I18n.t('actions.add', model_name: Plan.model_name.human.downcase)
   end
 
   it 'creates plan for the current_user' do
     wait_for_ajax
-    click_link I18n.t('actions.add', model_name: Activity.model_name.human)
+    click_link I18n.t('actions.add', model_name: Activity.model_name.human.downcase)
     find_field(type: 'number', match: :first).set(hours_per_week)
 
     expect { click_button I18n.t('actions.save') }.to change { Plan.count }.by(1)

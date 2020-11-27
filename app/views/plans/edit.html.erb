@@ -4,9 +4,9 @@
     <div class='col-12'>
       <h5>
         <% if @plan.persisted? %>
-          <%= I18n.t('actions.edit', model_name: Plan.model_name.human) %>
+          <%= I18n.t('actions.edit', model_name: Plan.model_name.human.downcase) %>
         <% else %>
-          <%= I18n.t('actions.add', model_name: Plan.model_name.human) %>
+          <%= I18n.t('actions.add', model_name: Plan.model_name.human.downcase) %>
         <% end %>
       </h5>
     </div>
@@ -35,7 +35,7 @@
         <% end %>
 
         <div>
-          <%= link_to_add_association I18n.t('actions.add', model_name: Activity.model_name.human), f, :activities %>
+          <%= link_to_add_association I18n.t('actions.add', model_name: Activity.model_name.human.downcase), f, :activities %>
         </div>
 
         <%= f.submit I18n.t('actions.save'), class: 'btn btn-primary mt-2' %>

@@ -3,7 +3,7 @@
   <div class='row'>
     <div class='col-12'>
       <h5>
-        <%= I18n.t('actions.edit', TagType.model_name.human) %>
+        <%= I18n.t('actions.edit', model_name: TagType.model_name.human.downcase) %>
       </h5>
     </div>
   </div>

@@ -6,7 +6,7 @@ describe 'Admin creates a time_range', type: :feature, js: true do
   before do
     log_in create(:admin)
     visit admin_time_ranges_path
-    click_link I18n.t('actions.add', model_name: TimeRange.model_name.human)
+    click_link I18n.t('actions.add', model_name: TimeRange.model_name.human.downcase)
     bootstrap_select input.time_range_type.name, from: I18n.t('time_range.labels.time_range_type')
     bootstrap_select input.start_time.year + 1, from: I18n.t('time_range.labels.end_time')
     find_field(type: 'number', match: :first).set(input.value)

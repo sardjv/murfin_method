@@ -27,7 +27,7 @@ class Plan < ApplicationRecord
   end
 
   def name
-    "#{user.name}'s #{start_date.year} #{I18n.t('plan.name')}"
+    "#{user.name}'s #{start_date.year} #{Plan.model_name.human.titleize}"
   end
 
   def self.default_length

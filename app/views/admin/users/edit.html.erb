@@ -4,9 +4,9 @@
     <div class='col-12'>
       <h5>
         <% if @user.persisted? %>
-          <%= I18n.t('actions.edit', model_name: User.model_name.human) %>
+          <%= I18n.t('actions.edit', model_name: User.model_name.human.downcase) %>
         <% else %>
-          <%= I18n.t('actions.add', model_name: User.model_name.human) %>
+          <%= I18n.t('actions.add', model_name: User.model_name.human.downcase) %>
         <% end %>
       </h5>
     </div>

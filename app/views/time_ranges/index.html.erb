@@ -6,7 +6,7 @@
 
       <%= link_to [:new, :time_range], class: 'btn btn-primary float-right mb-3' do %>
         <%= icon('plus') %>
-        <%= I18n.t('actions.add', model_name: TimeRange.model_name.human) %>
+        <%= I18n.t('actions.add', model_name: TimeRange.model_name.human.downcase) %>
       <% end %>
 
       <div class='table-responsive'>
