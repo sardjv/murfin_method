@@ -1,0 +1,6 @@
+<div class='row'>
+  <% if f.object.tag %>
+    <label class='col-md-3 col-form-label'><%= f.object.tag.tag_type.name %></label>
+    <%= f.select :tag_id, f.object.tag.tag_type.tags.map { |t| [ t.name, t.id ] }, class: 'col-md-9', hide_label: true %>
+  <% end %>
+</div>

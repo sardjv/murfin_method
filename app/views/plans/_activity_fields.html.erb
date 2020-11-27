@@ -5,11 +5,9 @@
       <%= f.number_field :seconds_per_week, class: 'duration-picker-activity col-md-9', hide_label: true, step: :any %>
     </div>
 
-    <% TagType.all.each do |tag_type| %>
-      <div class='row'>
-        <label class='col-md-3 col-form-label'><%= tag_type.name %></label>
-        <%= f.select :tags, tag_type.tags.map { |t| [ t.name, t.id ] }, class: 'col-md-9', hide_label: true %>
-      </div>
+    <% f.object.build_tags %>
+    <%= f.fields_for :activity_tags do |tag_form| %>
+      <%= render 'activity_tag_fields', activity_form: f, f: tag_form %>
     <% end %>
 
     <div class='row'>

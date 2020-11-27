@@ -20,6 +20,14 @@ class Activity < ApplicationRecord
   validates :schedule, presence: true
   validate :validate_end_time_after_start_time
 
+  def build_tags
+    return if activity_tags.any?
+
+    TagType.all.find_each do |tag_type|
+      activity_tags.build(tag: tag_type.tags.first)
+    end
+  end
+
   def seconds_per_week=(seconds)
     self.schedule = ScheduleBuilder.call(
       schedule: schedule,
