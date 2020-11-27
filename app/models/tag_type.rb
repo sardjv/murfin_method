@@ -13,4 +13,10 @@ class TagType < ApplicationRecord
   has_many :children, class_name: 'TagType', inverse_of: :parent, foreign_key: :parent_id, dependent: :nullify
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
+
+  def name
+    return "#{parent.name} > #{super}" if parent
+
+    super
+  end
 end

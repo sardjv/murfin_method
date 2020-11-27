@@ -48,6 +48,7 @@ class Admin::TagsController < ApplicationController
 
   def tag_params
     params.require(:tag).permit(
+      :parent_id,
       :name,
       :tag_type_id
     )
