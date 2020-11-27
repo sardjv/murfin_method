@@ -22,7 +22,7 @@ describe 'User edits a plan', type: :feature, js: true do
 
     expect(page).to have_content(I18n.t('notice.successfully.updated', model_name: Plan.model_name.human))
     expect(plan.reload.end_date.year).to eq input
-    expect(plan.activities.count).to eq 0
+    expect(plan.activities.first.tags.first).to eq tag2
   end
 
   context 'with end before start' do
