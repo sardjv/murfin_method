@@ -13,9 +13,7 @@ describe ActivityTag, type: :model do
 
   it { expect(subject).to be_valid }
   it { should belong_to(:tag) }
-  it { should validate_presence_of(:tag_id) }
   it { should belong_to(:activity) }
-  it { should validate_presence_of(:activity_id) }
   it { should have_db_index(%i[tag_id activity_id]).unique }
   it { should validate_uniqueness_of(:activity_id).scoped_to(:tag_id) }
 end
