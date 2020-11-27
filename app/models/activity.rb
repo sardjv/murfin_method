@@ -20,10 +20,10 @@ class Activity < ApplicationRecord
   validates :schedule, presence: true
   validate :validate_end_time_after_start_time
 
-  def build_tags
-    return if activity_tags.any?
-
+  def build_missing_tags
     TagType.all.find_each do |tag_type|
+      next if (tag_type.tag_ids & activity_tags.pluck(:tag_id)).present?
+
       activity_tags.build(tag: tag_type.tags.first)
     end
   end
