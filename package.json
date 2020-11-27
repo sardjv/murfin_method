@@ -12,7 +12,7 @@
     "lodash": "^4.17.20",
     "popper.js": "^1.16.1",
     "sass-variable-loader": "^0.1.2",
-    "svg-url-loader": "^6.0.0",
+    "svg-url-loader": "^7.0.0",
     "turbolinks": "^5.2.0"
   },
   "devDependencies": {
