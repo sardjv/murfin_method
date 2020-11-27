@@ -15,4 +15,6 @@ describe TagType, type: :model do
   it { should have_many(:tags).dependent(:destroy) }
   it { should have_db_index(:name).unique }
   it { should validate_uniqueness_of(:name).ignoring_case_sensitivity }
+  it { should belong_to(:parent).class_name('TagType').optional }
+  it { should have_many(:children).class_name('TagType').dependent(:nullify) }
 end

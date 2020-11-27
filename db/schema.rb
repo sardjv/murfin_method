@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_27_152000) do
+ActiveRecord::Schema.define(version: 2020_11_27_165400) do
 
   create_table "activities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.text "schedule", size: :medium, null: false
@@ -75,7 +75,9 @@ ActiveRecord::Schema.define(version: 2020_11_27_152000) do
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "parent_id"
     t.index ["name"], name: "index_tag_types_on_name", unique: true
+    t.index ["parent_id"], name: "index_tag_types_on_parent_id"
   end
 
   create_table "tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
