@@ -15,6 +15,7 @@ describe Activity, type: :model do
 
   it { should belong_to(:plan) }
   it { should have_many(:tags).through(:activity_tags) }
+  it { should accept_nested_attributes_for(:activity_tags).allow_destroy(true) }
 
   context 'with seconds_per_week' do
     before do
