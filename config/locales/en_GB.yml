@@ -92,7 +92,7 @@ en:
     under: Under
     unknown: Unknown
   tags:
-    add: Add %{tag_type_name} tag
+    add: Add %{tag_type_name} Tag
   tag_types:
     labels:
       name_help: Name should be singular
@@ -101,4 +101,4 @@ en:
       iso8601_utc: '%Y-%m-%dT%H:%M:%S.000Z'
       readable: '%H:%M on %d %B %Y'
   user_groups:
-    add: Add %{group_type_name} user group
+    add: Add %{group_type_name} User Group

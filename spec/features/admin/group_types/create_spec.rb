@@ -6,7 +6,7 @@ describe 'Admin creates a group type', type: :feature, js: true do
   it 'creates group type' do
     visit admin_group_types_path
 
-    click_link I18n.t('actions.add', model_name: GroupType.model_name.human.downcase)
+    click_link I18n.t('actions.add', model_name: GroupType.model_name.human.titleize)
     fill_in GroupType.human_attribute_name('name'), with: 'Band'
     click_button I18n.t('actions.save')
 
@@ -19,7 +19,7 @@ describe 'Admin creates a group type', type: :feature, js: true do
     it 'does not create group type' do
       visit admin_group_types_path
 
-      click_link I18n.t('actions.add', model_name: GroupType.model_name.human.downcase)
+      click_link I18n.t('actions.add', model_name: GroupType.model_name.human.titleize)
       fill_in GroupType.human_attribute_name('name'), with: 'Band'
       click_button I18n.t('actions.save')
 

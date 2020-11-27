@@ -23,7 +23,7 @@
     <% if note.persisted? %>
       <%= f.primary I18n.t('actions.save') %>
     <% else %>
-      <%= f.primary I18n.t('actions.add', model_name: Note.model_name.human.downcase) %>
+      <%= f.primary I18n.t('actions.add', model_name: Note.model_name.human.titleize) %>
     <% end %>
 
     <button type='button' class='btn btn-secondary mr-auto' data-dismiss='modal'><%= I18n.t('actions.cancel') %></button>

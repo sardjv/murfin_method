@@ -6,7 +6,7 @@ describe 'Admin creates a user', type: :feature do
   it 'creates user' do
     visit admin_users_path
 
-    click_link I18n.t('actions.add', model_name: User.model_name.human.downcase)
+    click_link I18n.t('actions.add', model_name: User.model_name.human.titleize)
     fill_in User.human_attribute_name('first_name'), with: 'Mary'
     fill_in User.human_attribute_name('last_name'), with: 'Anne'
     fill_in User.human_attribute_name('email'), with: 'mary@example.com'
@@ -22,7 +22,7 @@ describe 'Admin creates a user', type: :feature do
     it 'does not create user' do
       visit admin_users_path
 
-      click_link I18n.t('actions.add', model_name: User.model_name.human.downcase)
+      click_link I18n.t('actions.add', model_name: User.model_name.human.titleize)
       fill_in User.human_attribute_name('first_name'), with: 'Mary'
       fill_in User.human_attribute_name('last_name'), with: 'Anne'
       fill_in User.human_attribute_name('email'), with: 'john@example.com'

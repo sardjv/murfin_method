@@ -6,7 +6,7 @@
 
       <%= link_to [:new, :plan], class: 'btn btn-primary float-right mb-3' do %>
         <%= icon('plus') %>
-        <%= I18n.t('actions.add', model_name: Plan.model_name.human.downcase) %>
+        <%= I18n.t('actions.add', model_name: Plan.model_name.human.titleize) %>
       <% end %>
 
       <div class='table-responsive'>
