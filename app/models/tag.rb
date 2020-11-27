@@ -13,6 +13,6 @@ class Tag < ApplicationRecord
 
   has_many :activity_tags, dependent: :destroy
 
-  validates :name, :tag_type_id, presence: true
+  validates :name, presence: true
   validates :name, uniqueness: { scope: :tag_type_id, case_sensitive: false }
 end

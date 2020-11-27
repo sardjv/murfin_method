@@ -17,7 +17,7 @@ class Plan < ApplicationRecord
   has_many :activities, dependent: :destroy
   accepts_nested_attributes_for :activities, allow_destroy: true
 
-  validates :start_date, :end_date, :user_id, presence: true
+  validates :start_date, :end_date, presence: true
   validate :validate_end_date_after_start_date
 
   def validate_end_date_after_start_date
@@ -27,7 +27,7 @@ class Plan < ApplicationRecord
   end
 
   def name
-    "#{user.name}'s #{start_date.year} #{I18n.t('plan.name')}"
+    "#{user.name}'s #{start_date.year} #{Plan.model_name.human.titleize}"
   end
 
   def self.default_length

@@ -15,7 +15,7 @@ class TimeRange < ApplicationRecord
   belongs_to :user, touch: true
   belongs_to :time_range_type
 
-  validates :start_time, :end_time, :value, :time_range_type_id, :user_id, presence: true
+  validates :start_time, :end_time, :value, presence: true
   validate :validate_end_time_after_start_time
 
   def seconds_worked=(seconds)

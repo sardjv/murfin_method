@@ -15,8 +15,8 @@ describe Membership, type: :model do
   subject { build(:membership) }
 
   it { expect(subject).to be_valid }
-  it { should validate_presence_of(:user_group) }
-  it { should validate_presence_of(:user) }
+  it { should belong_to(:user) }
+  it { should belong_to(:user_group) }
   it { should validate_presence_of(:role) }
   it { should have_db_index(%i[user_group_id user_id]).unique }
 end

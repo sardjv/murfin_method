@@ -12,9 +12,9 @@ class Admin::TagsController < ApplicationController
     @tag_type = TagType.find(params[:tag_type_id])
     @tag = @tag_type.tags.new(tag_params)
     if @tag.save
-      redirect_to admin_tag_types_path, notice: t('tags.notice.successfully.created')
+      redirect_to admin_tag_types_path, notice: notice('successfully.created')
     else
-      flash.now.alert = t('tags.notice.could_not_be.created')
+      flash.now.alert = notice('could_not_be.created')
       render :new
     end
   end
@@ -27,9 +27,9 @@ class Admin::TagsController < ApplicationController
     @tag = Tag.find(params[:id])
 
     if @tag.update(tag_params)
-      redirect_to admin_tag_types_path, notice: t('tags.notice.successfully.updated')
+      redirect_to admin_tag_types_path, notice: notice('successfully.updated')
     else
-      flash.now.alert = t('tags.notice.could_not_be.updated')
+      flash.now.alert = notice('could_not_be.updated')
       render :edit
     end
   end
@@ -37,10 +37,14 @@ class Admin::TagsController < ApplicationController
   def destroy
     @tag = Tag.find(params[:id])
     @tag.destroy
-    redirect_to admin_tag_types_path, notice: t('tags.notice.successfully.destroyed')
+    redirect_to admin_tag_types_path, notice: notice('successfully.destroyed')
   end
 
   private
+
+  def notice(action)
+    t("notice.#{action}", model_name: Tag.model_name.human)
+  end
 
   def tag_params
     params.require(:tag).permit(

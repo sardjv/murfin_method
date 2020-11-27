@@ -4,9 +4,9 @@
     <div class='col-12'>
       <h5>
         <% if @group_type.persisted? %>
-          <%= I18n.t('group_types.edit') %>
+          <%= I18n.t('actions.edit', model_name: GroupType.model_name.human.titleize) %>
         <% else %>
-          <%= I18n.t('group_types.add') %>
+          <%= I18n.t('actions.add', model_name: GroupType.model_name.human.titleize) %>
         <% end %>
       </h5>
     </div>
@@ -15,12 +15,12 @@
   <div class='row'>
     <div class='col-12'>
       <%= bootstrap_form_for [:admin, @group_type] do |f| %>
-        <%= f.text_field :name, label: I18n.t('group_types.labels.name'),
-                                placeholder: I18n.t('group_types.labels.name'),
-                                help:  I18n.t('group_types.labels.name_help'),
+        <%= f.text_field :name, label: GroupType.human_attribute_name('name'),
+                                placeholder: GroupType.human_attribute_name('name'),
+                                help: I18n.t('group_types.labels.name_help'),
                                 required: true %>
-        <%= f.submit I18n.t('group_types.save'), class: 'btn btn-primary', style: 'margin-top: 10px;' %>
-        <%= link_to I18n.t('group_types.cancel'), :back, class: 'btn btn-outline-secondary mt-2' %>
+        <%= f.submit I18n.t('actions.save'), class: 'btn btn-primary', style: 'margin-top: 10px;' %>
+        <%= link_to I18n.t('actions.cancel'), :back, class: 'btn btn-outline-secondary mt-2' %>
       <% end %>
     </div>
   </div>
