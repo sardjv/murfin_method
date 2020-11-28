@@ -139,7 +139,7 @@ end
 
 Capybara.configure do |c|
   c.server_host = '0.0.0.0'
-  c.server_port = 3001
+  c.always_include_port = true
   c.app_host = ENV['CAPYBARA_RAILS_HOST']
 
   c.default_normalize_ws = true

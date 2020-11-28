@@ -65,7 +65,7 @@ services:
       # We cache the bundle so that we don't re-download every gem on any change to the Gemfile.
       - bundle_cache:/bundle
     environment:
-      - CAPYBARA_RAILS_HOST=http://rails:3001
+      - CAPYBARA_RAILS_HOST=http://rails
       - HEADLESS_CHROME_URL=http://selenium:4444/wd/hub
       - VISIBLE_CHROME_URL=http://chrome_visible:4444/wd/hub
       - BUNDLE_PATH=/bundle/vendor
