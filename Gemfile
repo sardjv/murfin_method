@@ -91,6 +91,10 @@ group :development, :test do
   # https://github.com/SamSaffron/memory_profiler
   gem 'memory_profiler', '~> 0.9.14'
 
+  # Ruby: 2 CPUs = 2x Testing Speed for RSpec.
+  # https://github.com/grosser/parallel_tests
+  gem 'parallel_tests', '~> 3.4.0'
+
   # Rails SQL Query Tracker.
   # https://github.com/steventen/sql_tracker
   gem 'sql_tracker', '~> 1.3.1'

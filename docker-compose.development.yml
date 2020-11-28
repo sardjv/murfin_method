@@ -1,3 +1,4 @@
+# sudo docker-compose -f docker-compose.development.yml up --scale chrome=8
 version: '3.7'
 
 services:
@@ -43,14 +44,14 @@ services:
     command: sh -c "echo never > /sys/kernel/mm/transparent_hugepage/enabled"
     privileged: true
 
-  app:
+  rails:
     depends_on:
       - db
       - db_test
       - redis
       - sidekiq
       - webpacker
-      - chrome_headless
+      - selenium
     build: .
     # 1) Remove any existing server process in case of dirty shutdown, with -f in case the file doesn't exist.
     # 2) if `bundle check` indicates it's needed, `bundle install` here rather than in Dockerfile,
@@ -60,12 +61,12 @@ services:
     ports:
       - '3000:3000'
     volumes:
-      - '.:/app'
+      - '.:/rails'
       # We cache the bundle so that we don't re-download every gem on any change to the Gemfile.
       - bundle_cache:/bundle
     environment:
-      - CAPYBARA_APP_HOST=http://app:3001
-      - HEADLESS_CHROME_URL=http://chrome_headless:4444/wd/hub
+      - CAPYBARA_RAILS_HOST=http://rails:3001
+      - HEADLESS_CHROME_URL=http://selenium:4444/wd/hub
       - VISIBLE_CHROME_URL=http://chrome_visible:4444/wd/hub
       - BUNDLE_PATH=/bundle/vendor
       - WEBPACKER_DEV_SERVER_HOST=webpacker
@@ -76,18 +77,24 @@ services:
     env_file:
       - '.env'
 
-  chrome_headless:
-    image: selenium/standalone-chrome:3.141.0
+  selenium:
+    image: selenium/hub:3.141.0
+    environment:
+     GRID_MAX_SESSION: 8
+
+  chrome:
+    image: selenium/node-chrome:3.141.0
     volumes:
-      - '.:/app'
-      - bundle_cache:/bundle
+      - '.:/rails'
+    environment:
+     HUB_HOST: selenium
 
   chrome_visible:
     image: selenium/standalone-chrome-debug:3.141.0
     ports:
       - 5900:5900 # Port for remote connection via `open vnc://0.0.0.0:5900`.
     volumes:
-      - '.:/app'
+      - '.:/rails'
       - bundle_cache:/bundle
 
   bundle_cache:
@@ -103,7 +110,7 @@ services:
     build: .
     command: ./script/start_sidekiq.sh
     volumes:
-      - '.:/app'
+      - '.:/rails'
       - bundle_cache:/bundle
     environment:
       - BUNDLE_PATH=/bundle/vendor
@@ -118,7 +125,7 @@ services:
     ports:
       - '3035:3035'
     volumes:
-      - '.:/app'
+      - '.:/rails'
       - bundle_cache:/bundle
     environment:
       - BUNDLE_PATH=/bundle/vendor

@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2020_11_26_120800) do
 
-  create_table "activities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "activities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.text "schedule", size: :medium, null: false
     t.bigint "plan_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2020_11_26_120800) do
     t.index ["plan_id"], name: "index_activities_on_plan_id"
   end
 
-  create_table "activity_tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "activity_tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "tag_id", null: false
     t.bigint "activity_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -30,14 +30,14 @@ ActiveRecord::Schema.define(version: 2020_11_26_120800) do
     t.index ["tag_id"], name: "index_activity_tags_on_tag_id"
   end
 
-  create_table "group_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "group_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_group_types_on_name", unique: true
   end
 
-  create_table "memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "memberships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "role", default: 0, null: false
     t.bigint "user_group_id", null: false
     t.bigint "user_id", null: false
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 2020_11_26_120800) do
     t.index ["user_id"], name: "index_memberships_on_user_id"
   end
 
-  create_table "notes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "notes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.text "content", null: false
     t.integer "state", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 2020_11_26_120800) do
     t.index ["subject_type", "subject_id"], name: "index_notes_on_subject_type_and_subject_id"
   end
 
-  create_table "plans", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "plans", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.date "start_date", null: false
     t.date "end_date", null: false
     t.bigint "user_id", null: false
@@ -71,14 +71,14 @@ ActiveRecord::Schema.define(version: 2020_11_26_120800) do
     t.index ["user_id"], name: "index_plans_on_user_id"
   end
 
-  create_table "tag_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "tag_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_tag_types_on_name", unique: true
   end
 
-  create_table "tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "tag_type_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -87,14 +87,14 @@ ActiveRecord::Schema.define(version: 2020_11_26_120800) do
     t.index ["tag_type_id"], name: "index_tags_on_tag_type_id"
   end
 
-  create_table "time_range_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "time_range_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_time_range_types_on_name", unique: true
   end
 
-  create_table "time_ranges", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "time_ranges", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.timestamp "start_time", null: false
     t.timestamp "end_time", null: false
     t.decimal "value", precision: 65, scale: 30, null: false
@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(version: 2020_11_26_120800) do
     t.index ["user_id"], name: "index_time_ranges_on_user_id"
   end
 
-  create_table "user_groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "user_groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -116,7 +116,7 @@ ActiveRecord::Schema.define(version: 2020_11_26_120800) do
     t.index ["name", "group_type_id"], name: "index_user_groups_on_name_and_group_type_id", unique: true
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.string "email", null: false

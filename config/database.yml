@@ -19,7 +19,7 @@ development:
 test:
   <<: *default
   host: <%= ENV['DB_HOST'] || 'db_test' %>
-  database: <%= ENV['DB_DATABASE'] %>_test
+  database: <%= ENV['DB_DATABASE'] %>_test<%= ENV['TEST_ENV_NUMBER'] %>
 
 staging:
   <<: *default
