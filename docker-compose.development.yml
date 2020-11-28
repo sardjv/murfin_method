@@ -79,15 +79,18 @@ services:
 
   selenium:
     image: selenium/hub:3.141.0
-    environment:
-     GRID_MAX_SESSION: 8
+    volumes:
+      - '.:/rails'
+    ports:
+      - "4444:4444"
 
   chrome:
     image: selenium/node-chrome:3.141.0
     volumes:
       - '.:/rails'
     environment:
-     HUB_HOST: selenium
+      HUB_HOST: selenium
+      HUB_PORT: 4444
 
   chrome_visible:
     image: selenium/standalone-chrome-debug:3.141.0
