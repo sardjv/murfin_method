@@ -52,11 +52,17 @@ jobs:
       - run:
           name: Run tests
           command:
-            mkdir /tmp/test-results; \
-            TESTFILES=$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
-            bundle exec rspec -- ${TESTFILES}
+            mkdir /tmp/test-results
+            mkdir /tmp/test-results/rspec
+            TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
+            bundle exec rspec --profile 10 \
+                              --format RspecJunitFormatter \
+                              --out /tmp/test-results/rspec/rspec.xml \
+                              --format progress \
+                              -- \
+                              $TEST_FILES
       - store_test_results:
-          path: /tmp/test-results
+          path: /tmp/test-results/rspec
 workflows:
   version: 2
   checks:
