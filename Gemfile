@@ -124,6 +124,10 @@ group :test do
   gem 'database_cleaner-active_record', '~> 1.8.0'
   gem 'database_cleaner-redis', '~> 1.8.0'
 
+  # RSpec results that your CI can read.
+  # https://github.com/sj26/rspec_junit_formatter
+  gem 'rspec_junit_formatter', '~> 0.4.1'
+
   # RSpec is a specification library for behaviour driven development.
   # https://github.com/rspec/rspec
   gem 'rspec-rails', '~> 4.0.1'
