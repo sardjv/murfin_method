@@ -18,7 +18,7 @@ jobs:
           command: |
             mkdir -p /tmp/test-results/rubocop
             PROJECTFILES=$(circleci tests glob "app/**/*.rb" | circleci tests split --split-by=timings)
-            bundle exec rubocop -- ${PROJECTFILES}
+            bundle exec rubocop -c .rubocop.yml -- ${PROJECTFILES}
       - store_test_results:
           path: /tmp/test-results/rubocop
   test:
