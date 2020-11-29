@@ -68,6 +68,21 @@ open vnc://0.0.0.0:5900
 
 The password is 'secret'. Run a feature spec with that window open and you should see the test running.
 
+## Parallel Specs
+
+If you have 4 or more CPU cores, you may see a speedup from running the specs in parallel. Start the dev containers with as many instances of Chrome as you have cores, e.g., in this case 8:
+
+```
+docker-compose -f docker-compose.development.yml up --scale chrome=8
+```
+
+Then run the specs in parallel:
+
+```
+docker exec -it murfin_method_rails_1 sh
+RAILS_ENV=test MYSQL_USER=root MYSQL_PASSWORD=$MYSQL_ROOT_PASSWORD bundle exec rails parallel:spec
+```
+
 ## Code Coverage
 
 After running the test suite, open the coverage/index.html file in a web browser to check what code is covered by the tests.
