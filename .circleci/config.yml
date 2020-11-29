@@ -51,8 +51,8 @@ jobs:
           command: bundle exec rails db:create db:schema:load --trace
       - run:
           name: Run tests
-          command:
-            mkdir -p /tmp/test-results/rspec; \
+          command: |
+            mkdir -p /tmp/test-results/rspec
             TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
             bundle exec rspec --profile 10 \
                               --format RspecJunitFormatter \
