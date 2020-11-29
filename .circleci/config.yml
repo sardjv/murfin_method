@@ -36,7 +36,6 @@ jobs:
       HEADLESS_CHROME_URL: http://localhost:4444/wd/hub
       CAPYBARA_APP_HOST: http://localhost:3001
       SPEC_RETRIES: 3
-      TESTFILES: $(circleci tests glob "spec/**/*.rb" | circleci tests split --split-by=timings)
     steps:
       - checkout
       - ruby/install-deps
@@ -50,7 +49,9 @@ jobs:
           command: bundle exec rails db:create db:schema:load --trace
       - run:
           name: Run tests
-          command: bundle exec rspec -- ${TESTFILES} -fd
+          command:
+            TESTFILES=$(circleci tests glob "spec/**/*.rb" | circleci tests split --split-by=timings)
+            bundle exec rspec -- ${TESTFILES}
 
 workflows:
   version: 2
