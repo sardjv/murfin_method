@@ -16,8 +16,11 @@ jobs:
       - run:
           name: Run Rubocop
           command:
+            mkdir -p /tmp/test-results/rubocop
             PROJECTFILES=$(circleci tests glob "app/**/*.rb" | circleci tests split --split-by=timings)
             bundle exec rubocop -- ${PROJECTFILES}
+      - store_test_results:
+          path: /tmp/test-results/rubocop
   test:
     parallelism: 4
     docker:
