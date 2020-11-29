@@ -50,9 +50,8 @@ jobs:
       - run:
           name: Run tests
           command:
-            TESTFILES=$(circleci tests glob "spec/**/*.rb" | circleci tests split)
-            bundle exec rspec — ${TESTFILES}
-
+            TESTFILES=$(circleci tests glob "spec/**/*.rb" | circleci tests split --split-by=timings)
+            bundle exec rspec -- ${TESTFILES}
 workflows:
   version: 2
   checks:
