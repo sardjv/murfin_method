@@ -7,7 +7,7 @@ orbs:
 
 jobs:
   rubocop:
-    parallelism: 1
+    parallelism: 4
     docker:
       - image: cimg/ruby:2.7.2-node
     steps:
@@ -15,7 +15,9 @@ jobs:
       - ruby/install-deps
       - run:
           name: Run Rubocop
-          command: bundle exec rubocop
+          command:
+            PROJECTFILES=$(circleci tests glob "app/**/*.rb" | circleci tests split --split-by=timings)
+            bundle exec rubocop -- ${PROJECTFILES}
   test:
     parallelism: 4
     docker:
