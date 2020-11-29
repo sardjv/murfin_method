@@ -16,7 +16,7 @@ describe 'Admin edits a tag', type: :feature, js: true do
   it 'updates tag' do
     visit admin_tag_types_path
 
-    page.click_on('Patient Contacts')
+    page.click_on('Patient Contact')
     within('.card-body') do
       first('.bi-pencil').click
     end
@@ -31,7 +31,7 @@ describe 'Admin edits a tag', type: :feature, js: true do
     it 'does not update tag' do
       visit admin_tag_types_path
 
-      page.click_on('Patient Contacts')
+      page.click_on('Patient Contact')
       within('.card-body') do
         first('.bi-pencil').click
       end
