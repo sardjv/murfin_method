@@ -47,7 +47,11 @@ jobs:
       - run:
           name: Database setup
           command: bundle exec rails db:create db:schema:load --trace
-      - ruby/rspec-test
+      - run:
+          name: Run tests
+          command:
+            TESTFILES=$(circleci tests glob "spec/**/*.rb" | circleci tests split)
+            bundle exec rspec — ${TESTFILES}
 
 workflows:
   version: 2
