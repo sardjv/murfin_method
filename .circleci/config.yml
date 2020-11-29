@@ -54,6 +54,8 @@ jobs:
           command:
             TESTFILES=$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
             bundle exec rspec -- ${TESTFILES}
+      - store_test_results:
+          path: /tmp/test-results
 workflows:
   version: 2
   checks:
