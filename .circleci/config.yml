@@ -15,7 +15,7 @@ jobs:
       - ruby/install-deps
       - run:
           name: Run Rubocop
-          command:
+          command: |
             mkdir -p /tmp/test-results/rubocop
             PROJECTFILES=$(circleci tests glob "app/**/*.rb" | circleci tests split --split-by=timings)
             bundle exec rubocop -- ${PROJECTFILES}
