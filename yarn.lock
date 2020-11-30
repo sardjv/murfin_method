@@ -7053,10 +7053,10 @@ supports-color@^7.0.0:
   dependencies:
     has-flag "^4.0.0"
 
-svg-url-loader@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/svg-url-loader/-/svg-url-loader-7.0.0.tgz#b781681353eebac347076820c7939d3dae346b62"
-  integrity sha512-z2UB/nQ+HJFbrMAFDC+S00Zk58ljX18fmPQcorGEFAfHGfYkfTn2+fjl7H8wpjWifArqid9Do1FaZpPoP3MtWw==
+svg-url-loader@^7.1.1:
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/svg-url-loader/-/svg-url-loader-7.1.1.tgz#0cbdb30beb8679cb060c12eaf30085747fa7591f"
+  integrity sha512-NlsMCePODm7FQhU9aEZyGLPx5Xe1QRI1cSEUE6vTq5LJc9l9pStagvXoEIyZ9O3r00w6G3+Wbkimb+SC3DI/Aw==
   dependencies:
     file-loader "~6.2.0"
     loader-utils "~2.0.0"
