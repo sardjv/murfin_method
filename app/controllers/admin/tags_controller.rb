@@ -16,7 +16,7 @@ class Admin::TagsController < ApplicationController
       redirect_to admin_tag_types_path, notice: notice('successfully.created')
     else
       flash.now.alert = notice('could_not_be.created')
-      render :new
+      render :edit
     end
   end
 
