@@ -3,15 +3,19 @@
   <div class='row'>
     <div class='col-12'>
       <h5>
-        <%= I18n.t('actions.edit', model_name: Tag.model_name.human.titleize) %>
+        <% if @tag.persisted? %>
+          <%= I18n.t('actions.edit', model_name: Tag.model_name.human.titleize) %>
+        <% else %>
+          <%= I18n.t('actions.add', model_name: Tag.model_name.human.titleize) %>
+        <% end %>
       </h5>
     </div>
   </div>
 
   <div class='row'>
     <div class='col-12'>
-      <%= bootstrap_form_for [:admin, @tag] do |f| %>
-        <% if (parent_tags = @tag.tag_type.parent&.tags.presence) %>
+      <%= bootstrap_form_for [:admin, @tag_type, @tag] do |f| %>
+        <% if (parent_tags = @tag.tag_type&.parent&.tags.presence) %>
           <%= f.select :parent_id,
             options_for_select(parent_tags.map { |t| [t.name, t.id] }, selected: f.object.parent_id),
             { label: TagType.human_attribute_name('parent') },

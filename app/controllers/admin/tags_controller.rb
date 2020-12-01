@@ -5,7 +5,8 @@ class Admin::TagsController < ApplicationController
 
   def new
     @tag_type = TagType.find(params[:tag_type_id])
-    @tag = Tag.new
+    @tag = Tag.new(tag_type_id: @tag_type.id)
+    render action: :edit
   end
 
   def create
