@@ -21,6 +21,8 @@ class TagType < ApplicationRecord
     name
   end
 
+  private
+
   def validate_acyclic
     next_parent = parent
 

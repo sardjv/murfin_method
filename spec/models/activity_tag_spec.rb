@@ -17,4 +17,18 @@ describe ActivityTag, type: :model do
   it { should belong_to(:activity) }
   it { should have_db_index(%i[activity_id tag_type_id tag_id]).unique }
   it { should validate_uniqueness_of(:activity_id).scoped_to(%i[tag_type_id tag_id]) }
+
+  context 'when tag.tag_type != tag_type' do
+    # Types.
+    let!(:type) { create(:tag_type) }
+    let!(:unrelated_type) { create(:tag_type) }
+
+    # Tags
+    let!(:tag) { create(:tag, tag_type: type) }
+
+    # ActivityTag.
+    let(:subject) { build(:activity_tag, tag_type: unrelated_type, tag: tag) }
+
+    it { expect(subject).not_to be_valid }
+  end
 end

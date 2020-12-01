@@ -14,4 +14,13 @@ class ActivityTag < ApplicationRecord
   belongs_to :activity
 
   validates :activity_id, uniqueness: { scope: %i[tag_type_id tag_id] }
+  validate :validate_tag_matches_type
+
+  def validate_tag_matches_type
+    return if tag.nil?
+
+    return if tag.tag_type == tag_type
+
+    errors.add :tag_id, 'the tag must belong to the selected tag_type'
+  end
 end

@@ -26,6 +26,8 @@ class Tag < ApplicationRecord
     name
   end
 
+  private
+
   def validate_type_hierarchy
     return if parent.nil? && tag_type.nil?
 
