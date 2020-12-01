@@ -36,6 +36,11 @@ class ActivityTag < ApplicationRecord
   end
 
   def correct_parent_tag?
-    activity.activity_tags.find { |at| at.tag_type == tag_type.parent }.tag == tag.parent
+    # e.g., if Category is DCC, is this a DCC Subcategory?
+    parent_tag_type.tag == tag.parent
+  end
+
+  def parent_tag_type
+    activity.activity_tags.find { |at| at.tag_type == tag_type.parent }
   end
 end
