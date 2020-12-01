@@ -13,10 +13,24 @@ class TagType < ApplicationRecord
   has_many :children, class_name: 'TagType', inverse_of: :parent, foreign_key: :parent_id, dependent: :nullify
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
+  validate :validate_acyclic
 
   def name_with_parent
     return "#{parent.name} > #{name}" if parent
 
     name
+  end
+
+  def validate_acyclic
+    next_parent = parent
+
+    while next_parent
+      if next_parent.parent_id = id
+        errors.add :parent_id, 'cannot be descended from itself'
+        break
+      else
+        next_parent = next_parent.parent
+      end
+    end
   end
 end
