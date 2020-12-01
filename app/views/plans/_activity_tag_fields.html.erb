@@ -1,6 +1,12 @@
 <div class='row'>
-  <% if f.object.tag %>
-    <label class='col-md-3 col-form-label'><%= f.object.tag.tag_type.name %></label>
-    <%= f.select :tag_id, f.object.tag.tag_type.tags.map { |t| [ t.name, t.id ] }, class: 'col-md-9', hide_label: true %>
+  <% if (tag_type = f.object.tag_type.presence) %>
+    <label class='col-md-3 col-form-label'><%= f.object.tag_type.name %></label>
+    <%= f.hidden_field :tag_type_id %>
+    <%= f.select :tag_id,
+      f.object.tag_type.tags.map { |t| [ t.name, t.id ] },
+      include_blank: I18n.t('prompts.none'),
+      hide_label: true,
+      class: 'col-md-9'
+    %>
   <% end %>
 </div>
