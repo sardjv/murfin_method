@@ -64,7 +64,10 @@ describe ActivityTag, type: :model do
     let!(:chosen_category) { create(:activity_tag, activity: activity, tag_type: category, tag: dcc_category) }
     let!(:chosen_subcategory) { create(:activity_tag, activity: activity.reload, tag_type: subcategory, tag: dcc_subcategory) }
 
-    before { activity.reload; chosen_category.assign_attributes(tag: spa_category) }
+    before do
+      activity.reload
+      chosen_category.assign_attributes(tag: spa_category)
+    end
 
     it { expect(chosen_category).not_to be_valid }
   end
