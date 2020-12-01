@@ -51,7 +51,7 @@ gem 'omniauth-rails_csrf_protection', '~> 0.1.2'
 
 # A Ruby/Rack web server built for concurrency.
 # https://github.com/puma/puma
-gem 'puma', '~> 5.0.4'
+gem 'puma', '~> 5.1.0'
 
 # Create database-backed web applications using the MVC pattern.
 # https://github.com/rails/rails
@@ -124,6 +124,10 @@ group :test do
   gem 'database_cleaner-active_record', '~> 1.8.0'
   gem 'database_cleaner-redis', '~> 1.8.0'
 
+  # RSpec results that your CI can read.
+  # https://github.com/sj26/rspec_junit_formatter
+  gem 'rspec_junit_formatter', '~> 0.4.1'
+
   # RSpec is a specification library for behaviour driven development.
   # https://github.com/rspec/rspec
   gem 'rspec-rails', '~> 4.0.1'
@@ -142,7 +146,7 @@ group :test do
 
   # Generate code coverage documentation.
   # https://github.com/colszowka/simplecov
-  gem 'simplecov', '~> 0.19.1'
+  gem 'simplecov', '~> 0.20.0'
 
   # Provides 'time travel' capabilities, making it simple to test time-dependent code.
   # https://github.com/travisjeffery/timecop
