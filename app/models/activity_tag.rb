@@ -13,5 +13,5 @@ class ActivityTag < ApplicationRecord
   belongs_to :tag, optional: true
   belongs_to :activity
 
-  validates :activity_id, uniqueness: { scope: [:tag_type_id, :tag_id] }
+  validates :activity_id, uniqueness: { scope: %i[tag_type_id tag_id] }
 end
