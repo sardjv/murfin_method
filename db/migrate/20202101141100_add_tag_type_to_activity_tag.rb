@@ -1,5 +1,7 @@
-class UpdateActivityWithTagTypeId < ActiveRecord::Migration[6.0]
+class AddTagTypeToActivityTag < ActiveRecord::Migration[6.0]
   def change
+    add_reference :activity_tags, :tag_type
+
     # Add tag_type_id to the unique index.
     remove_index :activity_tags, %i[tag_id activity_id]
     add_index :activity_tags, %i[activity_id tag_type_id tag_id], unique: true
