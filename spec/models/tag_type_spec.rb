@@ -19,7 +19,7 @@ describe TagType, type: :model do
   it { should have_many(:children).class_name('TagType').dependent(:nullify) }
 
   context 'with an infinite loop of parents' do
-    let!(:grandparent) { build(:tag_type) }
+    let!(:grandparent) { create(:tag_type) }
     let!(:parent) { create(:tag_type, parent_id: grandparent.id) }
     let!(:child) { create(:tag_type, parent_id: parent.id) }
 
