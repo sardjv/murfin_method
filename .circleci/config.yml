@@ -17,7 +17,7 @@ jobs:
           name: Run Rubocop
           command: bundle exec rubocop
   test:
-    parallelism: 1
+    parallelism: 3
     docker:
       - image: cimg/ruby:2.7.2-node
       - image: circleci/mysql:8.0.19
@@ -49,8 +49,17 @@ jobs:
           command: bundle exec rails db:create db:schema:load --trace
       - run:
           name: Run tests
-          command: bundle exec rspec -fd
-
+          command: |
+            mkdir -p /tmp/test-results/rspec
+            TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
+            bundle exec rspec --profile 10 \
+                              --format RspecJunitFormatter \
+                              --out /tmp/test-results/rspec/rspec.xml \
+                              --format progress \
+                              -- \
+                              $TEST_FILES
+      - store_test_results:
+          path: /tmp/test-results/rspec
 workflows:
   version: 2
   checks:
