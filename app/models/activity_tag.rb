@@ -15,6 +15,9 @@ class ActivityTag < ApplicationRecord
 
   validates :activity_id, uniqueness: { scope: %i[tag_type_id tag_id] }
   validate :validate_tag_matches_type
+  validate :validate_tag_hierarchy
+
+  private
 
   def validate_tag_matches_type
     return if tag.nil?
@@ -22,5 +25,13 @@ class ActivityTag < ApplicationRecord
     return if tag.tag_type == tag_type
 
     errors.add :tag_id, 'the tag must belong to the selected tag_type'
+  end
+
+  def validate_tag_hierarchy
+    return if tag.nil? || tag.tag_type.parent.nil?
+
+    return if activity.activity_tags.find { |activity_tag| activity_tag.tag_type == tag.tag_type.parent }.tag == tag.parent
+
+    errors.add :tag_id, 'the tag must match the selected parent tag'
   end
 end

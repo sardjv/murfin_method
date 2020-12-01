@@ -23,12 +23,29 @@ describe ActivityTag, type: :model do
     let!(:type) { create(:tag_type) }
     let!(:unrelated_type) { create(:tag_type) }
 
-    # Tags
+    # Tags.
     let!(:tag) { create(:tag, tag_type: type) }
 
     # ActivityTag.
     let(:subject) { build(:activity_tag, tag_type: unrelated_type, tag: tag) }
 
     it { expect(subject).not_to be_valid }
+  end
+
+  context 'when tag_type.parent != tag.parent' do
+    # Types.
+    let!(:category) { create(:tag_type, name: 'Category') }
+    let!(:subcategory) { create(:tag_type, name: 'Subcategory', parent: category) }
+
+    # Tags.
+    let!(:dcc_category) { create(:tag, name: 'DCC', tag_type: category) }
+    let!(:spa_category) { create(:tag, name: 'SPA', tag_type: category) }
+    let!(:spa_subcategory) { create(:tag, name: 'Outpatient', tag_type: subcategory, parent: spa_category) }
+
+    # ActivityTags.
+    let!(:chosen_category) { create(:activity_tag, tag_type: category, tag: dcc_category) }
+    let(:chosen_subcategory) { build(:activity_tag, tag_type: subcategory, tag: spa_subcategory) }
+
+    it { expect(chosen_subcategory).not_to be_valid }
   end
 end
