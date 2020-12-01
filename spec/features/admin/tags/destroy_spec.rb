@@ -12,7 +12,7 @@ describe 'Admin destroys a tag', type: :feature, js: true do
   it 'destroys user' do
     visit admin_tag_types_path
 
-    page.click_on('Patient Contacts')
+    page.click_on('Patient Contact')
     within('.card-body') do
       accept_confirm do
         first('.bi-trash').click

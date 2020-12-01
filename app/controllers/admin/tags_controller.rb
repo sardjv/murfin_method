@@ -5,7 +5,8 @@ class Admin::TagsController < ApplicationController
 
   def new
     @tag_type = TagType.find(params[:tag_type_id])
-    @tag = Tag.new
+    @tag = Tag.new(tag_type_id: @tag_type.id)
+    render action: :edit
   end
 
   def create
@@ -15,7 +16,7 @@ class Admin::TagsController < ApplicationController
       redirect_to admin_tag_types_path, notice: notice('successfully.created')
     else
       flash.now.alert = notice('could_not_be.created')
-      render :new
+      render :edit
     end
   end
 
@@ -48,6 +49,7 @@ class Admin::TagsController < ApplicationController
 
   def tag_params
     params.require(:tag).permit(
+      :parent_id,
       :name,
       :tag_type_id
     )

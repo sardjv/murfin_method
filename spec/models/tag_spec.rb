@@ -7,6 +7,7 @@
 #  tag_type_id :bigint           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  parent_id   :bigint
 #
 describe Tag, type: :model do
   subject { build(:tag) }
@@ -17,4 +18,6 @@ describe Tag, type: :model do
   it { should have_many(:activity_tags).dependent(:destroy) }
   it { should have_db_index(%i[tag_type_id name]).unique }
   it { should validate_uniqueness_of(:name).scoped_to(:tag_type_id).ignoring_case_sensitivity }
+  it { should belong_to(:parent).class_name('Tag').optional }
+  it { should have_many(:children).class_name('Tag').dependent(:nullify) }
 end

@@ -1,21 +1,10 @@
 <div class='table-responsive'>
   <table class='table table-bordered mb-0'>
-    <thead>
-      <tr>
-        <th>
-          <%= Tag.human_attribute_name('leads') %>
-        </th>
-        <th style='width: 50px;'>
-        </th>
-        <th style='width: 50px;'>
-        </th>
-      </tr>
-    </thead>
     <tbody>
       <% tag_type.tags.each do |tag| %>
         <tr>
           <td>
-            <%= tag.name %>
+            <%= tag.name_with_parent %>
           </td>
           <td>
             <%= link_to [:edit, :admin, tag], class: 'btn btn-link' do %>

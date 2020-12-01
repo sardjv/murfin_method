@@ -2,7 +2,7 @@
   <div class='card-header' id='heading<%=index%>'>
     <h5 class='mb-0'>
       <button class='btn btn-link' data-toggle='collapse' data-target='#collapse<%=index%>' aria-expanded='false' aria-controls='#collapse<%=index%>'>
-        <%= tag_type.name.pluralize %>
+        <%= tag_type.name_with_parent %>
       </button>
       <%= link_to [:admin, tag_type], method: :delete, data: { confirm: I18n.t('actions.confirm') }, class: 'float-right' do %>
         <%= icon('trash') %>
