@@ -32,6 +32,12 @@ en:
   date:
     formats:
       readable: '%-d %B %Y'
+  errors:
+    tag:
+      should_match_parent: must match the selected parent
+      should_match_tag_type: must belong to the selected tag_type
+    tag_type:
+      should_be_acyclic: cannot be descended from itself
   faker:
     time_range_type:
       name:

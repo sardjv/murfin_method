@@ -33,6 +33,6 @@ class Tag < ApplicationRecord
 
     return if parent&.tag_type == tag_type&.parent
 
-    errors.add :parent_id, 'tag_type must match tag_type parent'
+    errors.add :parent_id, I18n.t('errors.tag.should_match_parent')
   end
 end

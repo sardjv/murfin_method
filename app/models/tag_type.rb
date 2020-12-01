@@ -28,7 +28,7 @@ class TagType < ApplicationRecord
 
     while next_parent
       if next_parent.parent_id == id
-        errors.add :parent_id, 'cannot be descended from itself'
+        errors.add :parent_id, I18n.t('errors.tag_type.should_be_acyclic')
         break
       else
         next_parent = next_parent.parent

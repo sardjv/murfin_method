@@ -25,19 +25,19 @@ class ActivityTag < ApplicationRecord
 
     return if tag.tag_type == tag_type
 
-    errors.add :tag_id, 'the tag must belong to the selected tag_type'
+    errors.add :tag_id, I18n.t('errors.tag.should_match_tag_type')
   end
 
   def validate_tag_parent
     return if correct_parent_tag?
 
-    errors.add :tag_id, 'the tag must match the selected parent tag'
+    errors.add :tag_id, I18n.t('errors.tag.should_match_parent')
   end
 
   def validate_tag_child
     return if correct_child_tag?
 
-    errors.add :tag_id, 'the tag must match the selected parent tag'
+    errors.add :tag_id, I18n.t('errors.tag.should_match_parent')
   end
 
   def correct_parent_tag?
