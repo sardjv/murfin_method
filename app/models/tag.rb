@@ -18,10 +18,19 @@ class Tag < ApplicationRecord
 
   validates :name, presence: true
   validates :name, uniqueness: { scope: :tag_type_id, case_sensitive: false }
+  validate :validate_type_hierarchy
 
   def name_with_parent
     return "#{parent.name} > #{name}" if parent
 
     name
+  end
+
+  def validate_type_hierarchy
+    return if parent.nil? && tag_type.nil?
+
+    return if parent&.tag_type == tag_type&.parent
+
+    errors.add :parent_id, 'tag_type must match tag_type parent'
   end
 end
