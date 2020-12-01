@@ -30,8 +30,12 @@ class ActivityTag < ApplicationRecord
   def validate_tag_hierarchy
     return if tag.nil? || tag.tag_type.parent.nil?
 
-    return if activity.activity_tags.find { |activity_tag| activity_tag.tag_type == tag.tag_type.parent }.tag == tag.parent
+    return if correct_parent_tag?
 
     errors.add :tag_id, 'the tag must match the selected parent tag'
+  end
+
+  def correct_parent_tag?
+    activity.activity_tags.find { |at| at.tag_type == tag_type.parent }.tag == tag.parent
   end
 end
