@@ -13,9 +13,20 @@ class Activity < ApplicationRecord
   cacheable watch: %w[schedule], bust: [{ klass: 'User', ids: %i[plan user_id] }]
 
   belongs_to :plan, touch: true
+  has_many :activity_tags, dependent: :destroy
+  accepts_nested_attributes_for :activity_tags, allow_destroy: true
+  has_many :tags, through: :activity_tags
 
   validates :schedule, presence: true
   validate :validate_end_time_after_start_time
+
+  def build_missing_tags
+    TagType.all.find_each do |tag_type|
+      next if (tag_type.tag_ids & activity_tags.pluck(:tag_id)).present?
+
+      activity_tags.build(tag: tag_type.tags.first)
+    end
+  end
 
   def seconds_per_week=(seconds)
     self.schedule = ScheduleBuilder.call(

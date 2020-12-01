@@ -1,12 +1,19 @@
-<div class='nested-fields'>
-  <div class='row pb-4 pb-md-0 form-inline'>
-
-    <div class='col-md'>
-      <%= f.number_field :seconds_per_week, class: 'duration-picker-activity', hide_label: true, step: :any %>
+<div class='nested-fields card mb-4'>
+  <div class='card-body'>
+    <div class='row'>
+      <label class='col-md-3 col-form-label'><%= Activity.human_attribute_name('duration') %></label>
+      <%= f.number_field :seconds_per_week, class: 'duration-picker-activity col-md-9', hide_label: true, step: :any %>
     </div>
 
-    <div class='col-md'>
-      <%= link_to_remove_association I18n.t('actions.remove', model_name: Activity.model_name.human), f %>
+    <% f.object.build_missing_tags %>
+    <%= f.fields_for :activity_tags do |tag_form| %>
+      <%= render 'activity_tag_fields', activity_form: f, f: tag_form %>
+    <% end %>
+
+    <div class='row'>
+      <div class='col-md'>
+        <%= link_to_remove_association I18n.t('actions.remove', model_name: Activity.model_name.human), f %>
+      </div>
     </div>
   </div>
 </div>

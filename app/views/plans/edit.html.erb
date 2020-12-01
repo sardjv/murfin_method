@@ -27,19 +27,16 @@
 
         <label><%= Plan.human_attribute_name('activities') %></label>
 
-        <div class='row'>
-          <label class='col-md d-md-block'><%= Activity.human_attribute_name('duration') %></label>
-        </div>
         <%= f.fields_for :activities do |activity_form| %>
           <%= render 'activity_fields', plan_form: f, f: activity_form %>
         <% end %>
 
         <div>
-          <%= link_to_add_association I18n.t('actions.add', model_name: Activity.model_name.human.titleize), f, :activities %>
+          <%= link_to_add_association I18n.t('actions.add', model_name: Activity.model_name.human.titleize), f, :activities, class: 'btn btn-primary' %>
         </div>
 
-        <%= f.submit I18n.t('actions.save'), class: 'btn btn-primary mt-2' %>
-        <%= link_to I18n.t('actions.cancel'), plans_path, class: 'btn btn-outline-secondary mt-2' %>
+        <%= f.submit I18n.t('actions.save'), class: 'btn btn-primary mt-4' %>
+        <%= link_to I18n.t('actions.cancel'), plans_path, class: 'btn btn-outline-secondary mt-4' %>
       <% end %>
     </div>
   </div>
