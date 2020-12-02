@@ -26,7 +26,7 @@ function styleSelects() {
 function filterChildSelect(select) {
   const selectedOption = $(select).find('option:selected');
   const selectedId = selectedOption.attr('data-id');
-  const selectedTypeId = selectedOption.attr('data-tag-type-id');
+  const selectedTypeId = $(select).attr('data-tag-type-id');
   const childSelect = $('select.filter-child-select[data-tag-type-parent-id=' + selectedTypeId + ']');
 
   // Show all options.
