@@ -50,6 +50,31 @@ describe ActivityTag, type: :model do
     it { expect(chosen_subcategory).not_to be_valid }
   end
 
+  context 'when tag_type.parent.tag == nil' do
+    let!(:activity) { create(:activity) }
+
+    # Types.
+    let!(:category) { create(:tag_type, name: 'Category') }
+    let!(:subcategory) { create(:tag_type, name: 'Subcategory', parent: category) }
+
+    # Tags.
+    let!(:spa_category) { create(:tag, name: 'SPA', tag_type: category) }
+    let!(:spa_subcategory) { create(:tag, name: 'Outpatient', tag_type: subcategory, parent: spa_category) }
+
+    # ActivityTags.
+    let!(:chosen_category) { create(:activity_tag, activity: activity, tag_type: category, tag: spa_category) }
+    let!(:chosen_subcategory) { build(:activity_tag, activity: activity, tag_type: subcategory, tag: spa_subcategory) }
+
+    before do
+      activity.reload
+      chosen_subcategory.save!
+      activity.reload
+      chosen_category.assign_attributes(tag: nil)
+    end
+
+    it { expect(chosen_category).not_to be_valid }
+  end
+
   context 'when tag_type.child != tag.tag_type' do
     let!(:activity) { create(:activity) }
     # Types.

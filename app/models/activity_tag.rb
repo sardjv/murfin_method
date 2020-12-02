@@ -49,6 +49,8 @@ class ActivityTag < ApplicationRecord
   end
 
   def correct_child_tag?
+    return false if child_tag && tag.nil?
+
     # e.g., if this is a DCC Category, is the child a DCC Subcategory?
     child_tag.nil? || tag.children.include?(child_tag)
   end
