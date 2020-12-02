@@ -29,12 +29,11 @@ function filterChildSelect(select) {
   const selectedTypeId = selectedOption.attr('data-tag-type-id');
   const childOptions = $('option[data-tag-type-parent-id=' + selectedTypeId + ']');
 
-  // Hide all options in the child select.
-  childOptions.prop('disabled', true).hide();
+  // Show all child options.
+  childOptions.prop('disabled', false).show();
 
-  // Show all tag options which are children of the selected parent.
-  $('option[data-parent-id=' + selectedId + ']').prop('disabled', false);
-  $('option[data-parent-id=' + selectedId + ']').show();
+  // Hide all child options which aren't children of the selected parent.
+  childOptions.filter('[data-parent-id!=' + selectedId + ']').prop('disabled', true).prop('selected', false).hide();
 
   // Refresh the JS select overlay.
   $('select.filter-child-select').selectpicker('refresh');
