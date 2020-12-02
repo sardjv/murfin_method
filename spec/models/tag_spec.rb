@@ -49,10 +49,10 @@ describe Tag, type: :model do
 
   context 'with an activity_tag' do
     subject { create(:tag) }
-    let!(:activity_tag) { create(:activity_tag, tag: subject)}
+    let!(:activity_tag) { create(:activity_tag, tag: subject) }
 
     describe 'destroying' do
-      it { expect{ subject.destroy! }.to raise_error }
+      it { expect { subject.destroy! }.to raise_error }
     end
   end
 end

@@ -15,15 +15,20 @@
   <div class='row'>
     <div class='col-12'>
       <%= bootstrap_form_for [:admin, @tag_type] do |f| %>
-        <%= f.select :parent_id,
-          options_for_select(TagType.where.not(id: @tag_type.id).map { |t| [t.name, t.id] }, selected: f.object.parent_id),
-          { label: TagType.human_attribute_name('parent'), include_blank: I18n.t('prompts.none') },
-          class: 'input-group-btn'
-        %>
+        <% if (other_types = TagType.where.not(id: @tag_type.id).presence) %>
+          <%= f.select :parent_id,
+            options_for_select(other_types.map { |t| [t.name, t.id] }, selected: f.object.parent_id),
+            { label: TagType.human_attribute_name('parent'), include_blank: I18n.t('prompts.none') },
+            class: 'input-group-btn'
+          %>
+        <% end %>
+
         <%= f.text_field :name, label: TagType.human_attribute_name('name'),
                                 placeholder: TagType.human_attribute_name('name'),
                                 required: true %>
+
         <%= f.submit I18n.t('actions.save'), class: 'btn btn-primary', style: 'margin-top: 10px;' %>
+
         <%= link_to I18n.t('actions.cancel'), :back, class: 'btn btn-outline-secondary mt-2' %>
       <% end %>
     </div>
