@@ -17,7 +17,7 @@ class Tag < ApplicationRecord
   has_many :activity_tags, dependent: :destroy
 
   validates :name, presence: true
-  validates :name, uniqueness: { scope: :tag_type_id, case_sensitive: false }
+  validates :name, uniqueness: { scope: :parent_id, case_sensitive: false }
   validate :validate_type_hierarchy
 
   def name_with_parent

@@ -16,8 +16,8 @@ describe Tag, type: :model do
   it { should validate_presence_of(:name) }
   it { should belong_to(:tag_type) }
   it { should have_many(:activity_tags).dependent(:destroy) }
-  it { should have_db_index(%i[tag_type_id name]).unique }
-  it { should validate_uniqueness_of(:name).scoped_to(:tag_type_id).ignoring_case_sensitivity }
+  it { should have_db_index(%i[parent_id name]).unique }
+  it { should validate_uniqueness_of(:name).scoped_to(:parent_id).ignoring_case_sensitivity }
   it { should belong_to(:parent).class_name('Tag').optional }
   it { should have_many(:children).class_name('Tag').dependent(:nullify) }
 

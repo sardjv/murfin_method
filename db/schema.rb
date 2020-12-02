@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_21_01_163300) do
+ActiveRecord::Schema.define(version: 2020_21_01_134200) do
 
   create_table "activities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "schedule", size: :medium, null: false
@@ -88,8 +88,8 @@ ActiveRecord::Schema.define(version: 2020_21_01_163300) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "parent_id"
+    t.index ["parent_id", "name"], name: "index_tags_on_parent_id_and_name", unique: true
     t.index ["parent_id"], name: "index_tags_on_parent_id"
-    t.index ["tag_type_id", "name"], name: "index_tags_on_tag_type_id_and_name", unique: true
     t.index ["tag_type_id"], name: "index_tags_on_tag_type_id"
   end
 
