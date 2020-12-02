@@ -7,7 +7,7 @@
 #  activity_id :bigint           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  tag_type_id :bigint
+#  tag_type_id :bigint           not null
 #
 FactoryBot.define do
   factory :activity_tag do

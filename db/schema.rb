@@ -25,8 +25,8 @@ ActiveRecord::Schema.define(version: 2020_12_02_092415) do
     t.bigint "activity_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "tag_type_id"
-    t.index ["activity_id", "tag_type_id", "tag_id"], name: "index_activity_tags_on_activity_id_and_tag_type_id_and_tag_id", unique: true
+    t.bigint "tag_type_id", null: false
+    t.index ["activity_id", "tag_id"], name: "index_activity_tags_on_activity_id_and_tag_type_id_and_tag_id", unique: true
     t.index ["activity_id"], name: "index_activity_tags_on_activity_id"
     t.index ["tag_id"], name: "index_activity_tags_on_tag_id"
     t.index ["tag_type_id"], name: "index_activity_tags_on_tag_type_id"
