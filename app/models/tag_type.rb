@@ -17,7 +17,7 @@ class TagType < ApplicationRecord
   validate :validate_acyclic, on: :update
 
   def name_with_parent
-    return "#{parent.name} > #{name}" if parent
+    return "#{parent.name_with_parent} > #{name}" if parent
 
     name
   end
