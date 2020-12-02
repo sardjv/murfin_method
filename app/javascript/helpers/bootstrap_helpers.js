@@ -32,7 +32,7 @@ function filterChildSelect(select) {
   // Show all options.
   childSelect.find('option').prop('disabled', false).show();
 
-  // Show all child options which are children of the selected parent.
+  // Hide all child options which are not children of the selected parent.
   childSelect.find('option').filter('[data-parent-id!="' + selectedId + '"]').prop('selected', false).prop('disabled', true).hide();
 
   // Show empty option.
@@ -44,7 +44,7 @@ function filterChildSelect(select) {
   // Prevent dropdown carets getting stuck pointing up, for some reason.
   $('div.bootstrap-select').removeClass('dropup');
 
-  // Trigger change on the child select, so that any grandchildren (and so on) get updated too.
+  // Trigger change on the child select, so that any descendants get updated too.
   childSelect.trigger('change');
 }
 
