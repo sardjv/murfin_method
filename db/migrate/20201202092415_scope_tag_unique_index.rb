@@ -7,5 +7,9 @@ class ScopeTagUniqueIndex < ActiveRecord::Migration[6.0]
     # ActivityTag#tag_type_id should be null: false.
     remove_reference :activity_tags, :tag_type
     add_reference :activity_tags, :tag_type, null: false
+
+    # # Add tag_type_id to the unique index.
+    remove_index :activity_tags, %i[activity_id tag_id]
+    add_index :activity_tags, %i[activity_id tag_type_id tag_id], unique: true
   end
 end
