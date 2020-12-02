@@ -6,6 +6,7 @@
 #  name       :string(255)      not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  parent_id  :bigint
 #
 FactoryBot.define do
   factory :tag_type do

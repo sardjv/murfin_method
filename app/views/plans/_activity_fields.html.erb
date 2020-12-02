@@ -2,8 +2,8 @@
   <div class='card-body'>
     <div class='row'>
       <label class='col-md-3 col-form-label'><%= Activity.human_attribute_name('duration') %></label>
-      <div class='col-md-3'>
-        <%= f.number_field :seconds_per_week, class: 'duration-picker-activity col-md-9', hide_label: true, step: :any %>
+      <div class='col-md-9'>
+        <%= f.number_field :seconds_per_week, class: 'duration-picker-activity', hide_label: true, step: :any %>
       </div>
     </div>
 

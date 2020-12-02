@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_21_01_141100) do
+ActiveRecord::Schema.define(version: 2020_12_02_092415) do
 
   create_table "activities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "schedule", size: :medium, null: false
@@ -21,11 +21,11 @@ ActiveRecord::Schema.define(version: 2020_21_01_141100) do
   end
 
   create_table "activity_tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "tag_id"
+    t.bigint "tag_id"
     t.bigint "activity_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "tag_type_id"
+    t.bigint "tag_type_id", null: false
     t.index ["activity_id", "tag_type_id", "tag_id"], name: "index_activity_tags_on_activity_id_and_tag_type_id_and_tag_id", unique: true
     t.index ["activity_id"], name: "index_activity_tags_on_activity_id"
     t.index ["tag_id"], name: "index_activity_tags_on_tag_id"
@@ -88,8 +88,8 @@ ActiveRecord::Schema.define(version: 2020_21_01_141100) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "parent_id"
+    t.index ["parent_id", "name"], name: "index_tags_on_parent_id_and_name", unique: true
     t.index ["parent_id"], name: "index_tags_on_parent_id"
-    t.index ["tag_type_id", "name"], name: "index_tags_on_tag_type_id_and_name", unique: true
     t.index ["tag_type_id"], name: "index_tags_on_tag_type_id"
   end
 

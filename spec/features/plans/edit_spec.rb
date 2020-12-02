@@ -38,4 +38,14 @@ describe 'User edits a plan', type: :feature, js: true do
       expect(page).to have_content(I18n.t('notice.could_not_be.updated', model_name: Plan.model_name.human))
     end
   end
+
+  context 'when selecting None for tag' do
+    it 'does not raise error' do
+      find('#plan_activities_attributes_0_activity_tags_attributes_0_tag_id option', text: 'None', visible: false).click
+
+      click_button I18n.t('actions.save')
+
+      expect(page).to have_content(I18n.t('notice.successfully.updated', model_name: Plan.model_name.human))
+    end
+  end
 end
