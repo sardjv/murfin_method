@@ -29,14 +29,14 @@ function filterChildSelect(select) {
   const selectedTypeId = selectedOption.attr('data-tag-type-id');
   const childSelect = $('select.filter-child-select[data-tag-type-parent-id=' + selectedTypeId + ']');
 
-  // Hide all child options.
-  childSelect.find('option').prop('disabled', true).prop('selected', false).hide();
-
-  // Show 'None' option.
-  childSelect.find('option').filter("[value='None']").prop('disabled', false).show();
+  // Show all options.
+  childSelect.find('option').prop('disabled', false).show();
 
   // Show all child options which are children of the selected parent.
-  childSelect.find('option').filter('[data-parent-id=' + selectedId + ']').prop('disabled', false).show();
+  childSelect.find('option').filter('[data-parent-id!="' + selectedId + '"]').prop('selected', false).prop('disabled', true).hide();
+
+  // Show empty option.
+  childSelect.find('option').filter('[value=""]').prop('disabled', false).show();
 
   // Refresh the JS select overlay.
   childSelect.selectpicker('refresh');
@@ -45,7 +45,7 @@ function filterChildSelect(select) {
   $('div.bootstrap-select').removeClass('dropup');
 
   // Trigger change on the child select, so that any grandchildren (and so on) get updated too.
-  childSelect.trigger('change');
+  // childSelect.trigger('change');
 }
 
 function styleDurations() {
