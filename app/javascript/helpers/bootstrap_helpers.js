@@ -11,7 +11,7 @@ $(document).on('cocoon:after-insert', () => {
 });
 
 function styleSelects() {
-  $('select').selectpicker({ width: 'fit' });
+  $('select').selectpicker({ width: 'fit', liveSearch: true });
   $('.rails-bootstrap-forms-datetime-select').addClass('form-inline');
   $('.rails-bootstrap-forms-date-select').addClass('form-inline');
 
@@ -37,6 +37,9 @@ function filterChildSelect(select) {
 
   // Refresh the JS select overlay.
   $('select.filter-child-select').selectpicker('refresh');
+
+  // Prevent dropdown carets pointing up, for some reason.
+  $('div.bootstrap-select').removeClass('dropup')
 }
 
 function styleDurations() {
