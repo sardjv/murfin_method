@@ -37,8 +37,11 @@ class Admin::TagsController < ApplicationController
 
   def destroy
     @tag = Tag.find(params[:id])
-    @tag.destroy
-    redirect_to admin_tag_types_path, notice: notice('successfully.destroyed')
+    if @tag.destroy
+      redirect_to admin_tag_types_path, notice: notice('successfully.destroyed')
+    else
+      redirect_to admin_tag_types_path, alert: notice('could_not_be.destroyed')
+    end
   end
 
   private

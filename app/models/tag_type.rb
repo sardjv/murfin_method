@@ -9,9 +9,9 @@
 #  parent_id  :bigint
 #
 class TagType < ApplicationRecord
-  has_many :tags, dependent: :destroy
   belongs_to :parent, class_name: 'TagType', optional: true
-  has_many :children, class_name: 'TagType', inverse_of: :parent, foreign_key: :parent_id, dependent: :nullify
+  has_many :children, class_name: 'TagType', inverse_of: :parent, foreign_key: :parent_id, dependent: :destroy
+  has_many :tags, dependent: :destroy
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validate :validate_acyclic, on: :update
