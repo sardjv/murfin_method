@@ -27,19 +27,25 @@ function filterChildSelect(select) {
   const selectedOption = $(select).find('option:selected');
   const selectedId = selectedOption.attr('data-id');
   const selectedTypeId = selectedOption.attr('data-tag-type-id');
-  const childOptions = $('option[data-tag-type-parent-id=' + selectedTypeId + ']');
+  const childSelect = $('select.filter-child-select[data-tag-type-parent-id=' + selectedTypeId + ']');
 
-  // Show all child options.
-  childOptions.prop('disabled', false).show();
+  // Hide all child options.
+  childSelect.find('option').prop('disabled', true).prop('selected', false).hide();
 
-  // Hide all child options which aren't children of the selected parent.
-  childOptions.filter('[data-parent-id!=' + selectedId + ']').prop('disabled', true).prop('selected', false).hide();
+  // Show 'None' option.
+  childSelect.find('option').filter("[value='None']").prop('disabled', false).show();
+
+  // Show all child options which are children of the selected parent.
+  childSelect.find('option').filter('[data-parent-id=' + selectedId + ']').prop('disabled', false).show();
 
   // Refresh the JS select overlay.
-  $('select.filter-child-select').selectpicker('refresh');
+  childSelect.selectpicker('refresh');
 
-  // Prevent dropdown carets pointing up, for some reason.
-  $('div.bootstrap-select').removeClass('dropup')
+  // Prevent dropdown carets getting stuck pointing up, for some reason.
+  $('div.bootstrap-select').removeClass('dropup');
+
+  // Trigger change on the child select, so that any grandchildren (and so on) get updated too.
+  childSelect.trigger('change');
 }
 
 function styleDurations() {
