@@ -11,7 +11,7 @@
           'data-tag-type-parent-id' => tag_type.parent_id
         } ] },
         { include_blank: I18n.t('prompts.none'), hide_label: true },
-        { class: 'filter-child-select' }
+        { class: 'filter-child-select', 'data-size' => tag_type.tags.count + 1 }
       %>
     </div>
   <% end %>
