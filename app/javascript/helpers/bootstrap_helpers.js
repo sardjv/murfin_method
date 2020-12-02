@@ -45,7 +45,7 @@ function filterChildSelect(select) {
   $('div.bootstrap-select').removeClass('dropup');
 
   // Trigger change on the child select, so that any grandchildren (and so on) get updated too.
-  // childSelect.trigger('change');
+  childSelect.trigger('change');
 }
 
 function styleDurations() {
