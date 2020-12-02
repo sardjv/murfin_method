@@ -9,7 +9,7 @@ describe 'User edits a plan', type: :feature, js: true do
   let(:input) { plan.start_date.year + 2 }
 
   before do
-    plan.activities.first.tags << tag1
+    plan.activities.first.activity_tags.create(tag_type: tag_type, tag: tag1)
     log_in current_user
     visit plans_path
     first('.bi-pencil').click

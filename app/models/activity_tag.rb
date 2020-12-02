@@ -9,8 +9,9 @@
 #  updated_at  :datetime         not null
 #
 class ActivityTag < ApplicationRecord
-  belongs_to :tag
+  belongs_to :tag_type
+  belongs_to :tag, optional: true
   belongs_to :activity
 
-  validates :activity_id, uniqueness: { scope: :tag_id }
+  validates :activity_id, uniqueness: { scope: %i[tag_type_id tag_id] }
 end

@@ -10,6 +10,7 @@
 #
 FactoryBot.define do
   factory :activity_tag do
+    tag_type_id { TagType.all.sample.try(:id) || create(:tag_type).id }
     tag_id { Tag.all.sample.try(:id) || create(:tag).id }
     activity_id { Activity.all.sample.try(:id) || create(:activity).id }
   end
