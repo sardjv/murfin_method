@@ -25,9 +25,10 @@ function styleSelects() {
 
 function filterChildSelect(select) {
   const selectedOption = $(select).find('option:selected');
+  const activityId = $(select).attr('data-activity-id');
   const selectedId = selectedOption.attr('data-id');
   const selectedTypeId = $(select).attr('data-tag-type-id');
-  const childSelect = $('select.filter-child-select[data-tag-type-parent-id=' + selectedTypeId + ']');
+  const childSelect = $('select.filter-child-select[data-activity-id=' + activityId + '][data-tag-type-parent-id=' + selectedTypeId + ']');
 
   // Show all options.
   childSelect.find('option').prop('disabled', false).show();

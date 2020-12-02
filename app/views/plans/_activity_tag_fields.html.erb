@@ -11,6 +11,7 @@
         { include_blank: I18n.t('prompts.none'), hide_label: true },
         {
           class: 'filter-child-select',
+          'data-activity-id' => f.object.activity_id,
           'data-tag-type-id' => tag_type.id,
           'data-tag-type-parent-id' => tag_type.parent_id,
           'data-size' => TagTypeHelper.visible_options_count(tag_type)
