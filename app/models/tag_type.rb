@@ -17,7 +17,7 @@ class TagType < ApplicationRecord
   validate :validate_acyclic, on: :update
 
   def active=(state)
-    assign_attributes(active_at: (state.to_s == '1' ? Time.current : nil))
+    assign_attributes(active_at: (%w[1 true].include?(state.to_s) ? Time.current : nil))
   end
 
   def active
