@@ -52,7 +52,7 @@ describe Tag, type: :model do
     let!(:activity_tag) { create(:activity_tag, tag: subject) }
 
     describe 'destroying' do
-      it { expect { subject.destroy! }.to raise_error }
+      it { expect { subject.destroy! }.to raise_error(ActiveRecord::RecordNotDestroyed) }
     end
   end
 end
