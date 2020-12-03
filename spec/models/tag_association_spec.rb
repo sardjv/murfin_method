@@ -15,9 +15,9 @@ describe TagAssociation, type: :model do
   it { expect(subject).to be_valid }
   it { should belong_to(:tag_type) }
   it { should belong_to(:tag).optional }
-  it { should belong_to(:activity) }
-  it { should have_db_index(%i[activity_id tag_type_id tag_id]).unique }
-  it { should validate_uniqueness_of(:activity_id).scoped_to(%i[tag_type_id tag_id]) }
+  it { should belong_to(:taggable) }
+  it { should have_db_index(%i[taggable_type taggable_id tag_id]).unique }
+  it { should validate_uniqueness_of(:taggable_id).scoped_to(%i[taggable_type tag_id]) }
 
   context 'when tag.tag_type != tag_type' do
     # Types.
