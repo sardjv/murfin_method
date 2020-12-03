@@ -28,17 +28,16 @@ module Activatable
 
     def activatable(classes:)
       classes.each do |activatable|
+        # Setter.
         define_method "active_for_#{activatable}=" do |state|
           assign_attributes("active_for_#{activatable}_at" => (Activatable.checked?(state) ? Time.current : nil))
         end
 
-        define_method "active_for_#{activatable}"  do
+        # Getter.
+        define_method "active_for_#{activatable}" do
           send("active_for_#{activatable}_at").present?
         end
-
-        define_method "active_for_#{activatable}?"  do
-          send("active_for_#{activatable}")
-        end
+        alias_method :"active_for_#{activatable}?", :"active_for_#{activatable}"
       end
     end
   end
