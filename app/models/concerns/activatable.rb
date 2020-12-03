@@ -1,7 +1,7 @@
 # Adds the ability to make a model 'active' related to other classes.
 #
 # Requirements:
-# - A migration to add a boolean for each related
+# - A migration to add a datetime for each related
 # class with column name e.g. "active_for_activities_at".
 # - A list of activatable classes in the model
 #   e.g. activatable classes: %w[activities time_ranges]
