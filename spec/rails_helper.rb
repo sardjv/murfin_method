@@ -100,10 +100,7 @@ RSpec.configure do |config|
   # Show exception that triggers a retry if verbose_retry is set to true
   config.display_try_failure_messages = true
 
-  # Run retry only on features.
-  config.around :each, :js do |ex|
-    ex.run_with_retry retry: ENV['SPEC_RETRIES'].try(:to_i) || 0
-  end
+  config.default_retry_count = ENV['SPEC_RETRIES'].try(:to_i) || 0
 
   # Callback to be run between retries
   config.retry_callback = proc do |ex|
