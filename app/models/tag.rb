@@ -20,8 +20,8 @@ class Tag < ApplicationRecord
   validates :name, uniqueness: { scope: :parent_id, case_sensitive: false }
   validate :validate_type_hierarchy
 
-  def name_with_parent
-    return "#{parent.name} > #{name}" if parent
+  def name_with_ancestors
+    return "#{parent.name_with_ancestors} > #{name}" if parent
 
     name
   end

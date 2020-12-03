@@ -16,8 +16,8 @@ class TagType < ApplicationRecord
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validate :validate_acyclic, on: :update
 
-  def name_with_parent
-    return "#{parent.name_with_parent} > #{name}" if parent
+  def name_with_ancestors
+    return "#{parent.name_with_ancestors} > #{name}" if parent
 
     name
   end
