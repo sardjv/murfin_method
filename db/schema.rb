@@ -63,14 +63,15 @@ ActiveRecord::Schema.define(version: 2020_12_03_104000) do
 
   create_table "tag_associations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "tag_id"
-    t.bigint "activity_id", null: false
+    t.bigint "taggable_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "tag_type_id", null: false
-    t.index ["activity_id", "tag_type_id", "tag_id"], name: "index_tag_associations_on_activity_id_and_tag_type_id_and_tag_id", unique: true
-    t.index ["activity_id"], name: "index_tag_associations_on_activity_id"
+    t.string "taggable_type", null: false
     t.index ["tag_id"], name: "index_tag_associations_on_tag_id"
     t.index ["tag_type_id"], name: "index_tag_associations_on_tag_type_id"
+    t.index ["taggable_id"], name: "index_tag_associations_on_taggable_id"
+    t.index ["taggable_type", "taggable_id", "tag_type_id", "tag_id"], name: "index_tag_associations_on_belongs_to", unique: true
   end
 
   create_table "tag_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|

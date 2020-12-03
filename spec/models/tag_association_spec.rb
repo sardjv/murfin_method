@@ -62,8 +62,8 @@ describe TagAssociation, type: :model do
     let!(:spa_subcategory) { create(:tag, name: 'Outpatient', tag_type: subcategory, parent: spa_category) }
 
     # TagAssociations.
-    let!(:chosen_category) { create(:tag_association, activity: activity, tag_type: category, tag: spa_category) }
-    let!(:chosen_subcategory) { build(:tag_association, activity: activity, tag_type: subcategory, tag: spa_subcategory) }
+    let!(:chosen_category) { create(:tag_association, taggable: activity, tag_type: category, tag: spa_category) }
+    let!(:chosen_subcategory) { build(:tag_association, taggable: activity, tag_type: subcategory, tag: spa_subcategory) }
 
     before do
       activity.reload
@@ -87,8 +87,8 @@ describe TagAssociation, type: :model do
     let!(:dcc_subcategory) { create(:tag, name: 'Surgery', tag_type: subcategory, parent: dcc_category) }
 
     # TagAssociations.
-    let!(:chosen_category) { create(:tag_association, activity: activity, tag_type: category, tag: dcc_category) }
-    let!(:chosen_subcategory) { create(:tag_association, activity: activity.reload, tag_type: subcategory, tag: dcc_subcategory) }
+    let!(:chosen_category) { create(:tag_association, taggable: activity, tag_type: category, tag: dcc_category) }
+    let!(:chosen_subcategory) { create(:tag_association, taggable: activity.reload, tag_type: subcategory, tag: dcc_subcategory) }
 
     before do
       activity.reload
