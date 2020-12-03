@@ -11,7 +11,7 @@ module Taggable
       TagType.all.find_each do |tag_type|
         # Don't use a database query here, as we need to check unsaved
         # tag_associations if validation fails.
-        next if tag_associations.map(&:tag_type_id).include?(tag_type.id)
+        next if tag_associations.any? { |ta| ta.tag_type_id == tag_type.id }
 
         tag_associations.build(tag_type: tag_type)
       end

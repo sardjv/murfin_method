@@ -9,10 +9,12 @@ describe 'Admin creates a tag type', type: :feature, js: true do
 
     click_link I18n.t('actions.add', model_name: TagType.model_name.human.titleize)
     fill_in TagType.human_attribute_name('name'), with: name
+    check 'tag_type_active'
     click_button I18n.t('actions.save')
 
     expect(page).to have_content(I18n.t('notice.successfully.created', model_name: TagType.model_name.human))
     expect(TagType.all.count).to eq 1
+    expect(TagType.first.active?).to eq true
   end
 
   context 'when enter non unique name' do

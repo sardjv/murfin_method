@@ -16,6 +16,15 @@ class TagType < ApplicationRecord
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validate :validate_acyclic, on: :update
 
+  def active=(state)
+    assign_attributes(active_at: (state.to_s == '1' ? Time.current : nil))
+  end
+
+  def active
+    active_at.present?
+  end
+  alias active? active
+
   def name_with_parent
     return "#{parent.name_with_parent} > #{name}" if parent
 
