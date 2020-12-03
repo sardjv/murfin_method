@@ -16,6 +16,8 @@ class TagType < ApplicationRecord
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validate :validate_acyclic, on: :update
 
+  scope :active_for, -> (type) { where("active_for_#{type.underscore.pluralize}_at" => ..Time.current) }
+
   def active_for_activities=(state)
     assign_attributes(active_for_activities_at: (checked?(state) ? Time.current : nil))
   end
