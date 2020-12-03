@@ -27,9 +27,17 @@
 
         <label><%= Plan.human_attribute_name('activities') %></label>
 
-        <%= f.fields_for :activities do |activity_form| %>
-          <%= render 'activity_fields', plan_form: f, f: activity_form %>
-        <% end %>
+        <table>
+          <tr>
+            <% TagType.all.sort_by(&:name_with_parent).each do |at| %>
+              <th><%= at.name %></th>
+            <% end %>
+            <th><%= Activity.human_attribute_name('duration') %></th>
+          </tr>
+          <%= f.fields_for :activities do |activity_form| %>
+            <%= render 'activity_fields', plan_form: f, f: activity_form %>
+          <% end %>
+        </table>
 
         <div>
           <%= link_to_add_association I18n.t('actions.add', model_name: Activity.model_name.human.titleize), f, :activities, class: 'btn btn-primary' %>
