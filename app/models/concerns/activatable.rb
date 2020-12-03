@@ -15,7 +15,7 @@ module Activatable
   extend ActiveSupport::Concern
 
   included do
-    scope :active_for, -> (type) { where("active_for_#{type.to_s.underscore.pluralize}_at" => ..Time.current) }
+    scope :active_for, ->(type) { where("active_for_#{type.to_s.underscore.pluralize}_at" => ..Time.current) }
   end
 
   def self.checked?(state)
