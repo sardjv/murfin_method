@@ -16,14 +16,23 @@ class TagType < ApplicationRecord
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validate :validate_acyclic, on: :update
 
-  def active=(state)
-    assign_attributes(active_at: (checked?(state) ? Time.current : nil))
+  def active_for_activity=(state)
+    assign_attributes(active_for_activity_at: (checked?(state) ? Time.current : nil))
   end
 
-  def active
-    active_at.present?
+  def active_for_activity
+    active_for_activity_at.present?
   end
-  alias active? active
+  alias active_for_activity? active_for_activity
+
+  def active_for_time_range=(state)
+    assign_attributes(active_for_time_range_at: (checked?(state) ? Time.current : nil))
+  end
+
+  def active_for_time_range
+    active_for_time_range_at.present?
+  end
+  alias active_for_time_range? active_for_time_range
 
   def name_with_parent
     return "#{parent.name_with_parent} > #{name}" if parent
