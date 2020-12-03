@@ -19,16 +19,6 @@ class Activity < ApplicationRecord
   validates :schedule, presence: true
   validate :validate_end_time_after_start_time
 
-  def build_missing_tag_associations
-    TagType.all.find_each do |tag_type|
-      # Don't use a database query here, as we need to check unsaved
-      # tag_associations if validation fails.
-      next if tag_associations.map(&:tag_type_id).include?(tag_type.id)
-
-      tag_associations.build(tag_type: tag_type)
-    end
-  end
-
   def seconds_per_week=(seconds)
     self.schedule = ScheduleBuilder.call(
       schedule: schedule,
