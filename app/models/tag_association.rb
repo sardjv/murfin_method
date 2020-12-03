@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: activity_tags
+# Table name: tag_associations
 #
 #  id          :bigint           not null, primary key
 #  tag_id      :bigint
@@ -9,7 +9,7 @@
 #  updated_at  :datetime         not null
 #  tag_type_id :bigint           not null
 #
-class ActivityTag < ApplicationRecord
+class TagAssociation < ApplicationRecord
   belongs_to :tag_type
   belongs_to :tag, optional: true
   belongs_to :activity
@@ -56,10 +56,10 @@ class ActivityTag < ApplicationRecord
   end
 
   def parent_tag
-    activity&.activity_tags&.find { |at| at.tag_type == tag_type.parent }&.tag
+    activity&.tag_associations&.find { |at| at.tag_type == tag_type.parent }&.tag
   end
 
   def child_tag
-    activity&.activity_tags&.find { |at| at.tag_type.parent == tag_type }&.tag
+    activity&.tag_associations&.find { |at| at.tag_type.parent == tag_type }&.tag
   end
 end

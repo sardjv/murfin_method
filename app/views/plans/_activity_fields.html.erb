@@ -7,9 +7,9 @@
       </div>
     </div>
 
-    <% f.object.build_missing_activity_tags %>
-    <%= f.fields_for :activity_tags, f.object.activity_tags.sort_by { |at| at.tag_type.name_with_parent } do |activity_tag_form| %>
-      <%= render 'activity_tag_fields', f: activity_tag_form %>
+    <% f.object.build_missing_tag_associations %>
+    <%= f.fields_for :tag_associations, f.object.tag_associations.sort_by { |at| at.tag_type.name_with_parent } do |tag_association_form| %>
+      <%= render 'tag_association_fields', f: tag_association_form %>
     <% end %>
 
     <div class='row'>

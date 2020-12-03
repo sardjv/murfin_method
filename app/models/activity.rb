@@ -13,21 +13,21 @@ class Activity < ApplicationRecord
   cacheable watch: %w[schedule], bust: [{ klass: 'User', ids: %i[plan user_id] }]
 
   belongs_to :plan, touch: true
-  has_many :activity_tags, dependent: :destroy
-  accepts_nested_attributes_for :activity_tags, allow_destroy: true
-  has_many :tag_types, through: :activity_tags
-  has_many :tags, through: :activity_tags
+  has_many :tag_associations, dependent: :destroy
+  accepts_nested_attributes_for :tag_associations, allow_destroy: true
+  has_many :tag_types, through: :tag_associations
+  has_many :tags, through: :tag_associations
 
   validates :schedule, presence: true
   validate :validate_end_time_after_start_time
 
-  def build_missing_activity_tags
+  def build_missing_tag_associations
     TagType.all.find_each do |tag_type|
       # Don't use a database query here, as we need to check unsaved
-      # activity_tags if validation fails.
-      next if activity_tags.map(&:tag_type_id).include?(tag_type.id)
+      # tag_associations if validation fails.
+      next if tag_associations.map(&:tag_type_id).include?(tag_type.id)
 
-      activity_tags.build(tag_type: tag_type)
+      tag_associations.build(tag_type: tag_type)
     end
   end
 

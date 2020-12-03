@@ -14,7 +14,7 @@ class Tag < ApplicationRecord
   belongs_to :parent, class_name: 'Tag', optional: true
   has_many :children, class_name: 'Tag', inverse_of: :parent, foreign_key: :parent_id, dependent: :nullify
 
-  has_many :activity_tags, dependent: :restrict_with_error
+  has_many :tag_associations, dependent: :restrict_with_error
 
   validates :name, presence: true
   validates :name, uniqueness: { scope: :parent_id, case_sensitive: false }
