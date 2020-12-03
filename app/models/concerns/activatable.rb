@@ -1,17 +1,18 @@
-# Adds the ability to make a model 'active' related to other classes.
+# Summary:
+# - Adds the ability to make a model 'active' related to other classes.
 #
 # Requirements:
 # - A migration to add a datetime for each related
-# class with column name e.g. "active_for_activities_at".
+#   class with column name e.g. "active_for_activities_at".
 # - A list of activatable classes in the model
 #   e.g. activatable classes: %w[activities time_ranges]
 #
 # Adds:
-# - Setter (e.g. TagType.update(active_for_activity: true))
-# - Setter for checkboxes (e.g. TagType.update(active_for_activity: '1'))
-# - Getter (e.g. TagType.active_for_activity)
-# - Getter (e.g. TagType.active_for_activity?)
-# - Scope (e.g. TagType.active_for(Activity))
+# - Setters (e.g. TagType.update(active_for_activity: true))
+# - Setters for checkboxes (e.g. TagType.update(active_for_activity: '1'))
+# - Getters (e.g. TagType.active_for_activity)
+# - Getters (e.g. TagType.active_for_activity?)
+# - Scopes (e.g. TagType.active_for(Activity))
 module Activatable
   extend ActiveSupport::Concern
 
