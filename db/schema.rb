@@ -79,8 +79,8 @@ ActiveRecord::Schema.define(version: 2020_12_03_153100) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "parent_id"
-    t.datetime "active_for_activity_at"
-    t.datetime "active_for_time_range_at"
+    t.datetime "active_for_activities_at"
+    t.datetime "active_for_time_ranges_at"
     t.index ["name"], name: "index_tag_types_on_name", unique: true
     t.index ["parent_id"], name: "index_tag_types_on_parent_id"
   end

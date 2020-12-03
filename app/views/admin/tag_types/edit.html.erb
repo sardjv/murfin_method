@@ -27,9 +27,9 @@
                                 placeholder: TagType.human_attribute_name('name'),
                                 required: true %>
 
-        <%= f.check_box :active_for_activity, label: TagType.human_attribute_name('active_for_activity').pluralize %>
+        <%= f.check_box :active_for_activities, label: TagType.human_attribute_name('active_for_activities') %>
 
-        <%= f.check_box :active_for_time_range, label: TagType.human_attribute_name('active_for_time_range').pluralize %>
+        <%= f.check_box :active_for_time_ranges, label: TagType.human_attribute_name('active_for_time_ranges') %>
 
         <%= f.submit I18n.t('actions.save'), class: 'btn btn-primary', style: 'margin-top: 10px;' %>
 

@@ -7,7 +7,7 @@ en:
       activity:
         duration: Duration worked per week
       tag_type:
-        active_for_time_range: Active for actual
+        active_for_time_ranges: Active for actual
       note:
         content: Add note
         created_at: Created %{when} ago

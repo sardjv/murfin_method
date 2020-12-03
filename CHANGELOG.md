@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add TagType#active_for_activity
+- Add TagType#active_for_activities
 - Add TagType#active_for_time_ranges
 
 ## [0.5.0] - 2020-12-03

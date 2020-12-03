@@ -51,8 +51,8 @@ class Admin::TagTypesController < ApplicationController
 
   def tag_type_params
     params.require(:tag_type).permit(
-      :active_for_activity,
-      :active_for_time_range,
+      :active_for_activities,
+      :active_for_time_ranges,
       :name,
       :parent_id
     )
