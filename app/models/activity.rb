@@ -10,13 +10,11 @@
 #
 class Activity < ApplicationRecord
   include Cacheable
+  include Taggable
+
   cacheable watch: %w[schedule], bust: [{ klass: 'User', ids: %i[plan user_id] }]
 
   belongs_to :plan, touch: true
-  has_many :tag_associations, as: :taggable, dependent: :destroy
-  accepts_nested_attributes_for :tag_associations, allow_destroy: true
-  has_many :tag_types, through: :tag_associations
-  has_many :tags, through: :tag_associations
 
   validates :schedule, presence: true
   validate :validate_end_time_after_start_time

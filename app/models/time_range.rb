@@ -12,6 +12,8 @@
 #  updated_at         :datetime         not null
 #
 class TimeRange < ApplicationRecord
+  include Taggable
+
   belongs_to :user, touch: true
   belongs_to :time_range_type
 
