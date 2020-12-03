@@ -8,6 +8,6 @@ class RenameActivityTag < ActiveRecord::Migration[6.0]
 
     add_column :tag_associations, :taggable_type, :string, null: false
 
-    add_index :tag_associations, %i[taggable_type taggable_id tag_id], unique: true, name: 'index_tag_associations_uniqueness'
+    add_index :tag_associations, %i[taggable_type taggable_id tag_type_id tag_id], unique: true, name: 'index_tag_associations_uniqueness'
   end
 end

@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 2020_12_03_104000) do
     t.index ["tag_id"], name: "index_tag_associations_on_tag_id"
     t.index ["tag_type_id"], name: "index_tag_associations_on_tag_type_id"
     t.index ["taggable_id"], name: "index_tag_associations_on_taggable_id"
-    t.index ["taggable_type", "taggable_id", "tag_id"], name: "index_tag_associations_uniqueness", unique: true
+    t.index ["taggable_type", "taggable_id", "tag_type_id", "tag_id"], name: "index_tag_associations_uniqueness", unique: true
   end
 
   create_table "tag_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
