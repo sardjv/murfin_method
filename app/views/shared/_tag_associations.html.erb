@@ -1,0 +1,6 @@
+<div class='nested-fields'>
+  <% f.object.build_missing_tag_associations %>
+  <%= f.fields_for :tag_associations, f.object.tag_associations.sort_by { |at| at.tag_type.name_with_ancestors } do |tag_association_form| %>
+    <%= render 'shared/tag_association_fields', f: tag_association_form %>
+  <% end %>
+</div>

@@ -9,7 +9,7 @@ describe 'User edits a plan', type: :feature, js: true do
   let(:input) { plan.start_date.year + 2 }
 
   before do
-    plan.activities.first.activity_tags.create(tag_type: tag_type, tag: tag1)
+    plan.activities.first.tag_associations.create(tag_type: tag_type, tag: tag1)
     log_in current_user
     visit plans_path
     first('.bi-pencil').click
@@ -17,7 +17,7 @@ describe 'User edits a plan', type: :feature, js: true do
 
   it 'updates plan' do
     bootstrap_select input, from: Plan.human_attribute_name('end_date')
-    find('#plan_activities_attributes_0_activity_tags_attributes_0_tag_id option', text: tag2.name, visible: false).click
+    find('#plan_activities_attributes_0_tag_associations_attributes_0_tag_id option', text: tag2.name, visible: false).click
     click_button I18n.t('actions.save')
 
     expect(page).to have_content(I18n.t('notice.successfully.updated', model_name: Plan.model_name.human))
@@ -41,7 +41,7 @@ describe 'User edits a plan', type: :feature, js: true do
 
   context 'when selecting None for tag' do
     it 'does not raise error' do
-      find('#plan_activities_attributes_0_activity_tags_attributes_0_tag_id option', text: 'None', visible: false).click
+      find('#plan_activities_attributes_0_tag_associations_attributes_0_tag_id option', text: 'None', visible: false).click
 
       click_button I18n.t('actions.save')
 

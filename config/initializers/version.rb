@@ -1,3 +1,3 @@
 module Murfin
-  VERSION = '0.3.0'.freeze
+  VERSION = '0.6.1'.freeze
 end
