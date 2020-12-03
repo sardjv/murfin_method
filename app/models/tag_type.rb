@@ -9,32 +9,15 @@
 #  parent_id  :bigint
 #
 class TagType < ApplicationRecord
+  include Activatable
+  activatable classes: %w[activities time_ranges]
+
   has_many :tags, dependent: :destroy
   belongs_to :parent, class_name: 'TagType', optional: true
   has_many :children, class_name: 'TagType', inverse_of: :parent, foreign_key: :parent_id, dependent: :destroy
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validate :validate_acyclic, on: :update
-
-  scope :active_for, -> (type) { where("active_for_#{type.underscore.pluralize}_at" => ..Time.current) }
-
-  def active_for_activities=(state)
-    assign_attributes(active_for_activities_at: (checked?(state) ? Time.current : nil))
-  end
-
-  def active_for_activities
-    active_for_activities_at.present?
-  end
-  alias active_for_activities? active_for_activities
-
-  def active_for_time_ranges=(state)
-    assign_attributes(active_for_time_ranges_at: (checked?(state) ? Time.current : nil))
-  end
-
-  def active_for_time_ranges
-    active_for_time_ranges_at.present?
-  end
-  alias active_for_time_ranges? active_for_time_ranges
 
   def name_with_parent
     return "#{parent.name_with_parent} > #{name}" if parent
@@ -43,10 +26,6 @@ class TagType < ApplicationRecord
   end
 
   private
-
-  def checked?(state)
-    %w[1 true].include?(state.to_s)
-  end
 
   def validate_acyclic
     next_parent = parent

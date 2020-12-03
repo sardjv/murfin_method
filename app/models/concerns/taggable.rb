@@ -8,7 +8,7 @@ module Taggable
     has_many :tags, through: :tag_associations
 
     def build_missing_tag_associations
-      TagType.active_for(self.class.name).find_each do |tag_type|
+      TagType.active_for(self.class).find_each do |tag_type|
         # Don't use a database query here, as we need to check unsaved
         # tag_associations if validation fails.
         next if tag_associations.any? { |ta| ta.tag_type_id == tag_type.id }
