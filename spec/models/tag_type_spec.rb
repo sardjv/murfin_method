@@ -17,7 +17,7 @@ describe TagType, type: :model do
   it { should have_db_index(:name).unique }
   it { should validate_uniqueness_of(:name).ignoring_case_sensitivity }
   it { should belong_to(:parent).class_name('TagType').optional }
-  it { should have_many(:children).class_name('TagType').dependent(:nullify) }
+  it { should have_many(:children).class_name('TagType').dependent(:destroy) }
 
   context 'with an infinite loop of parents' do
     let!(:grandparent) { create(:tag_type) }

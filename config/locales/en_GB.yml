@@ -86,6 +86,8 @@ en:
         "%{model_name} could not be created"
       updated:
         "%{model_name} could not be updated"
+      destroyed:
+        "%{model_name} could not be deleted"
     successfully:
       created:
         "%{model_name} successfully created"

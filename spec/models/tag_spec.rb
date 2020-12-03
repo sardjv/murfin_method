@@ -15,7 +15,7 @@ describe Tag, type: :model do
   it { expect(subject).to be_valid }
   it { should validate_presence_of(:name) }
   it { should belong_to(:tag_type) }
-  it { should have_many(:activity_tags).dependent(:destroy) }
+  it { should have_many(:activity_tags).dependent(:restrict_with_error) }
   it { should have_db_index(%i[parent_id name]).unique }
   it { should validate_uniqueness_of(:name).scoped_to(:parent_id).ignoring_case_sensitivity }
   it { should belong_to(:parent).class_name('Tag').optional }
@@ -45,5 +45,14 @@ describe Tag, type: :model do
     let!(:child_tag) { build(:tag, tag_type: child_type, parent: unrelated_parent_tag) }
 
     it { expect(child_tag).not_to be_valid }
+  end
+
+  context 'with an activity_tag' do
+    subject { create(:tag) }
+    let!(:activity_tag) { create(:activity_tag, tag: subject) }
+
+    describe 'destroying' do
+      it { expect { subject.destroy! }.to raise_error }
+    end
   end
 end

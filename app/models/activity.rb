@@ -27,7 +27,7 @@ class Activity < ApplicationRecord
       # activity_tags if validation fails.
       next if activity_tags.map(&:tag_type_id).include?(tag_type.id)
 
-      activity_tags.build(tag_type: tag_type, tag: tag_type.tags.first)
+      activity_tags.build(tag_type: tag_type)
     end
   end
 
