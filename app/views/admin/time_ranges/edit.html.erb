@@ -34,6 +34,8 @@
 
         <%= f.number_field :seconds_worked, class: 'duration-picker-time-range', label: TimeRange.human_attribute_name('value'), step: :any %>
 
+        <%= render 'shared/tag_associations', f: f %>
+
         <%= f.select :user_id,
           options_for_select(User.all.map { |t| [t.name, t.id] }, selected: f.object.user_id),
           { label: TimeRange.human_attribute_name('user') },

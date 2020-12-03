@@ -10,6 +10,7 @@ class Admin::TagTypesController < ApplicationController
 
   def create
     @tag_type = TagType.new(tag_type_params)
+
     if @tag_type.save
       redirect_to admin_tag_types_path, notice: notice('successfully.created')
     else
@@ -50,7 +51,10 @@ class Admin::TagTypesController < ApplicationController
 
   def tag_type_params
     params.require(:tag_type).permit(
-      :parent_id, :name
+      :active_for_activities,
+      :active_for_time_ranges,
+      :name,
+      :parent_id
     )
   end
 end
