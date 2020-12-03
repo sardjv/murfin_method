@@ -8,7 +8,8 @@
 #
 # Adds:
 # - Setter (e.g. TagType.update(active_for_activity: true))
-# - Setter (e.g. TagType.update(active_for_activity: '1'))
+# - Setter for checkboxes (e.g. TagType.update(active_for_activity: '1'))
+# - Getter (e.g. TagType.active_for_activity)
 # - Getter (e.g. TagType.active_for_activity?)
 # - Scope (e.g. TagType.active_for(Activity))
 module Activatable
