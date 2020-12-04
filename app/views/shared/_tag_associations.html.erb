@@ -1,5 +1,5 @@
 <div class='nested-fields'>
-  <%= f.fields_for :tag_associations, f.object.tag_associations.sort_by { |at| at.tag_type.name_with_ancestors } do |tag_association_form| %>
+  <%= f.fields_for :tag_associations, f.object.active_tag_associations do |tag_association_form| %>
     <%= render 'shared/tag_association_fields', f: tag_association_form %>
   <% end %>
 </div>

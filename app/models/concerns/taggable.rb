@@ -7,13 +7,8 @@ module Taggable
     has_many :tag_types, through: :tag_associations
     has_many :tags, through: :tag_associations
 
-    def tag_associations
-      active_tag_associations(super)
-    end
-
-    private
-
-    def active_tag_associations(existing_associations)
+    def active_tag_associations
+      existing_associations = tag_associations
       TagType.active_for(self.class).sorted.map do |tag_type|
         existing_associations.find_by(tag_type_id: tag_type.id) || existing_associations.build(tag_type: tag_type)
       end

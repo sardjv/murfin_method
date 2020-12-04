@@ -46,9 +46,9 @@ describe Activity, type: :model do
 
     before { subject.tag_types << inactive }
 
-    describe '#tag_associations' do
+    describe '#active_tag_associations' do
       it 'includes only active tags regardless of association' do
-        expect(subject.tag_associations.map(&:tag_type_id)).to eq([active.id])
+        expect(subject.active_tag_associations.map(&:tag_type_id)).to eq([active.id])
       end
     end
   end
