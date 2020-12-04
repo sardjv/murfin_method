@@ -18,6 +18,5 @@ module Taggable
         existing_associations.find_by(tag_type_id: tag_type.id) || existing_associations.build(tag_type: tag_type)
       end
     end
-
   end
 end
