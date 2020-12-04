@@ -1,5 +1,3 @@
-<div class='nested-fields'>
-  <%= f.fields_for :tag_associations, f.object.active_tag_associations do |tag_association_form| %>
-    <%= render 'shared/tag_association_fields', f: tag_association_form %>
-  <% end %>
-</div>
+<%= f.fields_for :tag_associations, f.object.active_tag_associations do |tag_association_form| %>
+  <%= render 'shared/tag_association_fields', f: tag_association_form %>
+<% end %>
