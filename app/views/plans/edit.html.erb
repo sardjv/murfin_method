@@ -27,20 +27,25 @@
 
         <label><%= Plan.human_attribute_name('activities') %></label>
 
-        <table>
-          <tr>
-            <% TagType.active_for(Activity).sorted.each do |at| %>
-              <th><%= at.name %></th>
+        <table class='table'>
+          <thead>
+            <tr>
+              <% TagType.active_for(Activity).sorted.each do |at| %>
+                <th><%= at.name %></th>
+              <% end %>
+              <th><%= Activity.human_attribute_name('duration') %></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody class='activities'>
+            <%= f.fields_for :activities, wrapper: false do |activity_form| %>
+              <%= render 'activity_fields', plan_form: f, f: activity_form %>
             <% end %>
-            <th><%= Activity.human_attribute_name('duration') %></th>
-          </tr>
-          <%= f.fields_for :activities do |activity_form| %>
-            <%= render 'activity_fields', plan_form: f, f: activity_form %>
-          <% end %>
+          </tbody>
         </table>
 
         <div>
-          <%= link_to_add_association I18n.t('actions.add', model_name: Activity.model_name.human.titleize), f, :activities, class: 'btn btn-primary' %>
+          <%= link_to_add_association I18n.t('actions.add', model_name: Activity.model_name.human.titleize), f, :activities, data: { 'association-insertion-node' => 'tbody.activities', 'association-insertion-method' => 'append' }, class: 'btn btn-primary' %>
         </div>
 
         <%= f.submit I18n.t('actions.save'), class: 'btn btn-primary mt-4' %>

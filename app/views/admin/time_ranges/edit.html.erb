@@ -34,13 +34,18 @@
 
         <%= f.number_field :seconds_worked, class: 'duration-picker-time-range', label: TimeRange.human_attribute_name('value'), step: :any %>
 
-        <table>
-          <tr>
-            <% TagType.active_for(Activity).sorted.each do |at| %>
-              <th><%= at.name %></th>
-            <% end %>
-          </tr>
-          <%= render 'shared/tag_associations', f: f %>
+        <table class='table'>
+          <thead>
+            <tr>
+              <% TagType.active_for(Activity).sorted.each do |at| %>
+                <th><%= at.name %></th>
+              <% end %>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= render 'shared/tag_associations', f: f %>
+          </tbody>
         </table>
 
         <%= f.select :user_id,
