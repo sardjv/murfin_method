@@ -38,7 +38,7 @@
             </tr>
           </thead>
           <tbody class='activities list'>
-            <%= f.fields_for :activities, wrapper: false do |activity_form| %>
+            <%= f.fields_for :activities, wrapper: false, include_id: false do |activity_form| %>
               <%= render 'activity_fields', plan_form: f, f: activity_form %>
             <% end %>
           </tbody>

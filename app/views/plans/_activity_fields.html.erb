@@ -1,4 +1,6 @@
 <tr class='nested-fields'>
+  <%= f.hidden_field :id %>
+
   <%= render 'shared/tag_associations', f: f %>
 
   <td class=<%= Activity.human_attribute_name('duration').parameterize %>>
