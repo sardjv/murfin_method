@@ -34,7 +34,14 @@
 
         <%= f.number_field :seconds_worked, class: 'duration-picker-time-range', label: TimeRange.human_attribute_name('value'), step: :any %>
 
-        <%= render 'shared/tag_associations', f: f %>
+        <table>
+          <tr>
+            <% TagType.active_for(Activity).sorted.each do |at| %>
+              <th><%= at.name %></th>
+            <% end %>
+          </tr>
+          <%= render 'shared/tag_associations', f: f %>
+        </table>
 
         <%= f.select :user_id,
           options_for_select(User.all.map { |t| [t.name, t.id] }, selected: f.object.user_id),
