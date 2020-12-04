@@ -35,10 +35,10 @@
         <%= f.number_field :seconds_worked, class: 'duration-picker-time-range', label: TimeRange.human_attribute_name('value'), step: :any %>
 
         <table class='table'>
-          <thead>
+          <thead class='bg-white'>
             <tr>
               <% TagType.active_for(Activity).sorted.each do |at| %>
-                <th><%= at.name %></th>
+                <th class='font-weight-normal'><%= at.name %></th>
               <% end %>
               <th></th>
             </tr>

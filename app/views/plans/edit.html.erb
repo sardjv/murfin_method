@@ -28,12 +28,12 @@
         <label><%= Plan.human_attribute_name('activities') %></label>
 
         <table class='table'>
-          <thead>
+          <thead class='bg-white'>
             <tr>
               <% TagType.active_for(Activity).sorted.each do |at| %>
-                <th><%= at.name %></th>
+                <th class='font-weight-normal'><%= at.name %></th>
               <% end %>
-              <th><%= Activity.human_attribute_name('duration') %></th>
+              <th class='font-weight-normal'><%= Activity.human_attribute_name('duration') %></th>
               <th></th>
             </tr>
           </thead>
