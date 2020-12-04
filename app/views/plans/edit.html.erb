@@ -29,7 +29,7 @@
 
         <table>
           <tr>
-            <% TagType.all.sort_by(&:name_with_ancestors).each do |at| %>
+            <% TagType.active_for(Activity).sorted.each do |at| %>
               <th><%= at.name %></th>
             <% end %>
             <th><%= Activity.human_attribute_name('duration') %></th>

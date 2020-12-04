@@ -18,6 +18,7 @@ module Activatable
 
   included do
     scope :active_for, ->(type) { where("active_for_#{type.to_s.underscore.pluralize}_at" => ..Time.current) }
+    scope :sorted, -> { sort_by(&:name_with_ancestors) }
   end
 
   def self.checked?(state)
