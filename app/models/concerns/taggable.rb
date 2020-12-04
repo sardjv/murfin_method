@@ -8,10 +8,16 @@ module Taggable
     has_many :tags, through: :tag_associations
 
     def tag_associations
-      @cached_tag_associations = super
+      active_tag_associations(super)
+    end
+
+    private
+
+    def active_tag_associations(existing_associations)
       TagType.active_for(self.class).sorted.map do |tag_type|
-        @cached_tag_associations.where(tag_type_id: tag_type.id).first || @cached_tag_associations.build(tag_type: tag_type)
+        existing_associations.find_by(tag_type_id: tag_type.id) || existing_associations.build(tag_type: tag_type)
       end
     end
+
   end
 end
