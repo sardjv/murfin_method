@@ -1,7 +1,7 @@
 <tr class='nested-fields'>
   <%= render 'shared/tag_associations', f: f %>
 
-  <td>
+  <td class=<%= Activity.human_attribute_name('duration').parameterize %>>
     <%= f.number_field :seconds_per_week, class: 'duration-picker-activity', hide_label: true, step: :any %>
   </td>
 

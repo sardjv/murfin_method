@@ -19,6 +19,7 @@ require.context('../images', true)
 import '../graphs/api'
 import '../helpers/bootstrap_duration'
 import '../helpers/bootstrap_helpers'
+import '../helpers/tables'
 import '../graphs/missing_data'
 import '../graphs/bar_chart'
 import '../graphs/line_graph'
