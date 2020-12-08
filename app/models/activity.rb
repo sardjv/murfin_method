@@ -10,26 +10,14 @@
 #
 class Activity < ApplicationRecord
   include Cacheable
+  include Taggable
+
   cacheable watch: %w[schedule], bust: [{ klass: 'User', ids: %i[plan user_id] }]
 
   belongs_to :plan, touch: true
-  has_many :activity_tags, dependent: :destroy
-  accepts_nested_attributes_for :activity_tags, allow_destroy: true
-  has_many :tag_types, through: :activity_tags
-  has_many :tags, through: :activity_tags
 
   validates :schedule, presence: true
   validate :validate_end_time_after_start_time
-
-  def build_missing_activity_tags
-    TagType.all.find_each do |tag_type|
-      # Don't use a database query here, as we need to check unsaved
-      # activity_tags if validation fails.
-      next if activity_tags.map(&:tag_type_id).include?(tag_type.id)
-
-      activity_tags.build(tag_type: tag_type)
-    end
-  end
 
   def seconds_per_week=(seconds)
     self.schedule = ScheduleBuilder.call(

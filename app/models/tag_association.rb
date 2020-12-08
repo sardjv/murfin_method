@@ -1,20 +1,21 @@
 # == Schema Information
 #
-# Table name: activity_tags
+# Table name: tag_associations
 #
-#  id          :bigint           not null, primary key
-#  tag_id      :bigint
-#  activity_id :bigint           not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  tag_type_id :bigint           not null
+#  id            :bigint           not null, primary key
+#  tag_id        :bigint
+#  taggable_id   :bigint           not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  tag_type_id   :bigint           not null
+#  taggable_type :string(255)      not null
 #
-class ActivityTag < ApplicationRecord
+class TagAssociation < ApplicationRecord
   belongs_to :tag_type
   belongs_to :tag, optional: true
-  belongs_to :activity
+  belongs_to :taggable, polymorphic: true
 
-  validates :activity_id, uniqueness: { scope: %i[tag_type_id tag_id], case_sensitive: false }
+  validates :taggable_id, uniqueness: { scope: %i[taggable_type tag_type_id tag_id], case_sensitive: false }
   validate :validate_tag_matches_type
   validate :validate_tag_parent
   validate :validate_tag_child
@@ -56,10 +57,10 @@ class ActivityTag < ApplicationRecord
   end
 
   def parent_tag
-    activity&.activity_tags&.find { |at| at.tag_type == tag_type.parent }&.tag
+    taggable&.tag_associations&.find { |at| at.tag_type == tag_type.parent }&.tag
   end
 
   def child_tag
-    activity&.activity_tags&.find { |at| at.tag_type.parent == tag_type }&.tag
+    taggable&.tag_associations&.find { |at| at.tag_type.parent == tag_type }&.tag
   end
 end

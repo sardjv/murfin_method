@@ -2,13 +2,18 @@
 #
 # Table name: tag_types
 #
-#  id         :bigint           not null, primary key
-#  name       :string(255)      not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  parent_id  :bigint
+#  id                        :bigint           not null, primary key
+#  name                      :string(255)      not null
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  parent_id                 :bigint
+#  active_for_activities_at  :datetime
+#  active_for_time_ranges_at :datetime
 #
 class TagType < ApplicationRecord
+  include Activatable
+  activatable classes: %w[activities time_ranges]
+
   has_many :tags, dependent: :destroy
   belongs_to :parent, class_name: 'TagType', optional: true
   has_many :children, class_name: 'TagType', inverse_of: :parent, foreign_key: :parent_id, dependent: :destroy
@@ -16,8 +21,8 @@ class TagType < ApplicationRecord
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validate :validate_acyclic, on: :update
 
-  def name_with_parent
-    return "#{parent.name_with_parent} > #{name}" if parent
+  def name_with_ancestors
+    return "#{parent.name_with_ancestors} > #{name}" if parent
 
     name
   end
