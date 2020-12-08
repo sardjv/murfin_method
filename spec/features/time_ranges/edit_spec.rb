@@ -3,6 +3,9 @@ require 'rails_helper'
 describe 'User edits a time_range', type: :feature, js: true do
   let(:current_user) { create(:user) }
   let!(:time_range) { create(:time_range, user: current_user, value: 0) }
+  let(:tag_type) { create(:tag_type, name: 'Patient Contact', active_for_time_ranges: true) }
+  let!(:tag1) { create(:tag, name: 1, tag_type: tag_type) }
+  let!(:tag2) { create(:tag, name: 2, tag_type: tag_type) }
   let(:input_value) { 1234 }
 
   before do
@@ -13,10 +16,12 @@ describe 'User edits a time_range', type: :feature, js: true do
 
   it 'updates time_range' do
     find_field(type: 'number', match: :first).set(input_value)
+    find('#time_range_tag_associations_attributes_0_tag_id option', text: '1', visible: false).click
     click_button I18n.t('actions.save')
 
     expect(page).to have_content(I18n.t('notice.successfully.updated', model_name: TimeRange.model_name.human))
     expect(time_range.reload.value).to eq input_value * 60
+    expect(time_range.reload.tags.first.name).to eq '1'
   end
 
   context 'with end before start' do
