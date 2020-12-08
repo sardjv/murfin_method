@@ -2,12 +2,13 @@
 #
 # Table name: tag_associations
 #
-#  id          :bigint           not null, primary key
-#  tag_id      :bigint
-#  taggable_id :bigint           not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  tag_type_id :bigint           not null
+#  id            :bigint           not null, primary key
+#  tag_id        :bigint
+#  taggable_id   :bigint           not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  tag_type_id   :bigint           not null
+#  taggable_type :string(255)      not null
 #
 class TagAssociation < ApplicationRecord
   belongs_to :tag_type
