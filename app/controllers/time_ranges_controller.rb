@@ -52,7 +52,8 @@ class TimeRangesController < ApplicationController
       :start_time,
       :end_time,
       :seconds_worked,
-      :user_id
+      :user_id,
+      tag_associations_attributes: %i[id tag_type_id tag_id _destroy]
     )
   end
 end

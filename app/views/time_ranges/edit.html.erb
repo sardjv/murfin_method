@@ -34,6 +34,8 @@
 
         <%= f.number_field :seconds_worked, class: 'duration-picker-time-range', label: TimeRange.human_attribute_name('value'), step: :any %>
 
+        <%= render 'shared/tag_associations', f: f %>
+        
         <%= f.submit I18n.t('actions.save'), class: 'btn btn-primary mt-2' %>
         <%= link_to I18n.t('actions.cancel'), :back, class: 'btn btn-outline-secondary mt-2' %>
       <% end %>
