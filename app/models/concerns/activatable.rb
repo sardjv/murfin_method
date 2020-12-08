@@ -8,10 +8,10 @@
 #   e.g. activatable classes: %w[activities time_ranges]
 #
 # Adds:
-# - Setters (e.g. TagType.update(active_for_activity: true))
-# - Setters for checkboxes (e.g. TagType.update(active_for_activity: '1'))
-# - Getters (e.g. TagType.active_for_activity)
-# - Getters (e.g. TagType.active_for_activity?)
+# - Setters (e.g. TagType.update(active_for_activities: true))
+# - Setters for checkboxes (e.g. TagType.update(active_for_activities: '1'))
+# - Getters (e.g. TagType.active_for_activities)
+# - Getters (e.g. TagType.active_for_activities?)
 # - Scopes (e.g. TagType.active_for(Activity))
 module Activatable
   extend ActiveSupport::Concern

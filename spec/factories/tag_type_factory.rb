@@ -13,5 +13,7 @@
 FactoryBot.define do
   factory :tag_type do
     name { Faker::Company.industry }
+    active_for_activities_at { Time.current - 1.second }
+    active_for_time_ranges_at { Time.current - 1.second }
   end
 end
