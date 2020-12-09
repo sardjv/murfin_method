@@ -57,5 +57,4 @@ describe Signoff, type: :model do
       it { expect(subject.signed?).to eq(true) }
     end
   end
-
 end
