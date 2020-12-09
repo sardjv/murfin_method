@@ -3,25 +3,29 @@ import actionIcon from '!!svg-url-loader!../../../node_modules/bootstrap-icons/i
 import infoIcon from '!!svg-url-loader!../../../node_modules/bootstrap-icons/icons/info-square.svg';
 import resolvedIcon from '!!svg-url-loader!../../../node_modules/bootstrap-icons/icons/clipboard-check.svg';
 
-window.addEventListener('prev', (event) => {
-  Note.getEditNote(Note.getPrevNoteId(event.detail.note_id))
-});
+window.addEventListener('turbolinks:load', () => {
+  if (document.getElementById('line-graph')) {
+    window.addEventListener('prev', (event) => {
+      Note.getEditNote(Note.getPrevNoteId(event.detail.note_id))
+    });
 
-window.addEventListener('next', (event) => {
-  Note.getEditNote(Note.getNextNoteId(event.detail.note_id))
-});
+    window.addEventListener('next', (event) => {
+      Note.getEditNote(Note.getNextNoteId(event.detail.note_id))
+    });
 
-window.addEventListener('ajax:success', (event) => {
-  const [data, _status, xhr] = event.detail;
+    window.addEventListener('ajax:success', (event) => {
+      const [data, _status, xhr] = event.detail;
 
-  if (xhr.status == 204) {
-    Note.removeNotePoint(xhr.responseURL.split('/').pop())
-  } else if (data.constructor !== HTMLDocument) {
-    const response = JSON.parse(xhr.response)
-    Note.addNotePoint(response.start_time, response)
+      if (xhr.status == 204) {
+        Note.removeNotePoint(xhr.responseURL.split('/').pop())
+      } else if (data.constructor !== HTMLDocument) {
+        const response = JSON.parse(xhr.response)
+        Note.addNotePoint(response.start_time, response)
+      }
+
+      $('#modal').modal('hide')
+    });
   }
-
-  $('#modal').modal('hide')
 });
 
 export class Note {

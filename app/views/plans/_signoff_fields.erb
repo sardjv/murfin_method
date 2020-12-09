@@ -11,6 +11,16 @@
   </td>
 
   <td>
+    <% if f.object.persisted? %>
+      <% if f.object.signed? %>
+        <%= link_to 'Revoke', revoke_signoff_path(f.object.id), { remote: true, method: :put, class: 'btn btn-danger' } %>
+      <% else %>
+        <%= link_to 'Sign', sign_signoff_path(f.object.id), { remote: true, method: :put, class: 'btn btn-success' } %>
+      <% end %>
+    <% end %>
+  </td>
+
+  <td>
     <%= link_to_remove_association f do %>
       <%= icon('trash') %>
     <% end %>
