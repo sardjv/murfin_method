@@ -111,7 +111,7 @@ group :development do
 
   # A static code analyzer and formatter, based on the community style guide.
   # https://github.com/rubocop-hq/rubocop-rails
-  gem 'rubocop-rails', '~> 2.8.1'
+  gem 'rubocop-rails', '~> 2.9.0'
 end
 
 group :test do
