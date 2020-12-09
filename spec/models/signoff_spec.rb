@@ -18,7 +18,7 @@ describe Signoff, type: :model do
 
   describe '#sign' do
     before { subject.sign }
-    it { expect(subject.signed?).to eq(true) }
+    it { assert(subject.signed?) }
   end
 
   describe '#revoke' do
@@ -27,7 +27,7 @@ describe Signoff, type: :model do
       subject.revoke
     end
 
-    it { expect(subject.signed?).to eq(false) }
+    it { refute(subject.signed?) }
   end
 
   describe '#signed?' do
@@ -35,26 +35,35 @@ describe Signoff, type: :model do
     let(:signed_at) { nil }
     let(:revoked_at) { nil }
 
-    it { expect(subject.signed?).to eq(false) }
+    it { expect(subject.state).to eq(:unsigned) }
+    it { assert(subject.unsigned?) }
+    it { refute(subject.signed?) }
+    it { refute(subject.revoked?) }
 
     context 'when signed' do
       let(:signed_at) { Time.current }
-
-      it { expect(subject.signed?).to eq(true) }
+      it { expect(subject.state).to eq(:signed) }
+      it { refute(subject.unsigned?) }
+      it { assert(subject.signed?) }
+      it { refute(subject.revoked?) }
     end
 
     context 'when signed and revoked' do
       let(:signed_at) { Time.current - 1.second }
       let(:revoked_at) { Time.current }
-
-      it { expect(subject.signed?).to eq(false) }
+      it { expect(subject.state).to eq(:revoked) }
+      it { refute(subject.unsigned?) }
+      it { refute(subject.signed?) }
+      it { assert(subject.revoked?) }
     end
 
     context 'when revoked and then signed again' do
       let(:revoked_at) { Time.current - 1.second }
       let(:signed_at) { Time.current }
-
-      it { expect(subject.signed?).to eq(true) }
+      it { expect(subject.state).to eq(:signed) }
+      it { refute(subject.unsigned?) }
+      it { assert(subject.signed?) }
+      it { refute(subject.revoked?) }
     end
   end
 end

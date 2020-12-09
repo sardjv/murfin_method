@@ -21,11 +21,23 @@ class Signoff < ApplicationRecord
     update(revoked_at: Time.current)
   end
 
+  def state
+    return :unsigned if signed_at.nil? && revoked_at.nil?
+
+    return :signed if revoked_at.nil? || (signed_at > revoked_at)
+
+    :revoked
+  end
+
+  def unsigned?
+    state == :unsigned
+  end
+
   def signed?
-    return false if signed_at.nil?
+    state == :signed
+  end
 
-    return true if revoked_at.nil?
-
-    signed_at > revoked_at
+  def revoked?
+    state == :revoked
   end
 end
