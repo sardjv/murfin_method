@@ -62,6 +62,12 @@ class Plan < ApplicationRecord
     state == :complete
   end
 
+  def required_signoffs
+    signoffs.build(user_id: user_id) unless signoffs.find_by(user_id: user_id).present?
+
+    signoffs
+  end
+
   private
 
   def activities_cache_key

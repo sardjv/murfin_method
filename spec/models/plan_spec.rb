@@ -141,4 +141,12 @@ describe Plan, type: :model do
       end
     end
   end
+
+  describe '#required_signoffs' do
+    subject { build(:plan) }
+
+    it 'always includes owner' do
+      expect(subject.required_signoffs.first.user_id).to eq(subject.user_id)
+    end
+  end
 end
