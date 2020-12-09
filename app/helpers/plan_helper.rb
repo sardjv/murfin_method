@@ -8,10 +8,10 @@ module PlanHelper
   end
 
   def state_badge_colour(plan)
-    case plan.state
-    when :draft then 'bg-danger'
-    when :submitted then 'bg-warning'
-    when :complete then 'bg-success'
-    end
+    {
+      draft: 'bg-danger',
+      submitted: 'bg-warning',
+      complete: 'bg-success'
+    }[plan.state]
   end
 end

@@ -31,7 +31,6 @@ class PlansController < ApplicationController
     else
       redirect_to edit_plan_path(@plan), notice: notice('could_not_be.updated')
     end
-
   end
 
   def destroy
@@ -59,12 +58,9 @@ class PlansController < ApplicationController
       :end_date,
       :user_id,
       activities_attributes: [
-        :id, :seconds_per_week, :_destroy,
-        { tag_associations_attributes: %i[id tag_type_id tag_id _destroy] }
+        :id, :seconds_per_week, :_destroy, { tag_associations_attributes: %i[id tag_type_id tag_id _destroy] }
       ],
-      signoffs_attributes: [
-        :id, :user_id, :_destroy
-      ]
+      signoffs_attributes: %i[id user_id _destroy]
     )
   end
 end

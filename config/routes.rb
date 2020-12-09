@@ -48,7 +48,7 @@ Rails.application.routes.draw do
   resources :time_ranges, except: :show
   resources :plans, except: :show
 
-  resources :signoffs, only: [:sign, :revoke] do
+  resources :signoffs, only: %i[sign revoke] do
     put :sign, on: :member
     put :revoke, on: :member
   end
