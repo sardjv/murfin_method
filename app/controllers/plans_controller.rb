@@ -27,12 +27,11 @@ class PlansController < ApplicationController
     @plan = Plan.find(params[:id])
 
     if @plan.update(plan_params)
-      flash.now.notice = notice('successfully.updated')
+      redirect_to edit_plan_path(@plan), notice: notice('successfully.updated')
     else
-      flash.now.alert = notice('could_not_be.updated')
+      redirect_to edit_plan_path(@plan), notice: notice('could_not_be.updated')
     end
 
-    render :edit
   end
 
   def destroy
