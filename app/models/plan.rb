@@ -41,6 +41,26 @@ class Plan < ApplicationRecord
     end
   end
 
+  def state
+    return :draft unless signoffs.find_by(user_id: user_id)&.signed?
+
+    return :complete if signoffs.all?(&:signed?)
+
+    :submitted
+  end
+
+  def draft?
+    state == :draft
+  end
+
+  def submitted?
+    state == :submitted
+  end
+
+  def complete?
+    state == :complete
+  end
+
   private
 
   def activities_cache_key

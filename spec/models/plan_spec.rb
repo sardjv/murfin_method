@@ -78,4 +78,67 @@ describe Plan, type: :model do
       expect(subject.to_time_ranges.sum(&:value).round(7)).to eq(minutes_worked_in_year.round(7))
     end
   end
+
+  context 'with some signoffs' do
+    let(:owner) { create(:user) }
+    subject do
+      create(
+        :plan,
+        user: owner,
+        signoffs: [
+          create(:signoff, user: owner, signed_at: owner_signed_at),
+          create(:signoff, user: create(:user), signed_at: user1_signed_at),
+          create(:signoff, user: create(:user), signed_at: user2_signed_at)
+        ]
+      )
+    end
+    let(:owner_signed_at) { nil }
+    let(:user1_signed_at) { nil }
+    let(:user2_signed_at) { nil }
+
+    describe '#state' do
+      context 'with none signed' do
+        it { expect(subject.state).to eq(:draft) }
+        it { assert(subject.draft?) }
+        it { refute(subject.submitted?) }
+        it { refute(subject.complete?) }
+      end
+
+      context 'with only owner signed' do
+        let(:owner_signed_at) { Time.current }
+        it { expect(subject.state).to eq(:submitted) }
+        it { refute(subject.draft?) }
+        it { assert(subject.submitted?) }
+        it { refute(subject.complete?) }
+      end
+
+      context 'with one other signed' do
+        let(:owner_signed_at) { Time.current }
+        let(:user1_signed_at) { Time.current }
+        it { expect(subject.state).to eq(:submitted) }
+        it { refute(subject.draft?) }
+        it { assert(subject.submitted?) }
+        it { refute(subject.complete?) }
+      end
+
+      context 'with all signed' do
+        let(:owner_signed_at) { Time.current }
+        let(:user1_signed_at) { Time.current }
+        let(:user2_signed_at) { Time.current }
+        it { expect(subject.state).to eq(:complete) }
+        it { refute(subject.draft?) }
+        it { refute(subject.submitted?) }
+        it { assert(subject.complete?) }
+      end
+
+      context 'with all except owner signed' do
+        let(:user1_signed_at) { Time.current }
+        let(:user2_signed_at) { Time.current }
+        it { expect(subject.state).to eq(:draft) }
+        it { assert(subject.draft?) }
+        it { refute(subject.submitted?) }
+        it { refute(subject.complete?) }
+      end
+    end
+  end
 end
