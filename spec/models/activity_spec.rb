@@ -39,4 +39,17 @@ describe Activity, type: :model do
       end
     end
   end
+
+  context 'with some tags' do
+    let!(:active) { create(:tag_type, active_for_activities: true, name: '1') }
+    let!(:inactive) { create(:tag_type, active_for_activities: false, name: '2') }
+
+    before { subject.tag_types << inactive }
+
+    describe '#active_tag_associations' do
+      it 'includes only active tags regardless of association' do
+        expect(subject.active_tag_associations.map(&:tag_type_id)).to eq([active.id])
+      end
+    end
+  end
 end

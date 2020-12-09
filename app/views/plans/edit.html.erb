@@ -27,12 +27,25 @@
 
         <label><%= Plan.human_attribute_name('activities') %></label>
 
-        <%= f.fields_for :activities do |activity_form| %>
-          <%= render 'activity_fields', plan_form: f, f: activity_form %>
-        <% end %>
+        <table id='sortable' class='table'>
+          <thead class='bg-white'>
+            <tr>
+              <% TagType.active_for(Activity).sorted.each do |t| %>
+                <th class='font-weight-normal sort' data-sort=<%= t.name.parameterize %>><%= t.name %></th>
+              <% end %>
+              <th class='font-weight-normal sort' data-sort=<%= Activity.human_attribute_name('duration').parameterize %>><%= Activity.human_attribute_name('duration') %></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody class='activities list'>
+            <%= f.fields_for :activities, wrapper: false, include_id: false do |activity_form| %>
+              <%= render 'activity_fields', plan_form: f, f: activity_form %>
+            <% end %>
+          </tbody>
+        </table>
 
         <div>
-          <%= link_to_add_association I18n.t('actions.add', model_name: Activity.model_name.human.titleize), f, :activities, class: 'btn btn-primary' %>
+          <%= link_to_add_association I18n.t('actions.add', model_name: Activity.model_name.human.titleize), f, :activities, data: { 'association-insertion-node' => 'tbody.activities', 'association-insertion-method' => 'append' }, class: 'btn btn-primary' %>
         </div>
 
         <%= f.submit I18n.t('actions.save'), class: 'btn btn-primary mt-4' %>
