@@ -4,7 +4,16 @@ class SignoffsController < ApplicationController
 
     if @signoff.sign
       respond_to do |format|
-        format.json { render json: nil, status: :ok }
+        format.json do
+          render json: {
+            button: {
+              text: I18n.t('signoffs.revoke'),
+              href: revoke_signoff_path(@signoff),
+              class: 'btn btn-danger'
+            }
+          },
+          status: :ok
+        end
       end
     end
   end
@@ -14,7 +23,16 @@ class SignoffsController < ApplicationController
 
     if @signoff.revoke
       respond_to do |format|
-        format.json { render json: nil, status: :ok }
+        format.json do
+          render json: {
+            button: {
+              text: I18n.t('signoffs.sign'),
+              href: sign_signoff_path(@signoff),
+              class: 'btn btn-success'
+            }
+          },
+          status: :ok
+        end
       end
     end
   end

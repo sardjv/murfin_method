@@ -97,6 +97,9 @@ en:
         "%{model_name} deleted"
       updated:
         "%{model_name} successfully updated"
+  signoffs:
+    revoke: Revoke
+    sign: Sign
   status:
     about_right: About Right
     over: Over
