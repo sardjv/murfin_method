@@ -19,7 +19,7 @@ module ApplicationHelper
     svg = doc.at_css 'svg'
     svg['class'] += " #{options[:class]}" if options[:class].present?
     svg['width'] = svg['height'] = options[:width] || options[:height] || '1em'
-    # Note: if something is missing from an icon, you need to add the relevant tags and attributes
+    # NOTE: if something is missing from an icon, you need to add the relevant tags and attributes
     # to the sanitize parameters below so they get through.
     sanitize(
       doc.to_html,
