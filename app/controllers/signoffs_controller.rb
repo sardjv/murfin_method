@@ -27,5 +27,4 @@ class SignoffsController < ApplicationController
       end
     end
   end
-
 end

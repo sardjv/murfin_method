@@ -8,11 +8,11 @@ module SignoffHelper
     }
   end
 
-  def revoke_json_response(_signoff)
+  def revoke_json_response(signoff)
     {
       button: {
         text: I18n.t('signoffs.revoke'),
-        href: revoke_signoff_path(@signoff),
+        href: revoke_signoff_path(signoff),
         class: 'btn btn-danger'
       }
     }
