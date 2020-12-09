@@ -63,7 +63,7 @@ class Plan < ApplicationRecord
   end
 
   def required_signoffs
-    signoffs.build(user_id: user_id) unless signoffs.find_by(user_id: user_id).present?
+    signoffs.build(user_id: user_id) if signoffs.find_by(user_id: user_id).blank?
 
     signoffs
   end
