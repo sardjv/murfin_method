@@ -11,7 +11,7 @@
 #
 class Signoff < ApplicationRecord
   belongs_to :user
-  belongs_to :plan
+  belongs_to :plan, touch: true
 
   def sign
     update(signed_at: Time.current)
