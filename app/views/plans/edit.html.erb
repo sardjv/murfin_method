@@ -1,7 +1,8 @@
 <div class='container my-4'>
 
+
   <div class='row'>
-    <div class='col-12'>
+    <div class='col-9'>
       <h5>
         <% if @plan.persisted? %>
           <%= I18n.t('actions.edit', model_name: Plan.model_name.human.titleize) %>
@@ -9,6 +10,11 @@
           <%= I18n.t('actions.add', model_name: Plan.model_name.human.titleize) %>
         <% end %>
       </h5>
+    </div>
+    <div class='col-3'>
+      <h1 class='text-white'>
+        <span class='<%= state_badge_class(@plan) %>'><%= display_state(@plan) %></span>
+      </h1>
     </div>
   </div>
 

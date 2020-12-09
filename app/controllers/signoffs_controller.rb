@@ -1,4 +1,6 @@
 class SignoffsController < ApplicationController
+  include PlanHelper
+
   def sign
     @signoff = Signoff.find(params[:id])
 
@@ -6,10 +8,18 @@ class SignoffsController < ApplicationController
       respond_to do |format|
         format.json do
           render json: {
-            button: {
-              text: I18n.t('signoffs.revoke'),
-              href: revoke_signoff_path(@signoff),
-              class: 'btn btn-danger'
+            plan: {
+              state_badge: {
+                text: display_state(@signoff.plan),
+                class: state_badge_class(@signoff.plan)
+              }
+            },
+            signoff: {
+              button: {
+                text: I18n.t('signoffs.revoke'),
+                href: revoke_signoff_path(@signoff),
+                class: 'btn btn-danger'
+              }
             }
           },
           status: :ok
@@ -25,10 +35,18 @@ class SignoffsController < ApplicationController
       respond_to do |format|
         format.json do
           render json: {
-            button: {
-              text: I18n.t('signoffs.sign'),
-              href: sign_signoff_path(@signoff),
-              class: 'btn btn-success'
+            plan: {
+              state_badge: {
+                text: display_state(@signoff.plan),
+                class: state_badge_class(@signoff.plan)
+              }
+            },
+            signoff: {
+              button: {
+                text: I18n.t('signoffs.sign'),
+                href: sign_signoff_path(@signoff),
+                class: 'btn btn-success'
+              }
             }
           },
           status: :ok
