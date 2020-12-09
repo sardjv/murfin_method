@@ -22,6 +22,9 @@
               <th>
                 <%= Plan.human_attribute_name('end_date') %>
               </th>
+              <th>
+                <%= Plan.human_attribute_name('state') %>
+              </th>
               <th style='width: 50px;'></th>
               <th style='width: 50px;'></th>
             </tr>
@@ -38,6 +41,13 @@
                   </td>
                   <td>
                     <%= I18n.l(plan.end_date, format: :readable) %>
+                  </td>
+                  <td>
+                    <h4 class='text-white'>
+                      <span class='badge <%= state_badge_colour(plan) %>'>
+                        <%= display_state(plan) %>
+                      </span>
+                    </h4>
                   </td>
                   <td>
                     <%= link_to [:edit, plan], class: 'btn btn-link' do %>
