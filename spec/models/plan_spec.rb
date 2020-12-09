@@ -19,6 +19,7 @@ describe Plan, type: :model do
   it { should belong_to(:user) }
   it { should have_many(:activities).dependent(:destroy) }
   it { should accept_nested_attributes_for(:activities).allow_destroy(true) }
+  it { should have_many(:signoffs).dependent(:destroy) }
 
   context 'with nil user_id' do
     subject { build(:plan, user_id: nil) }

@@ -63,10 +63,12 @@ ActiveRecord::Schema.define(version: 2020_12_09_103955) do
 
   create_table "signoffs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
+    t.bigint "plan_id", null: false
     t.datetime "signed_at"
     t.datetime "revoked_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["plan_id"], name: "index_signoffs_on_plan_id"
     t.index ["user_id"], name: "index_signoffs_on_user_id"
   end
 
@@ -146,6 +148,7 @@ ActiveRecord::Schema.define(version: 2020_12_09_103955) do
 
   add_foreign_key "memberships", "user_groups"
   add_foreign_key "memberships", "users"
+  add_foreign_key "signoffs", "plans"
   add_foreign_key "signoffs", "users"
   add_foreign_key "user_groups", "group_types"
 end

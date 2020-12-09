@@ -14,4 +14,5 @@ describe Signoff, type: :model do
 
   it { expect(subject).to be_valid }
   it { should belong_to(:user) }
+  it { should belong_to(:plan) }
 end

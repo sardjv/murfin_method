@@ -12,5 +12,6 @@
 FactoryBot.define do
   factory :signoff do
     user_id { User.all.sample.try(:id) || create(:user).id }
+    plan_id { Plan.all.sample.try(:id) || create(:plan).id }
   end
 end
