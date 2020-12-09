@@ -25,27 +25,45 @@
           %>
         <% end %>
 
-        <label><%= Plan.human_attribute_name('activities') %></label>
+        <div class='border my-5 p-5'>
+          <label><%= Plan.human_attribute_name('activities') %></label>
 
-        <table id='sortable' class='table'>
-          <thead class='bg-white'>
-            <tr>
-              <% TagType.active_for(Activity).sorted.each do |t| %>
-                <th class='font-weight-normal sort' data-sort=<%= t.name.parameterize %>><%= t.name %></th>
+          <table id='sortable' class='table'>
+            <thead class='bg-white'>
+              <tr>
+                <% TagType.active_for(Activity).sorted.each do |t| %>
+                  <th class='font-weight-normal sort' data-sort=<%= t.name.parameterize %>><%= t.name %></th>
+                <% end %>
+                <th class='font-weight-normal sort' data-sort=<%= Activity.human_attribute_name('duration').parameterize %>><%= Activity.human_attribute_name('duration') %></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody class='activities list'>
+              <%= f.fields_for :activities, wrapper: false, include_id: false do |activity_form| %>
+                <%= render 'activity_fields', plan_form: f, f: activity_form %>
               <% end %>
-              <th class='font-weight-normal sort' data-sort=<%= Activity.human_attribute_name('duration').parameterize %>><%= Activity.human_attribute_name('duration') %></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody class='activities list'>
-            <%= f.fields_for :activities, wrapper: false, include_id: false do |activity_form| %>
-              <%= render 'activity_fields', plan_form: f, f: activity_form %>
-            <% end %>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
 
-        <div>
-          <%= link_to_add_association I18n.t('actions.add', model_name: Activity.model_name.human.titleize), f, :activities, data: { 'association-insertion-node' => 'tbody.activities', 'association-insertion-method' => 'append' }, class: 'btn btn-primary' %>
+          <div>
+            <%= link_to_add_association I18n.t('actions.add', model_name: Activity.model_name.human.titleize), f, :activities, data: { 'association-insertion-node' => 'tbody.activities', 'association-insertion-method' => 'append' }, class: 'btn btn-primary' %>
+          </div>
+        </div>
+
+        <div class='border my-5 p-5'>
+          <label><%= Plan.human_attribute_name('signoffs') %></label>
+
+          <table class='table'>
+            <tbody class='signoffs list'>
+              <%= f.fields_for :signoffs, wrapper: false, include_id: false do |signoff_form| %>
+                <%= render 'signoff_fields', f: signoff_form %>
+              <% end %>
+            </tbody>
+          </table>
+
+          <div>
+            <%= link_to_add_association I18n.t('actions.add', model_name: Signoff.model_name.human.titleize), f, :signoffs, data: { 'association-insertion-node' => 'tbody.signoffs', 'association-insertion-method' => 'append' }, class: 'btn btn-primary' %>
+          </div>
         </div>
 
         <%= f.submit I18n.t('actions.save'), class: 'btn btn-primary mt-4' %>

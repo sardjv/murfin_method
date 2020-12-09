@@ -17,6 +17,7 @@ class Plan < ApplicationRecord
   has_many :activities, dependent: :destroy
   accepts_nested_attributes_for :activities, allow_destroy: true
   has_many :signoffs, dependent: :destroy
+  accepts_nested_attributes_for :signoffs, allow_destroy: true
 
   validates :start_date, :end_date, presence: true
   validate :validate_end_date_after_start_date
