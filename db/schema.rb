@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_03_153100) do
+ActiveRecord::Schema.define(version: 2020_12_09_103955) do
 
   create_table "activities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "schedule", size: :medium, null: false
@@ -59,6 +59,17 @@ ActiveRecord::Schema.define(version: 2020_12_03_153100) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_plans_on_user_id"
+  end
+
+  create_table "signoffs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "plan_id", null: false
+    t.datetime "signed_at"
+    t.datetime "revoked_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["plan_id"], name: "index_signoffs_on_plan_id"
+    t.index ["user_id"], name: "index_signoffs_on_user_id"
   end
 
   create_table "tag_associations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -137,5 +148,7 @@ ActiveRecord::Schema.define(version: 2020_12_03_153100) do
 
   add_foreign_key "memberships", "user_groups"
   add_foreign_key "memberships", "users"
+  add_foreign_key "signoffs", "plans"
+  add_foreign_key "signoffs", "users"
   add_foreign_key "user_groups", "group_types"
 end

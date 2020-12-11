@@ -23,12 +23,13 @@ class User < ApplicationRecord
     :notes_written,
     foreign_key: 'author_id',
     class_name: 'Note',
-    dependent: :restrict_with_exception,
+    dependent: :restrict_with_error,
     inverse_of: 'author'
   )
   has_many :memberships, dependent: :destroy
   has_many :user_groups, through: :memberships
   has_many :plans, dependent: :destroy
+  has_many :signoffs, dependent: :restrict_with_error
 
   validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :first_name, presence: true
