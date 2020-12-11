@@ -61,7 +61,7 @@
 
           <table class='table'>
             <tbody class='signoffs list'>
-              <%= f.fields_for :signoffs, wrapper: false, include_id: false do |signoff_form| %>
+              <%= f.fields_for :signoffs, @plan.required_signoffs, wrapper: false, include_id: false do |signoff_form| %>
                 <%= render 'signoff_fields', f: signoff_form %>
               <% end %>
             </tbody>

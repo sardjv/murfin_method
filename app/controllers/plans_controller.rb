@@ -4,7 +4,7 @@ class PlansController < ApplicationController
   end
 
   def new
-    @plan = Plan.new
+    @plan = Plan.new(user: @current_user)
     render action: :edit
   end
 

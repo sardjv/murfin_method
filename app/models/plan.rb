@@ -43,7 +43,7 @@ class Plan < ApplicationRecord
   end
 
   def state
-    return :draft unless signoffs.find_by(user_id: user_id)&.signed?
+    return :draft unless user_signoff&.signed?
 
     return :complete if signoffs.all?(&:signed?)
 
@@ -62,9 +62,19 @@ class Plan < ApplicationRecord
     state == :complete
   end
 
+  def required_signoffs
+    signoffs.build(user_id: user_id) if user_signoff.blank?
+
+    signoffs
+  end
+
   private
 
   def activities_cache_key
     "Plan#to_time_ranges##{id}##{updated_at.to_f}"
+  end
+
+  def user_signoff
+    signoffs.find_by(user_id: user_id)
   end
 end
