@@ -29,7 +29,7 @@ class PlansController < ApplicationController
     if @plan.update(plan_params)
       redirect_to edit_plan_path(@plan), notice: notice('successfully.updated')
     else
-      flash.now.alert = notice('could_not_be.created')
+      flash.now.alert = notice('could_not_be.updated')
       render :edit
     end
   end
