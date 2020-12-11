@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe 'User creates a plan', type: :feature, js: true do
+  let!(:first_user_in_lists) { create(:user, first_name: '___Aardvark') }
   let(:current_user) { create(:user) }
   let(:hours_per_week) { 4 }
 
@@ -21,5 +22,6 @@ describe 'User creates a plan', type: :feature, js: true do
     expect(Plan.last.user_id).to eq(current_user.id)
     expect(Plan.last.activities.count).to eq(1)
     expect(Plan.last.end_date).to eq(Plan.last.start_date + 1.year - 1.day)
+    expect(Plan.last.signoffs.first.user).to eq(current_user)
   end
 end
