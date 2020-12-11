@@ -14,4 +14,13 @@ module PlanHelper
       complete: 'bg-success'
     }[plan.state]
   end
+
+  def state_json_response(plan)
+    {
+      state_badge: {
+        text: display_state(plan),
+        class: state_badge_class(plan)
+      }
+    }
+  end
 end
