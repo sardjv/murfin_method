@@ -9,7 +9,7 @@ class SignoffsController < ApplicationController
 
     respond_to do |format|
       format.json do
-        render json: { plan: plan_json_response(@signoff), signoff: revoke_json_response(@signoff) },
+        render json: { plan: state_json_response(@signoff.plan), signoff: revoke_json_response(@signoff) },
                status: :ok
       end
     end
@@ -22,7 +22,7 @@ class SignoffsController < ApplicationController
 
     respond_to do |format|
       format.json do
-        render json: { plan: plan_json_response(@signoff), signoff: sign_json_response(@signoff) },
+        render json: { plan: state_json_response(@signoff.plan), signoff: sign_json_response(@signoff) },
                status: :ok
       end
     end

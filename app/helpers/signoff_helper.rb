@@ -1,13 +1,4 @@
 module SignoffHelper
-  def plan_json_response(signoff)
-    {
-      state_badge: {
-        text: display_state(signoff.plan),
-        class: state_badge_class(signoff.plan)
-      }
-    }
-  end
-
   def revoke_json_response(signoff)
     {
       button: {

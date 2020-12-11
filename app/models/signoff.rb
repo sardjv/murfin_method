@@ -4,6 +4,7 @@
 #
 #  id         :bigint           not null, primary key
 #  user_id    :bigint           not null
+#  plan_id    :bigint           not null
 #  signed_at  :datetime
 #  revoked_at :datetime
 #  created_at :datetime         not null
@@ -11,7 +12,7 @@
 #
 class Signoff < ApplicationRecord
   belongs_to :user
-  belongs_to :plan
+  belongs_to :plan, touch: true
 
   def sign
     update(signed_at: Time.current)
