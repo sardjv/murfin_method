@@ -81,6 +81,6 @@ class Activity < ApplicationRecord
   def validate_end_time_after_start_time
     return unless start_time && end_time && end_time <= start_time
 
-    errors.add :end_time, 'must occur after start time'
+    errors.add :duration, I18n.t('errors.activity.duration.missing')
   end
 end

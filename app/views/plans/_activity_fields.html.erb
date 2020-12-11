@@ -4,7 +4,14 @@
   <%= render 'shared/tag_associations', f: f %>
 
   <td class=<%= Activity.human_attribute_name('duration').parameterize %>>
-    <%= f.number_field :seconds_per_week, class: 'duration-picker-activity', hide_label: true, step: :any %>
+    <%= f.number_field :seconds_per_week,
+      class: 'duration-picker-activity',
+      hide_label: true,
+      step: :any
+    %>
+    <% f.object.errors.full_messages_for(:duration).each do |error| %>
+      <div class='error text-danger small'><%= error %></div>
+    <% end %>
   </td>
 
   <td>
