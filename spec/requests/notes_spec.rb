@@ -69,7 +69,7 @@ RSpec.describe 'Notes', type: :request do
     end
   end
 
-  describe 'PUT /notes/:id/edit' do
+  describe 'PUT /notes/:id' do
     context 'with a note' do
       let!(:note) { create(:note) }
       let(:new_content) { Faker::Lorem.sentences.to_s }

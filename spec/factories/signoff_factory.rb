@@ -15,4 +15,8 @@ FactoryBot.define do
     user_id { User.all.sample.try(:id) || create(:user).id }
     plan_id { Plan.all.sample.try(:id) || create(:plan).id }
   end
+
+  factory :signed_signoff, parent: :signoff do
+    signed_at { Time.current - 1.second }
+  end
 end

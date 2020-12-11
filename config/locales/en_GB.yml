@@ -5,7 +5,7 @@ en:
       time_range: Actual data
     attributes:
       activity:
-        duration: Duration worked per week
+        duration: Time worked per week
       tag_type:
         active_for_time_ranges: Active for actual
       note:
@@ -16,7 +16,7 @@ en:
         updated_at: Updated %{when} ago
       time_range:
         time_range_type: Type
-        value: Duration worked
+        value: Time worked
         time_worked: Worked
   actions:
     add: Add %{model_name}
@@ -97,6 +97,9 @@ en:
         "%{model_name} deleted"
       updated:
         "%{model_name} successfully updated"
+  signoffs:
+    revoke: Revoke
+    sign: Sign
   status:
     about_right: About Right
     over: Over

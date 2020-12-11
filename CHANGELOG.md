@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add signoffs backend.
+- Add signoffs to plans.
 
 ## [0.5.3] - 2020-12-08
 
