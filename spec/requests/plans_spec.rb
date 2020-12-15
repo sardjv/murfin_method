@@ -61,7 +61,7 @@ RSpec.describe 'Plans', type: :request do
           context 'when not an admin' do
             it 'is forbidden' do
               post '/plans', params: params
-              expect(response).to be_forbidden
+              redirect_to url: root_path, alert: I18n.t('notice.forbidden')
             end
 
             it 'does not create a plan' do
@@ -97,7 +97,7 @@ RSpec.describe 'Plans', type: :request do
           context 'when not an admin' do
             it 'is forbidden' do
               get "/plans/#{plan.id}/edit"
-              expect(response).to be_forbidden
+              redirect_to url: root_path, alert: I18n.t('notice.forbidden')
             end
           end
         end
@@ -148,7 +148,7 @@ RSpec.describe 'Plans', type: :request do
           context 'when not an admin' do
             it 'is forbidden' do
               put "/plans/#{plan.id}", params: params
-              expect(response).to be_forbidden
+              redirect_to url: root_path, alert: I18n.t('notice.forbidden')
             end
 
             it 'does not update plan' do
@@ -193,7 +193,7 @@ RSpec.describe 'Plans', type: :request do
           context 'when not an admin' do
             it 'is forbidden' do
               delete "/plans/#{plan.id}"
-              expect(response).to be_forbidden
+              redirect_to url: root_path, alert: I18n.t('notice.forbidden')
             end
 
             it 'does not delete plan' do

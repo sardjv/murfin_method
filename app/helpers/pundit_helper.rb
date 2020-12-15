@@ -2,6 +2,6 @@ module PunditHelper
   private
 
   def user_not_authorized
-    render json: {}, status: :forbidden
+    redirect_to root_path, alert: notice('forbidden')
   end
 end
