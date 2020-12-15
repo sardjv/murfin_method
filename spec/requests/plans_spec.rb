@@ -7,6 +7,13 @@ RSpec.describe 'Plans', type: :request do
       log_in(current_user)
     end
 
+    describe 'GET /plans' do
+      it 'returns http ok' do
+        get '/plans'
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
     describe 'GET /plans/new' do
       it 'returns http ok' do
         get '/plans/new'
@@ -206,6 +213,13 @@ RSpec.describe 'Plans', type: :request do
   end
 
   context 'when not logged in' do
+    describe 'GET /plans' do
+      it 'redirects to root' do
+        get '/plans'
+        expect(response).to redirect_to(root_url)
+      end
+    end
+
     describe 'GET /plans/new' do
       it 'redirects to root' do
         get '/plans/new'
