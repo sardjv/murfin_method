@@ -45,7 +45,6 @@ Rails.application.routes.draw do
   end
 
   resources :notes, except: :show
-  resources :time_ranges, except: :show
   resources :plans, except: :show
 
   resources :signoffs, only: %i[sign revoke] do
