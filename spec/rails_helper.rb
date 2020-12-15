@@ -93,7 +93,8 @@ RSpec.configure do |config|
   config.include ActiveJob::TestHelper, type: :job
 
   config.include CapybaraHelpers, type: :feature
-  config.include SessionHelpers, type: :feature
+  config.include FeatureSessionHelpers, type: :feature
+  config.include RequestSessionHelpers, type: :request
 
   # Show retry status in spec process.
   config.verbose_retry = true

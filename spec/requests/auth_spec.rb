@@ -10,7 +10,7 @@ RSpec.describe 'Auth', type: :request do
     end
     context 'when authenticated' do
       before do
-        allow_any_instance_of(ApplicationController).to receive(:session).and_return(userinfo: mock_valid_auth_hash(user))
+        log_in(user)
       end
 
       it 'returns http success' do

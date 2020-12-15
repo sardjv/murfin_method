@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Signoffs', type: :request do
   before do
-    allow_any_instance_of(ApplicationController).to receive(:session).and_return(userinfo: mock_valid_auth_hash(build(:user)))
+    log_in(build(:user))
   end
 
   context 'with a signoff' do

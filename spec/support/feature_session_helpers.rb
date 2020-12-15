@@ -1,4 +1,4 @@
-module SessionHelpers
+module FeatureSessionHelpers
   def log_in(user)
     mock_valid_auth_hash(user)
     Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:auth0]
