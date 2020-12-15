@@ -76,7 +76,7 @@ en:
       admin_users: Users
       combined_data: Combined data
       individuals: Individuals
-      plans: Plans
+      plans: Job Plans
       summary: Summary
       tags: Tags
       team: '%{team_name} dashboard'
@@ -86,7 +86,6 @@ en:
     placeholders:
       content: Add some detail about the note here
   notice:
-    forbidden: You are not authorized to perform this action!
     could_not_be:
       created:
         "%{model_name} could not be created"
@@ -94,6 +93,7 @@ en:
         "%{model_name} could not be updated"
       destroyed:
         "%{model_name} could not be deleted"
+    forbidden: You are not authorized to perform this action!
     successfully:
       created:
         "%{model_name} successfully created"
