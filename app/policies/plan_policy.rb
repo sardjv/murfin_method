@@ -27,7 +27,8 @@ class PlanPolicy < ApplicationPolicy
       if user.admin?
         scope.all
       else
-        scope.where(user_id: user.id)
+        scope.left_joins(:signoffs)
+             .where('plans.user_id = :id OR signoffs.user_id = :id', id: user.id)
       end
     end
   end
