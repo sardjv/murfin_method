@@ -41,6 +41,34 @@ RSpec.describe 'Plans', type: :request do
           expect(Plan.last.start_date).to eq(start_date)
           expect(Plan.last.user_id).to eq(user_id)
         end
+
+        context 'with a different user_id' do
+          let(:user_id) { create(:user).id }
+
+          context 'when an admin' do
+            let(:current_user) { create(:user, admin: true) }
+
+            it 'creates a new plan' do
+              expect { post '/plans', params: params }.to change { Plan.count }.by(1)
+            end
+
+            it 'persists values' do
+              post '/plans', params: params
+              expect(Plan.last.user_id).to eq(user_id)
+            end
+          end
+
+          context 'when not an admin' do
+            it 'is forbidden' do
+              post '/plans', params: params
+              expect(response).to be_forbidden
+            end
+
+            it 'does not create a plan' do
+              expect { post '/plans', params: params }.not_to change { Plan.count }
+            end
+          end
+        end
       end
     end
 

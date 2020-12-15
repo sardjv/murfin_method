@@ -1,4 +1,6 @@
 class PlansController < ApplicationController
+  include Pundit
+
   def index
     @plans = Plan.where(user_id: @current_user.id).order(updated_at: :desc).page(params[:page])
   end
@@ -10,6 +12,7 @@ class PlansController < ApplicationController
 
   def create
     @plan = build_plan
+    authorize @plan
 
     if @plan.save
       redirect_to plans_path, notice: notice('successfully.created')
@@ -48,7 +51,6 @@ class PlansController < ApplicationController
 
   def build_plan
     Plan.new(plan_params) do |plan|
-      plan.user_id = @current_user.id
       plan.end_date = plan.start_date + Plan.default_length
     end
   end

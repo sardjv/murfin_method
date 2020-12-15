@@ -53,6 +53,10 @@ gem 'omniauth-rails_csrf_protection', '~> 0.1.2'
 # https://github.com/puma/puma
 gem 'puma', '~> 5.1.1'
 
+# Minimal authorization through OO design and pure Ruby classes.
+# https://github.com/varvet/pundit
+gem 'pundit', '~> 2.1.0'
+
 # Create database-backed web applications using the MVC pattern.
 # https://github.com/rails/rails
 gem 'rails', '~> 6.0.3'
