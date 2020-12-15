@@ -10,8 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add Pundit for authorization.
-- Authorize Plan controller.
-- Allow admins to index plans.
+- Authorize Plan and Signoff controllers.
+- Allow admins and signoffs to index plans.
+- Hide Plan and Signoff actions if not authorized.
 
 ## [0.6.2] - 2020-12-11
 
