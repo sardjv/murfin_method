@@ -31,6 +31,7 @@ class PlansController < ApplicationController
 
   def update
     @plan = Plan.find(params[:id])
+    authorize @plan
 
     if @plan.update(plan_params)
       redirect_to edit_plan_path(@plan), notice: notice('successfully.updated')
@@ -42,6 +43,8 @@ class PlansController < ApplicationController
 
   def destroy
     @plan = Plan.find(params[:id])
+    authorize @plan
+
     @plan.destroy
     redirect_to plans_path, notice: notice('successfully.destroyed')
   end

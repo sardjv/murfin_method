@@ -106,7 +106,9 @@ RSpec.describe 'Plans', type: :request do
 
     describe 'PUT /plans/:id' do
       context 'with a plan' do
-        let!(:plan) { create(:plan) }
+        let!(:plan) { create(:plan, user_id: user_id, start_date: old_start_date) }
+        let(:user_id) { current_user.id }
+        let(:old_start_date) { Date.today - 10.days }
         let(:new_start_date) { plan.end_date - 10.days }
         let(:params) do
           {
@@ -125,12 +127,43 @@ RSpec.describe 'Plans', type: :request do
           put "/plans/#{plan.id}", params: params
           expect(plan.reload.start_date).to eq(new_start_date)
         end
+
+        context 'with a different user_id' do
+          let(:user_id) { create(:user).id }
+
+          context 'when an admin' do
+            let(:current_user) { create(:user, admin: true) }
+
+            it 'redirects to the edit view' do
+              put "/plans/#{plan.id}", params: params
+              expect(response).to redirect_to(edit_plan_url(plan))
+            end
+
+            it 'updates plan' do
+              put "/plans/#{plan.id}", params: params
+              expect(plan.reload.start_date).to eq(new_start_date)
+            end
+          end
+
+          context 'when not an admin' do
+            it 'is forbidden' do
+              put "/plans/#{plan.id}", params: params
+              expect(response).to be_forbidden
+            end
+
+            it 'does not update plan' do
+              put "/plans/#{plan.id}", params: params
+              expect(plan.reload.start_date).to eq(old_start_date)
+            end
+          end
+        end
       end
     end
 
     describe 'DELETE /plans/:id' do
       context 'with a plan' do
-        let!(:plan) { create(:plan) }
+        let!(:plan) { create(:plan, user_id: user_id) }
+        let(:user_id) { current_user.id }
 
         it 'redirects to the index' do
           delete "/plans/#{plan.id}"
@@ -139,6 +172,34 @@ RSpec.describe 'Plans', type: :request do
 
         it 'deletes plan' do
           expect { delete "/plans/#{plan.id}" }.to change { Plan.count }.by(-1)
+        end
+
+        context 'with a different user_id' do
+          let(:user_id) { create(:user).id }
+
+          context 'when an admin' do
+            let(:current_user) { create(:user, admin: true) }
+
+            it 'redirects to the index' do
+              delete "/plans/#{plan.id}"
+              expect(response).to redirect_to(plans_url)
+            end
+
+            it 'deletes plan' do
+              expect { delete "/plans/#{plan.id}" }.to change { Plan.count }.by(-1)
+            end
+          end
+
+          context 'when not an admin' do
+            it 'is forbidden' do
+              delete "/plans/#{plan.id}"
+              expect(response).to be_forbidden
+            end
+
+            it 'does not delete plan' do
+              expect { delete "/plans/#{plan.id}" }.not_to change { Plan.count }
+            end
+          end
         end
       end
     end
