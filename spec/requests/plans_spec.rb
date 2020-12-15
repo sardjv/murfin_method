@@ -92,6 +92,15 @@ RSpec.describe 'Plans', type: :request do
         context 'with a different user_id' do
           let(:user_id) { create(:user).id }
 
+          context 'when a signoff' do
+            let!(:plan) { create(:plan, user_id: user_id, signoffs: [create(:signoff, user: current_user)]) }
+
+            it 'returns http ok' do
+              get "/plans/#{plan.id}/edit"
+              expect(response).to have_http_status(:ok)
+            end
+          end
+
           context 'when an admin' do
             let(:current_user) { create(:user, admin: true) }
 
@@ -138,6 +147,15 @@ RSpec.describe 'Plans', type: :request do
         context 'with a different user_id' do
           let(:user_id) { create(:user).id }
 
+          context 'when a signoff' do
+            let!(:plan) { create(:plan, user_id: user_id, signoffs: [create(:signoff, user: current_user)]) }
+
+            it 'is forbidden' do
+              put "/plans/#{plan.id}", params: params
+              redirect_to url: root_path, alert: I18n.t('notice.forbidden')
+            end
+          end
+
           context 'when an admin' do
             let(:current_user) { create(:user, admin: true) }
 
@@ -183,6 +201,15 @@ RSpec.describe 'Plans', type: :request do
 
         context 'with a different user_id' do
           let(:user_id) { create(:user).id }
+
+          context 'when a signoff' do
+            let!(:plan) { create(:plan, user_id: user_id, signoffs: [create(:signoff, user: current_user)]) }
+
+            it 'is forbidden' do
+              delete "/plans/#{plan.id}"
+              redirect_to url: root_path, alert: I18n.t('notice.forbidden')
+            end
+          end
 
           context 'when an admin' do
             let(:current_user) { create(:user, admin: true) }

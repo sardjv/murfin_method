@@ -11,6 +11,10 @@ class PlanPolicy < ApplicationPolicy
     (record.user_id == user.id) || user.admin?
   end
 
+  def edit?
+    update? || record.signoffs.find_by(user_id: user.id).present?
+  end
+
   def destroy?
     (record.user_id == user.id) || user.admin?
   end
