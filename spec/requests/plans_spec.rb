@@ -74,11 +74,32 @@ RSpec.describe 'Plans', type: :request do
 
     describe 'GET /plans/:id/edit' do
       context 'with a plan' do
-        let!(:plan) { create(:plan) }
+        let!(:plan) { create(:plan, user_id: user_id) }
+        let(:user_id) { current_user.id }
 
         it 'returns http ok' do
           get "/plans/#{plan.id}/edit"
           expect(response).to have_http_status(:ok)
+        end
+
+        context 'with a different user_id' do
+          let(:user_id) { create(:user).id }
+
+          context 'when an admin' do
+            let(:current_user) { create(:user, admin: true) }
+
+            it 'returns http ok' do
+              get "/plans/#{plan.id}/edit"
+              expect(response).to have_http_status(:ok)
+            end
+          end
+
+          context 'when not an admin' do
+            it 'is forbidden' do
+              get "/plans/#{plan.id}/edit"
+              expect(response).to be_forbidden
+            end
+          end
         end
       end
     end

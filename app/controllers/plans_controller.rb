@@ -7,6 +7,8 @@ class PlansController < ApplicationController
 
   def new
     @plan = Plan.new(user: @current_user)
+    authorize @plan
+
     render action: :edit
   end
 
@@ -24,6 +26,7 @@ class PlansController < ApplicationController
 
   def edit
     @plan = Plan.find(params[:id])
+    authorize @plan
   end
 
   def update
