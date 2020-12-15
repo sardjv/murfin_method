@@ -4,6 +4,7 @@ class SignoffsController < ApplicationController
 
   def sign
     @signoff = Signoff.find(params[:id])
+    authorize @signoff
 
     return unless @signoff.sign
 
@@ -17,6 +18,7 @@ class SignoffsController < ApplicationController
 
   def revoke
     @signoff = Signoff.find(params[:id])
+    authorize @signoff
 
     return unless @signoff.revoke
 

@@ -1,11 +1,10 @@
 <div class='container my-4'>
 
-
   <div class='row'>
     <div class='col-9'>
       <h5>
         <% if @plan.persisted? %>
-          <%= I18n.t('actions.edit', model_name: Plan.model_name.human.titleize) %>
+          <%= @plan.name %>
         <% else %>
           <%= I18n.t('actions.add', model_name: Plan.model_name.human.titleize) %>
         <% end %>
@@ -21,13 +20,24 @@
   <div class='row'>
     <div class='col-12'>
       <%= bootstrap_form_for @plan do |f| %>
+        <% if policy(@plan).change_user? %>
+          <%= f.select :user_id,
+            options_for_select(User.order(:first_name).all.map { |t| [t.name, t.id] }, selected: f.object.user_id || current_user.id),
+            { hide_label: true, class: 'input-group-btn', required: true }
+          %>
+        <% else %>
+          <%= f.hidden_field :user_id, value: f.object.user_id || current_user.id %>
+        <% end %>
+
         <%= f.date_select :start_date,
-          label: Plan.human_attribute_name('start_date')
+          label: Plan.human_attribute_name('start_date'),
+          disabled: !policy(@plan).update?
         %>
 
         <% if @plan.persisted? %>
           <%= f.date_select :end_date,
-            label: Plan.human_attribute_name('end_date')
+            label: Plan.human_attribute_name('end_date'),
+            disabled: !policy(@plan).update?
           %>
         <% end %>
 
@@ -51,9 +61,11 @@
             </tbody>
           </table>
 
-          <div>
-            <%= link_to_add_association I18n.t('actions.add', model_name: Activity.model_name.human.titleize), f, :activities, data: { 'association-insertion-node' => 'tbody.activities', 'association-insertion-method' => 'append' }, class: 'btn btn-primary' %>
-          </div>
+          <% if policy(@plan).update? %>
+            <div>
+              <%= link_to_add_association I18n.t('actions.add', model_name: Activity.model_name.human.titleize), f, :activities, data: { 'association-insertion-node' => 'tbody.activities', 'association-insertion-method' => 'append' }, class: 'btn btn-primary' %>
+            </div>
+          <% end %>
         </div>
 
         <div class='border my-4 p-4'>
@@ -67,12 +79,16 @@
             </tbody>
           </table>
 
-          <div>
-            <%= link_to_add_association I18n.t('actions.add', model_name: Signoff.model_name.human.titleize), f, :signoffs, data: { 'association-insertion-node' => 'tbody.signoffs', 'association-insertion-method' => 'append' }, class: 'btn btn-primary' %>
-          </div>
+          <% if policy(@plan).update? %>
+            <div>
+              <%= link_to_add_association I18n.t('actions.add', model_name: Signoff.model_name.human.titleize), f, :signoffs, data: { 'association-insertion-node' => 'tbody.signoffs', 'association-insertion-method' => 'append' }, class: 'btn btn-primary' %>
+            </div>
+          <% end %>
         </div>
 
-        <%= f.submit I18n.t('actions.save'), class: 'btn btn-primary mt-4' %>
+        <% if policy(@plan).update? %>
+          <%= f.submit I18n.t('actions.save'), class: 'btn btn-primary mt-4' %>
+        <% end %>
         <%= link_to I18n.t('actions.cancel'), plans_path, class: 'btn btn-outline-secondary mt-4' %>
       <% end %>
     </div>

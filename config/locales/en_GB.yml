@@ -86,6 +86,7 @@ en:
     placeholders:
       content: Add some detail about the note here
   notice:
+    forbidden: You are not authorized to perform this action!
     could_not_be:
       created:
         "%{model_name} could not be created"

@@ -1,15 +1,18 @@
 class PlansController < ApplicationController
   def index
-    @plans = Plan.where(user_id: @current_user.id).order(updated_at: :desc).page(params[:page])
+    @plans = policy_scope(Plan).order(updated_at: :desc).page(params[:page])
   end
 
   def new
     @plan = Plan.new(user: @current_user)
+    authorize @plan
+
     render action: :edit
   end
 
   def create
     @plan = build_plan
+    authorize @plan
 
     if @plan.save
       redirect_to plans_path, notice: notice('successfully.created')
@@ -21,10 +24,12 @@ class PlansController < ApplicationController
 
   def edit
     @plan = Plan.find(params[:id])
+    authorize @plan
   end
 
   def update
     @plan = Plan.find(params[:id])
+    authorize @plan
 
     if @plan.update(plan_params)
       redirect_to edit_plan_path(@plan), notice: notice('successfully.updated')
@@ -36,6 +41,8 @@ class PlansController < ApplicationController
 
   def destroy
     @plan = Plan.find(params[:id])
+    authorize @plan
+
     @plan.destroy
     redirect_to plans_path, notice: notice('successfully.destroyed')
   end
@@ -48,7 +55,6 @@ class PlansController < ApplicationController
 
   def build_plan
     Plan.new(plan_params) do |plan|
-      plan.user_id = @current_user.id
       plan.end_date = plan.start_date + Plan.default_length
     end
   end

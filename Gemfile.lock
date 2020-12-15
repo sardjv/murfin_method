@@ -198,6 +198,8 @@ GEM
     public_suffix (4.0.6)
     puma (5.1.1)
       nio4r (~> 2.0)
+    pundit (2.1.0)
+      activesupport (>= 3.0.0)
     rack (2.2.3)
     rack-proxy (0.6.5)
       rack
@@ -358,6 +360,7 @@ DEPENDENCIES
   omniauth-auth0 (~> 2.4.1)
   omniauth-rails_csrf_protection (~> 0.1.2)
   puma (~> 5.1.1)
+  pundit (~> 2.1.0)
   rails (~> 6.0.3)
   redis (~> 4.2.5)
   rspec-rails (~> 4.0.1)

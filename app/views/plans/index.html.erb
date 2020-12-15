@@ -50,13 +50,17 @@
                     </h4>
                   </td>
                   <td>
-                    <%= link_to [:edit, plan], class: 'btn btn-link' do %>
-                      <%= icon('pencil') %>
+                    <% if policy(plan).edit? %>
+                      <%= link_to [:edit, plan], class: 'btn btn-link' do %>
+                        <%= icon('pencil') %>
+                      <% end %>
                     <% end %>
                   </td>
                   <td>
-                    <%= link_to [plan], method: :delete, data: { confirm: I18n.t('actions.confirm') }, class: 'btn btn-link'  do %>
-                      <%= icon('trash') %>
+                    <% if policy(plan).destroy? %>
+                      <%= link_to [plan], method: :delete, data: { confirm: I18n.t('actions.confirm') }, class: 'btn btn-link'  do %>
+                        <%= icon('trash') %>
+                      <% end %>
                     <% end %>
                   </td>
                 </tr>
