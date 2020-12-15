@@ -4,6 +4,6 @@ class SignoffPolicy < ApplicationPolicy
   end
 
   def revoke?
-    (record.user_id == user.id) || user.admin?
+    sign?
   end
 end
