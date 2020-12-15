@@ -12,7 +12,8 @@
       class: 'filter-child-select',
       'data-tag-type-id' => tag_type.id,
       'data-tag-type-parent-id' => tag_type.parent_id,
-      'data-size' => TagTypeHelper.visible_options_count(tag_type)
+      'data-size' => TagTypeHelper.visible_options_count(tag_type),
+      disabled: !policy(f.object.taggable).update?
     }
   %>
 </td>
