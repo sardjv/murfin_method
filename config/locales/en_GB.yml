@@ -35,6 +35,9 @@ en:
     formats:
       readable: '%-d %B %Y'
   errors:
+    activity:
+      duration:
+        missing: required
     tag:
       should_match_parent: must match the selected parent
       should_match_tag_type: must belong to the selected tag_type

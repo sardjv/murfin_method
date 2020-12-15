@@ -24,4 +24,13 @@ describe 'User creates a plan', type: :feature, js: true do
     expect(Plan.last.end_date).to eq(Plan.last.start_date + 1.year - 1.day)
     expect(Plan.last.signoffs.first.user).to eq(current_user)
   end
+
+  context 'when invalid' do
+    it 'shows errors' do
+      click_link I18n.t('actions.add', model_name: Activity.model_name.human.titleize)
+      click_button I18n.t('actions.save')
+      expect(page).to have_content(I18n.t('notice.could_not_be.created', model_name: Plan.model_name.human))
+      expect(page).to have_content("#{Activity.human_attribute_name('duration')} #{I18n.t('errors.activity.duration.missing')}")
+    end
+  end
 end
