@@ -16,7 +16,7 @@ RSpec.describe 'Plans', type: :request do
 
     describe 'POST /plans' do
       context 'with valid params' do
-        let(:start_date) { Date.today }
+        let(:start_date) { Time.zone.today }
         let(:user_id) { current_user.id }
         let(:params) do
           {
@@ -65,7 +65,7 @@ RSpec.describe 'Plans', type: :request do
             end
 
             it 'does not create a plan' do
-              expect { post '/plans', params: params }.not_to change { Plan.count }
+              expect { post '/plans', params: params }.not_to change(Plan, :count)
             end
           end
         end
@@ -108,7 +108,7 @@ RSpec.describe 'Plans', type: :request do
       context 'with a plan' do
         let!(:plan) { create(:plan, user_id: user_id, start_date: old_start_date) }
         let(:user_id) { current_user.id }
-        let(:old_start_date) { Date.today - 10.days }
+        let(:old_start_date) { Time.zone.today - 10.days }
         let(:new_start_date) { plan.end_date - 10.days }
         let(:params) do
           {
@@ -197,7 +197,7 @@ RSpec.describe 'Plans', type: :request do
             end
 
             it 'does not delete plan' do
-              expect { delete "/plans/#{plan.id}" }.not_to change { Plan.count }
+              expect { delete "/plans/#{plan.id}" }.not_to change(Plan, :count)
             end
           end
         end
@@ -215,7 +215,7 @@ RSpec.describe 'Plans', type: :request do
 
     describe 'POST /plans' do
       context 'with valid params' do
-        let(:start_date) { Date.today }
+        let(:start_date) { Time.zone.today }
         let(:params) do
           {
             plan: {
@@ -231,7 +231,7 @@ RSpec.describe 'Plans', type: :request do
         end
 
         it 'does not create a plan' do
-          expect { post '/plans', params: params }.not_to change { Plan.count }
+          expect { post '/plans', params: params }.not_to change(Plan, :count)
         end
       end
     end
@@ -250,7 +250,7 @@ RSpec.describe 'Plans', type: :request do
     describe 'PUT /plans/:id' do
       context 'with a plan' do
         let!(:plan) { create(:plan, start_date: old_start_date) }
-        let(:old_start_date) { Date.today - 10.days }
+        let(:old_start_date) { Time.zone.today - 10.days }
         let(:new_start_date) { plan.end_date - 10.days }
         let(:params) do
           {
@@ -282,7 +282,7 @@ RSpec.describe 'Plans', type: :request do
         end
 
         it 'does not delete plan' do
-          expect { delete "/plans/#{plan.id}" }.not_to change { Plan.count }
+          expect { delete "/plans/#{plan.id}" }.not_to change(Plan, :count)
         end
       end
     end
