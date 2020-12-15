@@ -1,6 +1,4 @@
 class PlansController < ApplicationController
-  include Pundit
-
   def index
     @plans = Plan.where(user_id: @current_user.id).order(updated_at: :desc).page(params[:page])
   end

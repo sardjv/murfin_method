@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :user_authenticated?, :current_user_name, :current_user_email
 
-  # include Pundit
+  include Pundit
   include PunditHelper
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
