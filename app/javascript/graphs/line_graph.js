@@ -5,14 +5,25 @@ import * as SCSSColours from '!!sass-variable-loader!../stylesheets/variables/co
 import { Note } from './note'
 
 window.addEventListener('turbolinks:load', () => {
+  fetchData()
+
+  $('.filter').change(() => { fetchData() });
+});
+
+function fetchData() {
+  const startYear = parseInt($('#line_graph_filter_start_time_1i').val());
+  const startMonth = parseInt($('#line_graph_filter_start_time_2i').val()) - 1; // JS months are zero-based for some reason.
+  const endYear = parseInt($('#line_graph_filter_end_time_1i').val());
+  const endMonth = parseInt($('#line_graph_filter_end_time_2i').val()) - 1; // JS months are zero-based for some reason.
+
   const context = document.getElementById('line-graph');
   if (context) {
     Rails.ajax({
       url: API.url(),
       type: 'GET',
       data: new URLSearchParams({
-        'filter_start_time': new Date(2020, 5, 2).toISOString(),
-        'filter_end_time': new Date(2020, 11, 1).toISOString()
+        'filter_start_time': new Date(startYear, startMonth, 2).toISOString(),
+        'filter_end_time': new Date(endYear, endMonth, 1).toISOString()
       }).toString(),
       dataType: 'json',
       success: function(data) {
@@ -20,7 +31,7 @@ window.addEventListener('turbolinks:load', () => {
       }
     });
   }
-});
+}
 
 function getColour(number) {
   const colours = [
