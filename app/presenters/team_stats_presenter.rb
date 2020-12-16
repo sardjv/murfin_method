@@ -122,7 +122,7 @@ class TeamStatsPresenter
   end
 
   def percentage(month:)
-    return 0 if @plan[month].nil? || @plan[month].zero?
+    return 0 if @actual[month].nil? || @plan[month].nil? || @plan[month].zero?
 
     ((@actual[month] / @plan[month]) * 100).round(2)
   end
