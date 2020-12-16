@@ -26,7 +26,9 @@ class DashboardPresenter
   def team_stats_presenter
     @team_stats_presenter ||= TeamStatsPresenter.new(
       user_ids: @params[:user_ids],
-      actual_id: @params[:actual_id]
+      actual_id: @params[:actual_id],
+      filter_start_date: @params[:filter_start_time],
+      filter_end_date: @params[:filter_end_time]
     )
   end
 

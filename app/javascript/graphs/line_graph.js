@@ -10,6 +10,11 @@ window.addEventListener('turbolinks:load', () => {
     Rails.ajax({
       url: API.url(),
       type: 'GET',
+      data: new URLSearchParams({
+        'filter_start_time': new Date(2020, 5, 2).toISOString(),
+        'filter_end_time': new Date(2020, 11, 1).toISOString()
+      }).toString(),
+      dataType: 'json',
       success: function(data) {
         global.chart = line_graph(context, data.line_graph)
       }

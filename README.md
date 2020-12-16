@@ -81,7 +81,7 @@ open coverage/index.html
 To access a 'byebug' debugging point, run with:
 
 ```
-docker-compose run --service-ports app
+docker-compose -f docker-compose.development.yml run --service-ports app
 ```
 
 ## Model Annotation

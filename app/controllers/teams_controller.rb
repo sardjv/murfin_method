@@ -26,6 +26,6 @@ class TeamsController < ApplicationController
   private
 
   def team_params
-    params.permit(:format, :page, :user_ids, :plan_id, :actual_id)
+    params.permit(:id, :format, :page, :user_ids, :plan_id, :actual_id, :filter_start_time, :filter_end_time)
   end
 end
