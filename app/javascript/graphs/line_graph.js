@@ -22,7 +22,7 @@ function fetchData() {
       url: API.url(),
       type: 'GET',
       data: new URLSearchParams({
-        'filter_start_time': new Date(startYear, startMonth, 2).toISOString(),
+        'filter_start_time': new Date(startYear, startMonth, 1).toISOString(),
         'filter_end_time': new Date(endYear, endMonth, 1).toISOString()
       }).toString(),
       dataType: 'json',

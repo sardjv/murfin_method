@@ -2,8 +2,7 @@ class TeamStatsPresenter
   attr_accessor :filter_start_time, :filter_end_time, :plan, :actual
 
   def initialize(args)
-    args = args.reject { |_k, v| v.nil? }
-    args = defaults.merge(args)
+    args = defaults.merge(args.compact)
     calculate_variables(args)
   end
 
