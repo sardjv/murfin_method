@@ -3,7 +3,11 @@ describe DashboardPresenter do
     DashboardPresenter.new(
       params: {
         user_ids: [user.id],
-        actual_id: actual_id
+        actual_id: actual_id,
+        filter_start_month: '10',
+        filter_start_year: '2019',
+        filter_end_month: '6',
+        filter_end_year: '2020'
       }
     )
   end
@@ -63,10 +67,6 @@ describe DashboardPresenter do
           {
             line_graph: {
               data: [[
-                { name: '2019-06-01T00:00:00.000Z', value: 0, notes: '[]' },
-                { name: '2019-07-01T00:00:00.000Z', value: 0, notes: '[]' },
-                { name: '2019-08-01T00:00:00.000Z', value: 0, notes: '[]' },
-                { name: '2019-09-01T00:00:00.000Z', value: 0, notes: '[]' },
                 { name: '2019-10-01T00:00:00.000Z', value: 0, notes: '[]' },
                 { name: '2019-11-01T00:00:00.000Z', value: 0, notes: '[]' },
                 { name: '2019-12-01T00:00:00.000Z', value: 0, notes: '[]' },
