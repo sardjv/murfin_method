@@ -19,11 +19,15 @@ class DashboardPresenter
 
   def team_data
     [
-      TeamStatsPresenter.new(
-        user_ids: @params[:user_ids],
-        actual_id: @params[:actual_id]
-      ).weekly_percentage_delivered_per_month
+      team_stats_presenter.weekly_percentage_delivered_per_month
     ]
+  end
+
+  def team_stats_presenter
+    @team_stats_presenter ||= TeamStatsPresenter.new(
+      user_ids: @params[:user_ids],
+      actual_id: @params[:actual_id]
+    )
   end
 
   def admin_data

@@ -2,6 +2,7 @@ class TeamsController < ApplicationController
   def dashboard
     @user_group = UserGroup.find(params[:id])
     @presenter = DashboardPresenter.new(params: team_params.merge(user_ids: @user_group.user_ids))
+
     respond_to do |format|
       format.html
       format.json do
