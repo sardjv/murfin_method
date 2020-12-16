@@ -7,7 +7,7 @@ import { Note } from './note'
 window.addEventListener('turbolinks:load', () => {
   fetchData()
 
-  $('.filter').change(() => { fetchData() });
+  $('select.filter').change(() => { fetchData() });
 });
 
 function fetchData() {
