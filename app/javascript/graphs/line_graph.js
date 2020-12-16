@@ -27,7 +27,8 @@ function fetchData() {
       }).toString(),
       dataType: 'json',
       success: function(data) {
-        global.chart = line_graph(context, data.line_graph)
+        if (global.chart) { global.chart.destroy() };
+        global.chart = line_graph(context, data.line_graph);
       }
     });
   }
