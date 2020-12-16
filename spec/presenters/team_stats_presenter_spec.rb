@@ -187,6 +187,11 @@ describe TeamStatsPresenter do
             ]
           )
         end
+
+        context 'without actuals' do
+          let!(:actual_activity) { nil }
+          it { expect { subject.weekly_percentage_delivered_per_month }.not_to raise_error }
+        end
       end
     end
   end

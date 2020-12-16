@@ -81,12 +81,12 @@ class DashboardPresenter
   def filter_start_date
     return unless @params[:filter_start_year] && @params[:filter_start_month]
 
-    Date.new(@params[:filter_start_year].to_i, @params[:filter_start_month].to_i)
+    Date.new(@params[:filter_start_year].to_i, @params[:filter_start_month].to_i).beginning_of_month
   end
 
   def filter_end_date
     return unless @params[:filter_end_year] && @params[:filter_end_month]
 
-    Date.new(@params[:filter_end_year].to_i, @params[:filter_end_month].to_i)
+    Date.new(@params[:filter_end_year].to_i, @params[:filter_end_month].to_i).end_of_month
   end
 end
