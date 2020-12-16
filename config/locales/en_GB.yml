@@ -54,7 +54,6 @@ en:
     title:
       admin: Percentage delivered against job plan
       individuals: Percentage delivered against job plan
-      teams: Percentage delivered against job plan
     showing_users:
       one: Showing 1 user
       other: Showing %{count} users
@@ -76,7 +75,7 @@ en:
       admin_users: Users
       combined_data: Combined data
       individuals: Individuals
-      plans: Plans
+      plans: Job Plans
       summary: Summary
       tags: Tags
       team: '%{team_name} dashboard'
@@ -86,7 +85,6 @@ en:
     placeholders:
       content: Add some detail about the note here
   notice:
-    forbidden: You are not authorized to perform this action!
     could_not_be:
       created:
         "%{model_name} could not be created"
@@ -94,6 +92,7 @@ en:
         "%{model_name} could not be updated"
       destroyed:
         "%{model_name} could not be deleted"
+    forbidden: You are not authorized to perform this action!
     successfully:
       created:
         "%{model_name} successfully created"
@@ -110,8 +109,6 @@ en:
     really_under: Really Under
     under: Under
     unknown: Unknown
-  tags:
-    add: Add %{tag_type_name} Tag
   time:
     formats:
       iso8601_utc: '%Y-%m-%dT%H:%M:%S.000Z'
