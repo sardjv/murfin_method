@@ -19,11 +19,17 @@ class DashboardPresenter
 
   def team_data
     [
-      TeamStatsPresenter.new(
-        user_ids: @params[:user_ids],
-        actual_id: @params[:actual_id]
-      ).weekly_percentage_delivered_per_month
+      team_stats_presenter.weekly_percentage_delivered_per_month
     ]
+  end
+
+  def team_stats_presenter
+    @team_stats_presenter ||= TeamStatsPresenter.new(
+      user_ids: @params[:user_ids],
+      actual_id: @params[:actual_id],
+      filter_start_date: filter_start_date,
+      filter_end_date: filter_end_date
+    )
   end
 
   def admin_data
@@ -70,5 +76,17 @@ class DashboardPresenter
     (5..10).map do |month|
       Time.zone.local(2020, month, 1).strftime(I18n.t('time.formats.iso8601_utc'))
     end
+  end
+
+  def filter_start_date
+    return unless @params[:filter_start_year] && @params[:filter_start_month]
+
+    Date.new(@params[:filter_start_year].to_i, @params[:filter_start_month].to_i)
+  end
+
+  def filter_end_date
+    return unless @params[:filter_end_year] && @params[:filter_end_month]
+
+    Date.new(@params[:filter_end_year].to_i, @params[:filter_end_month].to_i)
   end
 end
