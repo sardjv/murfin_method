@@ -9,8 +9,8 @@ class TeamStatsPresenter
   def calculate_variables(args)
     @filter_start_time = args[:filter_start_date].to_time.in_time_zone.beginning_of_day
     @filter_end_time = args[:filter_end_date].to_time.in_time_zone.end_of_day
-    @plan = weekly_averages(time_ranges: plan_time_ranges(user_ids: args[:user_ids]))
-    @actual = weekly_averages(time_ranges: actual_time_ranges(time_range_type_id: args[:actual_id], user_ids: args[:user_ids]))
+    @plan = weekly_averages(time_ranges: plan_time_ranges(user_ids: args[:user_ids], tag_ids: args[:tag_ids]))
+    @actual = weekly_averages(time_ranges: actual_time_ranges(time_range_type_id: args[:actual_id], user_ids: args[:user_ids], tag_ids: args[:tag_ids]))
   end
 
   def average_weekly_planned_per_month
@@ -43,8 +43,11 @@ class TeamStatsPresenter
     }
   end
 
-  def plan_time_ranges(user_ids:)
-    Plan.where(user_id: user_ids).flat_map(&:to_time_ranges)
+  def plan_time_ranges(user_ids:, tag_ids:)
+    Activity.joins(:plan, :tag_associations)
+            .where('plans.user_id': user_ids, 'tag_associations.tag_id': tag_ids)
+            .distinct
+            .flat_map(&:to_time_ranges)
   end
 
   def weekly_averages(time_ranges:)
@@ -99,15 +102,17 @@ class TeamStatsPresenter
   # 1 user: index_time_ranges_on_user_id
   # Up to 50% of users: index_time_range_team_stats
   # >50% of users: index_time_ranges_on_time_range_type_id
-  def actual_time_ranges(time_range_type_id:, user_ids:)
+  def actual_time_ranges(time_range_type_id:, user_ids:, tag_ids:)
     scope = TimeRange.select(:time_range_type_id, :user_id, :start_time, :end_time, :value)
                      .where(time_range_type_id: time_range_type_id, user_id: user_ids)
+                     .joins(:tag_associations)
+                     .where('tag_associations.tag_id': tag_ids)
 
     scope.where('start_time BETWEEN ? AND ?', filter_start_time, filter_end_time).or(
       scope.where('end_time BETWEEN ? AND ?', filter_start_time, filter_end_time)
     ).or(
       scope.where('start_time <= ? AND end_time >= ?', filter_start_time, filter_end_time)
-    ).to_a
+    ).distinct.to_a
   end
 
   def months
