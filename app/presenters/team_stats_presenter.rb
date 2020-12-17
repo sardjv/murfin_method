@@ -44,8 +44,8 @@ class TeamStatsPresenter
   end
 
   def plan_time_ranges(user_ids:, tag_ids:)
-    Activity.joins(:plan, :tag_associations)
-            .where('plans.user_id': user_ids, 'tag_associations.tag_id': tag_ids)
+    Activity.joins(:plan, :tags)
+            .where('plans.user_id': user_ids, 'tags.id': tag_ids)
             .distinct
             .flat_map(&:to_time_ranges)
   end
@@ -105,8 +105,8 @@ class TeamStatsPresenter
   def actual_time_ranges(time_range_type_id:, user_ids:, tag_ids:)
     scope = TimeRange.select(:time_range_type_id, :user_id, :start_time, :end_time, :value)
                      .where(time_range_type_id: time_range_type_id, user_id: user_ids)
-                     .joins(:tag_associations)
-                     .where('tag_associations.tag_id': tag_ids)
+                     .joins(:tags)
+                     .where('tags.id': tag_ids)
 
     scope.where('start_time BETWEEN ? AND ?', filter_start_time, filter_end_time).or(
       scope.where('end_time BETWEEN ? AND ?', filter_start_time, filter_end_time)
