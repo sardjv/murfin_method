@@ -7,7 +7,8 @@ describe DashboardPresenter do
         filter_start_month: '10',
         filter_start_year: '2019',
         filter_end_month: '6',
-        filter_end_year: '2020'
+        filter_end_year: '2020',
+        filter_tag_ids: [tag1.id]
       }
     )
   end
@@ -22,6 +23,7 @@ describe DashboardPresenter do
 
   let(:user) { create(:user) }
   let(:actual_id) { TimeRangeType.actual_type.id }
+  let(:tag1) { create(:tag) }
 
   let!(:plan_ranges) do
     create(
@@ -29,7 +31,14 @@ describe DashboardPresenter do
       user_id: user.id,
       start_date: Time.zone.now.beginning_of_month,
       end_date: Time.zone.now,
-      activities: [create(:activity)] # 4 hours per week.
+      activities: [
+        create(
+          :activity, # 4 hours per week.
+          tag_associations: [
+            build(:tag_association, tag: tag1, tag_type: tag1.tag_type)
+          ]
+        )
+      ]
     )
   end
   let!(:actual_ranges) do
@@ -39,6 +48,9 @@ describe DashboardPresenter do
       time_range_type_id: actual_id,
       start_time: Time.zone.now.beginning_of_month,
       end_time: Time.zone.now,
+      tag_associations: [
+        build(:tag_association, tag: tag1, tag_type: tag1.tag_type)
+      ],
       value: 480 # About 2 hours per week.
     )
   end

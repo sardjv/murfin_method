@@ -11,7 +11,7 @@
 #
 FactoryBot.define do
   factory :tag do
-    name { Faker::Company.industry }
+    name { Faker::Company.unique.industry }
     tag_type_id { TagType.all.sample.try(:id) || create(:tag_type).id }
   end
 end

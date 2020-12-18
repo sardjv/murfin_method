@@ -12,12 +12,17 @@ describe TeamStatsPresenter do
   let(:args) do
     { user_ids: users.pluck(:id),
       filter_start_date: filter_start_date,
-      filter_end_date: filter_end_date }
+      filter_end_date: filter_end_date,
+      filter_tag_ids: filter_tag_ids }
   end
 
   let(:users) { create_list(:user, 10) }
   let(:filter_start_date) { Time.zone.today - 1.year }
   let(:filter_end_date) { Time.zone.today }
+  let(:filter_tag_ids) { [tag1, tag2, tag3].map(&:id) }
+  let(:tag1) { create(:tag) }
+  let(:tag2) { create(:tag) }
+  let(:tag3) { create(:tag) }
 
   context 'when users have no time range values' do
     describe 'average_weekly_planned_per_month' do
@@ -94,7 +99,15 @@ describe TeamStatsPresenter do
                user_id: user.id,
                start_date: plan_start_date,
                end_date: plan_end_date,
-               activities: [create(:activity)])
+               activities: [
+                 create(
+                   :activity,
+                   tag_associations: [
+                     build(:tag_association, tag: tag1, tag_type: tag1.tag_type),
+                     build(:tag_association, tag: tag2, tag_type: tag2.tag_type)
+                   ]
+                 )
+               ])
       end
     end
     let!(:actual_activity) do
@@ -104,6 +117,10 @@ describe TeamStatsPresenter do
                time_range_type_id: TimeRangeType.actual_type.id,
                start_time: actual_start_time,
                end_time: actual_end_time,
+               tag_associations: [
+                 build(:tag_association, tag: tag1, tag_type: tag1.tag_type),
+                 build(:tag_association, tag: tag3, tag_type: tag3.tag_type)
+               ],
                value: 6240)
       end
     end
@@ -138,6 +155,30 @@ describe TeamStatsPresenter do
             ]
           )
         end
+
+        context 'when tag not included' do
+          let(:filter_tag_ids) { nil }
+
+          it 'returns 0' do
+            expect(subject.average_weekly_planned_per_month).to eq(
+              [
+                { 'name': '2019-06-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+                { 'name': '2019-07-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+                { 'name': '2019-08-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+                { 'name': '2019-09-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+                { 'name': '2019-10-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+                { 'name': '2019-11-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+                { 'name': '2019-12-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+                { 'name': '2020-01-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+                { 'name': '2020-02-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+                { 'name': '2020-03-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+                { 'name': '2020-04-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+                { 'name': '2020-05-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+                { 'name': '2020-06-01T00:00:00.000Z', 'value': 0, 'notes': '[]' }
+              ]
+            )
+          end
+        end
       end
 
       describe 'average_weekly_actual_per_month' do
@@ -160,6 +201,30 @@ describe TeamStatsPresenter do
               { 'name': '2020-06-01T00:00:00.000Z', 'value': 1019, 'notes': '[]' }
             ]
           )
+        end
+
+        context 'when tag not included' do
+          let(:filter_tag_ids) { nil }
+
+          it 'returns 0' do
+            expect(subject.average_weekly_actual_per_month).to eq(
+              [
+                { 'name': '2019-06-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+                { 'name': '2019-07-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+                { 'name': '2019-08-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+                { 'name': '2019-09-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+                { 'name': '2019-10-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+                { 'name': '2019-11-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+                { 'name': '2019-12-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+                { 'name': '2020-01-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+                { 'name': '2020-02-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+                { 'name': '2020-03-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+                { 'name': '2020-04-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+                { 'name': '2020-05-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
+                { 'name': '2020-06-01T00:00:00.000Z', 'value': 0, 'notes': '[]' }
+              ]
+            )
+          end
         end
       end
 

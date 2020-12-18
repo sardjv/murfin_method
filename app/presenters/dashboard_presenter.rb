@@ -28,7 +28,8 @@ class DashboardPresenter
       user_ids: @params[:user_ids],
       actual_id: @params[:actual_id],
       filter_start_date: filter_start_date,
-      filter_end_date: filter_end_date
+      filter_end_date: filter_end_date,
+      filter_tag_ids: filter_tag_ids
     )
   end
 
@@ -88,5 +89,9 @@ class DashboardPresenter
     return unless @params[:filter_end_year] && @params[:filter_end_month]
 
     Date.new(@params[:filter_end_year].to_i, @params[:filter_end_month].to_i).end_of_month
+  end
+
+  def filter_tag_ids
+    @params[:filter_tag_ids]&.split
   end
 end

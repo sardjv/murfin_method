@@ -46,3 +46,27 @@ health_visitors.users.pluck(:id).each do |user_id|
     volatility: 0.5  # 50% seasonal variation
   )
 end
+
+# Create tags.
+category = FactoryBot.create(:tag_type, name: 'Category', active_for_time_ranges_at: Time.current, active_for_activities_at: Time.current)
+dcc = FactoryBot.create(:tag, tag_type: category, name: 'DCC')
+spa = FactoryBot.create(:tag, tag_type: category, name: 'SPA')
+subcategory = FactoryBot.create(:tag_type, name: 'Subcategory', parent: category, active_for_time_ranges_at: Time.current, active_for_activities_at: Time.current)
+FactoryBot.create(:tag, tag_type: subcategory, parent: dcc, name: 'Surgery')
+FactoryBot.create(:tag, tag_type: subcategory, parent: spa, name: 'Clinic')
+patient_contacts = FactoryBot.create(:tag_type, name: 'Patient Contacts', active_for_activities_at: Time.current)
+(1..10).each { |i| FactoryBot.create(:tag, tag_type: patient_contacts, name: i) }
+
+# Add a random root tag to each TimeRange.
+time_range_root_tags = Tag.joins(:tag_type).where('tags.parent_id IS NULL AND tag_types.active_for_time_ranges_at IS NOT NULL').to_a
+TimeRange.includes(:tags).each do |tr|
+  tag = time_range_root_tags.sample
+  tr.tag_associations.create(tag_id: tag.id, tag_type_id: tag.tag_type.id)
+end
+
+# Add a random root tag to each Activity.
+activity_root_tags = Tag.joins(:tag_type).where('tags.parent_id IS NULL AND tag_types.active_for_activities_at IS NOT NULL').to_a
+Activity.includes(:tags).each do |a|
+  tag = activity_root_tags.sample
+  a.tag_associations.create(tag_id: tag.id, tag_type_id: tag.tag_type.id)
+end

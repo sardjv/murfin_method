@@ -1,16 +1,19 @@
 class TeamStatsPresenter
-  attr_accessor :filter_start_time, :filter_end_time, :plan, :actual
+  attr_accessor :filter_start_time, :filter_end_time, :filter_tag_ids, :plan_id, :plan, :actual_id, :actual, :user_ids
 
   def initialize(args)
     args = defaults.merge(args.compact)
-    calculate_variables(args)
+    cache(args)
   end
 
-  def calculate_variables(args)
+  def cache(args)
+    @user_ids = args[:user_ids]
+    @actual_id = args[:actual_id]
+    @filter_tag_ids = args[:filter_tag_ids]
     @filter_start_time = args[:filter_start_date].to_time.in_time_zone.beginning_of_day
     @filter_end_time = args[:filter_end_date].to_time.in_time_zone.end_of_day
-    @plan = weekly_averages(time_ranges: plan_time_ranges(user_ids: args[:user_ids]))
-    @actual = weekly_averages(time_ranges: actual_time_ranges(time_range_type_id: args[:actual_id], user_ids: args[:user_ids]))
+    @plan = weekly_averages(time_ranges: plan_time_ranges)
+    @actual = weekly_averages(time_ranges: actual_time_ranges)
   end
 
   def average_weekly_planned_per_month
@@ -36,15 +39,14 @@ class TeamStatsPresenter
   end
 
   def defaults
-    {
-      filter_start_date: 1.year.ago,
-      filter_end_date: Time.zone.today,
-      actual_id: TimeRangeType.actual_type.id
-    }
+    { filter_start_date: 1.year.ago, filter_end_date: Time.zone.today, actual_id: TimeRangeType.actual_type.id }
   end
 
-  def plan_time_ranges(user_ids:)
-    Plan.where(user_id: user_ids).flat_map(&:to_time_ranges)
+  def plan_time_ranges
+    Activity.joins(:plan, :tags)
+            .where(plans: { user_id: @user_ids }, tags: { id: @filter_tag_ids })
+            .distinct
+            .flat_map(&:to_time_ranges)
   end
 
   def weekly_averages(time_ranges:)
@@ -72,10 +74,7 @@ class TeamStatsPresenter
   def calculate_monthly_values(time_ranges:)
     time_ranges.each_with_object(Hash.new(0)) do |t, per_month|
       months_between(from: t.start_time, to: t.end_time).each do |m|
-        per_month[m] += t.segment_value(
-          segment_start: m,
-          segment_end: m.end_of_month
-        ).to_f
+        per_month[m] += t.segment_value(segment_start: m, segment_end: m.end_of_month).to_f
       end
 
       per_month
@@ -91,7 +90,7 @@ class TeamStatsPresenter
   end
 
   def notes
-    @notes ||= Note.where(start_time: filter_start_time..filter_end_time)
+    @notes ||= Note.where(start_time: @filter_start_time..@filter_end_time)
                    .group_by { |n| n.start_time.strftime('%Y-%m') }
   end
 
@@ -99,19 +98,21 @@ class TeamStatsPresenter
   # 1 user: index_time_ranges_on_user_id
   # Up to 50% of users: index_time_range_team_stats
   # >50% of users: index_time_ranges_on_time_range_type_id
-  def actual_time_ranges(time_range_type_id:, user_ids:)
+  def actual_time_ranges
     scope = TimeRange.select(:time_range_type_id, :user_id, :start_time, :end_time, :value)
-                     .where(time_range_type_id: time_range_type_id, user_id: user_ids)
+                     .where(time_range_type_id: @actual_id, user_id: @user_ids)
+                     .joins(:tags)
+                     .where(tags: { id: @filter_tag_ids })
 
-    scope.where('start_time BETWEEN ? AND ?', filter_start_time, filter_end_time).or(
-      scope.where('end_time BETWEEN ? AND ?', filter_start_time, filter_end_time)
+    scope.where('start_time BETWEEN ? AND ?', @filter_start_time, @filter_end_time).or(
+      scope.where('end_time BETWEEN ? AND ?', @filter_start_time, @filter_end_time)
     ).or(
-      scope.where('start_time <= ? AND end_time >= ?', filter_start_time, filter_end_time)
-    ).to_a
+      scope.where('start_time <= ? AND end_time >= ?', @filter_start_time, @filter_end_time)
+    ).distinct.to_a
   end
 
   def months
-    @months ||= months_between(from: filter_start_time, to: filter_end_time)
+    @months ||= months_between(from: @filter_start_time, to: @filter_end_time)
   end
 
   def months_between(from:, to:)

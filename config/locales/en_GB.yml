@@ -52,8 +52,9 @@ en:
     api_docs: API Docs
   graph:
     filter:
-      start_time: Start
       end_time: End
+      start_time: Start
+      tags: Tags
     title:
       admin: Percentage delivered against job plan
       individuals: Percentage delivered against job plan
