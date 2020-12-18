@@ -10,7 +10,8 @@ class TeamStatsPresenter
     @filter_start_time = args[:filter_start_date].to_time.in_time_zone.beginning_of_day
     @filter_end_time = args[:filter_end_date].to_time.in_time_zone.end_of_day
     @plan = weekly_averages(time_ranges: plan_time_ranges(user_ids: args[:user_ids], filter_tag_ids: args[:filter_tag_ids]))
-    @actual = weekly_averages(time_ranges: actual_time_ranges(time_range_type_id: args[:actual_id], user_ids: args[:user_ids], filter_tag_ids: args[:filter_tag_ids]))
+    @actual = weekly_averages(time_ranges: actual_time_ranges(time_range_type_id: args[:actual_id], user_ids: args[:user_ids],
+                                                              filter_tag_ids: args[:filter_tag_ids]))
   end
 
   def average_weekly_planned_per_month

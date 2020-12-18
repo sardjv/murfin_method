@@ -107,8 +107,7 @@ describe TeamStatsPresenter do
                      build(:tag_association, tag: tag2, tag_type: tag2.tag_type)
                    ]
                  )
-               ]
-        )
+               ])
       end
     end
     let!(:actual_activity) do
@@ -122,8 +121,7 @@ describe TeamStatsPresenter do
                  build(:tag_association, tag: tag1, tag_type: tag1.tag_type),
                  build(:tag_association, tag: tag3, tag_type: tag3.tag_type)
                ],
-               value: 6240
-        )
+               value: 6240)
       end
     end
 
