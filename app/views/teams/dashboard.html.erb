@@ -54,7 +54,7 @@
               <div class='col-11'><%= select :line_graph,
                 :tags,
                 grouped_options_for_select(tag_options, Tag.pluck(:id)),
-                { },
+                {},
                 { class: 'filter', multiple: true, 'data-actions-box' => true }
               %></div>
             </div>
