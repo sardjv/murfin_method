@@ -58,13 +58,15 @@ patient_contacts = FactoryBot.create(:tag_type, name: 'Patient Contacts', active
 (1..10).each { |i| FactoryBot.create(:tag, tag_type: patient_contacts, name: i) }
 
 # Add a random root tag to each TimeRange.
+time_range_root_tags = Tag.joins(:tag_type).where('tags.parent_id IS NULL AND tag_types.active_for_time_ranges_at IS NOT NULL').to_a
 TimeRange.includes(:tags).each do |tr|
-  tag = Tag.joins(:tag_type).where('tags.parent_id IS NULL AND tag_types.active_for_time_ranges_at IS NOT NULL').sample
+  tag = time_range_root_tags.sample
   tr.tag_associations.create(tag_id: tag.id, tag_type_id: tag.tag_type.id)
 end
 
 # Add a random root tag to each Activity.
-Activity.includes(:tags).each do |tr|
-  tag = Tag.joins(:tag_type).where('tags.parent_id IS NULL AND tag_types.active_for_activities_at IS NOT NULL').sample
-  tr.tag_associations.create(tag_id: tag.id, tag_type_id: tag.tag_type.id)
+activity_root_tags = Tag.joins(:tag_type).where('tags.parent_id IS NULL AND tag_types.active_for_activities_at IS NOT NULL').to_a
+Activity.includes(:tags).each do |a|
+  tag = activity_root_tags.sample
+  a.tag_associations.create(tag_id: tag.id, tag_type_id: tag.tag_type.id)
 end
