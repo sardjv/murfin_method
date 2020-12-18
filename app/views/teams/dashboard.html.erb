@@ -50,6 +50,15 @@
         <div class='card-body'>
           <form role='form'>
             <div class='row form-group'>
+              <div class='col-1'><label><%= I18n.t('graph.filter.tags') %></label></div>
+              <div class='col-11'><%= select :line_graph,
+                :tags,
+                grouped_options_for_select(tag_options, Tag.pluck(:id)),
+                { },
+                { class: 'filter', multiple: true, 'data-actions-box' => true }
+              %></div>
+            </div>
+            <div class='row form-group'>
               <div class='col-1'><label><%= I18n.t('graph.filter.start_time') %></label></div>
               <div class='col-11'><%= date_select :line_graph,
                 :filter_start_time,
