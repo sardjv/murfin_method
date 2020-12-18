@@ -38,7 +38,8 @@ describe DashboardPresenter do
             build(:tag_association, tag: tag1, tag_type: tag1.tag_type)
           ]
         )
-      ])
+      ]
+    )
   end
   let!(:actual_ranges) do
     create(
