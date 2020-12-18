@@ -13,13 +13,13 @@ describe TeamStatsPresenter do
     { user_ids: users.pluck(:id),
       filter_start_date: filter_start_date,
       filter_end_date: filter_end_date,
-      tag_ids: tag_ids }
+      filter_tag_ids: filter_tag_ids }
   end
 
   let(:users) { create_list(:user, 10) }
   let(:filter_start_date) { Time.zone.today - 1.year }
   let(:filter_end_date) { Time.zone.today }
-  let(:tag_ids) { [tag1, tag2, tag3].map(&:id) }
+  let(:filter_tag_ids) { [tag1, tag2, tag3].map(&:id) }
   let(:tag1) { create(:tag) }
   let(:tag2) { create(:tag) }
   let(:tag3) { create(:tag) }
@@ -159,7 +159,7 @@ describe TeamStatsPresenter do
         end
 
         context 'when tag not included' do
-          let(:tag_ids) { nil }
+          let(:filter_tag_ids) { nil }
 
           it 'returns 0' do
             expect(subject.average_weekly_planned_per_month).to eq(
@@ -206,7 +206,7 @@ describe TeamStatsPresenter do
         end
 
         context 'when tag not included' do
-          let(:tag_ids) { nil }
+          let(:filter_tag_ids) { nil }
 
           it 'returns 0' do
             expect(subject.average_weekly_actual_per_month).to eq(
