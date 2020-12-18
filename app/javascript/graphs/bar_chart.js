@@ -5,17 +5,35 @@ import { MissingData } from './missing_data'
 import * as SCSSColours from '!!sass-variable-loader!../stylesheets/variables/colours.scss';
 
 window.addEventListener('turbolinks:load', () => {
+  fetchData()
+
+  $('select.filter').change(() => { fetchData() });
+});
+
+function fetchData() {
+  const startYear = parseInt($('#line_graph_filter_start_time_1i').val());
+  const startMonth = parseInt($('#line_graph_filter_start_time_2i').val());
+  const endYear = parseInt($('#line_graph_filter_end_time_1i').val());
+  const endMonth = parseInt($('#line_graph_filter_end_time_2i').val());
   const context = document.getElementById('bar-chart');
+
   if (context) {
     Rails.ajax({
       url: API.url(),
       type: 'GET',
+      data: new URLSearchParams({
+        'filter_start_month': startMonth,
+        'filter_start_year': startYear,
+        'filter_end_month': endMonth,
+        'filter_end_year': endYear
+      }).toString(),
+      dataType: 'json',
       success: function(data) {
         bar_chart(context, data.bar_chart.data)
       }
     });
   }
-});
+}
 
 function bar_chart(context, data) {
   const colours = data.map(function(e) {
