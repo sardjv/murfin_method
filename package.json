@@ -2,7 +2,7 @@
   "license": "MIT",
   "dependencies": {
     "@nathanvda/cocoon": "^1.2.14",
-    "@rails/ujs": "6.1.0",
+    "@rails/ujs": "6.1.1",
     "@rails/webpacker": "5.2.1",
     "bootstrap": "^4.5.3",
     "bootstrap-icons": "1.2.1",
