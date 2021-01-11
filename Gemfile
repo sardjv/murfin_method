@@ -76,7 +76,7 @@ gem 'sidekiq', '~> 6.1.2'
 
 # Bundle zoneinfo files which are not included in Windows.
 # https://github.com/tzinfo/tzinfo-data
-gem 'tzinfo-data', '~> 1.2020.4'
+gem 'tzinfo-data', '~> 1.2020.6'
 
 # Use Webpack to manage app-like JavaScript modules in Rails.
 # https://github.com/rails/webpacker
@@ -134,7 +134,7 @@ group :test do
 
   # RSpec is a specification library for behaviour driven development.
   # https://github.com/rspec/rspec
-  gem 'rspec-rails', '~> 4.0.1'
+  gem 'rspec-rails', '~> 4.0.2'
 
   # Retry flaky specs to reduce time spent on random failures.
   # https://github.com/noredink/rspec-retry
@@ -150,7 +150,7 @@ group :test do
 
   # Generate code coverage documentation.
   # https://github.com/colszowka/simplecov
-  gem 'simplecov', '~> 0.20.0'
+  gem 'simplecov', '~> 0.21.0'
 
   # Provides 'time travel' capabilities, making it simple to test time-dependent code.
   # https://github.com/travisjeffery/timecop
