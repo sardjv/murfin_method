@@ -58,26 +58,12 @@
                 { class: 'filter', multiple: true, 'data-actions-box' => true }
               %></div>
             </div>
-            <div class='row form-group'>
-              <div class='col-1'><label><%= I18n.t('graph.filter.start_time') %></label></div>
-              <div class='col-11'><%= date_select :line_graph,
-                :filter_start_time,
-                { order: %i[month year], default: @presenter.team_stats_presenter.filter_start_time },
-                class: 'filter'
-              %></div>
-            </div>
-            <div class='row form-group'>
-              <div class='col-1'><label><%= I18n.t('graph.filter.end_time') %></label></div>
-              <div class='col-11'><%= date_select :line_graph,
-                :filter_end_time,
-                { order: %i[month year], default: @presenter.team_stats_presenter.filter_end_time },
-                class: 'filter'
-              %></div>
-            </div>
           </form>
         </div>
       </div>
     </div>
   </div>
+
+  <%= render 'filters' %>
 
 </div>
