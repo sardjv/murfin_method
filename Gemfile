@@ -146,7 +146,7 @@ group :test do
 
   # Simple one-liner tests for common Rails functionality.
   # https://github.com/thoughtbot/shoulda-matchers
-  gem 'shoulda-matchers', '~> 4.4.1'
+  gem 'shoulda-matchers', '~> 4.5.0'
 
   # Generate code coverage documentation.
   # https://github.com/colszowka/simplecov
