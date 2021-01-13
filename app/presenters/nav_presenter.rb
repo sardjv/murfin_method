@@ -35,6 +35,9 @@ class NavPresenter
           { label: I18n.t('nav.tabs.time_ranges'),
             path: %i[admin time_ranges],
             controllers: ['admin/time_ranges'] },
+          { label: I18n.t('nav.tabs.plans'),
+            path: %i[admin plans],
+            controllers: ['admin/plans'] },
           { label: I18n.t('nav.tabs.tags'),
             path: %i[admin tag_types],
             controllers: ['admin/tag_types'] }
@@ -46,10 +49,10 @@ class NavPresenter
 
   def team_subnav(team)
     {
-      label: team.display_name,
+      label: team.name,
       path: [:dashboard, :team, { id: team }],
       controllers: ['teams'],
-      actions: %w[dashboard individuals]
+      actions: %w[dashboard individuals plans]
     }
   end
 

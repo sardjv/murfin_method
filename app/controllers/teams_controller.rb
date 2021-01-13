@@ -23,6 +23,11 @@ class TeamsController < ApplicationController
     end
   end
 
+  def plans
+    @user_group = UserGroup.find(params[:id])
+    @plans = Plan.where(user_id: @user_group.users.pluck(:id)).order(updated_at: :desc).page(params[:page])
+  end
+
   private
 
   def team_params

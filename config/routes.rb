@@ -27,9 +27,10 @@ Rails.application.routes.draw do
 
   resource :dashboard, only: :show, controller: 'dashboard'
 
-  resources :teams, only: %i[dashboard individuals] do
+  resources :teams, only: %i[dashboard individuals plans] do
     get :dashboard, on: :member
     get :individuals, on: :member
+    get :plans, on: :member
   end
 
   namespace :admin do
@@ -42,6 +43,7 @@ Rails.application.routes.draw do
     end
     resources :time_ranges, except: :show
     resources :users, except: :show
+    resources :plans, only: :index
   end
 
   resources :notes, except: :show
