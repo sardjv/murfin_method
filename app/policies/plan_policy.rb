@@ -14,7 +14,7 @@ class PlanPolicy < ApplicationPolicy
   def edit?
     update? ||
       record.signoffs.find_by(user_id: user.id).present? ||
-      Membership.where(user_group_id: record.user.user_group_ids, role: 'lead', user_id: user.id).any?
+      Membership.exists?(user_group_id: record.user.user_group_ids, role: 'lead', user_id: user.id)
   end
 
   def destroy?
