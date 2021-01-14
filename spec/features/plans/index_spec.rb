@@ -17,16 +17,6 @@ describe 'User indexes plans', type: :feature, js: true do
     expect(page).to have_content(signoff_plan.name)
   end
 
-  context 'when admin' do
-    let(:current_user) { create(:user, admin: true) }
-
-    it 'shows all plans' do
-      expect(page).to have_content(plan.name)
-      expect(page).to have_content(other_plan.name)
-      expect(page).to have_content(signoff_plan.name)
-    end
-  end
-
   context 'when a user name is updated' do
     let(:new_name) { 'Hirthe'.freeze }
 
