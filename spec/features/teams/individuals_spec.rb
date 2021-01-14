@@ -37,7 +37,7 @@ describe 'Team Individuals', type: :feature, js: true do
       expect(page).to have_text 'Percentage delivered against job plan'
       within('.table') do
         expect(page).to have_text Plan.human_attribute_name('name')
-        expect(page).to have_text '4 minutes' # 240 minutes / 52 weeks.
+        expect(page).to have_text '5 minutes' # 240 minutes / 52 weeks.
         expect(page).to have_text TimeRangeType.actual_type.name
         expect(page).to have_text '2 minutes' # 120 minutes / 52 weeks.
         expect(page).to have_text 'Percentage delivered'
