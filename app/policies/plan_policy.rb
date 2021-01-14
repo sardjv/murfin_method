@@ -12,7 +12,9 @@ class PlanPolicy < ApplicationPolicy
   end
 
   def edit?
-    update? || record.signoffs.find_by(user_id: user.id).present?
+    update? ||
+      record.signoffs.find_by(user_id: user.id).present? ||
+      Membership.exists?(user_group_id: record.user.user_group_ids, role: 'lead', user_id: user.id)
   end
 
   def destroy?
@@ -32,12 +34,8 @@ class PlanPolicy < ApplicationPolicy
     end
 
     def resolve
-      if user.admin?
-        scope.all
-      else
-        scope.left_joins(:signoffs)
-             .where('plans.user_id = :id OR signoffs.user_id = :id', id: user.id)
-      end
+      scope.left_joins(:signoffs)
+           .where('plans.user_id = :id OR signoffs.user_id = :id', id: user.id)
     end
   end
 end

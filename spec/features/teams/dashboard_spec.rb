@@ -42,7 +42,7 @@ describe 'Team Dashboard ', type: :feature, js: true do
 
   it 'renders' do
     visit dashboard_team_path(user_group)
-    expect(page).to have_text 'Cahms dashboard'
+    expect(page).to have_text 'CAHMS dashboard'
   end
 
   describe 'notes' do

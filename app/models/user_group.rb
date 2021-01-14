@@ -15,8 +15,4 @@ class UserGroup < ApplicationRecord
   has_many :users, through: :memberships
 
   validates :name, presence: true, uniqueness: { scope: :group_type, case_sensitive: false }
-
-  def display_name
-    name.titleize
-  end
 end
