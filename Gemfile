@@ -47,7 +47,7 @@ gem 'omniauth-auth0', '~> 2.4.1'
 
 # Provides CSRF protection on OmniAuth request endpoint on Rails application.
 # https://github.com/cookpad/omniauth-rails_csrf_protection
-gem 'omniauth-rails_csrf_protection', '~> 0.1.2'
+gem 'omniauth-rails_csrf_protection', '~> 1.0.0'
 
 # A Ruby/Rack web server built for concurrency.
 # https://github.com/puma/puma
