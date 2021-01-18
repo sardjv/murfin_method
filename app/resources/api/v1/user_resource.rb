@@ -14,5 +14,4 @@ class Api::V1::UserResource < JSONAPI::Resource
   before_remove do
     raise JSONAPI::Exceptions::RecordLocked.new(detail: 'Admin user can not be deleted.') and return if @model.admin
   end
-
 end

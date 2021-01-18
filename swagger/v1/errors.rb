@@ -47,7 +47,8 @@ module Swagger
                   type: 'object',
                   properties: {
                     title: { type: 'string', example: 'Not acceptable' },
-                    detail: { type: 'string', example: "All requests must use the 'application/vnd.api+json' Accept without media type parameters. This request specified 'application/json'." },
+                    detail: { type: 'string',
+                              example: "All requests must use the 'application/vnd.api+json' Accept without media type parameters. This request specified 'application/json'." },
                     code: { type: 'string', example: 'NOT_ACCEPTABLE' },
                     status: { type: 'string', example: '406' }
                   }
@@ -64,7 +65,8 @@ module Swagger
                   type: 'object',
                   properties: {
                     title: { type: 'string', example: 'Unsupported media type' },
-                    detail: { type: 'string', example: "All requests that create or update must use the 'application/vnd.api+json' Content-Type. This request specified 'application/json'." },
+                    detail: { type: 'string',
+                              example: "All requests that create or update must use the 'application/vnd.api+json' Content-Type. This request specified 'application/json'." },
                     code: { type: 'string', example: 'UNSUPPORTED_MEDIA_TYPE' },
                     status: { type: 'string', example: '415' }
                   }

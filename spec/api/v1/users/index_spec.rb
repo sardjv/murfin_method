@@ -22,7 +22,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
 
         describe 'attributes match database values' do
           run_test! do
-            expect(parsed_json_data.count).to eq(2) # TODO refactor to request spec helper
+            expect(parsed_json_data.count).to eq(2) # TODO: refactor to request spec helper
             database_record = User.find(parsed_json_data.first['id'])
             parsed_json_data.first['attributes'].each do |key, value|
               if database_record.send(key).is_a?(Time)

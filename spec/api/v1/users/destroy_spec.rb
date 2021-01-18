@@ -20,8 +20,8 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
           end
         end
 
-        response '404', 'Record not found' do # TODO refactor to shared example
-          let(:id) { 12345 }
+        response '404', 'Record not found' do # TODO: refactor to shared example
+          let(:id) { 12_345 }
           run_test!
         end
 

@@ -3,7 +3,11 @@ require 'swagger_helper'
 describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' do
   let(:created_user) { User.unscoped.last }
 
-  let(:example_attributes) { Swagger::V1::Users.definitions.dig(:user_attributes, :properties).transform_values { |v| v[:example] } }
+  let(:example_attributes) do
+    Swagger::V1::Users.definitions.dig(:user_attributes, :properties).transform_values do |v|
+      v[:example]
+    end
+  end
 
   path '/api/v1/users' do
     post 'create user' do
@@ -54,7 +58,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
 
       # user params include not permitted admin_id
       response '400', 'Error: Bad Request' do
-        let(:example_attributes_with_admin_id) { example_attributes.merge(admin_id: 123456) }
+        let(:example_attributes_with_admin_id) { example_attributes.merge(admin_id: 123_456) }
 
         let(:user) do
           {
@@ -68,7 +72,6 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
         schema '$ref' => '#/definitions/error_400'
         run_test!
       end
-
     end
   end
 end
