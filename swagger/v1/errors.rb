@@ -1,7 +1,9 @@
+# rubocop:disable Naming/VariableNumber
+
 module Swagger
   module V1
     class Errors
-      def self.definitions
+      def self.definitions # rubocop:disable Metrics/MethodLength
         {
           error_400: {
             type: 'object',
@@ -48,7 +50,7 @@ module Swagger
                   properties: {
                     title: { type: 'string', example: 'Not acceptable' },
                     detail: { type: 'string',
-                              example: "All requests must use the 'application/vnd.api+json' Accept without media type parameters. This request specified 'application/json'." },
+                              example: "All requests must use the 'application/vnd.api+json' Accept without media type parameters. This request specified 'application/json'." }, # rubocop:disable Layout/LineLength
                     code: { type: 'string', example: 'NOT_ACCEPTABLE' },
                     status: { type: 'string', example: '406' }
                   }
@@ -66,7 +68,7 @@ module Swagger
                   properties: {
                     title: { type: 'string', example: 'Unsupported media type' },
                     detail: { type: 'string',
-                              example: "All requests that create or update must use the 'application/vnd.api+json' Content-Type. This request specified 'application/json'." },
+                              example: "All requests that create or update must use the 'application/vnd.api+json' Content-Type. This request specified 'application/json'." }, # rubocop:disable Layout/LineLength
                     code: { type: 'string', example: 'UNSUPPORTED_MEDIA_TYPE' },
                     status: { type: 'string', example: '415' }
                   }
@@ -85,3 +87,5 @@ module Swagger
     end
   end
 end
+
+# rubocop:enable Naming/VariableNumber

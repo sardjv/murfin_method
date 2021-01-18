@@ -1,7 +1,7 @@
 module Swagger
   module V1
     class Users
-      def self.definitions
+      def self.definitions # rubocop:disable Metrics/MethodLength
         {
           user_attributes: {
             type: 'object',

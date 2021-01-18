@@ -2,41 +2,37 @@ require 'rails_helper'
 require './swagger/v1/errors'
 require './swagger/v1/users'
 
-module Swagger
-  module V1
-    class Core
-      def self.docs
-        {
-          'v1/swagger.json' => {
-            swagger: '2.0',
-            info: {
-              title: 'Murfin+ API',
-              version: 'v1',
-              description: 'This is the Murfin+ API. For more information visit
-                            <a href="https://github.com/sardjv/murfin_method">
-                            github.com/sardjv/murfin_method</a>.'
-            },
-            securityDefinitions: {
-              JWT: {
-                description: 'The JSON Web Token from Auth0 for authentication.',
-                type: :apiKey,
-                name: 'Authorization',
-                in: :header
-              }
-            },
-            paths: {},
-            definitions: definitions.inject(&:merge)
+class Swagger::V1::Core
+  def self.docs
+    {
+      'v1/swagger.json' => {
+        swagger: '2.0',
+        info: {
+          title: 'Murfin+ API',
+          version: 'v1',
+          description: 'This is the Murfin+ API. For more information visit
+                        <a href="https://github.com/sardjv/murfin_method">
+                        github.com/sardjv/murfin_method</a>.'
+        },
+        securityDefinitions: {
+          JWT: {
+            description: 'The JSON Web Token from Auth0 for authentication.',
+            type: :apiKey,
+            name: 'Authorization',
+            in: :header
           }
-        }
-      end
+        },
+        paths: {},
+        definitions: definitions.inject(&:merge)
+      }
+    }
+  end
 
-      def self.definitions
-        [
-          Swagger::V1::Users.definitions,
-          Swagger::V1::Errors.definitions
-        ]
-      end
-    end
+  def self.definitions
+    [
+      Swagger::V1::Users.definitions,
+      Swagger::V1::Errors.definitions
+    ]
   end
 end
 
