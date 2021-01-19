@@ -9,13 +9,34 @@ To get started, you need a `.env` file with secrets. For testing there is a `.en
 
 ## Booting up
 
-If you have Docker on your machine, run:
+If you have Docker on your machine:
 
+### Setup
+```
+cp docker-compose.override.yml.sample docker-compose.override.yml
+docker-compose build
+```
+
+### Start
 ```
 docker-compose up
 ```
 
 It can then be accessed at [http://localhost:3000/](http://localhost:3000/)
+
+### Stop
+
+Stop containers but do not remove them:
+
+```
+docker-compose stop
+```
+
+Stop containers and remove them:
+
+```
+docker-compose down --remove-orphans
+```
 
 ## Logging in
 
@@ -41,8 +62,10 @@ The API documentation can be viewed at [http://localhost:3000/api_docs](http://l
 The Swagger docs are generated from the RSpec tests in `spec/api` To rebuild the swagger docs:
 
 ```
-docker-compose run app bundle exec rails rswag
+docker-compose run --rm app bundle exec rails rswag
 ```
+
+_Note: --rm option removes container after task ended._
 
 ## Specs
 
@@ -81,7 +104,7 @@ open coverage/index.html
 To access a 'byebug' debugging point, run with:
 
 ```
-docker-compose -f docker-compose.development.yml run --service-ports app
+docker-compose run --service-ports app
 ```
 
 ## Model Annotation
@@ -89,7 +112,7 @@ docker-compose -f docker-compose.development.yml run --service-ports app
 To annotate rails models with schema run
 
 ```
-docker-compose run app bundle exec annotate --models
+docker-compose run --rm app bundle exec annotate --models
 ```
 
 ## Accessing the database console
@@ -113,3 +136,11 @@ To print a report of time, memory and database calls:
   require 'performance'
   Performance.test { object.method }
 ```
+
+## Resolving issues
+
+On first run new file is created:
+
+```script/first_run_complete.tmp```
+
+In some cases deleting it may help with resolving your running issues.
