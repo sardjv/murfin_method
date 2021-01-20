@@ -2,12 +2,13 @@
 #
 # Table name: tags
 #
-#  id          :bigint           not null, primary key
-#  name        :string(255)      not null
-#  tag_type_id :bigint           not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  parent_id   :bigint
+#  id                 :bigint           not null, primary key
+#  name               :string(255)      not null
+#  tag_type_id        :bigint           not null
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  parent_id          :bigint
+#  default_for_filter :boolean          default(FALSE), not null
 #
 FactoryBot.define do
   factory :tag do

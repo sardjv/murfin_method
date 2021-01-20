@@ -54,7 +54,8 @@ class Admin::TagsController < ApplicationController
     params.require(:tag).permit(
       :parent_id,
       :name,
-      :tag_type_id
+      :tag_type_id,
+      :default_for_filter
     )
   end
 end

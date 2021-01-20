@@ -14,10 +14,13 @@ describe 'Admin creates a tag', type: :feature, js: true do
     end
 
     fill_in Tag.human_attribute_name('name'), with: '1'
+    check 'Default for filter'
     click_button I18n.t('actions.save')
 
     expect(page).to have_content(I18n.t('notice.successfully.created', model_name: Tag.model_name.human))
     expect(Tag.all.count).to eq 1
+    expect(Tag.all.first.name).to eq '1'
+    expect(Tag.all.first.default_for_filter).to eq true
   end
 
   context 'when enter non unique name' do
