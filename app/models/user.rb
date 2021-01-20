@@ -2,15 +2,24 @@
 #
 # Table name: users
 #
-#  id         :bigint           not null, primary key
-#  first_name :string(255)      not null
-#  last_name  :string(255)      not null
-#  email      :string(255)      not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  admin      :boolean          default(FALSE), not null
+#  id                     :bigint           not null, primary key
+#  first_name             :string(255)      not null
+#  last_name              :string(255)      not null
+#  email                  :string(255)      not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  admin                  :boolean          default(FALSE), not null
+#  encrypted_password     :string(255)      default(""), not null
+#  reset_password_token   :string(255)
+#  reset_password_sent_at :datetime
+#  remember_created_at    :datetime
 #
 class User < ApplicationRecord
+  # :confirmable, :lockable, :timeoutable, :recoverable, :trackable and :omniauthable
+  devise :database_authenticatable, :validatable, :rememberable
+
+  include HasOptionalPassword
+
   include Cacheable
   cacheable watch: %w[first_name last_name], bust: [
     { klass: 'TimeRange', ids: :time_range_ids },

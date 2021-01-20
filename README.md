@@ -6,12 +6,14 @@
 ## .env file
 
 To get started, you need a `.env` file with secrets. For testing there is a `.env.example` file included in the repo that you can use, just remove the `.example` from the filename. Make sure to change all secrets marked with YOU_MUST_CHANGE_THIS_PASSWORD before running in production!
+Remember also to set one of the methods _form_ or _oauth2_ in _.env_ file.
 
 ## Booting up
 
 If you have Docker on your machine:
 
 ### Setup
+
 ```
 cp docker-compose.override.yml.sample docker-compose.override.yml
 docker-compose build

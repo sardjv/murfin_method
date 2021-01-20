@@ -26,6 +26,7 @@ en:
     confirm: Are you sure?
     delete: Delete
     save: Save
+    log_in: Log in
   app:
     name: Murfin+
   auth:
