@@ -14,7 +14,7 @@ describe 'Admin creates a tag', type: :feature, js: true do
     end
 
     fill_in Tag.human_attribute_name('name'), with: '1'
-    check 'Default for filter'
+    check TagType.human_attribute_name('default_for_filter')
     click_button I18n.t('actions.save')
 
     expect(page).to have_content(I18n.t('notice.successfully.created', model_name: Tag.model_name.human))
