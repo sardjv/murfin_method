@@ -42,7 +42,7 @@ describe 'Admin edits a user', type: :feature, js: true do
       click_button I18n.t('actions.save')
 
       expect(page).to have_content(I18n.t('notice.could_not_be.updated', model_name: User.model_name.human))
-      expect(user.reload.first_name).to eq email
+      expect(user.reload.email).to eq email
     end
   end
 
