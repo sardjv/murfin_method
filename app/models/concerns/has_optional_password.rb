@@ -14,7 +14,7 @@ module HasOptionalPassword
   # overwrite Devise method
   # https://github.com/heartcombo/devise/blob/45b831c4ea5a35914037bd27fe88b76d7b3683a4/lib/devise/models/validatable.rb#L60
   def password_required?
-    return false if skip_password_validation
+    return false if skip_password_validation || (password.blank? && password_confirmation.blank?)
 
     super
   end

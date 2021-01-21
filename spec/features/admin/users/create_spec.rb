@@ -23,6 +23,19 @@ describe 'Admin creates a user', type: :feature do
     expect(User.all.count).to eq 2
   end
 
+  it 'creates user with no password' do
+    visit admin_users_path
+
+    click_link I18n.t('actions.add', model_name: User.model_name.human.titleize)
+    fill_in User.human_attribute_name('first_name'), with: 'Mary'
+    fill_in User.human_attribute_name('last_name'), with: 'Anne'
+    fill_in User.human_attribute_name('email'), with: 'mary@example.com'
+    click_button I18n.t('actions.save')
+
+    expect(page).to have_content(I18n.t('notice.successfully.created', model_name: User.model_name.human))
+    expect(User.all.count).to eq 2
+  end
+
   context 'when enter non unique email' do
     let!(:existing_user) { create(:user, email: 'john@example.com') }
 
