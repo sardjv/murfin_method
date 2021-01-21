@@ -98,7 +98,9 @@ RSpec.configure do |config|
   config.include EnvHelpers, type: :feature
   config.include FormHelpers, type: :feature
 
+  config.include Warden::Test::Helpers, type: :request
   config.include Devise::Test::IntegrationHelpers, type: :feature
+  config.after(:each) { Warden.test_reset! }
 
   # Show retry status in spec process.
   config.verbose_retry = true

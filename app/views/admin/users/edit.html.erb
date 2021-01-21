@@ -20,7 +20,6 @@
         <%= f.text_field :email, label: User.human_attribute_name('email'), placeholder: User.human_attribute_name('email'), required: true %>
         <%= f.password_field :password, label: User.human_attribute_name('password'), placeholder: User.human_attribute_name('password') %>
         <%= f.password_field :password_confirmation, label: User.human_attribute_name('password_confirmation'), placeholder: User.human_attribute_name('password_confirmation') %>
-        <%= f.hidden_field :skip_password_validation, value: true if @user.new_record? %>
         <%= f.check_box :admin, label: User.human_attribute_name('admin'), placeholder: User.human_attribute_name('admin') %>
         <br />
         <% GroupType.all.each do |group_type| %>

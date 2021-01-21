@@ -1,16 +1,13 @@
 class ApplicationController < ActionController::Base
-  before_action :authenticate_user!
-
-  if ENV['AUTH_METHOD'] == 'oauth2'
-    include SecuredWithOauth
-  else
+  if ENV['AUTH_METHOD'] == 'form'
     include SecuredWithDevise
+  elsif ENV['AUTH_METHOD'] == 'oauth2'
+    include SecuredWithOauth
   end
 
-  delegate :name, :email, to: :current_user, prefix: :current_user
-  helper_method :current_user_name, :current_user_email
+  before_action :authenticate_user!
 
-  helper_method :user_authenticated?
+  helper_method :user_authenticated?, :current_user_name, :current_user_email
 
   before_action :nav_presenter, except: %w[create update destroy]
   protect_from_forgery with: :exception

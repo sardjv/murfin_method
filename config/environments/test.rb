@@ -53,5 +53,8 @@ Rails.application.configure do
   # Run ActiveJobs inline for tests.
   config.active_job.queue_adapter = :inline
 
-  # ENV['AUTH_METHOD'] == 'oauth2'
+  ENV['AUTH_METHOD'] = 'oauth2'
+  # keep above setting as default one
+  # if you want to use other auth method in some specs
+  # stub it using stub_env(key, value) from EnvHelpers
 end
