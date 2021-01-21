@@ -64,7 +64,9 @@ describe TagAssociation, type: :model do
 
     # TagAssociations.
     let!(:chosen_category) { create(:tag_association, taggable: activity, tag_type: category, tag: spa_category) }
-    let!(:chosen_subcategory) { build(:tag_association, taggable: activity, tag_type: subcategory, tag: spa_subcategory) }
+    let!(:chosen_subcategory) do
+      build(:tag_association, taggable: activity, tag_type: subcategory, tag: spa_subcategory)
+    end
 
     before do
       activity.reload
@@ -89,7 +91,9 @@ describe TagAssociation, type: :model do
 
     # TagAssociations.
     let!(:chosen_category) { create(:tag_association, taggable: activity, tag_type: category, tag: dcc_category) }
-    let!(:chosen_subcategory) { create(:tag_association, taggable: activity.reload, tag_type: subcategory, tag: dcc_subcategory) }
+    let!(:chosen_subcategory) do
+      create(:tag_association, taggable: activity.reload, tag_type: subcategory, tag: dcc_subcategory)
+    end
 
     before do
       activity.reload

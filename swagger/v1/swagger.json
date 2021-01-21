@@ -15,10 +15,57 @@
   },
   "paths": {
     "/api/v1/users": {
-      "get": {
-        "summary": "user records",
+      "post": {
+        "summary": "create user",
         "tags": [
-          "User"
+          "Users"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "consumes": [
+          "application/vnd.api+json"
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/user_post_params"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User created",
+            "schema": {
+              "$ref": "#/definitions/user_post_params"
+            }
+          },
+          "422": {
+            "description": "Invalid request",
+            "schema": {
+              "$ref": "#/definitions/error_422"
+            }
+          },
+          "400": {
+            "description": "Error: Bad Request",
+            "schema": {
+              "$ref": "#/definitions/error_400"
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "get users",
+        "tags": [
+          "Users"
         ],
         "security": [
           {
@@ -45,9 +92,129 @@
         ],
         "responses": {
           "200": {
-            "description": "successful",
+            "description": "Users index",
             "schema": {
               "$ref": "#/definitions/users_response"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/{id}": {
+      "delete": {
+        "summary": "destroys user",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "OK: No Content"
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "423": {
+            "description": "Error: Record Locked"
+          }
+        }
+      },
+      "get": {
+        "summary": "get user",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Showing user",
+            "schema": {
+              "$ref": "#/definitions/user_response"
+            }
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "406": {
+            "description": "Unsupported accept header"
+          }
+        }
+      },
+      "patch": {
+        "summary": "update user",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "consumes": [
+          "application/vnd.api+json"
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "user",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/user_patch_params"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK: User updated",
+            "schema": {
+              "$ref": "#/definitions/user_patch_params"
+            }
+          },
+          "400": {
+            "description": "Error: Bad Request",
+            "schema": {
+              "$ref": "#/definitions/error_400"
             }
           }
         }
@@ -58,25 +225,45 @@
     "user_attributes": {
       "type": "object",
       "properties": {
-        "ID": {
-          "type": "string",
-          "example": "1",
-          "x-nullable": true
-        },
-        "Last Name": {
+        "last_name": {
           "type": "string",
           "example": "Smith",
           "x-nullable": true
         },
-        "First Name": {
+        "first_name": {
           "type": "string",
           "example": "John",
           "x-nullable": true
         },
-        "Email": {
+        "email": {
           "type": "string",
-          "example": null,
+          "example": "john.smith@example.com",
+          "x-nullable": false
+        },
+        "admin": {
+          "type": "boolean",
+          "example": false,
+          "x-nullable": false
+        }
+      }
+    },
+    "user_attributes_without_admin": {
+      "type": "object",
+      "properties": {
+        "last_name": {
+          "type": "string",
+          "example": "Smith",
           "x-nullable": true
+        },
+        "first_name": {
+          "type": "string",
+          "example": "John",
+          "x-nullable": true
+        },
+        "email": {
+          "type": "string",
+          "example": "john.smith@example.com",
+          "x-nullable": false
         }
       }
     },
@@ -158,9 +345,170 @@
               }
             },
             "attributes": {
-              "$ref": "#/definitions/user_attributes"
+              "$ref": "#/definitions/user_attributes_without_admin"
             }
           }
+        }
+      }
+    },
+    "user_post_params": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "users"
+            },
+            "attributes": {
+              "$ref": "#/definitions/user_attributes_without_admin"
+            }
+          }
+        }
+      }
+    },
+    "user_patch_params": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "1"
+            },
+            "type": {
+              "type": "string",
+              "example": "users"
+            },
+            "attributes": {
+              "$ref": "#/definitions/user_attributes_without_admin"
+            }
+          }
+        }
+      }
+    },
+    "error_400": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Bad Request"
+        }
+      }
+    },
+    "error_401": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Unauthorized"
+        }
+      }
+    },
+    "error_403": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Forbidden"
+        }
+      }
+    },
+    "error_404": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "example": "Record not found"
+              },
+              "detail": {
+                "type": "string",
+                "example": "The record identified by 123 could not be found."
+              },
+              "code": {
+                "type": "string",
+                "example": "RECORD_NOT_FOUND"
+              },
+              "status": {
+                "type": "string",
+                "example": "404"
+              }
+            }
+          }
+        }
+      }
+    },
+    "error_406": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "example": "Not acceptable"
+              },
+              "detail": {
+                "type": "string",
+                "example": "All requests must use the 'application/vnd.api+json' Accept without media type parameters. This request specified 'application/json'."
+              },
+              "code": {
+                "type": "string",
+                "example": "NOT_ACCEPTABLE"
+              },
+              "status": {
+                "type": "string",
+                "example": "406"
+              }
+            }
+          }
+        }
+      }
+    },
+    "error_415": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "example": "Unsupported media type"
+              },
+              "detail": {
+                "type": "string",
+                "example": "All requests that create or update must use the 'application/vnd.api+json' Content-Type. This request specified 'application/json'."
+              },
+              "code": {
+                "type": "string",
+                "example": "UNSUPPORTED_MEDIA_TYPE"
+              },
+              "status": {
+                "type": "string",
+                "example": "415"
+              }
+            }
+          }
+        }
+      }
+    },
+    "error_422": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Invalid request"
         }
       }
     }

@@ -56,7 +56,9 @@ describe Plan, type: :model do
   end
 
   describe '#name' do
-    it { expect(subject.name).to eq("#{subject.user.name}'s #{subject.start_date.year} #{Plan.model_name.human.titleize}") }
+    it {
+      expect(subject.name).to eq("#{subject.user.name}'s #{subject.start_date.year} #{Plan.model_name.human.titleize}")
+    }
   end
 
   describe '#to_time_ranges' do
