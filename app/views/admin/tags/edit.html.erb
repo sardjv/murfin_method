@@ -23,7 +23,10 @@
           %>
         <% end %>
 
-        <%= f.text_field :name, label: Tag.human_attribute_name('name'), placeholder: Tag.human_attribute_name('name'), required: true %>
+        <%= f.text_field :name, label: Tag.human_attribute_name('name'),
+                                placeholder: Tag.human_attribute_name('name'), required: true %>
+
+        <%= f.check_box :default_for_filter, label: TagType.human_attribute_name('default_for_filter') %>
 
         <%= f.submit I18n.t('actions.save'), class: 'btn btn-primary', style: 'margin-top: 10px;' %>
         <%= link_to I18n.t('actions.cancel'), :back, class: 'btn btn-outline-secondary mt-2' %>

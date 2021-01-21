@@ -37,7 +37,7 @@
         <table class='table'>
           <thead class='bg-white'>
             <tr>
-              <% TagType.active_for(Activity).sorted.each do |at| %>
+              <% TagType.active_for(TimeRange).sorted.each do |at| %>
                 <th class='font-weight-normal'><%= at.name %></th>
               <% end %>
               <th></th>

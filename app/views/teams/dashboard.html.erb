@@ -53,7 +53,7 @@
               <div class='col-1'><label><%= I18n.t('graph.filter.tags') %></label></div>
               <div class='col-11'><%= select :line_graph,
                 :tags,
-                grouped_options_for_select(tag_options, Tag.pluck(:id)),
+                grouped_options_for_select(tag_options, Tag.where(default_for_filter: true).pluck(:id)),
                 {},
                 { class: 'filter', multiple: true, 'data-actions-box' => true }
               %></div>
