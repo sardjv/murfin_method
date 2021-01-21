@@ -23,12 +23,20 @@ Style/FrozenStringLiteralComment:
 Style/ClassAndModuleChildren:
   # Use compact module style for consistency and better indendation.
   EnforcedStyle: compact
+  Exclude:
+    - 'swagger/**/*'
 
 Style/MixinUsage:
   Enabled: false
 
 Layout/LineLength:
-  Max: 130
+  Max: 150
+
+Metrics/ClassLength:
+  Max: 150
+
+Metrics/MethodLength:
+  Max: 30
 
 Metrics/BlockLength:
   Exclude:
