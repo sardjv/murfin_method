@@ -1,15 +1,24 @@
 module Swagger
   module V1
     class Users
+
+      def self.user_properties_without_admin
+        {
+          last_name: { type: 'string', example: 'Smith', 'x-nullable': true },
+          first_name: { type: 'string', example: 'John', 'x-nullable': true },
+          email: { type: 'string', example: 'john.smith@example.com', 'x-nullable': false }
+        }
+      end
+
       def self.definitions # rubocop:disable Metrics/MethodLength
         {
           user_attributes: {
             type: 'object',
-            properties: {
-              last_name: { type: 'string', example: 'Smith', 'x-nullable': true },
-              first_name: { type: 'string', example: 'John', 'x-nullable': true },
-              email: { type: 'string', example: 'john.smith@example.com', 'x-nullable': true }
-            }
+            properties: user_properties_without_admin.merge( { admin: { type: 'boolean', example: false, 'x-nullable': false } } )
+          },
+          user_attributes_without_admin: {
+            type: 'object',
+            properties: user_properties_without_admin
           },
           users_response: {
             type: 'object',
@@ -62,7 +71,7 @@ module Swagger
                         'https://job-plan-stats.herokuapp.com/api/v1/users/1' }
                     }
                   },
-                  attributes: { '$ref' => '#/definitions/user_attributes' }
+                  attributes: { '$ref' => '#/definitions/user_attributes_without_admin' }
                 }
               }
             }
@@ -74,7 +83,7 @@ module Swagger
                 type: 'object',
                 properties: {
                   type: { type: 'string', example: 'users' },
-                  attributes: { '$ref' => '#/definitions/user_attributes' }
+                  attributes: { '$ref' => '#/definitions/user_attributes_without_admin' }
                 }
               }
             }
@@ -87,7 +96,7 @@ module Swagger
                 properties: {
                   id: { type: 'string', example: '1' },
                   type: { type: 'string', example: 'users' },
-                  attributes: { '$ref' => '#/definitions/user_attributes' }
+                  attributes: { '$ref' => '#/definitions/user_attributes_without_admin' }
                 }
               }
             }

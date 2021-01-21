@@ -238,7 +238,32 @@
         "email": {
           "type": "string",
           "example": "john.smith@example.com",
+          "x-nullable": false
+        },
+        "admin": {
+          "type": "boolean",
+          "example": false,
+          "x-nullable": false
+        }
+      }
+    },
+    "user_attributes_without_admin": {
+      "type": "object",
+      "properties": {
+        "last_name": {
+          "type": "string",
+          "example": "Smith",
           "x-nullable": true
+        },
+        "first_name": {
+          "type": "string",
+          "example": "John",
+          "x-nullable": true
+        },
+        "email": {
+          "type": "string",
+          "example": "john.smith@example.com",
+          "x-nullable": false
         }
       }
     },
@@ -320,7 +345,7 @@
               }
             },
             "attributes": {
-              "$ref": "#/definitions/user_attributes"
+              "$ref": "#/definitions/user_attributes_without_admin"
             }
           }
         }
@@ -337,7 +362,7 @@
               "example": "users"
             },
             "attributes": {
-              "$ref": "#/definitions/user_attributes"
+              "$ref": "#/definitions/user_attributes_without_admin"
             }
           }
         }
@@ -358,7 +383,7 @@
               "example": "users"
             },
             "attributes": {
-              "$ref": "#/definitions/user_attributes"
+              "$ref": "#/definitions/user_attributes_without_admin"
             }
           }
         }

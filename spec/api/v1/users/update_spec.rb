@@ -4,7 +4,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
   let!(:updated_user) { create :user }
 
   let(:example_attributes) do
-    Swagger::V1::Users.definitions.dig(:user_attributes, :properties).transform_values do |v|
+    Swagger::V1::Users.definitions.dig(:user_attributes_without_admin, :properties).transform_values do |v|
       v[:example]
     end
   end
@@ -44,15 +44,15 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
           end
         end
 
-        # user params include not permitted admin_id
+        # user params include not permitted admin flag
         response '400', 'Error: Bad Request' do
-          let(:example_attributes_with_admin_id) { example_attributes.merge(admin_id: 123_456) }
+          let(:example_attributes_with_admin) { example_attributes.merge(admin: true) }
 
           let(:user) do
             {
               data: {
                 type: 'users',
-                attributes: example_attributes_with_admin_id
+                attributes: example_attributes_with_admin
               }
             }
           end
