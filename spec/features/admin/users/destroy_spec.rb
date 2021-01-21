@@ -1,11 +1,7 @@
 require 'rails_helper'
 
 describe 'Admin destroys a user', type: :feature, js: true do
-  let!(:user) do
-    create(:user, first_name: 'Jo',
-                  last_name: 'Anne',
-                  email: 'joanne@example.com')
-  end
+  let!(:user) { create :user }
 
   before { log_in create(:admin) }
 
