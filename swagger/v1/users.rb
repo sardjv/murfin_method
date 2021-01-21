@@ -1,7 +1,6 @@
 module Swagger
   module V1
     class Users
-
       def self.user_properties_without_admin
         {
           last_name: { type: 'string', example: 'Smith', 'x-nullable': true },
@@ -14,7 +13,7 @@ module Swagger
         {
           user_attributes: {
             type: 'object',
-            properties: user_properties_without_admin.merge( { admin: { type: 'boolean', example: false, 'x-nullable': false } } )
+            properties: user_properties_without_admin.merge({ admin: { type: 'boolean', example: false, 'x-nullable': false } })
           },
           user_attributes_without_admin: {
             type: 'object',
