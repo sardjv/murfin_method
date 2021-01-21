@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :user_authenticated?
 
-  before_action :nav_presenter, except: %w[create update destroy] # rubocop:disable Rails/LexicallyScopedActionFilter
+  before_action :nav_presenter, except: %w[create update destroy]
   protect_from_forgery with: :exception
 
   include Pundit

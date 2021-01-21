@@ -15,8 +15,9 @@ module HasOptionalPassword
   # https://github.com/heartcombo/devise/blob/45b831c4ea5a35914037bd27fe88b76d7b3683a4/lib/devise/models/validatable.rb#L60
   def password_required?
     return false if skip_password_validation
+
     super
   end
 end
 
-# TODO other way may be removing :validatable from User setup
+# TODO: Other way may be removing :validatable from User setup

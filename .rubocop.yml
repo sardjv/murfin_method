@@ -47,3 +47,6 @@ Metrics/BlockLength:
 
 Rails/SkipsModelValidations:
   Enabled: false
+
+Rails/LexicallyScopedActionFilter:
+  Enabled: false

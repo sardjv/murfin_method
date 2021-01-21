@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'Admin log in', type: :feature do
-
   context 'via oauth2' do
     let!(:admin) { create :admin }
 
@@ -52,7 +51,7 @@ describe 'Admin log in', type: :feature do
       it 'shows form error' do
         within 'form' do
           fill_in 'Email', with: email
-          fill_in 'Password', with: password + '$'
+          fill_in 'Password', with: "#{password}$"
           click_button 'Log in'
         end
 
@@ -61,8 +60,7 @@ describe 'Admin log in', type: :feature do
         end
       end
     end
-
   end
 end
 
-# TODO missing similar feature specs set for regular user
+# TODO: missing similar feature specs set for regular user

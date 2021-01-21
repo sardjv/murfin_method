@@ -51,7 +51,7 @@ describe 'Admin creates a user', type: :feature do
       fill_in User.human_attribute_name('last_name'), with: 'Anne'
       fill_in User.human_attribute_name('email'), with: 'john@example.com'
       fill_in User.human_attribute_name('password'), with: password
-      fill_in User.human_attribute_name('password_confirmation'), with: password + '$'
+      fill_in User.human_attribute_name('password_confirmation'), with: "#{password}$"
       click_button I18n.t('actions.save')
 
       within_invalid_form_field 'password_confirmation' do
