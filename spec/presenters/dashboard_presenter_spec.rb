@@ -1,4 +1,4 @@
-describe DashboardPresenter do
+describe DashboardPresenter, freeze: Time.zone.local(2020, 6, 30, 23, 59, 59) do
   subject do
     DashboardPresenter.new(
       params: {
@@ -8,39 +8,26 @@ describe DashboardPresenter do
         filter_start_year: '2019',
         filter_end_month: '6',
         filter_end_year: '2020',
-        filter_tag_ids: [tag1.id]
+        filter_tag_ids: filter_tag_ids
       }
     )
   end
-
-  before :all do
-    Timecop.freeze(Time.zone.local(2020, 6, 30, 23, 59, 59))
-  end
-
-  after :all do
-    Timecop.return
-  end
+  # replicate how filter_tag_ids sent from line_graph.js
+  let(:filter_tag_ids) { tag1.id.to_s }
 
   let(:user) { create(:user) }
   let(:actual_id) { TimeRangeType.actual_type.id }
   let(:tag1) { create(:tag) }
 
-  let!(:plan_ranges) do
-    create(
-      :plan,
-      user_id: user.id,
-      start_date: Time.zone.now.beginning_of_month,
-      end_date: Time.zone.now,
-      activities: [
-        create(
-          :activity, # 4 hours per week.
-          tag_associations: [
-            build(:tag_association, tag: tag1, tag_type: tag1.tag_type)
-          ]
-        )
-      ]
-    )
+  let!(:plan) do
+    create(:plan,
+           user_id: user.id,
+           start_date: Time.zone.now.beginning_of_month,
+           end_date: Time.zone.now)
   end
+  let!(:activity) { create(:activity, plan: plan) }
+  let!(:tag_associations) { [create(:tag_association, taggable: activity, tag: tag1, tag_type: tag1.tag_type)] }
+
   let!(:actual_ranges) do
     create(
       :time_range,
@@ -115,6 +102,32 @@ describe DashboardPresenter do
             }
           }.to_json
         )
+      end
+    end
+  end
+
+  context 'when have a second activity with a different tag' do
+    let(:tag2) { create(:tag) }
+    let!(:activity2) { create(:activity, plan: plan) }
+    let!(:tag_associations2) { [create(:tag_association, taggable: activity2, tag: tag2, tag_type: tag2.tag_type)] }
+
+    context 'when filter by one tag' do
+      let(:filter_tag_ids) { tag1.id.to_s }
+
+      it 'returns filtered data' do
+        expect(subject.team_stats_presenter.average_weekly_planned_per_month.last[:value]).to eq 240.0
+        expect(subject.team_stats_presenter.average_weekly_actual_per_month.last[:value]).to eq 112.0
+        expect(subject.team_stats_presenter.weekly_percentage_delivered_per_month.last[:value]).to eq 46.67
+      end
+    end
+
+    context 'when filter by more than one tag' do
+      let(:filter_tag_ids) { "#{tag1.id}, #{tag2.id}" }
+
+      it 'returns filtered data' do
+        expect(subject.team_stats_presenter.average_weekly_planned_per_month.last[:value]).to eq 480.0
+        expect(subject.team_stats_presenter.average_weekly_actual_per_month.last[:value]).to eq 112.0
+        expect(subject.team_stats_presenter.weekly_percentage_delivered_per_month.last[:value]).to eq 23.33
       end
     end
   end
