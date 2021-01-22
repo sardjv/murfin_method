@@ -7,7 +7,7 @@ describe 'Admin Dashboard', type: :feature do
       :plan,
       user_id: user.id,
       start_date: 1.week.ago,
-      end_date: Time.zone.now,
+      end_date: Time.current,
       activities: [create(:activity, seconds_per_week: 6000)]
     )
   end
@@ -18,7 +18,7 @@ describe 'Admin Dashboard', type: :feature do
       user_id: user.id,
       time_range_type_id: TimeRangeType.actual_type.id,
       start_time: 1.week.ago,
-      end_time: Time.zone.now,
+      end_time: Time.current,
       value: 5
     )
   end

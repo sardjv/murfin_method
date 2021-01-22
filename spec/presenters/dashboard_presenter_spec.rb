@@ -22,8 +22,8 @@ describe DashboardPresenter, freeze: Time.zone.local(2020, 6, 30, 23, 59, 59) do
   let!(:plan) do
     create(:plan,
            user_id: user.id,
-           start_date: Time.zone.now.beginning_of_month,
-           end_date: Time.zone.now)
+           start_date: Time.current.beginning_of_month,
+           end_date: Time.current)
   end
   let!(:activity) { create(:activity, plan: plan) }
   let!(:tag_associations) { [create(:tag_association, taggable: activity, tag: tag1, tag_type: tag1.tag_type)] }
@@ -33,8 +33,8 @@ describe DashboardPresenter, freeze: Time.zone.local(2020, 6, 30, 23, 59, 59) do
       :time_range,
       user_id: user.id,
       time_range_type_id: actual_id,
-      start_time: Time.zone.now.beginning_of_month,
-      end_time: Time.zone.now,
+      start_time: Time.current.beginning_of_month,
+      end_time: Time.current,
       tag_associations: [
         build(:tag_association, tag: tag1, tag_type: tag1.tag_type)
       ],

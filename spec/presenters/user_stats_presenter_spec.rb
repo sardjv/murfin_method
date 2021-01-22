@@ -8,7 +8,7 @@ describe UserStatsPresenter do
 
   let(:user) { create(:user) }
   let(:filter_start_date) { (1.year.ago + 1.day).beginning_of_day }
-  let(:filter_end_date) { Time.zone.now.end_of_day }
+  let(:filter_end_date) { Time.current.end_of_day }
 
   before :all do
     Timecop.freeze(Time.zone.local(2020, 10, 30, 17, 59, 59))
@@ -58,9 +58,9 @@ describe UserStatsPresenter do
     end
     let(:actual_value) { 6274 } # 2 hours per week over the year in minutes.
     let(:plan_start_time) { (1.year.ago + 1.day).beginning_of_day }
-    let(:plan_end_time) { Time.zone.now.end_of_day }
+    let(:plan_end_time) { Time.current.end_of_day }
     let(:actual_start_time) { (1.year.ago + 1.day).beginning_of_day }
-    let(:actual_end_time) { Time.zone.now.end_of_day }
+    let(:actual_end_time) { Time.current.end_of_day }
 
     describe 'status' do
       context 'when no planned data' do
