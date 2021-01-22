@@ -28,7 +28,7 @@ module Swagger
                   type: 'object',
                   properties: {
                     id: { type: 'string', example: '1' },
-                    type: { type: 'string', example: 'Users' },
+                    type: { type: 'string', example: 'users' },
                     link: {
                       type: 'object',
                       properties: {
@@ -62,7 +62,6 @@ module Swagger
                 type: 'object',
                 properties: {
                   id: { type: 'string', example: '1' },
-                  type: { type: 'string', example: 'Users' },
                   link: {
                     type: 'object',
                     properties: {
