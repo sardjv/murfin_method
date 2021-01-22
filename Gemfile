@@ -43,7 +43,7 @@ gem 'mysql2', '~> 0.5.3'
 
 # OmniAuth is a flexible authentication system utilizing Rack middleware.
 # https://github.com/auth0/omniauth-auth0
-gem 'omniauth-auth0', '~> 2.4.2'
+gem 'omniauth-auth0', '~> 2.5.0'
 
 # Provides CSRF protection on OmniAuth request endpoint on Rails application.
 # https://github.com/cookpad/omniauth-rails_csrf_protection
@@ -72,7 +72,7 @@ gem 'rswag-ui', '~> 2.3.1'
 
 # Simple, efficient background processing for Ruby.
 # https://github.com/mperham/sidekiq
-gem 'sidekiq', '~> 6.1.2'
+gem 'sidekiq', '~> 6.1.3'
 
 # Bundle zoneinfo files which are not included in Windows.
 # https://github.com/tzinfo/tzinfo-data
