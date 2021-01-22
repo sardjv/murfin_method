@@ -9,4 +9,11 @@ module CapybaraHelpers
       find('.dropdown-menu li', text: value).click
     end
   end
+
+  def bootstrap_select_year(value, attrs)
+    within find('label', text: attrs[:from].to_s).find(:xpath, '..') do
+      all('button.dropdown-toggle')[2].click
+      find('.dropdown-menu li', text: value).click
+    end
+  end
 end
