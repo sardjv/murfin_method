@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe 'Auth', type: :request do
   describe 'GET admin_dashboard_path' do
     let(:user) do
-      build(:user,
-            first_name: 'John',
-            last_name: 'Smith',
-            email: 'john@example.com')
+      create(:user,
+             first_name: 'John',
+             last_name: 'Smith',
+             email: 'john@example.com')
     end
     context 'when authenticated' do
       before do
@@ -16,10 +16,6 @@ RSpec.describe 'Auth', type: :request do
       it 'returns http success' do
         get admin_dashboard_path
         expect(response).to have_http_status(:success)
-      end
-
-      it 'creates a user' do
-        expect { get admin_dashboard_path }.to change { User.count }.by(1)
       end
 
       it 'sets the user name and email' do

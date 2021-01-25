@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   mount Rswag::Ui::Engine => 'api_docs'
   mount Rswag::Api::Engine => 'api_docs'
 
-  constraints ->(request) { request.session[:userinfo].present? } do
+  constraints ->(request) { request.session[:user_id].present? } do
     mount Sidekiq::Web => '/sidekiq'
   end
 
