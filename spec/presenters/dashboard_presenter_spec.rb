@@ -95,7 +95,7 @@ describe DashboardPresenter, freeze: Time.zone.local(2020, 6, 30, 23, 59, 59) do
               data: [
                 {
                   name: user.name,
-                  value: '47.0'
+                  value: 47
                 }
               ],
               units: '%'

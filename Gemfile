@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.7.2'
+ruby '3.0.0'
 
 # Make it easy to create beautiful-looking forms using Bootstrap 4.
 # https://github.com/bootstrap-ruby/bootstrap_form
@@ -56,6 +56,11 @@ gem 'omniauth-auth0', '~> 2.5.0'
 # https://github.com/cookpad/omniauth-rails_csrf_protection
 gem 'omniauth-rails_csrf_protection', '~> 0.1.2'
 
+# A Ruby parser - used by Rubocop, added here to force it to a newer version
+# for compatibility with Ruby 3.0.0.
+# https://github.com/whitequark/parser
+gem 'parser', '~> 3.0.0.0'
+
 # A Ruby/Rack web server built for concurrency.
 # https://github.com/puma/puma
 gem 'puma', '~> 5.1.1'
@@ -90,9 +95,9 @@ gem 'tzinfo-data', '~> 1.2021.1'
 gem 'webpacker', '~> 5.2.1'
 
 group :development, :test do
-  # Call 'byebug' anywhere in your code to drop into a debugger console.
-  # https://github.com/deivid-rodriguez/byebug
-  gem 'byebug', '~> 11.1.3', platform: :mri
+  # Call 'binding.pry' anywhere in your code to drop into a debugger console.
+  # https://github.com/pry/pry
+  gem 'pry', '~> 0.13.1'
 
   # Generate Swagger docs from RSpec tests.
   # https://github.com/rswag/rswag
@@ -120,6 +125,10 @@ group :development do
   # https://github.com/yujinakayama/guard-rubocop
   gem 'guard-rubocop', '~> 1.4.0'
 
+  # Listens to file modifications and notifies you about the changes.
+  # https://github.com/guard/listen
+  gem 'listen', '~> 3.4.1'
+
   # A static code analyzer and formatter, based on the community style guide.
   # https://github.com/rubocop-hq/rubocop-rails
   gem 'rubocop-rails', '~> 2.9.1'
@@ -128,7 +137,9 @@ end
 group :test do
   # Acceptance test framework for web applications
   # https://github.com/teamcapybara/capybara
-  gem 'capybara', '~> 3.34.0'
+  # Use edge until Capybara version 3.35.0 is released,
+  # for Ruby 3.0.0 compatability.
+  gem 'capybara', github: 'teamcapybara/capybara', ref: '4cda03a40f02a01f363ca86883cd73e0be75a3ed'
 
   # Strategies for cleaning databases between tests.
   # https://github.com/DatabaseCleaner/database_cleaner
@@ -149,7 +160,8 @@ group :test do
 
   # A browser automation framework and ecosystem.
   # https://github.com/SeleniumHQ/selenium
-  gem 'selenium-webdriver', '3.142.7'
+  # Use edge until v4.0.0 of this gem is released, for Ruby 3.0.0 compatability.
+  gem 'selenium-webdriver', github: 'SeleniumHQ/selenium', ref: '8e5a9ede90137c048715125a14be3c25c08a51e7'
 
   # Simple one-liner tests for common Rails functionality.
   # https://github.com/thoughtbot/shoulda-matchers

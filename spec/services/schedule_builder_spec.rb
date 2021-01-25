@@ -18,7 +18,7 @@ describe ScheduleBuilder do
     expect(subject.rrules.count).to eq(rules.count)
 
     subject.rrules.each do |rule|
-      expect(rule.to_s).to eq('Weekly on Mondays')
+      expect(rule.to_ical).to eq('FREQ=WEEKLY;BYDAY=MO')
     end
   end
 
@@ -39,7 +39,7 @@ describe ScheduleBuilder do
         expect(subject.rrules.count).to eq(1)
 
         subject.rrules.each do |rule|
-          expect(rule.to_s).to eq('Weekly on Sundays, Mondays, Tuesdays, Wednesdays, Thursdays, Fridays, and Saturdays')
+          expect(rule.to_ical).to eq('FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR,SA,SU')
         end
       end
     end
@@ -53,7 +53,7 @@ describe ScheduleBuilder do
         expect(subject.rrules.count).to eq(1)
 
         subject.rrules.each do |rule|
-          expect(rule.to_s).to eq('Weekly on Sundays, Mondays, Tuesdays, Wednesdays, Thursdays, Fridays, and Saturdays')
+          expect(rule.to_ical).to eq('FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR,SA,SU')
         end
       end
     end

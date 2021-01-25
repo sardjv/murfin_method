@@ -1,4 +1,15 @@
 GIT
+  remote: https://github.com/SeleniumHQ/selenium.git
+  revision: 8e5a9ede90137c048715125a14be3c25c08a51e7
+  ref: 8e5a9ede90137c048715125a14be3c25c08a51e7
+  specs:
+    selenium-webdriver (4.0.0.alpha7)
+      childprocess (>= 0.5, < 5.0)
+      rexml (~> 3.2)
+      rubyzip (>= 1.2.2)
+      websocket (~> 1.0)
+
+GIT
   remote: https://github.com/cerebris/jsonapi-resources.git
   revision: eb432722b915e76914be9132e010a1244a32e91c
   ref: eb432722b915e76914be9132e010a1244a32e91c
@@ -7,6 +18,20 @@ GIT
       activerecord (>= 4.1)
       concurrent-ruby
       railties (>= 4.1)
+
+GIT
+  remote: https://github.com/teamcapybara/capybara.git
+  revision: 4cda03a40f02a01f363ca86883cd73e0be75a3ed
+  ref: 4cda03a40f02a01f363ca86883cd73e0be75a3ed
+  specs:
+    capybara (3.35.0)
+      addressable
+      mini_mime (>= 0.1.3)
+      nokogiri (~> 1.8)
+      rack (>= 1.6.0)
+      rack-test (>= 0.6.3)
+      regexp_parser (>= 1.5, < 3.0)
+      xpath (~> 3.2)
 
 GEM
   remote: https://rubygems.org/
@@ -75,22 +100,13 @@ GEM
     annotate (3.1.1)
       activerecord (>= 3.2, < 7.0)
       rake (>= 10.4, < 14.0)
-    ast (2.4.1)
+    ast (2.4.2)
     bcrypt (3.1.16)
     bootstrap_form (4.5.0)
       actionpack (>= 5.2)
       activemodel (>= 5.2)
     builder (3.2.4)
-    byebug (11.1.3)
-    capybara (3.34.0)
-      addressable
-      mini_mime (>= 0.1.3)
-      nokogiri (~> 1.8)
-      rack (>= 1.6.0)
-      rack-test (>= 0.6.3)
-      regexp_parser (~> 1.5)
-      xpath (~> 3.2)
-    childprocess (3.0.0)
+    childprocess (4.0.0)
     cocoon (1.2.15)
     coderay (1.1.3)
     concurrent-ruby (1.1.8)
@@ -124,7 +140,7 @@ GEM
       multipart-post (>= 1.2, < 3)
       ruby2_keywords
     faraday-net_http (1.0.1)
-    ffi (1.13.1)
+    ffi (1.14.2)
     formatador (0.2.5)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
@@ -164,7 +180,7 @@ GEM
       activerecord
       kaminari-core (= 1.2.1)
     kaminari-core (1.2.1)
-    listen (3.2.1)
+    listen (3.4.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     loofah (2.9.0)
@@ -213,7 +229,7 @@ GEM
       omniauth (>= 1.3.1)
     orm_adapter (0.5.0)
     parallel (1.20.1)
-    parser (2.7.2.0)
+    parser (3.0.0.0)
       ast (~> 2.4.1)
     pry (0.13.1)
       coderay (~> 1.1)
@@ -318,9 +334,6 @@ GEM
     ruby-progressbar (1.10.1)
     ruby2_keywords (0.0.4)
     rubyzip (2.3.0)
-    selenium-webdriver (3.142.7)
-      childprocess (>= 0.5, < 4.0)
-      rubyzip (>= 1.2.2)
     semantic_range (2.3.0)
     shellany (0.0.1)
     shoulda-matchers (4.5.1)
@@ -357,6 +370,7 @@ GEM
       rack-proxy (>= 0.6.1)
       railties (>= 5.2)
       semantic_range (>= 2.3.0)
+    websocket (1.2.9)
     websocket-driver (0.7.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -370,8 +384,7 @@ PLATFORMS
 DEPENDENCIES
   annotate (~> 3.1.1)
   bootstrap_form (~> 4.0)
-  byebug (~> 11.1.3)
-  capybara (~> 3.34.0)
+  capybara!
   cocoon (~> 1.2.15)
   database_cleaner-active_record (~> 1.8.0)
   database_cleaner-redis (~> 1.8.0)
@@ -385,10 +398,13 @@ DEPENDENCIES
   jsonapi-resources!
   jwt (~> 2.2.2)
   kaminari (~> 1.2.1)
+  listen (~> 3.4.1)
   memory_profiler (~> 1.0.0)
   mysql2 (~> 0.5.3)
   omniauth-auth0 (~> 2.5.0)
   omniauth-rails_csrf_protection (~> 0.1.2)
+  parser (~> 3.0.0.0)
+  pry (~> 0.13.1)
   puma (~> 5.1.1)
   pundit (~> 2.1.0)
   rails (~> 6.1.1)
@@ -400,7 +416,7 @@ DEPENDENCIES
   rswag-specs (~> 2.3.1)
   rswag-ui (~> 2.3.1)
   rubocop-rails (~> 2.9.1)
-  selenium-webdriver (= 3.142.7)
+  selenium-webdriver!
   shoulda-matchers (~> 4.5.1)
   sidekiq (~> 6.1.3)
   simplecov (~> 0.21.2)
@@ -410,7 +426,7 @@ DEPENDENCIES
   webpacker (~> 5.2.1)
 
 RUBY VERSION
-   ruby 2.7.2p137
+   ruby 3.0.0p0
 
 BUNDLED WITH
-   2.1.4
+   2.2.3
