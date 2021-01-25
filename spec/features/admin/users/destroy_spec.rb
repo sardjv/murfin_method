@@ -2,8 +2,11 @@ require 'rails_helper'
 
 describe 'Admin destroys a user', type: :feature, js: true do
   let!(:user) { create :user }
+  let!(:admin) { create :admin }
 
-  before { log_in create(:admin) }
+  before do
+    log_in admin
+  end
 
   it 'destroys user' do
     visit admin_users_path
