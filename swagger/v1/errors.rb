@@ -108,7 +108,7 @@ module Swagger
                   status: 422
                 }
               }
-            }	            
+            }
           }
         }
       end
