@@ -94,6 +94,6 @@ class DashboardPresenter
   end
 
   def filter_tag_ids
-    @params[:filter_tag_ids]&.split
+    @params[:filter_tag_ids]&.split(',')
   end
 end

@@ -37,6 +37,10 @@ en:
   date:
     formats:
       readable: '%-d %B %Y'
+    order:
+      - day
+      - month
+      - year
   errors:
     activity:
       duration:

@@ -17,7 +17,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
         schema '$ref' => '#/definitions/user_response'
 
         run_test! do
-          parsed_json_data_matches_db_values(user)
+          parsed_json_data_matches_db_record(user)
         end
       end
 

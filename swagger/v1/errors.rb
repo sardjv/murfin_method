@@ -79,7 +79,18 @@ module Swagger
           error_422: {
             type: 'object',
             properties: {
-              error: { type: 'string', example: 'Unprocessable Entity' }
+              errors: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    title: { type: 'string', example: 'must occur after start time' },
+                    detail: { type: 'string', example: 'end_time - must occur after start time' },
+                    code: { type: 'string', example: '100' },
+                    status: { type: 'string', example: '422' }
+                  }
+                }
+              }
             }
           },
           error_422_password_too_short: {
@@ -97,7 +108,7 @@ module Swagger
                   status: 422
                 }
               }
-            }
+            }	            
           }
         }
       end

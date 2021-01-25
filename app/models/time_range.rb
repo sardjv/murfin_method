@@ -20,6 +20,8 @@ class TimeRange < ApplicationRecord
   validates :start_time, :end_time, :value, presence: true
   validate :validate_end_time_after_start_time
 
+  # TODO: add validation for value, only positive numbers ?
+
   def seconds_worked=(seconds)
     self.value = seconds.to_f / 60
   end

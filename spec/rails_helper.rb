@@ -41,7 +41,23 @@ rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
   exit 1
 end
+
+require 'timecop'
+shared_context 'frozen in time examples' do
+  before do |example|
+    time = example.metadata[:freeze]
+    time = time.is_a?(Time) || time.is_a?(Date) ? time : nil
+    Timecop.freeze(time)
+  end
+
+  after do
+    Timecop.return
+  end
+end
+
 RSpec.configure do |config|
+  config.include_context 'frozen in time examples', freeze: true
+
   config.include OmniauthMacros
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
