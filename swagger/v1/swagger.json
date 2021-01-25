@@ -39,17 +39,24 @@
             "schema": {
               "$ref": "#/definitions/user_post_params"
             }
+          },
+          {
+            "name": "user",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/user_post_params"
+            }
           }
         ],
         "responses": {
           "201": {
             "description": "User created",
             "schema": {
-              "$ref": "#/definitions/user_post_params"
+              "$ref": "#/definitions/user_post_params_without_password"
             }
           },
           "422": {
-            "description": "Invalid request",
+            "description": "Unprocessable Entity",
             "schema": {
               "$ref": "#/definitions/error_422"
             }
@@ -208,7 +215,7 @@
           "200": {
             "description": "OK: User updated",
             "schema": {
-              "$ref": "#/definitions/user_patch_params"
+              "$ref": "#/definitions/user_patch_params_without_password"
             }
           },
           "400": {
@@ -264,6 +271,31 @@
           "type": "string",
           "example": "john.smith@example.com",
           "x-nullable": false
+        }
+      }
+    },
+    "user_attributes_with_password": {
+      "type": "object",
+      "properties": {
+        "last_name": {
+          "type": "string",
+          "example": "Smith",
+          "x-nullable": true
+        },
+        "first_name": {
+          "type": "string",
+          "example": "John",
+          "x-nullable": true
+        },
+        "email": {
+          "type": "string",
+          "example": "john.smith@example.com",
+          "x-nullable": false
+        },
+        "password": {
+          "type": "string",
+          "example": "pA$$w0Rd",
+          "x-nullable": true
         }
       }
     },
@@ -345,7 +377,7 @@
               }
             },
             "attributes": {
-              "$ref": "#/definitions/user_attributes_without_admin"
+              "$ref": "#/definitions/user_attributes"
             }
           }
         }
@@ -362,7 +394,24 @@
               "example": "users"
             },
             "attributes": {
-              "$ref": "#/definitions/user_attributes_without_admin"
+              "$ref": "#/definitions/user_attributes_with_password"
+            }
+          }
+        }
+      }
+    },
+    "user_post_params_without_password": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "users"
+            },
+            "attributes": {
+              "$ref": "#/definitions/user_attributes"
             }
           }
         }
@@ -383,7 +432,28 @@
               "example": "users"
             },
             "attributes": {
-              "$ref": "#/definitions/user_attributes_without_admin"
+              "$ref": "#/definitions/user_attributes_with_password"
+            }
+          }
+        }
+      }
+    },
+    "user_patch_params_without_password": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "1"
+            },
+            "type": {
+              "type": "string",
+              "example": "users"
+            },
+            "attributes": {
+              "$ref": "#/definitions/user_attributes"
             }
           }
         }
@@ -508,7 +578,24 @@
       "properties": {
         "error": {
           "type": "string",
-          "example": "Invalid request"
+          "example": "Unprocessable Entity"
+        }
+      }
+    },
+    "error_422_password_too_short": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "title": "is too short (minimum is 6 characters)",
+            "detail": "password - is too short (minimum is 6 characters)",
+            "code": 100,
+            "source": {
+              "pointer": "/data/attributes/password"
+            },
+            "status": 422
+          }
         }
       }
     }

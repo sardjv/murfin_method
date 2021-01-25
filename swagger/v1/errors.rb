@@ -79,7 +79,24 @@ module Swagger
           error_422: {
             type: 'object',
             properties: {
-              error: { type: 'string', example: 'Invalid request' }
+              error: { type: 'string', example: 'Unprocessable Entity' }
+            }
+          },
+          error_422_password_too_short: {
+            type: 'object',
+            properties: {
+              errors: {
+                type: 'array',
+                items: {
+                  title: 'is too short (minimum is 6 characters)',
+                  detail: 'password - is too short (minimum is 6 characters)',
+                  code: 100,
+                  source: {
+                    pointer: '/data/attributes/password'
+                  },
+                  status: 422
+                }
+              }
             }
           }
         }
