@@ -41,7 +41,7 @@ describe 'Team Individuals', type: :feature, js: true do
         expect(page).to have_text TimeRangeType.actual_type.name
         expect(page).to have_text '2 minutes' # 120 minutes / 52 weeks.
         expect(page).to have_text 'Percentage delivered'
-        expect(page).to have_text '50.0%'
+        expect(page).to have_text '50%'
         expect(page).to have_text 'Status'
         expect(page).to have_text 'Under'
       end
