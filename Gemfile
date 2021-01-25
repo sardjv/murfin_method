@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.7.2'
+ruby '3.0.0'
 
 # Make it easy to create beautiful-looking forms using Bootstrap 4.
 # https://github.com/bootstrap-ruby/bootstrap_form
@@ -115,6 +115,10 @@ group :development do
   # Automatically check Ruby code style with RuboCop when files are modified.
   # https://github.com/yujinakayama/guard-rubocop
   gem 'guard-rubocop', '~> 1.4.0'
+
+  # Listens to file modifications and notifies you about the changes.
+  # https://github.com/guard/listen
+  gem 'listen', '~> 3.4.1'
 
   # A static code analyzer and formatter, based on the community style guide.
   # https://github.com/rubocop-hq/rubocop-rails
