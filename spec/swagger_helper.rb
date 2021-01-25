@@ -1,6 +1,7 @@
 require 'rails_helper'
 require './swagger/v1/errors'
 require './swagger/v1/users'
+require './swagger/v1/time_ranges'
 
 class Swagger::V1::Core
   def self.docs
@@ -30,6 +31,7 @@ class Swagger::V1::Core
 
   def self.definitions
     [
+      Swagger::V1::TimeRanges.definitions,
       Swagger::V1::Users.definitions,
       Swagger::V1::Errors.definitions
     ]

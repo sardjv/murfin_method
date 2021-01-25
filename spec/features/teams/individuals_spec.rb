@@ -6,7 +6,7 @@ describe 'Team Individuals', type: :feature, js: true do
   let!(:user_group) { create(:user_group) }
   let!(:lead_membership) { create(:membership, user_group: user_group, user: manager, role: 'lead') }
 
-  before :each do
+  before do
     users.each do |user|
       create(
         :plan,

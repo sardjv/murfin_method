@@ -4,7 +4,7 @@ class PlansController < ApplicationController
   end
 
   def new
-    @plan = Plan.new(user: @current_user)
+    @plan = Plan.new(user: current_user)
     authorize @plan
 
     render action: :edit

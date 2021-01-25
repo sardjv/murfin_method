@@ -9,6 +9,10 @@ gem 'bootstrap_form', '~> 4.0'
 # https://github.com/nathanvda/cocoon
 gem 'cocoon', '~> 1.2.15'
 
+# Devise is a flexible authentication solution for Rails based on Warden.
+# https://github.com/heartcombo/devise
+gem 'devise', '~> 4.7.3'
+
 # Better distance of time in words for Rails.
 # https://github.com/radar/distance_of_time_in_words
 gem 'dotiw', '~> 5.2.0'

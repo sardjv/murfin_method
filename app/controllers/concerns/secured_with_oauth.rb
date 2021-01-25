@@ -16,7 +16,6 @@ module SecuredWithOauth
   def current_user
     @current_user
   end
-  delegate :name, :email, to: :current_user, prefix: :current_user
 
   private
 
