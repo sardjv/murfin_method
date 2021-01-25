@@ -104,6 +104,10 @@ en:
       destroyed:
         "%{model_name} could not be deleted"
     forbidden: You are not authorized to perform this action!
+    login_error:
+      There was a problem logging in. Please contact your administrator
+    logged_out:
+      You have been logged out
     successfully:
       created:
         "%{model_name} successfully created"

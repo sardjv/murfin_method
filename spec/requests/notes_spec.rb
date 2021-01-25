@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Notes', type: :request do
   before do
-    log_in(build(:user))
+    log_in(create(:user))
   end
 
   describe 'GET /notes/new' do
