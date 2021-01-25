@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :user_authenticated?, :current_user_name, :current_user_email
 
-  before_action :nav_presenter, except: %w[create update destroy]
+  before_action :nav_presenter, except: %w[create update destroy] # rubocop:disable Rails/LexicallyScopedActionFilter
   protect_from_forgery with: :exception
 
   include Pundit

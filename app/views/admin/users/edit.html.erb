@@ -18,8 +18,10 @@
         <%= f.text_field :first_name, label: User.human_attribute_name('first_name'), placeholder: User.human_attribute_name('first_name'), required: true %>
         <%= f.text_field :last_name, label: User.human_attribute_name('last_name'), placeholder: User.human_attribute_name('last_name'), required: true %>
         <%= f.text_field :email, label: User.human_attribute_name('email'), placeholder: User.human_attribute_name('email'), required: true %>
-        <%= f.password_field :password, label: User.human_attribute_name('password'), placeholder: User.human_attribute_name('password') %>
-        <%= f.password_field :password_confirmation, label: User.human_attribute_name('password_confirmation'), placeholder: User.human_attribute_name('password_confirmation') %>
+        <% if auth_method?(:form) %>
+          <%= f.password_field :password, label: User.human_attribute_name('password'), placeholder: User.human_attribute_name('password') %>
+          <%= f.password_field :password_confirmation, label: User.human_attribute_name('password_confirmation'), placeholder: User.human_attribute_name('password_confirmation') %>
+        <% end %>
         <%= f.check_box :admin, label: User.human_attribute_name('admin'), placeholder: User.human_attribute_name('admin') %>
         <br />
         <% GroupType.all.each do |group_type| %>

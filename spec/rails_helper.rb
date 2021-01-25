@@ -95,7 +95,6 @@ RSpec.configure do |config|
   config.include CapybaraHelpers, type: :feature
   config.include FeatureSessionHelpers, type: :feature
   config.include RequestSessionHelpers, type: :request
-  config.include EnvHelpers, type: :feature
   config.include FormHelpers, type: :feature
 
   config.include Warden::Test::Helpers, type: :request

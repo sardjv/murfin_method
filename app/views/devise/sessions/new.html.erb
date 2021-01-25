@@ -1,7 +1,7 @@
 <div class="container my-4">
 
   <div class="row">
-    <div class="col-md-4"><h5>Log in</h5></div>
+    <div class="col-md-4"><h5><%= I18n.t('actions.log_in') %></h5></div>
   </div>
 
   <div class="row">
@@ -16,8 +16,6 @@
 
         <%= f.submit I18n.t('actions.log_in'), class: 'btn btn-primary mt-2' %>
       <% end %>
-
-      <%#= render "devise/shared/links" %>
     </div>
   </div>
 </div>
