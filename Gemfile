@@ -91,9 +91,9 @@ gem 'tzinfo-data', '~> 1.2021.1'
 gem 'webpacker', '~> 5.2.1'
 
 group :development, :test do
-  # Call 'byebug' anywhere in your code to drop into a debugger console.
-  # https://github.com/deivid-rodriguez/byebug
-  gem 'byebug', '~> 11.1.3', platform: :mri
+  # Call 'binding.pry' anywhere in your code to drop into a debugger console.
+  # https://github.com/pry/pry
+  gem 'pry', '~> 0.13.1'
 
   # Generate Swagger docs from RSpec tests.
   # https://github.com/rswag/rswag
@@ -133,7 +133,9 @@ end
 group :test do
   # Acceptance test framework for web applications
   # https://github.com/teamcapybara/capybara
-  gem 'capybara', '~> 3.34.0'
+  # Use edge until Capybara version 3.35.0 is released,
+  # for Ruby 3.0.0 compatability.
+  gem 'capybara', github: 'teamcapybara/capybara', ref: '4cda03a40f02a01f363ca86883cd73e0be75a3ed'
 
   # Strategies for cleaning databases between tests.
   # https://github.com/DatabaseCleaner/database_cleaner
@@ -154,7 +156,8 @@ group :test do
 
   # A browser automation framework and ecosystem.
   # https://github.com/SeleniumHQ/selenium
-  gem 'selenium-webdriver', '3.142.7'
+  # Use edge until 4.0.0 is released, for Ruby 3.0.0 compatability.
+  gem 'selenium-webdriver', github: 'SeleniumHQ/selenium', ref: '8e5a9ede90137c048715125a14be3c25c08a51e7'
 
   # Simple one-liner tests for common Rails functionality.
   # https://github.com/thoughtbot/shoulda-matchers

@@ -101,7 +101,7 @@ open coverage/index.html
 
 ## Debugging
 
-To access a 'byebug' debugging point, run with:
+To access a 'binding.pry' debugging point, run with:
 
 ```
 docker-compose run --service-ports app
