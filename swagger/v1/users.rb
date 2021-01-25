@@ -19,6 +19,10 @@ module Swagger
             type: 'object',
             properties: user_properties_without_admin
           },
+          user_attributes_with_password: {
+            type: 'object',
+            properties: user_properties_without_admin.merge({ password: { type: 'string', example: 'pA$$w0Rd', 'x-nullable': true } })
+          },
           users_response: {
             type: 'object',
             properties: {
@@ -70,7 +74,7 @@ module Swagger
                         'https://job-plan-stats.herokuapp.com/api/v1/users/1' }
                     }
                   },
-                  attributes: { '$ref' => '#/definitions/user_attributes_without_admin' }
+                  attributes: { '$ref' => '#/definitions/user_attributes' }
                 }
               }
             }
@@ -82,7 +86,19 @@ module Swagger
                 type: 'object',
                 properties: {
                   type: { type: 'string', example: 'users' },
-                  attributes: { '$ref' => '#/definitions/user_attributes_without_admin' }
+                  attributes: { '$ref' => '#/definitions/user_attributes_with_password' }
+                }
+              }
+            }
+          },
+          user_post_params_without_password: {
+            type: 'object',
+            properties: {
+              data: {
+                type: 'object',
+                properties: {
+                  type: { type: 'string', example: 'users' },
+                  attributes: { '$ref' => '#/definitions/user_attributes' }
                 }
               }
             }
@@ -95,7 +111,20 @@ module Swagger
                 properties: {
                   id: { type: 'string', example: '1' },
                   type: { type: 'string', example: 'users' },
-                  attributes: { '$ref' => '#/definitions/user_attributes_without_admin' }
+                  attributes: { '$ref' => '#/definitions/user_attributes_with_password' }
+                }
+              }
+            }
+          },
+          user_patch_params_without_password: {
+            type: 'object',
+            properties: {
+              data: {
+                type: 'object',
+                properties: {
+                  id: { type: 'string', example: '1' },
+                  type: { type: 'string', example: 'users' },
+                  attributes: { '$ref' => '#/definitions/user_attributes' }
                 }
               }
             }
