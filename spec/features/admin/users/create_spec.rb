@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Admin creates a user', type: :feature do
   let!(:admin) { create :admin }
-  let(:password) { Faker::Internet.password }
+  # let(:password) { Faker::Internet.password }
 
   before do
     log_in admin
@@ -15,8 +15,8 @@ describe 'Admin creates a user', type: :feature do
     fill_in User.human_attribute_name('first_name'), with: 'Mary'
     fill_in User.human_attribute_name('last_name'), with: 'Anne'
     fill_in User.human_attribute_name('email'), with: 'mary@example.com'
-    fill_in User.human_attribute_name('password'), with: password
-    fill_in User.human_attribute_name('password_confirmation'), with: password
+    # fill_in User.human_attribute_name('password'), with: password
+    # fill_in User.human_attribute_name('password_confirmation'), with: password
     click_button I18n.t('actions.save')
 
     expect(page).to have_content(I18n.t('notice.successfully.created', model_name: User.model_name.human))
@@ -53,7 +53,7 @@ describe 'Admin creates a user', type: :feature do
     end
   end
 
-  context 'password does not match confirmation' do
+  xcontext 'password does not match confirmation' do
     let!(:existing_user) { create(:user, email: 'john@example.com') }
 
     it 'does not create user' do

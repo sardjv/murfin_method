@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   if ENV['AUTH_METHOD'] == 'form'
     include SecuredWithDevise
-  elsif ENV['AUTH_METHOD'] == 'oauth2'
+  else
     include SecuredWithOauth
   end
 
