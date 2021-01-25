@@ -28,7 +28,7 @@ module Swagger
                   type: 'object',
                   properties: {
                     id: { type: 'string', example: '1' },
-                    type: { type: 'string', example: 'Users' },
+                    type: { type: 'string', example: 'users' },
                     link: {
                       type: 'object',
                       properties: {
@@ -62,7 +62,7 @@ module Swagger
                 type: 'object',
                 properties: {
                   id: { type: 'string', example: '1' },
-                  type: { type: 'string', example: 'Users' },
+                  type: { type: 'string', example: 'users' },
                   link: {
                     type: 'object',
                     properties: {
@@ -70,7 +70,7 @@ module Swagger
                         'https://job-plan-stats.herokuapp.com/api/v1/users/1' }
                     }
                   },
-                  attributes: { '$ref' => '#/definitions/user_attributes_without_admin' }
+                  attributes: { '$ref' => '#/definitions/user_attributes' }
                 }
               }
             }

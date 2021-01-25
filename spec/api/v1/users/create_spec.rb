@@ -32,7 +32,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
         schema '$ref' => '#/definitions/user_post_params'
 
         run_test! do
-          parsed_json_data_matches_db_values(created_user)
+          parsed_json_data_matches_db_record(created_user)
         end
       end
 
