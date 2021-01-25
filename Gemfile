@@ -156,7 +156,7 @@ group :test do
 
   # A browser automation framework and ecosystem.
   # https://github.com/SeleniumHQ/selenium
-  # Use edge until 4.0.0 is released, for Ruby 3.0.0 compatability.
+  # Use edge until v4.0.0 of this gem is released, for Ruby 3.0.0 compatability.
   gem 'selenium-webdriver', github: 'SeleniumHQ/selenium', ref: '8e5a9ede90137c048715125a14be3c25c08a51e7'
 
   # Simple one-liner tests for common Rails functionality.
