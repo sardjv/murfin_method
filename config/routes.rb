@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   get 'auth/failure' => 'auth0#failure'
   get 'auth_logout' => 'auth0#destroy'
 
+  devise_for :users, controllers: { sessions: 'users/sessions' }
+
   namespace :api do
     namespace :v1 do
       jsonapi_resources :users

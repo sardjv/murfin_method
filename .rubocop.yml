@@ -26,6 +26,9 @@ Style/ClassAndModuleChildren:
   Exclude:
     - 'swagger/**/*'
 
+Style/CaseLikeIf:
+  Enabled: false
+
 Style/MixinUsage:
   Enabled: false
 
@@ -47,3 +50,4 @@ Metrics/BlockLength:
 
 Rails/SkipsModelValidations:
   Enabled: false
+  

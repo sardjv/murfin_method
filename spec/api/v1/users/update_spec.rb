@@ -34,7 +34,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
         let(:Authorization) { 'Bearer dummy_json_web_token' }
 
         response '200', 'OK: User updated' do
-          schema '$ref' => '#/definitions/user_patch_params'
+          schema '$ref' => '#/definitions/user_patch_params_without_password'
 
           run_test! do
             updated_user.reload
@@ -44,21 +44,56 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
           end
         end
 
-        # user params include not permitted admin flag
-        response '400', 'Error: Bad Request' do
-          let(:example_attributes_with_admin) { example_attributes.merge(admin: true) }
+        context 'user attributes contain password' do
+          let(:password) { Faker::Internet.password }
 
           let(:user) do
             {
               data: {
                 type: 'users',
-                attributes: example_attributes_with_admin
+                id: updated_user.id,
+                attributes: example_attributes.merge(password: password)
               }
             }
           end
 
-          schema '$ref' => '#/definitions/error_400'
-          run_test!
+          context 'valid password and user is not admin' do
+            response '200', 'OK: User updated' do
+              schema '$ref' => '#/definitions/user_patch_params_without_password'
+
+              run_test! do
+                expect(updated_user.reload.valid_password?(password)).to eql true
+              end
+            end
+          end
+
+          xcontext 'valid password but user is admin' do # TODO: trigger exception
+            let!(:updated_user) { create :user, admin: true }
+
+            response '400', 'Bad Request' do
+              schema '$ref' => '#/definitions/error_400'
+              run_test!
+            end
+          end
+        end
+
+        context 'user params include not permitted admin flag' do
+          response '400', 'Error: Bad Request' do
+            let(:example_attributes_with_admin) { example_attributes.merge(admin: true) }
+
+            let(:user) do
+              {
+                data: {
+                  type: 'users',
+                  id: updated_user.id,
+                  attributes: example_attributes_with_admin
+                }
+              }
+            end
+
+            schema '$ref' => '#/definitions/error_400'
+            run_test!
+          end
         end
       end
     end

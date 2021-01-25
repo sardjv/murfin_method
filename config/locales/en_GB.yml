@@ -18,6 +18,9 @@ en:
         time_range_type: Type
         value: Time worked
         time_worked: Worked
+  log_in_out: &log_in_out
+    log_in: Log in
+    log_out: Log out
   actions:
     add: Add %{model_name}
     edit: Edit %{model_name}
@@ -26,11 +29,11 @@ en:
     confirm: Are you sure?
     delete: Delete
     save: Save
+    << : *log_in_out
   app:
     name: Murfin+
   auth:
-    log_in: Log in
-    log_out: Log out
+    << : *log_in_out
   date:
     formats:
       readable: '%-d %B %Y'
