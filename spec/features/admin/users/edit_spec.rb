@@ -7,11 +7,11 @@ describe 'Admin edits a user', type: :feature, js: true do
   let(:new_first_name) { Faker::Name.first_name }
   let(:last_name) { Faker::Name.last_name }
   let(:email) { Faker::Internet.email }
-  let(:password) { Faker::Internet.password }
   let!(:user) { create :user, first_name: first_name, last_name: last_name, email: email }
 
   before do
     puts 'before spec'
+    puts "ENV['AUTH_METHOD'] => #{ENV['AUTH_METHOD']}"
     log_in admin
     visit admin_users_path
     first('.bi-pencil').click
@@ -26,7 +26,6 @@ describe 'Admin edits a user', type: :feature, js: true do
     end
 
     it 'updates user' do
-      page.save_screenshot
       fill_in User.human_attribute_name('first_name'), with: new_first_name
       click_button I18n.t('actions.save')
 
@@ -55,6 +54,8 @@ describe 'Admin edits a user', type: :feature, js: true do
   end
 
   context 'auth method is form' do
+    let(:password) { Faker::Internet.password }
+
     around do |example|
       ClimateControl.modify AUTH_METHOD: 'form' do
         puts "around cc2 #{ENV['AUTH_METHOD']}"

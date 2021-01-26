@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Admin log in', type: :feature, js: true do
+describe 'Admin log in', type: :feature do
   context 'via oauth2' do
     let!(:admin) { create :admin }
 
