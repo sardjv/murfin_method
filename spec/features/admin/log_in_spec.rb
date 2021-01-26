@@ -24,7 +24,6 @@ describe 'Admin log in', type: :feature do
   context 'via form(Devise)' do
     around do |example|
       ClimateControl.modify AUTH_METHOD: 'form' do
-        puts "around cc2 #{ENV['AUTH_METHOD']}"
         example.run
       end
     end
