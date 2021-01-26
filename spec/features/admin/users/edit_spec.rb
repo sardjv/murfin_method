@@ -10,8 +10,6 @@ describe 'Admin edits a user', type: :feature, js: true do
   let!(:user) { create :user, first_name: first_name, last_name: last_name, email: email }
 
   before do
-    puts 'before spec'
-    puts "ENV['AUTH_METHOD'] => #{ENV['AUTH_METHOD']}"
     log_in admin
     visit admin_users_path
     first('.bi-pencil').click
@@ -20,7 +18,6 @@ describe 'Admin edits a user', type: :feature, js: true do
   context 'auth method is oauth' do
     around do |example|
       ClimateControl.modify AUTH_METHOD: 'oauth' do
-        puts "around cc2 #{ENV['AUTH_METHOD']}"
         example.run
       end
     end
@@ -33,7 +30,7 @@ describe 'Admin edits a user', type: :feature, js: true do
       expect(user.reload.first_name).to eq new_first_name
     end
 
-    it 'does not contain password fields' do
+    it 'has form without password fields' do
       within 'form.edit_user' do
         expect(page).not_to have_content 'Password'
       end
@@ -58,7 +55,6 @@ describe 'Admin edits a user', type: :feature, js: true do
 
     around do |example|
       ClimateControl.modify AUTH_METHOD: 'form' do
-        puts "around cc2 #{ENV['AUTH_METHOD']}"
         example.run
       end
     end
@@ -69,9 +65,10 @@ describe 'Admin edits a user', type: :feature, js: true do
       click_button I18n.t('actions.save')
 
       expect(page).to have_content(I18n.t('notice.successfully.updated', model_name: User.model_name.human))
+      expect(user.valid_password?(password))
     end
 
-    context 'password is too short' do # TODO: enable when ENV issues on tests resolved
+    context 'password is too short' do
       let(:password) { '123' }
 
       it 'shows form error' do
@@ -84,6 +81,5 @@ describe 'Admin edits a user', type: :feature, js: true do
         end
       end
     end
-
   end
 end

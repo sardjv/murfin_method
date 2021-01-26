@@ -6,7 +6,6 @@ describe 'Admin log in', type: :feature do
 
     around do |example|
       ClimateControl.modify AUTH_METHOD: 'oauth2' do
-        puts "around cc1 #{ENV['AUTH_METHOD']}"
         example.run
       end
     end

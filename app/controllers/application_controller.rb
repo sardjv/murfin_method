@@ -33,6 +33,6 @@ class ApplicationController < ActionController::Base
   protected
 
   def authenticate_user!
-    auth_method?('form')  ? :authenticate_user_via_devise! : authenticate_user_via_oauth!
+    auth_method?('form') ? :authenticate_user_via_devise! : authenticate_user_via_oauth!
   end
 end
