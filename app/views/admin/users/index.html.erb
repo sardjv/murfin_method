@@ -24,7 +24,7 @@
           <tbody>
             <% @users.each do |user| %>
               <% cache user do %>
-                <tr>
+                <tr id="<%= dom_id user -%>">
                   <td>
                     <%= user.name %>
                     <% if user.admin? %>

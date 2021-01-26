@@ -11,8 +11,11 @@ describe 'Admin edits a user', type: :feature, js: true do
 
   before do
     log_in admin
+
     visit admin_users_path
-    first('.bi-pencil').click
+    within "#user_#{user.id}" do
+      first('.bi-pencil').click
+    end
   end
 
   context 'auth method is oauth' do

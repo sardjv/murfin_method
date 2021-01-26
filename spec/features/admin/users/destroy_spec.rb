@@ -12,7 +12,9 @@ describe 'Admin destroys a user', type: :feature, js: true do
     visit admin_users_path
 
     accept_confirm do
-      first('.bi-trash').click
+      within "#user_#{user.id}" do
+        first('.bi-trash').click
+      end
     end
 
     expect(page).to have_content(I18n.t('notice.successfully.destroyed', model_name: User.model_name.human))

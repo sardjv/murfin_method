@@ -12,6 +12,7 @@ describe 'Admin creates a user', type: :feature, js: true do
 
   before do
     log_in admin
+
     visit admin_users_path
     click_link I18n.t('actions.add', model_name: User.model_name.human.titleize)
   end
@@ -34,7 +35,7 @@ describe 'Admin creates a user', type: :feature, js: true do
     end
 
     it 'has form without password fields' do
-      within 'form.create_user' do
+      within 'form.new_user' do
         expect(page).not_to have_content 'Password'
       end
     end
