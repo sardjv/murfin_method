@@ -9,6 +9,10 @@ gem 'bootstrap_form', '~> 4.0'
 # https://github.com/nathanvda/cocoon
 gem 'cocoon', '~> 1.2.15'
 
+# Easily manage your environment.
+# https://github.com/thoughtbot/climate_control
+gem 'climate_control'
+
 # Devise is a flexible authentication solution for Rails based on Warden.
 # https://github.com/heartcombo/devise
 gem 'devise', '~> 4.7.3'

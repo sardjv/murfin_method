@@ -1,16 +1,24 @@
 class ApplicationController < ActionController::Base
-  if ENV['AUTH_METHOD'] == 'form'
-    include SecuredWithDevise
-  else
-    include SecuredWithOauth
-  end
+  protect_from_forgery with: :exception
+
+  include SecuredWithDevise
+  include SecuredWithOauth
 
   before_action :authenticate_user!
 
-  helper_method :user_authenticated?, :current_user_name, :current_user_email
+  def auth_method?(method_name)
+    ENV['AUTH_METHOD'] == method_name.to_s
+  end
+  helper_method :auth_method?
+
+  def user_authenticated?
+    auth_method?('form') ? user_authenticated_via_devise? : user_authenticated_via_oauth?
+  end
+  helper_method :user_authenticated?
+
+  helper_method :current_user_name, :current_user_email
 
   before_action :nav_presenter, except: %w[create update destroy] # rubocop:disable Rails/LexicallyScopedActionFilter
-  protect_from_forgery with: :exception
 
   include Pundit
   include PunditHelper
@@ -20,5 +28,11 @@ class ApplicationController < ActionController::Base
     return unless current_user
 
     @nav_presenter ||= NavPresenter.new(params: params, current_user: current_user)
+  end
+
+  protected
+
+  def authenticate_user!
+    auth_method?('form')  ? :authenticate_user_via_devise! : authenticate_user_via_oauth!
   end
 end

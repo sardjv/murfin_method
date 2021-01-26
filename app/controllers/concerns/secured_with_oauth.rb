@@ -1,11 +1,12 @@
 module SecuredWithOauth
   extend ActiveSupport::Concern
 
-  def user_authenticated?
-    session && session[:userinfo].present?
+  def user_authenticated_via_oauth?
+    puts 'user_authenticated_via_oauth?'
+    session[:userinfo].try(:present?)
   end
 
-  def authenticate_user!
+  def authenticate_user_via_oauth!
     if user_authenticated?
       @current_user = find_or_create_user
     else
@@ -13,9 +14,9 @@ module SecuredWithOauth
     end
   end
 
-  def current_user
-    @current_user
-  end
+  # def current_user
+  #   @current_user
+  # end
 
   private
 

@@ -1,12 +1,17 @@
 require 'rails_helper'
 
-describe 'Admin log in', type: :feature do
-  xcontext 'via oauth2' do
+describe 'Admin log in', type: :feature, js: true do
+  context 'via oauth2' do
     let!(:admin) { create :admin }
 
-    before do
-      stub_env('AUTH_METHOD', 'oauth2')
+    around do |example|
+      ClimateControl.modify AUTH_METHOD: 'oauth2' do
+        puts "around cc1 #{ENV['AUTH_METHOD']}"
+        example.run
+      end
+    end
 
+    before do
       log_in admin
     end
 
@@ -17,14 +22,19 @@ describe 'Admin log in', type: :feature do
     end
   end
 
-  xcontext 'via form(Devise)' do # TODO: make pass probably by refactoring controller concerns for auth
+  context 'via form(Devise)' do
+    around do |example|
+      ClimateControl.modify AUTH_METHOD: 'form' do
+        puts "around cc2 #{ENV['AUTH_METHOD']}"
+        example.run
+      end
+    end
+
     let(:email) { Faker::Internet.email }
     let(:password) { Faker::Internet.password }
     let!(:admin) { create :admin, :with_password, email: email, password: password }
 
     before do
-      stub_env('AUTH_METHOD', 'form')
-
       visit root_path
 
       within '.navbar' do
