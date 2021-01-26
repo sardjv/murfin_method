@@ -137,9 +137,7 @@ end
 group :test do
   # Acceptance test framework for web applications
   # https://github.com/teamcapybara/capybara
-  # Use edge until Capybara version 3.35.0 is released,
-  # for Ruby 3.0.0 compatability.
-  gem 'capybara'
+  gem 'capybara', '~> 3.35.0'
 
   # Strategies for cleaning databases between tests.
   # https://github.com/DatabaseCleaner/database_cleaner
