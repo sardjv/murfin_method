@@ -3,12 +3,12 @@ module SecuredWithOauth
 
   def user_authenticated_via_oauth?
     puts 'user_authenticated_via_oauth?'
-    session[:userinfo].try(:present?)
+    session && session[:user_id].present?
   end
 
   def authenticate_user_via_oauth!
     if user_authenticated?
-      @current_user = find_or_create_user
+      @current_user = User.find(session[:user_id])
     else
       redirect_to root_path
     end
