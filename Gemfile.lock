@@ -378,7 +378,7 @@ PLATFORMS
 DEPENDENCIES
   annotate (~> 3.1.1)
   bootstrap_form (~> 4.0)
-  capybara
+  capybara (~> 3.35.0)
   cocoon (~> 1.2.15)
   database_cleaner-active_record (~> 1.8.0)
   database_cleaner-redis (~> 1.8.0)
