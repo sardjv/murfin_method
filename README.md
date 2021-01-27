@@ -51,11 +51,11 @@ If you can run [Docker](https://en.wikipedia.org/wiki/Docker_(software)), that i
 
 Core dependencies:
 
-- Ruby 2.7 [https://github.com/ruby/ruby](https://github.com/ruby/ruby)
-- Rails 6.0.2.1 [https://github.com/rails/rails](https://github.com/rails/rails)
-- Redis 5.0.8 [https://redis.io/](https://redis.io/)
-- Sidekiq 6.0.6 [https://github.com/mperham/sidekiq](https://github.com/mperham/sidekiq)
-- MySQL 8.0.19
+- Ruby [https://github.com/ruby/ruby](https://github.com/ruby/ruby)
+- Rails [https://github.com/rails/rails](https://github.com/rails/rails)
+- Redis [https://redis.io/](https://redis.io/)
+- Sidekiq [https://github.com/mperham/sidekiq](https://github.com/mperham/sidekiq)
+- MySQL
 - Multiple supporting gems as listed in the Gemfile, Bundler (included in Ruby) should take care of installing these.
 
 ## Documentation
