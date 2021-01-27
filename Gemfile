@@ -40,7 +40,7 @@ gem 'jsonapi-resources', github: 'cerebris/jsonapi-resources', ref: 'eb432722b91
 # https://github.com/jwt/ruby-jwt
 gem 'jwt', '~> 2.2.2'
 
-# paginator for modern web app frameworks and ORMs
+# paginator for modern web app frameworks and ORMs.
 # https://github.com/kaminari/kaminari
 gem 'kaminari', '~> 1.2.1'
 
@@ -113,7 +113,7 @@ group :development, :test do
 end
 
 group :development do
-  # Annotate Rails classes with schema and routes info
+  # Annotate Rails classes with schema and routes info.
   # https://github.com/ctran/annotate_models
   gem 'annotate', '~> 3.1.1'
 
@@ -135,7 +135,7 @@ group :development do
 end
 
 group :test do
-  # Acceptance test framework for web applications
+  # Acceptance test framework for web applications.
   # https://github.com/teamcapybara/capybara
   gem 'capybara', '~> 3.35.0'
 
