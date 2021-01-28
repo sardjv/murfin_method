@@ -5,8 +5,9 @@
 
 ## .env file
 
-To get started, you need a `.env` file with secrets. For testing there is a `.env.example` file included in the repo that you can use, just remove the `.example` from the filename. Make sure to change all secrets marked with YOU_MUST_CHANGE_THIS_PASSWORD before running in production!
-Remember also to set one of the methods _form_ or _oauth2_ in _.env_ file.
+To get started, you need a `.env` file with secrets. If you use bash, you can generate one with the command `sh ./script/generate_env_file.sh`. If not, there is an `.env.example` file included in the repo that you can use, just remove the `.example` from the filename. Make sure to change all secrets marked with YOU_MUST_CHANGE_THIS_PASSWORD before running in production!
+
+You also need to set AUTH_METHOD to either _form_ or _oauth2_ in the _.env_ file.
 
 ## Booting up
 
@@ -50,11 +51,11 @@ If you can run [Docker](https://en.wikipedia.org/wiki/Docker_(software)), that i
 
 Core dependencies:
 
-- Ruby 2.7 [https://github.com/ruby/ruby](https://github.com/ruby/ruby)
-- Rails 6.0.2.1 [https://github.com/rails/rails](https://github.com/rails/rails)
-- Redis 5.0.8 [https://redis.io/](https://redis.io/)
-- Sidekiq 6.0.6 [https://github.com/mperham/sidekiq](https://github.com/mperham/sidekiq)
-- MySQL 8.0.19
+- Ruby [https://github.com/ruby/ruby](https://github.com/ruby/ruby)
+- Rails [https://github.com/rails/rails](https://github.com/rails/rails)
+- Redis [https://redis.io/](https://redis.io/)
+- Sidekiq [https://github.com/mperham/sidekiq](https://github.com/mperham/sidekiq)
+- MySQL
 - Multiple supporting gems as listed in the Gemfile, Bundler (included in Ruby) should take care of installing these.
 
 ## Documentation
