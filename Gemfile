@@ -101,7 +101,7 @@ group :development, :test do
 
   # Generate Swagger docs from RSpec tests.
   # https://github.com/rswag/rswag
-  gem 'rswag-specs', '~> 2.3.1'
+  gem 'rswag-specs', '~> 2.3.2'
 
   # A memory profiler for Ruby.
   # https://github.com/SamSaffron/memory_profiler
