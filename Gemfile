@@ -44,7 +44,7 @@ gem 'jsonapi-resources', github: 'cerebris/jsonapi-resources', ref: 'eb432722b91
 # https://github.com/jwt/ruby-jwt
 gem 'jwt', '~> 2.2.2'
 
-# paginator for modern web app frameworks and ORMs
+# paginator for modern web app frameworks and ORMs.
 # https://github.com/kaminari/kaminari
 gem 'kaminari', '~> 1.2.1'
 
@@ -67,7 +67,7 @@ gem 'parser', '~> 3.0.0.0'
 
 # A Ruby/Rack web server built for concurrency.
 # https://github.com/puma/puma
-gem 'puma', '~> 5.1.1'
+gem 'puma', '~> 5.2.0'
 
 # Minimal authorization through OO design and pure Ruby classes.
 # https://github.com/varvet/pundit
@@ -83,8 +83,8 @@ gem 'redis', '~> 4.2.5'
 
 # Serve Swagger documentation generated from RSpec tests.
 # https://github.com/rswag/rswag
-gem 'rswag-api', '~> 2.3.1'
-gem 'rswag-ui', '~> 2.3.1'
+gem 'rswag-api', '~> 2.3.2'
+gem 'rswag-ui', '~> 2.3.2'
 
 # Simple, efficient background processing for Ruby.
 # https://github.com/mperham/sidekiq
@@ -105,7 +105,7 @@ group :development, :test do
 
   # Generate Swagger docs from RSpec tests.
   # https://github.com/rswag/rswag
-  gem 'rswag-specs', '~> 2.3.1'
+  gem 'rswag-specs', '~> 2.3.2'
 
   # A memory profiler for Ruby.
   # https://github.com/SamSaffron/memory_profiler
@@ -117,7 +117,7 @@ group :development, :test do
 end
 
 group :development do
-  # Annotate Rails classes with schema and routes info
+  # Annotate Rails classes with schema and routes info.
   # https://github.com/ctran/annotate_models
   gem 'annotate', '~> 3.1.1'
 
@@ -139,9 +139,9 @@ group :development do
 end
 
 group :test do
-  # Acceptance test framework for web applications
+  # Acceptance test framework for web applications.
   # https://github.com/teamcapybara/capybara
-  gem 'capybara', '~> 3.35.0'
+  gem 'capybara', '~> 3.35.1'
 
   # Strategies for cleaning databases between tests.
   # https://github.com/DatabaseCleaner/database_cleaner
