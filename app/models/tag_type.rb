@@ -19,7 +19,6 @@ class TagType < ApplicationRecord
   has_many :children, class_name: 'TagType', inverse_of: :parent, foreign_key: :parent_id, dependent: :destroy
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
-  validates :parent, presence: true, if: :parent_id
   validate :validate_acyclic, on: :update
 
   def name_with_ancestors

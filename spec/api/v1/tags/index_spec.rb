@@ -1,20 +1,20 @@
 require 'swagger_helper'
 
 describe Api::V1::TagResource, type: :request, swagger_doc: 'v1/swagger.json' do
-  let(:tag_type_name1) { Faker::Lorem.word }
-  let(:tag_type_name2) { Faker::Lorem.word }
-  let(:tag_type_name3) { Faker::Lorem.word }
-  let(:tag_type_name4) { Faker::Lorem.word }
+  let(:tag_type_name1) { Faker::Lorem.unique.word }
+  let(:tag_type_name2) { Faker::Lorem.unique.word }
+  let(:tag_type_name3) { Faker::Lorem.unique.word }
+  let(:tag_type_name4) { Faker::Lorem.unique.word }
 
   let!(:tag_type1) { create :tag_type, name: tag_type_name1 }
   let!(:tag_type2) { create :tag_type, name: tag_type_name2, parent: tag_type1 }
   let!(:tag_type3) { create :tag_type, name: tag_type_name3 }
   let!(:tag_type4) { create :tag_type, name: tag_type_name4 }
 
-  let(:tag_name1) { Faker::Lorem.word }
-  let(:tag_name2) { Faker::Lorem.word }
-  let(:tag_name3) { Faker::Lorem.word }
-  let(:tag_name4) { Faker::Lorem.word }
+  let(:tag_name1) { Faker::Lorem.unique.word }
+  let(:tag_name2) { Faker::Lorem.unique.word }
+  let(:tag_name3) { Faker::Lorem.unique.word }
+  let(:tag_name4) { Faker::Lorem.unique.word }
 
   let!(:tag1) { create :tag, name: tag_name1, tag_type: tag_type1 }
   let!(:tag1a) { create :tag, name: tag_name2, tag_type: tag_type2, parent: tag1 }

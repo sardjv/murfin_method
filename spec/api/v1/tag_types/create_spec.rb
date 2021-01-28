@@ -67,15 +67,6 @@ describe Api::V1::TagTypeResource, type: :request, swagger_doc: 'v1/swagger.json
           run_test!
         end
       end
-
-      context 'parent tag does not exist' do
-        let(:attributes) { valid_attributes.merge({ parent_id: 111_222 }) }
-
-        response '422', 'Invalid request' do
-          schema '$ref' => '#/definitions/error_422'
-          run_test!
-        end
-      end
     end
   end
 end
