@@ -14,6 +14,424 @@
     }
   },
   "paths": {
+    "/api/v1/tag_types": {
+      "post": {
+        "summary": "create tag type",
+        "tags": [
+          "TagTypes"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "consumes": [
+          "application/vnd.api+json"
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "parameters": [
+          {
+            "name": "tag_type",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/tag_type_post_params"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Tag Type created",
+            "schema": {
+              "$ref": "#/definitions/tag_type_post_params"
+            }
+          },
+          "422": {
+            "description": "Invalid request",
+            "schema": {
+              "$ref": "#/definitions/error_422"
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "get tag types",
+        "tags": [
+          "TagTypes"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "parameters": [
+          {
+            "name": "page[size]",
+            "in": "query",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "page[number]",
+            "in": "query",
+            "type": "integer",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tag Types index",
+            "schema": {
+              "$ref": "#/definitions/tag_types_response"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tag_types/{id}": {
+      "delete": {
+        "summary": "destroy tag type",
+        "tags": [
+          "TagTypes"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "OK: No Content"
+          },
+          "404": {
+            "description": "Record not found",
+            "schema": {
+              "$ref": "#/definitions/error_404"
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "get tag type",
+        "tags": [
+          "TagTypes"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Showing tag type",
+            "schema": {
+              "$ref": "#/definitions/tag_type_response"
+            }
+          },
+          "404": {
+            "description": "Record not found",
+            "schema": {
+              "$ref": "#/definitions/error_404"
+            }
+          },
+          "406": {
+            "description": "Unsupported accept header",
+            "schema": {
+              "$ref": "#/definitions/error_406"
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "update tag",
+        "tags": [
+          "TagTypes"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "consumes": [
+          "application/vnd.api+json"
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "tag_type",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/tag_type_patch_params"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK: Tag updated",
+            "schema": {
+              "$ref": "#/definitions/tag_type_patch_params"
+            }
+          },
+          "422": {
+            "description": "Invalid request",
+            "schema": {
+              "$ref": "#/definitions/error_422"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tags": {
+      "post": {
+        "summary": "create tag",
+        "tags": [
+          "Tags"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "consumes": [
+          "application/vnd.api+json"
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "parameters": [
+          {
+            "name": "tag",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/tag_post_params"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Tag created",
+            "schema": {
+              "$ref": "#/definitions/tag_post_params"
+            }
+          },
+          "422": {
+            "description": "Invalid request",
+            "schema": {
+              "$ref": "#/definitions/error_422"
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "get tags",
+        "tags": [
+          "Tags"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "parameters": [
+          {
+            "name": "page[size]",
+            "in": "query",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "page[number]",
+            "in": "query",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "filter[tag_type_id]",
+            "in": "query",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "filter[parent_id]",
+            "in": "query",
+            "type": "integer",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tags index",
+            "schema": {
+              "$ref": "#/definitions/tags_response"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tags/{id}": {
+      "delete": {
+        "summary": "destroys tag",
+        "tags": [
+          "Tags"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "OK: No Content"
+          },
+          "404": {
+            "description": "Record not found",
+            "schema": {
+              "$ref": "#/definitions/error_404"
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "get tag",
+        "tags": [
+          "Tags"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Showing tag type",
+            "schema": {
+              "$ref": "#/definitions/tag_response"
+            }
+          },
+          "404": {
+            "description": "Record not found",
+            "schema": {
+              "$ref": "#/definitions/error_404"
+            }
+          },
+          "406": {
+            "description": "Unsupported accept header",
+            "schema": {
+              "$ref": "#/definitions/error_406"
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "update tag",
+        "tags": [
+          "Tags"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "consumes": [
+          "application/vnd.api+json"
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "tag",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/tag_patch_params"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK: Tag updated",
+            "schema": {
+              "$ref": "#/definitions/tag_patch_params"
+            }
+          }
+        }
+      }
+    },
     "/api/v1/time_ranges": {
       "post": {
         "summary": "create time range",
@@ -240,7 +658,7 @@
     },
     "/api/v1/users/{id}": {
       "delete": {
-        "summary": "destroys user",
+        "summary": "destroy user",
         "tags": [
           "Users"
         ],
@@ -266,7 +684,10 @@
             "description": "OK: No Content"
           },
           "404": {
-            "description": "Record not found"
+            "description": "Record not found",
+            "schema": {
+              "$ref": "#/definitions/error_404"
+            }
           },
           "423": {
             "description": "Error: Record Locked"
@@ -303,10 +724,16 @@
             }
           },
           "404": {
-            "description": "Record not found"
+            "description": "Record not found",
+            "schema": {
+              "$ref": "#/definitions/error_404"
+            }
           },
           "406": {
-            "description": "Unsupported accept header"
+            "description": "Unsupported accept header",
+            "schema": {
+              "$ref": "#/definitions/error_406"
+            }
           }
         }
       },
@@ -360,6 +787,300 @@
     }
   },
   "definitions": {
+    "tag_attributes": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Lorem",
+          "x-nullable": false
+        },
+        "tag_type_id": {
+          "type": "integer",
+          "example": 4567,
+          "x-nullable": false
+        },
+        "parent_id": {
+          "type": "integer",
+          "example": 98765,
+          "x-nullable": true
+        },
+        "default_for_filter": {
+          "type": "boolean",
+          "example": false,
+          "x-nullable": false
+        }
+      }
+    },
+    "tags_response": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "1"
+              },
+              "type": {
+                "type": "string",
+                "example": "tags"
+              },
+              "link": {
+                "type": "object",
+                "properties": {
+                  "self": {
+                    "type": "string",
+                    "example": "https://job-plan-stats.herokuapp.com/api/v1/tags/1"
+                  }
+                }
+              },
+              "attributes": {
+                "$ref": "#/definitions/tag_attributes"
+              }
+            }
+          }
+        },
+        "links": {
+          "type": "object",
+          "properties": {
+            "first": {
+              "type": "string",
+              "example": "https://job-plan-stats.herokuapp.com/api/v1/tags?page[number]=1&page[size]=5"
+            },
+            "prev": {
+              "type": "string",
+              "example": "https://job-plan-stats.herokuapp.com/api/v1/tags?page[number]=1&page[size]=5"
+            },
+            "next": {
+              "type": "string",
+              "example": "https://job-plan-stats.herokuapp.com/api/v1/tags?page[number]=2&page[size]=5"
+            },
+            "last": {
+              "type": "string",
+              "example": "https://job-plan-stats.herokuapp.com/api/v1/tags?page[number]=5&page[size]=5"
+            }
+          }
+        }
+      }
+    },
+    "tag_response": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "1"
+            },
+            "type": {
+              "type": "string",
+              "example": "tags"
+            },
+            "link": {
+              "type": "object",
+              "properties": {
+                "self": {
+                  "type": "string",
+                  "example": "https://job-plan-stats.herokuapp.com/api/v1/tags/1"
+                }
+              }
+            },
+            "attributes": {
+              "$ref": "#/definitions/tag_attributes"
+            }
+          }
+        }
+      }
+    },
+    "tag_post_params": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "tags"
+            },
+            "attributes": {
+              "$ref": "#/definitions/tag_attributes"
+            }
+          }
+        }
+      }
+    },
+    "tag_patch_params": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "1"
+            },
+            "type": {
+              "type": "string",
+              "example": "tags"
+            },
+            "attributes": {
+              "$ref": "#/definitions/tag_attributes"
+            }
+          }
+        }
+      }
+    },
+    "tag_type_attributes": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Ipsum",
+          "x-nullable": false
+        },
+        "parent_id": {
+          "type": "integer",
+          "example": null,
+          "x-nullable": true
+        },
+        "active_for_activities_at": {
+          "type": "string",
+          "example": "2021-01-28T12:30:00+00:00",
+          "x-nullable": true
+        },
+        "active_for_time_ranges_at": {
+          "type": "string",
+          "example": "2021-01-29T09:00:00+00:00",
+          "x-nullable": true
+        }
+      }
+    },
+    "tag_types_response": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "1"
+              },
+              "type": {
+                "type": "string",
+                "example": "tag_types"
+              },
+              "link": {
+                "type": "object",
+                "properties": {
+                  "self": {
+                    "type": "string",
+                    "example": "https://job-plan-stats.herokuapp.com/api/v1/tag_types/1"
+                  }
+                }
+              },
+              "attributes": {
+                "$ref": "#/definitions/tag_type_attributes"
+              }
+            }
+          }
+        },
+        "links": {
+          "type": "object",
+          "properties": {
+            "first": {
+              "type": "string",
+              "example": "https://job-plan-stats.herokuapp.com/api/v1/tag_types?page[number]=1&page[size]=5"
+            },
+            "prev": {
+              "type": "string",
+              "example": "https://job-plan-stats.herokuapp.com/api/v1/tag_types?page[number]=1&page[size]=5"
+            },
+            "next": {
+              "type": "string",
+              "example": "https://job-plan-stats.herokuapp.com/api/v1/tag_types?page[number]=2&page[size]=5"
+            },
+            "last": {
+              "type": "string",
+              "example": "https://job-plan-stats.herokuapp.com/api/v1/tag_types?page[number]=5&page[size]=5"
+            }
+          }
+        }
+      }
+    },
+    "tag_type_response": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "1"
+            },
+            "type": {
+              "type": "string",
+              "example": "tag_types"
+            },
+            "link": {
+              "type": "object",
+              "properties": {
+                "self": {
+                  "type": "string",
+                  "example": "https://job-plan-stats.herokuapp.com/api/v1/tag_types/1"
+                }
+              }
+            },
+            "attributes": {
+              "$ref": "#/definitions/tag_type_attributes"
+            }
+          }
+        }
+      }
+    },
+    "tag_type_post_params": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "tag_types"
+            },
+            "attributes": {
+              "$ref": "#/definitions/tag_type_attributes"
+            }
+          }
+        }
+      }
+    },
+    "tag_type_patch_params": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "1"
+            },
+            "type": {
+              "type": "string",
+              "example": "tag_types"
+            },
+            "attributes": {
+              "$ref": "#/definitions/tag_type_attributes"
+            }
+          }
+        }
+      }
+    },
     "time_range_attributes": {
       "type": "object",
       "properties": {
