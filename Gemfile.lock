@@ -379,7 +379,7 @@ PLATFORMS
 DEPENDENCIES
   annotate (~> 3.1.1)
   bootstrap_form (~> 4.0)
-  capybara (~> 3.35.0)
+  capybara (~> 3.35.1)
   climate_control
   cocoon (~> 1.2.15)
   database_cleaner-active_record (~> 1.8.0)
