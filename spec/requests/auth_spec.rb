@@ -9,12 +9,7 @@ RSpec.describe 'Auth', type: :request do
     end
 
     describe 'GET admin_dashboard_path' do
-      let(:user) do
-        create(:user,
-              first_name: 'John',
-              last_name: 'Smith',
-              email: 'john@example.com')
-      end
+      let(:user) { create :user, first_name: 'John', last_name: 'Smith', email: 'john@example.com' }
 
       context 'when authenticated' do
         before do
