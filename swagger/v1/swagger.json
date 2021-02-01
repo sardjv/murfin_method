@@ -463,7 +463,7 @@
           "201": {
             "description": "Time Range created",
             "schema": {
-              "$ref": "#/definitions/time_range_post_params"
+              "$ref": "#/definitions/time_range_response_with_relationships"
             }
           },
           "422": {
@@ -512,6 +512,12 @@
             "in": "query",
             "type": "integer",
             "required": false
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "type": "string",
+            "required": false
           }
         ],
         "responses": {
@@ -542,6 +548,12 @@
             "in": "path",
             "type": "string",
             "required": true
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "type": "string",
+            "required": false
           }
         ],
         "produces": [
@@ -551,7 +563,7 @@
           "200": {
             "description": "Showing time range",
             "schema": {
-              "$ref": "#/definitions/time_range_response"
+              "$ref": "#/definitions/time_range_response_with_relationships"
             }
           },
           "404": {
@@ -1091,7 +1103,7 @@
         },
         "end_time": {
           "type": "string",
-          "example": "2021-01-24T23:59:59Z",
+          "example": "2021-01-22T23:59:59Z",
           "x-nullable": false
         },
         "user_id": {
@@ -1106,7 +1118,7 @@
         },
         "time_range_type_id": {
           "type": "integer",
-          "example": 567,
+          "example": 1,
           "x-nullable": false
         }
       }
@@ -1195,6 +1207,61 @@
         }
       }
     },
+    "time_range_response_with_relationships": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "1"
+            },
+            "type": {
+              "type": "string",
+              "example": "time_ranges"
+            },
+            "link": {
+              "type": "object",
+              "properties": {
+                "self": {
+                  "type": "string",
+                  "example": "https://job-plan-stats.herokuapp.com/api/v1/time_ranges/1"
+                }
+              }
+            },
+            "attributes": {
+              "$ref": "#/definitions/time_range_attributes"
+            },
+            "relationships": {
+              "type": "object",
+              "properties": {
+                "tags": {
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "105"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "tags"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "time_range_post_params": {
       "type": "object",
       "properties": {
@@ -1207,6 +1274,31 @@
             },
             "attributes": {
               "$ref": "#/definitions/time_range_attributes"
+            },
+            "relationships": {
+              "type": "object",
+              "properties": {
+                "tags": {
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "105"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "tags"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }

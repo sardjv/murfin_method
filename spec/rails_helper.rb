@@ -113,7 +113,7 @@ RSpec.configure do |config|
   config.include RequestSessionHelpers, type: :request
   config.include FormHelpers, type: :feature
 
-  config.include Warden::Test::Helpers, type: :request
+  config.include Warden::Test::Helpers
   config.include Devise::Test::IntegrationHelpers, type: :feature
   config.after(:each) { Warden.test_reset! }
 

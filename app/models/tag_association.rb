@@ -20,6 +20,10 @@ class TagAssociation < ApplicationRecord
   validate :validate_tag_parent
   validate :validate_tag_child
 
+  before_validation do
+    self.tag_type_id ||= tag.tag_type_id if tag
+  end
+
   private
 
   def validate_tag_matches_type
@@ -57,10 +61,10 @@ class TagAssociation < ApplicationRecord
   end
 
   def parent_tag
-    taggable&.tag_associations&.find { |at| at.tag_type == tag_type.parent }&.tag
+    taggable&.tag_associations&.find { |ta| ta.tag_type == tag_type&.parent }&.tag
   end
 
   def child_tag
-    taggable&.tag_associations&.find { |at| at.tag_type.parent == tag_type }&.tag
+    taggable&.tag_associations&.find { |at| at.tag_type&.parent == tag_type }&.tag
   end
 end

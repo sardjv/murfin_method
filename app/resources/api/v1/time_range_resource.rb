@@ -3,6 +3,8 @@ class Api::V1::TimeRangeResource < JSONAPI::Resource
 
   attributes :start_time, :end_time, :user_id, :time_range_type_id, :seconds_worked
 
+  has_many :tags, acts_as_set: true, exclude_links: :default
+
   filter :user_id,
          verify: lambda { |values, _context|
            values[0] = values[0].to_i
