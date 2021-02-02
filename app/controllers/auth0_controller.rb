@@ -3,7 +3,7 @@ class Auth0Controller < ApplicationController
   include LogoutHelper
 
   def callback
-    user_id = find_or_create_user(request.env['omniauth.auth'])
+    user_id = find_or_create_user_from_auth_info(request.env['omniauth.auth'])
     return redirect_to root_path, alert: I18n.t('notice.login_error') unless user_id
 
     session[:user_id] = user_id
@@ -23,7 +23,7 @@ class Auth0Controller < ApplicationController
 
   private
 
-  def find_or_create_user(auth_info)
+  def find_or_create_user_from_auth_info(auth_info)
     user = User.find_or_initialize_by(email: auth_info.dig(:info, 'email'))
     return user.id if user.persisted?
 

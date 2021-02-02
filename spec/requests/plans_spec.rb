@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Plans', type: :request do
+  around do |example|
+    ClimateControl.modify AUTH_METHOD: 'oauth2' do
+      example.run
+    end
+  end
+
   context 'when logged in' do
     let(:current_user) { create(:user) }
     before do

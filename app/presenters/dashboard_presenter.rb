@@ -71,7 +71,7 @@ class DashboardPresenter
   def defaults
     {
       user_ids: User.ids,
-      actual_id: TimeRangeType.actual_type.id
+      actual_id: TimeRangeType.actual_type.try(:id)
     }
   end
 
