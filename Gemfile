@@ -141,12 +141,11 @@ end
 group :test do
   # Acceptance test framework for web applications.
   # https://github.com/teamcapybara/capybara
-  gem 'capybara', '~> 3.35.1'
+  gem 'capybara', '~> 3.35.3'
 
   # Strategies for cleaning databases between tests.
   # https://github.com/DatabaseCleaner/database_cleaner
-  gem 'database_cleaner-active_record', '~> 1.8.0'
-  gem 'database_cleaner-redis', '~> 1.8.0'
+  gem 'database_cleaner-active_record', '~> 2.0.0'
 
   # RSpec results that your CI can read.
   # https://github.com/sj26/rspec_junit_formatter

@@ -10,7 +10,6 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 require 'database_cleaner/active_record'
-require 'database_cleaner/redis'
 Dir[File.join(__dir__, 'fixtures/', '*.rb')].sort.each { |file| require file }
 Dir[File.join(__dir__, 'support/', '*.rb')].sort.each { |file| require file }
 
