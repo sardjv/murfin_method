@@ -38,6 +38,13 @@
     <div class='col-12'>
       <div class='card my-4'>
         <div class='card-body'>
+          <div class="mb-4">
+            <%= radio_button_tag 'graph_kind', 'percentage_delivered', checked: true %>
+            <%= label_tag 'graph_kind_percentage_delivered', t('graphs.percentage_delivered.full_name') %>
+            &nbsp;
+            <%= radio_button_tag 'graph_kind', 'planned_vs_actual' %>
+            <%= label_tag 'graph_kind_planned_vs_actual', t('graphs.planned_vs_actual.full_name') %>
+          </div>
           <canvas id='line-graph'></canvas>
         </div>
       </div>
