@@ -26,6 +26,19 @@ describe Api::V1::TagResource, type: :request, swagger_doc: 'v1/swagger.json' do
 
         run_test!
       end
+
+      context 'tag has associations' do
+        let!(:tag_association) { create :tag_association, :skip_validate, tag: tag }
+        let(:error_detail) { 'Cannot delete record because dependent tag associations exist' }
+
+        response '422', 'Error: Unprocessable Entity' do
+          schema '$ref' => '#/definitions/error_422'
+
+          run_test! do
+            expect(parsed_json['errors'][0]['detail']).to eql error_detail
+          end
+        end
+      end
     end
   end
 end

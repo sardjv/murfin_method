@@ -26,6 +26,20 @@ describe Api::V1::TagTypeResource, type: :request, swagger_doc: 'v1/swagger.json
 
         run_test!
       end
+
+      context 'tag type has tag with association' do
+        let!(:tag) { create :tag, tag_type: tag_type }
+        let!(:tag_association) { create :tag_association, tag: tag }
+        let(:error_detail) { 'Cannot delete record because dependent tag associations exist.' }
+
+        response '423', 'Error: Locked Resource' do
+          schema '$ref' => '#/definitions/error_423'
+
+          run_test! do
+            expect(parsed_json['errors'][0]['detail']).to eql error_detail
+          end
+        end
+      end
     end
   end
 end

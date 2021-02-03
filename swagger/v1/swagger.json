@@ -126,6 +126,12 @@
             "schema": {
               "$ref": "#/definitions/error_404"
             }
+          },
+          "423": {
+            "description": "Error: Locked Resource",
+            "schema": {
+              "$ref": "#/definitions/error_423"
+            }
           }
         }
       },
@@ -343,6 +349,12 @@
             "description": "Record not found",
             "schema": {
               "$ref": "#/definitions/error_404"
+            }
+          },
+          "422": {
+            "description": "Error: Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/error_422"
             }
           }
         }
@@ -1579,7 +1591,7 @@
               },
               "code": {
                 "type": "string",
-                "example": "RECORD_NOT_FOUND"
+                "example": "404"
               },
               "status": {
                 "type": "string",
@@ -1608,7 +1620,7 @@
               },
               "code": {
                 "type": "string",
-                "example": "NOT_ACCEPTABLE"
+                "example": "406"
               },
               "status": {
                 "type": "string",
@@ -1637,7 +1649,7 @@
               },
               "code": {
                 "type": "string",
-                "example": "UNSUPPORTED_MEDIA_TYPE"
+                "example": "415"
               },
               "status": {
                 "type": "string",
@@ -1685,12 +1697,21 @@
           "items": {
             "title": "is too short (minimum is 6 characters)",
             "detail": "password - is too short (minimum is 6 characters)",
-            "code": 100,
+            "code": "100",
             "source": {
               "pointer": "/data/attributes/password"
             },
-            "status": 422
+            "status": "422"
           }
+        }
+      }
+    },
+    "error_423": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Record Locked"
         }
       }
     }
