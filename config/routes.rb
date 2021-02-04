@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       jsonapi_resources :users
+      jsonapi_resources :tags
+      jsonapi_resources :tag_types
       jsonapi_resources :time_ranges, only: %i[index show create]
     end
   end

@@ -33,7 +33,7 @@ module Swagger
                   properties: {
                     title: { type: 'string', example: 'Record not found' },
                     detail: { type: 'string', example: 'The record identified by 123 could not be found.' },
-                    code: { type: 'string', example: 'RECORD_NOT_FOUND' },
+                    code: { type: 'string', example: JSONAPI::RECORD_NOT_FOUND },
                     status: { type: 'string', example: '404' }
                   }
                 }
@@ -51,7 +51,7 @@ module Swagger
                     title: { type: 'string', example: 'Not acceptable' },
                     detail: { type: 'string',
                               example: "All requests must use the 'application/vnd.api+json' Accept without media type parameters. This request specified 'application/json'." }, # rubocop:disable Layout/LineLength
-                    code: { type: 'string', example: 'NOT_ACCEPTABLE' },
+                    code: { type: 'string', example: JSONAPI::NOT_ACCEPTABLE },
                     status: { type: 'string', example: '406' }
                   }
                 }
@@ -69,7 +69,7 @@ module Swagger
                     title: { type: 'string', example: 'Unsupported media type' },
                     detail: { type: 'string',
                               example: "All requests that create or update must use the 'application/vnd.api+json' Content-Type. This request specified 'application/json'." }, # rubocop:disable Layout/LineLength
-                    code: { type: 'string', example: 'UNSUPPORTED_MEDIA_TYPE' },
+                    code: { type: 'string', example: JSONAPI::UNSUPPORTED_MEDIA_TYPE },
                     status: { type: 'string', example: '415' }
                   }
                 }
@@ -86,7 +86,7 @@ module Swagger
                   properties: {
                     title: { type: 'string', example: 'must occur after start time' },
                     detail: { type: 'string', example: 'end_time - must occur after start time' },
-                    code: { type: 'string', example: '100' },
+                    code: { type: 'string', example: JSONAPI::VALIDATION_ERROR },
                     status: { type: 'string', example: '422' }
                   }
                 }
@@ -101,13 +101,19 @@ module Swagger
                 items: {
                   title: 'is too short (minimum is 6 characters)',
                   detail: 'password - is too short (minimum is 6 characters)',
-                  code: 100,
+                  code: JSONAPI::VALIDATION_ERROR,
                   source: {
                     pointer: '/data/attributes/password'
                   },
-                  status: 422
+                  status: '422'
                 }
               }
+            }
+          },
+          error_423: {
+            type: 'object',
+            properties: {
+              error: { type: 'string', example: 'Record Locked' }
             }
           }
         }

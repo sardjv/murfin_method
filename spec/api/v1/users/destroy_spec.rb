@@ -4,7 +4,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
   let!(:user) { create :user }
 
   path '/api/v1/users/{id}' do
-    delete 'destroys user' do
+    delete 'destroy user' do
       tags 'Users'
       security [{ JWT: {} }]
       produces 'application/vnd.api+json'
@@ -21,7 +21,9 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
         end
 
         response '404', 'Record not found' do # TODO: refactor to shared example
-          let(:id) { 12_345 }
+          schema '$ref' => '#/definitions/error_404'
+          let(:id) { 123_456 }
+
           run_test!
         end
 
