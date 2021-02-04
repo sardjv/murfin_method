@@ -6,11 +6,15 @@ import { Note } from './note'
 import minutesHumanized from '../shared/minutes_humanized'
 
 window.addEventListener('turbolinks:load', () => {
+  const graphKindSelector = "input:radio[name='graph_kind']"
   let graphKind = 'percentage_delivered'
 
-  $("input:radio[name='graph_kind']").on('click', (e) => {
-    graphKind = e.target.value
-    drawGraph(graphKind)
+  let prev_graph_kind_val = $(`${graphKindSelector}:checked`).val()
+  $(graphKindSelector).on('click', (e) => {
+    if(prev_graph_kind_val != e.target.value) {
+      graphKind = e.target.value
+      drawGraph(graphKind)
+    }
   })
 
   $('select.filter').on('change', () => { drawGraph(graphKind) })

@@ -24,7 +24,6 @@ class DashboardPresenter
         team_stats_presenter.average_weekly_planned_per_month,
         team_stats_presenter.average_weekly_actual_per_month
       ]
-    # when 'percentage_delivered'
     else
       [team_stats_presenter.weekly_percentage_delivered_per_month]
     end
