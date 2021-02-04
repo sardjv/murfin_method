@@ -18,6 +18,8 @@ bundle exec rails assets:precompile
 # Perform any database tasks needed.
 bundle exec rails db:create db:migrate
 
+# https://manytools.org/hacker-tools/ascii-banner/
+# Subtitle font: Small Slant
 echo '
 
        .,*******.        .******  .******.       .,*****,       ,*//(((//*,
