@@ -60,18 +60,24 @@ class Activity < ApplicationRecord
     super(ice_cube_schedule.to_yaml)
   end
 
-  def to_time_ranges
-    schedule.occurrences_between(plan.start_date.beginning_of_day, plan.end_date.end_of_day).map do |o|
-      TimeRange.new(
-        start_time: o.start_time,
-        end_time: o.end_time,
-        value: o.duration / 60, # Duration in minutes.
-        user_id: plan.user_id
-      )
+  def to_time_ranges # rubocop:disable Metrics/AbcSize
+    Rails.cache.fetch(time_ranges_cache_key, expires_in: 1.week) do
+      schedule.occurrences_between(plan.start_date.beginning_of_day, plan.end_date.end_of_day).map do |o|
+        TimeRange.new(
+          start_time: o.start_time,
+          end_time: o.end_time,
+          value: o.duration / 60, # Duration in minutes.
+          user_id: plan.user_id
+        )
+      end
     end
   end
 
   private
+
+  def time_ranges_cache_key
+    "Activity#to_time_ranges##{id}"
+  end
 
   def time_value(hash)
     # Store time values on the same day so the duration of each occurrence is correct.
