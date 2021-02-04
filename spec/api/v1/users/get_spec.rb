@@ -23,11 +23,13 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
 
       response '404', 'Record not found' do # TODO: refactor to shared example
         let(:id) { 12_345 }
+        schema '$ref' => '#/definitions/error_404'
         run_test!
       end
 
       response '406', 'Unsupported accept header' do # TODO: refactor to shared example
         let(:Accept) { 'application/json' }
+        schema '$ref' => '#/definitions/error_406'
         run_test!
       end
     end

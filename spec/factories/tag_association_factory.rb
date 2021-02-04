@@ -16,5 +16,9 @@ FactoryBot.define do
     tag_id { Tag.all.sample.try(:id) || create(:tag).id }
     taggable_id { Activity.all.sample.try(:id) || create(:activity).id }
     taggable_type { 'Activity'.freeze }
+
+    trait :skip_validate do
+      to_create { |instance| instance.save(validate: false) }
+    end
   end
 end

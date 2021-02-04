@@ -10,6 +10,7 @@ module RequestSpecHelper
   def parsed_json_data_matches_db_record(db_record, data = nil) # rubocop:disable Metrics/AbcSize
     data ||= parsed_json_data
 
+    db_record.reload
     expect(data['id']).to eql db_record.id.to_s # because attributes do not contain id
 
     data['attributes'].each do |key, value|
