@@ -76,7 +76,7 @@ class Activity < ApplicationRecord
   private
 
   def time_ranges_cache_key
-    "Activity#to_time_ranges##{id}##{updated_at}"
+    "Activity#to_time_ranges##{id}##{updated_at.to_f}"
   end
 
   def time_value(hash)
