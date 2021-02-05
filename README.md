@@ -43,7 +43,21 @@ docker-compose down --remove-orphans
 
 ## Logging in
 
-Auth0 is required for login. You also need to add your client ID and secret to the env file in the Auth0 section.
+Auth0 or Devise can be used for login. For Auth0, you need to add your client ID and secret to the env file in the Auth0 section.
+
+## Caching
+
+You can view keys in the Redis cache from the console with:
+
+```
+Redis.new(url: "redis://redis:#{ENV['REDIS_PORT']}/0", password: ENV['REDIS_PASSWORD'], namespace: ENV['REDIS_CACHE_NAMESPACE']).keys('*')
+```
+
+And to view via Rails cache:
+
+```
+Rails.cache.instance_variable_get(:@data).keys
+```
 
 ## Deployment without Docker
 
