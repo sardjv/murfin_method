@@ -53,6 +53,12 @@ You can view keys in the Redis cache from the console with:
 Redis.new(url: "redis://redis:#{ENV['REDIS_PORT']}/0", password: ENV['REDIS_PASSWORD'], namespace: ENV['REDIS_CACHE_NAMESPACE']).keys('*')
 ```
 
+And to view via Rails cache:
+
+```
+Rails.cache.instance_variable_get(:@data).keys
+```
+
 ## Deployment without Docker
 
 If you can run [Docker](https://en.wikipedia.org/wiki/Docker_(software)), that is the quickest way to get started. If Docker install is not possible, the Dockerfile, docker-compose.yml and Gemfile files included in the repository can be used as a guide for dependencies.
