@@ -47,7 +47,8 @@ module Murfin # rubocop:disable Style/ClassAndModuleChildren
 
     # Set Redis as the back-end for the cache.
     config.cache_store = :redis_cache_store, {
-      url: "redis://:#{ENV['REDIS_PASSWORD']}@redis:#{ENV['REDIS_PORT']}/0",
+      url: "redis://redis:#{ENV['REDIS_PORT']}/0",
+      password: ENV['REDIS_PASSWORD'],
       namespace: ENV['REDIS_CACHE_NAMESPACE']
     }
 
