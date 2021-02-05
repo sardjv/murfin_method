@@ -1,7 +1,7 @@
 class TeamStatsPresenter
   attr_accessor :filter_start_time, :filter_end_time, :filter_tag_ids, :graph_kind, :plan_id, :plan, :actual_id, :actual, :user_ids
 
-  GRAPH_KIND_OPTIONS = %w(percentage_delivered planned_vs_actual)
+  GRAPH_KIND_OPTIONS = %w[percentage_delivered planned_vs_actual].freeze
 
   def initialize(args)
     args = defaults.merge(args.compact)

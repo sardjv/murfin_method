@@ -14,6 +14,7 @@ window.addEventListener('turbolinks:load', () => {
     if(prev_graph_kind_val != e.target.value) {
       graphKind = e.target.value
       drawGraph(graphKind)
+      prev_graph_kind_val = graphKind
     }
   })
 
