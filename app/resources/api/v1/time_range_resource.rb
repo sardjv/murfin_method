@@ -1,7 +1,12 @@
 class Api::V1::TimeRangeResource < JSONAPI::Resource
   model_name 'TimeRange'
 
-  attributes :start_time, :end_time, :user_id, :time_range_type_id, :seconds_worked
+  attributes :start_time, :end_time, :user_id, :time_range_type_id
+  attribute :minutes_worked, delegate: :value
+
+  def minutes_worked
+    @model.value.to_i
+  end
 
   has_many :tags, acts_as_set: true, exclude_links: :default
 

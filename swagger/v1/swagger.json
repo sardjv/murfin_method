@@ -1110,12 +1110,12 @@
       "properties": {
         "start_time": {
           "type": "string",
-          "example": "2021-01-22T00:00:00Z",
+          "example": "2021-01-22T09:00:00+00:00",
           "x-nullable": false
         },
         "end_time": {
           "type": "string",
-          "example": "2021-01-22T23:59:59Z",
+          "example": "2021-01-22T09:45:00+00:00",
           "x-nullable": false
         },
         "user_id": {
@@ -1123,9 +1123,9 @@
           "example": 123,
           "x-nullable": false
         },
-        "seconds_worked": {
-          "type": "string",
-          "example": "57600",
+        "minutes_worked": {
+          "type": "integer",
+          "example": 45,
           "x-nullable": false
         },
         "time_range_type_id": {

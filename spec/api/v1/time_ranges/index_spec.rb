@@ -38,7 +38,11 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
           expect(parsed_json_data.count).to eq(2)
 
           database_record = TimeRange.find(parsed_json_data.first['id'])
-          parsed_json_data_matches_db_record(database_record, parsed_json_data.first)
+
+          data = parsed_json_data.first
+          data['attributes']['value'] = data['attributes'].delete('minutes_worked').to_d.to_s
+
+          parsed_json_data_matches_db_record(database_record, data)
         end
 
         context 'include tags' do

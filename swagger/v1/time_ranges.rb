@@ -6,10 +6,10 @@ module Swagger
           time_range_attributes: {
             type: 'object',
             properties: {
-              start_time: { type: 'string', example: Date.parse('2021-01-22').beginning_of_day.iso8601, 'x-nullable': false },
-              end_time: { type: 'string', example: Date.parse('2021-01-22').end_of_day.iso8601, 'x-nullable': false },
+              start_time: { type: 'string', example: DateTime.parse('2021-01-22 09:00:00').iso8601, 'x-nullable': false },
+              end_time: { type: 'string', example: DateTime.parse('2021-01-22 09:45:00').iso8601, 'x-nullable': false },
               user_id: { type: 'integer', example: 123, 'x-nullable': false },
-              seconds_worked: { type: 'string', example: (3600 * 16).to_s, 'x-nullable': false },
+              minutes_worked: { type: 'integer', example: 45, 'x-nullable': false },
               time_range_type_id: { type: 'integer', example: 1, 'x-nullable': false }
             }
           },
