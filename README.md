@@ -53,10 +53,10 @@ You can view keys in the Redis cache from the console with:
 Redis.new(url: "redis://redis:#{ENV['REDIS_PORT']}/0", password: ENV['REDIS_PASSWORD'], namespace: ENV['REDIS_CACHE_NAMESPACE']).keys('*')
 ```
 
-And to view via Rails cache:
+or
 
 ```
-Rails.cache.instance_variable_get(:@data).keys
+Rails.cache.redis.keys('*')
 ```
 
 ## Deployment without Docker
