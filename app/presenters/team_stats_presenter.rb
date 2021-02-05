@@ -53,7 +53,7 @@ class TeamStatsPresenter
     Activity.joins(:plan, :tags)
             .where(plans: { user_id: @user_ids }, tags: { id: @filter_tag_ids })
             .distinct
-            .preload(:plan)
+            .preload(:plan, :tags)
             .flat_map(&:to_time_ranges)
   end
 
