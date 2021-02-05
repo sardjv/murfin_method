@@ -75,7 +75,10 @@ class Activity < ApplicationRecord
 
   private
 
-  # Use updated_at.to_f here because the default is only accurate to the second and can lead to tricky bugs, e.g. if 2 updates happen within 1 second. Also makes for a shorter key. "2021-01-29 13:52:43 UTC" vs "1611928363.130215"
+  # Use updated_at.to_f here because the default is only accurate to
+  # the second and can lead to tricky bugs, e.g. if 2 updates happen
+  # within 1 second. Also makes for a shorter key.
+  # "2021-01-29 13:52:43 UTC" vs "1611928363.130215"
   def time_ranges_cache_key
     "Activity#to_time_ranges##{id}##{updated_at.to_f}"
   end
