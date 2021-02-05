@@ -14,7 +14,8 @@
 FactoryBot.define do
   factory :time_range do
     start_time { Faker::Time.between(from: DateTime.now - 1.year, to: DateTime.now + 1.year) }
-    value { Faker::Number.decimal(l_digits: 2) }
+    #value { Faker::Number.decimal(l_digits: 2) } # returns float not decimal
+    value { BigDecimal(Faker::Number.within(range: 5..120)) }
     time_range_type_id { TimeRangeType.all.sample.try(:id) || create(:time_range_type).id }
     user_id { User.all.sample.try(:id) || create(:user).id }
 

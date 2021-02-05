@@ -19,7 +19,10 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
         schema '$ref' => '#/definitions/time_range_response'
 
         run_test! do
-          parsed_json_data_matches_db_record(time_range)
+          data = parsed_json_data
+          data['attributes']['value'] = data['attributes'].delete('minutes_worked').to_d.to_s
+
+          parsed_json_data_matches_db_record(time_range, data)
         end
       end
 
