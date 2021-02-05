@@ -1,5 +1,4 @@
 <div class='container my-4 xs-row-reverse'>
-
   <%= render 'team_tabs' %>
 
   <%= render(
@@ -38,6 +37,13 @@
     <div class='col-12'>
       <div class='card my-4'>
         <div class='card-body'>
+          <div class="mb-4">
+            <% @presenter.team_stats_presenter.graph_kind_options.each do |key| %>
+              <%= radio_button_tag 'graph_kind', key, **(@presenter.team_stats_presenter.graph_kind == key ? { checked: 'checked' } : {}) %>
+              <%= label_tag "graph_kind_#{key}", t("graphs.#{key}.name") %>
+              &nbsp;
+            <% end %>
+          </div>
           <canvas id='line-graph'></canvas>
         </div>
       </div>
@@ -55,7 +61,7 @@
                 :tags,
                 grouped_options_for_select(tag_options, Tag.where(default_for_filter: true).pluck(:id)),
                 {},
-                { class: 'filter', multiple: true, 'data-actions-box' => true }
+                { class: 'filter', multiple: true, 'data-actions-box': true }
               %></div>
             </div>
           </form>
@@ -65,5 +71,4 @@
   </div>
 
   <%= render 'filters' %>
-
 </div>

@@ -1,17 +1,24 @@
 describe DashboardPresenter, freeze: Time.zone.local(2020, 6, 30, 23, 59, 59) do
   subject do
     DashboardPresenter.new(
-      params: {
-        user_ids: [user.id],
-        actual_id: actual_id,
-        filter_start_month: '10',
-        filter_start_year: '2019',
-        filter_end_month: '6',
-        filter_end_year: '2020',
-        filter_tag_ids: filter_tag_ids
-      }
+      params: presenter_params
     )
   end
+
+  let(:default_presenter_params) do
+    {
+      user_ids: [user.id],
+      actual_id: actual_id,
+      filter_start_month: '10',
+      filter_start_year: '2019',
+      filter_end_month: '6',
+      filter_end_year: '2020',
+      filter_tag_ids: filter_tag_ids
+    }
+  end
+
+  let(:presenter_params) { default_presenter_params }
+
   # replicate how filter_tag_ids sent from line_graph.js
   let(:filter_tag_ids) { tag1.id.to_s }
 
@@ -57,29 +64,71 @@ describe DashboardPresenter, freeze: Time.zone.local(2020, 6, 30, 23, 59, 59) do
     end
 
     context 'with :team data' do
-      it 'returns a line graph' do
-        expect(
-          subject.to_json(
-            graphs: [{ type: :line_graph, data: :team_data, units: '%' }]
+      context 'parcentage delivered' do
+        let(:presenter_params) { default_presenter_params.merge({ graph_kind: 'percentage_delivered' }) }
+        let(:graphs_params) { [{ type: :line_graph, data: :team_data, units: '%' }] }
+
+        it 'returns a line graph' do
+          expect(subject.to_json(graphs: graphs_params)).to eq(
+            {
+              line_graph: {
+                data: [[
+                  { name: '2019-10-01T00:00:00.000Z', value: 0, notes: '[]' },
+                  { name: '2019-11-01T00:00:00.000Z', value: 0, notes: '[]' },
+                  { name: '2019-12-01T00:00:00.000Z', value: 0, notes: '[]' },
+                  { name: '2020-01-01T00:00:00.000Z', value: 0, notes: '[]' },
+                  { name: '2020-02-01T00:00:00.000Z', value: 0, notes: '[]' },
+                  { name: '2020-03-01T00:00:00.000Z', value: 0, notes: '[]' },
+                  { name: '2020-04-01T00:00:00.000Z', value: 0, notes: '[]' },
+                  { name: '2020-05-01T00:00:00.000Z', value: 0, notes: '[]' },
+                  { name: '2020-06-01T00:00:00.000Z', value: 46.67, notes: '[]' }
+                ]],
+                units: '%'
+              }
+            }.to_json
           )
-        ).to eq(
-          {
-            line_graph: {
-              data: [[
-                { name: '2019-10-01T00:00:00.000Z', value: 0, notes: '[]' },
-                { name: '2019-11-01T00:00:00.000Z', value: 0, notes: '[]' },
-                { name: '2019-12-01T00:00:00.000Z', value: 0, notes: '[]' },
-                { name: '2020-01-01T00:00:00.000Z', value: 0, notes: '[]' },
-                { name: '2020-02-01T00:00:00.000Z', value: 0, notes: '[]' },
-                { name: '2020-03-01T00:00:00.000Z', value: 0, notes: '[]' },
-                { name: '2020-04-01T00:00:00.000Z', value: 0, notes: '[]' },
-                { name: '2020-05-01T00:00:00.000Z', value: 0, notes: '[]' },
-                { name: '2020-06-01T00:00:00.000Z', value: 46.67, notes: '[]' }
-              ]],
-              units: '%'
-            }
-          }.to_json
-        )
+        end
+      end
+
+      context 'planned vs actual' do
+        let(:presenter_params) { default_presenter_params.merge({ graph_kind: 'planned_vs_actual' }) }
+        let(:dataset_labels) { [Faker::Lorem.sentence, Faker::Lorem.sentence] }
+        let(:graphs_params) { [{ type: :line_graph, data: :team_data, units: 'minutes', dataset_labels: dataset_labels }] }
+
+        it 'returns a line graph' do
+          expect(subject.to_json(graphs: graphs_params)).to eq(
+            {
+              line_graph: {
+                data: [
+                  [
+                    { name: '2019-10-01T00:00:00.000Z', value: 0, notes: '[]' },
+                    { name: '2019-11-01T00:00:00.000Z', value: 0, notes: '[]' },
+                    { name: '2019-12-01T00:00:00.000Z', value: 0, notes: '[]' },
+                    { name: '2020-01-01T00:00:00.000Z', value: 0, notes: '[]' },
+                    { name: '2020-02-01T00:00:00.000Z', value: 0, notes: '[]' },
+                    { name: '2020-03-01T00:00:00.000Z', value: 0, notes: '[]' },
+                    { name: '2020-04-01T00:00:00.000Z', value: 0, notes: '[]' },
+                    { name: '2020-05-01T00:00:00.000Z', value: 0, notes: '[]' },
+                    { name: '2020-06-01T00:00:00.000Z', value: 240.0, notes: '[]' }
+                  ],
+                  [
+                    { name: '2019-10-01T00:00:00.000Z', value: 0, notes: '[]' },
+                    { name: '2019-11-01T00:00:00.000Z', value: 0, notes: '[]' },
+                    { name: '2019-12-01T00:00:00.000Z', value: 0, notes: '[]' },
+                    { name: '2020-01-01T00:00:00.000Z', value: 0, notes: '[]' },
+                    { name: '2020-02-01T00:00:00.000Z', value: 0, notes: '[]' },
+                    { name: '2020-03-01T00:00:00.000Z', value: 0, notes: '[]' },
+                    { name: '2020-04-01T00:00:00.000Z', value: 0, notes: '[]' },
+                    { name: '2020-05-01T00:00:00.000Z', value: 0, notes: '[]' },
+                    { name: '2020-06-01T00:00:00.000Z', value: 112.0, notes: '[]' }
+                  ]
+                ],
+                units: 'minutes',
+                dataset_labels: dataset_labels
+              }
+            }.to_json
+          )
+        end
       end
     end
 

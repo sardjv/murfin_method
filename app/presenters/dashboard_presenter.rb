@@ -18,9 +18,15 @@ class DashboardPresenter
   end
 
   def team_data
-    [
-      team_stats_presenter.weekly_percentage_delivered_per_month
-    ]
+    case @params[:graph_kind]
+    when 'planned_vs_actual'
+      [
+        team_stats_presenter.average_weekly_planned_per_month,
+        team_stats_presenter.average_weekly_actual_per_month
+      ]
+    else
+      [team_stats_presenter.weekly_percentage_delivered_per_month]
+    end
   end
 
   def team_stats_presenter
@@ -29,7 +35,8 @@ class DashboardPresenter
       actual_id: @params[:actual_id],
       filter_start_date: filter_start_date,
       filter_end_date: filter_end_date,
-      filter_tag_ids: filter_tag_ids
+      filter_tag_ids: filter_tag_ids,
+      graph_kind: @params[:graph_kind]
     )
   end
 
@@ -49,8 +56,9 @@ class DashboardPresenter
     args[:graphs].each_with_object({}) do |graph, hash|
       hash[graph[:type]] = {
         data: send(graph[:data]),
-        units: graph[:units]
-      }
+        units: graph[:units],
+        dataset_labels: graph[:dataset_labels]
+      }.delete_if { |_k, v| v.blank? }
       hash
     end.to_json
   end

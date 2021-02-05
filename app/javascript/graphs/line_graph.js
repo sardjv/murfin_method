@@ -3,14 +3,27 @@ import Rails from '@rails/ujs'
 import { API } from './api'
 import * as SCSSColours from '!!sass-variable-loader!../stylesheets/variables/colours.scss';
 import { Note } from './note'
+import minutesHumanized from '../shared/minutes_humanized'
 
 window.addEventListener('turbolinks:load', () => {
-  fetchData()
+  const graphKindSelector = "input:radio[name='graph_kind']"
+  let graphKind = 'percentage_delivered'
 
-  $('select.filter').change(() => { fetchData() });
+  let prev_graph_kind_val = $(`${graphKindSelector}:checked`).val()
+  $(graphKindSelector).on('click', (e) => {
+    if(prev_graph_kind_val != e.target.value) {
+      graphKind = e.target.value
+      drawGraph(graphKind)
+      prev_graph_kind_val = graphKind
+    }
+  })
+
+  $('select.filter').on('change', () => { drawGraph(graphKind) })
+
+  drawGraph(graphKind)
 });
 
-function fetchData() {
+function drawGraph(graph_kind) {
   const startYear = parseInt($('#line_graph_filter_start_time_1i').val());
   const startMonth = parseInt($('#line_graph_filter_start_time_2i').val());
   const endYear = parseInt($('#line_graph_filter_end_time_1i').val());
@@ -27,12 +40,13 @@ function fetchData() {
         'filter_start_year': startYear,
         'filter_end_month': endMonth,
         'filter_end_year': endYear,
-        'filter_tag_ids': tagIds
+        'filter_tag_ids': tagIds,
+        'graph_kind': graph_kind
       }).toString(),
       dataType: 'json',
       success: function(data) {
         if (global.chart) { global.chart.destroy() };
-        global.chart = line_graph(context, data.line_graph);
+        global.chart = line_graph(context, data.line_graph, { graph_kind: graph_kind });
       }
     });
   }
@@ -57,17 +71,17 @@ function getColour(number) {
   return SCSSColours[colours[number]]
 }
 
-function buildDatasets(datas) {
+function buildDatasets(datas, options = {}) {
   let index = 0;
   return datas.map(function(data) {
     const dataset = {
+      label: options.dataset_labels ? options.dataset_labels[index] : null,
       data: data.map(function(e) {
         return e.value;
       }),
       notes: data.map(function(e) {
         return JSON.parse(e.notes);
       }),
-      borderWidth: 1,
       fill: false,
       backgroundColor: getColour(index),
       borderColor: getColour(index),
@@ -82,18 +96,25 @@ function buildDatasets(datas) {
   });
 }
 
-function line_graph(context, line_graph) {
+function line_graph(context, line_graph, options = {}) {
   const originalLabels = line_graph.data[0].map(function(e) {
     return e.name;
   });
+
   const formattedLabels = line_graph.data[0].map(function(e) {
     return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][new Date(Date.parse(e.name)).getMonth()];
   });
+
   const units = line_graph.units || ''
-  const datasets = buildDatasets(line_graph.data)
+  const datasets = buildDatasets(line_graph.data, { dataset_labels: line_graph.dataset_labels })
+
   const notes = datasets.map(function(dataset) {
     return dataset.notes
   });
+
+  const formatChartValue = (val, units) => {
+    return units == 'minutes' ? minutesHumanized(val) : `${val}${units}`
+  }
 
   return new Chart(context, {
     type: 'line',
@@ -106,14 +127,14 @@ function line_graph(context, line_graph) {
     },
     options: {
       legend: {
-        display: false,
+        display: line_graph.dataset_labels ? true : false,
         onHover: function(e) {
           e.target.style.cursor = 'pointer';
         }
       },
       hover: {
         onHover: function(e) {
-           var point = this.getElementAtEvent(e);
+           let point = this.getElementAtEvent(e);
            if (point.length) e.target.style.cursor = 'pointer';
            else e.target.style.cursor = 'default';
         }
@@ -125,7 +146,9 @@ function line_graph(context, line_graph) {
         callbacks: {
           label: (tooltipItem, data) => {
             let tooltip = []
-            tooltip.push(tooltipItem.value + data.units)
+
+            const tooltip_str = formatChartValue(tooltipItem.value, data.units)
+            tooltip.push(tooltip_str)
             const notes = global.chart.data.datasets[tooltipItem.datasetIndex].notes[tooltipItem.index]
             _.each(Note.toMultilineArray(notes, 50), (note) => {
               tooltip.push(note)
@@ -159,9 +182,9 @@ function line_graph(context, line_graph) {
             drawBorder: false
           },
           ticks: {
-            stepSize: 10,
+            stepSize: units == 'minutes' ? 120 : 10,
             callback: function(value) {
-              return value + units
+              return formatChartValue(value, units)
             }
           }
         }]
