@@ -14,11 +14,24 @@ describe TagAssociation, type: :model do
   subject { build(:tag_association) }
 
   it { expect(subject).to be_valid }
-  it { should belong_to(:tag_type) }
   it { should belong_to(:tag).optional }
   it { should belong_to(:taggable) }
   it { should have_db_index(%i[taggable_type taggable_id tag_type_id tag_id]).unique }
   it { should validate_uniqueness_of(:taggable_id).scoped_to(%i[taggable_type tag_type_id tag_id]) }
+
+  describe 'tag type validation' do
+    context 'tag type not set and can not be obtained from tag' do
+      let(:subject) { build :tag_association, tag_type: nil, tag: nil }
+
+      it { expect(subject).not_to be_valid }
+    end
+
+    context 'tag type not set but can be obtained from tag' do
+      let(:subject) { build :tag_association, tag_type: nil, tag: create(:tag) }
+
+      it { expect(subject).to be_valid }
+    end
+  end
 
   context 'when tag.tag_type != tag_type' do
     # Types.

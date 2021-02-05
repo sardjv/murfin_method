@@ -1,7 +1,9 @@
 require 'rails_helper'
 require './swagger/v1/errors'
-require './swagger/v1/users'
+require './swagger/v1/tags'
+require './swagger/v1/tag_types'
 require './swagger/v1/time_ranges'
+require './swagger/v1/users'
 
 class Swagger::V1::Core
   def self.docs
@@ -31,6 +33,8 @@ class Swagger::V1::Core
 
   def self.definitions
     [
+      Swagger::V1::Tags.definitions,
+      Swagger::V1::TagTypes.definitions,
       Swagger::V1::TimeRanges.definitions,
       Swagger::V1::Users.definitions,
       Swagger::V1::Errors.definitions

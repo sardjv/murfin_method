@@ -1,17 +1,20 @@
 class TeamStatsPresenter
-  attr_accessor :filter_start_time, :filter_end_time, :filter_tag_ids, :plan_id, :plan, :actual_id, :actual, :user_ids
+  attr_accessor :filter_start_time, :filter_end_time, :filter_tag_ids, :graph_kind, :plan_id, :plan, :actual_id, :actual, :user_ids
+
+  GRAPH_KIND_OPTIONS = %w[percentage_delivered planned_vs_actual].freeze
 
   def initialize(args)
     args = defaults.merge(args.compact)
     cache(args)
   end
 
-  def cache(args)
+  def cache(args) # rubocop:disable Metrics/AbcSize
     @user_ids = args[:user_ids]
     @actual_id = args[:actual_id]
     @filter_tag_ids = args[:filter_tag_ids]
     @filter_start_time = args[:filter_start_date].to_time.in_time_zone.beginning_of_day
     @filter_end_time = args[:filter_end_date].to_time.in_time_zone.end_of_day
+    @graph_kind = args[:graph_kind] || 'percentage_delivered'
     @plan = weekly_averages(time_ranges: plan_time_ranges)
     @actual = weekly_averages(time_ranges: actual_time_ranges)
   end
@@ -28,6 +31,10 @@ class TeamStatsPresenter
     months.map { |month| response(month: month, value: percentage(month: month)) }
   end
 
+  def graph_kind_options
+    self.class::GRAPH_KIND_OPTIONS
+  end
+
   private
 
   def response(month:, value:)
@@ -39,7 +46,7 @@ class TeamStatsPresenter
   end
 
   def defaults
-    { filter_start_date: 1.year.ago, filter_end_date: Time.zone.today, actual_id: TimeRangeType.actual_type.id }
+    { filter_start_date: 1.year.ago, filter_end_date: Time.zone.today, actual_id: TimeRangeType.actual_type.id, graph_kind: 'percentage_delivered' }
   end
 
   def plan_time_ranges
