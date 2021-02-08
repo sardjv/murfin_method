@@ -84,7 +84,7 @@ gem 'redis', '~> 4.2.5'
 # Serve Swagger documentation generated from RSpec tests.
 # https://github.com/rswag/rswag
 gem 'rswag-api', '~> 2.3.2'
-gem 'rswag-ui', '~> 2.3.2'
+gem 'rswag-ui', '~> 2.3.3'
 
 # Simple, efficient background processing for Ruby.
 # https://github.com/mperham/sidekiq
