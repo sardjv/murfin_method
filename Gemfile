@@ -67,7 +67,7 @@ gem 'parser', '~> 3.0.0.0'
 
 # A Ruby/Rack web server built for concurrency.
 # https://github.com/puma/puma
-gem 'puma', '~> 5.2.0'
+gem 'puma', '~> 5.2.1'
 
 # Minimal authorization through OO design and pure Ruby classes.
 # https://github.com/varvet/pundit
@@ -83,7 +83,7 @@ gem 'redis', '~> 4.2.5'
 
 # Serve Swagger documentation generated from RSpec tests.
 # https://github.com/rswag/rswag
-gem 'rswag-api', '~> 2.3.2'
+gem 'rswag-api', '~> 2.3.3'
 gem 'rswag-ui', '~> 2.3.3'
 
 # Simple, efficient background processing for Ruby.
