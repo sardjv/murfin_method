@@ -28,7 +28,17 @@ class TeamStatsPresenter
   end
 
   def weekly_percentage_delivered_per_month
-    months.map { |month| response(month: month, value: percentage(month: month)) }
+    @weekly_percentage_delivered_per_month ||= months.map { |month| response(month: month, value: percentage(month: month)) }
+  end
+
+  def average_weekly_percentage_delivered_per_month
+    data = weekly_percentage_delivered_per_month
+    data_size = data&.size
+
+    return 0 if data_size == 0
+
+    data_values_sum = data.sum {|e| e[:value]}
+    (data_values_sum.to_f / data_size).round(2)
   end
 
   def graph_kind_options

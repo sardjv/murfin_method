@@ -45,8 +45,14 @@ function drawGraph(graph_kind) {
       }).toString(),
       dataType: 'json',
       success: function(data) {
+        console.log(data)
+
         if (global.chart) { global.chart.destroy() };
         global.chart = line_graph(context, data.line_graph, { graph_kind: graph_kind });
+
+        if(data.average_weekly_percentage_delivered_per_month) {
+          $('#team-dash-average-delivery').html(`${data.average_weekly_percentage_delivered_per_month}%`)
+        }
       }
     });
   }

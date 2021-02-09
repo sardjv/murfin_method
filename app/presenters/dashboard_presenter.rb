@@ -59,6 +59,11 @@ class DashboardPresenter
         units: graph[:units],
         dataset_labels: graph[:dataset_labels]
       }.delete_if { |_k, v| v.blank? }
+
+      args[:extras].each do |name|
+        hash[name] = @team_stats_presenter.send(name)
+      end
+
       hash
     end.to_json
   end

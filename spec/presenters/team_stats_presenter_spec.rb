@@ -90,6 +90,12 @@ describe TeamStatsPresenter do
         )
       end
     end
+
+    describe 'average_weekly_percentage_delivered_per_month' do
+      it 'returns zero' do
+        expect(subject.average_weekly_percentage_delivered_per_month).to eql 0
+      end
+    end
   end
 
   context 'when users have plans and actuals' do
@@ -256,6 +262,12 @@ describe TeamStatsPresenter do
         context 'without actuals' do
           let!(:actual_activity) { nil }
           it { expect { subject.weekly_percentage_delivered_per_month }.not_to raise_error }
+        end
+      end
+
+      describe 'average_weekly_percentage_delivered_per_month' do
+        it 'calculates average' do
+          expect(subject.average_weekly_percentage_delivered_per_month).to eql 49.2
         end
       end
     end
