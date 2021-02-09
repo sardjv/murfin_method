@@ -45,13 +45,15 @@ function drawGraph(graph_kind) {
       }).toString(),
       dataType: 'json',
       success: function(data) {
-        console.log(data)
-
         if (global.chart) { global.chart.destroy() };
         global.chart = line_graph(context, data.line_graph, { graph_kind: graph_kind });
 
-        if(data.average_weekly_percentage_delivered_per_month) {
+        if(data.average_weekly_percentage_delivered_per_month !== undefined) {
           $('#team-dash-average-delivery').html(`${data.average_weekly_percentage_delivered_per_month}%`)
+        }
+
+        if(data.people_under_80_percent_delivered !== undefined) {
+          $('#team-dash-people-under-80-percent-delivered').html(data.people_under_80_percent_delivered)
         }
       }
     });

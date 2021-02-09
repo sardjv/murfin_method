@@ -12,8 +12,10 @@ class TeamStatsPresenter
     @user_ids = args[:user_ids]
     @actual_id = args[:actual_id]
     @filter_tag_ids = args[:filter_tag_ids]
-    @filter_start_time = args[:filter_start_date].to_time.in_time_zone.beginning_of_day
-    @filter_end_time = args[:filter_end_date].to_time.in_time_zone.end_of_day
+    @filter_start_date = args[:filter_start_date]
+    @filter_start_time = @filter_start_date.to_time.in_time_zone.beginning_of_day
+    @filter_end_date = args[:filter_end_date]
+    @filter_end_time = @filter_end_date.to_time.in_time_zone.end_of_day
     @graph_kind = args[:graph_kind] || 'percentage_delivered'
     @plan = weekly_averages(time_ranges: plan_time_ranges)
     @actual = weekly_averages(time_ranges: actual_time_ranges)
@@ -35,10 +37,28 @@ class TeamStatsPresenter
     data = weekly_percentage_delivered_per_month
     data_size = data&.size
 
-    return 0 if data_size == 0
+    return 0 if data_size.zero?
 
-    data_values_sum = data.sum {|e| e[:value]}
-    (data_values_sum.to_f / data_size).round(2)
+    data_values_sum = data.sum { |e| e[:value] }
+    (data_values_sum.to_f / data_size).round
+  end
+
+  def people_under_80_percent_delivered
+    count = 0
+
+    users = User.where(id: @user_ids)
+    users.each do |user|
+      pd = UserStatsPresenter.new(
+        user: user,
+        actual_id: @actual_id,
+        filter_start_date: @filter_start_date,
+        filter_end_date: @filter_end_date
+      ).percentage_delivered
+
+      count += 1 if pd.is_a?(Numeric) && pd < 80
+    end
+
+    count
   end
 
   def graph_kind_options
