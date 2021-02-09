@@ -5,11 +5,15 @@ class DashboardPresenter
   end
 
   def paginated_users
-    User.where(id: @params[:user_ids]).page(@params[:page])
+    users.page(@params[:page])
+  end
+
+  def users_with_job_plan_count
+    users.all.joins(:plans).count('DISTINCT(users.id)')
   end
 
   def individual_data
-    User.find(@params[:user_ids]).map do |user|
+    users.map do |user|
       {
         'name': user.name,
         'value': bar_chart_value(user: user)
@@ -69,6 +73,10 @@ class DashboardPresenter
   end
 
   private
+
+  def users
+    @users ||= User.where(id: @params[:user_ids])
+  end
 
   def bar_chart_value(user:)
     return if user.time_ranges.none?
