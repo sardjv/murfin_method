@@ -72,7 +72,7 @@ gem 'pundit', '~> 2.1.0'
 
 # Create database-backed web applications using the MVC pattern.
 # https://github.com/rails/rails
-gem 'rails', '~> 6.1.1'
+gem 'rails', '~> 6.1.2'
 
 # A very fast key-value store to hold jobs until they are run.
 # https://github.com/redis/redis-rb
