@@ -43,15 +43,6 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
 
         let(:attributes) { valid_attributes.merge(password: password) }
 
-        # let(:user) do
-        #   {
-        #     data: {
-        #       type: 'users',
-        #       attributes:
-        #     }
-        #   }
-        # end
-
         context 'valid password' do
           let(:password) { Faker::Internet.password }
 
