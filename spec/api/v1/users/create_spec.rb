@@ -3,7 +3,7 @@ require 'swagger_helper'
 describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' do
   let(:created_user) { User.unscoped.last }
 
-  let(:example_attributes) do
+  let(:valid_attributes) do
     Swagger::V1::Users.definitions.dig(:user_attributes_without_admin, :properties).transform_values do |v|
       v[:example]
     end
@@ -17,11 +17,13 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
       produces 'application/vnd.api+json'
       parameter name: :user, in: :body, schema: { '$ref' => '#/definitions/user_post_params' }
 
+      let(:attributes) { valid_attributes }
+
       let(:user) do
         {
           data: {
             type: 'users',
-            attributes: example_attributes
+            attributes: attributes
           }
         }
       end
@@ -39,14 +41,16 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
       context 'user attributes contain password' do
         parameter name: :user, in: :body, schema: { '$ref' => '#/definitions/user_post_params' }
 
-        let(:user) do
-          {
-            data: {
-              type: 'users',
-              attributes: example_attributes.merge(password: password)
-            }
-          }
-        end
+        let(:attributes) { valid_attributes.merge(password: password) }
+
+        # let(:user) do
+        #   {
+        #     data: {
+        #       type: 'users',
+        #       attributes:
+        #     }
+        #   }
+        # end
 
         context 'valid password' do
           let(:password) { Faker::Internet.password }
@@ -69,21 +73,47 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
         end
       end
 
-      # email already exists
-      response '422', 'Unprocessable Entity' do
-        let!(:existing_user) { create :user }
-        let(:email) { existing_user.email }
+      context 'user group relationships passed' do
+        let!(:user_group1) { create :user_group }
+        let!(:user_group2) { create :user_group }
+        let!(:user_group3) { create :user_group }
 
-        let(:example_attributes_with_existing_user_email) { example_attributes.merge(email: email) }
+        let(:relationships) do
+          {
+            user_groups: {
+              data: [
+                { type: 'user_groups', id: user_group1.id },
+                { type: 'user_groups', id: user_group3.id }
+              ]
+            }
+          }
+        end
 
         let(:user) do
           {
             data: {
               type: 'users',
-              attributes: example_attributes_with_existing_user_email
+              attributes: attributes,
+              relationships: relationships
             }
           }
         end
+
+        response '201', 'User created' do
+          schema '$ref' => '#/definitions/user_response_with_relationships'
+
+          run_test! do
+            expect(created_user.user_groups.pluck(:id)).to match_array [user_group1.id, user_group3.id]
+          end
+        end
+      end
+
+      # email already exists
+      response '422', 'Unprocessable Entity' do
+        let!(:existing_user) { create :user }
+        let(:email) { existing_user.email }
+
+        let(:attributes) { valid_attributes.merge(email: email) }
 
         schema '$ref' => '#/definitions/error_422'
         run_test!
@@ -91,16 +121,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
 
       # user params include not permitted admin flag
       response '400', 'Error: Bad Request' do
-        let(:example_attributes_with_admin) { example_attributes.merge(admin: true) }
-
-        let(:user) do
-          {
-            data: {
-              type: 'users',
-              attributes: example_attributes_with_admin
-            }
-          }
-        end
+        let(:attributes) { valid_attributes.merge(admin: true) }
 
         schema '$ref' => '#/definitions/error_400'
         run_test!

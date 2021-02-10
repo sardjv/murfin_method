@@ -54,7 +54,7 @@ describe Api::V1::UserGroupResource, type: :request, swagger_doc: 'v1/swagger.js
         let(:attributes) do
           {
             name: user_group_name,
-            group_type_id: 54321
+            group_type_id: 54_321
           }
         end
 

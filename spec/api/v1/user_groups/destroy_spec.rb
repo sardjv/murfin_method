@@ -22,7 +22,7 @@ describe Api::V1::UserGroupResource, type: :request, swagger_doc: 'v1/swagger.js
       response '404', 'Record not found' do
         schema '$ref' => '#/definitions/error_404'
 
-        let(:id) { 54321 }
+        let(:id) { 54_321 }
 
         run_test!
       end

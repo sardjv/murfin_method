@@ -3,7 +3,7 @@ require 'swagger_helper'
 describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' do
   let!(:updated_user) { create :user }
 
-  let(:example_attributes) do
+  let(:valid_attributes) do
     Swagger::V1::Users.definitions.dig(:user_attributes_without_admin, :properties).transform_values do |v|
       v[:example]
     end
@@ -19,13 +19,14 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
       parameter name: :user, in: :body, schema: { '$ref' => '#/definitions/user_patch_params' }
 
       let(:id) { updated_user.id }
+      let(:attributes) { valid_attributes }
 
       let(:user) do
         {
           data: {
             type: 'users',
             id: updated_user.id,
-            attributes: example_attributes
+            attributes: attributes
           }
         }
       end
@@ -38,7 +39,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
 
           run_test! do
             updated_user.reload
-            example_attributes.each do |key, value|
+            attributes.each do |key, value|
               expect(value.to_s).to eq(updated_user.send(key).to_s)
             end
           end
@@ -52,7 +53,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
               data: {
                 type: 'users',
                 id: updated_user.id,
-                attributes: example_attributes.merge(password: password)
+                attributes: attributes.merge(password: password)
               }
             }
           end
@@ -77,16 +78,56 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
           end
         end
 
+        context 'user group relationships passed' do
+          let!(:user_group1) { create :user_group }
+          let!(:user_group2) { create :user_group }
+          let!(:user_group3) { create :user_group }
+
+          let(:relationships) do
+            {
+              user_groups: {
+                data: [
+                  { type: 'user_groups', id: user_group1.id },
+                  { type: 'user_groups', id: user_group3.id }
+                ]
+              }
+            }
+          end
+
+          let(:user) do
+            {
+              data: {
+                type: 'users',
+                id: updated_user.id,
+                attributes: attributes,
+                relationships: relationships
+              }
+            }
+          end
+
+          before do
+            updated_user.user_groups << user_group2 # user already has user group assigned, this membership will be removed
+          end
+
+          response '200', 'OK: User updated' do
+            schema '$ref' => '#/definitions/user_response_with_relationships'
+
+            run_test! do
+              expect(updated_user.user_groups.pluck(:id)).to match_array [user_group1.id, user_group3.id]
+            end
+          end
+        end
+
         context 'user params include not permitted admin flag' do
           response '400', 'Error: Bad Request' do
-            let(:example_attributes_with_admin) { example_attributes.merge(admin: true) }
+            let(:attributes_with_admin) { valid_attributes.merge(admin: true) }
 
             let(:user) do
               {
                 data: {
                   type: 'users',
                   id: updated_user.id,
-                  attributes: example_attributes_with_admin
+                  attributes: attributes_with_admin
                 }
               }
             end

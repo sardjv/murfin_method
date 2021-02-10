@@ -843,7 +843,7 @@
           "201": {
             "description": "User created",
             "schema": {
-              "$ref": "#/definitions/user_post_params_without_password"
+              "$ref": "#/definitions/user_response_with_relationships"
             }
           },
           "422": {
@@ -885,6 +885,12 @@
             "name": "page[number]",
             "in": "query",
             "type": "integer",
+            "required": false
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "type": "string",
             "required": false
           }
         ],
@@ -953,6 +959,12 @@
             "in": "path",
             "type": "string",
             "required": true
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "type": "string",
+            "required": false
           }
         ],
         "produces": [
@@ -1015,7 +1027,7 @@
           "200": {
             "description": "OK: User updated",
             "schema": {
-              "$ref": "#/definitions/user_patch_params_without_password"
+              "$ref": "#/definitions/user_response_with_relationships"
             }
           },
           "400": {
@@ -1688,6 +1700,61 @@
         }
       }
     },
+    "user_response_with_relationships": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "1"
+            },
+            "type": {
+              "type": "string",
+              "example": "users"
+            },
+            "link": {
+              "type": "object",
+              "properties": {
+                "self": {
+                  "type": "string",
+                  "example": "https://job-plan-stats.herokuapp.com/api/v1/users/1"
+                }
+              }
+            },
+            "attributes": {
+              "$ref": "#/definitions/user_attributes"
+            },
+            "relationships": {
+              "type": "object",
+              "properties": {
+                "user_groups": {
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "303"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "user_groups"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "user_post_params": {
       "type": "object",
       "properties": {
@@ -1700,6 +1767,31 @@
             },
             "attributes": {
               "$ref": "#/definitions/user_attributes_with_password"
+            },
+            "relationships": {
+              "type": "object",
+              "properties": {
+                "user_groups": {
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "303"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "user_groups"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -1738,6 +1830,31 @@
             },
             "attributes": {
               "$ref": "#/definitions/user_attributes_with_password"
+            },
+            "relationships": {
+              "type": "object",
+              "properties": {
+                "user_groups": {
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "303"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "user_groups"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -1769,7 +1886,7 @@
       "properties": {
         "name": {
           "type": "string",
-          "example": "voluptas",
+          "example": "nesciunt",
           "x-nullable": false
         },
         "group_type_id": {

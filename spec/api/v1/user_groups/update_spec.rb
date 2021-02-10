@@ -45,7 +45,7 @@ describe Api::V1::UserGroupResource, type: :request, swagger_doc: 'v1/swagger.js
         end
 
         context 'group type does not exist' do
-          let(:attributes) { valid_attributes.merge({ group_type_id: 9876543 }) }
+          let(:attributes) { valid_attributes.merge({ group_type_id: 9_876_543 }) }
 
           response '422', 'Invalid request' do
             schema '$ref' => '#/definitions/error_422'
