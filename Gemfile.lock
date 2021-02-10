@@ -9,16 +9,6 @@ GIT
       rubyzip (>= 1.2.2)
       websocket (~> 1.0)
 
-GIT
-  remote: https://github.com/cerebris/jsonapi-resources.git
-  revision: eb432722b915e76914be9132e010a1244a32e91c
-  ref: eb432722b915e76914be9132e010a1244a32e91c
-  specs:
-    jsonapi-resources (0.11.0.beta1)
-      activerecord (>= 4.1)
-      concurrent-ruby
-      railties (>= 4.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -159,6 +149,10 @@ GEM
     ice_cube (0.16.3)
     json-schema (2.8.1)
       addressable (>= 2.4)
+    jsonapi-resources (0.10.4)
+      activerecord (>= 4.1)
+      concurrent-ruby
+      railties (>= 4.1)
     jwt (2.2.2)
     kaminari (1.2.1)
       activesupport (>= 4.1.0)
@@ -387,7 +381,7 @@ DEPENDENCIES
   guard-rspec (~> 4.7.3)
   guard-rubocop (~> 1.4.0)
   ice_cube (~> 0.16.3)
-  jsonapi-resources!
+  jsonapi-resources (~> 0.10.4)
   jwt (~> 2.2.2)
   kaminari (~> 1.2.1)
   listen (~> 3.4.1)
