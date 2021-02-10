@@ -4,6 +4,7 @@ require './swagger/v1/tags'
 require './swagger/v1/tag_types'
 require './swagger/v1/time_ranges'
 require './swagger/v1/users'
+require './swagger/v1/user_groups'
 
 class Swagger::V1::Core
   def self.docs
@@ -37,6 +38,7 @@ class Swagger::V1::Core
       Swagger::V1::TagTypes.definitions,
       Swagger::V1::TimeRanges.definitions,
       Swagger::V1::Users.definitions,
+      Swagger::V1::UserGroups.definitions,
       Swagger::V1::Errors.definitions
     ]
   end

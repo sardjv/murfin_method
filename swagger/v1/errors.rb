@@ -79,6 +79,12 @@ module Swagger
           error_422: {
             type: 'object',
             properties: {
+              error: { type: 'string', example: 'Invalid request' }
+            }
+          },
+          error_422_start_end_time: {
+            type: 'object',
+            properties: {
               errors: {
                 type: 'array',
                 items: {

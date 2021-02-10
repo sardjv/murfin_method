@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       jsonapi_resources :tags
       jsonapi_resources :tag_types
       jsonapi_resources :time_ranges, only: %i[index show create]
+      jsonapi_resources :user_groups
     end
   end
 
