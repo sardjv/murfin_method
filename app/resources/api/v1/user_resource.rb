@@ -17,11 +17,14 @@ class Api::V1::UserResource < JSONAPI::Resource
     super - [:admin]
   end
 
-  # before_update do
-  #   if @model.admin? # TODO: && check if password passed
-  #     raise JSONAPI::Exceptions::ParameterNotAllowed, 'Admin password change not allowed via API.' and return
-  #   end
-  # end
+  # HACK: do not allow change admin password via API
+  def replace_fields(field_data)
+    if @model.admin? && @model.persisted? && field_data[:attributes] && field_data[:attributes].include?(:password)
+      raise JSONAPI::Exceptions::ParameterNotAllowed, 'Admin password change via API' and return
+    end
+
+    super
+  end
 
   before_remove do
     raise JSONAPI::Exceptions::RecordLocked, 'Admin user can not be deleted.' and return if @model.admin?

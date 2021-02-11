@@ -27,7 +27,7 @@ gem 'factory_bot', '~> 6.1.0'
 
 # Generate fake data such as names, addresses, and phone numbers.
 # https://github.com/faker-ruby/faker
-gem 'faker', '~> 2.15.1'
+gem 'faker', '~> 2.16.0'
 
 # Allows easy creation of recurrence rules and fast querying.
 # https://github.com/seejohnrun/ice_cube
@@ -72,7 +72,7 @@ gem 'pundit', '~> 2.1.0'
 
 # Create database-backed web applications using the MVC pattern.
 # https://github.com/rails/rails
-gem 'rails', '~> 6.1.1'
+gem 'rails', '~> 6.1.2'
 
 # A very fast key-value store to hold jobs until they are run.
 # https://github.com/redis/redis-rb
@@ -80,8 +80,8 @@ gem 'redis', '~> 4.2.5'
 
 # Serve Swagger documentation generated from RSpec tests.
 # https://github.com/rswag/rswag
-gem 'rswag-api', '~> 2.3.3'
-gem 'rswag-ui', '~> 2.3.3'
+gem 'rswag-api', '~> 2.4.0'
+gem 'rswag-ui', '~> 2.4.0'
 
 # Simple, efficient background processing for Ruby.
 # https://github.com/mperham/sidekiq
@@ -102,7 +102,7 @@ group :development, :test do
 
   # Generate Swagger docs from RSpec tests.
   # https://github.com/rswag/rswag
-  gem 'rswag-specs', '~> 2.3.3'
+  gem 'rswag-specs', '~> 2.4.0'
 
   # A memory profiler for Ruby.
   # https://github.com/SamSaffron/memory_profiler
@@ -171,5 +171,5 @@ group :test do
 
   # Provides 'time travel' capabilities, making it simple to test time-dependent code.
   # https://github.com/travisjeffery/timecop
-  gem 'timecop', '~> 0.9.3'
+  gem 'timecop', '~> 0.9.4'
 end

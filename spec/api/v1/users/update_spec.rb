@@ -68,12 +68,16 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
             end
           end
 
-          xcontext 'valid password but user is admin' do # TODO: trigger exception
-            let!(:updated_user) { create :user, admin: true }
+          context 'valid password but user is admin' do
+            let!(:updated_user) { create :user, admin: true, password: Faker::Internet.password }
+            let(:error_detail) { 'Admin password change via API is not allowed.' }
 
             response '400', 'Bad Request' do
               schema '$ref' => '#/definitions/error_400'
-              run_test!
+
+              run_test! do
+                expect(parsed_json['errors'][0]['detail']).to eql error_detail
+              end
             end
           end
         end
