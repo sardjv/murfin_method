@@ -32,7 +32,8 @@ module Swagger
                 properties: {
                   type: { type: 'string', example: 'memberships' },
                   attributes: { '$ref' => '#/definitions/membership_attributes' }
-                }
+                },
+                required: %w[user_id user_group_id role]
               }
             }
           }

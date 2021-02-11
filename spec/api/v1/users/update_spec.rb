@@ -35,7 +35,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
         let(:Authorization) { 'Bearer dummy_json_web_token' }
 
         response '200', 'OK: User updated' do
-          schema '$ref' => '#/definitions/user_patch_params_without_password'
+          schema '$ref' => '#/definitions/user_response'
 
           run_test! do
             updated_user.reload
@@ -60,7 +60,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
 
           context 'valid password and user is not admin' do
             response '200', 'OK: User updated' do
-              schema '$ref' => '#/definitions/user_patch_params_without_password'
+              schema '$ref' => '#/definitions/user_response'
 
               run_test! do
                 expect(updated_user.reload.valid_password?(password)).to eql true

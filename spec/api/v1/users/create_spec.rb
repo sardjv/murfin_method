@@ -31,7 +31,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
       let(:Authorization) { 'Bearer dummy_json_web_token' }
 
       response '201', 'User created' do
-        schema '$ref' => '#/definitions/user_post_params_without_password'
+        schema '$ref' => '#/definitions/user_response'
 
         run_test! do
           parsed_json_data_matches_db_record(created_user)
@@ -47,7 +47,8 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
           let(:password) { Faker::Internet.password }
 
           response '201', 'User created' do
-            schema '$ref' => '#/definitions/user_post_params_without_password'
+            schema '$ref' => '#/definitions/user_response'
+
             run_test! do
               expect(created_user.valid_password?(password)).to eql true
             end

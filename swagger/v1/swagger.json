@@ -51,7 +51,7 @@
           "400": {
             "description": "Bad request",
             "schema": {
-              "$ref": "#/definitions/error_422"
+              "$ref": "#/definitions/error_400"
             }
           },
           "422": {
@@ -1059,7 +1059,7 @@
           "200": {
             "description": "Showing user",
             "schema": {
-              "$ref": "#/definitions/user_response"
+              "$ref": "#/definitions/user_response_with_relationships"
             }
           },
           "404": {
@@ -1882,23 +1882,6 @@
         }
       }
     },
-    "user_post_params_without_password": {
-      "type": "object",
-      "properties": {
-        "data": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "string",
-              "example": "users"
-            },
-            "attributes": {
-              "$ref": "#/definitions/user_attributes"
-            }
-          }
-        }
-      }
-    },
     "user_patch_params": {
       "type": "object",
       "properties": {
@@ -1971,7 +1954,7 @@
       "properties": {
         "name": {
           "type": "string",
-          "example": "esse",
+          "example": "error",
           "x-nullable": false
         },
         "group_type_id": {
@@ -2157,7 +2140,12 @@
             "attributes": {
               "$ref": "#/definitions/membership_attributes"
             }
-          }
+          },
+          "required": [
+            "user_id",
+            "user_group_id",
+            "role"
+          ]
         }
       }
     },

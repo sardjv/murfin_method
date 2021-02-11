@@ -149,18 +149,6 @@ module Swagger
               }
             }
           },
-          user_post_params_without_password: {
-            type: 'object',
-            properties: {
-              data: {
-                type: 'object',
-                properties: {
-                  type: { type: 'string', example: 'users' },
-                  attributes: { '$ref' => '#/definitions/user_attributes' }
-                }
-              }
-            }
-          },
           user_patch_params: {
             type: 'object',
             properties: {

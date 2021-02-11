@@ -49,7 +49,7 @@ describe Api::V1::MembershipResource, type: :request, swagger_doc: 'v1/swagger.j
         let(:error_title) { 'Invalid field value' }
 
         response '400', 'Bad request' do
-          schema '$ref' => '#/definitions/error_422'
+          schema '$ref' => '#/definitions/error_400'
           run_test! do
             expect(parsed_json['errors'][0]['title']).to eql error_title
             expect(parsed_json['errors'][0]['detail']).to eql error_detail
