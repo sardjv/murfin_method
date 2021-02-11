@@ -27,7 +27,7 @@ gem 'factory_bot', '~> 6.1.0'
 
 # Generate fake data such as names, addresses, and phone numbers.
 # https://github.com/faker-ruby/faker
-gem 'faker', '~> 2.15.1'
+gem 'faker', '~> 2.16.0'
 
 # Allows easy creation of recurrence rules and fast querying.
 # https://github.com/seejohnrun/ice_cube
@@ -35,10 +35,7 @@ gem 'ice_cube', '~> 0.16.3'
 
 # A resource-focused Rails library for developing JSON:API compliant servers.
 # https://github.com/cerebris/jsonapi-resources
-# Use specified version until jsonapi-resources version after 0.10.2 is released.
-# This is so we can use this PR https://github.com/cerebris/jsonapi-resources/pull/1346
-# for Rails 6.1.1 compatibility.
-gem 'jsonapi-resources', github: 'cerebris/jsonapi-resources', ref: 'eb432722b915e76914be9132e010a1244a32e91c'
+gem 'jsonapi-resources', '~> 0.10.4'
 
 # A ruby implementation of the RFC 7519 OAuth JSON Web Token (JWT) standard.
 # https://github.com/jwt/ruby-jwt
@@ -75,7 +72,7 @@ gem 'pundit', '~> 2.1.0'
 
 # Create database-backed web applications using the MVC pattern.
 # https://github.com/rails/rails
-gem 'rails', '~> 6.1.1'
+gem 'rails', '~> 6.1.2'
 
 # A very fast key-value store to hold jobs until they are run.
 # https://github.com/redis/redis-rb
@@ -83,8 +80,8 @@ gem 'redis', '~> 4.2.5'
 
 # Serve Swagger documentation generated from RSpec tests.
 # https://github.com/rswag/rswag
-gem 'rswag-api', '~> 2.3.3'
-gem 'rswag-ui', '~> 2.3.3'
+gem 'rswag-api', '~> 2.4.0'
+gem 'rswag-ui', '~> 2.4.0'
 
 # Simple, efficient background processing for Ruby.
 # https://github.com/mperham/sidekiq
@@ -101,11 +98,11 @@ gem 'webpacker', '~> 5.2.1'
 group :development, :test do
   # Call 'binding.pry' anywhere in your code to drop into a debugger console.
   # https://github.com/pry/pry
-  gem 'pry', '~> 0.13.1'
+  gem 'pry', '~> 0.14.0'
 
   # Generate Swagger docs from RSpec tests.
   # https://github.com/rswag/rswag
-  gem 'rswag-specs', '~> 2.3.3'
+  gem 'rswag-specs', '~> 2.4.0'
 
   # A memory profiler for Ruby.
   # https://github.com/SamSaffron/memory_profiler
@@ -174,5 +171,5 @@ group :test do
 
   # Provides 'time travel' capabilities, making it simple to test time-dependent code.
   # https://github.com/travisjeffery/timecop
-  gem 'timecop', '~> 0.9.3'
+  gem 'timecop', '~> 0.9.4'
 end
