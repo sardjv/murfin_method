@@ -43,7 +43,7 @@ class TeamStatsPresenter
     (data_values_sum.to_f / data_size).round
   end
 
-  def people_under_80_percent_delivered
+  def members_under_delivered_percent
     count = 0
 
     users = User.where(id: @user_ids)

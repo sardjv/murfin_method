@@ -271,7 +271,7 @@ describe TeamStatsPresenter do
         end
       end
 
-      describe 'people_under_80_percent_delivered' do
+      describe 'members_under_delivered_percent' do
         let!(:last_user_long_activity) do
           create(:time_range,
                  user_id: users.last.id,
@@ -282,7 +282,7 @@ describe TeamStatsPresenter do
         end
 
         it 'returns number of users' do
-          expect(subject.people_under_80_percent_delivered).to eql(users.count - 1)
+          expect(subject.members_under_delivered_percent).to eql(users.count - 1)
         end
       end
     end

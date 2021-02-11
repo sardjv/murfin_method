@@ -52,8 +52,8 @@ function drawGraph(graph_kind) {
           $('#team-dash-average-delivery').html(`${data.average_weekly_percentage_delivered_per_month}%`)
         }
 
-        if(data.people_under_80_percent_delivered !== undefined) {
-          $('#team-dash-people-under-80-percent-delivered').html(data.people_under_80_percent_delivered)
+        if(data.members_under_delivered_percent !== undefined) {
+          $('#team-dash-members-under-delivered-percent').html(data.members_under_delivered_percent)
         }
       }
     });
