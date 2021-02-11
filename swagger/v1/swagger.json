@@ -1120,6 +1120,12 @@
             "schema": {
               "$ref": "#/definitions/error_400"
             }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/error_403"
+            }
           }
         }
       }
@@ -1954,7 +1960,7 @@
       "properties": {
         "name": {
           "type": "string",
-          "example": "error",
+          "example": "ipsum",
           "x-nullable": false
         },
         "group_type_id": {
