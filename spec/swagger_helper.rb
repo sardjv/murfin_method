@@ -1,5 +1,6 @@
 require 'rails_helper'
 require './swagger/v1/errors'
+require './swagger/v1/memberships'
 require './swagger/v1/tags'
 require './swagger/v1/tag_types'
 require './swagger/v1/time_ranges'
@@ -39,6 +40,7 @@ class Swagger::V1::Core
       Swagger::V1::TimeRanges.definitions,
       Swagger::V1::Users.definitions,
       Swagger::V1::UserGroups.definitions,
+      Swagger::V1::Memberships.definitions,
       Swagger::V1::Errors.definitions
     ]
   end

@@ -3,7 +3,8 @@ class Api::V1::UserResource < JSONAPI::Resource
 
   attributes :first_name, :last_name, :email, :admin, :password
 
-  has_many :user_groups, acts_as_set: true, exclude_links: :default
+  has_many :user_groups, acts_as_set: false, exclude_links: :default
+  has_many :memberships, acts_as_set: false, exclude_links: :default
 
   def self.fetchable_fields(_context)
     super - [:password]

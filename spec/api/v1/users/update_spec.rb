@@ -86,6 +86,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
           let!(:user_group1) { create :user_group }
           let!(:user_group2) { create :user_group }
           let!(:user_group3) { create :user_group }
+          let!(:user_group4) { create :user_group }
 
           let(:relationships) do
             {
@@ -110,14 +111,15 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
           end
 
           before do
-            updated_user.user_groups << user_group2 # user already has user group assigned, this membership will be removed
+            # user already has one user group assigned and this membership will be removed
+            updated_user.user_groups << user_group2
           end
 
           response '200', 'OK: User updated' do
             schema '$ref' => '#/definitions/user_response_with_relationships'
 
             run_test! do
-              expect(updated_user.user_groups.pluck(:id)).to match_array [user_group1.id, user_group3.id]
+              expect(updated_user.user_groups.reload.pluck(:id)).to match_array [user_group1.id, user_group3.id]
             end
           end
         end
