@@ -71,12 +71,14 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
           context 'valid password but user is admin' do
             let!(:updated_user) { create :user, admin: true, password: Faker::Internet.password }
             let(:error_detail) { 'Admin password change via API is not allowed.' }
+            let(:error_title) { 'Param not allowed' }
 
             response '400', 'Bad Request' do
               schema '$ref' => '#/definitions/error_400'
 
               run_test! do
                 expect(parsed_json['errors'][0]['detail']).to eql error_detail
+                expect(parsed_json['errors'][0]['title']).to eql error_title
               end
             end
           end
@@ -110,16 +112,28 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
             }
           end
 
-          before do
-            # user already has one user group assigned and this membership will be removed
-            updated_user.user_groups << user_group2
-          end
-
           response '200', 'OK: User updated' do
             schema '$ref' => '#/definitions/user_response_with_relationships'
 
             run_test! do
               expect(updated_user.user_groups.reload.pluck(:id)).to match_array [user_group1.id, user_group3.id]
+            end
+          end
+
+          context 'user already has user group assigned' do
+            before do
+              updated_user.user_groups << user_group2
+            end
+
+            let(:error_detail) { 'User already has user group(s) assigned. Use memberships CREATE endpoint.' }
+            let(:error_title) { 'Complete replacement forbidden' }
+
+            response '403', 'Forbidden' do
+              schema '$ref' => '#/definitions/error_403'
+              run_test! do
+                expect(parsed_json['errors'][0]['title']).to eql error_title
+                expect(parsed_json['errors'][0]['detail']).to eql error_detail
+              end
             end
           end
         end
