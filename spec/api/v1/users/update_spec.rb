@@ -125,7 +125,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
               updated_user.user_groups << user_group2
             end
 
-            let(:error_detail) { 'User already has user group(s) assigned. Use memberships CREATE endpoint.' }
+            let(:error_detail) { 'User already has user group(s) assigned. Use memberships POST endpoint.' }
             let(:error_title) { 'Complete replacement forbidden' }
 
             response '403', 'Forbidden' do

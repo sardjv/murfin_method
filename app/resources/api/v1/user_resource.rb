@@ -31,7 +31,7 @@ class Api::V1::UserResource < JSONAPI::Resource
   def _replace_to_many_links(relationship_type, relationship_key_values, options)
     if relationship_type == :user_groups && @model.user_groups.any?
       raise JSONAPI::Exceptions::ToManySetReplacementForbidden.new(
-        detail: 'User already has user group(s) assigned. Use memberships CREATE endpoint.'
+        detail: 'User already has user group(s) assigned. Use memberships POST endpoint.'
       )
     end
 
