@@ -3,6 +3,11 @@ class Api::V1::UserResource < JSONAPI::Resource
 
   attributes :first_name, :last_name, :email, :admin, :password
 
+  filter :email,
+         apply: lambda { |records, values, _options|
+           records.where(email: values[0])
+         }
+
   def self.fetchable_fields(_context)
     super - [:password]
   end

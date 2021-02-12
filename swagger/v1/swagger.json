@@ -668,6 +668,12 @@
             "in": "query",
             "type": "integer",
             "required": false
+          },
+          {
+            "name": "filter[email]",
+            "in": "query",
+            "type": "string",
+            "required": false
           }
         ],
         "responses": {
