@@ -155,6 +155,12 @@ describe DashboardPresenter, freeze: Time.zone.local(2020, 6, 30, 23, 59, 59) do
     end
   end
 
+  describe 'users_with_job_plan_count' do
+    it 'returns number of users' do
+      expect(subject.users_with_job_plan_count).to eql 1
+    end
+  end
+
   context 'when have a second activity with a different tag' do
     let(:tag2) { create(:tag) }
     let!(:activity2) { create(:activity, plan: plan) }

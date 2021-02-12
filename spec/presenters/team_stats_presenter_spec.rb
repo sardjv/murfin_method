@@ -90,6 +90,12 @@ describe TeamStatsPresenter do
         )
       end
     end
+
+    describe 'average_weekly_percentage_delivered_per_month' do
+      it 'returns zero' do
+        expect(subject.average_weekly_percentage_delivered_per_month).to eql 0
+      end
+    end
   end
 
   context 'when users have plans and actuals' do
@@ -256,6 +262,27 @@ describe TeamStatsPresenter do
         context 'without actuals' do
           let!(:actual_activity) { nil }
           it { expect { subject.weekly_percentage_delivered_per_month }.not_to raise_error }
+        end
+      end
+
+      describe 'average_weekly_percentage_delivered_per_month' do
+        it 'returns average' do
+          expect(subject.average_weekly_percentage_delivered_per_month).to eql 49
+        end
+      end
+
+      describe 'members_under_delivered_percent' do
+        let!(:last_user_long_activity) do
+          create(:time_range,
+                 user_id: users.last.id,
+                 time_range_type_id: TimeRangeType.actual_type.id,
+                 start_time: 4.days.ago.beginning_of_day,
+                 end_time: 1.day.ago.end_of_day,
+                 value: 4 * 24 * 60)
+        end
+
+        it 'returns number of users' do
+          expect(subject.members_under_delivered_percent).to eql(users.count - 1)
         end
       end
     end

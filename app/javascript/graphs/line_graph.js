@@ -47,6 +47,14 @@ function drawGraph(graph_kind) {
       success: function(data) {
         if (global.chart) { global.chart.destroy() };
         global.chart = line_graph(context, data.line_graph, { graph_kind: graph_kind });
+
+        if(data.average_weekly_percentage_delivered_per_month !== undefined) {
+          $('#team-dash-average-delivery').html(`${data.average_weekly_percentage_delivered_per_month}%`)
+        }
+
+        if(data.members_under_delivered_percent !== undefined) {
+          $('#team-dash-members-under-delivered-percent').html(data.members_under_delivered_percent)
+        }
       }
     });
   }
