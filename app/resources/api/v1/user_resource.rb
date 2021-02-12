@@ -6,6 +6,11 @@ class Api::V1::UserResource < JSONAPI::Resource
   has_many :user_groups, acts_as_set: false, exclude_links: :default
   has_many :memberships, acts_as_set: false, exclude_links: :default
 
+  filter :email,
+         apply: lambda { |records, values, _options|
+           records.where(email: values[0])
+         }
+
   def self.fetchable_fields(_context)
     super - [:password]
   end

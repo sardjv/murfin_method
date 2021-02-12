@@ -87,6 +87,13 @@ en:
     compare_plan_with_actuals: Compare job plans versus actual time spent with patients.
     drill_down: Drill down to find service and data collection problems.
     you_can: 'You can use this service to:'
+  teams:
+    dashboard:
+      boxes:
+        members: Members
+        avg_delivery: Average delivery
+        members_under_delivered_percent: Members under 80%
+        members_with_job_plan: Members with job plan
   prompts:
     none: None
   nav:

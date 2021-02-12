@@ -8,26 +8,26 @@
         {
           icon: 'people',
           colour: 'purple',
-          label: 'Members',
+          label: t('teams.dashboard.boxes.members'),
           value: @presenter.paginated_users.total_count
         },
         {
           icon: 'bar-chart',
           colour: 'green',
-          label: 'Average delivery',
-          value: '90%'
+          label: t('teams.dashboard.boxes.avg_delivery'),
+          value: '<span id="team-dash-average-delivery">&nbsp;</span>'.html_safe
         },
         {
           icon: 'compass',
           colour: 'yellow',
-          label: 'People under 80%',
-          value: '4'
+          label: t('teams.dashboard.boxes.members_under_delivered_percent'),
+          value: '<span id="team-dash-members-under-delivered-percent">&nbsp;</span>'.html_safe
         },
         {
           icon: 'flag',
           colour: 'red',
-          label: 'Average team delivery',
-          value: '< 1%'
+          label: t('teams.dashboard.boxes.members_with_job_plan'),
+          value: @presenter.users_with_job_plan_count
         }
       ]
     }

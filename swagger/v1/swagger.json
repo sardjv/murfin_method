@@ -977,6 +977,12 @@
             "in": "query",
             "type": "string",
             "required": false
+          },
+          {
+            "name": "filter[email]",
+            "in": "query",
+            "type": "string",
+            "required": false
           }
         ],
         "responses": {
@@ -1960,7 +1966,7 @@
       "properties": {
         "name": {
           "type": "string",
-          "example": "ipsum",
+          "example": "vel",
           "x-nullable": false
         },
         "group_type_id": {

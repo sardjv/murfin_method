@@ -10,7 +10,10 @@ class TeamsController < ApplicationController
         dataset_labels = t("graphs.#{params[:graph_kind]}.dataset_labels", default: nil)
         units = t("graphs.#{params[:graph_kind]}.units", default: '')
 
-        render json: @presenter.to_json(graphs: [{ type: :line_graph, data: :team_data, units: units, dataset_labels: dataset_labels }])
+        render json: @presenter.to_json(
+          graphs: [{ type: :line_graph, data: :team_data, units: units, dataset_labels: dataset_labels }],
+          extras: %i[average_weekly_percentage_delivered_per_month members_under_delivered_percent]
+        )
       end
     end
   end
