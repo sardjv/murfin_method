@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.9] - 2021-02-12
+
+### Added
+
+- UserGroup and Membership API endpoints
+- Add filter[email] to api/v1/users
+
+### Fixed
+
+- Show correct stats in report cards
+
+
 ## [0.9.8] - 2021-02-05
 
 ### Added
