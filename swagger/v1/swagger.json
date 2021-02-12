@@ -14,6 +14,91 @@
     }
   },
   "paths": {
+    "/api/v1/memberships": {
+      "post": {
+        "summary": "create membership",
+        "tags": [
+          "Memberships"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "consumes": [
+          "application/vnd.api+json"
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "parameters": [
+          {
+            "name": "membership",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/membership_post_params"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Membership created",
+            "schema": {
+              "$ref": "#/definitions/membership_response"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/error_400"
+            }
+          },
+          "422": {
+            "description": "Invalid request",
+            "schema": {
+              "$ref": "#/definitions/error_422"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/memberships/{id}": {
+      "delete": {
+        "summary": "destroy membership",
+        "tags": [
+          "Memberships"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "OK: No Content"
+          },
+          "404": {
+            "description": "Record not found",
+            "schema": {
+              "$ref": "#/definitions/error_404"
+            }
+          }
+        }
+      }
+    },
     "/api/v1/tag_types": {
       "post": {
         "summary": "create tag type",
@@ -481,7 +566,7 @@
           "422": {
             "description": "Invalid request",
             "schema": {
-              "$ref": "#/definitions/error_422"
+              "$ref": "#/definitions/error_422_start_end_time"
             }
           }
         }
@@ -587,6 +672,224 @@
         }
       }
     },
+    "/api/v1/user_groups": {
+      "post": {
+        "summary": "create user group",
+        "tags": [
+          "UserGroups"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "consumes": [
+          "application/vnd.api+json"
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "parameters": [
+          {
+            "name": "user_group",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/user_group_post_params"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User Group created",
+            "schema": {
+              "$ref": "#/definitions/user_group_post_params"
+            }
+          },
+          "422": {
+            "description": "Invalid request",
+            "schema": {
+              "$ref": "#/definitions/error_422"
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "get user groups",
+        "tags": [
+          "UserGroups"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "parameters": [
+          {
+            "name": "page[size]",
+            "in": "query",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "page[number]",
+            "in": "query",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "filter[name]",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "filter[group_type_id]",
+            "in": "query",
+            "type": "integer",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User Groups index",
+            "schema": {
+              "$ref": "#/definitions/user_groups_response"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user_groups/{id}": {
+      "delete": {
+        "summary": "destroy user group",
+        "tags": [
+          "UserGroups"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "OK: No Content"
+          },
+          "404": {
+            "description": "Record not found",
+            "schema": {
+              "$ref": "#/definitions/error_404"
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "get user group",
+        "tags": [
+          "UserGroups"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Showing tag type",
+            "schema": {
+              "$ref": "#/definitions/user_group_response"
+            }
+          },
+          "404": {
+            "description": "Record not found",
+            "schema": {
+              "$ref": "#/definitions/error_404"
+            }
+          },
+          "406": {
+            "description": "Unsupported accept header",
+            "schema": {
+              "$ref": "#/definitions/error_406"
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "update user group",
+        "tags": [
+          "UserGroups"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "consumes": [
+          "application/vnd.api+json"
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "user_group",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/user_group_patch_params"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK: User Group updated",
+            "schema": {
+              "$ref": "#/definitions/user_group_patch_params"
+            }
+          },
+          "422": {
+            "description": "Invalid request",
+            "schema": {
+              "$ref": "#/definitions/error_422"
+            }
+          }
+        }
+      }
+    },
     "/api/v1/users": {
       "post": {
         "summary": "create user",
@@ -625,7 +928,7 @@
           "201": {
             "description": "User created",
             "schema": {
-              "$ref": "#/definitions/user_post_params_without_password"
+              "$ref": "#/definitions/user_response_with_relationships"
             }
           },
           "422": {
@@ -667,6 +970,12 @@
             "name": "page[number]",
             "in": "query",
             "type": "integer",
+            "required": false
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "type": "string",
             "required": false
           },
           {
@@ -741,6 +1050,12 @@
             "in": "path",
             "type": "string",
             "required": true
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "type": "string",
+            "required": false
           }
         ],
         "produces": [
@@ -750,7 +1065,7 @@
           "200": {
             "description": "Showing user",
             "schema": {
-              "$ref": "#/definitions/user_response"
+              "$ref": "#/definitions/user_response_with_relationships"
             }
           },
           "404": {
@@ -803,13 +1118,19 @@
           "200": {
             "description": "OK: User updated",
             "schema": {
-              "$ref": "#/definitions/user_patch_params_without_password"
+              "$ref": "#/definitions/user_response_with_relationships"
             }
           },
           "400": {
             "description": "Error: Bad Request",
             "schema": {
               "$ref": "#/definitions/error_400"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/error_403"
             }
           }
         }
@@ -1476,6 +1797,61 @@
         }
       }
     },
+    "user_response_with_relationships": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "1"
+            },
+            "type": {
+              "type": "string",
+              "example": "users"
+            },
+            "link": {
+              "type": "object",
+              "properties": {
+                "self": {
+                  "type": "string",
+                  "example": "https://job-plan-stats.herokuapp.com/api/v1/users/1"
+                }
+              }
+            },
+            "attributes": {
+              "$ref": "#/definitions/user_attributes"
+            },
+            "relationships": {
+              "type": "object",
+              "properties": {
+                "user_groups": {
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "303"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "user_groups"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "user_post_params": {
       "type": "object",
       "properties": {
@@ -1488,23 +1864,31 @@
             },
             "attributes": {
               "$ref": "#/definitions/user_attributes_with_password"
-            }
-          }
-        }
-      }
-    },
-    "user_post_params_without_password": {
-      "type": "object",
-      "properties": {
-        "data": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "string",
-              "example": "users"
             },
-            "attributes": {
-              "$ref": "#/definitions/user_attributes"
+            "relationships": {
+              "type": "object",
+              "properties": {
+                "user_groups": {
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "303"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "user_groups"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -1526,6 +1910,31 @@
             },
             "attributes": {
               "$ref": "#/definitions/user_attributes_with_password"
+            },
+            "relationships": {
+              "type": "object",
+              "properties": {
+                "user_groups": {
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "303"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "user_groups"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -1549,6 +1958,206 @@
               "$ref": "#/definitions/user_attributes"
             }
           }
+        }
+      }
+    },
+    "user_group_attributes": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "vel",
+          "x-nullable": false
+        },
+        "group_type_id": {
+          "type": "integer",
+          "example": 2,
+          "x-nullable": false
+        }
+      }
+    },
+    "user_groups_response": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "1"
+              },
+              "type": {
+                "type": "string",
+                "example": "user_groups"
+              },
+              "link": {
+                "type": "object",
+                "properties": {
+                  "self": {
+                    "type": "string",
+                    "example": "https://job-plan-stats.herokuapp.com/api/v1/user_groups/1"
+                  }
+                }
+              },
+              "attributes": {
+                "$ref": "#/definitions/user_group_attributes"
+              }
+            }
+          }
+        },
+        "links": {
+          "type": "object",
+          "properties": {
+            "first": {
+              "type": "string",
+              "example": "https://job-plan-stats.herokuapp.com/api/v1/user_groups?page[number]=1&page[size]=5"
+            },
+            "prev": {
+              "type": "string",
+              "example": "https://job-plan-stats.herokuapp.com/api/v1/user_groups?page[number]=1&page[size]=5"
+            },
+            "next": {
+              "type": "string",
+              "example": "https://job-plan-stats.herokuapp.com/api/v1/user_groups?page[number]=2&page[size]=5"
+            },
+            "last": {
+              "type": "string",
+              "example": "https://job-plan-stats.herokuapp.com/api/v1/user_groups?page[number]=5&page[size]=5"
+            }
+          }
+        }
+      }
+    },
+    "user_group_response": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "1"
+            },
+            "type": {
+              "type": "string",
+              "example": "user_groups"
+            },
+            "link": {
+              "type": "object",
+              "properties": {
+                "self": {
+                  "type": "string",
+                  "example": "https://job-plan-stats.herokuapp.com/api/v1/user_groups/1"
+                }
+              }
+            },
+            "attributes": {
+              "$ref": "#/definitions/user_group_attributes"
+            }
+          }
+        }
+      }
+    },
+    "user_group_post_params": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "user_groups"
+            },
+            "attributes": {
+              "$ref": "#/definitions/user_group_attributes"
+            }
+          }
+        }
+      }
+    },
+    "user_group_patch_params": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "10"
+            },
+            "type": {
+              "type": "string",
+              "example": "user_groups"
+            },
+            "attributes": {
+              "$ref": "#/definitions/user_group_attributes"
+            }
+          }
+        }
+      }
+    },
+    "membership_attributes": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "integer",
+          "example": 1234,
+          "x-nullable": false
+        },
+        "user_group_id": {
+          "type": "integer",
+          "example": 13,
+          "x-nullable": false
+        },
+        "role": {
+          "type": "string",
+          "example": "member",
+          "x-nullable": false
+        }
+      }
+    },
+    "membership_response": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "123"
+            },
+            "type": {
+              "type": "string",
+              "example": "memberships"
+            },
+            "attributes": {
+              "$ref": "#/definitions/membership_attributes"
+            }
+          }
+        }
+      }
+    },
+    "membership_post_params": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "memberships"
+            },
+            "attributes": {
+              "$ref": "#/definitions/membership_attributes"
+            }
+          },
+          "required": [
+            "user_id",
+            "user_group_id",
+            "role"
+          ]
         }
       }
     },
@@ -1667,6 +2276,15 @@
       }
     },
     "error_422": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Invalid request"
+        }
+      }
+    },
+    "error_422_start_end_time": {
       "type": "object",
       "properties": {
         "errors": {

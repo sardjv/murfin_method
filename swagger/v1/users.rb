@@ -1,6 +1,6 @@
 module Swagger
   module V1
-    class Users
+    class Users # rubocop:disable Metrics/ClassLength
       def self.user_properties_without_admin
         {
           last_name: { type: 'string', example: 'Smith', 'x-nullable': true },
@@ -79,6 +79,45 @@ module Swagger
               }
             }
           },
+          user_response_with_relationships: {
+            type: 'object',
+            properties: {
+              data: {
+                type: 'object',
+                properties: {
+                  id: { type: 'string', example: '1' },
+                  type: { type: 'string', example: 'users' },
+                  link: {
+                    type: 'object',
+                    properties: {
+                      self: { type: 'string', example:
+                        'https://job-plan-stats.herokuapp.com/api/v1/users/1' }
+                    }
+                  },
+                  attributes: { '$ref' => '#/definitions/user_attributes' },
+                  relationships: {
+                    type: 'object',
+                    properties: {
+                      user_groups: {
+                        properties: {
+                          data: {
+                            type: 'array',
+                            items: {
+                              type: 'object',
+                              properties: {
+                                id: { type: 'string', example: '303' },
+                                type: { type: 'string', example: 'user_groups' }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
           user_post_params: {
             type: 'object',
             properties: {
@@ -86,19 +125,26 @@ module Swagger
                 type: 'object',
                 properties: {
                   type: { type: 'string', example: 'users' },
-                  attributes: { '$ref' => '#/definitions/user_attributes_with_password' }
-                }
-              }
-            }
-          },
-          user_post_params_without_password: {
-            type: 'object',
-            properties: {
-              data: {
-                type: 'object',
-                properties: {
-                  type: { type: 'string', example: 'users' },
-                  attributes: { '$ref' => '#/definitions/user_attributes' }
+                  attributes: { '$ref' => '#/definitions/user_attributes_with_password' },
+                  relationships: {
+                    type: 'object',
+                    properties: {
+                      user_groups: {
+                        properties: {
+                          data: {
+                            type: 'array',
+                            items: {
+                              type: 'object',
+                              properties: {
+                                id: { type: 'string', example: '303' },
+                                type: { type: 'string', example: 'user_groups' }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -111,7 +157,26 @@ module Swagger
                 properties: {
                   id: { type: 'string', example: '1' },
                   type: { type: 'string', example: 'users' },
-                  attributes: { '$ref' => '#/definitions/user_attributes_with_password' }
+                  attributes: { '$ref' => '#/definitions/user_attributes_with_password' },
+                  relationships: {
+                    type: 'object',
+                    properties: {
+                      user_groups: {
+                        properties: {
+                          data: {
+                            type: 'array',
+                            items: {
+                              type: 'object',
+                              properties: {
+                                id: { type: 'string', example: '303' },
+                                type: { type: 'string', example: 'user_groups' }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }

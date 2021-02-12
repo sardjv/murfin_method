@@ -60,7 +60,7 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
         let(:attributes) { valid_attributes.merge({ user_id: 987_654 }) }
 
         response '422', 'Invalid request' do
-          schema '$ref' => '#/definitions/error_422'
+          schema '$ref' => '#/definitions/error_422_start_end_time'
           run_test!
         end
       end

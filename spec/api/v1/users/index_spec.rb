@@ -11,6 +11,11 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
       produces 'application/vnd.api+json'
       parameter name: 'page[size]', in: :query, type: :integer, required: false
       parameter name: 'page[number]', in: :query, type: :integer, required: false
+
+      parameter name: 'include', in: :query, type: :string, required: false
+
+      let(:include) { '' }
+
       parameter name: 'filter[email]', in: :query, type: :string, required: false
 
       let!(:'page[size]') { 2 }
@@ -18,21 +23,17 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
 
       let(:Authorization) { 'Bearer dummy_json_web_token' }
 
+      let(:user1_data) { parsed_json_data.find { |d| d['id'] == user1.id.to_s } }
+      let(:user2_data) { parsed_json_data.find { |d| d['id'] == user2.id.to_s } }
+
       response '200', 'Users index' do
         schema '$ref' => '#/definitions/users_response'
 
-        describe 'attributes match database values' do
-          run_test! do
-            expect(parsed_json_data.count).to eq(2) # TODO: refactor to request spec helper
-            database_record = User.find(parsed_json_data.first['id'])
-            parsed_json_data.first['attributes'].each do |key, value|
-              if database_record.send(key).is_a?(Time)
-                expect(I18n.l(database_record.send(key), format: :iso8601_utc)).to eq(value.to_s)
-              else
-                expect(database_record.send(key).to_s).to eq(value.to_s)
-              end
-            end
-          end
+        run_test! do
+          expect(parsed_json_data.count).to eq(2)
+
+          parsed_json_data_matches_db_record(user1, user1_data)
+          parsed_json_data_matches_db_record(user2, user2_data)
         end
 
         context 'with 1 result per page' do
@@ -42,6 +43,25 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
           run_test! do
             expect(parsed_json_data.first['id']).to eq(user2.id.to_s)
             expect(parsed_json_data.first['attributes']['email']).to eq(user2.email)
+          end
+        end
+
+        context 'include user groups' do
+          let(:include) { 'user_groups' }
+
+          let!(:user_group1) { create :user_group }
+          let!(:user_group2) { create :user_group }
+          let!(:user_group3) { create :user_group }
+
+          before do
+            user1.user_groups << [user_group2, user_group1]
+          end
+
+          run_test! do
+            expect(user1_data['relationships']['user_groups']['data'].collect { |e| e['id'].to_i }).to match_array [user_group1.id, user_group2.id]
+            expect(user2_data['relationships']['user_groups']['data']).to be_empty
+
+            expect(parsed_json['included'].collect { |e| e['attributes']['name'] }).to match_array [user_group1.name, user_group2.name]
           end
         end
 

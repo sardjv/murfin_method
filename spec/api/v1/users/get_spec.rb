@@ -8,13 +8,15 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
       tags 'Users'
       security [{ JWT: {} }]
       parameter name: :id, in: :path, type: :string, required: true
+      parameter name: :include, in: :query, type: :string, required: false
       produces 'application/vnd.api+json'
 
       let(:Authorization) { 'Bearer dummy_json_web_token' }
       let!(:id) { user.id }
+      let(:include) { '' }
 
       response '200', 'Showing user' do
-        schema '$ref' => '#/definitions/user_response'
+        schema '$ref' => '#/definitions/user_response_with_relationships'
 
         run_test! do
           parsed_json_data_matches_db_record(user)
