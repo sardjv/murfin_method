@@ -1,5 +1,5 @@
 class UserStatsPresenter
-  attr_accessor :user, :filter_start_time, :filter_end_time, :plan_id, :actual_id
+  attr_accessor :user, :filter_tag_ids, :filter_start_time, :filter_end_time, :plan_id, :actual_id
 
   OVER_MIN_PERCENTAGE = 120
   OK_MIN_PERCENTAGE = 80
@@ -8,6 +8,7 @@ class UserStatsPresenter
   def initialize(args)
     args = defaults.merge(args)
     @user = args[:user]
+    @filter_tag_ids = args[:filter_tag_ids]
     @filter_start_time = args[:filter_start_date].to_time.in_time_zone.beginning_of_day
     @filter_end_time = args[:filter_end_date].to_time.in_time_zone.end_of_day
     @actual_id = args[:actual_id]
@@ -23,13 +24,13 @@ class UserStatsPresenter
   def average_weekly_actual
     return nil if no_actual_data?
 
-    average_weekly(actual_time_ranges(actual_id))
+    average_weekly(actual_time_ranges)
   end
 
   def percentage_delivered
     return nil if no_planned_data? || no_actual_data?
 
-    percentage(total(actual_time_ranges(actual_id)), total(planned_time_ranges))
+    percentage(total(actual_time_ranges), total(planned_time_ranges))
   end
 
   def status
@@ -53,7 +54,8 @@ class UserStatsPresenter
     {
       filter_start_date: (1.year.ago + 1.day).beginning_of_day,
       filter_end_date: Time.zone.today.end_of_day,
-      actual_id: TimeRangeType.actual_type.id
+      actual_id: TimeRangeType.actual_type.id,
+      filter_tag_ids: Tag.where(default_for_filter: true).pluck(:id)
     }
   end
 
@@ -74,10 +76,10 @@ class UserStatsPresenter
     end
   end
 
-  def actual_time_ranges(time_range_type_id)
+  def actual_time_ranges
     return @cache[:actual_time_ranges] if @cache[:actual_time_ranges].present?
 
-    @cache[:actual_time_ranges] = calculate_actual_time_ranges(time_range_type_id)
+    @cache[:actual_time_ranges] = calculate_actual_time_ranges
   end
 
   def planned_time_ranges
@@ -102,27 +104,34 @@ class UserStatsPresenter
   end
 
   def no_actual_data?
-    actual_time_ranges(actual_id).empty?
+    actual_time_ranges.empty?
   end
 
-  def calculate_actual_time_ranges(time_range_type_id)
-    scope = user.time_ranges.where(time_range_type_id: time_range_type_id)
+  def calculate_actual_time_ranges
+    scope = user_time_range_scope
 
     scope.where('start_time BETWEEN ? AND ?', filter_start_time, filter_end_time).or(
       scope.where('end_time BETWEEN ? AND ?', filter_start_time, filter_end_time)
     ).or(
       scope.where('start_time <= ? AND end_time >= ?', filter_start_time, filter_end_time)
-    ).to_a
+    ).distinct.to_a
+  end
+
+  def user_time_range_scope
+    scope = user.time_ranges.where(time_range_type_id: actual_id)
+    scope = scope.joins(:tags).where(tags: { id: filter_tag_ids }) if filter_tag_ids.any?
+    scope
   end
 
   def calculate_planned_time_ranges
-    Plan.where(user_id: user.id).flat_map(&:to_time_ranges).select do |a|
-      Intersection.call(
-        a_start: a.start_time,
-        a_end: a.end_time,
-        b_start: filter_start_time,
-        b_end: filter_end_time
-      ).positive?
+    user_plan_time_ranges.select do |a|
+      Intersection.call(a_start: a.start_time, a_end: a.end_time, b_start: filter_start_time, b_end: filter_end_time).positive?
     end
+  end
+
+  def user_plan_time_ranges
+    scope = Activity.joins(:plan).where(plans: { user_id: user.id })
+    scope = scope.joins(:tags).where(tags: { id: filter_tag_ids }) if filter_tag_ids.any?
+    scope.distinct.flat_map(&:to_time_ranges)
   end
 end

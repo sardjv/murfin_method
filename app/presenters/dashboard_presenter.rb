@@ -85,7 +85,8 @@ class DashboardPresenter
       user: user,
       actual_id: @params[:actual_id],
       filter_start_date: filter_start_date,
-      filter_end_date: filter_end_date
+      filter_end_date: filter_end_date,
+      filter_tag_ids: filter_tag_ids
     ).percentage_delivered
   end
 
