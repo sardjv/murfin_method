@@ -8,19 +8,23 @@ import minutesHumanized from '../shared/minutes_humanized'
 window.addEventListener('turbolinks:load', () => {
   const graphKindSelector = "input:radio[name='graph_kind']"
   let graphKind = 'percentage_delivered'
+  const graphContext = $('#line-graph')
 
-  let prev_graph_kind_val = $(`${graphKindSelector}:checked`).val()
-  $(graphKindSelector).on('click', (e) => {
-    if(prev_graph_kind_val != e.target.value) {
-      graphKind = e.target.value
-      drawGraph(graphKind)
-      prev_graph_kind_val = graphKind
-    }
-  })
+  if(graphContext) {
+    let prev_graph_kind_val = $(`${graphKindSelector}:checked`).val()
+    $(graphKindSelector).on('click', (e) => {
+      if(prev_graph_kind_val != e.target.value) {
+        graphKind = e.target.value
+        drawGraph(graphKind)
+        prev_graph_kind_val = graphKind
+      }
+    })
 
-  $('select.filter').on('change', () => { drawGraph(graphKind) })
+    $('select.filter').on('change', () => { drawGraph(graphKind) })
 
-  drawGraph(graphKind)
+    //const userId = graphContext.data('user-id')
+    drawGraph(graphKind)
+  }
 });
 
 function drawGraph(graph_kind) {

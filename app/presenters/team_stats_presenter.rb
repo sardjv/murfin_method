@@ -16,7 +16,7 @@ class TeamStatsPresenter
     @filter_start_time = @filter_start_date.to_time.in_time_zone.beginning_of_day
     @filter_end_date = args[:filter_end_date]
     @filter_end_time = @filter_end_date.to_time.in_time_zone.end_of_day
-    @graph_kind = args[:graph_kind] || 'percentage_delivered'
+    @graph_kind = args[:graph_kind] # || 'percentage_delivered' TODO not needed set in defaults ?
     @plan = weekly_averages(time_ranges: plan_time_ranges)
     @actual = weekly_averages(time_ranges: actual_time_ranges)
   end
@@ -65,6 +65,23 @@ class TeamStatsPresenter
     self.class::GRAPH_KIND_OPTIONS
   end
 
+  # Indexes hit:
+  # 1 user: index_time_ranges_on_user_id
+  # Up to 50% of users: index_time_range_team_stats
+  # >50% of users: index_time_ranges_on_time_range_type_id
+  def actual_time_ranges
+    scope = TimeRange.select(:time_range_type_id, :user_id, :start_time, :end_time, :value, :updated_at)
+                     .where(time_range_type_id: @actual_id, user_id: @user_ids)
+                     .joins(:tags)
+                     .where(tags: { id: @filter_tag_ids })
+
+    scope.where('start_time BETWEEN ? AND ?', @filter_start_time, @filter_end_time).or(
+      scope.where('end_time BETWEEN ? AND ?', @filter_start_time, @filter_end_time)
+    ).or(
+      scope.where('start_time <= ? AND end_time >= ?', @filter_start_time, @filter_end_time)
+    ).distinct # .to_a
+  end
+
   private
 
   def response(month:, value:)
@@ -76,7 +93,12 @@ class TeamStatsPresenter
   end
 
   def defaults
-    { filter_start_date: 1.year.ago, filter_end_date: Time.zone.today, actual_id: TimeRangeType.actual_type.id, graph_kind: 'percentage_delivered' }
+    {
+      filter_start_date: 1.year.ago.to_date,
+      filter_end_date: Time.zone.today,
+      actual_id: TimeRangeType.actual_type.id,
+      graph_kind: 'percentage_delivered'
+    }
   end
 
   def plan_time_ranges
@@ -130,23 +152,6 @@ class TeamStatsPresenter
   def notes
     @notes ||= Note.where(start_time: @filter_start_time..@filter_end_time)
                    .group_by { |n| n.start_time.strftime('%Y-%m') }
-  end
-
-  # Indexes hit:
-  # 1 user: index_time_ranges_on_user_id
-  # Up to 50% of users: index_time_range_team_stats
-  # >50% of users: index_time_ranges_on_time_range_type_id
-  def actual_time_ranges
-    scope = TimeRange.select(:time_range_type_id, :user_id, :start_time, :end_time, :value)
-                     .where(time_range_type_id: @actual_id, user_id: @user_ids)
-                     .joins(:tags)
-                     .where(tags: { id: @filter_tag_ids })
-
-    scope.where('start_time BETWEEN ? AND ?', @filter_start_time, @filter_end_time).or(
-      scope.where('end_time BETWEEN ? AND ?', @filter_start_time, @filter_end_time)
-    ).or(
-      scope.where('start_time <= ? AND end_time >= ?', @filter_start_time, @filter_end_time)
-    ).distinct.to_a
   end
 
   def months

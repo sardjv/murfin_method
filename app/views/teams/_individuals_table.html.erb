@@ -11,7 +11,7 @@
               <%= User.human_attribute_name('name') %>
             </th>
             <th>
-              <%= Plan.human_attribute_name('name') %>
+              <%= Plan.human_attribute_name('average_weekly_planned') %>
             </th>
             <th>
               <%= TimeRangeType.actual_type.name %>
@@ -22,13 +22,14 @@
             <th>
               <%= User.human_attribute_name('status') %>
             </th>
+            <th style='width: 50px;'></th>
           </tr>
         </thead>
         <tbody>
           <% @presenter.paginated_users.each do |user| %>
             <% cache user do %>
               <% user_presenter = UserStatsPresenter.new(user: user, actual_id: TimeRangeType.actual_type.id) %>
-              <tr>
+              <tr data-user-id="<%= user.id -%>">
                 <td>
                   <%= user.name %>
                 </td>
@@ -55,6 +56,11 @@
                 </td>
                 <td class="<%= user_presenter.status.parameterize %>">
                   <%= user_presenter.status%>
+                </td>
+                <td>
+                  <%= link_to team_individual_path(@user_group, user), title: 'Individual Summary', class: 'btn btn-link' do %>
+                    <%= icon('eye') %>
+                  <% end %>
                 </td>
               </tr>
             <% end %>

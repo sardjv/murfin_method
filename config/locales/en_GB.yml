@@ -94,6 +94,12 @@ en:
         avg_delivery: Average delivery
         members_under_delivered_percent: Members under 80%
         members_with_job_plan: Members with job plan
+  team_individuals:
+    dashboard:
+      boxes:
+        total_planned: Total planned
+        total_worked: Total worked
+        percentage_delivered: Delivered
   prompts:
     none: None
   nav:
@@ -104,6 +110,7 @@ en:
       admin_group_types: Groups
       admin_users: Users
       combined_data: Combined data
+      data: Data
       individuals: Individuals
       plans: Job Plans
       summary: Summary

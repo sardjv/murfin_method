@@ -47,6 +47,28 @@ class UserStatsPresenter
     I18n.t('status.really_under')
   end
 
+  def actual_time_ranges(time_range_type_id)
+    return @cache[:actual_time_ranges] if @cache[:actual_time_ranges].present?
+
+    @cache[:actual_time_ranges] = calculate_actual_time_ranges(time_range_type_id)
+  end
+
+  def planned_time_ranges
+    return @cache[:planned_time_ranges] if @cache[:planned_time_ranges].present?
+
+    @cache[:planned_time_ranges] = calculate_planned_time_ranges
+  end
+
+  def total(time_ranges)
+    time_ranges.sum do |t|
+      t.segment_value(
+        segment_start: filter_start_time,
+        segment_end: filter_end_time
+      )
+    end
+  end
+  # TODO: move to TimeRange class ?
+
   private
 
   def defaults
@@ -63,27 +85,6 @@ class UserStatsPresenter
     return 0 if result.nan? || result.infinite?
 
     result.round(1)
-  end
-
-  def total(time_ranges)
-    time_ranges.sum do |t|
-      t.segment_value(
-        segment_start: filter_start_time,
-        segment_end: filter_end_time
-      )
-    end
-  end
-
-  def actual_time_ranges(time_range_type_id)
-    return @cache[:actual_time_ranges] if @cache[:actual_time_ranges].present?
-
-    @cache[:actual_time_ranges] = calculate_actual_time_ranges(time_range_type_id)
-  end
-
-  def planned_time_ranges
-    return @cache[:planned_time_ranges] if @cache[:planned_time_ranges].present?
-
-    @cache[:planned_time_ranges] = calculate_planned_time_ranges
   end
 
   def number_of_weeks

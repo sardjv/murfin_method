@@ -1,0 +1,59 @@
+<div class='container my-4'>
+  <%= link_to '< Back to team', dashboard_team_path(@user_group) %>
+  <%= render 'info' %>
+  <%= render 'tabs' %>
+  <%= render 'tag_filter' %>
+  <%= render 'date_filter' %>
+  <%= render 'boxes' %>
+
+  <div class='row'>
+    <div class='col-12'>
+      <div class='card my-4'>
+        <div class='card-body'>
+          <div class='table-responsive'>
+            <table class='table table-bordered'>
+              <thead>
+                <tr>
+                  <th>
+                    <%= TimeRange.human_attribute_name('time_range_type') %>
+                  </th>
+                  <th>
+                    <%= TimeRange.human_attribute_name('start_time') %>
+                  </th>
+                  <th>
+                    <%= TimeRange.human_attribute_name('end_time') %>
+                  </th>
+                  <th>
+                    <%= TimeRange.human_attribute_name('time_worked') %>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @time_ranges.each do |time_range| %>
+                  <% cache time_range do %>
+                    <tr>
+                      <td>
+                        <%= time_range.time_range_type.name %>
+                      </td>
+                      <td>
+                        <%= time_range.start_time.strftime(I18n.t('time.formats.readable')) %>
+                      </td>
+                      <td>
+                        <%= time_range.end_time.strftime(I18n.t('time.formats.readable')) %>
+                      </td>
+                      <td>
+                        <%= time_worked(time_range) %>
+                      </td>
+                    </tr>
+                  <% end %>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          <%= paginate @time_ranges %>
+        </div>
+        <small> TODO: refactor, use table from /admin/time-ranges</small>
+      </div>
+    </div>
+  </div>
+</div>

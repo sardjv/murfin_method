@@ -1,0 +1,25 @@
+<%= render(
+  partial: 'shared/highlights',
+  locals: {
+    highlights: [
+      {
+        icon: 'bar-chart',
+        colour: 'purple',
+        label: t('team_individuls.dashboard.boxes.total_planned'),
+        value: duration_in_words(@presenter.total_planned)
+      },
+      {
+        icon: 'bar-chart',
+        colour: 'green',
+        label: t('team_individuls.dashboard.boxes.total_worked'),
+        value: duration_in_words(@presenter.total_worked)
+      },
+      {
+        icon: 'bar-chart',
+        colour: 'green',
+        label: t('team_individuls.dashboard.boxes.percentage_delivered'),
+        value: @presenter.user_stats_presenter.percentage_delivered ? "#{@presenter.user_stats_presenter.percentage_delivered}%" : icon('question-circle').html_safe
+      }
+    ]
+  }
+) %>

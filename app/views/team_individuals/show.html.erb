@@ -1,0 +1,22 @@
+<div class='container my-4'>
+  <%= link_to '< Back to team', dashboard_team_path(@user_group) %>
+  <%= render 'info' %>
+  <%= render 'tabs' %>
+  <%= render 'tag_filter' %>
+  <%= render 'date_filter' %>
+
+  <div class='row'>
+    <div class='col-12'>
+      <div class='card my-4'>
+        <div class='card-body'>
+          <% @presenter.team_stats_presenter.graph_kind_options.each do |key| %>
+            <%= radio_button_tag 'graph_kind', key, **(@presenter.team_stats_presenter.graph_kind == key ? { checked: 'checked' } : {}) %>
+            <%= label_tag "graph_kind_#{key}", t("graphs.#{key}.name") %>
+            &nbsp;
+          <% end %>
+          <canvas id='line-graph' data-user-id="<%= @user.id -%>"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
