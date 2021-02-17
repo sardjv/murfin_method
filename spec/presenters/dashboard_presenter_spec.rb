@@ -133,6 +133,7 @@ describe DashboardPresenter, freeze: Time.zone.local(2020, 6, 30, 23, 59, 59) do
     end
 
     context 'with :individual data' do
+      let(:filter_tag_ids) { [tag1.id] }
       it 'returns a bar chart' do
         expect(
           subject.to_json(
@@ -167,7 +168,7 @@ describe DashboardPresenter, freeze: Time.zone.local(2020, 6, 30, 23, 59, 59) do
     let!(:tag_associations2) { [create(:tag_association, taggable: activity2, tag: tag2, tag_type: tag2.tag_type)] }
 
     context 'when filter by one tag' do
-      let(:filter_tag_ids) { tag1.id.to_s }
+      let(:filter_tag_ids) { [tag1.id] }
 
       it 'returns filtered data' do
         expect(subject.team_stats_presenter.average_weekly_planned_per_month.last[:value]).to eq 240.0
@@ -177,8 +178,8 @@ describe DashboardPresenter, freeze: Time.zone.local(2020, 6, 30, 23, 59, 59) do
     end
 
     context 'when filter by more than one tag' do
-      let(:filter_tag_ids) { "#{tag1.id}, #{tag2.id}" }
-
+      let(:filter_tag_ids) { [tag1.id, tag2.id] }
+      
       it 'returns filtered data' do
         expect(subject.team_stats_presenter.average_weekly_planned_per_month.last[:value]).to eq 480.0
         expect(subject.team_stats_presenter.average_weekly_actual_per_month.last[:value]).to eq 112.0

@@ -76,10 +76,12 @@ class TeamStatsPresenter
   end
 
   def defaults
-    { filter_start_date: 1.year.ago,
-      filter_end_date: Time.zone.today,
+    {
+      filter_start_date: (1.year.ago + 1.day).beginning_of_day,
+      filter_end_date: Time.zone.today.end_of_day,
       actual_id: TimeRangeType.actual_type.id,
-      graph_kind: 'percentage_delivered' }
+      graph_kind: 'percentage_delivered'
+    }
   end
 
   def plan_time_ranges

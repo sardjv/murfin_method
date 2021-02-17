@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Team Individuals', type: :feature, js: true do
+describe 'Team Individuals', type: :feature, js: true, freeze: Time.zone.local(2021, 02, 16, 17, 59, 59) do
   let(:actual_id) { TimeRangeType.actual_type.id }
   let(:manager) { create(:user, first_name: 'John', last_name: 'Smith', email: 'john@example.com') }
   let!(:user_group) { create(:user_group) }
@@ -37,9 +37,9 @@ describe 'Team Individuals', type: :feature, js: true do
       expect(page).to have_text 'Percentage delivered against job plan'
       within('.table') do
         expect(page).to have_text Plan.human_attribute_name('name')
-        expect(page).to have_text '5 minutes' # 240 minutes / 52 weeks.
+        expect(page).to have_text '4 minutes'
         expect(page).to have_text TimeRangeType.actual_type.name
-        expect(page).to have_text '2 minutes' # 120 minutes / 52 weeks.
+        expect(page).to have_text '2 minutes'
         expect(page).to have_text 'Percentage delivered'
         expect(page).to have_text '50%'
         expect(page).to have_text 'Status'
@@ -88,7 +88,7 @@ describe 'Team Individuals', type: :feature, js: true do
 
         it 'updates the values' do
           within('.table') do
-            expect(page).to have_text 'Unknown'
+            expect(page).to have_text 'Under'
           end
         end
       end
@@ -114,7 +114,7 @@ describe 'Team Individuals', type: :feature, js: true do
 
         it 'updates the values' do
           within('.table') do
-            expect(page).to have_text 'Really Under'
+            expect(page).to have_text 'Under'
           end
         end
       end
