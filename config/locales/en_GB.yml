@@ -149,3 +149,12 @@ en:
       readable: '%H:%M on %d %B %Y'
   user_groups:
     add: Add %{group_type_name} User Group
+  api:
+    user_resource:
+      errors:
+        admin_delete: Admin user can not be deleted.
+        admin_password_change: Admin password change via API is not allowed.
+        invalid_user_groups:
+          one: User group with id %{invalid_ids} not found.
+          other: User groups with ids %{invalid_ids} not found.
+        user_has_user_groups: User already has user group(s) assigned. Use memberships POST endpoint.
