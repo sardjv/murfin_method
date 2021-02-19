@@ -24,13 +24,17 @@ class DashboardPresenter
   def team_data
     case @params[:graph_kind]
     when 'planned_vs_actual'
-      @params[:time_scope] == 'weekly' ?
-        [ team_stats_presenter.average_weekly_planned_per_week, team_stats_presenter.average_weekly_actual_per_week ] :
-        [ team_stats_presenter.average_weekly_planned_per_month, team_stats_presenter.average_weekly_actual_per_month ]
+      if @params[:time_scope] == 'weekly'
+        [team_stats_presenter.average_weekly_planned_per_week, team_stats_presenter.average_weekly_actual_per_week]
+      else
+        [team_stats_presenter.average_weekly_planned_per_month, team_stats_presenter.average_weekly_actual_per_month]
+      end
     else
-      @params[:time_scope] == 'weekly' ?
-        [ team_stats_presenter.weekly_percentage_delivered_per_week ] :
-        [ team_stats_presenter.weekly_percentage_delivered_per_month ]
+      if @params[:time_scope] == 'weekly'
+        [team_stats_presenter.weekly_percentage_delivered_per_week]
+      else
+        [team_stats_presenter.weekly_percentage_delivered_per_month]
+      end
     end
   end
 

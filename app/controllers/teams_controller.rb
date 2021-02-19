@@ -1,9 +1,8 @@
 class TeamsController < ApplicationController
   before_action :find_user_group
+  before_action :initialize_presenter, only: %i[dashboard individuals]
 
   def dashboard
-    @presenter = DashboardPresenter.new(params: team_params.merge(user_ids: @user_group.user_ids, time_scope: params[:time_scope]))
-
     respond_to do |format|
       format.html
       format.json do
@@ -19,8 +18,6 @@ class TeamsController < ApplicationController
   end
 
   def individuals
-    @presenter = DashboardPresenter.new(params: team_params.merge(user_ids: @user_group.user_ids))
-
     respond_to do |format|
       format.html
       format.json do
@@ -37,6 +34,10 @@ class TeamsController < ApplicationController
 
   def find_user_group
     @user_group = UserGroup.find(params[:id])
+  end
+
+  def initialize_presenter
+    @presenter = DashboardPresenter.new(params: team_params.merge(user_ids: @user_group.user_ids, time_scope: params[:time_scope]))
   end
 
   def team_params

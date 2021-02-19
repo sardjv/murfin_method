@@ -25,7 +25,7 @@ describe TeamStatsPresenter do
 
   let(:users) { create_list(:user, 10) }
 
-  let(:filter_start_date) { Time.zone.today - 1.year}
+  let(:filter_start_date) { Time.zone.today - 1.year }
   let(:filter_end_date) { Time.zone.today }
   let(:filter_tag_ids) { [tag1, tag2, tag3].map(&:id) }
 
@@ -41,13 +41,13 @@ describe TeamStatsPresenter do
     context 'when users have no time range values' do
       describe 'average_weekly_planned_per_month' do
         it "returns 0s for all row' values" do
-          expect(subject.average_weekly_planned_per_month.collect {|r| r[:value]}.uniq).to eq [0]
+          expect(subject.average_weekly_planned_per_month.pluck(:value).uniq).to eq [0]
         end
       end
 
       describe 'average_weekly_actual_per_month' do
         it "returns 0s for all row' values" do
-          expect(subject.average_weekly_actual_per_month.collect {|r| r[:value]}.uniq).to eq [0]
+          expect(subject.average_weekly_actual_per_month.pluck(:value).uniq).to eq [0]
         end
       end
 
@@ -55,7 +55,7 @@ describe TeamStatsPresenter do
         let(:graph_kind) { 'percentage_delivered' }
 
         it "returns 0s for all row' values" do
-          expect(subject.weekly_percentage_delivered_per_month.collect {|r| r[:value]}.uniq).to eq [0]
+          expect(subject.weekly_percentage_delivered_per_month.pluck(:value).uniq).to eq [0]
         end
       end
 
@@ -72,24 +72,24 @@ describe TeamStatsPresenter do
       let!(:planned_activity) do
         users.each do |user|
           create(:plan,
-                user_id: user.id,
-                start_date: plan_start_date,
-                end_date: plan_end_date,
-                activities: [
-                  create(:activity, tag_ids: tag_ids)
-                ])
+                 user_id: user.id,
+                 start_date: plan_start_date,
+                 end_date: plan_end_date,
+                 activities: [
+                   create(:activity, tag_ids: tag_ids)
+                 ])
         end
       end
 
       let!(:actual_activity) do
         users.each do |user|
           create(:time_range,
-                user_id: user.id,
-                time_range_type_id: TimeRangeType.actual_type.id,
-                start_time: actual_start_time,
-                end_time: actual_end_time,
-                tag_ids: tag_ids,
-                value: 6240)
+                 user_id: user.id,
+                 time_range_type_id: TimeRangeType.actual_type.id,
+                 start_time: actual_start_time,
+                 end_time: actual_end_time,
+                 tag_ids: tag_ids,
+                 value: 6240)
         end
       end
 
@@ -100,7 +100,6 @@ describe TeamStatsPresenter do
 
       context 'within filter time range' do
         describe 'average_weekly_planned_per_month' do
-
           it 'returns average weekly planned values for the time range' do
             # Approx 4 hours per week * 10 users = approx 2400 minutes per week.
             expect(subject.average_weekly_planned_per_month).to eq(
@@ -126,7 +125,7 @@ describe TeamStatsPresenter do
             let(:filter_tag_ids) { nil }
 
             it "returns 0s for all row' values" do
-              expect(subject.average_weekly_planned_per_month.collect {|r| r[:value]}.uniq).to eq [0]
+              expect(subject.average_weekly_planned_per_month.pluck(:value).uniq).to eq [0]
             end
           end
         end
@@ -157,7 +156,7 @@ describe TeamStatsPresenter do
             let(:filter_tag_ids) { nil }
 
             it "returns 0s for all row' values" do
-              expect(subject.average_weekly_actual_per_month.collect {|r| r[:value]}.uniq).to eq [0]
+              expect(subject.average_weekly_actual_per_month.pluck(:value).uniq).to eq [0]
             end
           end
         end
@@ -203,11 +202,11 @@ describe TeamStatsPresenter do
         describe 'members_under_delivered_percent' do
           let!(:last_user_long_activity) do
             create(:time_range,
-                  user_id: users.last.id,
-                  time_range_type_id: TimeRangeType.actual_type.id,
-                  start_time: 4.days.ago.beginning_of_day,
-                  end_time: 1.day.ago.end_of_day,
-                  value: 4 * 24 * 60)
+                   user_id: users.last.id,
+                   time_range_type_id: TimeRangeType.actual_type.id,
+                   start_time: 4.days.ago.beginning_of_day,
+                   end_time: 1.day.ago.end_of_day,
+                   value: 4 * 24 * 60)
           end
 
           it 'returns number of users' do
@@ -247,67 +246,65 @@ describe TeamStatsPresenter do
       let!(:planned_activities) do
         users.each do |user|
           create(:plan,
-                user_id: user.id,
-                start_date: plan_start_date,
-                end_date: plan_end_date,
-                activities: [
-                  create(
-                    :activity,
-                    seconds_per_week: 8 * 3600, # 8h
-                    tag_ids: tag_ids
-                  )
-                ])
+                 user_id: user.id,
+                 start_date: plan_start_date,
+                 end_date: plan_end_date,
+                 activities: [
+                   create(
+                     :activity,
+                     seconds_per_week: 8 * 3600, # 8h
+                     tag_ids: tag_ids
+                   )
+                 ])
         end
       end
 
       let!(:actual_activity) do
         users.each do |user|
           create(:time_range,
-                user_id: user.id,
-                time_range_type_id: TimeRangeType.actual_type.id,
-                start_time: actual1_start_time,
-                end_time: actual1_end_time,
-                tag_ids: tag_ids.sample,
-                value: 8 * 60) # 8h
-        end
+                 user_id: user.id,
+                 time_range_type_id: TimeRangeType.actual_type.id,
+                 start_time: actual1_start_time,
+                 end_time: actual1_end_time,
+                 tag_ids: tag_ids.sample,
+                 value: 8 * 60) # 8h
 
-        users.each do |user|
           create(:time_range,
-                user_id: user.id,
-                time_range_type_id: TimeRangeType.actual_type.id,
-                start_time: actual2_start_time,
-                end_time: actual2_end_time,
-                tag_ids: tag_ids.sample,
-                value: 8 * 60) # 8h
+                 user_id: user.id,
+                 time_range_type_id: TimeRangeType.actual_type.id,
+                 start_time: actual2_start_time,
+                 end_time: actual2_end_time,
+                 tag_ids: tag_ids.sample,
+                 value: 8 * 60) # 8h
         end
 
         users.first(5).each do |user|
           create(:time_range,
-                user_id: user.id,
-                time_range_type_id: TimeRangeType.actual_type.id,
-                start_time: actual3_start_time,
-                end_time: actual3_end_time,
-                tag_ids: tag_ids.sample,
-                value: 4.5 * 60) # 4.5h
+                 user_id: user.id,
+                 time_range_type_id: TimeRangeType.actual_type.id,
+                 start_time: actual3_start_time,
+                 end_time: actual3_end_time,
+                 tag_ids: tag_ids.sample,
+                 value: 4.5 * 60) # 4.5h
         end
         users.last(5).each do |user|
           create(:time_range,
-                user_id: user.id,
-                time_range_type_id: TimeRangeType.actual_type.id,
-                start_time: actual3_start_time,
-                end_time: actual3_end_time,
-                tag_ids: tag_ids.sample,
-                value: 6.5 * 60) # 6.5h
+                 user_id: user.id,
+                 time_range_type_id: TimeRangeType.actual_type.id,
+                 start_time: actual3_start_time,
+                 end_time: actual3_end_time,
+                 tag_ids: tag_ids.sample,
+                 value: 6.5 * 60) # 6.5h
         end
 
         users.each do |user|
           create(:time_range,
-                user_id: user.id,
-                time_range_type_id: TimeRangeType.actual_type.id,
-                start_time: actual4_start_time,
-                end_time: actual4_end_time,
-                tag_ids: tag_ids.sample,
-                value: 9 * 60) # 9h
+                 user_id: user.id,
+                 time_range_type_id: TimeRangeType.actual_type.id,
+                 start_time: actual4_start_time,
+                 end_time: actual4_end_time,
+                 tag_ids: tag_ids.sample,
+                 value: 9 * 60) # 9h
         end
       end
 
@@ -318,7 +315,8 @@ describe TeamStatsPresenter do
             # 4800 because there is one 8h long activity in the plan
             expect(subject.average_weekly_planned_per_week).to eq(
               [
-                { 'name': '2020-04-20T00:00:00.000Z', 'value': 685.7, 'notes': '[]' }, # 4800/7 * 1 because filter range starts on Sun, so only one day from the week counted
+                { 'name': '2020-04-20T00:00:00.000Z', 'value': 685.7, 'notes': '[]' },
+                # 4800/7 * 1 because filter range starts on Sun, so only one day from the week counted
                 { 'name': '2020-04-27T00:00:00.000Z', 'value': 4800.0, 'notes': '[]' },
                 { 'name': '2020-05-04T00:00:00.000Z', 'value': 4800.0, 'notes': '[]' },
                 { 'name': '2020-05-11T00:00:00.000Z', 'value': 4800.0, 'notes': '[]' },
@@ -327,7 +325,8 @@ describe TeamStatsPresenter do
                 { 'name': '2020-06-01T00:00:00.000Z', 'value': 4800.0, 'notes': '[]' },
                 { 'name': '2020-06-08T00:00:00.000Z', 'value': 4800.0, 'notes': '[]' },
                 { 'name': '2020-06-15T00:00:00.000Z', 'value': 4800.0, 'notes': '[]' },
-                { 'name': '2020-06-22T00:00:00.000Z', 'value': 3428.6, 'notes': '[]' } # 4800/7 * 5 because filter range ends on Fri so only 5 days from the week counted
+                { 'name': '2020-06-22T00:00:00.000Z', 'value': 3428.6, 'notes': '[]' }
+                # 4800/7 * 5 because filter range ends on Fri so only 5 days from the week counted
               ]
             )
           end
@@ -336,7 +335,7 @@ describe TeamStatsPresenter do
             let(:filter_tag_ids) { nil }
 
             it "returns 0s for all row' values" do
-              expect(subject.average_weekly_planned_per_week.collect {|r| r[:value]}.uniq).to eq [0]
+              expect(subject.average_weekly_planned_per_week.pluck(:value).uniq).to eq [0]
             end
           end
         end
@@ -350,7 +349,7 @@ describe TeamStatsPresenter do
                 { 'name': '2020-05-04T00:00:00.000Z', 'value': 0, 'notes': '[]' },
                 { 'name': '2020-05-11T00:00:00.000Z', 'value': 0, 'notes': '[]' },
                 { 'name': '2020-05-18T00:00:00.000Z', 'value': 0, 'notes': '[]' },
-                { 'name': '2020-05-25T00:00:00.000Z', 'value': 3300.0, 'notes': '[]' }, #4.5h + 6.5.h / 2 = 5.5h p/u * 10 = 3300
+                { 'name': '2020-05-25T00:00:00.000Z', 'value': 3300.0, 'notes': '[]' }, # 4.5h + 6.5.h / 2 = 5.5h p/u * 10 = 3300
                 { 'name': '2020-06-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
                 { 'name': '2020-06-08T00:00:00.000Z', 'value': 0, 'notes': '[]' },
                 { 'name': '2020-06-15T00:00:00.000Z', 'value': 0, 'notes': '[]' },
@@ -363,7 +362,7 @@ describe TeamStatsPresenter do
             let(:filter_tag_ids) { nil }
 
             it "returns 0s for all row' values" do
-              expect(subject.average_weekly_actual_per_month.collect {|r| r[:value]}.uniq).to eq [0]
+              expect(subject.average_weekly_actual_per_month.pluck(:value).uniq).to eq [0]
             end
           end
         end
@@ -407,15 +406,15 @@ describe TeamStatsPresenter do
         describe 'members_under_delivered_percent' do
           let!(:last_user_all_day_activity) do
             create(:time_range,
-                  user_id: users.last.id,
-                  time_range_type_id: TimeRangeType.actual_type.id,
-                  start_time: 1.day.ago.beginning_of_day,
-                  end_time: 1.day.ago.end_of_day,
-                  value: 24 * 60)
+                   user_id: users.last.id,
+                   time_range_type_id: TimeRangeType.actual_type.id,
+                   start_time: 1.day.ago.beginning_of_day,
+                   end_time: 1.day.ago.end_of_day,
+                   value: 24 * 60)
           end
 
           it 'returns number of users' do
-            expect(subject.members_under_delivered_percent).to eql (users.count - 1)
+            expect(subject.members_under_delivered_percent).to eql(users.count - 1)
           end
         end
       end

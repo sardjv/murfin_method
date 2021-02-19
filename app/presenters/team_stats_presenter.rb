@@ -78,7 +78,7 @@ class TeamStatsPresenter
     (data_values_sum.to_f / data_size).round
   end
 
-  def average_weekly_percentage_delivered_per_week # TODO refactor with above one
+  def average_weekly_percentage_delivered_per_week
     data = weekly_percentage_delivered_per_week
     data_size = data&.size
 
@@ -129,7 +129,8 @@ class TeamStatsPresenter
   end
 
   def defaults
-    { filter_start_date: 1.year.ago.to_date, filter_end_date: Time.zone.today.to_date, actual_id: TimeRangeType.actual_type.id, graph_kind: 'percentage_delivered' }
+    { filter_start_date: 1.year.ago.to_date, filter_end_date: Time.zone.today.to_date, actual_id: TimeRangeType.actual_type.id,
+      graph_kind: 'percentage_delivered' }
   end
 
   def plan_time_ranges
@@ -255,7 +256,7 @@ class TeamStatsPresenter
   end
 
   def months_between(from:, to:)
-    raise ArgumentError.new('from must be before to') if from >= to
+    raise ArgumentError, 'from must be before to' if from >= to
 
     (from.to_date..to.to_date)
       .map(&:beginning_of_month)
@@ -264,7 +265,7 @@ class TeamStatsPresenter
   end
 
   def weeks_between(from:, to:)
-    raise ArgumentError.new('from must be before to') if from >= to
+    raise ArgumentError, 'from must be before to' if from >= to
 
     (from.to_date..to.to_date)
       .map(&:beginning_of_week)

@@ -36,7 +36,7 @@ Layout/LineLength:
   Max: 150
 
 Metrics/ClassLength:
-  Max: 150
+  Enabled: false
 
 Metrics/MethodLength:
   Max: 30
