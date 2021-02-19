@@ -404,13 +404,13 @@ describe TeamStatsPresenter do
         end
 
         describe 'members_under_delivered_percent' do
-          let!(:last_user_all_day_activity) do
+          let!(:last_user_long_activity) do
             create(:time_range,
                    user_id: users.last.id,
                    time_range_type_id: TimeRangeType.actual_type.id,
-                   start_time: 1.day.ago.beginning_of_day,
-                   end_time: 1.day.ago.end_of_day,
-                   value: 24 * 60)
+                   start_time: 3.days.ago.beginning_of_day,
+                   end_time: 2.days.ago.end_of_day,
+                   value: 2 * 24 * 60)
           end
 
           it 'returns number of users' do
