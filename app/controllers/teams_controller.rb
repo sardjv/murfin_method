@@ -2,7 +2,7 @@ class TeamsController < ApplicationController
   before_action :find_user_group
 
   def dashboard
-    @presenter = DashboardPresenter.new(params: team_params.merge(user_ids: @user_group.user_ids))
+    @presenter = DashboardPresenter.new(params: team_params.merge(user_ids: @user_group.user_ids, time_scope: params[:time_scope]))
 
     respond_to do |format|
       format.html
@@ -12,7 +12,7 @@ class TeamsController < ApplicationController
 
         render json: @presenter.to_json(
           graphs: [{ type: :line_graph, data: :team_data, units: units, dataset_labels: dataset_labels }],
-          extras: %i[average_weekly_percentage_delivered_per_month members_under_delivered_percent]
+          extras: %i[average_delivery_percent members_under_delivered_percent]
         )
       end
     end
@@ -42,6 +42,6 @@ class TeamsController < ApplicationController
   def team_params
     params.permit(:id, :format, :page, :user_ids, :plan_id, :actual_id,
                   :filter_start_month, :filter_end_month, :filter_start_year, :filter_end_year, :filter_tag_ids,
-                  :graph_kind)
+                  :graph_kind, :time_scope)
   end
 end

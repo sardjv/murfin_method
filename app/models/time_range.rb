@@ -30,6 +30,7 @@ class TimeRange < ApplicationRecord
     (value || 0) * 60.0
   end
 
+  # how many minutes from time range overlaps with given segment
   def segment_value(segment_start:, segment_end:)
     value * Intersection.call(
       a_start: start_time,

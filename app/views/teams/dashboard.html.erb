@@ -14,8 +14,8 @@
         {
           icon: 'bar-chart',
           colour: 'green',
-          label: t('teams.dashboard.boxes.avg_delivery'),
-          value: '<span id="team-dash-average-delivery">&nbsp;</span>'.html_safe
+          label: t('teams.dashboard.boxes.average_delivery_percent'),
+          value: '<span id="team-dash-average-delivery-percent">&nbsp;</span>'.html_safe
         },
         {
           icon: 'compass',
@@ -44,7 +44,7 @@
               &nbsp;
             <% end %>
           </div>
-          <canvas id='line-graph'></canvas>
+          <canvas id='line-graph' data-time-scope="<%= @presenter.team_stats_presenter.time_scope -%>"></canvas>
         </div>
       </div>
     </div>

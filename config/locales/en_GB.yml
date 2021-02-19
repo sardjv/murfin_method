@@ -91,7 +91,7 @@ en:
     dashboard:
       boxes:
         members: Members
-        avg_delivery: Average delivery
+        average_delivery_percent: Average delivery
         members_under_delivered_percent: Members under 80%
         members_with_job_plan: Members with job plan
   prompts:

@@ -4,12 +4,13 @@ import { API } from './api'
 import * as SCSSColours from '!!sass-variable-loader!../stylesheets/variables/colours.scss';
 import { Note } from './note'
 import minutesHumanized from '../shared/minutes_humanized'
+import { format, addDays } from 'date-fns'
 
 window.addEventListener('turbolinks:load', () => {
   const graphKindSelector = "input:radio[name='graph_kind']"
   let graphKind = 'percentage_delivered'
-
   let prev_graph_kind_val = $(`${graphKindSelector}:checked`).val()
+
   $(graphKindSelector).on('click', (e) => {
     if(prev_graph_kind_val != e.target.value) {
       graphKind = e.target.value
@@ -24,14 +25,16 @@ window.addEventListener('turbolinks:load', () => {
 });
 
 function drawGraph(graph_kind) {
-  const startYear = parseInt($('#line_graph_filter_start_time_1i').val());
-  const startMonth = parseInt($('#line_graph_filter_start_time_2i').val());
-  const endYear = parseInt($('#line_graph_filter_end_time_1i').val());
-  const endMonth = parseInt($('#line_graph_filter_end_time_2i').val());
-  const tagIds = $('#line_graph_tags').val()
-  const context = document.getElementById('line-graph');
+  const context = document.getElementById('line-graph')
 
   if (context) {
+    const startYear = parseInt($('#line_graph_filter_start_time_1i').val())
+    const startMonth = parseInt($('#line_graph_filter_start_time_2i').val())
+    const endYear = parseInt($('#line_graph_filter_end_time_1i').val())
+    const endMonth = parseInt($('#line_graph_filter_end_time_2i').val())
+    const tagIds = $('#line_graph_tags').val()
+    const timeScope = context.getAttribute('data-time-scope')
+
     Rails.ajax({
       url: API.url(),
       type: 'GET',
@@ -41,15 +44,16 @@ function drawGraph(graph_kind) {
         'filter_end_month': endMonth,
         'filter_end_year': endYear,
         'filter_tag_ids': tagIds,
-        'graph_kind': graph_kind
+        'graph_kind': graph_kind,
+        'time_scope': timeScope
       }).toString(),
       dataType: 'json',
       success: function(data) {
         if (global.chart) { global.chart.destroy() };
-        global.chart = line_graph(context, data.line_graph, { graph_kind: graph_kind });
+        global.chart = line_graph(context, data.line_graph, { graph_kind: graph_kind, time_scope: timeScope });
 
-        if(data.average_weekly_percentage_delivered_per_month !== undefined) {
-          $('#team-dash-average-delivery').html(`${data.average_weekly_percentage_delivered_per_month}%`)
+        if(data.average_delivery_percent !== undefined) {
+          $('#team-dash-average-delivery-percent').html(`${data.average_delivery_percent}%`)
         }
 
         if(data.members_under_delivered_percent !== undefined) {
@@ -110,7 +114,21 @@ function line_graph(context, line_graph, options = {}) {
   });
 
   const formattedLabels = line_graph.data[0].map(function(e) {
-    return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][new Date(Date.parse(e.name)).getMonth()];
+    let date = new Date(Date.parse(e.name))
+
+    if(options.time_scope == 'weekly') {
+      let date_eof_week = addDays(date, 7)
+
+      let label = format(date, 'MMM d') + ' - '
+      if(date.getMonth() == date_eof_week.getMonth()) {
+        label += format(date_eof_week, 'd')
+      } else {
+        label += format(date_eof_week, 'MMM d')
+      }
+      return label
+    } else if (options.time_scope == 'monthly') {
+      return format(date, 'MMM')
+    }
   });
 
   const units = line_graph.units || ''
