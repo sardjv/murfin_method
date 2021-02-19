@@ -98,6 +98,32 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
             expect(created_user.user_groups.pluck(:id)).to match_array [user_group1.id, user_group3.id]
           end
         end
+
+        context 'one user group id is invalid' do
+          let(:invalid_group_id) { 543_210 }
+
+          let(:relationships) do
+            {
+              user_groups: {
+                data: [
+                  { type: 'user_groups', id: user_group1.id },
+                  { type: 'user_groups', id: invalid_group_id }
+                ]
+              }
+            }
+          end
+
+          let(:error_detail) { "User group with id #{invalid_group_id} not found." }
+          let(:error_title) { 'Record not found' }
+
+          response '404', 'Not found' do
+            schema '$ref' => '#/definitions/error_404'
+            run_test! do
+              expect(parsed_json['errors'][0]['title']).to eql error_title
+              expect(parsed_json['errors'][0]['detail']).to eql error_detail
+            end
+          end
+        end
       end
 
       # email already exists
