@@ -10,7 +10,7 @@
     "chart.js": "^2.9.4",
     "date-fns": "^2.17.0",
     "jquery": "^3.5.1",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "popper.js": "^1.16.1",
     "sass-variable-loader": "^0.1.2",
     "svg-url-loader": "^7.1.1",
