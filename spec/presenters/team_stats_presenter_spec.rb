@@ -1,13 +1,5 @@
-describe TeamStatsPresenter do
+describe TeamStatsPresenter, freeze: Time.zone.local(2020, 6, 26, 14, 59, 59) do
   subject { TeamStatsPresenter.new(args) }
-
-  before :all do
-    Timecop.freeze(Time.zone.local(2020, 6, 26, 14, 59, 59))
-  end
-
-  after :all do
-    Timecop.return
-  end
 
   let(:args) do
     { user_ids: users.pluck(:id),

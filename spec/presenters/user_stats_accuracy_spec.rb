@@ -1,14 +1,6 @@
-describe UserStatsPresenter do
+describe UserStatsPresenter, freeze: Time.zone.local(2020, 11, 9, 0, 42) do
   subject { UserStatsPresenter.new(user: user) }
   let(:user) { create(:user) }
-
-  before :all do
-    Timecop.freeze(Time.zone.local(2020, 11, 9, 0, 42))
-  end
-
-  after :all do
-    Timecop.return
-  end
 
   context 'when user has time range values' do
     let!(:time_range) do
