@@ -6,7 +6,7 @@ class TeamsController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        dataset_labels = t("graphs.#{params[:graph_kind]}.dataset_labels", default: nil)
+        dataset_labels = t("graphs.#{params[:graph_kind]}.dataset_labels.#{params[:time_scope] || 'weekly'}", default: nil)
         units = t("graphs.#{params[:graph_kind]}.units", default: '')
 
         render json: @presenter.to_json(

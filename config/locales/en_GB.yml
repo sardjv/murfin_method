@@ -74,8 +74,12 @@ en:
       full_name: Average weekly planned vs actual per month
       units: minutes
       dataset_labels:
-        - Average weekly planned per month
-        - Average weekly actual per month
+        weekly:
+          - Average weekly planned
+          - Average weekly actual
+        monthly:
+          - Average weekly planned per month
+          - Average weekly actual per month
     percentage_delivered:
       name: Percentage Delivered
       full_name: Weekly percentage delivered per month
