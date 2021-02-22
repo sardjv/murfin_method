@@ -1,7 +1,7 @@
 class TeamStatsPresenter
   attr_accessor :filter_start_time, :filter_end_time, :filter_tag_ids, :graph_kind, :time_scope, :plan_id, :plan, :actual_id, :actual, :user_ids
 
-  GRAPH_KIND_OPTIONS = %w[percentage_delivered planned_vs_actual].freeze
+  GRAPH_KINDS = %w[percentage_delivered planned_vs_actual].freeze
   TIME_SCOPES = %w[weekly monthly].freeze
 
   def initialize(args)
@@ -17,7 +17,7 @@ class TeamStatsPresenter
     @filter_start_time = @filter_start_date.to_time.in_time_zone.beginning_of_day
     @filter_end_date = args[:filter_end_date]
     @filter_end_time = @filter_end_date.to_time.in_time_zone.end_of_day
-    @graph_kind = args[:graph_kind] || GRAPH_KIND_OPTIONS.first
+    @graph_kind = args[:graph_kind] || GRAPH_KINDS.first
     @time_scope = args[:time_scope] || TIME_SCOPES.first
 
     if @time_scope == 'monthly'
@@ -106,8 +106,12 @@ class TeamStatsPresenter
     count
   end
 
+  def time_scope_options
+    self.class::TIME_SCOPES
+  end
+
   def graph_kind_options
-    self.class::GRAPH_KIND_OPTIONS
+    self.class::GRAPH_KINDS
   end
 
   private

@@ -68,6 +68,9 @@ en:
     showing_users:
       one: Showing 1 user
       other: Showing %{count} users
+    time_scope:
+      weekly: Weekly
+      monthly: Monthly
   graphs:
     planned_vs_actual:
       name: Planned vs Actual

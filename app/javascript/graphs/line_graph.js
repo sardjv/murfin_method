@@ -8,23 +8,34 @@ import { format, addDays } from 'date-fns'
 
 window.addEventListener('turbolinks:load', () => {
   const graphKindSelector = "input:radio[name='graph_kind']"
+  const graphTimeScopeSelector = "input:radio[name='time_scope']"
   let graphKind = 'percentage_delivered'
+  let timeScope = 'weekly'
   let prev_graph_kind_val = $(`${graphKindSelector}:checked`).val()
+  let prev_time_scope_val = $(`${graphTimeScopeSelector}:checked`).val()
 
   $(graphKindSelector).on('click', (e) => {
     if(prev_graph_kind_val != e.target.value) {
       graphKind = e.target.value
-      drawGraph(graphKind)
+      drawGraph(graphKind, timeScope)
       prev_graph_kind_val = graphKind
     }
   })
 
-  $('select.filter').on('change', () => { drawGraph(graphKind) })
+  $(graphTimeScopeSelector).on('click', (e) => {
+    if(prev_time_scope_val != e.target.value) {
+      timeScope = e.target.value
+      drawGraph(graphKind, timeScope)
+      prev_time_scope_val = timeScope
+    }
+  })
 
-  drawGraph(graphKind)
+  $('select.filter').on('change', () => { drawGraph(graphKind, timeScope) })
+
+  drawGraph(graphKind, timeScope)
 });
 
-function drawGraph(graph_kind) {
+function drawGraph(graph_kind, time_scope) {
   const context = document.getElementById('line-graph')
 
   if (context) {
@@ -33,7 +44,6 @@ function drawGraph(graph_kind) {
     const endYear = parseInt($('#line_graph_filter_end_time_1i').val())
     const endMonth = parseInt($('#line_graph_filter_end_time_2i').val())
     const tagIds = $('#line_graph_tags').val()
-    const timeScope = context.getAttribute('data-time-scope')
 
     Rails.ajax({
       url: API.url(),
@@ -45,12 +55,12 @@ function drawGraph(graph_kind) {
         'filter_end_year': endYear,
         'filter_tag_ids': tagIds,
         'graph_kind': graph_kind,
-        'time_scope': timeScope
+        'time_scope': time_scope
       }).toString(),
       dataType: 'json',
       success: function(data) {
         if (global.chart) { global.chart.destroy() };
-        global.chart = line_graph(context, data.line_graph, { graph_kind: graph_kind, time_scope: timeScope });
+        global.chart = line_graph(context, data.line_graph, { graph_kind: graph_kind, time_scope: time_scope });
 
         if(data.average_delivery_percent !== undefined) {
           $('#team-dash-average-delivery-percent').html(`${data.average_delivery_percent}%`)
