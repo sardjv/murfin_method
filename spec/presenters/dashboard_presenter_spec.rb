@@ -13,7 +13,8 @@ describe DashboardPresenter, freeze: Time.zone.local(2020, 6, 30, 23, 59, 59) do
       filter_start_year: '2019',
       filter_end_month: '6',
       filter_end_year: '2020',
-      filter_tag_ids: filter_tag_ids
+      filter_tag_ids: filter_tag_ids,
+      time_scope: 'monthly'
     }
   end
 

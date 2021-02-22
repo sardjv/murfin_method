@@ -4,6 +4,7 @@ global.$ = jQuery;
 require('@rails/ujs').start()
 require('turbolinks').start()
 require('@nathanvda/cocoon')
+require("date-fns")
 
 import 'bootstrap'
 import 'bootstrap-select';
