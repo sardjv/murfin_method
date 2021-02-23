@@ -17,8 +17,7 @@ class TeamsController < ApplicationController
     end
   end
 
-  def individuals
-  end
+  def individuals; end
 
   def plans
     @plans = Plan.where(user_id: @user_group.users.pluck(:id)).order(updated_at: :desc).page(params[:page])
@@ -40,5 +39,4 @@ class TeamsController < ApplicationController
                   :filter_start_month, :filter_end_month, :filter_start_year, :filter_end_year, :filter_tag_ids,
                   :graph_kind, :time_scope, query: {})
   end
-
 end
