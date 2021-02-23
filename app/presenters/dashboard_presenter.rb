@@ -1,6 +1,5 @@
 class DashboardPresenter
-  # rubocop:disable Metrics/AbcSize
-  def initialize(args)
+  def initialize(args) # rubocop:disable Metrics/AbcSize
     args[:params] = defaults.merge(args[:params].to_hash.symbolize_keys)
     @params = args[:params]
     return unless args[:params][:query]
@@ -11,7 +10,6 @@ class DashboardPresenter
     @params[:filter_end_year] = args[:params][:query]['filter_end_time(1i)'].to_i
     @params[:filter_tag_ids] = args[:params][:query]['filter_tag_ids'].reject(&:empty?).map(&:to_i)
   end
-  # rubocop:enable Metrics/AbcSize
 
   def paginated_users
     users.page(@params[:page])
