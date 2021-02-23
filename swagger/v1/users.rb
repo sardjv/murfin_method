@@ -1,6 +1,6 @@
 module Swagger
   module V1
-    class Users # rubocop:disable Metrics/ClassLength
+    class Users
       def self.user_properties_without_admin
         {
           last_name: { type: 'string', example: 'Smith', 'x-nullable': true },

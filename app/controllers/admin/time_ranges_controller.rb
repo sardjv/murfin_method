@@ -1,6 +1,6 @@
 class Admin::TimeRangesController < ApplicationController
   def index
-    @time_ranges = TimeRange.order(updated_at: :desc).page(params[:page])
+    @time_ranges = TimeRange.order(:user_id, start_time: :asc).page(params[:page])
   end
 
   def new

@@ -68,14 +68,21 @@ en:
     showing_users:
       one: Showing 1 user
       other: Showing %{count} users
+    time_scope:
+      weekly: Weekly
+      monthly: Monthly
   graphs:
     planned_vs_actual:
       name: Planned vs Actual
       full_name: Average weekly planned vs actual per month
       units: minutes
       dataset_labels:
-        - Average weekly planned per month
-        - Average weekly actual per month
+        weekly:
+          - Average weekly planned
+          - Average weekly actual
+        monthly:
+          - Average weekly planned per month
+          - Average weekly actual per month
     percentage_delivered:
       name: Percentage Delivered
       full_name: Weekly percentage delivered per month
@@ -91,7 +98,7 @@ en:
     dashboard:
       boxes:
         members: Members
-        avg_delivery: Average delivery
+        average_delivery_percent: Average delivery
         members_under_delivered_percent: Members under 80%
         members_with_job_plan: Members with job plan
   team_individuals:
@@ -156,3 +163,12 @@ en:
       readable: '%H:%M on %d %B %Y'
   user_groups:
     add: Add %{group_type_name} User Group
+  api:
+    user_resource:
+      errors:
+        admin_delete: Admin user can not be deleted.
+        admin_password_change: Admin password change via API is not allowed.
+        invalid_user_groups:
+          one: User group with id %{invalid_ids} not found.
+          other: User groups with ids %{invalid_ids} not found.
+        user_has_user_groups: User already has user group(s) assigned. Use memberships POST endpoint.

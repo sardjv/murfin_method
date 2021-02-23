@@ -23,13 +23,13 @@ class UserStatsPresenter
   def average_weekly_actual
     return nil if no_actual_data?
 
-    average_weekly(actual_time_ranges(actual_id))
+    average_weekly(actual_time_ranges)
   end
 
   def percentage_delivered
     return nil if no_planned_data? || no_actual_data?
 
-    percentage(total(actual_time_ranges(actual_id)), total(planned_time_ranges))
+    percentage(total(actual_time_ranges), total(planned_time_ranges))
   end
 
   def status
@@ -79,6 +79,12 @@ class UserStatsPresenter
     }
   end
 
+  def actual_time_ranges
+    return @cache[:actual_time_ranges] if @cache[:actual_time_ranges].present?
+
+    @cache[:actual_time_ranges] = calculate_actual_time_ranges
+  end
+
   def average_weekly(time_ranges)
     total = total(time_ranges)
     result = (total.to_f / number_of_weeks)
@@ -103,11 +109,11 @@ class UserStatsPresenter
   end
 
   def no_actual_data?
-    actual_time_ranges(actual_id).empty?
+    actual_time_ranges.empty?
   end
 
-  def calculate_actual_time_ranges(time_range_type_id)
-    scope = user.time_ranges.where(time_range_type_id: time_range_type_id)
+  def calculate_actual_time_ranges
+    scope = user.time_ranges.where(time_range_type_id: actual_id)
 
     scope.where('start_time BETWEEN ? AND ?', filter_start_time, filter_end_time).or(
       scope.where('end_time BETWEEN ? AND ?', filter_start_time, filter_end_time)

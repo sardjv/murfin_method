@@ -136,6 +136,33 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
               end
             end
           end
+
+          context 'user group ids are invalid' do
+            let(:invalid_group_id1) { 543 }
+            let(:invalid_group_id2) { 210 }
+
+            let(:relationships) do
+              {
+                user_groups: {
+                  data: [
+                    { type: 'user_groups', id: invalid_group_id1 },
+                    { type: 'user_groups', id: invalid_group_id2 }
+                  ]
+                }
+              }
+            end
+
+            let(:error_detail) { "User groups with ids #{invalid_group_id1}, #{invalid_group_id2} not found." }
+            let(:error_title) { 'Record not found' }
+
+            response '404', 'Not found' do
+              schema '$ref' => '#/definitions/error_404'
+              run_test! do
+                expect(parsed_json['errors'][0]['title']).to eql error_title
+                expect(parsed_json['errors'][0]['detail']).to eql error_detail
+              end
+            end
+          end
         end
 
         context 'user params include not permitted admin flag' do
