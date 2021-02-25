@@ -98,6 +98,7 @@ class TeamStatsPresenter
         actual_id: @actual_id,
         filter_start_date: @filter_start_date,
         filter_end_date: @filter_end_date
+        # TODO: tags here ?
       ).percentage_delivered
 
       count += 1 if pd.is_a?(Numeric) && pd < 80
@@ -121,14 +122,18 @@ class TeamStatsPresenter
   def actual_time_ranges
     scope = TimeRange.select(:time_range_type_id, :user_id, :start_time, :end_time, :value, :updated_at)
                      .where(time_range_type_id: @actual_id, user_id: @user_ids)
-                     .joins(:tags)
-                     .where(tags: { id: @filter_tag_ids })
+
+    scope = scope.joins(:tags).where(tags: { id: @filter_tag_ids }) if @filter_tag_ids.present?
 
     scope.where('start_time BETWEEN ? AND ?', @filter_start_time, @filter_end_time).or(
       scope.where('end_time BETWEEN ? AND ?', @filter_start_time, @filter_end_time)
     ).or(
       scope.where('start_time <= ? AND end_time >= ?', @filter_start_time, @filter_end_time)
     ).distinct # .to_a
+  end
+
+  def weeks
+    @weeks ||= weeks_between(from: @filter_start_time, to: @filter_end_time)
   end
 
   private
@@ -159,11 +164,14 @@ class TeamStatsPresenter
   end
 
   def plan_time_ranges
-    Activity.joins(:plan, :tags)
-            .where(plans: { user_id: @user_ids }, tags: { id: @filter_tag_ids })
-            .distinct
-            .preload(:plan, :tags)
-            .flat_map(&:to_time_ranges)
+    scope = Activity.joins(:plan)
+                    .where(plans: { user_id: @user_ids })
+                    .distinct
+                    .preload(:plan)
+
+    scope = scope.joins(:tags).where(tags: { id: @filter_tag_ids }).preload(:tags) if @filter_tag_ids.present?
+
+    scope.flat_map(&:to_time_ranges)
   end
 
   def weekly_averages_per_month(time_ranges:)
@@ -257,10 +265,6 @@ class TeamStatsPresenter
 
   def months
     @months ||= months_between(from: @filter_start_time, to: @filter_end_time)
-  end
-
-  def weeks
-    @weeks ||= weeks_between(from: @filter_start_time, to: @filter_end_time)
   end
 
   def months_between(from:, to:)

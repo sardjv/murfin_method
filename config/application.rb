@@ -26,6 +26,8 @@ module Murfin # rubocop:disable Style/ClassAndModuleChildren
     config.log_tags  = %i[subdomain uuid]
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
 
+    config.autoload_paths << Rails.root.join('lib')
+
     # Action mailer settings.
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
@@ -62,6 +64,10 @@ module Murfin # rubocop:disable Style/ClassAndModuleChildren
       g.test_framework :rspec, fixture: true
       g.fixture_replacement :factory_bot, dir: 'spec/factories'
       g.view_specs false
+    end
+
+    initializer 'murfin.extensions', before: :load_config_initializers do |_app|
+      require 'extensions'
     end
   end
 end

@@ -1,5 +1,5 @@
 <div class='container my-4'>
-  <%= link_to '< Back to team', dashboard_team_path(@user_group) %>
+  <%= link_to '< Back to team', dashboard_team_path(@user_group_team) %>
   <%= render 'info' %>
   <%= render 'tabs' %>
   <%= render 'tag_filter' %>
@@ -15,44 +15,39 @@
               <thead>
                 <tr>
                   <th>
-                    <%= TimeRange.human_attribute_name('time_range_type') %>
+                    <%= TimeRange.human_attribute_name('week') %>
                   </th>
                   <th>
-                    <%= TimeRange.human_attribute_name('start_time') %>
+                    <%= TimeRange.human_attribute_name('plan') %>
                   </th>
+                  <th>RiO Data</th>
                   <th>
-                    <%= TimeRange.human_attribute_name('end_time') %>
-                  </th>
-                  <th>
-                    <%= TimeRange.human_attribute_name('time_worked') %>
+                    <%= TimeRange.human_attribute_name('percentage') %>
                   </th>
                 </tr>
               </thead>
               <tbody>
-                <% @time_ranges.each do |time_range| %>
-                  <% cache time_range do %>
-                    <tr>
-                      <td>
-                        <%= time_range.time_range_type.name %>
-                      </td>
-                      <td>
-                        <%= time_range.start_time.strftime(I18n.t('time.formats.readable')) %>
-                      </td>
-                      <td>
-                        <%= time_range.end_time.strftime(I18n.t('time.formats.readable')) %>
-                      </td>
-                      <td>
-                        <%= time_worked(time_range) %>
-                      </td>
-                    </tr>
-                  <% end %>
+                <% @weekly_data.each_pair do |week, data| %>
+                  <tr>
+                    <td>
+                      <%= date_range_humanized week %>
+                    </td>
+                    <td>
+                      <%= duration_in_words data[:planned_minutes], :short %>
+                    </td>
+                    <td>
+                      <%= duration_in_words data[:actual_minutes], :short %>
+                    </td>
+                    <td>
+                      <%= data[:planned_minutes] > 0 ? "#{data[:percentage]}%" : icon('question-circle') %>
+                    </td>
+                  </tr>
                 <% end %>
               </tbody>
             </table>
           </div>
-          <%= paginate @time_ranges %>
+          <%#= paginate @weekly_data %>
         </div>
-        <small> TODO: refactor, use table from /admin/time-ranges</small>
       </div>
     </div>
   </div>

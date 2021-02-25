@@ -29,7 +29,7 @@ class UserStatsPresenter
   def percentage_delivered
     return nil if no_planned_data? || no_actual_data?
 
-    percentage(total(actual_time_ranges), total(planned_time_ranges))
+    Numeric.percentage_rounded(total(actual_time_ranges), total(planned_time_ranges))
   end
 
   def status
@@ -47,10 +47,10 @@ class UserStatsPresenter
     I18n.t('status.really_under')
   end
 
-  def actual_time_ranges(time_range_type_id)
+  def actual_time_ranges
     return @cache[:actual_time_ranges] if @cache[:actual_time_ranges].present?
 
-    @cache[:actual_time_ranges] = calculate_actual_time_ranges(time_range_type_id)
+    @cache[:actual_time_ranges] = calculate_actual_time_ranges
   end
 
   def planned_time_ranges
@@ -67,7 +67,6 @@ class UserStatsPresenter
       )
     end
   end
-  # TODO: move to TimeRange class ?
 
   private
 
@@ -77,12 +76,6 @@ class UserStatsPresenter
       filter_end_date: Time.zone.today.end_of_day,
       actual_id: TimeRangeType.actual_type.id
     }
-  end
-
-  def actual_time_ranges
-    return @cache[:actual_time_ranges] if @cache[:actual_time_ranges].present?
-
-    @cache[:actual_time_ranges] = calculate_actual_time_ranges
   end
 
   def average_weekly(time_ranges)
@@ -95,13 +88,6 @@ class UserStatsPresenter
 
   def number_of_weeks
     (filter_end_time - filter_start_time) / 1.week
-  end
-
-  def percentage(numerator, denominator)
-    result = ((numerator.to_f / denominator) * 100)
-    return 0 if result.nan? || result.infinite?
-
-    result.round(0)
   end
 
   def no_planned_data?

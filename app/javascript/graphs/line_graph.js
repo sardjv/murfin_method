@@ -31,7 +31,6 @@ window.addEventListener('turbolinks:load', () => {
   })
 
   $('select.filter').on('change', () => { drawGraph(graphKind, timeScope) })
-
   drawGraph(graphKind, timeScope)
 });
 

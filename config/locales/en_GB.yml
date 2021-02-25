@@ -104,9 +104,9 @@ en:
   team_individuals:
     dashboard:
       boxes:
-        total_planned: Total planned
-        total_worked: Total worked
-        percentage_delivered: Delivered
+        average_planned_per_week: Average planned per week
+        average_worked_per_week: Average actual per week
+        average_percentage_per_week: Average percentage per week
   prompts:
     none: None
   nav:

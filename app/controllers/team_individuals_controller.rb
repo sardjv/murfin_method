@@ -1,13 +1,14 @@
 class TeamIndividualsController < ApplicationController
-  before_action :find_user_group
+  before_action :find_team
   before_action :find_user
+  before_action :find_user_groups
   before_action :initialize_presenter
 
   def show
     respond_to do |format|
       format.html
       format.json do
-        dataset_labels = t("graphs.#{params[:graph_kind]}.dataset_labels", default: nil)
+        dataset_labels = t("graphs.#{params[:graph_kind]}.dataset_labels.#{params[:time_scope] || 'weekly'}", default: nil)
         units = t("graphs.#{params[:graph_kind]}.units", default: '')
 
         render json: @presenter.to_json(
@@ -18,24 +19,30 @@ class TeamIndividualsController < ApplicationController
   end
 
   def data
-    @time_ranges = @presenter.team_individual_table_data
+    @weekly_data = @presenter.time_ranges_weekly_data # TODO: .page(params[:page])
   end
 
   private
 
-  def find_user_group
-    @user_group = UserGroup.find(params[:team_id])
+  def find_team
+    @user_group_team = UserGroup.find(params[:team_id])
   end
 
   def find_user
-    @user = @user_group.users.find(params[:id])
+    @user = @user_group_team.users.find(params[:id])
+  end
+
+  def find_user_groups
+    @user_groups = @user.user_groups.where.not(id: @user_group_team.id)
   end
 
   def initialize_presenter
-    @presenter = TeamIndividualPresenter.new(params: team_individual_params)
+    @presenter = TeamIndividualPresenter.new(params: team_individual_params.merge(time_scope: params[:time_scope]))
   end
 
   def team_individual_params
-    params.permit(:team_id, :id, :graph_kind, :filter_start_month, :filter_start_year, :filter_end_month, :filter_end_year, :page, :format)
+    params.permit(:team_id, :id, :graph_kind, :time_scope,
+                  :filter_tag_ids, :filter_start_month, :filter_start_year, :filter_end_month, :filter_end_year,
+                  :page, :format)
   end
 end
