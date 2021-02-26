@@ -198,6 +198,7 @@ describe TeamStatsPresenter, freeze: Time.zone.local(2020, 6, 26, 14, 59, 59) do
                    time_range_type_id: TimeRangeType.actual_type.id,
                    start_time: 4.days.ago.beginning_of_day,
                    end_time: 1.day.ago.end_of_day,
+                   tag_ids: tag_ids,
                    value: 4 * 24 * 60)
           end
 
@@ -402,6 +403,7 @@ describe TeamStatsPresenter, freeze: Time.zone.local(2020, 6, 26, 14, 59, 59) do
                    time_range_type_id: TimeRangeType.actual_type.id,
                    start_time: 3.days.ago.beginning_of_day,
                    end_time: 2.days.ago.end_of_day,
+                   tag_ids: tag_ids,
                    value: 2 * 24 * 60)
           end
 

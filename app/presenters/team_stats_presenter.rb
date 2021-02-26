@@ -97,7 +97,8 @@ class TeamStatsPresenter
         user: user,
         actual_id: @actual_id,
         filter_start_date: @filter_start_date,
-        filter_end_date: @filter_end_date
+        filter_end_date: @filter_end_date,
+        filter_tag_ids: @filter_tag_ids
       ).percentage_delivered
 
       count += 1 if pd.is_a?(Numeric) && pd < 80
@@ -133,8 +134,12 @@ class TeamStatsPresenter
   end
 
   def defaults
-    { filter_start_date: 1.year.ago.to_date, filter_end_date: Time.zone.today.to_date, actual_id: TimeRangeType.actual_type.id,
-      graph_kind: 'percentage_delivered' }
+    {
+      filter_start_date: (1.year.ago + 1.day).beginning_of_day,
+      filter_end_date: Time.zone.today.end_of_day,
+      actual_id: TimeRangeType.actual_type.id,
+      graph_kind: 'percentage_delivered'
+    }
   end
 
   def plan_time_ranges

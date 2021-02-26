@@ -26,38 +26,36 @@
         </thead>
         <tbody>
           <% @presenter.paginated_users.each do |user| %>
-            <% cache user do %>
-              <% user_presenter = UserStatsPresenter.new(user: user, actual_id: TimeRangeType.actual_type.id) %>
-              <tr>
-                <td>
-                  <%= user.name %>
-                </td>
-                <td>
-                  <% if user_presenter.average_weekly_planned.nil? %>
-                    <%= icon('question-circle') %>
-                  <% else %>
-                    <%= duration_in_words(user_presenter.average_weekly_planned) %>
-                  <% end %>
-                </td>
-                <td>
-                  <% if user_presenter.average_weekly_actual.nil? %>
-                    <%= icon('question-circle') %>
-                  <% else %>
-                    <%= duration_in_words(user_presenter.average_weekly_actual) %>
-                  <% end %>
-                </td>
-                <td>
-                  <% if user_presenter.percentage_delivered.nil? %>
-                    <%= icon('question-circle') %>
-                  <% else %>
-                    <%= user_presenter.percentage_delivered%>%
-                  <% end %>
-                </td>
-                <td class="<%= user_presenter.status.parameterize %>">
-                  <%= user_presenter.status%>
-                </td>
-              </tr>
-            <% end %>
+            <% user_presenter = @presenter.user_stats_presenter(user) %>
+            <tr>
+              <td>
+                <%= user.name %>
+              </td>
+              <td>
+                <% if user_presenter.average_weekly_planned.nil? %>
+                  <%= icon('question-circle') %>
+                <% else %>
+                  <%= duration_in_words(user_presenter.average_weekly_planned) %>
+                <% end %>
+              </td>
+              <td>
+                <% if user_presenter.average_weekly_actual.nil? %>
+                  <%= icon('question-circle') %>
+                <% else %>
+                  <%= duration_in_words(user_presenter.average_weekly_actual) %>
+                <% end %>
+              </td>
+              <td>
+                <% if user_presenter.percentage_delivered.nil? %>
+                  <%= icon('question-circle') %>
+                <% else %>
+                  <%= user_presenter.percentage_delivered%>%
+                <% end %>
+              </td>
+              <td class="<%= user_presenter.status.parameterize %>">
+                <%= user_presenter.status%>
+              </td>
+            </tr>
           <% end %>
         </tbody>
       </table>

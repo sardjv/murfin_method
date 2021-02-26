@@ -1,11 +1,28 @@
 class DashboardPresenter
-  def initialize(args)
+  def initialize(args) # rubocop:disable Metrics/AbcSize
     args[:params] = defaults.merge(args[:params].to_hash.symbolize_keys)
     @params = args[:params]
+    return if args[:params][:query].blank?
+
+    @params[:filter_start_month] = args[:params][:query]['filter_start_time(2i)'].to_i
+    @params[:filter_start_year] = args[:params][:query]['filter_start_time(1i)'].to_i
+    @params[:filter_end_month] = args[:params][:query]['filter_end_time(2i)'].to_i
+    @params[:filter_end_year] = args[:params][:query]['filter_end_time(1i)'].to_i
+    @params[:filter_tag_ids] = args[:params][:query]['filter_tag_ids'].reject(&:empty?).map(&:to_i)
   end
 
   def paginated_users
     users.page(@params[:page])
+  end
+
+  def user_stats_presenter(user)
+    UserStatsPresenter.new(
+      user: user,
+      actual_id: TimeRangeType.actual_type.id,
+      filter_start_date: filter_start_date,
+      filter_end_date: filter_end_date,
+      filter_tag_ids: filter_tag_ids
+    )
   end
 
   def users_with_job_plan_count
@@ -87,18 +104,18 @@ class DashboardPresenter
   def bar_chart_value(user:)
     return if user.time_ranges.none?
 
-    UserStatsPresenter.new(
-      user: user,
-      actual_id: @params[:actual_id],
-      filter_start_date: filter_start_date,
-      filter_end_date: filter_end_date
-    ).percentage_delivered
+    user_stats_presenter(user).percentage_delivered
   end
 
   def defaults
     {
       user_ids: User.ids,
-      actual_id: TimeRangeType.actual_type.try(:id)
+      actual_id: TimeRangeType.actual_type.try(:id),
+      filter_start_year: 1.year.ago.year,
+      filter_start_month: 1.year.ago.month,
+      filter_end_year: Time.zone.today.year,
+      filter_end_month: Time.zone.today.month,
+      filter_tag_ids: Tag.where(default_for_filter: true).pluck(:id)
     }
   end
 
@@ -121,6 +138,9 @@ class DashboardPresenter
   end
 
   def filter_tag_ids
-    @params[:filter_tag_ids]&.split(',')
+    return [] if @params[:filter_tag_ids].blank?
+    return @params[:filter_tag_ids]&.split(',') if @params[:filter_tag_ids].is_a? String
+
+    @params[:filter_tag_ids]
   end
 end
