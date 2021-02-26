@@ -1,37 +1,12 @@
 <div class='container my-4 xs-row-reverse'>
   <%= render 'team_tabs' %>
 
-  <%= render(
-    partial: 'shared/highlights',
-    locals: {
-      highlights: [
-        {
-          icon: 'people',
-          colour: 'purple',
-          label: t('teams.dashboard.boxes.members'),
-          value: @presenter.paginated_users.total_count
-        },
-        {
-          icon: 'bar-chart',
-          colour: 'green',
-          label: t('teams.dashboard.boxes.average_delivery_percent'),
-          value: '<span id="team-dash-average-delivery-percent">&nbsp;</span>'.html_safe
-        },
-        {
-          icon: 'compass',
-          colour: 'yellow',
-          label: t('teams.dashboard.boxes.members_under_delivered_percent'),
-          value: '<span id="team-dash-members-under-delivered-percent">&nbsp;</span>'.html_safe
-        },
-        {
-          icon: 'flag',
-          colour: 'red',
-          label: t('teams.dashboard.boxes.members_with_job_plan'),
-          value: @presenter.users_with_job_plan_count
-        }
-      ]
-    }
-  ) %>
+  <%= render 'shared/filters',
+    filter_tag_ids: @presenter.team_stats_presenter.filter_tag_ids,
+    filter_start_time: @presenter.team_stats_presenter.filter_start_time,
+    filter_end_time: @presenter.team_stats_presenter.filter_end_time %>
+
+  <%= render 'boxes' %>
 
   <div class='row'>
     <div class='col-12'>
@@ -56,26 +31,4 @@
       </div>
     </div>
   </div>
-
-  <div class='row'>
-    <div class='col-12'>
-      <div class='card mb-4'>
-        <div class='card-body'>
-          <form role='form'>
-            <div class='row form-group'>
-              <div class='col-1'><label><%= I18n.t('graph.filter.tags') %></label></div>
-              <div class='col-11'><%= select :line_graph,
-                :tags,
-                grouped_options_for_select(tag_options, Tag.where(default_for_filter: true).pluck(:id)),
-                {},
-                { class: 'filter', multiple: true, 'data-actions-box': true }
-              %></div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <%= render 'filters' %>
 </div>

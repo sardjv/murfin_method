@@ -28,7 +28,7 @@
         <tbody>
           <% @presenter.paginated_users.each do |user| %>
             <% cache user do %>
-              <% user_presenter = UserStatsPresenter.new(user: user, actual_id: TimeRangeType.actual_type.id) %>
+              <% user_presenter = @presenter.user_stats_presenter(user) %>
               <tr data-user-id="<%= user.id -%>">
                 <td>
                   <%= user.name %>

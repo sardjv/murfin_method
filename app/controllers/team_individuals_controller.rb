@@ -43,6 +43,6 @@ class TeamIndividualsController < ApplicationController
   def team_individual_params
     params.permit(:team_id, :id, :graph_kind, :time_scope,
                   :filter_tag_ids, :filter_start_month, :filter_start_year, :filter_end_month, :filter_end_year,
-                  :page, :format)
+                  :page, :format, query: {})
   end
 end

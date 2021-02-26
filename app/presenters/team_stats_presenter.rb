@@ -14,8 +14,8 @@ class TeamStatsPresenter
     @actual_id = args[:actual_id]
     @filter_tag_ids = args[:filter_tag_ids]
     @filter_start_date = args[:filter_start_date]
-    @filter_start_time = @filter_start_date.to_time.in_time_zone.beginning_of_day
     @filter_end_date = args[:filter_end_date]
+    @filter_start_time = @filter_start_date.to_time.in_time_zone.beginning_of_day
     @filter_end_time = @filter_end_date.to_time.in_time_zone.end_of_day
     @graph_kind = args[:graph_kind] || GRAPH_KINDS.first
     @time_scope = args[:time_scope] || TIME_SCOPES.first
@@ -97,8 +97,8 @@ class TeamStatsPresenter
         user: user,
         actual_id: @actual_id,
         filter_start_date: @filter_start_date,
-        filter_end_date: @filter_end_date
-        # TODO: tags here ?
+        filter_end_date: @filter_end_date,
+        filter_tag_ids: @filter_tag_ids
       ).percentage_delivered
 
       count += 1 if pd.is_a?(Numeric) && pd < 80
@@ -156,8 +156,8 @@ class TeamStatsPresenter
 
   def defaults
     {
-      filter_start_date: 1.year.ago.to_date,
-      filter_end_date: Time.zone.today.to_date,
+      filter_start_date: (1.year.ago + 1.day).to_date,
+      filter_end_date: Time.zone.today,
       actual_id: TimeRangeType.actual_type.id,
       graph_kind: 'percentage_delivered'
     }

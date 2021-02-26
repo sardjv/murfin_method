@@ -1,6 +1,18 @@
+require 'concerns/uses_filters'
+
 class TeamIndividualPresenter
+  include UsesFilters
+
   def initialize(args)
-    @params = defaults.merge(args[:params].to_hash.symbolize_keys)
+    query = args[:params].delete(:query)
+    query_params = prepare_query_params(query)
+
+    @params = defaults
+              .merge(args[:params].to_hash.symbolize_keys)
+              .merge(query_params)
+
+    pp '--------------- params TeamIndividualPresenter ', @params
+
     @team = UserGroup.find(@params[:team_id])
     @user = @team.users.find(@params[:id])
   end
@@ -60,8 +72,9 @@ class TeamIndividualPresenter
     @user_stats_presenter ||= UserStatsPresenter.new(
       user: @user,
       actual_id: @params[:actual_id],
-      filter_start_date: @params[:filter_start_date],
-      filter_end_date: @params[:filter_end_date]
+      filter_start_date: filter_start_date,
+      filter_end_date: filter_end_date,
+      filter_tag_ids: filter_tag_ids
     )
   end
 
@@ -91,14 +104,6 @@ class TeamIndividualPresenter
   end
   # EOF Team/Individual/Data (Boxes)
 
-  def filter_start_date
-    @params[:filter_start_date]
-  end
-
-  def filter_end_date
-    @params[:filter_end_date]
-  end
-
   private
 
   def planned_time_ranges
@@ -111,14 +116,7 @@ class TeamIndividualPresenter
 
   def defaults
     {
-      actual_id: TimeRangeType.actual_type.try(:id),
-      filter_start_date: 1.year.ago.to_date,
-      filter_end_date: Time.zone.today,
-      filter_tag_ids: Tag.where(default_for_filter: true).pluck(:id)
-    }
-  end
-
-  def filter_tag_ids
-    @params[:filter_tag_ids].split(',')
+      actual_id: TimeRangeType.actual_type.try(:id)
+    }.merge(filters_defaults)
   end
 end

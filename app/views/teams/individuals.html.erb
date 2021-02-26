@@ -1,5 +1,6 @@
 <div class='container my-4'>
   <%= render 'team_tabs' %>
+  <%= render 'shared/filters' %>
 
   <div class='row'>
     <div class='col-12'>
@@ -17,6 +18,9 @@
     </div>
   </div>
 
-  <%= render 'filters' %>
   <%= render 'individuals_table' %>
 </div>
+
+<script>
+  var chartData = <%= raw @presenter.to_json(graphs: [{ type: :bar_chart, data: :individual_data, units: '%' }]) %>;
+</script>

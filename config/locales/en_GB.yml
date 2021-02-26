@@ -29,6 +29,7 @@ en:
     confirm: Are you sure?
     delete: Delete
     save: Save
+    filter: Filter
     << : *log_in_out
   app:
     name: Murfin+
