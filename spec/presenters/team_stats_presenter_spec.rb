@@ -113,10 +113,10 @@ describe TeamStatsPresenter, freeze: Time.zone.local(2020, 6, 26, 14, 59, 59) do
             )
           end
 
-          context 'when tag not included' do
-            let(:filter_tag_ids) { nil }
+          context 'not related tags included' do
+            let(:filter_tag_ids) { [1001, 1002] }
 
-            it "returns 0s for all row' values" do
+            it "returns 0s for all rows' values" do
               expect(subject.average_weekly_planned_per_month.pluck(:value).uniq).to eq [0]
             end
           end
@@ -144,10 +144,10 @@ describe TeamStatsPresenter, freeze: Time.zone.local(2020, 6, 26, 14, 59, 59) do
             )
           end
 
-          context 'when tag not included' do
-            let(:filter_tag_ids) { nil }
+          context 'not related tags included' do
+            let(:filter_tag_ids) { [1001, 1002] }
 
-            it "returns 0s for all row' values" do
+            it "returns 0s for all rows' values" do
               expect(subject.average_weekly_actual_per_month.pluck(:value).uniq).to eq [0]
             end
           end
@@ -323,10 +323,10 @@ describe TeamStatsPresenter, freeze: Time.zone.local(2020, 6, 26, 14, 59, 59) do
             )
           end
 
-          context 'when tag not included' do
-            let(:filter_tag_ids) { nil }
+          context 'not related tags included' do
+            let(:filter_tag_ids) { [1001, 1002] }
 
-            it "returns 0s for all row' values" do
+            it "returns 0s for all rows' values" do
               expect(subject.average_weekly_planned_per_week.pluck(:value).uniq).to eq [0]
             end
           end
@@ -405,7 +405,7 @@ describe TeamStatsPresenter, freeze: Time.zone.local(2020, 6, 26, 14, 59, 59) do
                    value: 2 * 24 * 60)
           end
 
-          it 'returns number of users' do
+          it 'returns number of users under delivered percent' do
             expect(subject.members_under_delivered_percent).to eql(users.count - 1)
           end
         end

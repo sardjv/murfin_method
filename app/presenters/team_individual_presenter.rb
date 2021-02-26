@@ -77,14 +77,6 @@ class TeamIndividualPresenter
     end.to_json
   end
 
-  # def total_planned
-  #   @total_planned ||= user_stats_presenter.total(planned_time_ranges)
-  # end
-
-  # def total_worked
-  #   @total_worked ||= user_stats_presenter.total(actual_time_ranges)
-  # end
-
   # Team/Individual/Data (Boxes)
   def average_planned_per_week
     user_stats_presenter.average_weekly_planned
