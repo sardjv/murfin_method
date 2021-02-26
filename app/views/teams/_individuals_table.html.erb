@@ -26,7 +26,7 @@
         </thead>
         <tbody>
           <% @presenter.paginated_users.each do |user| %>
-            <% user_presenter = @presenter.user_presenter(user) %>
+            <% user_presenter = @presenter.user_stats_presenter(user) %>
             <tr>
               <td>
                 <%= user.name %>

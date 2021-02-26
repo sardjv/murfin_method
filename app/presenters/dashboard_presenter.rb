@@ -2,7 +2,7 @@ class DashboardPresenter
   def initialize(args) # rubocop:disable Metrics/AbcSize
     args[:params] = defaults.merge(args[:params].to_hash.symbolize_keys)
     @params = args[:params]
-    return unless args[:params][:query]
+    return if args[:params][:query].blank?
 
     @params[:filter_start_month] = args[:params][:query]['filter_start_time(2i)'].to_i
     @params[:filter_start_year] = args[:params][:query]['filter_start_time(1i)'].to_i
@@ -15,7 +15,7 @@ class DashboardPresenter
     users.page(@params[:page])
   end
 
-  def user_presenter(user)
+  def user_stats_presenter(user)
     UserStatsPresenter.new(
       user: user,
       actual_id: TimeRangeType.actual_type.id,
@@ -104,7 +104,7 @@ class DashboardPresenter
   def bar_chart_value(user:)
     return if user.time_ranges.none?
 
-    user_presenter(user).percentage_delivered
+    user_stats_presenter(user).percentage_delivered
   end
 
   def defaults
