@@ -1,21 +1,32 @@
+require 'concerns/uses_filters'
+
 class UserStatsPresenter
-  attr_accessor :user, :filter_start_time, :filter_end_time, :filter_tag_ids, :plan_id, :actual_id
+  include UsesFilters
+
+  attr_accessor :user, :plan_id, :actual_id
 
   OVER_MIN_PERCENTAGE = 120
   OK_MIN_PERCENTAGE = 80
   UNDER_MIN_PERCENTAGE = 50
 
   def initialize(args)
-    args = defaults.merge(args)
+    if filter_start_date = args.delete(:filter_start_date)
+      args[:filter_start_year] = filter_start_date.year
+      args[:filter_start_month] = filter_start_date.month
+    end
 
-    pp 'UserStatsPresenter args', args
+    if filter_end_date = args.delete(:filter_end_date)
+      args[:filter_end_year] = filter_end_date.year
+      args[:filter_end_month] = filter_end_date.month
+    end
 
-    @user = args[:user]
-    @filter_start_time = args[:filter_start_date].to_time.in_time_zone.beginning_of_day
-    @filter_end_time = args[:filter_end_date].to_time.in_time_zone.end_of_day
-    @filter_tag_ids = args[:filter_tag_ids]
-    @actual_id = args[:actual_id]
+    @params = defaults.merge(args)
+
+    @user = @params[:user]
+    @actual_id = @params[:actual_id]
     @cache = {}
+
+    # pp 'UserStatsPresenter @params', @params
   end
 
   def average_weekly_planned
@@ -76,11 +87,8 @@ class UserStatsPresenter
 
   def defaults
     {
-      filter_start_date: (1.year.ago + 1.day).to_date,
-      filter_end_date: Time.zone.today,
-      actual_id: TimeRangeType.actual_type.id,
-      filter_tag_ids: Tag.where(default_for_filter: true).pluck(:id)
-    }
+      actual_id: TimeRangeType.actual_type.id
+    }.merge(filters_defaults)
   end
 
   def average_weekly(time_ranges)
@@ -126,7 +134,7 @@ class UserStatsPresenter
   end
 
   def user_plan_time_ranges
-    scope = Activity.joins(:plan).where(plans: { user_id: user.id })
+    scope = Activity.joins(:plan).where(plans: { user_id: @user.id })
     scope = scope.joins(:tags).where(tags: { id: filter_tag_ids }) if filter_tag_ids.any?
     scope.distinct.flat_map(&:to_time_ranges)
   end
