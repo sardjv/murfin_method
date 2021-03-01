@@ -22,7 +22,7 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
       parameter name: 'page[number]', in: :query, type: :integer, required: false
       parameter name: 'filter[user_id]', in: :query, type: :integer, required: false
       parameter name: 'filter[time_range_type_id]', in: :query, type: :integer, required: false
-      parameter name: 'include', in: :query, type: :string, required: false
+      parameter name: 'include', in: :query, type: :string, required: false, example: 'tags'
 
       let(:include) { '' }
 

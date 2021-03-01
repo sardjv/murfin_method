@@ -99,6 +99,103 @@
         }
       }
     },
+    "/api/v1/plans/{id}": {
+      "get": {
+        "summary": "get plan",
+        "tags": [
+          "Plans"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "example": "activities"
+          }
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Showing plan",
+            "schema": {
+              "$ref": "#/definitions/plan_response_with_relationships"
+            }
+          },
+          "404": {
+            "description": "Record not found"
+          },
+          "406": {
+            "description": "Unsupported accept header"
+          }
+        }
+      }
+    },
+    "/api/v1/plans": {
+      "get": {
+        "summary": "get plans",
+        "tags": [
+          "Plans"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "parameters": [
+          {
+            "name": "page[size]",
+            "in": "query",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "page[number]",
+            "in": "query",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "filter[user_id]",
+            "in": "query",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Plans index",
+            "schema": {
+              "$ref": "#/definitions/plans_response"
+            }
+          }
+        }
+      }
+    },
     "/api/v1/tag_types": {
       "post": {
         "summary": "create tag type",
@@ -614,7 +711,8 @@
             "name": "include",
             "in": "query",
             "type": "string",
-            "required": false
+            "required": false,
+            "example": "tags"
           }
         ],
         "responses": {
@@ -937,6 +1035,12 @@
               "$ref": "#/definitions/error_422"
             }
           },
+          "404": {
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/error_404"
+            }
+          },
           "400": {
             "description": "Error: Bad Request",
             "schema": {
@@ -976,7 +1080,8 @@
             "name": "include",
             "in": "query",
             "type": "string",
-            "required": false
+            "required": false,
+            "example": "user_groups"
           },
           {
             "name": "filter[email]",
@@ -1132,12 +1237,418 @@
             "schema": {
               "$ref": "#/definitions/error_403"
             }
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/error_404"
+            }
           }
         }
       }
     }
   },
   "definitions": {
+    "error_400": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Bad Request"
+        }
+      }
+    },
+    "error_401": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Unauthorized"
+        }
+      }
+    },
+    "error_403": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Forbidden"
+        }
+      }
+    },
+    "error_404": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "example": "Record not found"
+              },
+              "detail": {
+                "type": "string",
+                "example": "The record identified by 123 could not be found."
+              },
+              "code": {
+                "type": "string",
+                "example": "404"
+              },
+              "status": {
+                "type": "string",
+                "example": "404"
+              }
+            }
+          }
+        }
+      }
+    },
+    "error_406": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "example": "Not acceptable"
+              },
+              "detail": {
+                "type": "string",
+                "example": "All requests must use the 'application/vnd.api+json' Accept without media type parameters. This request specified 'application/json'."
+              },
+              "code": {
+                "type": "string",
+                "example": "406"
+              },
+              "status": {
+                "type": "string",
+                "example": "406"
+              }
+            }
+          }
+        }
+      }
+    },
+    "error_415": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "example": "Unsupported media type"
+              },
+              "detail": {
+                "type": "string",
+                "example": "All requests that create or update must use the 'application/vnd.api+json' Content-Type. This request specified 'application/json'."
+              },
+              "code": {
+                "type": "string",
+                "example": "415"
+              },
+              "status": {
+                "type": "string",
+                "example": "415"
+              }
+            }
+          }
+        }
+      }
+    },
+    "error_422": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Invalid request"
+        }
+      }
+    },
+    "error_422_start_end_time": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "example": "must occur after start time"
+              },
+              "detail": {
+                "type": "string",
+                "example": "end_time - must occur after start time"
+              },
+              "code": {
+                "type": "string",
+                "example": "100"
+              },
+              "status": {
+                "type": "string",
+                "example": "422"
+              }
+            }
+          }
+        }
+      }
+    },
+    "error_422_password_too_short": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "title": "is too short (minimum is 6 characters)",
+            "detail": "password - is too short (minimum is 6 characters)",
+            "code": "100",
+            "source": {
+              "pointer": "/data/attributes/password"
+            },
+            "status": "422"
+          }
+        }
+      }
+    },
+    "error_423": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Record Locked"
+        }
+      }
+    },
+    "membership_attributes": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "integer",
+          "example": 1234,
+          "x-nullable": false
+        },
+        "user_group_id": {
+          "type": "integer",
+          "example": 13,
+          "x-nullable": false
+        },
+        "role": {
+          "type": "string",
+          "example": "member",
+          "x-nullable": false
+        }
+      }
+    },
+    "membership_response": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "123"
+            },
+            "type": {
+              "type": "string",
+              "example": "memberships"
+            },
+            "attributes": {
+              "$ref": "#/definitions/membership_attributes"
+            }
+          }
+        }
+      }
+    },
+    "membership_post_params": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "memberships"
+            },
+            "attributes": {
+              "$ref": "#/definitions/membership_attributes"
+            }
+          },
+          "required": [
+            "user_id",
+            "user_group_id",
+            "role"
+          ]
+        }
+      }
+    },
+    "plan_attributes": {
+      "type": "object",
+      "properties": {
+        "start_date": {
+          "type": "string",
+          "example": "2021-01-01",
+          "x-nullable": false
+        },
+        "end_date": {
+          "type": "string",
+          "example": "2021-12-31",
+          "x-nullable": false
+        },
+        "user_id": {
+          "type": "integer",
+          "example": 321,
+          "x-nullable": false
+        }
+      }
+    },
+    "plans_response": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "1"
+              },
+              "type": {
+                "type": "string",
+                "example": "plans"
+              },
+              "link": {
+                "type": "object",
+                "properties": {
+                  "self": {
+                    "type": "string",
+                    "example": "https://job-plan-stats.herokuapp.com/api/v1/plans/1"
+                  }
+                }
+              },
+              "attributes": {
+                "$ref": "#/definitions/plan_attributes"
+              }
+            }
+          }
+        },
+        "links": {
+          "type": "object",
+          "properties": {
+            "first": {
+              "type": "string",
+              "example": "https://job-plan-stats.herokuapp.com/api/v1/plans?page[number]=1&page[size]=5"
+            },
+            "prev": {
+              "type": "string",
+              "example": "https://job-plan-stats.herokuapp.com/api/v1/plans?page[number]=1&page[size]=5"
+            },
+            "next": {
+              "type": "string",
+              "example": "https://job-plan-stats.herokuapp.com/api/v1/plans?page[number]=2&page[size]=5"
+            },
+            "last": {
+              "type": "string",
+              "example": "https://job-plan-stats.herokuapp.com/api/v1/plans?page[number]=5&page[size]=5"
+            }
+          }
+        }
+      }
+    },
+    "plan_response": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "1"
+            },
+            "type": {
+              "type": "string",
+              "example": "plans"
+            },
+            "link": {
+              "type": "object",
+              "properties": {
+                "self": {
+                  "type": "string",
+                  "example": "https://job-plan-stats.herokuapp.com/api/v1/plans/1"
+                }
+              }
+            },
+            "attributes": {
+              "$ref": "#/definitions/plan_attributes"
+            }
+          }
+        }
+      }
+    },
+    "plan_response_with_relationships": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "1"
+            },
+            "type": {
+              "type": "string",
+              "example": "plans"
+            },
+            "link": {
+              "type": "object",
+              "properties": {
+                "self": {
+                  "type": "string",
+                  "example": "https://job-plan-stats.herokuapp.com/api/v1/plans/1"
+                }
+              }
+            },
+            "attributes": {
+              "$ref": "#/definitions/plan_attributes"
+            },
+            "relationships": {
+              "type": "object",
+              "properties": {
+                "activities": {
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "321"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "activities"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "tag_attributes": {
       "type": "object",
       "properties": {
@@ -1966,7 +2477,7 @@
       "properties": {
         "name": {
           "type": "string",
-          "example": "vel",
+          "example": "eveniet",
           "x-nullable": false
         },
         "group_type_id": {
@@ -2095,247 +2606,6 @@
               "$ref": "#/definitions/user_group_attributes"
             }
           }
-        }
-      }
-    },
-    "membership_attributes": {
-      "type": "object",
-      "properties": {
-        "user_id": {
-          "type": "integer",
-          "example": 1234,
-          "x-nullable": false
-        },
-        "user_group_id": {
-          "type": "integer",
-          "example": 13,
-          "x-nullable": false
-        },
-        "role": {
-          "type": "string",
-          "example": "member",
-          "x-nullable": false
-        }
-      }
-    },
-    "membership_response": {
-      "type": "object",
-      "properties": {
-        "data": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string",
-              "example": "123"
-            },
-            "type": {
-              "type": "string",
-              "example": "memberships"
-            },
-            "attributes": {
-              "$ref": "#/definitions/membership_attributes"
-            }
-          }
-        }
-      }
-    },
-    "membership_post_params": {
-      "type": "object",
-      "properties": {
-        "data": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "string",
-              "example": "memberships"
-            },
-            "attributes": {
-              "$ref": "#/definitions/membership_attributes"
-            }
-          },
-          "required": [
-            "user_id",
-            "user_group_id",
-            "role"
-          ]
-        }
-      }
-    },
-    "error_400": {
-      "type": "object",
-      "properties": {
-        "error": {
-          "type": "string",
-          "example": "Bad Request"
-        }
-      }
-    },
-    "error_401": {
-      "type": "object",
-      "properties": {
-        "error": {
-          "type": "string",
-          "example": "Unauthorized"
-        }
-      }
-    },
-    "error_403": {
-      "type": "object",
-      "properties": {
-        "error": {
-          "type": "string",
-          "example": "Forbidden"
-        }
-      }
-    },
-    "error_404": {
-      "type": "object",
-      "properties": {
-        "errors": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "title": {
-                "type": "string",
-                "example": "Record not found"
-              },
-              "detail": {
-                "type": "string",
-                "example": "The record identified by 123 could not be found."
-              },
-              "code": {
-                "type": "string",
-                "example": "404"
-              },
-              "status": {
-                "type": "string",
-                "example": "404"
-              }
-            }
-          }
-        }
-      }
-    },
-    "error_406": {
-      "type": "object",
-      "properties": {
-        "errors": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "title": {
-                "type": "string",
-                "example": "Not acceptable"
-              },
-              "detail": {
-                "type": "string",
-                "example": "All requests must use the 'application/vnd.api+json' Accept without media type parameters. This request specified 'application/json'."
-              },
-              "code": {
-                "type": "string",
-                "example": "406"
-              },
-              "status": {
-                "type": "string",
-                "example": "406"
-              }
-            }
-          }
-        }
-      }
-    },
-    "error_415": {
-      "type": "object",
-      "properties": {
-        "errors": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "title": {
-                "type": "string",
-                "example": "Unsupported media type"
-              },
-              "detail": {
-                "type": "string",
-                "example": "All requests that create or update must use the 'application/vnd.api+json' Content-Type. This request specified 'application/json'."
-              },
-              "code": {
-                "type": "string",
-                "example": "415"
-              },
-              "status": {
-                "type": "string",
-                "example": "415"
-              }
-            }
-          }
-        }
-      }
-    },
-    "error_422": {
-      "type": "object",
-      "properties": {
-        "error": {
-          "type": "string",
-          "example": "Invalid request"
-        }
-      }
-    },
-    "error_422_start_end_time": {
-      "type": "object",
-      "properties": {
-        "errors": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "title": {
-                "type": "string",
-                "example": "must occur after start time"
-              },
-              "detail": {
-                "type": "string",
-                "example": "end_time - must occur after start time"
-              },
-              "code": {
-                "type": "string",
-                "example": "100"
-              },
-              "status": {
-                "type": "string",
-                "example": "422"
-              }
-            }
-          }
-        }
-      }
-    },
-    "error_422_password_too_short": {
-      "type": "object",
-      "properties": {
-        "errors": {
-          "type": "array",
-          "items": {
-            "title": "is too short (minimum is 6 characters)",
-            "detail": "password - is too short (minimum is 6 characters)",
-            "code": "100",
-            "source": {
-              "pointer": "/data/attributes/password"
-            },
-            "status": "422"
-          }
-        }
-      }
-    },
-    "error_423": {
-      "type": "object",
-      "properties": {
-        "error": {
-          "type": "string",
-          "example": "Record Locked"
         }
       }
     }

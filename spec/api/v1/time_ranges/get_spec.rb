@@ -8,7 +8,7 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
       tags 'TimeRanges'
       security [{ JWT: {} }]
       parameter name: :id, in: :path, type: :string, required: true
-      parameter name: :include, in: :query, type: :string, required: false
+      parameter name: :include, in: :query, type: :string, required: false, example: 'tags'
       produces 'application/vnd.api+json'
 
       let(:Authorization) { 'Bearer dummy_json_web_token' }
