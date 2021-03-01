@@ -30,17 +30,19 @@ module UsesFilters
     @params[:filter_tag_ids].is_a?(String) ? @params[:filter_tag_ids]&.split(',') : @params[:filter_tag_ids]
   end
 
-  def prepare_query_params(query)
+  def prepare_query_params(query) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     return {} if query.blank?
 
-    tag_ids = query['filter_tag_ids'] ? query['filter_tag_ids'].reject(&:empty?).map(&:to_i) : nil
-    {
-      filter_start_month: (query['filter_start_month'] || query['filter_start_time(2i)']).to_i,
-      filter_start_year: (query['filter_start_year'] || query['filter_start_time(1i)']).to_i,
-      filter_end_month: (query['filter_end_month'] || query['filter_end_time(2i)']).to_i,
-      filter_end_year: (query['filter_end_year'] || query['filter_end_time(1i)']).to_i,
-      filter_tag_ids: tag_ids
-    }.compact
+    query_params = {
+      filter_start_month: query['filter_start_month'] || query['filter_start_time(2i)'],
+      filter_start_year: query['filter_start_year'] || query['filter_start_time(1i)'],
+      filter_end_month: query['filter_end_month'] || query['filter_end_time(2i)'],
+      filter_end_year: query['filter_end_year'] || query['filter_end_time(1i)']
+    }.update { |_k, v| }.to_i
+
+    query_params[:filter_tag_ids] = query['filter_tag_ids'].reject(&:empty?).map(&:to_i) if query['filter_tag_ids'].present?
+
+    query_params.compact
   end
 
   private

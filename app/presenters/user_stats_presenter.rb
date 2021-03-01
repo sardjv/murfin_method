@@ -9,13 +9,15 @@ class UserStatsPresenter
   OK_MIN_PERCENTAGE = 80
   UNDER_MIN_PERCENTAGE = 50
 
-  def initialize(args)
-    if filter_start_date = args.delete(:filter_start_date)
+  def initialize(args) # rubocop:disable Metrics/AbcSize
+    filter_start_date = args.delete(:filter_start_date)
+    if filter_start_date
       args[:filter_start_year] = filter_start_date.year
       args[:filter_start_month] = filter_start_date.month
     end
 
-    if filter_end_date = args.delete(:filter_end_date)
+    filter_end_date = args.delete(:filter_end_date)
+    if filter_end_date
       args[:filter_end_year] = filter_end_date.year
       args[:filter_end_month] = filter_end_date.month
     end

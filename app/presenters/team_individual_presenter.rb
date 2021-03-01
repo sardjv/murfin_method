@@ -11,7 +11,7 @@ class TeamIndividualPresenter
               .merge(args[:params].to_hash.symbolize_keys)
               .merge(query_params)
 
-    pp '--------------- params TeamIndividualPresenter ', @params
+    # pp '--------------- params TeamIndividualPresenter ', @params
 
     @team = UserGroup.find(@params[:team_id])
     @user = @team.users.find(@params[:id])

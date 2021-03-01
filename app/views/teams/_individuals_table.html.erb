@@ -27,7 +27,7 @@
         </thead>
         <tbody>
           <% @presenter.paginated_users.each do |user| %>
-            <% cache user do %>
+            <%# cache user do %>
               <% user_presenter = @presenter.user_stats_presenter(user) %>
               <tr data-user-id="<%= user.id -%>">
                 <td>
@@ -63,7 +63,7 @@
                   <% end %>
                 </td>
               </tr>
-            <% end %>
+            <%#end %>
           <% end %>
         </tbody>
       </table>
