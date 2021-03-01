@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'concerns/uses_filters'
 
 class UserStatsPresenter

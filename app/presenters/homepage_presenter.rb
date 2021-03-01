@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HomepagePresenter
   def initialize(args)
     @params = args[:params]

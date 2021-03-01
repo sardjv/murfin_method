@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 class TeamStatsPresenter
   attr_accessor :filter_start_time, :filter_end_time, :filter_tag_ids, :graph_kind, :time_scope, :plan_id, :plan, :actual_id, :actual, :user_ids
 
   GRAPH_KINDS = %w[percentage_delivered planned_vs_actual].freeze
   TIME_SCOPES = %w[weekly monthly].freeze
+  PERCENTAGE_DELIVERED_MIN = 80.freeze
 
   def initialize(args)
     args = defaults.merge(args.compact)
@@ -100,8 +103,8 @@ class TeamStatsPresenter
         filter_end_date: @filter_end_date,
         filter_tag_ids: @filter_tag_ids
       ).percentage_delivered
-
-      count += 1 if pd.is_a?(Numeric) && pd < 80
+      pp "user_id: #{user.id} | pd%: #{pd}"
+      count += 1 if pd.is_a?(Numeric) && pd < PERCENTAGE_DELIVERED_MIN
     end
 
     count
@@ -157,7 +160,7 @@ class TeamStatsPresenter
   def defaults
     {
       filter_start_date: (1.year.ago + 1.day).to_date,
-      filter_end_date: Time.zone.today,
+      filter_end_date: Date.current,
       actual_id: TimeRangeType.actual_type.id,
       graph_kind: 'percentage_delivered'
     }
