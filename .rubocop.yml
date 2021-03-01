@@ -50,6 +50,4 @@ Metrics/BlockLength:
 
 Rails/SkipsModelValidations:
   Enabled: false
-
-SuggestExtensions: false
   
