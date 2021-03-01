@@ -8,7 +8,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
       tags 'Users'
       security [{ JWT: {} }]
       parameter name: :id, in: :path, type: :string, required: true
-      parameter name: :include, in: :query, type: :string, required: false
+      parameter name: :include, in: :query, type: :string, required: false, example: 'user_groups'
       produces 'application/vnd.api+json'
 
       let(:Authorization) { 'Bearer dummy_json_web_token' }

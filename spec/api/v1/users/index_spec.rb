@@ -11,8 +11,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
       produces 'application/vnd.api+json'
       parameter name: 'page[size]', in: :query, type: :integer, required: false
       parameter name: 'page[number]', in: :query, type: :integer, required: false
-
-      parameter name: 'include', in: :query, type: :string, required: false
+      parameter name: 'include', in: :query, type: :string, required: false, example: 'user_groups'
 
       let(:include) { '' }
 
