@@ -5,7 +5,6 @@ class TeamStatsPresenter
 
   GRAPH_KINDS = %w[percentage_delivered planned_vs_actual].freeze
   TIME_SCOPES = %w[weekly monthly].freeze
-  PERCENTAGE_DELIVERED_MIN = 80.freeze
 
   def initialize(args)
     args = defaults.merge(args.compact)
@@ -103,8 +102,8 @@ class TeamStatsPresenter
         filter_end_date: @filter_end_date,
         filter_tag_ids: @filter_tag_ids
       ).percentage_delivered
-      pp "user_id: #{user.id} | pd%: #{pd}"
-      count += 1 if pd.is_a?(Numeric) && pd < PERCENTAGE_DELIVERED_MIN
+
+      count += 1 if pd.is_a?(Numeric) && pd < UserStatsPresenter::OK_MIN_PERCENTAGE
     end
 
     count
@@ -159,8 +158,10 @@ class TeamStatsPresenter
 
   def defaults
     {
-      filter_start_date: (1.year.ago + 1.day).to_date,
-      filter_end_date: Date.current,
+      filter_start_date: (1.year.ago + 1.day).beginning_of_day,
+      filter_end_date: Time.zone.today.end_of_day,
+      #  filter_start_date: (1.year.ago + 1.day).to_date,
+      # filter_end_date: Date.current,
       actual_id: TimeRangeType.actual_type.id,
       graph_kind: 'percentage_delivered'
     }

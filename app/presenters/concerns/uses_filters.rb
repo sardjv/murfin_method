@@ -9,19 +9,19 @@ module UsesFilters
   end
 
   def filter_end_time
-    filter_end_date.in_time_zone.beginning_of_day
+    filter_end_date.in_time_zone.end_of_day
   end
 
   def filter_start_date
     return unless @params[:filter_start_year] && @params[:filter_start_month]
 
-    Date.new(@params[:filter_start_year].to_i, @params[:filter_start_month].to_i)
+    Date.new(@params[:filter_start_year].to_i, @params[:filter_start_month].to_i).beginning_of_month
   end
 
   def filter_end_date
     return unless @params[:filter_end_year] && @params[:filter_end_month]
 
-    Date.new(@params[:filter_end_year].to_i, @params[:filter_end_month].to_i)
+    Date.new(@params[:filter_end_year].to_i, @params[:filter_end_month].to_i).end_of_month
   end
 
   def filter_tag_ids
@@ -51,9 +51,10 @@ module UsesFilters
     {
       filter_start_year: 1.year.ago.year,
       filter_start_month: 1.year.ago.month,
-      filter_end_year: Time.zone.today.year,
-      filter_end_month: Time.zone.today.month,
-      filter_tag_ids: Tag.where(default_for_filter: true).pluck(:id)
+      filter_end_year: Date.current.year,
+      filter_end_month: Date.current.month,
+      filter_tag_ids: Tag.where(default_for_filter: true).pluck(:id),
+      actual_id: TimeRangeType.actual_type.id
     }
   end
 end

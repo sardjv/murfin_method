@@ -1,5 +1,6 @@
 describe UserStatsPresenter, freeze: Time.zone.local(2020, 10, 30, 17, 59, 59) do
   subject { UserStatsPresenter.new(args) }
+
   let(:args) do
     { user: user,
       filter_start_date: filter_start_date,
@@ -7,8 +8,8 @@ describe UserStatsPresenter, freeze: Time.zone.local(2020, 10, 30, 17, 59, 59) d
   end
 
   let(:user) { create(:user) }
-  let(:filter_start_date) { (1.year.ago + 1.day).beginning_of_day }
-  let(:filter_end_date) { Time.current.end_of_day }
+  let(:filter_start_date) { (1.year.ago + 1.day).to_date }
+  let(:filter_end_date) { Date.current }
 
   context 'when user has no time range values' do
     describe 'average_weekly_planned' do
