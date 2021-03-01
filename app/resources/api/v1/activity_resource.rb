@@ -2,7 +2,7 @@ class Api::V1::ActivityResource < JSONAPI::Resource
   model_name 'Activity'
   immutable
 
-  attributes :plan_id, :minutes_per_week
+  attributes :plan_id, :minutes_per_week, :tag_ids
 
   # disable self_link within resource
   # gets rid of the warning: self_link for Api::V1::ActivityResource could not be generated

@@ -15,7 +15,7 @@ describe Api::V1::PlanResource, type: :request, swagger_doc: 'v1/swagger.json' d
       parameter name: 'page[size]', in: :query, type: :integer, required: false
       parameter name: 'page[number]', in: :query, type: :integer, required: false
       parameter name: 'filter[user_id]', in: :query, type: :integer, required: false
-      parameter name: 'include', in: :query, type: :string, required: false
+      parameter name: 'include', in: :query, type: :string, required: false, example: 'activities'
 
       let(:include) { '' }
 
