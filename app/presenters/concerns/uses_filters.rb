@@ -38,7 +38,7 @@ module UsesFilters
       filter_start_year: query['filter_start_year'] || query['filter_start_time(1i)'],
       filter_end_month: query['filter_end_month'] || query['filter_end_time(2i)'],
       filter_end_year: query['filter_end_year'] || query['filter_end_time(1i)']
-    }.update { |_k, v| }.to_i
+    }.update { |_k, v| v.to_i }
 
     query_params[:filter_tag_ids] = query['filter_tag_ids'].reject(&:empty?).map(&:to_i) if query['filter_tag_ids'].present?
 
