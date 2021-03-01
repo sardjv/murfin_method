@@ -12,8 +12,6 @@ class DashboardPresenter
     @params = defaults
               .merge(args[:params].to_hash.symbolize_keys)
               .merge(query_params)
-
-    # pp '--------------- params  DashboardPresenter ', @params
   end
 
   def paginated_users
