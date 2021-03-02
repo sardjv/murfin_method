@@ -60,6 +60,8 @@ jobs:
                               $TEST_FILES
       - store_test_results:
           path: /tmp/test-results/rspec
+      - store_artifacts:
+          path: coverage
 workflows:
   version: 2
   checks:
