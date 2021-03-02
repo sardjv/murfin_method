@@ -103,11 +103,10 @@ en:
         members_under_delivered_percent: Members under 80%
         members_with_job_plan: Members with job plan
   team_individuals:
-    dashboard:
-      boxes:
-        average_planned_per_week: Average planned per week
-        average_worked_per_week: Average actual per week
-        average_percentage_per_week: Average percentage per week
+    average_planned_per_week: Average planned per week
+    average_worked_per_week: Average actual per week
+    average_percentage_per_week: Average percentage per week
+    status: Status
   prompts:
     none: None
   nav:

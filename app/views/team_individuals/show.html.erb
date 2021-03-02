@@ -1,5 +1,5 @@
 <div class='container my-4'>
-  <%= link_to '< Back to team', dashboard_team_path(@user_group_team) %>
+  <%= link_to '< Back to team', dashboard_team_path(@presenter.user_group_team) %>
   <%= render 'info' %>
   <%= render 'tabs' %>
   <%= render 'shared/filters' %>
@@ -22,7 +22,7 @@
               &nbsp;
             <% end %>
           </div>
-          <canvas id='line-graph' data-user-id="<%= @user.id -%>"></canvas>
+          <canvas id='line-graph' data-user-id="<%= @presenter.user.id -%>"></canvas>
         </div>
       </div>
     </div>

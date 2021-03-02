@@ -5,10 +5,10 @@
       locals: {
         tabs: [
           {
-            label: I18n.t('nav.tabs.summary', team_name: @user_group_team.name), path: team_individual_path(@user_group_team, @user)
+            label: I18n.t('nav.tabs.summary', team_name: @presenter.user_group_team.name), path: team_individual_path(@presenter.user_group_team, @presenter.user)
           },
           {
-            label: I18n.t('nav.tabs.data'), path: data_team_individual_path(@user_group_team, @user)
+            label: I18n.t('nav.tabs.data'), path: data_team_individual_path(@presenter.user_group_team, @presenter.user)
           }
         ]
       }

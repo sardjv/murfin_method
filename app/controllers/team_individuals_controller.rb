@@ -1,7 +1,4 @@
 class TeamIndividualsController < ApplicationController
-  before_action :find_team
-  before_action :find_user
-  before_action :find_user_groups
   before_action :initialize_presenter
 
   def show
@@ -18,23 +15,9 @@ class TeamIndividualsController < ApplicationController
     end
   end
 
-  def data
-    @weekly_data = @presenter.time_ranges_weekly_data # TODO: .page(params[:page])
-  end
+  def data; end
 
   private
-
-  def find_team
-    @user_group_team = UserGroup.find(params[:team_id])
-  end
-
-  def find_user
-    @user = @user_group_team.users.find(params[:id])
-  end
-
-  def find_user_groups
-    @user_groups = @user.user_groups.where.not(id: @user_group_team.id)
-  end
 
   def initialize_presenter
     @presenter = TeamIndividualPresenter.new(params: team_individual_params.merge(time_scope: params[:time_scope]))

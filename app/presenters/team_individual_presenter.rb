@@ -3,6 +3,8 @@
 require 'concerns/uses_filters'
 
 class TeamIndividualPresenter
+  attr_reader :user, :user_group_team, :user_groups
+
   include UsesFilters
 
   def initialize(args)
@@ -13,8 +15,9 @@ class TeamIndividualPresenter
               .merge(args[:params].to_hash.symbolize_keys)
               .merge(query_params)
 
-    @team = UserGroup.find(@params[:team_id])
-    @user = @team.users.find(@params[:id])
+    @user_group_team = UserGroup.find(@params[:team_id])
+    @user = @user_group_team.users.find(@params[:id])
+    @user_groups = @user.user_groups.where.not(id: @user_group_team.id)
   end
 
   def team_individual_data

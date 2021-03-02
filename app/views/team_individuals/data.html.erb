@@ -1,5 +1,5 @@
 <div class='container my-4'>
-  <%= link_to '< Back to team', dashboard_team_path(@user_group_team) %>
+  <%= link_to '< Back to team', dashboard_team_path(@presenter.user_group_team) %>
   <%= render 'info' %>
   <%= render 'tabs' %>
   <%= render 'shared/filters' %>
@@ -26,7 +26,7 @@
                 </tr>
               </thead>
               <tbody>
-                <% @weekly_data.each_pair do |week, data| %>
+                <% @presenter.time_ranges_weekly_data.each_pair do |week, data| %>
                   <tr>
                     <td>
                       <%= date_range_humanized week %>

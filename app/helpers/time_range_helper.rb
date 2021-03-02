@@ -4,6 +4,7 @@ module TimeRangeHelper
   end
 
   def duration_in_words(value, format = :long)
+    value ||= 0
     hours = (value / 60).floor
     minutes = (value % 60).round
     if minutes == 60 # it may rarely happen when rounding
