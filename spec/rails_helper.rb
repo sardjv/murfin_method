@@ -73,6 +73,8 @@ RSpec.configure do |config|
     DatabaseCleaner.cleaning do
       example.run
     end
+    Faker::Name.unique.clear
+    Faker::Company.unique.clear
   end
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
