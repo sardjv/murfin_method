@@ -39,9 +39,9 @@ describe 'Team Individuals', type: :feature, js: true, freeze: Time.zone.local(2
       within '.table' do
         within 'thead' do
           expect(page).to have_text 'Plan'
-          expect(page).to have_text 'Avarage Planed Per Week'
-          expect(page).to have_text 'Avarage Actual Per Week'
-          expect(page).to have_text 'Avarage Percentage Per Week'
+          expect(page).to have_text 'Average Planed Per Week'
+          expect(page).to have_text 'Average Actual Per Week'
+          expect(page).to have_text 'Average Percentage Per Week'
           expect(page).to have_text 'Status'
         end
 
