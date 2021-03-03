@@ -7,7 +7,7 @@
   <div class='row'>
     <div class='col-12'>
       <div class='card my-4'>
-        <div class='card-body'>
+        <div class='card-body' id="team-individual-chart-container">
           <div class="mb-4 float-left">
             <% @presenter.team_stats_presenter.graph_kind_options.each do |key| %>
               <%= radio_button_tag 'graph_kind', key, **(@presenter.team_stats_presenter.graph_kind == key ? { checked: 'checked' } : {}) %>

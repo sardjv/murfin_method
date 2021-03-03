@@ -7,7 +7,7 @@ class TeamIndividualPresenter
 
   include UsesFilters
 
-  def initialize(args)
+  def initialize(args) # rubocop:disable Metrics/AbcSize
     query = args[:params].delete(:query)
     query_params = prepare_query_params(query)
 

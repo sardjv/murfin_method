@@ -27,17 +27,17 @@
               </thead>
               <tbody>
                 <% @presenter.time_ranges_weekly_data.each_pair do |week, data| %>
-                  <tr>
-                    <td>
+                  <tr data-week-start-date=<%= week.begin.to_s(:db) -%>>
+                    <td class="team-individual-table-week">
                       <%= date_range_humanized week %>
                     </td>
-                    <td>
+                    <td class="team-individual-table-planned-minutes">
                       <%= duration_in_words data[:planned_minutes], :short %>
                     </td>
-                    <td>
+                    <td class="team-individual-table-actual-minutes">
                       <%= duration_in_words data[:actual_minutes], :short %>
                     </td>
-                    <td>
+                    <td class="team-individual-table-percentage">
                       <%= data[:planned_minutes] > 0 ? "#{data[:percentage]}%" : icon('question-circle') %>
                     </td>
                   </tr>
