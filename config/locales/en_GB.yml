@@ -106,6 +106,7 @@ en:
     average_planned_per_week: Average planned per week
     average_worked_per_week: Average actual per week
     average_percentage_per_week: Average percentage per week
+    plan: Plan
     status: Status
   prompts:
     none: None
