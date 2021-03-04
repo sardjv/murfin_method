@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Team Individual Data', type: :feature, js: true, freeze: Time.zone.local(2021, 2, 28, 15, 30, 00) do
+describe 'Team Individual Data', type: :feature, js: true, freeze: Time.zone.local(2021, 2, 28, 15, 30, 0) do
   let(:actual_id) { TimeRangeType.actual_type.id }
 
   let(:manager) { create :user }
