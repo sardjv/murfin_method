@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TeamStatsPresenter
   attr_accessor :filter_start_time, :filter_end_time, :filter_tag_ids, :graph_kind, :time_scope, :plan_id, :plan, :actual_id, :actual, :user_ids
 
@@ -14,8 +16,8 @@ class TeamStatsPresenter
     @actual_id = args[:actual_id]
     @filter_tag_ids = args[:filter_tag_ids]
     @filter_start_date = args[:filter_start_date]
-    @filter_start_time = @filter_start_date.to_time.in_time_zone.beginning_of_day
     @filter_end_date = args[:filter_end_date]
+    @filter_start_time = @filter_start_date.to_time.in_time_zone.beginning_of_day
     @filter_end_time = @filter_end_date.to_time.in_time_zone.end_of_day
     @graph_kind = args[:graph_kind] || GRAPH_KINDS.first
     @time_scope = args[:time_scope] || TIME_SCOPES.first
@@ -101,7 +103,7 @@ class TeamStatsPresenter
         filter_tag_ids: @filter_tag_ids
       ).percentage_delivered
 
-      count += 1 if pd.is_a?(Numeric) && pd < 80
+      count += 1 if pd.is_a?(Numeric) && pd < UserStatsPresenter::OK_MIN_PERCENTAGE
     end
 
     count
@@ -113,6 +115,27 @@ class TeamStatsPresenter
 
   def graph_kind_options
     self.class::GRAPH_KINDS
+  end
+
+  # Indexes hit:
+  # 1 user: index_time_ranges_on_user_id
+  # Up to 50% of users: index_time_range_team_stats
+  # >50% of users: index_time_ranges_on_time_range_type_id
+  def actual_time_ranges
+    scope = TimeRange.select(:time_range_type_id, :user_id, :start_time, :end_time, :value, :updated_at)
+                     .where(time_range_type_id: @actual_id, user_id: @user_ids)
+
+    scope = scope.joins(:tags).where(tags: { id: @filter_tag_ids }) if @filter_tag_ids.present?
+
+    scope.where('start_time BETWEEN ? AND ?', @filter_start_time, @filter_end_time).or(
+      scope.where('end_time BETWEEN ? AND ?', @filter_start_time, @filter_end_time)
+    ).or(
+      scope.where('start_time <= ? AND end_time >= ?', @filter_start_time, @filter_end_time)
+    ).distinct # .to_a
+  end
+
+  def weeks
+    @weeks ||= weeks_between(from: @filter_start_time, to: @filter_end_time)
   end
 
   private
@@ -143,11 +166,14 @@ class TeamStatsPresenter
   end
 
   def plan_time_ranges
-    Activity.joins(:plan, :tags)
-            .where(plans: { user_id: @user_ids }, tags: { id: @filter_tag_ids })
-            .distinct
-            .preload(:plan, :tags)
-            .flat_map(&:to_time_ranges)
+    scope = Activity.joins(:plan)
+                    .where(plans: { user_id: @user_ids })
+                    .distinct
+                    .preload(:plan)
+
+    scope = scope.joins(:tags).where(tags: { id: @filter_tag_ids }).preload(:tags) if @filter_tag_ids.present?
+
+    scope.flat_map(&:to_time_ranges)
   end
 
   def weekly_averages_per_month(time_ranges:)
@@ -239,29 +265,8 @@ class TeamStatsPresenter
     @notes
   end
 
-  # Indexes hit:
-  # 1 user: index_time_ranges_on_user_id
-  # Up to 50% of users: index_time_range_team_stats
-  # >50% of users: index_time_ranges_on_time_range_type_id
-  def actual_time_ranges
-    scope = TimeRange.select(:time_range_type_id, :user_id, :start_time, :end_time, :value)
-                     .where(time_range_type_id: @actual_id, user_id: @user_ids)
-                     .joins(:tags)
-                     .where(tags: { id: @filter_tag_ids })
-
-    scope.where('start_time BETWEEN ? AND ?', @filter_start_time, @filter_end_time).or(
-      scope.where('end_time BETWEEN ? AND ?', @filter_start_time, @filter_end_time)
-    ).or(
-      scope.where('start_time <= ? AND end_time >= ?', @filter_start_time, @filter_end_time)
-    ).distinct.to_a
-  end
-
   def months
     @months ||= months_between(from: @filter_start_time, to: @filter_end_time)
-  end
-
-  def weeks
-    @weeks ||= weeks_between(from: @filter_start_time, to: @filter_end_time)
   end
 
   def months_between(from:, to:)

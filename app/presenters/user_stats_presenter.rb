@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class UserStatsPresenter
-  attr_accessor :user, :filter_start_time, :filter_end_time, :filter_tag_ids, :plan_id, :actual_id
+  attr_accessor :user, :filter_start_time, :filter_end_time, :filter_tag_ids, :actual_id
 
   OVER_MIN_PERCENTAGE = 120
   OK_MIN_PERCENTAGE = 80
@@ -30,7 +32,7 @@ class UserStatsPresenter
   def percentage_delivered
     return nil if no_planned_data? || no_actual_data?
 
-    percentage(total(actual_time_ranges), total(planned_time_ranges))
+    Numeric.percentage_rounded(total(actual_time_ranges), total(planned_time_ranges))
   end
 
   def status
@@ -48,12 +50,33 @@ class UserStatsPresenter
     I18n.t('status.really_under')
   end
 
+  def actual_time_ranges
+    return @cache[:actual_time_ranges] if @cache[:actual_time_ranges].present?
+
+    @cache[:actual_time_ranges] = calculate_actual_time_ranges
+  end
+
+  def planned_time_ranges
+    return @cache[:planned_time_ranges] if @cache[:planned_time_ranges].present?
+
+    @cache[:planned_time_ranges] = calculate_planned_time_ranges
+  end
+
+  def total(time_ranges)
+    time_ranges.sum do |t|
+      t.segment_value(
+        segment_start: filter_start_time,
+        segment_end: filter_end_time
+      )
+    end
+  end
+
   private
 
   def defaults
     {
-      filter_start_date: (1.year.ago + 1.day).beginning_of_day,
-      filter_end_date: Time.zone.today.end_of_day,
+      filter_start_date: (1.year.ago + 1.day).to_date,
+      filter_end_date: Date.current,
       actual_id: TimeRangeType.actual_type.id,
       filter_tag_ids: Tag.where(default_for_filter: true).pluck(:id)
     }
@@ -67,36 +90,8 @@ class UserStatsPresenter
     result.round(1)
   end
 
-  def total(time_ranges)
-    time_ranges.sum do |t|
-      t.segment_value(
-        segment_start: filter_start_time,
-        segment_end: filter_end_time
-      )
-    end
-  end
-
-  def actual_time_ranges
-    return @cache[:actual_time_ranges] if @cache[:actual_time_ranges].present?
-
-    @cache[:actual_time_ranges] = calculate_actual_time_ranges
-  end
-
-  def planned_time_ranges
-    return @cache[:planned_time_ranges] if @cache[:planned_time_ranges].present?
-
-    @cache[:planned_time_ranges] = calculate_planned_time_ranges
-  end
-
   def number_of_weeks
     (filter_end_time - filter_start_time) / 1.week
-  end
-
-  def percentage(numerator, denominator)
-    result = ((numerator.to_f / denominator) * 100)
-    return 0 if result.nan? || result.infinite?
-
-    result.round(0)
   end
 
   def no_planned_data?

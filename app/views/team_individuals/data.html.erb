@@ -1,0 +1,53 @@
+<div class='container my-4'>
+  <%= link_to '< Back to team', dashboard_team_path(@presenter.user_group_team) %>
+  <%= render 'info' %>
+  <%= render 'tabs' %>
+  <%= render 'shared/filters' %>
+  <%= render 'boxes' %>
+
+  <div class='row'>
+    <div class='col-12'>
+      <div class='card my-4'>
+        <div class='card-body'>
+          <div class='table-responsive'>
+            <table class='table table-bordered'>
+              <thead>
+                <tr>
+                  <th>
+                    <%= TimeRange.human_attribute_name('week') %>
+                  </th>
+                  <th>
+                    <%= TimeRange.human_attribute_name('plan') %>
+                  </th>
+                  <th>RiO Data</th>
+                  <th>
+                    <%= TimeRange.human_attribute_name('percentage') %>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @presenter.time_ranges_weekly_data.each_pair do |week, data| %>
+                  <tr data-week-start-date=<%= week.begin.to_s(:db) -%>>
+                    <td class="team-individual-table-week">
+                      <%= date_range_humanized week %>
+                    </td>
+                    <td class="team-individual-table-planned-minutes">
+                      <%= duration_in_words data[:planned_minutes], :short %>
+                    </td>
+                    <td class="team-individual-table-actual-minutes">
+                      <%= duration_in_words data[:actual_minutes], :short %>
+                    </td>
+                    <td class="team-individual-table-percentage">
+                      <%= data[:planned_minutes] > 0 ? "#{data[:percentage]}%" : icon('question-circle') %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          <%#= paginate @weekly_data %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

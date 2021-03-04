@@ -35,14 +35,20 @@ describe 'Team Individuals', type: :feature, js: true, freeze: Time.zone.local(2
 
     it 'has table with planned and actual data' do
       expect(page).to have_text 'Percentage delivered against job plan'
-      within('.table') do
-        expect(page).to have_text Plan.human_attribute_name('name')
+
+      within '.table' do
+        within 'thead' do
+          expect(page).to have_text 'Plan'
+          expect(page).to have_text 'Average planned per week'
+          expect(page).to have_text 'Average actual per week'
+          expect(page).to have_text 'Average percentage per week'
+          expect(page).to have_text 'Status'
+        end
+
+        expect(page).to have_text user.name
         expect(page).to have_text '4 minutes'
-        expect(page).to have_text TimeRangeType.actual_type.name
         expect(page).to have_text '2 minutes'
-        expect(page).to have_text 'Percentage delivered'
         expect(page).to have_text '50%'
-        expect(page).to have_text 'Status'
         expect(page).to have_text 'Under'
       end
     end
@@ -127,7 +133,6 @@ describe 'Team Individuals', type: :feature, js: true, freeze: Time.zone.local(2
     describe 'pagination' do
       it 'puts user #11 on the next page' do
         within('.table') do
-          expect(page).to have_text Plan.human_attribute_name('name')
           expect(page).not_to have_text users.last.name
         end
         click_on 'Next'

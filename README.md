@@ -94,7 +94,7 @@ docker-compose run app bundle exec guard
 
 Just press enter to run the whole test suite straight away.
 
-To view and interact with a visible Chrome browser in feature tests, uncomment this line in `rail_helper.rb`:
+To view and interact with a visible Chrome browser in feature tests, uncomment this line in `rails_helper.rb`:
 
 ```
 c.javascript_driver = :chrome_visible
@@ -107,6 +107,12 @@ open vnc://0.0.0.0:5900
 ```
 
 The password is 'secret'. Run a feature spec with that window open and you should see the test running.
+
+_Note: feature specs should be run from app shell, so connect first:_
+
+```
+docker exec -it murfin_method_app_1 sh
+```
 
 ## Code Coverage
 

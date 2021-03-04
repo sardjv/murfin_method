@@ -1,0 +1,2 @@
+<h6><%= @presenter.user.name %></h6>
+<div id="team-individual-user-groups"><%= ([@presenter.user_group_team.name] + @presenter.user_groups.pluck(:name)).join(" • ") -%></div>

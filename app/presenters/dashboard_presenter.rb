@@ -1,14 +1,17 @@
-class DashboardPresenter
-  def initialize(args) # rubocop:disable Metrics/AbcSize
-    args[:params] = defaults.merge(args[:params].to_hash.symbolize_keys)
-    @params = args[:params]
-    return if args[:params][:query].blank?
+# frozen_string_literal: true
 
-    @params[:filter_start_month] = args[:params][:query]['filter_start_time(2i)'].to_i
-    @params[:filter_start_year] = args[:params][:query]['filter_start_time(1i)'].to_i
-    @params[:filter_end_month] = args[:params][:query]['filter_end_time(2i)'].to_i
-    @params[:filter_end_year] = args[:params][:query]['filter_end_time(1i)'].to_i
-    @params[:filter_tag_ids] = args[:params][:query]['filter_tag_ids'].reject(&:empty?).map(&:to_i)
+require 'concerns/uses_filters'
+
+class DashboardPresenter
+  include UsesFilters
+
+  def initialize(args)
+    query = args[:params].delete(:query)
+    query_params = prepare_query_params(query)
+
+    @params = defaults
+              .merge(args[:params].to_hash.symbolize_keys)
+              .merge(query_params)
   end
 
   def paginated_users
@@ -110,37 +113,13 @@ class DashboardPresenter
   def defaults
     {
       user_ids: User.ids,
-      actual_id: TimeRangeType.actual_type.try(:id),
-      filter_start_year: 1.year.ago.year,
-      filter_start_month: 1.year.ago.month,
-      filter_end_year: Time.zone.today.year,
-      filter_end_month: Time.zone.today.month,
-      filter_tag_ids: Tag.where(default_for_filter: true).pluck(:id)
-    }
+      actual_id: TimeRangeType.actual_type.try(:id)
+    }.merge(filters_defaults)
   end
 
   def admin_x_axis
     (5..10).map do |month|
       Time.zone.local(2020, month, 1).strftime(I18n.t('time.formats.iso8601_utc'))
     end
-  end
-
-  def filter_start_date
-    return unless @params[:filter_start_year] && @params[:filter_start_month]
-
-    Date.new(@params[:filter_start_year].to_i, @params[:filter_start_month].to_i).beginning_of_month
-  end
-
-  def filter_end_date
-    return unless @params[:filter_end_year] && @params[:filter_end_month]
-
-    Date.new(@params[:filter_end_year].to_i, @params[:filter_end_month].to_i).end_of_month
-  end
-
-  def filter_tag_ids
-    return [] if @params[:filter_tag_ids].blank?
-    return @params[:filter_tag_ids]&.split(',') if @params[:filter_tag_ids].is_a? String
-
-    @params[:filter_tag_ids]
   end
 end

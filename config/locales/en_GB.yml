@@ -102,6 +102,12 @@ en:
         average_delivery_percent: Average delivery
         members_under_delivered_percent: Members under 80%
         members_with_job_plan: Members with job plan
+  team_individuals:
+    average_planned_per_week: Average planned per week
+    average_actual_per_week: Average actual per week
+    average_percentage_per_week: Average percentage per week
+    plan: Plan
+    status: Status
   prompts:
     none: None
   nav:
@@ -112,6 +118,7 @@ en:
       admin_group_types: Groups
       admin_users: Users
       combined_data: Combined data
+      data: Data
       individuals: Individuals
       plans: Job Plans
       summary: Summary

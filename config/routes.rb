@@ -37,8 +37,11 @@ Rails.application.routes.draw do
 
   resources :teams, only: %i[dashboard individuals plans] do
     get :dashboard, on: :member
-    get :individuals, on: :member
     get :plans, on: :member
+    resources :individuals, only: :show, controller: 'team_individuals' do
+      get :data, on: :member
+    end
+    get :individuals, on: :member
   end
 
   namespace :admin do

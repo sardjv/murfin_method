@@ -5,6 +5,7 @@ import * as SCSSColours from '!!sass-variable-loader!../stylesheets/variables/co
 import { Note } from './note'
 import minutesHumanized from '../shared/minutes_humanized'
 import { format, addDays } from 'date-fns'
+import { pickBy } from 'lodash'
 
 window.addEventListener('turbolinks:load', () => {
   const graphKindSelector = "input:radio[name='graph_kind']"
@@ -30,8 +31,6 @@ window.addEventListener('turbolinks:load', () => {
     }
   })
 
-  $('select.filter').on('change', () => { drawGraph(graphKind, timeScope) })
-
   drawGraph(graphKind, timeScope)
 });
 
@@ -39,24 +38,13 @@ function drawGraph(graph_kind, time_scope) {
   const context = document.getElementById('line-graph')
 
   if (context) {
-    const startYear = parseInt($('#line_graph_filter_start_time_1i').val())
-    const startMonth = parseInt($('#line_graph_filter_start_time_2i').val())
-    const endYear = parseInt($('#line_graph_filter_end_time_1i').val())
-    const endMonth = parseInt($('#line_graph_filter_end_time_2i').val())
-    const tagIds = $('#line_graph_tags').val()
+    const query_params = prepareQueryParamsFromFilters()
+    const url_params = { query: query_params, graph_kind: graph_kind, time_scope: time_scope }
 
     Rails.ajax({
       url: API.url(),
       type: 'GET',
-      data: new URLSearchParams({
-        'filter_start_month': startMonth,
-        'filter_start_year': startYear,
-        'filter_end_month': endMonth,
-        'filter_end_year': endYear,
-        'filter_tag_ids': tagIds,
-        'graph_kind': graph_kind,
-        'time_scope': time_scope
-      }).toString(),
+      data: $.param(url_params).toString(),
       dataType: 'json',
       success: function(data) {
         if (global.chart) { global.chart.destroy() };
@@ -72,6 +60,21 @@ function drawGraph(graph_kind, time_scope) {
       }
     });
   }
+}
+
+function prepareQueryParamsFromFilters() {
+  const filtersFormSelector = 'form#filters-form'
+
+  let params = {
+    filter_start_year: parseInt($(`${filtersFormSelector} #query_filter_start_time_1i`).val()),
+    filter_start_month: parseInt($(`${filtersFormSelector} #query_filter_start_time_2i`).val()),
+    filter_end_year: parseInt($(`${filtersFormSelector} #query_filter_end_time_1i`).val()),
+    filter_end_month: parseInt($(`${filtersFormSelector} #query_filter_end_time_2i`).val()),
+    filter_tag_ids: $(`${filtersFormSelector} #query_filter_tag_ids`).val()
+  }
+
+  params = pickBy(params, v => v !== undefined ) // use loadash' pickBy remove keys where value is undefined
+  return params
 }
 
 function getColour(number) {

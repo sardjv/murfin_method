@@ -3,59 +3,67 @@
     <p>
       <%= I18n.t('graph.showing_users', count: @presenter.paginated_users.count) %>
     </p>
-    <div class='table-responsive'>
+    <div class='table-responsive' id="team-individuals-table">
       <table class='table table-bordered'>
         <thead>
           <tr>
             <th>
-              <%= User.human_attribute_name('name') %>
+              <%= t('team_individuals.plan') %>
             </th>
             <th>
-              <%= Plan.model_name.human %>
+              <%= t('team_individuals.average_planned_per_week') %>
             </th>
             <th>
-              <%= TimeRangeType.actual_type.name %>
+              <%= t('team_individuals.average_actual_per_week') %>
             </th>
             <th>
-              <%= User.human_attribute_name('percentage_delivered') %>
+              <%= t('team_individuals.average_percentage_per_week') %>
             </th>
             <th>
-              <%= User.human_attribute_name('status') %>
+              <%= t('team_individuals.status') %>
             </th>
+            <th style='width: 50px;'></th>
           </tr>
         </thead>
         <tbody>
           <% @presenter.paginated_users.each do |user| %>
-            <% user_presenter = @presenter.user_stats_presenter(user) %>
-            <tr>
-              <td>
-                <%= user.name %>
-              </td>
-              <td>
-                <% if user_presenter.average_weekly_planned.nil? %>
-                  <%= icon('question-circle') %>
-                <% else %>
-                  <%= duration_in_words(user_presenter.average_weekly_planned) %>
-                <% end %>
-              </td>
-              <td>
-                <% if user_presenter.average_weekly_actual.nil? %>
-                  <%= icon('question-circle') %>
-                <% else %>
-                  <%= duration_in_words(user_presenter.average_weekly_actual) %>
-                <% end %>
-              </td>
-              <td>
-                <% if user_presenter.percentage_delivered.nil? %>
-                  <%= icon('question-circle') %>
-                <% else %>
-                  <%= user_presenter.percentage_delivered%>%
-                <% end %>
-              </td>
-              <td class="<%= user_presenter.status.parameterize %>">
-                <%= user_presenter.status%>
-              </td>
-            </tr>
+            <%# cache user do %>
+              <% user_presenter = @presenter.user_stats_presenter(user) %>
+              <tr data-user-id="<%= user.id -%>">
+                <td>
+                  <%= user.name %>
+                </td>
+                <td>
+                  <% if user_presenter.average_weekly_planned.nil? %>
+                    <%= icon('question-circle') %>
+                  <% else %>
+                    <%= duration_in_words(user_presenter.average_weekly_planned) %>
+                  <% end %>
+                </td>
+                <td>
+                  <% if user_presenter.average_weekly_actual.nil? %>
+                    <%= icon('question-circle') %>
+                  <% else %>
+                    <%= duration_in_words(user_presenter.average_weekly_actual) %>
+                  <% end %>
+                </td>
+                <td>
+                  <% if user_presenter.percentage_delivered.nil? %>
+                    <%= icon('question-circle') %>
+                  <% else %>
+                    <%= user_presenter.percentage_delivered%>%
+                  <% end %>
+                </td>
+                <td class="<%= user_presenter.status.parameterize %>">
+                  <%= user_presenter.status%>
+                </td>
+                <td>
+                  <%= link_to team_individual_path(@user_group, user), title: 'Individual Summary', class: 'btn btn-link' do %>
+                    <%= icon('eye') %>
+                  <% end %>
+                </td>
+              </tr>
+            <%#end %>
           <% end %>
         </tbody>
       </table>

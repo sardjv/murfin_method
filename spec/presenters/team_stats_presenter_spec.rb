@@ -17,8 +17,8 @@ describe TeamStatsPresenter, freeze: Time.zone.local(2020, 6, 26, 14, 59, 59) do
 
   let(:users) { create_list(:user, 10) }
 
-  let(:filter_start_date) { Time.zone.today - 1.year }
-  let(:filter_end_date) { Time.zone.today }
+  let(:filter_start_date) { Date.current - 1.year }
+  let(:filter_end_date) { Date.current }
   let(:filter_tag_ids) { [tag1, tag2, tag3].map(&:id) }
 
   let(:tag1) { create(:tag) }
@@ -58,9 +58,9 @@ describe TeamStatsPresenter, freeze: Time.zone.local(2020, 6, 26, 14, 59, 59) do
       end
     end
 
-    let(:tag_ids) { [tag1.id, tag2.id] }
-
     context 'when users have plans and actuals' do
+      let(:tag_ids) { [tag1.id, tag2.id] }
+
       let!(:planned_activity) do
         users.each do |user|
           create(:plan,
@@ -113,10 +113,10 @@ describe TeamStatsPresenter, freeze: Time.zone.local(2020, 6, 26, 14, 59, 59) do
             )
           end
 
-          context 'when tag not included' do
-            let(:filter_tag_ids) { nil }
+          context 'not related tags included' do
+            let(:filter_tag_ids) { [1001, 1002] }
 
-            it "returns 0s for all row' values" do
+            it "returns 0s for all rows' values" do
               expect(subject.average_weekly_planned_per_month.pluck(:value).uniq).to eq [0]
             end
           end
@@ -144,10 +144,10 @@ describe TeamStatsPresenter, freeze: Time.zone.local(2020, 6, 26, 14, 59, 59) do
             )
           end
 
-          context 'when tag not included' do
-            let(:filter_tag_ids) { nil }
+          context 'not related tags included' do
+            let(:filter_tag_ids) { [1001, 1002] }
 
-            it "returns 0s for all row' values" do
+            it "returns 0s for all rows' values" do
               expect(subject.average_weekly_actual_per_month.pluck(:value).uniq).to eq [0]
             end
           end
@@ -194,7 +194,7 @@ describe TeamStatsPresenter, freeze: Time.zone.local(2020, 6, 26, 14, 59, 59) do
         describe 'members_under_delivered_percent' do
           let!(:last_user_long_activity) do
             create(:time_range,
-                   user_id: users.last.id,
+                   user_id: users[3].id,
                    time_range_type_id: TimeRangeType.actual_type.id,
                    start_time: 4.days.ago.beginning_of_day,
                    end_time: 1.day.ago.end_of_day,
@@ -324,10 +324,10 @@ describe TeamStatsPresenter, freeze: Time.zone.local(2020, 6, 26, 14, 59, 59) do
             )
           end
 
-          context 'when tag not included' do
-            let(:filter_tag_ids) { nil }
+          context 'not related tags included' do
+            let(:filter_tag_ids) { [1001, 1002] }
 
-            it "returns 0s for all row' values" do
+            it "returns 0s for all rows' values" do
               expect(subject.average_weekly_planned_per_week.pluck(:value).uniq).to eq [0]
             end
           end
@@ -407,7 +407,7 @@ describe TeamStatsPresenter, freeze: Time.zone.local(2020, 6, 26, 14, 59, 59) do
                    value: 2 * 24 * 60)
           end
 
-          it 'returns number of users' do
+          it 'returns number of users under delivered percent' do
             expect(subject.members_under_delivered_percent).to eql(users.count - 1)
           end
         end
