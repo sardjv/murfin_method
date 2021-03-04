@@ -41,6 +41,12 @@ Stop containers and remove them:
 docker-compose down --remove-orphans
 ```
 
+Remove all stopped containers, networks not used by at least one container, dangling images and dangling build cache
+
+```
+docker system prune
+```
+
 ## Logging in
 
 Auth0 or Devise can be used for login. For Auth0, you need to add your client ID and secret to the env file in the Auth0 section.
