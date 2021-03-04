@@ -58,11 +58,11 @@ en:
         - RIO sessions
   footer:
     api_docs: API Docs
+  filters:
+    end_time: End
+    start_time: Start
+    tags: Tags
   graph:
-    filter:
-      end_time: End
-      start_time: Start
-      tags: Tags
     title:
       admin: Percentage delivered against job plan
       individuals: Percentage delivered against job plan
