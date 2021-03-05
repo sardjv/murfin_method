@@ -7,34 +7,30 @@
 
 <div class='card mb-4'>
   <div class='card-body'>
-    <%= form_for :query, url: url, method: :get, html: { id: 'filters-form' } do |form| %>
+    <%= bootstrap_form_for :query, url: url, method: :get, html: { id: 'filters-form' } do |f| %>
       <div class='form-row'>
-        <div class='form-group col-md-3'>
-          <div><label><%= I18n.t('graph.filter.tags') %></label></div>
-          <div><%= form.select :filter_tag_ids,
-            grouped_options_for_select(tag_options, filter_tag_ids), {},
-            { class: 'filter', multiple: true, 'data-actions-box': true }
-          %></div>
-        </div>
-        <div class='form-group col-md-3'>
-          <div ><label><%= I18n.t('graph.filter.start_time') %></label></div>
-          <div ><%= form.date_select :filter_start_time,
-            { order: %i[month year], default: filter_start_time },
-            class: 'filter'
-          %></div>
-        </div>
-        <div class='form-group col-md-3'>
-          <div><label><%= I18n.t('graph.filter.end_time') %></label></div>
-          <div><%= form.date_select :filter_end_time,
-            { order: %i[month year], default: filter_end_time },
-            class: 'filter'
-          %></div>
-        </div>
+        <%= f.select :filter_tag_ids,
+          grouped_options_for_select(tag_options, filter_tag_ids),
+          { label: t('filters.tags'), wrapper: { class: 'col-md-5' } },
+          { class: 'filter',
+            multiple: true, 'data-actions-box': true, 'data-use-select2': true } %>
 
-        <div class='form-group col-md-3'>
-          <div><label></label></div>
-          <%= form.submit I18n.t('actions.filter'), name: nil, class: 'btn btn-primary mt-2' %>
-        </div>
+        <%= f.date_select :filter_start_time,
+          { label: t('filters.start_time'), wrapper: { class: 'col-md-3' },
+            order: %i[month year], default: filter_start_time },
+          class: 'filter'
+        %>
+
+        <%= f.date_select :filter_end_time,
+          { label: t('filters.end_time'), wrapper: { class: 'col-md-3' },
+            order: %i[month year], default: filter_end_time },
+          class: 'filter' %>
+
+        <%= f.form_group class: 'col-md-1' do %>
+          <div><label>&nbsp;</label></div>
+          <%= f.submit t('actions.filter'), name: nil, class: 'btn btn-primary' %>
+          <div><%= link_to 'Reset', request.path, class: 'small text-muted', title: 'Reset filters' %></div>
+        <% end %>
       </div>
     <% end %>
   </div>

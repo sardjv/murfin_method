@@ -11,6 +11,9 @@ import 'bootstrap-select';
 import '../stylesheets/application'
 import * as _ from 'lodash';
 
+import 'select2'
+import 'select2/dist/css/select2.css'
+
 require.context('../images', true)
 
 // Load all JS on every page here, via this single entry point.
@@ -26,3 +29,4 @@ import '../graphs/bar_chart'
 import '../graphs/line_graph'
 import '../graphs/note'
 import '../shared/minutes_humanized'
+import '../shared/use_select2'

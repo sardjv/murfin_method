@@ -11,15 +11,15 @@ $(document).on('cocoon:after-insert', () => {
 });
 
 function styleSelects() {
-  $('select').not('[multiple="multiple"]').selectpicker({ width: 'fit', liveSearch: true });
-  $('select[multiple="multiple"').selectpicker({ liveSearch: true });
+  $('select').not('[multiple="multiple"]').not('[data-use-select2]').selectpicker({ width: 'fit', liveSearch: true });
+  $('select[multiple="multiple"').not('[data-use-select2]').selectpicker({ liveSearch: true });
   $('.rails-bootstrap-forms-datetime-select').addClass('form-inline');
   $('.rails-bootstrap-forms-date-select').addClass('form-inline');
 
-  $('select.filter-child-select').each((_index, select) => {
+  $('select.filter-child-select').not('[data-use-select2]').each((_index, select) => {
     filterChildSelect(select);
   })
-  $('select.filter-child-select').change(function() {
+  $('select.filter-child-select').not('[data-use-select2]').change(function() {
     filterChildSelect(this);
   });
 }
