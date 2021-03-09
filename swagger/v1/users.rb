@@ -5,7 +5,8 @@ module Swagger
         {
           last_name: { type: 'string', example: 'Smith', 'x-nullable': true },
           first_name: { type: 'string', example: 'John', 'x-nullable': true },
-          email: { type: 'string', example: 'john.smith@example.com', 'x-nullable': false }
+          email: { type: 'string', example: 'john.smith@example.com', 'x-nullable': false },
+          epr_uuid: { type: 'string', example: '435f9dfe-4e89-4b5a-b63e-9095327c3a6b', 'x-nullable': true }
         }
       end
 

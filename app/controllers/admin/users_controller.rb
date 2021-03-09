@@ -53,6 +53,7 @@ class Admin::UsersController < ApplicationController
       :first_name,
       :last_name,
       :email,
+      :epr_uuid,
       :password,
       :password_confirmation,
       :skip_password_validation,

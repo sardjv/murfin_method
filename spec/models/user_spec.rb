@@ -13,6 +13,7 @@
 #  reset_password_token   :string(255)
 #  reset_password_sent_at :datetime
 #  remember_created_at    :datetime
+#  epr_uuid               :string(255)
 #
 describe User, type: :model do
   subject { build(:user) }
@@ -26,4 +27,5 @@ describe User, type: :model do
   it { should validate_presence_of(:email) }
   it { should validate_presence_of(:first_name) }
   it { should validate_presence_of(:last_name) }
+  it { should validate_uniqueness_of(:epr_uuid).allow_blank }
 end

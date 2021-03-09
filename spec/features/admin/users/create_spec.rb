@@ -7,6 +7,7 @@ describe 'Admin creates a user', type: :feature, js: true do
   let(:new_first_name) { Faker::Name.first_name }
   let(:last_name) { Faker::Name.last_name }
   let(:email) { Faker::Internet.email }
+  let(:epr_uuid) { Faker::Internet.uuid }
 
   let(:created_user) { User.find_by(email: email) }
 
@@ -28,6 +29,7 @@ describe 'Admin creates a user', type: :feature, js: true do
       fill_in User.human_attribute_name('first_name'), with: first_name
       fill_in User.human_attribute_name('last_name'), with: last_name
       fill_in User.human_attribute_name('email'), with: email
+      fill_in 'EPR UUID', with: epr_uuid
       click_button I18n.t('actions.save')
 
       expect(page).to have_content(I18n.t('notice.successfully.created', model_name: User.model_name.human))

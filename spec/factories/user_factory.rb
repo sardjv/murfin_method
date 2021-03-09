@@ -13,6 +13,7 @@
 #  reset_password_token   :string(255)
 #  reset_password_sent_at :datetime
 #  remember_created_at    :datetime
+#  epr_uuid               :string(255)
 #
 FactoryBot.define do
   factory :user do
@@ -20,6 +21,7 @@ FactoryBot.define do
     last_name  { Faker::Name.unique.last_name }
     email { Faker::Internet.unique.email }
     skip_password_validation { true }
+    epr_uuid { Faker::Internet.uuid }
   end
 
   factory(:admin, parent: :user) do
