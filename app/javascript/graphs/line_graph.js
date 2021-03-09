@@ -132,7 +132,7 @@ function buildDatasets(datas, options = {}) {
 function line_graph(context, line_graph, options = {}) {
   const originalLabels = line_graph.data[0].map(function(e) {
     return e.name;
-  });
+  })
 
   const formattedLabels = line_graph.data[0].map(function(e) {
     let date = new Date(Date.parse(e.name))
@@ -148,7 +148,7 @@ function line_graph(context, line_graph, options = {}) {
       }
       return label
     } else if (options.time_scope == 'monthly') {
-      return format(date, 'MMM')
+      return format(date, 'MMM yyyy')
     }
   });
 
