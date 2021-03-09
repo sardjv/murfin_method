@@ -59,7 +59,8 @@ en:
   footer:
     api_docs: API Docs
   filters:
-    end_time: End
+    date_range: Dates
+    end_time: End # TODO remvoe both ?
     start_time: Start
     tags: Tags
   graph:

@@ -14,7 +14,7 @@ function styleSelects() {
   $('select').not('[multiple="multiple"]').not('[data-use-select2]').selectpicker({ width: 'fit', liveSearch: true });
   $('select[multiple="multiple"').not('[data-use-select2]').selectpicker({ liveSearch: true });
   $('.rails-bootstrap-forms-datetime-select').addClass('form-inline');
-  $('.rails-bootstrap-forms-date-select').addClass('form-inline');
+  $('.rails-bootstrap-forms-date-select').not('[data-use-litepicker]').addClass('form-inline');
 
   $('select.filter-child-select').not('[data-use-select2]').each((_index, select) => {
     filterChildSelect(select);

@@ -7,7 +7,12 @@ require('@nathanvda/cocoon')
 require("date-fns")
 
 import 'bootstrap'
-import 'bootstrap-select';
+import 'bootstrap-select'
+
+import 'litepicker-polyfills-ie11'
+import Litepicker from 'litepicker'
+import 'litepicker/dist/plugins/ranges'
+
 import '../stylesheets/application'
 import * as _ from 'lodash';
 
@@ -20,6 +25,11 @@ require.context('../images', true)
 // It's possible to do this better, either conditionally, or with separate packs,
 // but there are lots of gotchas for potentially minimal performance gain.
 // Currently on step 1 of this: https://stackoverflow.com/a/59495659/4741698
+
+import '../shared/minutes_humanized'
+import '../shared/use_litepicker'
+import '../shared/use_select2'
+
 import '../graphs/api'
 import '../helpers/bootstrap_duration'
 import '../helpers/bootstrap_helpers'
@@ -28,5 +38,3 @@ import '../graphs/missing_data'
 import '../graphs/bar_chart'
 import '../graphs/line_graph'
 import '../graphs/note'
-import '../shared/minutes_humanized'
-import '../shared/use_select2'
