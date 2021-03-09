@@ -6,7 +6,6 @@ const useLitepicker = () => {
     return false
   }
   const defStartDate = el.getAttribute('data-filter-start-date')
-  //const defStartDate = '2021-01-01'
   const defEndDate = el.getAttribute('data-filter-end-date')
 
   const today = new Date()
@@ -23,13 +22,11 @@ const useLitepicker = () => {
 
   const picker = new Litepicker({
     element: el,
-    //format: 'YYYY-MM-DD',
     format: monthYearFormat,
     startDate: defStartDate,
     endDate: defEndDate,
     numberOfMonths: 2,
     numberOfColumns: 2,
-    //selectForward: true,
     singleMode: false, // Choose a single date instead of a date range.
     scrollToDate: false, // Scroll to start date on open.
     splitView: true, // Enable the previous and the next button for each month.

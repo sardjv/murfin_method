@@ -27,7 +27,7 @@ module UsesFilters
   def filter_date_range
     return unless filter_start_date && filter_end_date
 
-    return "#{filter_start_date} - #{filter_end_date}"
+    "#{filter_start_date} - #{filter_end_date}"
   end
 
   def filter_tag_ids
