@@ -1,12 +1,8 @@
 import { format, toDate, subMonths, startOfMonth, endOfMonth, startOfYear, endOfYear } from 'date-fns'
 
-const useLitepicker = () => {
-  const el = document.getElementById('query_filter_date_range')
-  if(!el) {
-    return false
-  }
-  const defStartDate = el.getAttribute('data-filter-start-date')
-  const defEndDate = el.getAttribute('data-filter-end-date')
+const useLitepicker = (input) => {
+  const defStartDate = input.getAttribute('data-filter-start-date')
+  const defEndDate = input.getAttribute('data-filter-end-date')
 
   const today = new Date()
 
@@ -21,7 +17,7 @@ const useLitepicker = () => {
   const monthYearFormat = 'MMM YYYY'
 
   const picker = new Litepicker({
-    element: el,
+    element: input,
     format: monthYearFormat,
     startDate: defStartDate,
     endDate: defEndDate,
@@ -90,4 +86,10 @@ const useLitepicker = () => {
   })
 }
 
-$(document).on('turbolinks:load', useLitepicker)
+$(document).on('turbolinks:load', () => {
+  const filterDateRangeSelector = '#query_filter_date_range'
+  const el = $(filterDateRangeSelector)
+  if(el.length > 0) {
+    useLitepicker(el[0])
+  }
+})
