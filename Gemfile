@@ -110,7 +110,7 @@ group :development, :test do
 
   # Rails SQL Query Tracker.
   # https://github.com/steventen/sql_tracker
-  gem 'sql_tracker', '~> 1.3.1'
+  gem 'sql_tracker', '~> 1.3.2'
 end
 
 group :development do
@@ -150,7 +150,7 @@ group :test do
 
   # RSpec is a specification library for behaviour driven development.
   # https://github.com/rspec/rspec
-  gem 'rspec-rails', '~> 4.0.2'
+  gem 'rspec-rails', '~> 5.0.0'
 
   # Retry flaky specs to reduce time spent on random failures.
   # https://github.com/noredink/rspec-retry
