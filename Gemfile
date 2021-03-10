@@ -150,7 +150,7 @@ group :test do
 
   # RSpec is a specification library for behaviour driven development.
   # https://github.com/rspec/rspec
-  gem 'rspec-rails', '~> 4.0.2'
+  gem 'rspec-rails', '~> 5.0.0'
 
   # Retry flaky specs to reduce time spent on random failures.
   # https://github.com/noredink/rspec-retry
