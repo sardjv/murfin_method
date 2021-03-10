@@ -60,8 +60,6 @@ en:
     api_docs: API Docs
   filters:
     date_range: Dates
-    end_time: End # TODO remvoe both ?
-    start_time: Start
     tags: Tags
   graph:
     title:

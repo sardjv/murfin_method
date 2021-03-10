@@ -17,7 +17,7 @@
           { #value: @presenter.filter_date_range,
             label: t('filters.date_range'),
             wrapper: { class: 'col-md-3' },
-            class: 'filter', autocomplete: 'off', 'data-use-litepicker': true,
+            class: 'filter', autocomplete: 'off', 'data-use-litepicker': true, readonly: true,
             'data-filter-start-date': @presenter.filter_start_date, 'data-filter-end-date': @presenter.filter_end_date } %>
 
         <%= f.form_group class: 'col-md-1' do %>

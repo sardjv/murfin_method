@@ -28,12 +28,13 @@ const useLitepicker = (input) => {
     splitView: true, // Enable the previous and the next button for each month.
     allowRepick: true,
     autoRefresh: true,
-    autoApply: false,
+    autoApply: true,
     showTooltip: false,
     plugins: ['ranges'],
     dropdowns: { minYear: today.getFullYear() - 10, maxYear: today.getFullYear(), months: true, years: true },
     lockDaysFilter: (day) => {
       const date = day.dateInstance
+
       let month_start = startOfMonth(date)
       let month_end = endOfMonth(date)
 
@@ -50,6 +51,11 @@ const useLitepicker = (input) => {
       autoApply: true
     },
     setup: (picker) => {
+      picker.on('show', () => { // TODO hack to fix end date selection, remove when Litepicker fixed version released
+        picker.gotoDate(picker.options.startDate, 0)
+        picker.gotoDate(picker.options.endDate, 1)
+      }),
+
       picker.on('change:month', (date, calendarIdx) => {
         let startDate = picker.getStartDate() ? picker.getStartDate().dateInstance : startOfCurrentMonth
         let endDate = picker.getEndDate() ? picker.getEndDate().dateInstance : endOfMonth(startDate)
@@ -63,6 +69,7 @@ const useLitepicker = (input) => {
         }
 
         picker.setDateRange(startDate, endDate, true)
+        picker.gotoDate(picker.getStartDate(), 0)
       })
 
       picker.on('change:year', (date, calendarIdx) => {
@@ -81,7 +88,6 @@ const useLitepicker = (input) => {
 
         picker.setDateRange(startDate, endDate, true)
       })
-
     }
   })
 }
@@ -89,6 +95,7 @@ const useLitepicker = (input) => {
 $(document).on('turbolinks:load', () => {
   const filterDateRangeSelector = '#query_filter_date_range'
   const el = $(filterDateRangeSelector)
+
   if(el.length > 0) {
     useLitepicker(el[0])
   }
