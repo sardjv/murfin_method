@@ -110,7 +110,7 @@ group :development, :test do
 
   # Rails SQL Query Tracker.
   # https://github.com/steventen/sql_tracker
-  gem 'sql_tracker', '~> 1.3.1'
+  gem 'sql_tracker', '~> 1.3.2'
 end
 
 group :development do
