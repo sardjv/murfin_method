@@ -30,6 +30,7 @@ const useLitepicker = (input) => {
     autoRefresh: true,
     autoApply: true,
     showTooltip: false,
+    selectForward: true,
     plugins: ['ranges'],
     dropdowns: { minYear: today.getFullYear() - 10, maxYear: today.getFullYear(), months: true, years: true },
     lockDaysFilter: (day) => {
@@ -73,7 +74,7 @@ const useLitepicker = (input) => {
       })
 
       picker.on('change:year', (date, calendarIdx) => {
-        picker.clearSelection()
+        //picker.clearSelection()
 
         let startDate = picker.getStartDate()
         let endDate = picker.getEndDate()

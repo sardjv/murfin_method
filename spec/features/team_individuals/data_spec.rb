@@ -35,14 +35,10 @@ describe 'Team Individual Data', type: :feature, js: true, freeze: Time.zone.loc
 
   before do
     log_in manager
-    visit team_individual_path(user_group, user)
-
-    within '.nav-tabs' do
-      click_link 'Data'
-    end
+    visit data_team_individual_path(user_group, user)
   end
 
-  it { expect(current_path).to eql data_team_individual_path(user_group, user) }
+  #it { expect(current_path).to eql data_team_individual_path(user_group, user) }
 
   it 'shows boxes with stats' do
     within '#team-individual-box-average-planned-per-week' do
@@ -139,6 +135,91 @@ describe 'Team Individual Data', type: :feature, js: true, freeze: Time.zone.loc
         within '.team-individual-table-percentage' do
           expect(page).to have_content '0%'
         end
+      end
+    end
+  end
+
+  describe 'filters' do
+    it 'has set default one year range' do
+      within '#filters-form' do
+        expect(page).to have_css "input#query_filter_date_range[data-filter-start-date = '2020-02-01'][data-filter-end-date = '2021-02-28']"
+      end
+    end
+
+    it 'applies selected range into team individuals table' do
+      within '#filters-form' do
+        find('#query_filter_date_range').click
+      end
+
+      within '.litepicker' do
+        within '.container__predefined-ranges' do
+          click_button 'last 3 months'
+        end
+      end
+
+      within '#filters-form' do
+        click_button 'Filter'
+      end
+
+      within '#team-individual-table' do
+        within first('.team-individual-table-week') do
+          expect(page).to have_content 'Dec 28th - Jan 3rd'
+        end
+
+        within all('.team-individual-table-week').last do
+          expect(page).to have_content 'Mar 29th - Apr 4th'
+        end
+      end
+    end
+
+    it 'allows to select range with months/years selects' do
+      within '#filters-form' do
+        find('#query_filter_date_range').click
+      end
+
+      within '.litepicker' do
+        within '.container__months .month-item:nth-child(1)' do
+          find('.month-item-name').find(:xpath, "option[text() = 'January']").select_option
+          #find(".month-item-year option[value='2020']").select_option
+          #find(".month-item-name option[value='2020']").select_option
+        end
+
+        within '.container__months .month-item:nth-child(2)' do
+          #find('.month-item-year').select 2020
+          #select 2020, from: '.month-item-year'
+          find('.month-item-year').find(:xpath, "option[text() = '2020']").select_option
+          find('.month-item-name').find(:xpath, "option[text() = 'February']").select_option
+          #find(".month-item-year option[value='2020']").select_option
+          #find(".month-item-name option[value='2020']").select_option
+        end
+      end
+
+      within '#filters-form' do
+        click_button 'Filter'
+      end
+
+      within '#team-individual-table' do
+        within first('.team-individual-table-week') do
+          expect(page).to have_content 'Dec 30th - Jan 5th'
+        end
+
+        within all('.team-individual-table-week').last do
+          expect(page).to have_content 'Feb 24th - Mar 1st'
+        end
+      end
+    end
+
+    it 'applies selected range into boxes with stats' do
+      within '#team-individual-box-average-planned-per-week' do
+        expect(page).to have_content '18m'
+      end
+
+      within '#team-individual-box-average-actual-per-week' do
+        expect(page).to have_content '0h'
+      end
+
+      within '#team-individual-box-average-percentage-per-week' do
+        expect(page).to have_content '0%'
       end
     end
   end

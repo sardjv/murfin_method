@@ -39,8 +39,9 @@ module UsesFilters
   def prepare_query_params(query) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     return {} if query.blank?
 
-    if query['filter_date_range']
-      date_range = query.delete('filter_date_range')
+    date_range = query.delete('filter_date_range')
+
+    if date_range.present?
       date_range_arr = date_range.split(' - ')
 
       start_date = Date.parse(date_range_arr[0])
@@ -52,7 +53,7 @@ module UsesFilters
         filter_end_month: end_date.month,
         filter_end_year: end_date.year
       }
-    else
+    elsif query['filter_start_month'].present?
       query_params = {
         filter_start_month: query['filter_start_month'] || query['filter_start_time(2i)'],
         filter_start_year: query['filter_start_year'] || query['filter_start_time(1i)'],
@@ -61,6 +62,7 @@ module UsesFilters
       }.update { |_k, v| v.to_i }
     end
 
+    query_params ||= {}
     query_params[:filter_tag_ids] = query['filter_tag_ids'].reject(&:empty?).map(&:to_i) if query['filter_tag_ids'].present?
 
     query_params.compact
