@@ -45,7 +45,7 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :admin, inclusion: { in: [true, false] }
-  validates :epr_uuid, uniqueness: { case_sensitive: true }, allow_blank: true # rubocop:disable Rails/UniqueValidationWithoutIndex
+  validates :epr_uuid, uniqueness: { case_sensitive: true }, allow_blank: true
 
   def name
     "#{first_name} #{last_name}"
