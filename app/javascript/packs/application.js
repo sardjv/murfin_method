@@ -4,10 +4,11 @@ global.$ = jQuery;
 require('@rails/ujs').start()
 require('turbolinks').start()
 require('@nathanvda/cocoon')
-require("date-fns")
+require('date-fns')
 
 import 'bootstrap'
-import 'bootstrap-select';
+import 'bootstrap-select'
+
 import '../stylesheets/application'
 import * as _ from 'lodash';
 
@@ -28,5 +29,7 @@ import '../graphs/missing_data'
 import '../graphs/bar_chart'
 import '../graphs/line_graph'
 import '../graphs/note'
+import '../shared/filters'
 import '../shared/minutes_humanized'
+import '../shared/use_flatpickr'
 import '../shared/use_select2'

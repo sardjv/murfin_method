@@ -30,14 +30,21 @@ module TimeRangeHelper
 
   # formats date range like: Feb 24th - Mar 1st, by default
   # accepts other date_format param
-  def date_range_humanized(range, date_format = :short_ordinal)
-    ret = [range.begin.to_s(date_format)]
+  def date_range_humanized(range, date_format = :short_ordinal) # rubocop:disable Metrics/AbcSize
+    range_begin_part = range.begin.to_s(date_format)
+    range_begin_part += ", #{range.begin.year}" if range.begin.year != range.end.year
+
+    ret = [range_begin_part]
     if range.begin != range.end
-      ret << if range.begin.month == range.end.month
-               range.end.day.ordinalize
-             else
-               range.end.to_s(date_format)
-             end
+      range_end_part = if range.begin.month == range.end.month
+                         range.end.day.ordinalize
+                       else
+                         range.end.to_s(date_format)
+                       end
+
+      range_end_part += ", #{range.end.year}" if range.begin.year != range.end.year
+
+      ret << range_end_part
     end
     ret.join(' - ')
   end

@@ -33,12 +33,26 @@ module UsesFilters
   def prepare_query_params(query) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     return {} if query.blank?
 
-    query_params = {
-      filter_start_month: query['filter_start_month'] || query['filter_start_time(2i)'],
-      filter_start_year: query['filter_start_year'] || query['filter_start_time(1i)'],
-      filter_end_month: query['filter_end_month'] || query['filter_end_time(2i)'],
-      filter_end_year: query['filter_end_year'] || query['filter_end_time(1i)']
-    }.update { |_k, v| v.to_i }
+    if query['filter_start_date'].present? && query['filter_end_date'].present?
+      start_date = Date.parse(query['filter_start_date'])
+      end_date = Date.parse(query['filter_end_date'])
+
+      query_params = {
+        filter_start_month: start_date.month,
+        filter_start_year: start_date.year,
+        filter_end_month: end_date.month,
+        filter_end_year: end_date.year
+      }
+    elsif query['filter_start_month'].present?
+      query_params = {
+        filter_start_month: query['filter_start_month'] || query['filter_start_time(2i)'],
+        filter_start_year: query['filter_start_year'] || query['filter_start_time(1i)'],
+        filter_end_month: query['filter_end_month'] || query['filter_end_time(2i)'],
+        filter_end_year: query['filter_end_year'] || query['filter_end_time(1i)']
+      }.update { |_k, v| v.to_i }
+    end
+
+    query_params ||= {}
 
     query_params[:filter_tag_ids] = query['filter_tag_ids'].reject(&:empty?).map(&:to_i) if query['filter_tag_ids'].present?
 
@@ -48,9 +62,11 @@ module UsesFilters
   private
 
   def filters_defaults
+    range_begin = 11.months.ago.beginning_of_month.to_date
+
     {
-      filter_start_year: 1.year.ago.year,
-      filter_start_month: 1.year.ago.month,
+      filter_start_year: range_begin.year,
+      filter_start_month: range_begin.month,
       filter_end_year: Date.current.year,
       filter_end_month: Date.current.month,
       filter_tag_ids: Tag.where(default_for_filter: true).pluck(:id),

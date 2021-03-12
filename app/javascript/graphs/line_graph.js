@@ -65,13 +65,23 @@ function drawGraph(graph_kind, time_scope) {
 function prepareQueryParamsFromFilters() {
   const filtersFormSelector = 'form#filters-form'
 
-  let params = {
-    filter_start_year: parseInt($(`${filtersFormSelector} #query_filter_start_time_1i`).val()),
-    filter_start_month: parseInt($(`${filtersFormSelector} #query_filter_start_time_2i`).val()),
-    filter_end_year: parseInt($(`${filtersFormSelector} #query_filter_end_time_1i`).val()),
-    filter_end_month: parseInt($(`${filtersFormSelector} #query_filter_end_time_2i`).val()),
-    filter_tag_ids: $(`${filtersFormSelector} #query_filter_tag_ids`).val()
+  let params = {}
+
+  if($(`${filtersFormSelector} #query_filter_start_date`).length > 0) {
+    params = {
+      filter_start_date: $(`${filtersFormSelector} #query_filter_start_date`).val(),
+      filter_end_date: $(`${filtersFormSelector} #query_filter_end_date`).val()
+    }
+  } else if($(`${filtersFormSelector} #query_filter_start_time_1i`).length > 0) {
+    params = {
+      filter_start_year: parseInt($(`${filtersFormSelector} #query_filter_start_time_1i`).val()),
+      filter_start_month: parseInt($(`${filtersFormSelector} #query_filter_start_time_2i`).val()),
+      filter_end_year: parseInt($(`${filtersFormSelector} #query_filter_end_time_1i`).val()),
+      filter_end_month: parseInt($(`${filtersFormSelector} #query_filter_end_time_2i`).val())
+    }
   }
+
+  params.filter_tag_ids = $(`${filtersFormSelector} #query_filter_tag_ids`).val()
 
   params = pickBy(params, v => v !== undefined ) // use loadash' pickBy remove keys where value is undefined
   return params
