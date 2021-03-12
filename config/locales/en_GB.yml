@@ -18,6 +18,8 @@ en:
         time_range_type: Type
         value: Time worked
         time_worked: Worked
+      user:
+        epr_uuid: EPR UUID
   log_in_out: &log_in_out
     log_in: Log in
     log_out: Log out

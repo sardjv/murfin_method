@@ -183,7 +183,8 @@
             "name": "include",
             "in": "query",
             "type": "string",
-            "required": false
+            "required": false,
+            "example": "activities"
           }
         ],
         "responses": {
@@ -748,7 +749,8 @@
             "name": "include",
             "in": "query",
             "type": "string",
-            "required": false
+            "required": false,
+            "example": "tags"
           }
         ],
         "produces": [
@@ -1088,6 +1090,12 @@
             "in": "query",
             "type": "string",
             "required": false
+          },
+          {
+            "name": "filter[epr_uuid]",
+            "in": "query",
+            "type": "string",
+            "required": false
           }
         ],
         "responses": {
@@ -1160,7 +1168,8 @@
             "name": "include",
             "in": "query",
             "type": "string",
-            "required": false
+            "required": false,
+            "example": "user_groups"
           }
         ],
         "produces": [
@@ -2172,6 +2181,11 @@
           "example": "john.smith@example.com",
           "x-nullable": false
         },
+        "epr_uuid": {
+          "type": "string",
+          "example": "435f9dfe-4e89-4b5a-b63e-9095327c3a6b",
+          "x-nullable": true
+        },
         "admin": {
           "type": "boolean",
           "example": false,
@@ -2196,6 +2210,11 @@
           "type": "string",
           "example": "john.smith@example.com",
           "x-nullable": false
+        },
+        "epr_uuid": {
+          "type": "string",
+          "example": "435f9dfe-4e89-4b5a-b63e-9095327c3a6b",
+          "x-nullable": true
         }
       }
     },
@@ -2216,6 +2235,11 @@
           "type": "string",
           "example": "john.smith@example.com",
           "x-nullable": false
+        },
+        "epr_uuid": {
+          "type": "string",
+          "example": "435f9dfe-4e89-4b5a-b63e-9095327c3a6b",
+          "x-nullable": true
         },
         "password": {
           "type": "string",
@@ -2477,7 +2501,7 @@
       "properties": {
         "name": {
           "type": "string",
-          "example": "eveniet",
+          "example": "quam",
           "x-nullable": false
         },
         "group_type_id": {
