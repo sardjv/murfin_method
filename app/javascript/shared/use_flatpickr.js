@@ -10,7 +10,6 @@ $(document).on('turbolinks:load', () => {
   const flatpickrConfig = {
     allowInput: false,
     altInput: true,
-    //altInputClass: 'filters-date-alt-input',
     plugins: [
         new monthSelectPlugin({
           shorthand: true,
@@ -18,10 +17,6 @@ $(document).on('turbolinks:load', () => {
           dateFormat: 'Y-m-d'
         })
     ]
-    // onChange: function(selectedDates, dateStr, instance) {
-    //   console.log(selectedDates)
-    //   console.log(dateStr)
-    // }
   }
 
   flatpickr(useFlatpickrSelector, flatpickrConfig)
