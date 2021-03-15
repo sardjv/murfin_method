@@ -3,11 +3,11 @@ require 'rails_helper'
 describe 'Account', type: :feature do
   let(:user) { create :user }
 
-  let(:group_type1) { create :group_type, name: 'Band' }
-  let(:group_type2) { create :group_type, name: 'Team' }
+  let!(:group_type1) { create :group_type, name: 'Band' }
+  let!(:group_type2) { create :group_type, name: 'Team' }
 
-  let(:user_group1) { create :user_group, group_type: group_type1 }
-  let(:user_group2) { create :user_group, group_type: group_type2 }
+  let!(:user_group1) { create :user_group, group_type: group_type1 }
+  let!(:user_group2) { create :user_group, group_type: group_type2 }
 
   let!(:membership1) { create :membership, user: user, user_group: user_group1, role: 'member' }
   let!(:membership2) { create :membership, user: user, user_group: user_group2, role: 'lead' }
