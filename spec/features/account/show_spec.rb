@@ -28,16 +28,12 @@ describe 'Account', type: :feature do
   end
 
   it 'has user team and band info' do
-    within ".row[data-group-type-id = '#{user_group1.id}']" do
-      expect(page).to have_content group_type1.name
-      expect(page).to have_content user_group1.name
-      expect(page).to have_content 'member'
-    end
+    expect(page).to have_content group_type1.name
+    expect(page).to have_content user_group1.name
+    expect(page).to have_content 'member'
 
-    within ".row[data-group-type-id = '#{user_group2.id}']" do
-      expect(page).to have_content group_type2.name
-      expect(page).to have_content user_group2.name
-      expect(page).to have_content 'lead'
-    end
+    expect(page).to have_content group_type2.name
+    expect(page).to have_content user_group2.name
+    expect(page).to have_content 'lead'
   end
 end
