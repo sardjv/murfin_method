@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { sessions: 'users/sessions' }
 
+  get 'account' => 'account#show'
+
   namespace :api do
     namespace :v1 do
       jsonapi_resources :memberships, only: %i[create destroy]

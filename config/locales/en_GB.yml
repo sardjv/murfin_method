@@ -18,6 +18,10 @@ en:
         time_range_type: Type
         value: Time worked
         time_worked: Worked
+      user:
+        email: Email
+        first_name: First name
+        last_name: Last name
   log_in_out: &log_in_out
     log_in: Log in
     log_out: Log out
@@ -111,6 +115,7 @@ en:
   prompts:
     none: None
   nav:
+    account: Account
     admin_dashboard: Admin
     dashboard: Dashboard
     tabs:
