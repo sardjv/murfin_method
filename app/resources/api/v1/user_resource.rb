@@ -1,7 +1,7 @@
 class Api::V1::UserResource < JSONAPI::Resource
   model_name 'User'
 
-  attributes :first_name, :last_name, :email, :admin, :password
+  attributes :first_name, :last_name, :email, :epr_uuid, :admin, :password
 
   has_many :user_groups, exclude_links: :default
   has_many :memberships, exclude_links: :default
@@ -9,6 +9,11 @@ class Api::V1::UserResource < JSONAPI::Resource
   filter :email,
          apply: lambda { |records, values, _options|
            records.where(email: values[0])
+         }
+
+  filter :epr_uuid,
+         apply: lambda { |records, values, _options|
+           records.where(epr_uuid: values[0])
          }
 
   def self.fetchable_fields(_context)

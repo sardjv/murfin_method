@@ -20,6 +20,7 @@ en:
         time_worked: Worked
       user:
         email: Email
+        epr_uuid: EPR UUID
         first_name: First name
         last_name: Last name
   log_in_out: &log_in_out

@@ -16,6 +16,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
       let(:include) { '' }
 
       parameter name: 'filter[email]', in: :query, type: :string, required: false
+      parameter name: 'filter[epr_uuid]', in: :query, type: :string, required: false
 
       let!(:'page[size]') { 2 }
       let!(:'page[number]') { 1 }
@@ -71,6 +72,15 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
             run_test! do
               expect(parsed_json_data.length).to eq(1)
               expect(parsed_json_data.collect { |e| e['id'].to_i }).to eql [user2.id]
+            end
+          end
+
+          context 'epr_uuid' do
+            let(:'filter[epr_uuid]') { user1.epr_uuid }
+
+            run_test! do
+              expect(parsed_json_data.length).to eq(1)
+              expect(parsed_json_data.collect { |e| e['id'].to_i }).to eql [user1.id]
             end
           end
         end
