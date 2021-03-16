@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Use HAML insted ERB templates
 
+## [0.9.13] - 2021-03-16
+
+### Added
+
+- TagAssociation API end points
+- User Account page
+- Range date picker on filter
+
 ## [0.9.12] - 2021-02-26
 
 ### Added
