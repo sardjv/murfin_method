@@ -3,6 +3,7 @@ require './swagger/v1/errors'
 require './swagger/v1/memberships'
 require './swagger/v1/plans'
 require './swagger/v1/tags'
+require './swagger/v1/tag_associations'
 require './swagger/v1/tag_types'
 require './swagger/v1/time_ranges'
 require './swagger/v1/users'
@@ -40,6 +41,7 @@ class Swagger::V1::Core
       Swagger::V1::Memberships.definitions,
       Swagger::V1::Plans.definitions,
       Swagger::V1::Tags.definitions,
+      Swagger::V1::TagAssociations.definitions,
       Swagger::V1::TagTypes.definitions,
       Swagger::V1::TimeRanges.definitions,
       Swagger::V1::Users.definitions,

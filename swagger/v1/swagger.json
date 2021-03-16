@@ -197,6 +197,85 @@
         }
       }
     },
+    "/api/v1/tag_associations": {
+      "post": {
+        "summary": "create tag association",
+        "tags": [
+          "TagAssociations"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "consumes": [
+          "application/vnd.api+json"
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "parameters": [
+          {
+            "name": "tag_association",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/tag_association_post_params"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Tag Association created",
+            "schema": {
+              "$ref": "#/definitions/tag_association_response"
+            }
+          },
+          "422": {
+            "description": "Invalid request",
+            "schema": {
+              "$ref": "#/definitions/error_422"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tag_associations/{id}": {
+      "delete": {
+        "summary": "destroys tag association",
+        "tags": [
+          "TagAssociations"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "OK: No Content"
+          },
+          "404": {
+            "description": "Record not found",
+            "schema": {
+              "$ref": "#/definitions/error_404"
+            }
+          }
+        }
+      }
+    },
     "/api/v1/tag_types": {
       "post": {
         "summary": "create tag type",
@@ -1805,6 +1884,81 @@
         }
       }
     },
+    "tag_association_attributes": {
+      "type": "object",
+      "properties": {
+        "tag_id": {
+          "type": "integer",
+          "example": 100,
+          "x-nullable": true
+        },
+        "tag_type_id": {
+          "type": "integer",
+          "required": true,
+          "example": 200,
+          "x-nullable": false
+        },
+        "taggable_id": {
+          "type": "integer",
+          "required": true,
+          "example": 123,
+          "x-nullable": false
+        },
+        "taggable_type": {
+          "type": "string",
+          "required": true,
+          "example": "TimeRange",
+          "x-nullable": false
+        }
+      }
+    },
+    "tag_association_response": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "1"
+            },
+            "type": {
+              "type": "string",
+              "example": "tag_associations"
+            },
+            "link": {
+              "type": "object",
+              "properties": {
+                "self": {
+                  "type": "string",
+                  "example": "https://job-plan-stats.herokuapp.com/api/v1/tag_associations/1"
+                }
+              }
+            },
+            "attributes": {
+              "$ref": "#/definitions/tag_association_attributes"
+            }
+          }
+        }
+      }
+    },
+    "tag_association_post_params": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "tag_associations"
+            },
+            "attributes": {
+              "$ref": "#/definitions/tag_association_attributes"
+            }
+          }
+        }
+      }
+    },
     "tag_type_attributes": {
       "type": "object",
       "properties": {
@@ -2501,7 +2655,7 @@
       "properties": {
         "name": {
           "type": "string",
-          "example": "quam",
+          "example": "quo",
           "x-nullable": false
         },
         "group_type_id": {

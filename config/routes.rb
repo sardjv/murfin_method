@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       jsonapi_resources :memberships, only: %i[create destroy]
       jsonapi_resources :plans, only: %i[index show]
       jsonapi_resources :tags
+      jsonapi_resources :tag_associations, only: %i[create destroy]
       jsonapi_resources :tag_types
       jsonapi_resources :time_ranges, only: %i[index show create]
       jsonapi_resources :users
