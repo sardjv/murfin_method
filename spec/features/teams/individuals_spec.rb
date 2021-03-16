@@ -46,7 +46,7 @@ describe 'Team Individuals', type: :feature, js: true, freeze: Time.zone.local(2
         end
 
         expect(page).to have_text user.name
-        expect(page).to have_text '4 minutes'
+        expect(page).to have_text '5 minutes'
         expect(page).to have_text '2 minutes'
         expect(page).to have_text '50%'
         expect(page).to have_text 'Under'

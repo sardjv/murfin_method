@@ -61,9 +61,12 @@ en:
   footer:
     api_docs: API Docs
   filters:
-    end_time: End
-    start_time: Start
+    start_date: Dates
     tags: Tags
+    predefined_ranges:
+      last_3_months: Last 3 months
+      last_6_months: Last 6 months
+      last_12_months: Last 12 months
   graph:
     title:
       admin: Percentage delivered against job plan

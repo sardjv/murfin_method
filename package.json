@@ -9,6 +9,7 @@
     "bootstrap-select": "^1.13.18",
     "chart.js": "^2.9.4",
     "date-fns": "^2.19.0",
+    "flatpickr": "^4.6.9",
     "jquery": "^3.6.0",
     "lodash": "^4.17.21",
     "popper.js": "^1.16.1",

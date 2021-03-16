@@ -25,7 +25,7 @@ class TeamIndividualsController < ApplicationController
 
   def team_individual_params
     params.permit(:team_id, :id, :graph_kind, :time_scope,
-                  :filter_tag_ids, :filter_start_month, :filter_start_year, :filter_end_month, :filter_end_year,
+                  :filter_tag_ids, :filter_start_date, :filter_end_date,
                   :page, :format, query: {})
   end
 end

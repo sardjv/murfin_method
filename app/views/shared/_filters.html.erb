@@ -11,20 +11,21 @@
       <div class='form-row'>
         <%= f.select :filter_tag_ids,
           grouped_options_for_select(tag_options, filter_tag_ids),
-          { label: t('filters.tags'), wrapper: { class: 'col-md-5' } },
-          { class: 'filter',
-            multiple: true, 'data-actions-box': true, 'data-use-select2': true } %>
+          { label: t('filters.tags'), wrapper: { class: 'col-md-7 filters-tags-container' } },
+          { class: 'filter', multiple: true, 'data-actions-box': true, 'data-use-select2': true } %>
 
-        <%= f.date_select :filter_start_time,
-          { label: t('filters.start_time'), wrapper: { class: 'col-md-3' },
-            order: %i[month year], default: filter_start_time },
-          class: 'filter'
-        %>
+        <%= f.text_field :filter_start_date,
+          { value: @presenter.filter_start_date,
+            label: t('filters.start_date'),
+            wrapper: { class: 'col-md-2 filters-start-date-container' },
+            class: 'filter', autocomplete: 'off', 'data-behaviour-flatpickr': true } %>
 
-        <%= f.date_select :filter_end_time,
-          { label: t('filters.end_time'), wrapper: { class: 'col-md-3' },
-            order: %i[month year], default: filter_end_time },
-          class: 'filter' %>
+        <%= f.text_field :filter_end_date,
+          { value: @presenter.filter_end_date,
+            label: render('shared/filters_predefined_ranges'),
+            label_class: 'd-block',
+            wrapper: { class: 'col-md-2 filters-end-date-container' },
+            class: 'filter', autocomplete: 'off', 'data-behaviour-flatpickr': true } %>
 
         <%= f.form_group class: 'col-md-1' do %>
           <div><label>&nbsp;</label></div>
@@ -35,4 +36,3 @@
     <% end %>
   </div>
 </div>
-
