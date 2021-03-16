@@ -1,0 +1,5 @@
+.thin-tabs
+  = render(partial: 'shared/tabs',
+    locals: { tabs: [{ label: I18n.t('nav.tabs.team', team_name: @user_group.name), path: [:dashboard, :team, id: @user_group]},
+                     { label: I18n.t('nav.tabs.individuals'), path: [:individuals, :team, id: @user_group] },
+                     { label: I18n.t('nav.tabs.plans'), path: [:plans, :team, id: @user_group]} ] })

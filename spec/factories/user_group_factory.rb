@@ -10,7 +10,7 @@
 #
 FactoryBot.define do
   factory :user_group do
-    name { Faker::Commerce.department }
+    name { Faker::Commerce.unique.department }
     group_type_id { GroupType.all.sample.try(:id) || create(:group_type).id }
   end
 end

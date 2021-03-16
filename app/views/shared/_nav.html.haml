@@ -1,0 +1,33 @@
+%nav.rootnav.navbar.navbar-expand-lg.navbar-dark.bg-primary
+  .container
+    %a.navbar-brand{href: root_path}
+      = image_pack_tag 'media/images/logos/nhs.svg', width: '100 px'
+    %button.navbar-toggler{"aria-controls": "navbarSupportedContent", "aria-expanded": "false", "aria-label": "Toggle navigation", "data-target": "#navbarSupportedContent", "data-toggle": "collapse", type: "button"}
+      %span.navbar-toggler-icon
+    #navbarSupportedContent.collapse.navbar-collapse.pl-4
+      - if user_authenticated?
+        %ul.navbar-nav.mr-auto
+          - navs.each do |nav|
+            - if nav[:enabled]
+              %li.nav-item
+                = link_to(nav[:label], nav[:path],
+                  class: "nav-link #{' active' if current_page?(nav[:path]) || @nav_presenter.any_subnavs_active?(nav) }")                                                                                                         |
+      %ul.navbar-nav.ml-auto
+        - if user_authenticated?
+          %li.nav-item
+            = link_to account_path, class: 'nav-link p-3' do
+              = I18n.t('nav.account')
+              = icon('person', width: '2em')
+        = render partial: 'shared/auth'
+- navs.each do |nav|
+  - if @nav_presenter.any_subnavs_active?(nav)
+    - if nav[:enabled]
+      %nav.subnav.navbar.navbar-expand-lg
+        .container
+          #navbarSupportedContent.collapse.navbar-collapse.pl-4
+            - if user_authenticated?
+              %ul.navbar-nav.mr-auto
+                - nav[:subnavs].each do |subnav|
+                  %li.nav-item.pl-3
+                    = link_to(subnav[:label], subnav[:path],
+                              class: "nav-link#{ ' active' if @nav_presenter.subnav_active?(subnav) }")                                                                          |

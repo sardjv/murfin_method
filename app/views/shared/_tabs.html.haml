@@ -1,0 +1,4 @@
+%ul.nav.nav-tabs.my-4
+  - tabs.each do |tab|
+    %li.nav-item
+      = link_to tab[:label], tab[:path], class: current_page?(tab[:path]) ? 'nav-link active' : 'nav-link'

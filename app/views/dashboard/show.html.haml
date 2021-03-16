@@ -1,0 +1,9 @@
+.container.my-4
+  .row
+    .col-12= render 'user_tabs'
+    .col-sm-4.my-4
+      %h1= I18n.t('app.name')
+      %p.my-4= I18n.t('home.you_can')
+      %ul
+        %li= I18n.t('home.compare_plan_with_actuals')
+        %li= I18n.t('home.drill_down')

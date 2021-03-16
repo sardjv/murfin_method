@@ -29,6 +29,10 @@ gem 'factory_bot', '~> 6.1.0'
 # https://github.com/faker-ruby/faker
 gem 'faker', '~> 2.17.0'
 
+# HTML Abstraction Markup Language - A Markup Haiku
+# https://github.com/haml/haml
+gem 'haml', '~> 5.2.1'
+
 # Allows easy creation of recurrence rules and fast querying.
 # https://github.com/seejohnrun/ice_cube
 gem 'ice_cube', '~> 0.16.3'

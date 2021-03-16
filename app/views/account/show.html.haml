@@ -1,0 +1,39 @@
+.container.my-4
+  .row
+    .col-12
+      %h5= I18n.t('nav.account')
+      .card.mt-4
+        .card-body
+          %h4 Details
+          .row
+            .col-md-2
+              %strong
+                = t('activerecord.models.attributes.user.email')
+                \:
+            .col-md-10= current_user.email
+          .row
+            .col-md-2
+              %strong
+                = t('activerecord.models.attributes.user.first_name')
+                \:
+            .col-md-10= current_user.first_name
+          .row
+            .col-md-2
+              %strong
+                = t('activerecord.models.attributes.user.last_name')
+                \:
+            .col-md-10= current_user.last_name
+      - if @user_memberships.any?
+        .card.mt-4
+          .card-body
+            - @user_memberships.each do |group_type, data|
+              .row.mb-2{"data-group-type-id": "#{group_type.id}"}
+                .col-md-2
+                  %strong
+                    = group_type.name
+                    \:
+                .col-md-10
+                  - data.each do |membership|
+                    = membership.user_group.name
+                    %span.badge.badge-primary= membership.role
+                    %br/

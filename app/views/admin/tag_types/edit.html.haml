@@ -1,0 +1,17 @@
+.container.my-4
+  .row
+    .col-12
+      %h5= @tag_type.persisted? ? I18n.t('actions.edit', model_name: TagType.model_name.human.titleize) : I18n.t('actions.add', model_name: TagType.model_name.human.titleize)
+  .row
+    .col-12
+      = bootstrap_form_for [:admin, @tag_type] do |f|
+        - if (other_types = TagType.where.not(id: @tag_type.id).presence)
+          = f.select :parent_id,
+            options_for_select(other_types.map { |t| [t.name, t.id] }, selected: f.object.parent_id),
+            { label: TagType.human_attribute_name('parent'), include_blank: I18n.t('prompts.none') },
+            class: 'input-group-btn'
+        = f.text_field :name, label: TagType.human_attribute_name('name'), placeholder: TagType.human_attribute_name('name'), required: true
+        = f.check_box :active_for_activities, label: TagType.human_attribute_name('active_for_activities')
+        = f.check_box :active_for_time_ranges, label: TagType.human_attribute_name('active_for_time_ranges')
+        = f.submit I18n.t('actions.save'), class: 'btn btn-primary', style: 'margin-top: 10px;'
+        = link_to I18n.t('actions.cancel'), :back, class: 'btn btn-outline-secondary mt-2'

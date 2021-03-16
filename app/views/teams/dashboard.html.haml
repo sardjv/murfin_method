@@ -1,0 +1,22 @@
+.container.my-4.xs-row-reverse
+  = render 'team_tabs'
+  = render 'shared/filters',
+    filter_tag_ids: @presenter.team_stats_presenter.filter_tag_ids,
+    filter_start_time: @presenter.team_stats_presenter.filter_start_time,
+    filter_end_time: @presenter.team_stats_presenter.filter_end_time
+  = render 'boxes'
+  .row
+    .col-12
+      .card.my-4
+        .card-body
+          .mb-4.float-left
+            - @presenter.team_stats_presenter.graph_kind_options.each do |key|
+              = radio_button_tag 'graph_kind', key, **(@presenter.team_stats_presenter.graph_kind == key ? { checked: 'checked' } : {})
+              = label_tag "graph_kind_#{key}", t("graphs.#{key}.name")
+
+          .mb-4.float-right
+            - @presenter.team_stats_presenter.time_scope_options.each do |key|
+              = radio_button_tag 'time_scope', key, **(@presenter.team_stats_presenter.time_scope == key ? { checked: 'checked' } : {})
+              = label_tag "time_scope_#{key}", t("graph.time_scope.#{key}")
+
+          %canvas#line-graph{"data-time-scope" => "#{@presenter.team_stats_presenter.time_scope}"}

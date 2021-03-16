@@ -1,0 +1,8 @@
+.pull-right
+  %ul.nav.nav-pills
+    %li.nav-item.dropdown
+      %a#filters-predefined-ranges-toggle.dropdown-toggle{"aria-expanded": "false", "aria-haspopup": "true", "data-toggle": "dropdown", href: '#', role: 'button'} Last 12 months
+      #filters-predefined-ranges-menu.dropdown-menu
+        - filters_predefined_ranges.each do |data|
+          %a{class: "dropdown-item #{'active' if @presenter.filter_start_date == data[:range][0]}", "data-range-begin" => "#{data[:range][0]}", "data-range-end" => "#{data[:range][1]}", href: '#'}
+            = data[:label]

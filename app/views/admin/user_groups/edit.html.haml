@@ -1,0 +1,17 @@
+.container.my-4
+  .row
+    .col-12
+      %h5= I18n.t('actions.edit', model_name: UserGroup.model_name.human.titleize)
+  .row
+    .col-12
+      = bootstrap_form_for [:admin, @user_group] do |f|
+        = f.text_field :name, label: UserGroup.human_attribute_name('name'), placeholder: UserGroup.human_attribute_name('name'), required: true
+        = f.fields_for :memberships, @user_group.memberships.order(role: :desc) do |mf|
+          - user = mf.object.user
+          .row
+            .col-4= user.name
+            .col-8
+              - Membership::roles.keys.reverse.each do |role_name|
+                = mf.radio_button :role, role_name, inline: true, label:  UserGroup.human_attribute_name("#{role_name}")
+        = f.submit I18n.t('actions.save'), class: 'btn btn-primary', style: 'margin-top: 10px;'
+        = link_to I18n.t('actions.cancel'), :back, class: 'btn btn-outline-secondary mt-2'
