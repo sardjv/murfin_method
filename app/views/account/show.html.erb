@@ -11,15 +11,15 @@
 
           <div class="row">
             <div class="col-md-2"><strong><%= t('activerecord.models.attributes.user.email') %>:</strong></div>
-            <div class="col-md-2"><%= current_user.email %></div>
+            <div class="col-md-10"><%= current_user.email %></div>
           </div>
           <div class="row">
             <div class="col-md-2"><strong><%= t('activerecord.models.attributes.user.first_name') %>:</strong></div>
-            <div class="col-md-2"><%= current_user.first_name %></div>
+            <div class="col-md-10"><%= current_user.first_name %></div>
           </div>
           <div class="row">
             <div class="col-md-2"><strong><%= t('activerecord.models.attributes.user.last_name') %>:</strong></div>
-            <div class="col-md-2"><%= current_user.last_name %></div>
+            <div class="col-md-10"><%= current_user.last_name %></div>
           </div>
         </div>
       </div>
@@ -30,7 +30,7 @@
             <% @user_memberships.each do |group_type, data| %>
               <div class="row mb-2" data-group-type-id="<%= group_type.id -%>">
                 <div class="col-md-2"><strong><%= group_type.name -%>:</strong></div>
-                <div class="col-md-2">
+                <div class="col-md-10">
                   <% data.each do |membership| %>
                     <%= membership.user_group.name %> <span class="badge badge-primary"><%= membership.role %></span><br />
                   <% end %>
