@@ -324,7 +324,7 @@ GEM
     shellany (0.0.1)
     shoulda-matchers (4.5.1)
       activesupport (>= 4.2.0)
-    sidekiq (6.1.3)
+    sidekiq (6.2.0)
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
@@ -404,7 +404,7 @@ DEPENDENCIES
   rubocop-rails (~> 2.9.1)
   selenium-webdriver!
   shoulda-matchers (~> 4.5.1)
-  sidekiq (~> 6.1.3)
+  sidekiq (~> 6.2.0)
   simplecov (~> 0.21.2)
   sql_tracker (~> 1.3.2)
   timecop (~> 0.9.4)
