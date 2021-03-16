@@ -37,6 +37,8 @@ Rails.application.routes.draw do
   end
 
   resource :dashboard, only: :show, controller: 'dashboard'
+  get 'users/summary' => 'users#summary'
+  get 'users/data' => 'users#data'
 
   resources :teams, only: %i[dashboard individuals plans] do
     get :dashboard, on: :member
