@@ -26,8 +26,8 @@ class UsersController < ApplicationController
   end
 
   def initialize_presenter
-    @presenter = TeamIndividualPresenter.new(params: team_individual_params.
-                                         merge(id: current_user.id, team_id: @user_group.id, time_scope: params[:time_scope]))
+    @presenter = TeamIndividualPresenter.new(params: team_individual_params
+                                         .merge(id: current_user.id, team_id: @user_group.id, time_scope: params[:time_scope]))
   end
 
   def team_individual_params

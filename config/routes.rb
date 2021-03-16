@@ -36,7 +36,7 @@ Rails.application.routes.draw do
     get :home, on: :collection
   end
 
-  resource :dashboard, only: :show, controller: 'dashboard'
+  get 'dashboard' => 'users#dashboard'
   get 'users/summary' => 'users#summary'
   get 'users/data' => 'users#data'
 
