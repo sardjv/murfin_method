@@ -5,4 +5,4 @@
 bundle install
 
 # Start Sidekiq.
-bundle exec sidekiq -C config/sidekiq.yml.erb
+bundle exec sidekiq -C config/sidekiq.yml.haml
