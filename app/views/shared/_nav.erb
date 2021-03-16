@@ -27,7 +27,17 @@
         </ul>
       <% end %>
 
-      <%= render(partial: 'shared/auth') %>
+      <ul class='navbar-nav ml-auto'>
+        <% if user_authenticated? %>
+          <li class='nav-item'>
+            <%= link_to account_path, class: 'nav-link p-3' do %>
+              <%= I18n.t('nav.account') %>
+              <%= icon('person', width: '2em') %>
+            <% end %>
+          </li>
+        <% end %>
+        <%= render(partial: 'shared/auth') %>
+      </ul>
     </div>
   </div>
 </nav>
