@@ -11,4 +11,12 @@ FactoryBot.define do
   factory :group_type do
     name { Faker::Company.industry }
   end
+
+  # trait :team do
+  #   name { 'team' }
+  # end
+
+  # trait :band do
+  #   name { 'band' }
+  # end
 end

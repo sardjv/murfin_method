@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
-  before_action :find_user_group
+  before_action :find_user_group_team, only: %i[summary data]
   before_action :initialize_presenter, only: %i[summary data]
+
+  def dashboard; end
 
   def summary
     respond_to do |format|
@@ -20,14 +22,15 @@ class UsersController < ApplicationController
 
   private
 
-  def find_user_group
+  def find_user_group_team
     # assume that user has only one team user group
     @user_group = current_user.user_groups.joins(:group_type).where("group_types.name = 'team'").first
   end
 
   def initialize_presenter
     @presenter = TeamIndividualPresenter.new(params: team_individual_params
-                                         .merge(id: current_user.id, team_id: @user_group.id, time_scope: params[:time_scope]))
+                                         .merge(id: current_user.id,
+                                                team_id: @user_group.id, time_scope: params[:time_scope]))
   end
 
   def team_individual_params

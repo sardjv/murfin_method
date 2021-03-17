@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-describe 'Team Individual Data', type: :feature, js: true, freeze: Time.zone.local(2021, 2, 28, 15, 30, 0) do
+describe 'User Data', type: :feature, js: true, freeze: Time.zone.local(2021, 2, 28, 15, 30, 0) do
   let(:actual_id) { TimeRangeType.actual_type.id }
 
-  let(:manager) { create :user }
   let(:user) { create :user }
 
-  let(:user_group) { create :user_group }
+  let!(:user_group_team) { create :user_group, :team }
+  let!(:user_group_band) { create :user_group, :band }
 
-  let!(:lead_membership) { create :membership, user_group: user_group, user: manager, role: 'lead' }
-  let!(:user_membership) { create :membership, user_group: user_group, user: user, role: 'member' }
+  let!(:user_team_membership) { create :membership, user_group: user_group_team, user: user, role: 'member' }
+  let!(:user_band_membership) { create :membership, user_group: user_group_band, user: user, role: 'member' }
 
   let(:plan_start_date) { 11.months.ago.beginning_of_month }
   let(:plan_end_date) { Date.current.end_of_month }
@@ -35,9 +35,15 @@ describe 'Team Individual Data', type: :feature, js: true, freeze: Time.zone.loc
   end
 
   before do
-    log_in manager
-    visit data_team_individual_path(user_group, user)
+    log_in user
+    visit dashboard_path
+    within '.nav-tabs' do
+      click_link 'Data'
+    end
   end
+
+  it { expect(current_path).to eql users_data_path }
+  it { expect(page).to have_css 'a.nav-link.active', text: 'Data' }
 
   it 'shows boxes with stats' do
     within '#team-individual-box-average-planned-per-week' do
@@ -53,12 +59,6 @@ describe 'Team Individual Data', type: :feature, js: true, freeze: Time.zone.loc
     within '#team-individual-box-average-percentage-per-week' do
       expect(page).to have_content '3%'
       expect(page).to have_content 'Average percentage per week'
-    end
-  end
-
-  it 'contains user group name' do
-    within '#team-individual-user-groups' do
-      expect(page).to have_content user_group.name
     end
   end
 
