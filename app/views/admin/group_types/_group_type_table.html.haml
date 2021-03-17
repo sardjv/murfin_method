@@ -1,0 +1,28 @@
+.table-responsive
+  %table.table.table-bordered.mb-0
+    %thead
+      %tr
+        %th= UserGroup.human_attribute_name('name')
+        %th= UserGroup.human_attribute_name('leads')
+        %th= UserGroup.human_attribute_name('members')
+        %th{style: "width: 50px;"}
+        %th{style: "width: 50px;"}
+    %tbody
+      - group_type.user_groups.each do |user_group|
+        %tr
+          %td
+            = user_group.name
+          %td
+            - user_group.memberships.where(role: 'lead').each do |membership|
+              = membership.user.name
+              %br/
+          %td
+            - user_group.memberships.where(role: 'user').each do |membership|
+              = membership.user.name
+              %br/
+          %td
+            = link_to [:edit, :admin, user_group], class: 'btn btn-link' do
+              = icon('pencil')
+          %td
+            = link_to [:admin, user_group], class: 'btn btn-link', method: :delete, data: { confirm: I18n.t('actions.confirm') } do
+              = icon('trash')

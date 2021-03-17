@@ -1,0 +1,19 @@
+%li.nav-item
+  - if auth_method?('oauth2')
+    - if user_authenticated?
+      = link_to auth_logout_path, class: 'nav-link p-3' do
+        = I18n.t('auth.log_out')
+        = icon('arrow-right-square', class: 'mx-2', width: '2em')
+    - else
+      = button_to "#{root_url}auth/auth0", method: :post, type: 'button', class: 'btn btn-primary' do
+        = I18n.t('auth.log_in')
+        = icon('arrow-right-square', class: 'm-2', width: '2em')
+  - else
+    - if user_signed_in?
+      = link_to destroy_user_session_path, method: :delete, class: 'nav-link p-3' do
+        = I18n.t('auth.log_out')
+        = icon('arrow-right-square', class: 'mx-2', width: '2em')
+    - else
+      = link_to new_user_session_path, class: 'btn btn-primary' do
+        = I18n.t('auth.log_in')
+        = icon('arrow-right-square', class: 'm-2', width: '2em')

@@ -1,0 +1,33 @@
+.container.my-4
+  .row
+    .col-12
+      = link_to [:new, :admin, :time_range], class: 'btn btn-primary float-right mb-3' do
+        = icon('plus')
+        = I18n.t('actions.add', model_name: TimeRange.model_name.human.titleize)
+      .table-responsive
+        %table.table.table-bordered
+          %thead
+            %tr
+              %th= TimeRange.human_attribute_name('time_range_type')
+              %th= TimeRange.human_attribute_name('start_time')
+              %th= TimeRange.human_attribute_name('end_time')
+              %th= TimeRange.human_attribute_name('time_worked')
+              %th= TimeRange.human_attribute_name('user')
+              %th{style: "width: 50px;"}
+              %th{style: "width: 50px;"}
+          %tbody
+            - @time_ranges.each do |time_range|
+              - cache time_range do
+                %tr
+                  %td= time_range.time_range_type.name
+                  %td= time_range.start_time.strftime(I18n.t('time.formats.readable'))
+                  %td= time_range.end_time.strftime(I18n.t('time.formats.readable'))
+                  %td= time_worked(time_range)
+                  %td= time_range.user.name
+                  %td
+                    = link_to [:edit, :admin, time_range], class: 'btn btn-link' do
+                      = icon('pencil')
+                  %td
+                    = link_to [:admin, time_range], method: :delete, data: { confirm: I18n.t('actions.confirm') }, class: 'btn btn-link'  do
+                      = icon('trash')
+      = paginate @time_ranges

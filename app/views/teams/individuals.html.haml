@@ -1,0 +1,14 @@
+.container.my-4
+  = render 'team_tabs'
+  = render 'shared/filters'
+  .row
+    .col-12
+      %h5= I18n.t('graph.title.individuals')
+      %p= I18n.t('graph.showing_users', count: @presenter.paginated_users.total_count)
+      .card.my-4
+        .card-body
+          %canvas#bar-chart
+  = render 'individuals_table'
+
+:javascript
+  var chartData = #{raw @presenter.to_json(graphs: [{ type: :bar_chart, data: :individual_data, units: '%' }])};

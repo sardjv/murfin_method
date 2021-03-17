@@ -1,0 +1,22 @@
+:ruby
+  highlights = [{
+                  icon: 'bar-chart',
+                  colour: 'green',
+                  label: t('team_individuals.average_planned_per_week'),
+                  value: duration_in_words(@presenter.average_planned_per_week, :short)
+                },
+                {
+                  icon: 'bar-chart',
+                  colour: 'green',
+                  label: t('team_individuals.average_actual_per_week'),
+                  value: duration_in_words(@presenter.average_worked_per_week, :short)
+                },
+                {
+                  icon: 'bar-chart',
+                  colour: 'purple',
+                  label: t('team_individuals.average_percentage_per_week'),
+                  value: @presenter.average_delivered_percent_per_week ? "#{@presenter.average_delivered_percent_per_week}%" : icon('question-circle').html_safe
+                }
+              ]
+
+= render partial: 'shared/highlights', locals: { highlights: highlights }

@@ -1,0 +1,14 @@
+.card
+  .card-header{id: "heading#{index}"}
+    %h5.mb-0
+      %button.btn.btn-link{"aria-controls": "#collapse#{index}", "aria-expanded": "false", "data-target": "#collapse#{index}", "data-toggle": "collapse"}
+        = group_type.name.pluralize
+      = link_to [:admin, group_type], method: :delete, data: { confirm: I18n.t('actions.confirm') }, class: 'float-right' do
+        = icon('trash')
+      = link_to [:edit, :admin, group_type], class: 'float-right' do
+        = icon('pencil')
+      = link_to [:new, :admin, group_type, :user_group], class: 'float-right' do
+        = icon('plus')
+  .collapse{"aria-labelledby": "heading#{index}", "data-parent": "#accordion", id: "collapse#{index}"}
+    .card-body.p-0
+      = render partial: 'group_type_table', locals: { group_type: group_type }
