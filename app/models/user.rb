@@ -13,7 +13,7 @@
 #  reset_password_token   :string(255)
 #  reset_password_sent_at :datetime
 #  remember_created_at    :datetime
-#  epr_uuid               :string(255)
+#  epr_uuid               :string(255)      default(""), not null
 #
 class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :recoverable, :trackable and :omniauthable
@@ -45,7 +45,7 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :admin, inclusion: { in: [true, false] }
-  validates :epr_uuid, uniqueness: { case_sensitive: true }, allow_blank: true
+  validates :epr_uuid, uniqueness: { case_sensitive: true }, allow_blank: true # rubocop:disable Rails/UniqueValidationWithoutIndex
 
   def name
     "#{first_name} #{last_name}"

@@ -2655,7 +2655,7 @@
       "properties": {
         "name": {
           "type": "string",
-          "example": "quo",
+          "example": "atque",
           "x-nullable": false
         },
         "group_type_id": {

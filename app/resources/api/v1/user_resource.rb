@@ -6,6 +6,10 @@ class Api::V1::UserResource < JSONAPI::Resource
   has_many :user_groups, exclude_links: :default
   has_many :memberships, exclude_links: :default
 
+  def epr_uuid=(val)
+    @model.epr_uuid = val || ''
+  end
+
   filter :email,
          apply: lambda { |records, values, _options|
            records.where(email: values[0])

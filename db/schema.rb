@@ -148,9 +148,9 @@ ActiveRecord::Schema.define(version: 2021_03_09_150047) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.string "epr_uuid"
+    t.string "epr_uuid", default: "", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["epr_uuid"], name: "index_users_on_epr_uuid", unique: true
+    t.index ["epr_uuid"], name: "index_users_on_epr_uuid"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

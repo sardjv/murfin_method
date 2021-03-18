@@ -84,6 +84,18 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
           end
         end
 
+        context 'epr_uuid is null' do
+          let(:attributes) { valid_attributes.merge(epr_uuid: nil) }
+
+          response '200', 'OK: User updated' do
+            schema '$ref' => '#/definitions/user_response'
+
+            run_test! do
+              expect(updated_user.reload.epr_uuid).to eql ''
+            end
+          end
+        end
+
         context 'user group relationships passed' do
           let!(:user_group1) { create :user_group }
           let!(:user_group2) { create :user_group }
