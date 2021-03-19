@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module FiltersHelper
+  def filters_tag_options
+    TagType.includes(tags: :parent).map { |type| [type.name, type.tags.map { |t| [t.name_with_ancestors, t.id] }] }
+  end
+
   def filters_predefined_ranges_options # rubocop:disable Metrics/AbcSize
     [
       {
@@ -30,12 +34,12 @@ module FiltersHelper
 
   def filters_predefined_ranges_option_is_selected(start_date, end_date, option_range)
     (start_date == option_range[0] && end_date == option_range[1]) ||
-    (option_range.blank? && !filters_predefined_ranges_find_option(start_date, end_date))
+      (option_range.blank? && !filters_predefined_ranges_find_option(start_date, end_date))
   end
 
   private
 
   def filters_predefined_ranges_find_option(start_date, end_date)
-    filters_predefined_ranges_options.detect {|h| h[:range][0] == start_date && h[:range][1] == end_date }
+    filters_predefined_ranges_options.detect { |h| h[:range][0] == start_date && h[:range][1] == end_date }
   end
 end

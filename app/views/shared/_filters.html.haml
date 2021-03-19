@@ -8,7 +8,7 @@
   .card-body
     = bootstrap_form_for :query, url: url, method: :get, html: { id: 'filters-form' } do |f|
       .form-row
-        = f.select :filter_tag_ids, grouped_options_for_select(tag_options, filter_tag_ids),
+        = f.select :filter_tag_ids, grouped_options_for_select(filters_tag_options, filter_tag_ids),
           { label: t('filters.tags'), wrapper: { class: 'col-md-7 filters-tags-container' } },
           { class: 'filter', multiple: true, 'data-actions-box': true, 'data-use-select2': true }
         = f.text_field :filter_start_date,
