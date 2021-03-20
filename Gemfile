@@ -133,7 +133,7 @@ group :development do
   # haml-lint is a tool to help keep your HAML files clean and readable
   # https://github.com/sds/haml-lint
   gem 'haml_lint', '~> 0.37.0', require: false
-  
+
   # Listens to file modifications and notifies you about the changes.
   # https://github.com/guard/listen
   gem 'listen', '~> 3.4.1'
