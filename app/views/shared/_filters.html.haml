@@ -1,7 +1,7 @@
-- url ||= request.path
-- filter_tag_ids ||= @presenter.filter_tag_ids
-- filter_start_time ||= @presenter.filter_start_date
-- filter_end_time ||= @presenter.filter_end_date
+:ruby
+  url ||= request.path
+  filter_tag_ids ||= presenter.filter_tag_ids
+
 .card.mb-4
   .card-body
     = bootstrap_form_for :query, url: url, method: :get, html: { id: 'filters-form' } do |f|
@@ -10,13 +10,13 @@
           { label: t('filters.tags'), wrapper: { class: 'col-md-7 filters-tags-container' } },
           { class: 'filter', multiple: true, 'data-actions-box': true, 'data-use-select2': true }
         = f.text_field :filter_start_date,
-          { value: @presenter.filter_start_date,
+          { value: presenter.filter_start_date,
           label: t('filters.start_date'),
           wrapper: { class: 'col-md-2 filters-start-date-container' },
           class: 'filter', autocomplete: 'off', 'data-behaviour-flatpickr': true }
         = f.text_field :filter_end_date,
-          { value: @presenter.filter_end_date,
-          label: render('shared/filters_predefined_ranges'),
+          { value: presenter.filter_end_date,
+          label: render('shared/filters_predefined_ranges', presenter: presenter),
           label_class: 'd-block',
           wrapper: { class: 'col-md-2 filters-end-date-container' },
           class: 'filter', autocomplete: 'off', 'data-behaviour-flatpickr': true }

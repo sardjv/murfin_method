@@ -6,8 +6,8 @@
         %th= Plan.human_attribute_name('start_date')
         %th= Plan.human_attribute_name('end_date')
         %th= Plan.human_attribute_name('state')
-        %th{style: "width: 50px;"}
-        %th{style: "width: 50px;"}
+        %th{ style: 'width: 50px;' }
+        %th{ style: 'width: 50px;' }
     %tbody
       - plans.each do |plan|
         - cache plan do
@@ -17,7 +17,7 @@
             %td= I18n.l(plan.end_date, format: :readable)
             %td
               %h4.text-white
-                %span{class: "badge #{state_badge_colour(plan)}"}
+                %span{ class: "badge #{state_badge_colour(plan)}" }
                   = display_state(plan)
             %td
               - if policy(plan).edit?
@@ -25,6 +25,6 @@
                   = icon('pencil')
             %td
               - if policy(plan).destroy?
-                = link_to [plan], method: :delete, data: { confirm: I18n.t('actions.confirm') }, class: 'btn btn-link'  do
+                = link_to [plan], method: :delete, data: { confirm: I18n.t('actions.confirm') }, class: 'btn btn-link' do
                   = icon('trash')
-= paginate @plans
+= paginate plans

@@ -22,11 +22,12 @@
       = f.primary I18n.t('actions.save')
     - else
       = f.primary I18n.t('actions.add', model_name: Note.model_name.human.titleize)
-    %button.btn.btn-secondary.mr-auto{"data-dismiss" => "modal", :type => "button"}= I18n.t('actions.cancel')
+    %button.btn.btn-secondary.mr-auto{ 'data-dismiss': 'modal', type: :button }= I18n.t('actions.cancel')
     - if note.persisted?
       = link_to note, type: 'button', class: 'btn btn-danger', method: :delete, remote: true, data: { confirm: I18n.t('actions.confirm') } do
         = I18n.t('actions.delete')
-      = link_to '', id: 'prev_note', class: 'ml-auto', remote: true, onclick: "window.dispatchEvent(new CustomEvent('prev', { detail: { note_id: #{note.id} } }))" do
+      = link_to '', id: 'prev_note', class: 'ml-auto', remote: true,
+                    onclick: "window.dispatchEvent(new CustomEvent('prev', { detail: { note_id: #{note.id} } }))" do
         = icon('chevron-left', width: '2em')
       = link_to '', id: 'next_note', remote: true, onclick: "window.dispatchEvent(new CustomEvent('next', { detail: { note_id: #{note.id} } }))" do
         = icon('chevron-right', width: '2em')

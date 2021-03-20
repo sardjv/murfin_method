@@ -1,6 +1,6 @@
 .container.my-4
-  = render 'team_tabs'
-  = render 'shared/filters'
+  = render 'team_tabs', user_group: @user_group
+  = render 'shared/filters', presenter: @presenter
   .row
     .col-12
       %h5= I18n.t('graph.title.individuals')
@@ -8,7 +8,7 @@
       .card.my-4
         .card-body
           %canvas#bar-chart
-  = render 'individuals_table'
+  = render 'individuals_table', presenter: @presenter
 
 :javascript
   var chartData = #{raw @presenter.to_json(graphs: [{ type: :bar_chart, data: :individual_data, units: '%' }])};

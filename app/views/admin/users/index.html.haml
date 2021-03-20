@@ -10,12 +10,12 @@
             %tr
               %th= User.human_attribute_name('name')
               %th= User.human_attribute_name('email')
-              %th{style: "width: 50px;"}
-              %th{style: "width: 50px;"}
+              %th{ style: 'width: 50px;' }
+              %th{ style: 'width: 50px;' }
           %tbody
             - @users.each do |user|
               - cache user do
-                %tr{:id => "#{dom_id user}"}
+                %tr{ id: dom_id(user) }
                   %td
                     = user.name
                     - if user.admin?
@@ -26,6 +26,6 @@
                     = link_to [:edit, :admin, user], class: 'btn btn-link' do
                       = icon('pencil')
                   %td
-                    = link_to [:admin, user], method: :delete, data: { confirm: I18n.t('actions.confirm') }, class: 'btn btn-link'  do
+                    = link_to [:admin, user], method: :delete, data: { confirm: I18n.t('actions.confirm') }, class: 'btn btn-link' do
                       = icon('trash')
       = paginate @users

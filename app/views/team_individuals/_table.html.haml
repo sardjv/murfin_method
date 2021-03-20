@@ -11,9 +11,9 @@
                 %th RiO Data
                 %th= TimeRange.human_attribute_name('percentage')
             %tbody
-              - @presenter.time_ranges_weekly_data.each_pair do |week, data|
-                %tr{'data-week-start-date': week.begin.to_s(:db)}
+              - presenter.time_ranges_weekly_data.each_pair do |week, data|
+                %tr{ 'data-week-start-date': week.begin.to_s(:db) }
                   %td.team-individual-table-week= date_range_humanized week
                   %td.team-individual-table-planned-minutes= duration_in_words data[:planned_minutes], :short
                   %td.team-individual-table-actual-minutes= duration_in_words data[:actual_minutes], :short
-                  %td.team-individual-table-percentage= data[:planned_minutes] > 0 ? "#{data[:percentage]}%" : icon('question-circle')
+                  %td.team-individual-table-percentage= data[:planned_minutes].positive? ? "#{data[:percentage]}%" : icon('question-circle')

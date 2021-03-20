@@ -1,8 +1,8 @@
 .container.my-4
   = link_to '< Back to team', dashboard_team_path(@presenter.user_group_team)
-  = render 'info'
-  = render 'tabs'
-  = render 'shared/filters'
+  = render 'info', presenter: @presenter
+  = render 'tabs', presenter: @presenter
+  = render 'shared/filters', presenter: @presenter
   .row
     .col-12
       .card.my-4
@@ -17,4 +17,4 @@
               = radio_button_tag 'time_scope', key, **(@presenter.team_stats_presenter.time_scope == key ? { checked: 'checked' } : {})
               = label_tag "time_scope_#{key}", t("graph.time_scope.#{key}")
                
-          %canvas#line-graph{"data-user-id" => "#{@presenter.user.id}"}
+          %canvas#line-graph{ 'data-user-id': @presenter.user.id }
