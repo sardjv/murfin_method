@@ -1,28 +1,20 @@
 :ruby
-  highlights = [{
-                  icon: 'people',
+  highlights = [{ icon: 'people',
                   colour: 'purple',
                   label: 'People',
-                  value: @presenter.paginated_users.total_count
-                },
-                {
-                  icon: 'pie-chart',
+                  value: @presenter.paginated_users.total_count },
+                { icon: 'pie-chart',
                   colour: 'green',
                   label: 'Professional Groups',
-                  value: '14'
-                },
-                {
-                  icon: 'compass',
+                  value: '14' },
+                { icon: 'compass',
                   colour: 'yellow',
                   label: 'Average flex. hours',
-                  value: '8.9'
-                },
-                {
-                  icon: 'flag',
+                  value: '8.9' },
+                { icon: 'flag',
                   colour: 'red',
                   label: 'Teams under 6 hours',
-                  value: '4'
-                }]
+                  value: '4' }]
 
 .container.my-4
   .row
@@ -32,4 +24,4 @@
       = render 'graph_tabs'
       .card.mt-4
         .card-body
-          %canvas#line-graph{'data-time-scope': 'weekly'}
+          %canvas#line-graph{ 'data-time-scope': 'weekly' }

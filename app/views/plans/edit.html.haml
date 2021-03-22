@@ -4,43 +4,59 @@
       %h5= @plan.persisted? ? @plan.name : I18n.t('actions.add', model_name: Plan.model_name.human.titleize)
     .col-3
       %h1.text-white
-        %span{class: "#{state_badge_class(@plan)}"}= display_state(@plan)
+        %span{ class: state_badge_class(@plan) }= display_state(@plan)
   .row
     .col-12
       = bootstrap_form_for @plan do |f|
         - if policy(@plan).change_user?
-          = f.select :user_id,
-            options_for_select(User.order(:first_name).all.map { |t| [t.name, t.id] }, selected: f.object.user_id || current_user.id),
-            { hide_label: true, class: 'input-group-btn', required: true }
+          = f.select :user_id, options_for_select(User.order(:first_name).all.map { |t| [t.name, t.id] },
+                               selected: f.object.user_id || current_user.id),
+                               { hide_label: true, class: 'input-group-btn', required: true }
         - else
           = f.hidden_field :user_id, value: f.object.user_id || current_user.id
+
         = f.date_select :start_date, label: Plan.human_attribute_name('start_date'), disabled: !policy(@plan).update?
+
         - if @plan.persisted?
           = f.date_select :end_date, label: Plan.human_attribute_name('end_date'), disabled: !policy(@plan).update?
+
         .border.my-4.p-4
           %label= Plan.human_attribute_name('activities')
           %table#sortable.table
             %thead.bg-white
               %tr
                 - TagType.active_for(Activity).sorted.each do |t|
-                  %th.font-weight-normal.sort{"data-sort": t.name.parameterize}=t.name
-                %th.font-weight-normal.sort{"data-sort": Activity.human_attribute_name('duration').parameterize}=Activity.human_attribute_name('duration')
+                  %th.font-weight-normal.sort{ 'data-sort': t.name.parameterize }
+                    = t.name
+                %th.font-weight-normal.sort{ 'data-sort': Activity.human_attribute_name('duration').parameterize }
+                  = Activity.human_attribute_name('duration')
                 %th
             %tbody.activities.list
               = f.fields_for :activities, wrapper: false, include_id: false do |activity_form|
-                = render 'activity_fields', plan_form: f, f: activity_form
+                = render 'activity_fields', plan: @plan, plan_form: f, f: activity_form
+
           - if policy(@plan).update?
             %div
-              = link_to_add_association I18n.t('actions.add', model_name: Activity.model_name.human.titleize), f, :activities, data: { 'association-insertion-node': 'tbody.activities', 'association-insertion-method': 'append' }, class: 'btn btn-primary'
+              = link_to_add_association I18n.t('actions.add', model_name: Activity.model_name.human.titleize), f,
+                                        :activities,
+                                        data: { 'association-insertion-node': 'tbody.activities', 'association-insertion-method': 'append' },
+                                        class: 'btn btn-primary',
+                                        render_options: { locals: { plan: @plan } }
+
         .border.my-4.p-4
           %label= Plan.human_attribute_name('signoffs')
           %table.table
             %tbody.signoffs.list
               = f.fields_for :signoffs, @plan.required_signoffs, wrapper: false, include_id: false do |signoff_form|
                 = render 'signoff_fields', f: signoff_form
+
           - if policy(@plan).update?
             %div
-              = link_to_add_association I18n.t('actions.add', model_name: Signoff.model_name.human.titleize), f, :signoffs, data: { 'association-insertion-node': 'tbody.signoffs', 'association-insertion-method': 'append' }, class: 'btn btn-primary'
+              = link_to_add_association I18n.t('actions.add', model_name: Signoff.model_name.human.titleize), f, :signoffs,
+                                        data: { 'association-insertion-node': 'tbody.signoffs', 'association-insertion-method': 'append' },
+                                        class: 'btn btn-primary',
+                                        render_options: { locals: { plan: @plan } }
+
         - if policy(@plan).update?
           = f.submit I18n.t('actions.save'), class: 'btn btn-primary mt-4'
         = link_to I18n.t('actions.cancel'), plans_path, class: 'btn btn-outline-secondary mt-4'

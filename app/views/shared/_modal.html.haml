@@ -1,7 +1,7 @@
-#modal.modal.fade{'aria-hidden': 'true', 'aria-labelledby': 'modalTitle', role: 'dialog', tabindex: '-1'}
-  .modal-dialog.modal-dialog-centered{role: 'document'}
+#modal.modal.fade{ 'aria-hidden': 'true', 'aria-labelledby': 'modalTitle', role: 'dialog', tabindex: '-1' }
+  .modal-dialog.modal-dialog-centered{ role: 'document' }
     .modal-content
       .modal-header
-        %button.close{'aria-label': 'Close', 'data-dismiss': 'modal', type: 'button' }
-          %span{'aria-hidden': 'true'} ×
+        %button.close{ 'aria-label': 'Close', 'data-dismiss': 'modal', type: 'button' }
+          %span{ 'aria-hidden': 'true' } ×
       = render partial: template, locals: template_locals

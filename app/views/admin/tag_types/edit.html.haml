@@ -1,7 +1,11 @@
 .container.my-4
   .row
     .col-12
-      %h5= @tag_type.persisted? ? I18n.t('actions.edit', model_name: TagType.model_name.human.titleize) : I18n.t('actions.add', model_name: TagType.model_name.human.titleize)
+      %h5
+        - if @tag_type.persisted?
+          = I18n.t('actions.edit', model_name: TagType.model_name.human.titleize)
+        - else
+          = I18n.t('actions.add', model_name: TagType.model_name.human.titleize)
   .row
     .col-12
       = bootstrap_form_for [:admin, @tag_type] do |f|

@@ -6,6 +6,16 @@ orbs:
   heroku: circleci/heroku@1.0.1
 
 jobs:
+  hamllint:
+    parallelism: 1
+    docker:
+      - image: cimg/ruby:3.0.0-node
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run:
+          name: Run haml-lint
+          command: bundle exec haml-lint app/views
   rubocop:
     parallelism: 1
     docker:
@@ -66,10 +76,12 @@ workflows:
   version: 2
   checks:
     jobs:
+      - hamllint
       - rubocop
       - test
       - heroku/deploy-via-git:
           requires:
+            - hamllint
             - rubocop
             - test
           filters:

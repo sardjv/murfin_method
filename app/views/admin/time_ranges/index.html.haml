@@ -13,8 +13,8 @@
               %th= TimeRange.human_attribute_name('end_time')
               %th= TimeRange.human_attribute_name('time_worked')
               %th= TimeRange.human_attribute_name('user')
-              %th{style: "width: 50px;"}
-              %th{style: "width: 50px;"}
+              %th{ style: 'width: 50px;' }
+              %th{ style: 'width: 50px;' }
           %tbody
             - @time_ranges.each do |time_range|
               - cache time_range do
@@ -28,6 +28,6 @@
                     = link_to [:edit, :admin, time_range], class: 'btn btn-link' do
                       = icon('pencil')
                   %td
-                    = link_to [:admin, time_range], method: :delete, data: { confirm: I18n.t('actions.confirm') }, class: 'btn btn-link'  do
+                    = link_to [:admin, time_range], method: :delete, data: { confirm: I18n.t('actions.confirm') }, class: 'btn btn-link' do
                       = icon('trash')
       = paginate @time_ranges

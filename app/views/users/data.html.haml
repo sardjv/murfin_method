@@ -3,8 +3,9 @@
     .col-12
       = render 'user_tabs'
       = render 'shared/filters',
+        presenter: @presenter,
         filter_tag_ids: @presenter.team_stats_presenter.filter_tag_ids,
         filter_start_time: @presenter.team_stats_presenter.filter_start_time,
         filter_end_time: @presenter.team_stats_presenter.filter_end_time
-      = render 'team_individuals/boxes'
-      = render 'team_individuals/table'
+      = render 'team_individuals/boxes', presenter: @presenter
+      = render 'team_individuals/table', presenter: @presenter

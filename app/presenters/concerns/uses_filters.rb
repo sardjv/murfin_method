@@ -4,6 +4,10 @@
 module UsesFilters
   extend ActiveSupport::Concern
 
+  included do
+    attr_reader :query_params, :cookies
+  end
+
   def filter_start_time
     filter_start_date.in_time_zone.beginning_of_day
   end
@@ -13,47 +17,38 @@ module UsesFilters
   end
 
   def filter_start_date
-    return unless @params[:filter_start_year] && @params[:filter_start_month]
+    return unless @params[:filter_start_date]
 
-    Date.new(@params[:filter_start_year].to_i, @params[:filter_start_month].to_i).beginning_of_month
+    Date.parse(@params[:filter_start_date])
   end
 
   def filter_end_date
-    return unless @params[:filter_end_year] && @params[:filter_end_month]
+    return unless @params[:filter_end_date]
 
-    Date.new(@params[:filter_end_year].to_i, @params[:filter_end_month].to_i).end_of_month
+    Date.parse(@params[:filter_end_date])
   end
 
   def filter_tag_ids
     return [] if @params[:filter_tag_ids].blank?
 
-    @params[:filter_tag_ids].is_a?(String) ? @params[:filter_tag_ids]&.split(',') : @params[:filter_tag_ids]
+    if @params[:filter_tag_ids].is_a?(String)
+      @params[:filter_tag_ids]&.split('&')
+    else
+      @params[:filter_tag_ids]
+    end
   end
 
-  def prepare_query_params(query) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def prepare_query_params(query) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
     return {} if query.blank?
 
     if query['filter_start_date'].present? && query['filter_end_date'].present?
-      start_date = Date.parse(query['filter_start_date'])
-      end_date = Date.parse(query['filter_end_date'])
-
       query_params = {
-        filter_start_month: start_date.month,
-        filter_start_year: start_date.year,
-        filter_end_month: end_date.month,
-        filter_end_year: end_date.year
+        filter_start_date: Date.parse(query['filter_start_date']).to_s(:db),
+        filter_end_date: Date.parse(query['filter_end_date']).to_s(:db)
       }
-    elsif query['filter_start_month'].present?
-      query_params = {
-        filter_start_month: query['filter_start_month'] || query['filter_start_time(2i)'],
-        filter_start_year: query['filter_start_year'] || query['filter_start_time(1i)'],
-        filter_end_month: query['filter_end_month'] || query['filter_end_time(2i)'],
-        filter_end_year: query['filter_end_year'] || query['filter_end_time(1i)']
-      }.update { |_k, v| v.to_i }
     end
 
     query_params ||= {}
-
     query_params[:filter_tag_ids] = query['filter_tag_ids'].reject(&:empty?).map(&:to_i) if query['filter_tag_ids'].present?
 
     query_params.compact
@@ -61,15 +56,15 @@ module UsesFilters
 
   private
 
-  def filters_defaults
-    range_begin = 11.months.ago.beginning_of_month.to_date
+  def filters_defaults # rubocop:disable Metrics/AbcSize
+    default_start_date = 11.months.ago.beginning_of_month.to_date
+    default_end_date = Date.current.end_of_month
+    default_tag_ids = Tag.where(default_for_filter: true).pluck(:id)
 
     {
-      filter_start_year: range_begin.year,
-      filter_start_month: range_begin.month,
-      filter_end_year: Date.current.year,
-      filter_end_month: Date.current.month,
-      filter_tag_ids: Tag.where(default_for_filter: true).pluck(:id),
+      filter_start_date: cookies.try(:[], :filter_start_date) || default_start_date.to_s(:db),
+      filter_end_date: cookies.try(:[], :filter_end_date) || default_end_date.to_s(:db),
+      filter_tag_ids: cookies.try(:[], :filter_tag_ids) || default_tag_ids,
       actual_id: TimeRangeType.actual_type.id
     }
   end

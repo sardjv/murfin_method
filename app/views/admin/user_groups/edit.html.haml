@@ -11,7 +11,7 @@
           .row
             .col-4= user.name
             .col-8
-              - Membership::roles.keys.reverse.each do |role_name|
-                = mf.radio_button :role, role_name, inline: true, label:  UserGroup.human_attribute_name("#{role_name}")
+              - Membership.roles.keys.reverse.each do |role_name|
+                = mf.radio_button :role, role_name, inline: true, label: UserGroup.human_attribute_name(role_name)
         = f.submit I18n.t('actions.save'), class: 'btn btn-primary', style: 'margin-top: 10px;'
         = link_to I18n.t('actions.cancel'), :back, class: 'btn btn-outline-secondary mt-2'
