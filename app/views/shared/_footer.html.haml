@@ -2,6 +2,6 @@
   .container
     .d-flex.justify-content-start
       .text-center.m-4
-        %a{href: "https://github.com/sardjv/murfin_method"}= "#{I18n.t('app.name')} v#{Murfin::VERSION}"
+        %a{ href: 'https://github.com/sardjv/murfin_method' } #{I18n.t('app.name')} v#{Murfin::VERSION}
       .text-center.m-4
-        %a{href: "/api_docs"}= I18n.t('footer.api_docs')
+        %a{ href: '/api_docs' }= I18n.t('footer.api_docs')

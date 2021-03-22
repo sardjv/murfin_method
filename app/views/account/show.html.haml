@@ -27,7 +27,7 @@
         .card.mt-4
           .card-body
             - @user_memberships.each do |group_type, data|
-              .row.mb-2{"data-group-type-id": "#{group_type.id}"}
+              .row.mb-2{ "data-group-type-id": group_type.id }
                 .col-md-2
                   %strong
                     = group_type.name
