@@ -6,6 +6,7 @@ class DashboardPresenter
   include UsesFilters
 
   def initialize(args)
+    @cookies = args[:cookies]
     query = args[:params].delete(:query)
     query_params = prepare_query_params(query)
 

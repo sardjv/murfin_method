@@ -1,6 +1,9 @@
 class TeamsController < ApplicationController
+  include QueryFilters
+
   before_action :find_user_group
   before_action :initialize_presenter, only: %i[dashboard individuals]
+  after_action :remember_query_filters, only: %i[dashboard individuals], format: :html
 
   def dashboard
     respond_to do |format|
@@ -30,8 +33,7 @@ class TeamsController < ApplicationController
   end
 
   def initialize_presenter
-    @presenter = DashboardPresenter.new(params: team_params.merge(user_ids: @user_group.user_ids,
-                                                                  time_scope: params[:time_scope]))
+    @presenter = DashboardPresenter.new(params: team_params.merge(user_ids: @user_group.user_ids, time_scope: params[:time_scope]), cookies: cookies)
   end
 
   def team_params

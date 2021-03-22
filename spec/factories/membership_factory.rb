@@ -13,5 +13,13 @@ FactoryBot.define do
   factory :membership do
     user_group_id { UserGroup.all.sample.try(:id) || create(:user_group).id }
     user_id { User.all.sample.try(:id) || create(:user).id }
+
+    trait :member do
+      role { 'member' }
+    end
+
+    trait :lead do
+      role { 'lead' }
+    end
   end
 end

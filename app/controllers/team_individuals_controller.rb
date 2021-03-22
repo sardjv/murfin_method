@@ -1,5 +1,8 @@
 class TeamIndividualsController < ApplicationController
+  include QueryFilters
+
   before_action :initialize_presenter
+  after_action :remember_query_filters, only: %i[show data], format: :html
 
   def show
     respond_to do |format|
@@ -20,7 +23,7 @@ class TeamIndividualsController < ApplicationController
   private
 
   def initialize_presenter
-    @presenter = TeamIndividualPresenter.new(params: team_individual_params.merge(time_scope: params[:time_scope]))
+    @presenter = TeamIndividualPresenter.new(params: team_individual_params.merge(time_scope: params[:time_scope]), cookies: cookies)
   end
 
   def team_individual_params

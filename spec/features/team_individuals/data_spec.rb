@@ -170,6 +170,15 @@ describe 'Team Individual Data', type: :feature, js: true, freeze: Time.zone.loc
             expect(page).to have_content 'Feb 22nd - 28th'
           end
         end
+
+        # make sure after page refresh Last 3 months option is still selected
+        within 'a#filters-predefined-ranges-toggle' do
+          expect(page).to have_content 'Last 3 months'
+        end
+
+        within '#filters-predefined-ranges-menu', visible: false do
+          expect(page).to have_css '.dropdown-item.active', text: 'Last 3 months', visible: false
+        end
       end
     end
 
@@ -180,7 +189,7 @@ describe 'Team Individual Data', type: :feature, js: true, freeze: Time.zone.loc
         end
 
         within '.flatpickr-monthSelect-months' do # Jan 2020
-          find(:xpath, "span[text() = 'Jan']").click
+          find('.flatpickr-monthSelect-month', text: 'Jan').click
         end
 
         within '#filters-form' do
@@ -192,7 +201,20 @@ describe 'Team Individual Data', type: :feature, js: true, freeze: Time.zone.loc
         end
 
         within '.flatpickr-monthSelect-months' do # Feb 2020
-          find(:xpath, "span[text() = 'Feb']").click
+          find('.flatpickr-monthSelect-month', text: 'Feb').click
+        end
+
+        within '#filters-form' do # make sure beginning of start month and end of end month is set
+          expect(page).to have_css "input#query_filter_start_date[value = '2020-01-01']", visible: false
+          expect(page).to have_css "input#query_filter_end_date[value = '2020-02-29']", visible: false
+        end
+
+        within 'a#filters-predefined-ranges-toggle' do
+          expect(page).to have_content 'Custom'
+        end
+
+        within '#filters-predefined-ranges-menu', visible: false do
+          expect(page).to have_css '.dropdown-item.active', text: 'Custom', visible: false
         end
 
         within '#filters-form' do
@@ -207,6 +229,15 @@ describe 'Team Individual Data', type: :feature, js: true, freeze: Time.zone.loc
           within all('.team-individual-table-week').last do
             expect(page).to have_content 'Feb 24th - Mar 1st'
           end
+        end
+
+        # make sure after page refresh Custom is still selected
+        within 'a#filters-predefined-ranges-toggle' do
+          expect(page).to have_content 'Custom'
+        end
+
+        within '#filters-predefined-ranges-menu', visible: false do
+          expect(page).to have_css '.dropdown-item.active', text: 'Custom', visible: false
         end
       end
     end
