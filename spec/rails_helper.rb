@@ -14,6 +14,7 @@ Dir[File.join(__dir__, 'fixtures/', '*.rb')].sort.each { |file| require file }
 Dir[File.join(__dir__, 'support/', '*.rb')].sort.each { |file| require file }
 
 require 'rspec/retry'
+require 'strip_attributes/matchers'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -115,6 +116,7 @@ RSpec.configure do |config|
   config.include FeatureSessionHelpers, type: :feature
   config.include RequestSessionHelpers, type: :request
   config.include FormHelpers, type: :feature
+  config.include StripAttributes::Matchers
 
   config.include Warden::Test::Helpers
   config.include Devise::Test::IntegrationHelpers, type: :feature
