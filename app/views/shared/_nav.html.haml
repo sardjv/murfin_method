@@ -11,8 +11,8 @@
           - navs.each do |nav|
             - if nav[:enabled]
               %li.nav-item
-                .nav-link
-                  = link_to(nav[:label], nav[:path], class: ('active' if current_page?(nav[:path]) || presenter.any_subnavs_active?(nav)))
+                = link_to(nav[:label], nav[:path],
+                  class: "nav-link #{' active' if current_page?(nav[:path]) || presenter.any_subnavs_active?(nav)}")
       %ul.navbar-nav.ml-auto
         - if user_authenticated?
           %li.nav-item
