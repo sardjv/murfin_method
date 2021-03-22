@@ -91,6 +91,10 @@ gem 'rswag-ui', '~> 2.4.0'
 # https://github.com/mperham/sidekiq
 gem 'sidekiq', '~> 6.2.0'
 
+# Strips attributes of leading and trailing whitespace before validation.
+# https://github.com/rmm5t/strip_attributes
+gem 'strip_attributes', '~> 1.11.0'
+
 # Bundle zoneinfo files which are not included in Windows.
 # https://github.com/tzinfo/tzinfo-data
 gem 'tzinfo-data', '~> 1.2021.1'
