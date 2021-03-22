@@ -18,6 +18,16 @@ describe 'Admin edits a user', type: :feature, js: true do
     end
   end
 
+  context 'when remove epr_uuid' do
+    let!(:user_without_epr_uuid) { create :user, epr_uuid: '' }
+    it 'saves as nil to prevent ActiveRecord::RecordNotUnique' do
+      fill_in User.human_attribute_name('epr_uuid'), with: ''
+      click_button I18n.t('actions.save')
+      expect(page).to have_content(I18n.t('notice.successfully.updated', model_name: User.model_name.human))
+      expect(user.reload.epr_uuid).to eq nil
+    end
+  end
+
   context 'auth method is oauth' do
     around do |example|
       ClimateControl.modify AUTH_METHOD: 'oauth' do

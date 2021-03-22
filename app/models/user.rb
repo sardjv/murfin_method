@@ -16,6 +16,7 @@
 #  epr_uuid               :string(255)
 #
 class User < ApplicationRecord
+  strip_attributes only: %i[first_name last_name email epr_uuid]
   # :confirmable, :lockable, :timeoutable, :recoverable, :trackable and :omniauthable
   devise :database_authenticatable, :validatable, :rememberable
 
