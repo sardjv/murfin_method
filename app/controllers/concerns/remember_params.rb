@@ -9,7 +9,7 @@ module RememberParams
     helper_method :graph_time_scope, :graph_kind
   end
 
-  def time_scope
+  def graph_time_scope
     cookies[:time_scope] || (params[:time_scope] || 'weekly')
   end
 
