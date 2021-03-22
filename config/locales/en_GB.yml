@@ -67,6 +67,7 @@ en:
     start_date: Dates
     tags: Tags
     predefined_ranges:
+      custom: Custom
       last_3_months: Last 3 months
       last_6_months: Last 6 months
       last_12_months: Last 12 months
@@ -127,6 +128,7 @@ en:
       admin_group_types: Groups
       admin_users: Users
       combined_data: Combined data
+      dashboard: Dashboard
       data: Data
       individuals: Individuals
       plans: Job Plans

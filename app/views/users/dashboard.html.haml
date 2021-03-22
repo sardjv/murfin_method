@@ -1,6 +1,7 @@
 .container.my-4
   .row
-    .col-12= render 'user_tabs'
+    .col-12
+      = render 'users/user_tabs'
     .col-sm-4.my-4
       %h1= I18n.t('app.name')
       %p.my-4= I18n.t('home.you_can')

@@ -8,16 +8,17 @@ class TeamIndividualPresenter
   include UsesFilters
 
   def initialize(args) # rubocop:disable Metrics/AbcSize
+    @cookies = args[:cookies]
     query = args[:params].delete(:query)
-    query_params = prepare_query_params(query)
+    @query_params = prepare_query_params(query)
 
     @params = defaults
               .merge(args[:params].to_hash.symbolize_keys)
               .merge(query_params)
 
-    @user_group_team = UserGroup.find(@params[:team_id])
-    @user = @user_group_team.users.find(@params[:id])
-    @user_groups = @user.user_groups.where.not(id: @user_group_team.id)
+    @user = User.find(@params[:id])
+    @user_group_team = UserGroup.find(@params[:team_id]) if @params[:team_id]
+    @user_groups = @user.user_groups.where.not(id: @user_group_team.try(:id))
   end
 
   def team_individual_data

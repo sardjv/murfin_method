@@ -1,10 +1,9 @@
-class TeamIndividualsController < ApplicationController
-  include QueryFilters
+class UsersController < ApplicationController
+  before_action :initialize_presenter, only: %i[summary data]
 
-  before_action :initialize_presenter
-  after_action :remember_query_filters, only: %i[show data], format: :html
+  def dashboard; end
 
-  def show
+  def summary
     respond_to do |format|
       format.html
       format.json do
@@ -23,7 +22,7 @@ class TeamIndividualsController < ApplicationController
   private
 
   def initialize_presenter
-    @presenter = TeamIndividualPresenter.new(params: team_individual_params.merge(time_scope: params[:time_scope]), cookies: cookies)
+    @presenter = TeamIndividualPresenter.new(params: team_individual_params.merge(id: current_user.id, time_scope: params[:time_scope]))
   end
 
   def team_individual_params

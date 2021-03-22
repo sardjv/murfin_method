@@ -21,7 +21,7 @@
     .col-12
       %h5= I18n.t('graph.title.admin')
       = render partial: 'shared/highlights', locals: { highlights: highlights }
-      = render 'dashboard/graph_tabs'
+      = render 'graph_tabs'
       .card.mt-4
         .card-body
           %canvas#line-graph{ 'data-time-scope': 'weekly' }
