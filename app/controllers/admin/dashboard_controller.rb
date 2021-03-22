@@ -1,4 +1,6 @@
 class Admin::DashboardController < ApplicationController
+  include RememberParams
+
   def show
     @presenter = DashboardPresenter.new(params: dashboard_params)
 
@@ -13,6 +15,6 @@ class Admin::DashboardController < ApplicationController
   private
 
   def dashboard_params
-    params.permit(:format, :page, :user_ids, :plan_id, :actual_id)
+    params.permit(:format, :page, :user_ids, :plan_id, :actual_id, :time_scope)
   end
 end

@@ -160,8 +160,7 @@ class TeamStatsPresenter
     {
       filter_start_date: (1.year.ago + 1.day).beginning_of_day,
       filter_end_date: Time.zone.today.end_of_day,
-      actual_id: TimeRangeType.actual_type.id,
-      graph_kind: 'percentage_delivered'
+      actual_id: TimeRangeType.actual_type.id
     }
   end
 

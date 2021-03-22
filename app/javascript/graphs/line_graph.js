@@ -8,58 +8,61 @@ import { format, addDays } from 'date-fns'
 import { pickBy } from 'lodash'
 
 window.addEventListener('turbolinks:load', () => {
-  const graphKindSelector = "input:radio[name='graph_kind']"
-  const graphTimeScopeSelector = "input:radio[name='time_scope']"
-  let graphKind = 'percentage_delivered'
-  let timeScope = 'weekly'
-  let prev_graph_kind_val = $(`${graphKindSelector}:checked`).val()
-  let prev_time_scope_val = $(`${graphTimeScopeSelector}:checked`).val()
-
-  $(graphKindSelector).on('click', (e) => {
-    if(prev_graph_kind_val != e.target.value) {
-      graphKind = e.target.value
-      drawGraph(graphKind, timeScope)
-      prev_graph_kind_val = graphKind
-    }
-  })
-
-  $(graphTimeScopeSelector).on('click', (e) => {
-    if(prev_time_scope_val != e.target.value) {
-      timeScope = e.target.value
-      drawGraph(graphKind, timeScope)
-      prev_time_scope_val = timeScope
-    }
-  })
-
-  drawGraph(graphKind, timeScope)
-});
-
-function drawGraph(graph_kind, time_scope) {
-  const context = document.getElementById('line-graph')
+  const lineGraphId = 'line-graph'
+  const context = document.getElementById(lineGraphId)
 
   if (context) {
-    const query_params = prepareQueryParamsFromFilters()
-    const url_params = { query: query_params, graph_kind: graph_kind, time_scope: time_scope }
+    const graphKindSelector = "input:radio[name='graph_kind']"
+    const graphTimeScopeSelector = "input:radio[name='time_scope']"
 
-    Rails.ajax({
-      url: API.url(),
-      type: 'GET',
-      data: $.param(url_params).toString(),
-      dataType: 'json',
-      success: function(data) {
-        if (global.chart) { global.chart.destroy() };
-        global.chart = line_graph(context, data.line_graph, { graph_kind: graph_kind, time_scope: time_scope });
+    let prev_graph_kind = $(`${graphKindSelector}:checked`).val()
+    let prev_time_scope = $(`${graphTimeScopeSelector}:checked`).val()
 
-        if(data.average_delivery_percent !== undefined) {
-          $('#team-dash-average-delivery-percent').html(`${data.average_delivery_percent}%`)
-        }
+    let current_graph_kind = prev_graph_kind
+    let current_time_scope = prev_time_scope
 
-        if(data.members_under_delivered_percent !== undefined) {
-          $('#team-dash-members-under-delivered-percent').html(data.members_under_delivered_percent)
-        }
+    $(graphKindSelector).on('click', (e) => {
+      if(prev_graph_kind != e.target.value) {
+        current_graph_kind = e.target.value
+        drawGraph(context, current_graph_kind, current_time_scope)
+        prev_graph_kind = current_graph_kind
       }
-    });
+    })
+
+    $(graphTimeScopeSelector).on('click', (e) => {
+      if(prev_time_scope != e.target.value) {
+        current_time_scope = e.target.value
+        drawGraph(context, current_graph_kind, current_time_scope)
+        prev_time_scope = current_time_scope
+      }
+    })
+
+    drawGraph(context, current_graph_kind, current_time_scope)
   }
+});
+
+function drawGraph(context, graph_kind, time_scope) {
+  const query_params = prepareQueryParamsFromFilters()
+  const url_params = { query: query_params, graph_kind: graph_kind, time_scope: time_scope }
+
+  Rails.ajax({
+    url: API.url(),
+    type: 'GET',
+    data: $.param(url_params).toString(),
+    dataType: 'json',
+    success: function(data) {
+      if (global.chart) { global.chart.destroy() };
+      global.chart = line_graph(context, data.line_graph, { graph_kind: graph_kind, time_scope: time_scope });
+
+      if(data.average_delivery_percent !== undefined) {
+        $('#team-dash-average-delivery-percent').html(`${data.average_delivery_percent}%`)
+      }
+
+      if(data.members_under_delivered_percent !== undefined) {
+        $('#team-dash-members-under-delivered-percent').html(data.members_under_delivered_percent)
+      }
+    }
+  });
 }
 
 function prepareQueryParamsFromFilters() {

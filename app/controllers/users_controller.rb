@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  include RememberParams
+
   before_action :initialize_presenter, only: %i[summary data]
 
   def dashboard; end
@@ -7,8 +9,8 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        dataset_labels = t("graphs.#{params[:graph_kind]}.dataset_labels.#{params[:time_scope] || 'weekly'}", default: nil)
-        units = t("graphs.#{params[:graph_kind]}.units", default: '')
+        dataset_labels = t("graphs.#{get_graph_kind}.dataset_labels.#{get_time_scope}", default: nil)
+        units = t("graphs.#{get_graph_kind}.units", default: '')
 
         render json: @presenter.to_json(
           graphs: [{ type: :line_graph, data: :team_individual_data, units: units, dataset_labels: dataset_labels }]
@@ -22,12 +24,10 @@ class UsersController < ApplicationController
   private
 
   def initialize_presenter
-    @presenter = TeamIndividualPresenter.new(params: team_individual_params.merge(id: current_user.id, time_scope: params[:time_scope]))
+    @presenter = TeamIndividualPresenter.new(params: team_individual_params.merge(id: current_user.id, time_scope: get_time_scope, graph_kind: get_graph_kind))
   end
 
   def team_individual_params
-    params.permit(:team_id, :id, :graph_kind, :time_scope,
-                  :filter_tag_ids, :filter_start_date, :filter_end_date,
-                  :page, :format, query: {})
+    params.permit(:team_id, :id, :graph_kind, :time_scope, :page, :format, query: {})
   end
 end

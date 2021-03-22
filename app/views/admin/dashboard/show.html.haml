@@ -24,4 +24,4 @@
       = render 'graph_tabs'
       .card.mt-4
         .card-body
-          %canvas#line-graph{ 'data-time-scope': 'weekly' }
+          %canvas#line-graph{ 'data-time-scope': get_time_scope }
