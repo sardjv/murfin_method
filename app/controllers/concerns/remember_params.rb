@@ -33,7 +33,7 @@ module RememberParams
     end
 
     data = data.symbolize_keys.slice(*PARAMS_TO_REMEMBER)
-    data.reject_if! { |_k, v| v.blank? }
+    data = data.reject { |_k, v| v.blank? }
 
     data.each_pair do |k, v|
       if v.blank?
