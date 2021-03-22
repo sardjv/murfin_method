@@ -1,0 +1,10 @@
+:ruby
+  tabs = [
+    { label: I18n.t('nav.tabs.dashboard'), path: dashboard_path },
+    { label: I18n.t('nav.tabs.summary'), path: users_summary_path },
+    { label: I18n.t('nav.tabs.data'), path: users_data_path },
+    { label: I18n.t('nav.tabs.plans'), path: plans_path }
+  ]
+
+.thin-tabs
+  = render partial: 'shared/tabs', locals: { tabs: tabs }

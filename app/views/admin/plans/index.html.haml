@@ -1,3 +1,4 @@
 .container.my-4
   .row
-    .col-12= render(partial: 'plans/plans', locals: { plans: @plans })
+    .col-12
+      = render partial: 'plans/plans', locals: { plans: @plans }

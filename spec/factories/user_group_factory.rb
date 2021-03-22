@@ -13,4 +13,12 @@ FactoryBot.define do
     name { Faker::Commerce.unique.department }
     group_type_id { GroupType.all.sample.try(:id) || create(:group_type).id }
   end
+
+  trait :team do
+    group_type { GroupType.where(name: 'team').first || FactoryBot.create(:group_type, name: 'team') }
+  end
+
+  trait :band do
+    group_type { GroupType.where(name: 'band').first || FactoryBot.create(:group_type, name: 'band') }
+  end
 end
