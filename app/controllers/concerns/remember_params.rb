@@ -3,31 +3,37 @@
 module RememberParams
   extend ActiveSupport::Concern
 
-  PARAMS_TO_REMEMBER = [:filter_start_date, :filter_end_date, :filter_tag_ids, :time_scope, :graph_kind]
+  PARAMS_TO_REMEMBER = %i[filter_start_date filter_end_date filter_tag_ids time_scope graph_kind].freeze
 
   included do
-    helper_method :get_time_scope, :get_graph_kind
+    helper_method :graph_time_scope, :graph_kind
   end
 
-  def get_time_scope
-    cookies[:time_scope] ? cookies[:time_scope] : (params[:time_scope] || 'weekly')
+  def time_scope
+    cookies[:time_scope] || (params[:time_scope] || 'weekly')
   end
 
-  def get_graph_kind
-    cookies[:graph_kind] ? cookies[:graph_kind] : (params[:graph_kind] || 'percentage_delivered')
+  def graph_kind
+    cookies[:graph_kind] || (params[:graph_kind] || 'percentage_delivered')
   end
 
   private
 
-  def remember_params # rubocop:disable Metrics/AbcSize
-    return if params[:query].blank? && params[:time_scope].blank?
+  def remember_params # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    return unless params[:query].present? || params[:time_scope] || params[:graph_kind]
 
-    data = {}
-    data.merge!(params[:query].permit!.to_h) unless params[:query].blank?
-    data.merge!({ time_scope: params[:time_scope] }) unless params[:time_scope].blank?
-    data.merge!({ graph_kind: params[:graph_kind] }) unless params[:graph_kind].blank?
+    data = {
+      time_scope: params[:time_scope],
+      graph_kind: params[:graph_kind]
+    }
+
+    if params[:query].present?
+      query_params = params[:query].permit!.to_h
+      data.merge!(query_params)
+    end
 
     data = data.symbolize_keys.slice(*PARAMS_TO_REMEMBER)
+    data.reject_if! { |_k, v| v.blank? }
 
     data.each_pair do |k, v|
       if v.blank?
