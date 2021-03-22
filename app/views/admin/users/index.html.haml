@@ -10,14 +10,9 @@
             %tr
               %th= User.human_attribute_name('name')
               %th= User.human_attribute_name('email')
-<<<<<<< HEAD
               %th= User.human_attribute_name('epr_uuid')
-              %th{style: "width: 50px;"}
-              %th{style: "width: 50px;"}
-=======
               %th{ style: 'width: 50px;' }
               %th{ style: 'width: 50px;' }
->>>>>>> master
           %tbody
             - @users.each do |user|
               - cache user do
