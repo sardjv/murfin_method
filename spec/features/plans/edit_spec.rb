@@ -1,52 +1,132 @@
 require 'rails_helper'
 
 describe 'User edits a plan', type: :feature, js: true do
-  let(:current_user) { create(:user) }
-  let(:tag_type) { create(:tag_type, name: 'Patient Contact') }
-  let!(:tag1) { create(:tag, name: 1, tag_type: tag_type) }
-  let!(:tag2) { create(:tag, name: 2, tag_type: tag_type) }
-  let!(:plan) { create(:plan, user: current_user, activities: [create(:activity)]) }
-  let(:input) { plan.start_date.year + 2 }
+  let(:current_user) { create :user }
+
+  let(:tag_type1) { create :tag_type, name: 'Patient Contact' }
+  let(:tag_type2) { create :tag_type, name: 'Lorem' }
+  let!(:tag1a) { create :tag, name: 1, tag_type: tag_type1 }
+  let!(:tag1b) { create :tag, name: 2, tag_type: tag_type1 }
+
+  let!(:tag2a) { create :tag, tag_type: tag_type2 }
+  let!(:tag2b) { create :tag, tag_type: tag_type2 }
+
+  let(:plan) { create :plan, user: current_user }
+  let!(:activity1) { create :activity, plan: plan }
+  let!(:tag_association) { create :tag_association, tag_type: tag_type1, tag: tag1a, taggable: activity1 }
+
+  let(:end_date_year) { plan.start_date.year + 2 }
+  let(:success_message) { I18n.t('notice.successfully.updated', model_name: Plan.model_name.human) }
 
   before do
-    plan.activities.first.tag_associations.create(tag_type: tag_type, tag: tag1)
     log_in current_user
     visit plans_path
     first('.bi-pencil').click
   end
 
   it 'updates plan' do
-    bootstrap_select_year input, from: Plan.human_attribute_name('end_date')
-    find("option[data-id='#{tag2.id}']").click
-    click_button I18n.t('actions.save')
+    bootstrap_select_year end_date_year, from: 'End date'
 
-    expect(page).to have_content(I18n.t('notice.successfully.updated', model_name: Plan.model_name.human))
-    expect(plan.reload.end_date.year).to eq input
-    expect(plan.activities.first.tags.first).to eq tag2
+    within '.patient-contact' do
+      find("option[data-id='#{tag1b.id}']").click
+    end
+    click_button 'Save'
+
+    expect(page).to have_content success_message
+    expect(plan.reload.end_date.year).to eq end_date_year
+    expect(plan.activities.first.tags.first).to eq tag1b
   end
 
-  context 'with end before start' do
-    let(:input) { plan.start_date.year - 1 }
+  describe 'add activity' do
+    let(:time_worked_hours) { 8 }
+    let(:activity2) { plan.activities.unscoped.last }
+    let(:activities_last_row_selector) { '.activities .nested-fields:last-of-type' }
 
     before do
-      bootstrap_select_year input, from: Plan.human_attribute_name('end_date')
+      click_link 'Add Activity'
+    end
+
+    it 'adds activity to the plan' do
+      within activities_last_row_selector do
+        within '.lorem' do
+          find("option[data-id='#{tag2a.id}']").click
+        end
+
+        within '.time-worked-per-week' do
+          find_field(type: 'number', match: :first).set(time_worked_hours)
+        end
+      end
+
+      expect { click_button 'Save' }.to change(plan.activities, :count).by(1)
+
+      within activities_last_row_selector do
+        within '.lorem' do
+          expect(page).to have_css '.filter-option-inner-inner', text: tag2a.name
+        end
+
+        within '.time-worked-per-week' do
+          expect(page).to have_css "input.duration-picker-activity[value = '#{(time_worked_hours * 3600).to_f}']", visible: false
+        end
+      end
+
+      expect(activity2.seconds_per_week.to_i).to eql time_worked_hours * 3600
+    end
+
+    context 'time worked per week not set' do
+      let(:time_worked_error_message) { 'Time worked per week required' }
+
+      it 'does not add activity and keeps selected other fields' do
+        within activities_last_row_selector do
+          within '.patient-contact' do
+            find("option[data-id='#{tag1a.id}']").click
+          end
+
+          within '.lorem' do
+            find("option[data-id='#{tag2a.id}']").click
+          end
+        end
+
+        expect { click_button 'Save' }.not_to change(plan.activities, :count)
+
+        within activities_last_row_selector do
+          within '.time-worked-per-week' do
+            expect(page).to have_css '.error', text: time_worked_error_message
+          end
+
+          within '.patient-contact' do
+            expect(page).to have_css '.filter-option-inner-inner', text: tag1a.name
+          end
+
+          within '.lorem' do
+            expect(page).to have_css '.filter-option-inner-inner', text: tag2a.name
+          end
+        end
+      end
+    end
+  end
+  # TODO: add similar scenario for create spec
+
+  context 'with end before start' do
+    let(:end_date_year) { plan.start_date.year - 1 }
+
+    before do
+      bootstrap_select_year end_date_year, from: Plan.human_attribute_name('end_date')
     end
 
     it 'does not save' do
-      expect { click_button I18n.t('actions.save') }.not_to change(Plan, :count)
+      expect { click_button 'Save' }.not_to change(Plan, :count)
 
-      expect(page).to have_content(I18n.t('notice.could_not_be.updated', model_name: Plan.model_name.human))
+      expect(page).not_to have_content success_message
     end
   end
 
   context 'when selecting None for tag' do
     it 'does not raise error' do
-      find('#plan_activities_attributes_0_tag_associations_attributes_0_tag_id option', text: 'None',
-                                                                                        visible: false).click
+      find('#plan_activities_attributes_0_tag_associations_attributes_0_tag_id option', text: 'None', visible: false).click
 
-      click_button I18n.t('actions.save')
+      click_button 'Save'
 
-      expect(page).to have_content(I18n.t('notice.successfully.updated', model_name: Plan.model_name.human))
+      expect(page).to have_content success_message
     end
   end
 end

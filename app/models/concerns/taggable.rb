@@ -9,8 +9,10 @@ module Taggable
 
     def active_tag_associations
       TagType.active_for(self.class).sorted.map do |tag_type|
-        tag_associations.find_by(tag_type_id: tag_type.id) || tag_associations.build(tag_type: tag_type)
+        # tag_associations.find_by(tag_type_id: tag_type.id) || tag_associations.build(tag_type: tag_type)
+        tag_associations.detect { |ta| ta.tag_type_id == tag_type.id } || tag_associations.build(tag_type: tag_type)
       end
+      # detect insted find_by finds also not saved (just builded) tag associations
     end
   end
 end
