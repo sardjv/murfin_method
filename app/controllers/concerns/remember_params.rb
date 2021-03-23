@@ -10,11 +10,11 @@ module RememberParams
   end
 
   def graph_time_scope
-    cookies[:time_scope] || (params[:time_scope] || 'weekly')
+    (params[:time_scope] || cookies[:time_scope]) || 'weekly'
   end
 
   def graph_kind
-    cookies[:graph_kind] || (params[:graph_kind] || 'percentage_delivered')
+    (params[:graph_kind] || cookies[:graph_kind]) || 'percentage_delivered'
   end
 
   private

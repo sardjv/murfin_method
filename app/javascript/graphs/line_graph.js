@@ -51,8 +51,8 @@ function drawGraph(context, graph_kind, time_scope) {
     data: $.param(url_params).toString(),
     dataType: 'json',
     success: function(data) {
-      if (global.chart) { global.chart.destroy() };
-      global.chart = line_graph(context, data.line_graph, { graph_kind: graph_kind, time_scope: time_scope });
+      if (global.chart) { global.chart.destroy() }
+      global.chart = line_graph(context, data.line_graph, { graph_kind: graph_kind, time_scope: time_scope })
 
       if(data.average_delivery_percent !== undefined) {
         $('#team-dash-average-delivery-percent').html(`${data.average_delivery_percent}%`)
