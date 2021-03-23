@@ -13,7 +13,7 @@
 #  reset_password_token   :string(255)
 #  reset_password_sent_at :datetime
 #  remember_created_at    :datetime
-#  epr_uuid               :string(255)      default(""), not null
+#  epr_uuid               :string(255)
 #
 describe User, type: :model do
   subject { build(:user) }
