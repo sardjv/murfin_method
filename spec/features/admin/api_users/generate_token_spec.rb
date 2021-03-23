@@ -4,6 +4,12 @@ describe 'Admin generates a token for an API User', type: :feature, js: true do
   let!(:admin) { create :admin }
   let!(:api_user) { create(:api_user) }
 
+  around do |example|
+    ClimateControl.modify JWT_ALGORITHM: 'HS256', JWT_SECRET: 'my$ecretK3y' do
+      example.run
+    end
+  end
+
   before do
     log_in admin
     visit admin_api_user_path(api_user)
