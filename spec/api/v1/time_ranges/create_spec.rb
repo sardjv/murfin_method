@@ -5,6 +5,7 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
 
   let(:user) { create :user }
   let(:time_range_type) { create :time_range_type }
+  let(:appointment_id) { Faker::Lorem.characters(number: 8) }
 
   let(:valid_attributes) do
     {
@@ -12,7 +13,8 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
       start_time: 1.hour.since.iso8601,
       end_time: 20.hours.since.iso8601,
       minutes_worked: 50,
-      time_range_type_id: time_range_type.id
+      time_range_type_id: time_range_type.id,
+      appointment_id: appointment_id
     }
   end
 
@@ -61,6 +63,15 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
 
         response '422', 'Invalid request' do
           schema '$ref' => '#/definitions/error_422_start_end_time'
+          run_test!
+        end
+      end
+
+      context 'appointment id already used' do
+        let!(:other_time_range) { create :time_range, appointment_id: appointment_id }
+
+        response '422', 'Invalid request' do
+          schema '$ref' => '#/definitions/error_422'
           run_test!
         end
       end

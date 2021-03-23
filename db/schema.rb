@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_09_150047) do
+ActiveRecord::Schema.define(version: 2021_03_23_150802) do
 
   create_table "activities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "schedule", size: :medium, null: false
@@ -123,6 +123,8 @@ ActiveRecord::Schema.define(version: 2021_03_09_150047) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "appointment_id"
+    t.index ["appointment_id"], name: "index_time_ranges_on_appointment_id", unique: true
     t.index ["time_range_type_id", "user_id", "start_time", "end_time", "value"], name: "index_time_range_team_stats"
     t.index ["time_range_type_id"], name: "index_time_ranges_on_time_range_type_id"
     t.index ["user_id"], name: "index_time_ranges_on_user_id"
@@ -148,9 +150,9 @@ ActiveRecord::Schema.define(version: 2021_03_09_150047) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.string "epr_uuid"
+    t.string "epr_uuid", default: "", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["epr_uuid"], name: "index_users_on_epr_uuid", unique: true
+    t.index ["epr_uuid"], name: "index_users_on_epr_uuid"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

@@ -10,14 +10,18 @@
 #  user_id            :bigint           not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  appointment_id     :string(255)
 #
 class TimeRange < ApplicationRecord
+  strip_attributes only: %i[appointment_id]
+
   include Taggable
 
   belongs_to :user, touch: true
   belongs_to :time_range_type
 
   validates :start_time, :end_time, :value, presence: true
+  validates :appointment_id, uniqueness: { case_sensitive: true }, allow_blank: true
   validate :validate_end_time_after_start_time
 
   # TODO: add validation for value, only positive numbers ?
