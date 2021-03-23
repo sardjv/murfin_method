@@ -10,6 +10,7 @@
             %tr
               %th= User.human_attribute_name('name')
               %th= User.human_attribute_name('email')
+              %th= User.human_attribute_name('epr_uuid')
               %th{ style: 'width: 50px;' }
               %th{ style: 'width: 50px;' }
           %tbody
@@ -22,6 +23,7 @@
                       %br/
                       Admin
                   %td= user.email
+                  %td= user.epr_uuid
                   %td
                     = link_to [:edit, :admin, user], class: 'btn btn-link' do
                       = icon('pencil')
