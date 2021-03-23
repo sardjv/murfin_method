@@ -4,7 +4,8 @@ describe 'filters remember', js: true do
 
   let!(:membership) { create :membership, :lead, user_group: user_group, user: user }
 
-  let(:filter_range_label) { 'Last 6 months' }
+  let(:filter_last_6_months_label) { 'Last 6 months' }
+  let(:filter_last_12_months_label) { 'Last 12 months' }
 
   let(:tag_type1) { create :tag_type }
   let(:tag_type2) { create :tag_type }
@@ -18,13 +19,13 @@ describe 'filters remember', js: true do
   before do
     log_in user
     visit dashboard_path
-  end
 
-  it 'remembers selected filter values' do
     within '.navbar' do
       click_link 'Team'
     end
+  end
 
+  it 'remembers selected filter values' do
     within '#filters-form' do
       within '.filters-tags-container' do
         within '.select2-selection' do
@@ -37,7 +38,7 @@ describe 'filters remember', js: true do
       find('#filters-predefined-ranges-toggle').click
 
       within '#filters-predefined-ranges-menu' do
-        click_link filter_range_label
+        click_link filter_last_6_months_label
       end
 
       click_button 'Filter'
@@ -64,10 +65,53 @@ describe 'filters remember', js: true do
     assert_filters_set
   end
 
+  describe 'reset filters' do
+    before do
+      within '#filters-form' do
+        within '.filters-tags-container' do
+          within '.select2-selection' do
+            within :xpath, "//li[@title = '#{tag1a.name}']" do
+              click_button 'Remove item'
+            end
+          end
+        end
+
+        find('#filters-predefined-ranges-toggle').click
+
+        within '#filters-predefined-ranges-menu' do
+          click_link filter_last_6_months_label
+        end
+
+        click_button 'Filter'
+      end
+    end
+
+    it 'resets selected filter to default values' do
+      within '#filters-form' do
+        click_link 'Reset'
+      end
+
+      within '#filters-form' do
+        within '#filters-predefined-ranges-toggle' do
+          expect(page).to have_text filter_last_12_months_label
+        end
+
+        within '.filters-tags-container' do
+          within '.select2-selection__rendered' do
+            expect(page).to have_content tag1a.name
+            expect(page).to have_content tag2c.name
+          end
+        end
+      end
+    end
+  end
+
+  private
+
   def assert_filters_set # rubocop:disable Metrics/AbcSize
     within '#filters-form' do
       within '#filters-predefined-ranges-toggle' do
-        expect(page).to have_text filter_range_label
+        expect(page).to have_text filter_last_6_months_label
       end
 
       within '.filters-tags-container' do
