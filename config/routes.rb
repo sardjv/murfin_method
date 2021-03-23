@@ -58,6 +58,9 @@ Rails.application.routes.draw do
       resources :tags, except: :show, shallow: true
     end
     resources :time_ranges, except: :show
+    resources :api_users, except: %i[edit update] do
+      patch :generate_token, on: :member
+    end
     resources :users, except: :show
     resources :plans, only: :index
   end

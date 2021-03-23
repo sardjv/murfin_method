@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_09_150047) do
+ActiveRecord::Schema.define(version: 2021_03_23_103307) do
 
   create_table "activities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "schedule", size: :medium, null: false
@@ -18,6 +18,18 @@ ActiveRecord::Schema.define(version: 2021_03_09_150047) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["plan_id"], name: "index_activities_on_plan_id"
+  end
+
+  create_table "api_users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "contact_email"
+    t.string "created_by"
+    t.string "token_generated_by"
+    t.string "token_sample"
+    t.timestamp "token_generated_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_api_users_on_name", unique: true
   end
 
   create_table "group_types", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
