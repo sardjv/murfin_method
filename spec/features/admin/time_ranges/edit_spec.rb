@@ -2,7 +2,8 @@ require 'rails_helper'
 
 describe 'Admin edits a time_range', type: :feature, js: true do
   let!(:time_range) { create(:time_range, value: 0) }
-  let(:input_value) { 1234 }
+  let(:new_hours) { 1234 }
+  let(:new_appointment_id) { Faker::Lorem.characters(number: 8) }
 
   before do
     log_in create(:admin)
@@ -11,14 +12,14 @@ describe 'Admin edits a time_range', type: :feature, js: true do
   end
 
   it 'updates time_range' do
-    find_field(type: 'number', match: :first).set(input_value)
-    fill_in 'Appointment ID', with: input.appointment_id
+    find_field(type: 'number', match: :first).set(new_hours)
+    fill_in 'Appointment ID', with: new_appointment_id
 
     click_button I18n.t('actions.save')
 
     expect(page).to have_content(I18n.t('notice.successfully.updated', model_name: TimeRange.model_name.human))
-    expect(time_range.reload.value).to eq input_value * 60
-    expect(time_range.reload.appointment_id).to eq appointment_id
+    expect(time_range.reload.value).to eq new_hours * 60
+    expect(time_range.reload.appointment_id).to eq new_appointment_id
   end
 
   context 'with end before start' do
