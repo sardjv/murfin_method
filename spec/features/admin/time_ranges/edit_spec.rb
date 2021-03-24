@@ -12,10 +12,13 @@ describe 'Admin edits a time_range', type: :feature, js: true do
 
   it 'updates time_range' do
     find_field(type: 'number', match: :first).set(input_value)
+    fill_in 'Appointment ID', with: input.appointment_id
+
     click_button I18n.t('actions.save')
 
     expect(page).to have_content(I18n.t('notice.successfully.updated', model_name: TimeRange.model_name.human))
     expect(time_range.reload.value).to eq input_value * 60
+    expect(time_range.reload.appointment_id).to eq appointment_id
   end
 
   context 'with end before start' do
