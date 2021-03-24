@@ -42,7 +42,10 @@ class NavPresenter
             controllers: ['admin/plans'] },
           { label: I18n.t('nav.tabs.tags'),
             path: %i[admin tag_types],
-            controllers: ['admin/tag_types'] }
+            controllers: ['admin/tag_types'] },
+          { label: I18n.t('nav.tabs.api_users'),
+            path: %i[admin api_users],
+            controllers: ['admin/api_users'] }
         ],
         enabled: @current_user&.admin?
       }

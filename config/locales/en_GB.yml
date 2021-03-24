@@ -1,11 +1,14 @@
 en:
   activerecord:
     models:
+      api_user: API User
       plan: Job plan
       time_range: Actual data
     attributes:
       activity:
         duration: Time worked per week
+      api_user:
+        api_token: API token
       tag_type:
         active_for_time_ranges: Active for actual
       note:
@@ -35,7 +38,21 @@ en:
     delete: Delete
     save: Save
     filter: Filter
+    generate: Generate %{attribute_name}
     << : *log_in_out
+  api_users:
+    current_token:
+        Current API token
+    generate_new_token:
+        Generate New API token
+    revoke_and_generate_new_token:
+        Revoke Current Token and Generate New Token
+    token_description:
+        API tokens grant full access to all Murfin+ data via the API. They must be kept secret. They can only be viewed once.
+    token_notice:
+        'API Token for %{name}. This API Token will never be visible again so you should copy it now:'
+    token_warning:
+        N.B. if a new API Token is generated then the current token will be revoked and will no longer be valid.
   app:
     name: Murfin+
   auth:
@@ -127,6 +144,7 @@ en:
       admin_dashboard: Admin dashboard
       admin_group_types: Groups
       admin_users: Users
+      api_users: API Tokens
       combined_data: Combined data
       dashboard: Dashboard
       data: Data
@@ -144,10 +162,12 @@ en:
     could_not_be:
       created:
         "%{model_name} could not be created"
-      updated:
-        "%{model_name} could not be updated"
       destroyed:
         "%{model_name} could not be deleted"
+      generated:
+        "%{attribute_name} could not be generated"
+      updated:
+        "%{model_name} could not be updated"
     forbidden: You are not authorized to perform this action!
     login_error:
       There was a problem logging in. Please contact your administrator
