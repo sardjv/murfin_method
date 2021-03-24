@@ -75,9 +75,9 @@ class UserStatsPresenter
 
   def defaults
     {
+      actual_id: TimeRangeType.actual_type.id,
       filter_start_date: (1.year.ago + 1.day).to_date,
       filter_end_date: Date.current,
-      actual_id: TimeRangeType.actual_type.id,
       filter_tag_ids: Tag.where(default_for_filter: true).pluck(:id)
     }
   end

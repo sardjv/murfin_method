@@ -1,7 +1,7 @@
 .row
   .col-12
     .card.my-4
-      #team-individual-chart-container.card-body
+      #chart-container.card-body
         .mb-4.float-left
           - presenter.team_stats_presenter.graph_kind_options.each do |key|
             = radio_button_tag 'graph_kind', key, **(presenter.team_stats_presenter.graph_kind == key ? { checked: 'checked' } : {})
@@ -12,4 +12,6 @@
             = radio_button_tag 'time_scope', key, **(presenter.team_stats_presenter.time_scope == key ? { checked: 'checked' } : {})
             = label_tag "time_scope_#{key}", t("graph.time_scope.#{key}")
              
-        %canvas#line-graph{ 'data-user-id': presenter.user.id }
+        %canvas#line-graph{ 'data-user-id': presenter.user.id,
+                            'data-time-scope': presenter.team_stats_presenter.time_scope,
+                            'data-graph-kind': presenter.team_stats_presenter.graph_kind }
