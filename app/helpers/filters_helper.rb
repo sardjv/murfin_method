@@ -37,6 +37,15 @@ module FiltersHelper
       (option_range.blank? && !filters_predefined_ranges_find_option(start_date, end_date))
   end
 
+  def filters_reset_url
+    last_12_months_range = filters_predefined_ranges_options.last[:range]
+
+    reset_url_params = { query: { filter_tag_ids: Tag.where(default_for_filter: true).pluck(:id),
+                                  filter_start_date: last_12_months_range.first, filter_end_date: last_12_months_range.last } }
+
+    "#{request.path}?#{reset_url_params.to_query}"
+  end
+
   private
 
   def filters_predefined_ranges_find_option(start_date, end_date)

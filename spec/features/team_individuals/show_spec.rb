@@ -49,7 +49,7 @@ describe 'Team Individual Summary', type: :feature, js: true do
   end
 
   it 'shows chart with default options selected' do
-    within '#team-individual-chart-container' do
+    within '#chart-container' do
       expect(page).to have_css '#graph_kind_percentage_delivered[checked=checked]'
       expect(page).to have_css '#time_scope_weekly[checked=checked]'
 

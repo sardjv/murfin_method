@@ -20,6 +20,18 @@ ActiveRecord::Schema.define(version: 2021_03_23_150802) do
     t.index ["plan_id"], name: "index_activities_on_plan_id"
   end
 
+  create_table "api_users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "contact_email"
+    t.string "created_by"
+    t.string "token_generated_by"
+    t.string "token_sample"
+    t.timestamp "token_generated_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_api_users_on_name", unique: true
+  end
+
   create_table "group_types", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false

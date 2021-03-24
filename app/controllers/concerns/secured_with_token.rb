@@ -9,7 +9,7 @@ module SecuredWithToken
 
   def authenticate_request!
     auth_token
-  rescue JWT::VerificationError, JWT::DecodeError
+  rescue ActiveRecord::RecordNotFound, JWT::VerificationError, JWT::DecodeError
     render json: { errors: ['Not Authenticated'] }, status: :unauthorized
   end
 
@@ -18,6 +18,9 @@ module SecuredWithToken
   end
 
   def auth_token
-    Auth::JsonWebToken.verify(http_token)
+    decoded_token = JWT.decode http_token, ENV['JWT_SECRET'], true, { algorithm: ENV['JWT_ALGORITHM'] }
+    api_user_id = decoded_token.first['data']
+    api_timestamp = decoded_token.first['timestamp']
+    ApiUser.find_by!(id: api_user_id, token_generated_at: api_timestamp)
   end
 end
