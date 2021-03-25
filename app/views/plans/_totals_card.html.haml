@@ -6,7 +6,7 @@
       :ruby
         collapse_id = "collapse#{tl_tag.id}"
         heading = "heading#{tl_tag.id}"
-        hours_pw = calculate_hours_per_week_for_tag(tl_tag)
+        hours_pw = @activities.tagged_with(tl_tag).sum(&:seconds_per_week) / 60
 
       - button_content = capture_haml do
         = "#{tl_tag.tag_type.name}: " if tl_tag.tag_type
@@ -28,7 +28,7 @@
                 %table.table.mb-0
                   %tbody
                   - tl_tag.children.each do |tag|
-                    - hours_pw = calculate_hours_per_week_for_tag(tag)
+                    - hours_pw = activities.tagged_with(tag).sum(&:seconds_per_week) / 60
                     - if hours_pw.positive?
                       %tr{ data: { tag_id: tag.id } }
                         %td= tag.name
