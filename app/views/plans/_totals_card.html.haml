@@ -28,7 +28,7 @@
                 %table.table.mb-0
                   %tbody
                   - tl_tag.children.each do |tag|
-                    - hours_pw = activities.tagged_with(tag).sum(&:seconds_per_week) / 60
+                    - hours_pw = @activities.tagged_with(tag).sum(&:seconds_per_week) / 60
                     - if hours_pw.positive?
                       %tr{ data: { tag_id: tag.id } }
                         %td= tag.name
