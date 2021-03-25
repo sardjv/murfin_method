@@ -180,6 +180,8 @@ en:
         "%{model_name} deleted"
       updated:
         "%{model_name} successfully updated"
+  plans:
+    totals: Totals
   signoffs:
     revoke: Revoke
     sign: Sign

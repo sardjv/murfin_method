@@ -1,0 +1,35 @@
+#plan-totals-card.border.my-4.p-4
+  %label= t('plans.totals')
+
+  #plan-totals.accordion
+    - @activity_tags_top_level.each do |tl_tag|
+      :ruby
+        collapse_id = "collapse#{tl_tag.id}"
+        heading = "heading#{tl_tag.id}"
+        hours_pw = calculate_hours_per_week_for_tag(tl_tag)
+
+      - button_content = capture_haml do
+        = "#{tl_tag.tag_type.name}: " if tl_tag.tag_type
+        = tl_tag.name
+        .float-right= duration_in_words(hours_pw, :short)
+
+      .card{ data: { tag_id: tl_tag.id } }
+        .card-header.pl-0.pr-0{ id: heading }
+          %h5.mb-0
+            - if tl_tag.children.any?
+              %button.btn.btn-link.btn-block.text-left{ 'aria-controls': collapse_id, 'aria-expanded': false,
+                                                        'data-target': "##{collapse_id}", 'data-toggle': 'collapse', type: 'button' }= button_content
+            - else
+              .btn.btn-block.text-left= button_content
+        - if tl_tag.children.any?
+          .collapse{ id: collapse_id, 'aria-labelledby': heading, 'data-parent': '#plan-totals' }
+            .card-body.p-0
+              .table-responsive
+                %table.table.mb-0
+                  %tbody
+                  - tl_tag.children.each do |tag|
+                    - hours_pw = calculate_hours_per_week_for_tag(tag)
+                    - if hours_pw.positive?
+                      %tr{ data: { tag_id: tag.id } }
+                        %td= tag.name
+                        %td.text-right= duration_in_words(hours_pw, :short)
