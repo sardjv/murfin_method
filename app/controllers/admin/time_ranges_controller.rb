@@ -47,6 +47,7 @@ class Admin::TimeRangesController < ApplicationController
 
   def time_range_params
     params.require(:time_range).permit(
+      :appointment_id,
       :time_range_type_id,
       :start_time,
       :end_time,

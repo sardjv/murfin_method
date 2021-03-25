@@ -10,6 +10,7 @@
 #  user_id            :bigint           not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  appointment_id     :string(255)
 #
 FactoryBot.define do
   factory :time_range do
@@ -18,6 +19,7 @@ FactoryBot.define do
     value { BigDecimal(Faker::Number.within(range: 5..120)) }
     time_range_type_id { TimeRangeType.all.sample.try(:id) || create(:time_range_type).id }
     user_id { User.all.sample.try(:id) || create(:user).id }
+    appointment_id { Faker::Lorem.characters(number: 8) }
 
     after(:build) do |time_range|
       # Set end_time to be after start_time.

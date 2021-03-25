@@ -1,7 +1,7 @@
 class Api::V1::TimeRangeResource < JSONAPI::Resource
   model_name 'TimeRange'
 
-  attributes :start_time, :end_time, :user_id, :time_range_type_id
+  attributes :start_time, :end_time, :user_id, :time_range_type_id, :appointment_id
   attribute :minutes_worked, delegate: :value
 
   def minutes_worked
@@ -9,6 +9,11 @@ class Api::V1::TimeRangeResource < JSONAPI::Resource
   end
 
   has_many :tags, acts_as_set: true, exclude_links: :default
+
+  filter :appointment_id,
+         apply: lambda { |records, values, _options|
+           records.where(appointment_id: values[0])
+         }
 
   filter :user_id,
          verify: lambda { |values, _context|

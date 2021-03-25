@@ -10,6 +10,7 @@
 #  user_id            :bigint           not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  appointment_id     :string(255)
 #
 describe TimeRange, type: :model do
   subject { build(:time_range) }
@@ -19,8 +20,12 @@ describe TimeRange, type: :model do
   it { should validate_presence_of(:start_time) }
   it { should validate_presence_of(:end_time) }
   it { should validate_presence_of(:value) }
+  it { should validate_uniqueness_of(:appointment_id).allow_blank }
+
   it { should belong_to(:time_range_type) }
   it { should belong_to(:user) }
+
+  it { is_expected.to strip_attributes(:appointment_id) }
 
   describe '#value' do
     context 'with a longer float' do

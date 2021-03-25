@@ -10,7 +10,8 @@ module Swagger
               end_time: { type: 'string', example: DateTime.parse('2021-01-22 09:45:00').iso8601, 'x-nullable': false },
               user_id: { type: 'integer', example: 123, 'x-nullable': false },
               minutes_worked: { type: 'integer', example: 45, 'x-nullable': false },
-              time_range_type_id: { type: 'integer', example: 1, 'x-nullable': false }
+              time_range_type_id: { type: 'integer', example: 1, 'x-nullable': false },
+              appointment_id: { type: 'string', example: '12345678', 'x-nullable': true }
             }
           },
           time_ranges_response: {

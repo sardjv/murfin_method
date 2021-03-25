@@ -35,5 +35,6 @@
           { label: TimeRange.human_attribute_name('user') },
           class: 'input-group-btn',
           required: true
+        = f.text_field :appointment_id
         = f.submit I18n.t('actions.save'), class: 'btn btn-primary mt-2'
         = link_to I18n.t('actions.cancel'), :back, class: 'btn btn-outline-secondary mt-2'
