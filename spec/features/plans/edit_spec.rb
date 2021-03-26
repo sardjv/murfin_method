@@ -221,7 +221,7 @@ describe 'User edits a plan', type: :feature, js: true do
           expect(page).to have_content "Category: #{tag1c.name}"
           expect(page).to have_content '2h 30m'
 
-          expect(page).not_to have_css ".collapse"
+          expect(page).not_to have_css '.collapse'
         end
       end
     end
