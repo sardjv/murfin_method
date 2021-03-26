@@ -90,7 +90,7 @@ describe 'User edits a plan', type: :feature, js: true do
     context 'time worked per week not set' do
       let(:time_worked_error_message) { 'Time worked per week required' }
 
-      it 'does not add activity and keeps selected other fields' do
+      before do
         within activities_last_row_selector do
           within '.category' do
             find("option[data-id='#{tag1a.id}']").click
@@ -102,7 +102,17 @@ describe 'User edits a plan', type: :feature, js: true do
         end
 
         expect { click_button 'Save' }.not_to change(plan.activities, :count)
+      end
 
+      it 'shows form error' do
+        within activities_last_row_selector do
+          within '.time-worked-per-week' do
+            expect(page).to have_css '.error', text: time_worked_error_message
+          end
+        end
+      end
+
+      it 'keeps other fields selected' do
         within activities_last_row_selector do
           within '.time-worked-per-week' do
             expect(page).to have_css '.error', text: time_worked_error_message
@@ -114,6 +124,14 @@ describe 'User edits a plan', type: :feature, js: true do
 
           within '.subcategory' do
             expect(page).to have_css '.filter-option-inner-inner', text: tag2a.name
+          end
+        end
+      end
+
+      context 'one signoff assigned' do
+        it 'should not duplicate signoff' do
+          within '.signoffs' do
+            expect(page).to have_css '.filter-option-inner-inner', text: current_user.name, count: 1
           end
         end
       end
@@ -169,7 +187,6 @@ describe 'User edits a plan', type: :feature, js: true do
           expect(page).to have_content '4h'
 
           find("button[data-target = '#collapse#{tag1a.id}']").click
-          page.save_screenshot
 
           within "#collapse#{tag1a.id}" do
             within "tr[data-tag-id = '#{tag2a.id}']" do

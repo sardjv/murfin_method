@@ -63,7 +63,7 @@ class Plan < ApplicationRecord
   end
 
   def required_signoffs
-    signoffs.build(user_id: user_id) if user_signoff.blank?
+    signoffs.build(user_id: user_id) unless user_signoff
 
     signoffs
   end
@@ -79,6 +79,6 @@ class Plan < ApplicationRecord
   end
 
   def user_signoff
-    signoffs.find_by(user_id: user_id)
+    signoffs.detect { |so| so.user_id == user_id } # detect because we want check within builded (not saved) relations too
   end
 end
