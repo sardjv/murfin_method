@@ -18,5 +18,8 @@ const select2FormatTagSelection = (tag_selection) => {
   return result
 }
 
-$(document).on('turbolinks:load', useSelect2)
-// $(document).on('cocoon:after-insert', useSelect2)
+// Called once after the initial page has loaded
+document.addEventListener('turbolinks:load', () => useSelect2(), { once: true })
+
+// Called after every non-initial page load
+document.addEventListener('turbolinks:render', () => useSelect2() )
