@@ -201,7 +201,9 @@ describe 'User edits a plan', type: :feature, js: true do
           expect(page).to have_content '10h'
 
           find("button[data-target = '#collapse#{tag1b.id}']").click
+        end
 
+        within ".card[data-tag-id = '#{tag1b.id}']" do
           within "#collapse#{tag1b.id}" do
             within "tr[data-tag-id = '#{tag2d.id}']" do
               expect(page).to have_content tag2d.name
@@ -213,13 +215,13 @@ describe 'User edits a plan', type: :feature, js: true do
               expect(page).to have_content '4h'
             end
           end
-
-          expect(page).not_to have_css "#collapse#{tag1c.id}"
         end
 
         within ".card[data-tag-id = '#{tag1c.id}']" do
           expect(page).to have_content "Category: #{tag1c.name}"
           expect(page).to have_content '2h 30m'
+
+          expect(page).not_to have_css ".collapse"
         end
       end
     end
