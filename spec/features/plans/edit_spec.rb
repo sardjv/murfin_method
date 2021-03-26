@@ -188,7 +188,7 @@ describe 'User edits a plan', type: :feature, js: true do
 
           find("button[data-target = '#collapse#{tag1a.id}']").click
 
-          within "#collapse#{tag1a.id}" do
+          within '.collapse' do
             within "tr[data-tag-id = '#{tag2a.id}']" do
               expect(page).to have_content tag2a.name
               expect(page).to have_content '4h'
@@ -204,7 +204,7 @@ describe 'User edits a plan', type: :feature, js: true do
         end
 
         within ".card[data-tag-id = '#{tag1b.id}']" do
-          within "#collapse#{tag1b.id}" do
+          within '.collapse' do
             within "tr[data-tag-id = '#{tag2d.id}']" do
               expect(page).to have_content tag2d.name
               expect(page).to have_content '6h'
