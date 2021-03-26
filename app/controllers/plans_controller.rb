@@ -1,5 +1,6 @@
 class PlansController < ApplicationController
   def index
+    authorize :plan
     @plans = policy_scope(Plan).order(updated_at: :desc).page(params[:page])
   end
 

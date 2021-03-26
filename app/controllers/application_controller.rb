@@ -23,6 +23,7 @@ class ApplicationController < ActionController::Base
   include Pundit
   include PunditHelper
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  after_action :verify_authorized, unless: -> { devise_controller? }
 
   def nav_presenter
     return unless current_user

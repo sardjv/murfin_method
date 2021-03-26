@@ -1,15 +1,20 @@
 class Admin::UsersController < ApplicationController
+  before_action :find_user, only: %i[edit update destroy]
+
   def index
+    authorize :user
     @users = User.order(last_name: :asc).page(params[:page])
   end
 
   def new
     @user = User.new
+    authorize @user
     render action: :edit
   end
 
   def create
     @user = User.new(user_params)
+    authorize @user
     if @user.save
       redirect_to admin_users_path, notice: notice('successfully.created')
     else
@@ -18,13 +23,9 @@ class Admin::UsersController < ApplicationController
     end
   end
 
-  def edit
-    @user = User.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @user = User.find(params[:id])
-
     if @user.update(user_params)
       redirect_to admin_users_path, notice: notice('successfully.updated')
     else
@@ -34,7 +35,6 @@ class Admin::UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:id])
     if @user.destroy
       redirect_to admin_users_path, notice: notice('successfully.destroyed')
     else
@@ -43,6 +43,11 @@ class Admin::UsersController < ApplicationController
   end
 
   private
+
+  def find_user
+    @user = User.find(params[:id])
+    authorize @user
+  end
 
   def notice(action)
     t("notice.#{action}", model_name: User.model_name.human)

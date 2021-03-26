@@ -1,15 +1,20 @@
 class Admin::GroupTypesController < ApplicationController
+  before_action :find_group_type, only: %i[edit update destroy]
+
   def index
+    authorize :group_type
     @group_types = GroupType.page(params[:page])
   end
 
   def new
     @group_type = GroupType.new
+    authorize @group_type
     render action: :edit
   end
 
   def create
     @group_type = GroupType.new(group_type_params)
+    authorize @group_type
     if @group_type.save
       redirect_to admin_group_types_path, notice: notice('successfully.created')
     else
@@ -18,12 +23,11 @@ class Admin::GroupTypesController < ApplicationController
     end
   end
 
-  def edit
-    @group_type = GroupType.find(params[:id])
-  end
+  def edit; end
 
   def update
     @group_type = GroupType.find(params[:id])
+    authorize @group_type
 
     if @group_type.update(group_type_params)
       redirect_to admin_group_types_path, notice: notice('successfully.updated')
@@ -34,12 +38,16 @@ class Admin::GroupTypesController < ApplicationController
   end
 
   def destroy
-    @group_type = GroupType.find(params[:id])
     @group_type.destroy
     redirect_to admin_group_types_path, notice: notice('successfully.destroyed')
   end
 
   private
+
+  def find_group_type
+    @group_type = GroupType.find(params[:id])
+    authorize @group_type
+  end
 
   def notice(action)
     t("notice.#{action}", model_name: GroupType.model_name.human)

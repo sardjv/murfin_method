@@ -23,8 +23,10 @@ class TeamIndividualsController < ApplicationController
   private
 
   def initialize_presenter
+    user_group = UserGroup.find(params[:team_id])
+    authorize user_group
     @presenter = TeamIndividualPresenter.new(params: team_individual_params.merge(time_scope: graph_time_scope, graph_kind: graph_kind),
-                                             cookies: cookies)
+                                             cookies: cookies, user_group: user_group)
   end
 
   def team_individual_params

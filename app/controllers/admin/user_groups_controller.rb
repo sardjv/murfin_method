@@ -1,16 +1,21 @@
 class Admin::UserGroupsController < ApplicationController
+  before_action :find_user_group, only: %i[edit update destroy]
+
   def index
+    authorize :user_group
     @user_groups = UserGroup.page(params[:page])
   end
 
   def new
     @group_type = GroupType.find(params[:group_type_id])
     @user_group = UserGroup.new
+    authorize @user_group
   end
 
   def create
     @group_type = GroupType.find(params[:group_type_id])
     @user_group = @group_type.user_groups.new(user_group_params)
+    authorize @user_group
     if @user_group.save
       redirect_to admin_group_types_path, notice: notice('successfully.created')
     else
@@ -19,12 +24,11 @@ class Admin::UserGroupsController < ApplicationController
     end
   end
 
-  def edit
-    @user_group = UserGroup.find(params[:id])
-  end
+  def edit; end
 
   def update
     @user_group = UserGroup.find(params[:id])
+    authorize @user_group
 
     if @user_group.update(user_group_params)
       redirect_to admin_group_types_path, notice: notice('successfully.updated')
@@ -35,12 +39,16 @@ class Admin::UserGroupsController < ApplicationController
   end
 
   def destroy
-    @user_group = UserGroup.find(params[:id])
     @user_group.destroy
     redirect_to admin_group_types_path, notice: notice('successfully.destroyed')
   end
 
   private
+
+  def find_user_group
+    @user_group = UserGroup.find(params[:id])
+    authorize @user_group
+  end
 
   def notice(action)
     t("notice.#{action}", model_name: UserGroup.model_name.human)

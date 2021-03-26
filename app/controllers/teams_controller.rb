@@ -30,6 +30,7 @@ class TeamsController < ApplicationController
 
   def find_user_group
     @user_group = UserGroup.find(params[:id])
+    authorize @user_group
   end
 
   def initialize_presenter
