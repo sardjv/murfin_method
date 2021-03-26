@@ -20,6 +20,7 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
       produces 'application/vnd.api+json'
       parameter name: 'page[size]', in: :query, type: :integer, required: false
       parameter name: 'page[number]', in: :query, type: :integer, required: false
+      parameter name: 'filter[appointment_id]', in: :query, type: :string, required: false
       parameter name: 'filter[user_id]', in: :query, type: :integer, required: false
       parameter name: 'filter[time_range_type_id]', in: :query, type: :integer, required: false
       parameter name: 'include', in: :query, type: :string, required: false, example: 'tags'
@@ -93,6 +94,15 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
             run_test! do
               expect(parsed_json_data.length).to eq(1)
               expect(parsed_json_data.collect { |e| e['id'].to_i }).to eql [time_range1.id]
+            end
+          end
+
+          context 'appointment_id' do
+            let(:'filter[appointment_id]') { time_range2.appointment_id }
+
+            run_test! do
+              expect(parsed_json_data.length).to eq(1)
+              expect(parsed_json_data.collect { |e| e['id'].to_i }).to eql [time_range2.id]
             end
           end
         end

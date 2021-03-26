@@ -11,6 +11,7 @@ describe 'Admin creates a time_range', type: :feature, js: true do
       bootstrap_select input.time_range_type.name, from: TimeRange.human_attribute_name('time_range_type')
       bootstrap_select input.user.name, from: TimeRange.human_attribute_name('user')
     end
+
     it 'defaults to 9:00 to 17:00' do
       expect { click_button I18n.t('actions.save') }.to change { TimeRange.count }.by(1)
       expect(TimeRange.first.start_time.strftime('%H:%M')).to eq '09:00'
@@ -27,6 +28,7 @@ describe 'Admin creates a time_range', type: :feature, js: true do
       bootstrap_select_year input.start_time.year + 1, from: TimeRange.human_attribute_name('end_time')
       find_field(type: 'number', match: :first).set(input.value)
       bootstrap_select input.user.name, from: TimeRange.human_attribute_name('user')
+      fill_in 'Appointment ID', with: input.appointment_id
     end
 
     it 'creates time_range' do

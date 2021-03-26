@@ -18,6 +18,7 @@ en:
         state: Note type
         updated_at: Updated %{when} ago
       time_range:
+        appointment_id: Appointment ID
         time_range_type: Type
         value: Time worked
         time_worked: Worked
