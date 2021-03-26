@@ -43,7 +43,7 @@
                                         class: 'btn btn-primary',
                                         render_options: { locals: { plan: @plan } }
 
-        = render 'totals_card' if @plan.persisted? && @activity_tags_top_level.present?
+        = render 'totals_card', activity_tags_top_level: @activity_tags_top_level, activities: @activities if @plan.persisted?
 
         .border.my-4.p-4
           %label= Plan.human_attribute_name('signoffs')
