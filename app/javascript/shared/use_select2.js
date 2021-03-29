@@ -1,7 +1,7 @@
-const useSelect2 = () => {
-  const cssSelectorUseSelect2 = 'select[data-use-select2]'
+const useSelect2Selector = 'select[data-use-select2]'
 
-  $(cssSelectorUseSelect2).each(function() {
+const useSelect2 = () => {
+  $(useSelect2Selector).each(function() {
     $(this).select2({
       templateSelection: select2FormatTagSelection
     })
@@ -18,8 +18,10 @@ const select2FormatTagSelection = (tag_selection) => {
   return result
 }
 
-// Called once after the initial page has loaded
-document.addEventListener('turbolinks:load', () => useSelect2(), { once: true })
+document.addEventListener('turbolinks:load', () => useSelect2() )
 
-// Called after every non-initial page load
-document.addEventListener('turbolinks:render', () => useSelect2() )
+document.addEventListener('turbolinks:before-cache', () => {
+  $(useSelect2Selector).each(function() {
+    $(this).select2('destroy')
+  })
+})
