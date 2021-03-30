@@ -19,7 +19,7 @@ gem 'devise', '~> 4.7.3'
 
 # Better distance of time in words for Rails.
 # https://github.com/radar/distance_of_time_in_words
-gem 'dotiw', '~> 5.3.0'
+gem 'dotiw', '~> 5.3.1'
 
 # Fixtures replacement with a straightforward definition syntax.
 # https://github.com/thoughtbot/factory_bot
