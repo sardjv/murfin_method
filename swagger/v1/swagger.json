@@ -1895,14 +1895,38 @@
       "properties": {
         "tag_id": {
           "type": "integer",
+          "required": false,
           "example": 100,
           "x-nullable": true
         },
         "tag_type_id": {
           "type": "integer",
-          "required": true,
+          "required": false,
           "example": 200,
           "x-nullable": false
+        },
+        "taggable_id": {
+          "type": "integer",
+          "required": true,
+          "example": 123,
+          "x-nullable": false
+        },
+        "taggable_type": {
+          "type": "string",
+          "required": true,
+          "example": "TimeRange",
+          "x-nullable": false
+        }
+      }
+    },
+    "tag_association_attributes_without_tag_type_id": {
+      "type": "object",
+      "properties": {
+        "tag_id": {
+          "type": "integer",
+          "required": false,
+          "example": 100,
+          "x-nullable": true
         },
         "taggable_id": {
           "type": "integer",
@@ -1959,7 +1983,7 @@
               "example": "tag_associations"
             },
             "attributes": {
-              "$ref": "#/definitions/tag_association_attributes"
+              "$ref": "#/definitions/tag_association_attributes_without_tag_type_id"
             }
           }
         }
@@ -2666,7 +2690,7 @@
       "properties": {
         "name": {
           "type": "string",
-          "example": "magnam",
+          "example": "illum",
           "x-nullable": false
         },
         "group_type_id": {
