@@ -54,7 +54,6 @@ describe Api::V1::TagAssociationResource, type: :request, swagger_doc: 'v1/swagg
           schema '$ref' => '#/definitions/tag_association_response'
 
           run_test! do
-            pp attributes
             parsed_json_data_matches_db_record(created_tag_association)
           end
         end
