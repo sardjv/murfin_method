@@ -197,6 +197,9 @@ en:
   user_groups:
     add: Add %{group_type_name} User Group
   api:
+    time_range_resource:
+      errors:
+        invalid_user_epr_uuid: User with EPR UUID %{epr_uuid} not found.
     user_resource:
       errors:
         admin_delete: Admin user can not be deleted.

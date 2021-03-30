@@ -2117,33 +2117,85 @@
       "properties": {
         "start_time": {
           "type": "string",
+          "required": true,
           "example": "2021-01-22T09:00:00+00:00",
           "x-nullable": false
         },
         "end_time": {
           "type": "string",
+          "required": true,
           "example": "2021-01-22T09:45:00+00:00",
           "x-nullable": false
         },
         "user_id": {
           "type": "integer",
+          "required": false,
           "example": 123,
           "x-nullable": false
         },
         "minutes_worked": {
           "type": "integer",
+          "required": true,
           "example": 45,
           "x-nullable": false
         },
         "time_range_type_id": {
           "type": "integer",
+          "required": false,
           "example": 1,
           "x-nullable": false
         },
         "appointment_id": {
           "type": "string",
-          "example": "12345678",
+          "required": false,
+          "example": "33445566",
           "x-nullable": true
+        }
+      }
+    },
+    "time_range_attributes_with_user_epr_uuid": {
+      "type": "object",
+      "properties": {
+        "start_time": {
+          "type": "string",
+          "required": true,
+          "example": "2021-01-22T09:00:00+00:00",
+          "x-nullable": false
+        },
+        "end_time": {
+          "type": "string",
+          "required": true,
+          "example": "2021-01-22T09:45:00+00:00",
+          "x-nullable": false
+        },
+        "user_id": {
+          "type": "integer",
+          "required": false,
+          "example": 123,
+          "x-nullable": false
+        },
+        "minutes_worked": {
+          "type": "integer",
+          "required": true,
+          "example": 45,
+          "x-nullable": false
+        },
+        "time_range_type_id": {
+          "type": "integer",
+          "required": false,
+          "example": 1,
+          "x-nullable": false
+        },
+        "appointment_id": {
+          "type": "string",
+          "required": false,
+          "example": "33445566",
+          "x-nullable": true
+        },
+        "user_epr_uuid": {
+          "type": "string",
+          "example": "01234567890",
+          "x-nullable": false
         }
       }
     },
@@ -2297,7 +2349,7 @@
               "example": "time_ranges"
             },
             "attributes": {
-              "$ref": "#/definitions/time_range_attributes"
+              "$ref": "#/definitions/time_range_attributes_with_user_epr_uuid"
             },
             "relationships": {
               "type": "object",
@@ -2666,7 +2718,7 @@
       "properties": {
         "name": {
           "type": "string",
-          "example": "magnam",
+          "example": "Lorems",
           "x-nullable": false
         },
         "group_type_id": {

@@ -1,18 +1,26 @@
 module Swagger
   module V1
     class TimeRanges
+      def self.time_range_properties
+        {
+          start_time: { type: 'string', required: true, example: DateTime.parse('2021-01-22 09:00:00').iso8601, 'x-nullable': false },
+          end_time: { type: 'string', required: true, example: DateTime.parse('2021-01-22 09:45:00').iso8601, 'x-nullable': false },
+          user_id: { type: 'integer', required: false, example: 123, 'x-nullable': false },
+          minutes_worked: { type: 'integer', required: true, example: 45, 'x-nullable': false },
+          time_range_type_id: { type: 'integer', required: false, example: 1, 'x-nullable': false },
+          appointment_id: { type: 'string', required: false, example: '33445566', 'x-nullable': true }
+        }
+      end
+
       def self.definitions # rubocop:disable Metrics/MethodLength
         {
           time_range_attributes: {
             type: 'object',
-            properties: {
-              start_time: { type: 'string', example: DateTime.parse('2021-01-22 09:00:00').iso8601, 'x-nullable': false },
-              end_time: { type: 'string', example: DateTime.parse('2021-01-22 09:45:00').iso8601, 'x-nullable': false },
-              user_id: { type: 'integer', example: 123, 'x-nullable': false },
-              minutes_worked: { type: 'integer', example: 45, 'x-nullable': false },
-              time_range_type_id: { type: 'integer', example: 1, 'x-nullable': false },
-              appointment_id: { type: 'string', example: '12345678', 'x-nullable': true }
-            }
+            properties: time_range_properties
+          },
+          time_range_attributes_with_user_epr_uuid: {
+            type: 'object',
+            properties: time_range_properties.merge({ user_epr_uuid: { type: 'string', example: '01234567890', 'x-nullable': false } })
           },
           time_ranges_response: {
             type: 'object',
@@ -113,7 +121,7 @@ module Swagger
                 type: 'object',
                 properties: {
                   type: { type: 'string', example: 'time_ranges' },
-                  attributes: { '$ref' => '#/definitions/time_range_attributes' },
+                  attributes: { '$ref' => '#/definitions/time_range_attributes_with_user_epr_uuid' },
                   relationships: {
                     type: 'object',
                     properties: {
