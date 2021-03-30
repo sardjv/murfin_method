@@ -49,8 +49,6 @@ gem 'jwt', '~> 2.2.2'
 # https://github.com/kaminari/kaminari
 gem 'kaminari', '~> 1.2.1'
 
-gem 'mimemagic', '0.3.9'
-
 # Use MySQL as the database for Active Record.
 # https://github.com/brianmario/mysql2
 gem 'mysql2', '~> 0.5.3'

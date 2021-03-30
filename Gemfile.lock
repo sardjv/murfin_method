@@ -404,7 +404,6 @@ DEPENDENCIES
   kaminari (~> 1.2.1)
   listen (~> 3.5.0)
   memory_profiler (~> 1.0.0)
-  mimemagic (= 0.3.9)
   mysql2 (~> 0.5.3)
   omniauth-auth0 (~> 2.5.0)
   omniauth-rails_csrf_protection (~> 0.1.2)
