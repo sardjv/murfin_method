@@ -1931,7 +1931,7 @@
         }
       }
     },
-    "tag_association_attributes_with_time_range_appointment_id": {
+    "tag_association_post_attributes": {
       "type": "object",
       "properties": {
         "tag_id": {
@@ -1939,12 +1939,6 @@
           "required": false,
           "example": 100,
           "x-nullable": true
-        },
-        "tag_type_id": {
-          "type": "integer",
-          "required": true,
-          "example": 200,
-          "x-nullable": false
         },
         "taggable_id": {
           "type": "integer",
@@ -2007,7 +2001,7 @@
               "example": "tag_associations"
             },
             "attributes": {
-              "$ref": "#/definitions/tag_association_attributes_with_time_range_appointment_id"
+              "$ref": "#/definitions/tag_association_post_attributes"
             }
           }
         }

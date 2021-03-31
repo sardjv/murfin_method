@@ -16,9 +16,10 @@ module Swagger
             type: 'object',
             properties: tag_association_properties
           },
-          tag_association_attributes_with_time_range_appointment_id: {
+          tag_association_post_attributes: {
             type: 'object',
-            properties: tag_association_properties.merge({ time_range_appointment_id: { type: 'string', required: false, example: 'lorem123',
+            properties: tag_association_properties.except(:tag_type_id)
+                                                  .merge({ time_range_appointment_id: { type: 'string', required: false, example: 'lorem123',
                                                                                         'x-nullable': true } })
           },
           tag_association_response: {
@@ -48,7 +49,7 @@ module Swagger
                 type: 'object',
                 properties: {
                   type: { type: 'string', example: 'tag_associations' },
-                  attributes: { '$ref' => '#/definitions/tag_association_attributes_with_time_range_appointment_id' }
+                  attributes: { '$ref' => '#/definitions/tag_association_post_attributes' }
                 }
               }
             }
