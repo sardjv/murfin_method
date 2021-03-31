@@ -68,10 +68,10 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
       context 'wrong user_epr_uuid passed' do
         let(:attributes) { valid_attributes.except(:user_id).merge({ user_epr_uuid: 'f00' }) }
         let(:error_title) { 'Record not found' }
-        let(:error_detail) { 'User with EPR UUID f00 not found' }
+        let(:error_detail) { 'User with EPR UUID f00 not found.' }
 
         response '404', 'Record not found' do
-          schema '$ref' => '#/definitions/error_422'
+          schema '$ref' => '#/definitions/error_404'
 
           run_test! do
             expect(parsed_json['errors'][0]['title']).to eql error_title

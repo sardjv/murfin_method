@@ -26,8 +26,11 @@ class Api::V1::TimeRangeResource < JSONAPI::Resource
     if @model.user_id.blank? && @model.user_epr_uuid.present?
       user = User.find_by(epr_uuid: @model.user_epr_uuid)
 
-      raise JSONAPI::Exceptions::RecordNotFound.new(@model.user_epr_uuid,
-        detail: I18n.t('api.time_range_resource.errors.invalid_user_epr_uuid', epr_uuid: @model.user_epr_uuid)) unless user
+      unless user
+        raise JSONAPI::Exceptions::RecordNotFound.new(@model.user_epr_uuid,
+                                                      detail: I18n.t('api.time_range_resource.errors.invalid_user_epr_uuid',
+                                                                     epr_uuid: @model.user_epr_uuid))
+      end
 
       @model.user_id = user.id
     end

@@ -231,6 +231,12 @@
               "$ref": "#/definitions/tag_association_response"
             }
           },
+          "404": {
+            "description": "Record not found",
+            "schema": {
+              "$ref": "#/definitions/error_404"
+            }
+          },
           "422": {
             "description": "Invalid request",
             "schema": {
@@ -738,6 +744,12 @@
             "description": "Time Range created",
             "schema": {
               "$ref": "#/definitions/time_range_response_with_relationships"
+            }
+          },
+          "404": {
+            "description": "Record not found",
+            "schema": {
+              "$ref": "#/definitions/error_404"
             }
           },
           "422": {
@@ -1906,15 +1918,49 @@
         },
         "taggable_id": {
           "type": "integer",
-          "required": true,
+          "required": false,
           "example": 123,
           "x-nullable": false
         },
         "taggable_type": {
           "type": "string",
-          "required": true,
+          "required": false,
           "example": "TimeRange",
           "x-nullable": false
+        }
+      }
+    },
+    "tag_association_attributes_with_time_range_appointment_id": {
+      "type": "object",
+      "properties": {
+        "tag_id": {
+          "type": "integer",
+          "example": 100,
+          "x-nullable": true
+        },
+        "tag_type_id": {
+          "type": "integer",
+          "required": true,
+          "example": 200,
+          "x-nullable": false
+        },
+        "taggable_id": {
+          "type": "integer",
+          "required": false,
+          "example": 123,
+          "x-nullable": false
+        },
+        "taggable_type": {
+          "type": "string",
+          "required": false,
+          "example": "TimeRange",
+          "x-nullable": false
+        },
+        "time_range_appointment_id": {
+          "type": "string",
+          "required": false,
+          "example": "lorem123",
+          "x-nullable": true
         }
       }
     },
@@ -1959,7 +2005,7 @@
               "example": "tag_associations"
             },
             "attributes": {
-              "$ref": "#/definitions/tag_association_attributes"
+              "$ref": "#/definitions/tag_association_attributes_with_time_range_appointment_id"
             }
           }
         }
