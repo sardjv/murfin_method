@@ -46,51 +46,55 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
         run_test! do
           data = parsed_json_data
           data['attributes']['value'] = data['attributes'].delete('minutes_worked').to_d.to_s
+
           parsed_json_data_matches_db_record(created_time_range, data)
         end
       end
 
-      context 'user_epr_uuid attribute passed instead user_id' do
-        let(:attributes) { valid_attributes.except(:user_id).merge({ user_epr_uuid: epr_uuid }) }
+      context 'find user by user_epr_uuid instead user_id' do
+        context 'correct user_epr_uuid passed' do
+          let(:attributes) { valid_attributes.except(:user_id).merge({ user_epr_uuid: epr_uuid }) }
 
-        response '201', 'Time Range created' do
-          schema '$ref' => '#/definitions/time_range_response'
+          response '201', 'Time Range created' do
+            schema '$ref' => '#/definitions/time_range_response'
 
-          run_test! do
-            data = parsed_json_data
-            data['attributes']['value'] = data['attributes'].delete('minutes_worked').to_d.to_s
-            data['attributes']['user_id'] = user.id
-            parsed_json_data_matches_db_record(created_time_range, data)
+            run_test! do
+              data = parsed_json_data
+              data['attributes']['value'] = data['attributes'].delete('minutes_worked').to_d.to_s
+              data['attributes']['user_id'] = user.id
+
+              parsed_json_data_matches_db_record(created_time_range, data)
+            end
           end
         end
-      end
 
-      context 'wrong user_epr_uuid passed' do
-        let(:attributes) { valid_attributes.except(:user_id).merge({ user_epr_uuid: 'f00' }) }
-        let(:error_title) { 'Record not found' }
-        let(:error_detail) { 'User with EPR UUID f00 not found.' }
+        context 'wrong user_epr_uuid passed' do
+          let(:attributes) { valid_attributes.except(:user_id).merge({ user_epr_uuid: 'f00' }) }
+          let(:error_title) { 'Record not found' }
+          let(:error_detail) { 'User with EPR UUID f00 not found.' }
 
-        response '404', 'Record not found' do
-          schema '$ref' => '#/definitions/error_404'
+          response '404', 'Record not found' do
+            schema '$ref' => '#/definitions/error_404'
 
-          run_test! do
-            expect(parsed_json['errors'][0]['title']).to eql error_title
-            expect(parsed_json['errors'][0]['detail']).to eql error_detail
+            run_test! do
+              expect(parsed_json['errors'][0]['title']).to eql error_title
+              expect(parsed_json['errors'][0]['detail']).to eql error_detail
+            end
           end
         end
-      end
 
-      context 'missing both user_id and user_epr_uuid' do
-        let(:attributes) { valid_attributes.except(:user_id) }
-        let(:error_title) { 'must exist' }
-        let(:error_detail) { 'user - must exist' }
+        context 'missing both user_id and user_epr_uuid' do
+          let(:attributes) { valid_attributes.except(:user_id) }
+          let(:error_title) { 'must exist' }
+          let(:error_detail) { 'user - must exist' }
 
-        response '422', 'Invalid request' do
-          schema '$ref' => '#/definitions/error_422'
+          response '422', 'Invalid request' do
+            schema '$ref' => '#/definitions/error_422'
 
-          run_test! do
-            expect(parsed_json['errors'][0]['title']).to eql error_title
-            expect(parsed_json['errors'][0]['detail']).to eql error_detail
+            run_test! do
+              expect(parsed_json['errors'][0]['title']).to eql error_title
+              expect(parsed_json['errors'][0]['detail']).to eql error_detail
+            end
           end
         end
       end

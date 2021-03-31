@@ -1907,6 +1907,7 @@
       "properties": {
         "tag_id": {
           "type": "integer",
+          "required": false,
           "example": 100,
           "x-nullable": true
         },
@@ -1935,6 +1936,7 @@
       "properties": {
         "tag_id": {
           "type": "integer",
+          "required": false,
           "example": 100,
           "x-nullable": true
         },

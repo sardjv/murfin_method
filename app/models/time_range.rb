@@ -24,8 +24,6 @@ class TimeRange < ApplicationRecord
   validates :appointment_id, uniqueness: { case_sensitive: true }, allow_blank: true
   validate :validate_end_time_after_start_time
 
-  attr_accessor :user_epr_uuid # TEMP used in TimeRangeResource
-
   # TODO: add validation for value, only positive numbers ?
 
   def seconds_worked=(seconds)

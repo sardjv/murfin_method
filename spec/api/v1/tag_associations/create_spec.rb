@@ -42,11 +42,11 @@ describe Api::V1::TagAssociationResource, type: :request, swagger_doc: 'v1/swagg
         schema '$ref' => '#/definitions/tag_association_response'
 
         run_test! do
-          parsed_json_data_matches_db_record(created_tag_association, skip_data_attributes: ['time_range_appointment_id'])
+          parsed_json_data_matches_db_record(created_tag_association)
         end
       end
 
-      describe 'pass time_range_appointment_id instead time range as taggable' do
+      describe 'find tabbable by time_range_appointment_id instead taggable_id and taggable_type' do
         context 'correct time_range_appointment_id passed' do
           let(:attributes) do
             {
@@ -60,7 +60,7 @@ describe Api::V1::TagAssociationResource, type: :request, swagger_doc: 'v1/swagg
             schema '$ref' => '#/definitions/tag_association_response'
 
             run_test! do
-              parsed_json_data_matches_db_record(created_tag_association, skip_data_attributes: ['time_range_appointment_id'])
+              parsed_json_data_matches_db_record(created_tag_association)
 
               expect(created_tag_association.taggable).to eql time_range
             end
@@ -96,7 +96,7 @@ describe Api::V1::TagAssociationResource, type: :request, swagger_doc: 'v1/swagg
           schema '$ref' => '#/definitions/tag_association_response'
 
           run_test! do
-            parsed_json_data_matches_db_record(created_tag_association, skip_data_attributes: ['time_range_appointment_id'])
+            parsed_json_data_matches_db_record(created_tag_association)
           end
         end
       end

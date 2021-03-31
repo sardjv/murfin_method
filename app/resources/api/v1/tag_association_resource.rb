@@ -9,7 +9,7 @@ class Api::V1::TagAssociationResource < JSONAPI::Resource
     nil
   end
 
-  def self.fetchable_fields(_context)
+  def fetchable_fields
     super - [:time_range_appointment_id]
   end
 
