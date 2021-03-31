@@ -187,7 +187,7 @@ GEM
     marcel (1.0.0)
     memory_profiler (1.0.0)
     method_source (1.0.0)
-    mimemagic (0.3.9)
+    mimemagic (0.4.3)
       nokogiri (~> 1)
       rake
     mini_mime (1.0.3)
@@ -403,7 +403,7 @@ DEPENDENCIES
   kaminari (~> 1.2.1)
   listen (~> 3.5.0)
   memory_profiler (~> 1.0.0)
-  mimemagic (= 0.3.9)
+  mimemagic (= 0.4.3)
   mysql2 (~> 0.5.3)
   omniauth-auth0 (~> 2.5.0)
   omniauth-rails_csrf_protection (~> 0.1.2)
