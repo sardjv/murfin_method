@@ -8,10 +8,6 @@ class Api::V1::TimeRangeResource < JSONAPI::Resource
 
   attr_writer :user_epr_uuid
 
-  def user_epr_uuid
-    nil
-  end
-
   def minutes_worked
     @model.value.to_i
   end

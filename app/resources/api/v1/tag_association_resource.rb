@@ -5,10 +5,6 @@ class Api::V1::TagAssociationResource < JSONAPI::Resource
 
   attr_writer :time_range_appointment_id
 
-  def time_range_appointment_id
-    nil
-  end
-
   def fetchable_fields
     super - [:time_range_appointment_id]
   end
