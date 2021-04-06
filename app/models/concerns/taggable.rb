@@ -15,4 +15,23 @@ module Taggable
       # detect insted find_by finds also not saved (just builded) tag associations
     end
   end
+
+  module ClassMethods
+    # example logic: (tag_type1 AND (tag1a OR tag1b)) AND (tag_type2 AND (tag2a))
+    def filter_by_tag_types_and_tags(filter_tag_ids)
+      scope = all
+      tags_by_tag_type = Tag.where(id: filter_tag_ids).group_by(&:tag_type_id) # TODO: refactor to get hash ?
+
+      taggable_ids = []
+      tags_by_tag_type.each_with_index do |(tag_type_id, tags), index|
+        tags = Array.wrap(tags)
+        tag_ids = tags.collect(&:id)
+
+        tmp_taggable_ids = TagAssociation.where(taggable: scope).where(tag_id: tag_ids, tag_type_id: tag_type_id).pluck('DISTINCT(taggable_id)')
+        taggable_ids = index.zero? ? tmp_taggable_ids : (taggable_ids & tmp_taggable_ids)
+      end
+
+      scope.where(id: taggable_ids)
+    end
+  end
 end

@@ -154,6 +154,10 @@ group :test do
   # https://github.com/teamcapybara/capybara
   gem 'capybara', '~> 3.35.3'
 
+  # Capybara helpers for https://select2.org select box (supports Select2 version 2/3/4)
+  # https://github.com/Hirurg103/capybara_select2
+  gem 'capybara-select-2', '~> 0.5.1'
+
   # Strategies for cleaning databases between tests.
   # https://github.com/DatabaseCleaner/database_cleaner
   gem 'database_cleaner-active_record', '~> 2.0.0'

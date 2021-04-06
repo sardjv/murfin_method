@@ -103,19 +103,13 @@ class UserStatsPresenter
   end
 
   def calculate_actual_time_ranges
-    scope = user_time_range_scope
+    scope = user_time_range_and_tags_scope
 
     scope.where('start_time BETWEEN ? AND ?', filter_start_time, filter_end_time).or(
       scope.where('end_time BETWEEN ? AND ?', filter_start_time, filter_end_time)
     ).or(
       scope.where('start_time <= ? AND end_time >= ?', filter_start_time, filter_end_time)
     ).distinct.to_a
-  end
-
-  def user_time_range_scope
-    scope = user.time_ranges.where(time_range_type_id: actual_id)
-    scope = scope.joins(:tags).where(tags: { id: filter_tag_ids }) if filter_tag_ids.any?
-    scope
   end
 
   def calculate_planned_time_ranges
@@ -127,6 +121,13 @@ class UserStatsPresenter
   def user_plan_time_ranges
     scope = Activity.joins(:plan).where(plans: { user_id: user.id })
     scope = scope.joins(:tags).where(tags: { id: filter_tag_ids }) if filter_tag_ids.any?
+    # scope = scope.filter_by_tag_types_and_tags(filter_tag_ids) if filter_tag_ids.present?
     scope.distinct.flat_map(&:to_time_ranges)
+  end
+
+  def user_time_range_and_tags_scope
+    scope = user.time_ranges.where(time_range_type_id: actual_id)
+    scope = scope.filter_by_tag_types_and_tags(filter_tag_ids) if filter_tag_ids.present?
+    scope
   end
 end
