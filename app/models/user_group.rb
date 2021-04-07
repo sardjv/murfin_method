@@ -15,4 +15,6 @@ class UserGroup < ApplicationRecord
   has_many :users, through: :memberships
 
   validates :name, presence: true, uniqueness: { scope: :group_type, case_sensitive: false }
+
+  scope :teams, -> { joins(:group_type).where(group_types: { name: 'Team' }) }
 end

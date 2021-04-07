@@ -1,5 +1,8 @@
 .container.my-4
-  = link_to '< Back to team', dashboard_team_path(@presenter.user_group_team) if @presenter.user_group_team
+  - if @presenter.user_group_team
+    = link_to '< Back to team', @presenter.context == :admin_teams ?
+    dashboard_admin_team_path(@presenter.user_group_team) :
+    dashboard_team_path(@presenter.user_group_team)
   = render 'info', presenter: @presenter
   = render 'tabs', presenter: @presenter
   = render 'shared/filters', presenter: @presenter

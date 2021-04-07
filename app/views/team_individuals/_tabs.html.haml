@@ -1,13 +1,20 @@
 :ruby
+  tab_summary_url = @presenter.context == :admin_teams ?
+                    admin_team_individual_path(@presenter.user_group_team, @presenter.user) :
+                    team_individual_path(@presenter.user_group_team, @presenter.user)
+  tab_data_url = @presenter.context == :admin_teams ?
+                 data_admin_team_individual_path(@presenter.user_group_team, @presenter.user) :
+                 data_team_individual_path(@presenter.user_group_team, @presenter.user)
+
   tabs = [
     {
       label: I18n.t('nav.tabs.summary'),
       team_name: @presenter.user_group_team.try(:name),
-      path: team_individual_path(@presenter.user_group_team, @presenter.user)
+      path: tab_summary_url
     },
     {
       label: I18n.t('nav.tabs.data'),
-      path: data_team_individual_path(@presenter.user_group_team, @presenter.user)
+      path: tab_data_url
     }
   ]
 

@@ -1,0 +1,17 @@
+.container.my-4
+  .row
+    .col-12
+      .table-responsive
+        %table.table.table-bordered
+          %thead
+            %tr
+              %th= t('activerecord.models.user_group.name')
+              %th{ style: 'width: 50px;' }
+          %tbody
+            - @user_groups.each do |team|
+              %tr{ data: { team_id: team.id } }
+                %td= team.name
+                %td
+                  = link_to dashboard_admin_team_path(team), class: 'btn btn-link' do
+                    = icon('eye')
+      = paginate @user_groups
