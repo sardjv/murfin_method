@@ -10,8 +10,8 @@ describe 'Team Individual Data', type: :feature, js: true, freeze: Time.zone.loc
 
   let!(:user_membership) { create :membership, user_group: user_group, user: user, role: 'member' }
 
-  let(:plan_start_date) { 11.months.ago.beginning_of_month }
-  let(:plan_end_date) { Date.current.end_of_month }
+  let(:plan_start_date) { 11.months.ago.beginning_of_month.to_date }
+  let(:plan_end_date) { Date.current.end_of_month.to_date }
 
   let!(:plan) do
     create :plan, user_id: user.id,
@@ -40,6 +40,8 @@ describe 'Team Individual Data', type: :feature, js: true, freeze: Time.zone.loc
     within '.thin-tabs' do
       click_link 'Data'
     end
+
+    expect(page).to have_css 'a.nav-link.active', text: 'Data'
   end
 
   it { expect(current_path).to eql data_admin_team_individual_path(user_group, user) }
@@ -61,14 +63,14 @@ describe 'Team Individual Data', type: :feature, js: true, freeze: Time.zone.loc
     end
   end
 
-  it 'contains user group name' do
+  it 'contains team name' do
     within '#team-individual-user-groups' do
       expect(page).to have_content user_group.name
     end
   end
 
   it 'shows table with stats groupped weekly' do
-    within '.table-responsive' do
+    within '#team-individual-table' do
       within "tr[data-week-start-date='2020-02-24']" do
         within '.team-individual-table-week' do
           expect(page).to have_content 'Feb 24th - Mar 1st'

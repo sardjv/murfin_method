@@ -11,8 +11,8 @@ describe 'Team Individual Data', type: :feature, js: true, freeze: Time.zone.loc
   let!(:lead_membership) { create :membership, user_group: user_group, user: manager, role: 'lead' }
   let!(:user_membership) { create :membership, user_group: user_group, user: user, role: 'member' }
 
-  let(:plan_start_date) { 11.months.ago.beginning_of_month }
-  let(:plan_end_date) { Date.current.end_of_month }
+  let(:plan_start_date) { 11.months.ago.beginning_of_month.to_date }
+  let(:plan_end_date) { Date.current.end_of_month.to_date }
 
   let!(:plan) do
     create :plan, user_id: user.id,

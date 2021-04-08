@@ -1,10 +1,11 @@
 :ruby
-  tab_summary_url = @presenter.context == :admin_teams ?
-                    admin_team_individual_path(@presenter.user_group_team, @presenter.user) :
-                    team_individual_path(@presenter.user_group_team, @presenter.user)
-  tab_data_url = @presenter.context == :admin_teams ?
-                 data_admin_team_individual_path(@presenter.user_group_team, @presenter.user) :
-                 data_team_individual_path(@presenter.user_group_team, @presenter.user)
+  if @presenter.context == :admin_teams
+    tab_summary_url = admin_team_individual_path(@presenter.user_group_team, @presenter.user)
+    tab_data_url = data_admin_team_individual_path(@presenter.user_group_team, @presenter.user)
+  else
+    tab_summary_url = team_individual_path(@presenter.user_group_team, @presenter.user)
+    tab_data_url = data_team_individual_path(@presenter.user_group_team, @presenter.user)
+  end
 
   tabs = [
     {
