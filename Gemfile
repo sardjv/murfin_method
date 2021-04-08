@@ -66,7 +66,7 @@ gem 'omniauth-rails_csrf_protection', '~> 0.1.2'
 # A Ruby parser - used by Rubocop, added here to force it to a newer version
 # for compatibility with Ruby 3.0.0.
 # https://github.com/whitequark/parser
-gem 'parser', '~> 3.0.0.0'
+gem 'parser', '~> 3.0.1.0'
 
 # A Ruby/Rack web server built for concurrency.
 # https://github.com/puma/puma
