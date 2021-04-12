@@ -15,12 +15,13 @@ describe 'Teams', type: :feature do
   let(:user_group3) { create :user_group }
   let!(:lead_membership2) { create :membership, user_group: user_group3, user: manager2, role: 'lead' }
 
-  let(:user_group4) { create :user_group }
+  let!(:user_group4) { create :user_group }
 
   it 'lists only user groups with lead' do
     log_in admin
+    visit admin_dashboard_path
 
-    within '.thin-tabs' do
+    within '.subnav' do
       click_link 'Teams'
     end
 
