@@ -34,6 +34,7 @@
             %tbody.activities.list
               = f.fields_for :activities, wrapper: false, include_id: false do |activity_form|
                 = render 'activity_fields', plan: @plan, plan_form: f, f: activity_form
+            %tfoot
               %tr
                 %td{ colspan: 3 }
                 %td#plan-total-time-worked-per-week.small{ colspan: 2 }
