@@ -2,10 +2,9 @@ class SignoffsController < ApplicationController
   include PlanHelper
   include SignoffHelper
 
-  def sign
-    @signoff = Signoff.find(params[:id])
-    authorize @signoff
+  before_action :find_and_authorize_sign_off
 
+  def sign
     return unless @signoff.sign
 
     respond_to do |format|
@@ -17,9 +16,6 @@ class SignoffsController < ApplicationController
   end
 
   def revoke
-    @signoff = Signoff.find(params[:id])
-    authorize @signoff
-
     return unless @signoff.revoke
 
     respond_to do |format|
@@ -28,5 +24,10 @@ class SignoffsController < ApplicationController
                status: :ok
       end
     end
+  end
+
+  def find_and_authorize_sign_off
+    @signoff = Signoff.find(params[:id])
+    authorize @signoff
   end
 end

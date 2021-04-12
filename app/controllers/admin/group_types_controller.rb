@@ -1,5 +1,5 @@
 class Admin::GroupTypesController < ApplicationController
-  before_action :find_group_type, only: %i[edit update destroy]
+  before_action :find_and_authorize_group_type, only: %i[edit update destroy]
 
   def index
     authorize :group_type
@@ -26,9 +26,6 @@ class Admin::GroupTypesController < ApplicationController
   def edit; end
 
   def update
-    @group_type = GroupType.find(params[:id])
-    authorize @group_type
-
     if @group_type.update(group_type_params)
       redirect_to admin_group_types_path, notice: notice('successfully.updated')
     else
@@ -44,7 +41,7 @@ class Admin::GroupTypesController < ApplicationController
 
   private
 
-  def find_group_type
+  def find_and_authorize_group_type
     @group_type = GroupType.find(params[:id])
     authorize @group_type
   end

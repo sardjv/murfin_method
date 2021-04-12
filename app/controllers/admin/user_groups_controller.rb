@@ -1,5 +1,5 @@
 class Admin::UserGroupsController < ApplicationController
-  before_action :find_user_group, only: %i[edit update destroy]
+  before_action :find_and_authorize_user_group, only: %i[edit update destroy]
 
   def index
     authorize :user_group
@@ -27,9 +27,6 @@ class Admin::UserGroupsController < ApplicationController
   def edit; end
 
   def update
-    @user_group = UserGroup.find(params[:id])
-    authorize @user_group
-
     if @user_group.update(user_group_params)
       redirect_to admin_group_types_path, notice: notice('successfully.updated')
     else
@@ -45,7 +42,7 @@ class Admin::UserGroupsController < ApplicationController
 
   private
 
-  def find_user_group
+  def find_and_authorize_user_group
     @user_group = UserGroup.find(params[:id])
     authorize @user_group
   end

@@ -1,5 +1,5 @@
 class Admin::ApiUsersController < ApplicationController
-  before_action :find_api_user, only: %i[show generate_token destroy]
+  before_action :find_and_authorize_api_user, only: %i[show generate_token destroy]
 
   def index
     authorize :api_user
@@ -49,7 +49,7 @@ class Admin::ApiUsersController < ApplicationController
 
   private
 
-  def find_api_user
+  def find_and_authorize_api_user
     @api_user = ApiUser.find(params[:id])
     authorize @api_user
   end

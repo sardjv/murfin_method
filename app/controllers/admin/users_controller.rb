@@ -1,5 +1,5 @@
 class Admin::UsersController < ApplicationController
-  before_action :find_user, only: %i[edit update destroy]
+  before_action :find_and_authorize_user, only: %i[edit update destroy]
 
   def index
     authorize :user
@@ -44,7 +44,7 @@ class Admin::UsersController < ApplicationController
 
   private
 
-  def find_user
+  def find_and_authorize_user
     @user = User.find(params[:id])
     authorize @user
   end

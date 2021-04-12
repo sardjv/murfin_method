@@ -1,5 +1,5 @@
 class Admin::TagTypesController < ApplicationController
-  before_action :find_tag_type, only: %i[edit update destroy]
+  before_action :find_and_authorize_tag_type, only: %i[edit update destroy]
 
   def index
     authorize :tag_type
@@ -45,7 +45,7 @@ class Admin::TagTypesController < ApplicationController
 
   private
 
-  def find_tag_type
+  def find_and_authorize_tag_type
     @tag_type = TagType.find(params[:id])
     authorize @tag_type
   end

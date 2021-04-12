@@ -1,5 +1,5 @@
 class Admin::TimeRangesController < ApplicationController
-  before_action :find_time_range, only: %i[edit update destroy]
+  before_action :find_and_authorize_time_range, only: %i[edit update destroy]
 
   def index
     authorize :time_range
@@ -41,7 +41,7 @@ class Admin::TimeRangesController < ApplicationController
 
   private
 
-  def find_time_range
+  def find_and_authorize_time_range
     @time_range = TimeRange.find(params[:id])
     authorize @time_range
   end

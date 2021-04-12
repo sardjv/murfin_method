@@ -1,5 +1,5 @@
 class Admin::TagsController < ApplicationController
-  before_action :find_tag, only: %i[edit update destroy]
+  before_action :find_and_authorize_tag, only: %i[edit update destroy]
 
   def index
     @tags = Tag.page(params[:page])
@@ -45,7 +45,7 @@ class Admin::TagsController < ApplicationController
 
   private
 
-  def find_tag
+  def find_and_authorize_tag
     @tag = Tag.find(params[:id])
     authorize @tag
   end
