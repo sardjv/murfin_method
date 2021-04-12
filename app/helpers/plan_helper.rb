@@ -23,4 +23,8 @@ module PlanHelper
       }
     }
   end
+
+  def plan_total_time_worked_per_week(plan)
+    plan.activities.sum(&:seconds_per_week) / 60
+  end
 end

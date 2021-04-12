@@ -22,7 +22,7 @@
 
         .border.my-4.p-4
           %label= Plan.human_attribute_name('activities')
-          %table#sortable.table
+          %table.table#plan-activities-table
             %thead.bg-white
               %tr
                 - TagType.active_for(Activity).sorted.each do |t|
@@ -34,6 +34,9 @@
             %tbody.activities.list
               = f.fields_for :activities, wrapper: false, include_id: false do |activity_form|
                 = render 'activity_fields', plan: @plan, plan_form: f, f: activity_form
+              %tr
+                %td{ colspan: 3 }
+                %td#plan-total-time-worked-per-week.small{ colspan: 2 }= t('plans.total_time_worked_per_week', total: duration_in_words(plan_total_time_worked_per_week(@plan), :short))
 
           - if policy(@plan).update?
             %div

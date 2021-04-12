@@ -44,6 +44,12 @@ describe 'User edits a plan', type: :feature, js: true do
     expect(plan.activities.first.tags.first).to eq tag1b
   end
 
+  it 'contains total time worked per week' do
+    within '#plan-activities-table' do
+      expect(page).to have_css '#plan-total-time-worked-per-week', text: 'Total time worked per week: 4h'
+    end
+  end
+
   describe 'add activity' do
     let(:time_worked_hours) { 8 }
     let(:new_activity) { plan.activities.unscoped.last }
