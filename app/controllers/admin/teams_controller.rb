@@ -2,7 +2,7 @@ class Admin::TeamsController < TeamsController
   before_action :set_context_in_presenter, only: %i[dashboard individuals] # rubocop:disable Rails/LexicallyScopedActionFilter
 
   def index
-    @user_groups = UserGroup.teams.order(:name).page(params[:page])
+    @user_groups = UserGroup.with_lead.order(:name).page(params[:page])
   end
 
   private

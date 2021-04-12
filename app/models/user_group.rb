@@ -16,5 +16,5 @@ class UserGroup < ApplicationRecord
 
   validates :name, presence: true, uniqueness: { scope: :group_type, case_sensitive: false }
 
-  scope :teams, -> { joins(:group_type).where(group_types: { name: 'Team' }) }
+  scope :with_lead, -> { joins(:memberships).where(memberships: { role: :lead }).distinct }
 end

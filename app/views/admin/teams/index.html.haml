@@ -2,10 +2,10 @@
   .row
     .col-12
       .table-responsive
-        %table.table.table-bordered
+        %table#user-groups-with-lead.table.table-bordered
           %thead
             %tr
-              %th= t('activerecord.models.user_group.name')
+              %th= UserGroup.human_attribute_name(:name)
               %th{ style: 'width: 50px;' }
           %tbody
             - @user_groups.each do |team|
