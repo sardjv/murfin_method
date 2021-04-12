@@ -131,11 +131,11 @@ describe 'User edits a plan', type: :feature, js: true do
   end
 
   describe 'signoffs' do
-    let(:user1) { create :user, first_name: 'Artur' } # lead of user' group
-    let(:user2) { create :user, first_name: 'Barbara' } # lead of user' group
-    let(:user3) { create :user, first_name: 'Anthony' } # lead but some other users' group
-    let(:user4) { create :user, first_name: 'Andy' } # member of user' group
-    let!(:user5) { create :user, first_name: 'Deborah' } # some user, not member of any group
+    let(:user1) { create :user, first_name: 'Artur', last_name: 'Lorem' } # lead of user' group
+    let(:user2) { create :user, first_name: 'Barbara', last_name: 'Ipsum' } # lead of user' group
+    let(:user3) { create :user, first_name: 'Anthony', last_name: 'Bar' } # lead but some other users' group
+    let(:user4) { create :user, first_name: 'Andy', last_name: 'Foo' } # member of user' group
+    let!(:user5) { create :user, first_name: 'Deborah', last_name: 'Lorem' } # some user, not member of any group
 
     let(:user_group1) { create :user_group, users: [current_user] }
     let(:user_group2) { create :user_group }
@@ -152,10 +152,10 @@ describe 'User edits a plan', type: :feature, js: true do
         find('button.dropdown-toggle').click
 
         within '.dropdown-menu.inner.show' do
-          expect('Artur').to appear_before 'Barbara'
-          expect('Barbara').to appear_before 'Andy'
-          expect('Andy').to appear_before 'Anthony'
-          expect('Anthony').to appear_before 'Deborah'
+          expect('Barbara').to appear_before 'Artur'
+          expect('Artur').to appear_before 'Anthony'
+          expect('Anthony').to appear_before 'Andy'
+          expect('Andy').to appear_before 'Deborah'
         end
       end
     end
