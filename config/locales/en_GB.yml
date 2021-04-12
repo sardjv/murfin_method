@@ -181,6 +181,9 @@ en:
         "%{model_name} deleted"
       updated:
         "%{model_name} successfully updated"
+  plans:
+    totals: Totals
+    total_time_worked_per_week: "Total time worked per week: %{total}"
   signoffs:
     revoke: Revoke
     sign: Sign

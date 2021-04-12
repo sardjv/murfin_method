@@ -21,6 +21,8 @@ class Tag < ApplicationRecord
   validates :name, uniqueness: { scope: :parent_id, case_sensitive: false }
   validate :validate_type_hierarchy
 
+  scope :with_tag_type_active_for, ->(klass) { where(tag_type_id: TagType.active_for(klass).select(:id)) }
+
   def name_with_ancestors
     return "#{parent.name_with_ancestors} > #{name}" if parent
 
