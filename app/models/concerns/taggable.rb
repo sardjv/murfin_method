@@ -14,6 +14,11 @@ module Taggable
       end
       # detect insted find_by finds also not saved (just builded) tag associations
     end
+
+    def self.tagged_with(tag_or_tags)
+      tag_ids = tag_or_tags.respond_to?(:each) ? tag_or_tags.pluck(:id) : tag_or_tags.id
+      joins(:tags).where(tags: { id: tag_ids })
+    end
   end
 
   module ClassMethods

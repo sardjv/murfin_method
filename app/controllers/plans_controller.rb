@@ -25,6 +25,11 @@ class PlansController < ApplicationController
   def edit
     @plan = Plan.find(params[:id])
     authorize @plan
+
+    @activities = @plan.activities.includes(tags: :children)
+    @activity_tags_top_level = @activities.collect do |a|
+      a.tags.where(parent_id: nil).with_tag_type_active_for(Activity)
+    end.flatten.uniq.sort_by(&:tag_type_id)
   end
 
   def update
