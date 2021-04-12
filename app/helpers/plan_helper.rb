@@ -24,7 +24,11 @@ module PlanHelper
     }
   end
 
-  def job_plan_sign_off_options(plan)
+  def plan_total_time_worked_per_week(plan)
+    plan.activities.sum(&:seconds_per_week) / 60
+  end
+
+  def plan_sign_off_options(plan)
     user_group_ids = plan.user.memberships.pluck(:user_group_id)
     lead_ids = Membership.where(user_group_id: user_group_ids, role: 'lead').pluck(:user_id).uniq || []
     lead_ids_partial_query = lead_ids.any? ? "(id IN (#{lead_ids.join(',')}) IS TRUE) DESC," : ''
