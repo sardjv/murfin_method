@@ -1392,10 +1392,10 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz"
 
-bootstrap-icons@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/bootstrap-icons/-/bootstrap-icons-1.4.0.tgz#ea08e2c8bc1535576ad267312cca9ee84ea73343"
-  integrity sha512-EynaOv/G/X/sQgPUqkdLJoxPrWk73wwsVjVR3cDNYO0jMS58poq7DOC2CraBWlBt1AberEmt0blfw4ony2/ZIg==
+bootstrap-icons@1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/bootstrap-icons/-/bootstrap-icons-1.4.1.tgz#5071d2ea9dab0ad79ca5673a97a0074872c74e14"
+  integrity sha512-EcATaAGsRgyy4NtnwXlNzkgWttpb6PqcXCoLtZZKdZtAYJU/WYqoQFxuGFKAppOlf7NmKpvGtSsC/921H7LIjg==
 
 bootstrap-select@^1.13.18:
   version "1.13.18"
@@ -1664,25 +1664,10 @@ chalk@^2.0, chalk@^2.0.0, chalk@^2.4.1, chalk@^2.4.2:
     escape-string-regexp "^1.0.5"
     supports-color "^5.3.0"
 
-chart.js@^2.9.4:
-  version "2.9.4"
-  resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-2.9.4.tgz"
-  dependencies:
-    chartjs-color "^2.1.0"
-    moment "^2.10.2"
-
-chartjs-color-string@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/chartjs-color-string/-/chartjs-color-string-0.6.0.tgz"
-  dependencies:
-    color-name "^1.0.0"
-
-chartjs-color@^2.1.0:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/chartjs-color/-/chartjs-color-2.4.1.tgz"
-  dependencies:
-    chartjs-color-string "^0.6.0"
-    color-convert "^1.9.3"
+chart.js@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-3.0.2.tgz#5893b0548714445b5190cbda9ac307357a56a0c7"
+  integrity sha512-DR0GmFSlxcFJp/w//ZmbxSduAkH/AqwxoiZxK97KHnWZf6gvsKWS3160WvNMMHYvzW9OXqGWjPjVh1Qu+xDabg==
 
 chokidar@^2.1.8:
   version "2.1.8"
@@ -1785,7 +1770,7 @@ collection-visit@^1.0.0:
     map-visit "^1.0.0"
     object-visit "^1.0.0"
 
-color-convert@^1.9.0, color-convert@^1.9.1, color-convert@^1.9.3:
+color-convert@^1.9.0, color-convert@^1.9.1:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-1.9.3.tgz"
   dependencies:
@@ -2201,10 +2186,10 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-date-fns@^2.19.0:
-  version "2.19.0"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.19.0.tgz#65193348635a28d5d916c43ec7ce6fbd145059e1"
-  integrity sha512-X3bf2iTPgCAQp9wvjOQytnf5vO5rESYRXlPIVcgSbtT5OTScPcsf9eZU+B/YIkKAtYr5WeCii58BgATrNitlWg==
+date-fns@^2.20.0:
+  version "2.20.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.20.0.tgz#df00ba9177fbea22d88010b5844ecc91e9e03ceb"
+  integrity sha512-nmA7y6aDH5+fknfJ0G77HQzUSfTPpq4ifq+c9blP9d+X9zs3kNjxC+t3pcbBMGTp262a6PJB3RVjLlxIgoMI+Q==
 
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3:
   version "2.6.9"
@@ -4028,10 +4013,6 @@ mixin-deep@^1.2.0:
 mkdirp@^1.0.3, mkdirp@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz"
-
-moment@^2.10.2:
-  version "2.27.0"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.27.0.tgz"
 
 move-concurrently@^1.0.1:
   version "1.0.1"
@@ -6697,8 +6678,9 @@ xtend@^4.0.0, xtend@~4.0.1:
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.2.tgz"
 
 y18n@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/y18n/-/y18n-4.0.0.tgz"
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/y18n/-/y18n-4.0.1.tgz#8db2b83c31c5d75099bb890b23f3094891e247d4"
+  integrity sha512-wNcy4NvjMYL8gogWWYAO7ZFWFfHcbdbE57tZO8e4cbpj8tfUcwrwqSl3ad8HxpYWCdXcJUCeKKZS62Av1affwQ==
 
 yallist@^2.1.2:
   version "2.1.2"
