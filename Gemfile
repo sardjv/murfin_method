@@ -19,7 +19,7 @@ gem 'devise', '~> 4.7.3'
 
 # Better distance of time in words for Rails.
 # https://github.com/radar/distance_of_time_in_words
-gem 'dotiw', '~> 5.3.0'
+gem 'dotiw', '~> 5.3.1'
 
 # Fixtures replacement with a straightforward definition syntax.
 # https://github.com/thoughtbot/factory_bot
@@ -49,15 +49,13 @@ gem 'jwt', '~> 2.2.2'
 # https://github.com/kaminari/kaminari
 gem 'kaminari', '~> 1.2.1'
 
-gem 'mimemagic', '0.3.7'
-
 # Use MySQL as the database for Active Record.
 # https://github.com/brianmario/mysql2
 gem 'mysql2', '~> 0.5.3'
 
 # OmniAuth is a flexible authentication system utilizing Rack middleware.
 # https://github.com/auth0/omniauth-auth0
-gem 'omniauth-auth0', '~> 2.5.0'
+gem 'omniauth-auth0', '~> 2.6.0'
 
 # Provides CSRF protection on OmniAuth request endpoint on Rails application.
 # https://github.com/cookpad/omniauth-rails_csrf_protection
@@ -66,7 +64,7 @@ gem 'omniauth-rails_csrf_protection', '~> 0.1.2'
 # A Ruby parser - used by Rubocop, added here to force it to a newer version
 # for compatibility with Ruby 3.0.0.
 # https://github.com/whitequark/parser
-gem 'parser', '~> 3.0.0.0'
+gem 'parser', '~> 3.0.1.0'
 
 # A Ruby/Rack web server built for concurrency.
 # https://github.com/puma/puma
@@ -91,7 +89,7 @@ gem 'rswag-ui', '~> 2.4.0'
 
 # Simple, efficient background processing for Ruby.
 # https://github.com/mperham/sidekiq
-gem 'sidekiq', '~> 6.2.0'
+gem 'sidekiq', '~> 6.2.1'
 
 # Strips attributes of leading and trailing whitespace before validation.
 # https://github.com/rmm5t/strip_attributes
@@ -142,7 +140,7 @@ group :development do
 
   # Listens to file modifications and notifies you about the changes.
   # https://github.com/guard/listen
-  gem 'listen', '~> 3.5.0'
+  gem 'listen', '~> 3.5.1'
 
   # A static code analyzer and formatter, based on the community style guide.
   # https://github.com/rubocop-hq/rubocop-rails

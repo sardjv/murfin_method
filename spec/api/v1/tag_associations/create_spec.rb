@@ -1,16 +1,17 @@
 require 'swagger_helper'
 
 describe Api::V1::TagAssociationResource, type: :request, swagger_doc: 'v1/swagger.json' do
-  let(:created_tag_association) { time_range.tag_associations.where(tag_type_id: tag_type.id).last }
+  let(:created_tag_association) { time_range.tag_associations.where(taggable: time_range).last }
 
   let!(:tag_type) { create :tag_type }
   let!(:tag) { create :tag, tag_type: tag_type }
-  let!(:time_range) { create :time_range }
+
+  let!(:appointment_id) { Faker::Lorem.characters(number: 8) }
+  let!(:time_range) { create :time_range, appointment_id: appointment_id }
 
   let(:valid_attributes) do
     {
       tag_id: tag.id,
-      tag_type_id: tag_type.id,
       taggable_id: time_range.id,
       taggable_type: time_range.class.name
     }
@@ -42,11 +43,56 @@ describe Api::V1::TagAssociationResource, type: :request, swagger_doc: 'v1/swagg
 
         run_test! do
           parsed_json_data_matches_db_record(created_tag_association)
+
+          expect(created_tag_association.tag_type_id).to eql tag.tag_type_id
         end
       end
 
-      context 'optional tag id not passed' do
-        let(:attributes) { valid_attributes.except(:tag_id) }
+      describe 'find tabbable by time_range_appointment_id instead taggable_id and taggable_type' do
+        context 'correct time_range_appointment_id passed' do
+          let(:attributes) do
+            {
+              tag_id: tag.id,
+              tag_type_id: tag_type.id,
+              time_range_appointment_id: appointment_id
+            }
+          end
+
+          response '201', 'Tag Association created' do
+            schema '$ref' => '#/definitions/tag_association_response'
+
+            run_test! do
+              parsed_json_data_matches_db_record(created_tag_association)
+
+              expect(created_tag_association.taggable).to eql time_range
+            end
+          end
+        end
+
+        context 'wrong time_range_appointment_id passed' do
+          let(:attributes) do
+            {
+              tag_id: tag.id,
+              tag_type_id: tag_type.id,
+              time_range_appointment_id: 'l0r3m'
+            }
+          end
+          let(:error_title) { 'Record not found' }
+          let(:error_detail) { 'Time range with appointment id l0r3m not found.' }
+
+          response '404', 'Record not found' do
+            schema '$ref' => '#/definitions/error_404'
+
+            run_test! do
+              expect(parsed_json['errors'][0]['title']).to eql error_title
+              expect(parsed_json['errors'][0]['detail']).to eql error_detail
+            end
+          end
+        end
+      end
+
+      context 'optional tag id not passed but passed tag type id' do
+        let(:attributes) { valid_attributes.except(:tag_id).merge({ tag_type_id: tag_type.id }) }
 
         response '201', 'Tag Association created' do
           schema '$ref' => '#/definitions/tag_association_response'
@@ -57,15 +103,12 @@ describe Api::V1::TagAssociationResource, type: :request, swagger_doc: 'v1/swagg
         end
       end
 
-      context 'required tag type not passed so is assigned from tag' do
-        let(:attributes) { valid_attributes.except(:tag_type_id) }
+      context 'tag id and tag type id not passed' do
+        let(:attributes) { valid_attributes.except(:tag_id) }
 
-        response '201', 'Tag Association created' do
-          schema '$ref' => '#/definitions/tag_association_response'
-
-          run_test! do
-            created_tag_association.tag_type = tag.tag_type
-          end
+        response '422', 'Invalid request' do
+          schema '$ref' => '#/definitions/error_422'
+          run_test!
         end
       end
 

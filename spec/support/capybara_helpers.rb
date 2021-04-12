@@ -3,10 +3,23 @@ module CapybaraHelpers
     have_select(args.first, **args.last.merge(visible: false))
   end
 
-  def bootstrap_select(value, attrs)
+  def bootstrap_select(labels, attrs)
+    labels = Array.wrap(labels)
+
     within find('label', text: attrs[:from].to_s).find(:xpath, '..') do
-      first('button.dropdown-toggle').click
-      find('.dropdown-menu li', text: value).click
+      dropdown_toggle = first('button.dropdown-toggle')
+
+      dropdown_toggle.click
+
+      within 'ul.dropdown-menu.show' do
+        labels.each do |label|
+          find('.dropdown-menu li', text: label).click
+        end
+      end
+
+      if page.has_css?('button.dropdown-toggle[aria-expanded=true]')
+        dropdown_toggle.click # hide dropdown if still visible, e.g. happens if select is multiple
+      end
     end
   end
 
