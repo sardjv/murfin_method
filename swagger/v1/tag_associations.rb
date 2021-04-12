@@ -4,9 +4,9 @@ module Swagger
       def self.tag_association_properties
         {
           tag_id: { type: 'integer', required: false, example: 100, 'x-nullable': true },
-          tag_type_id: { type: 'integer', required: false, example: 200, 'x-nullable': false },
-          taggable_id: { type: 'integer', required: true, example: 123, 'x-nullable': false },
-          taggable_type: { type: 'string', required: true, example: 'TimeRange', 'x-nullable': false }
+          tag_type_id: { type: 'integer', required: true, example: 200, 'x-nullable': false },
+          taggable_id: { type: 'integer', required: false, example: 123, 'x-nullable': false },
+          taggable_type: { type: 'string', required: false, example: 'TimeRange', 'x-nullable': false }
         }
       end
 
@@ -16,9 +16,11 @@ module Swagger
             type: 'object',
             properties: tag_association_properties
           },
-          tag_association_attributes_without_tag_type_id: {
+          tag_association_post_attributes: {
             type: 'object',
             properties: tag_association_properties.except(:tag_type_id)
+                                                  .merge({ time_range_appointment_id: { type: 'string', required: false, example: 'lorem123',
+                                                                                        'x-nullable': true } })
           },
           tag_association_response: {
             type: 'object',
@@ -47,7 +49,7 @@ module Swagger
                 type: 'object',
                 properties: {
                   type: { type: 'string', example: 'tag_associations' },
-                  attributes: { '$ref' => '#/definitions/tag_association_attributes_without_tag_type_id' }
+                  attributes: { '$ref' => '#/definitions/tag_association_post_attributes' }
                 }
               }
             }

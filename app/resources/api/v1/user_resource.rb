@@ -16,7 +16,7 @@ class Api::V1::UserResource < JSONAPI::Resource
            records.where(epr_uuid: values[0])
          }
 
-  def self.fetchable_fields(_context)
+  def fetchable_fields
     super - [:password]
   end
 

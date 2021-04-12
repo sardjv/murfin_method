@@ -11,4 +11,6 @@ class GroupType < ApplicationRecord
   has_many :user_groups, dependent: :destroy
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
+
+  scope :with_user_groups, -> { includes(:user_groups).where.not(user_groups: { id: nil }) }
 end
