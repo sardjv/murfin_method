@@ -7,13 +7,13 @@ module RequestSpecHelper
     parsed_json['data']
   end
 
-  def parsed_json_data_matches_db_record(db_record, data = nil) # rubocop:disable Metrics/AbcSize
+  def parsed_json_data_matches_db_record(db_record, data = nil, skip_data_attributes: []) # rubocop:disable Metrics/AbcSize
     data ||= parsed_json_data
 
     db_record.reload
     expect(data['id']).to eql db_record.id.to_s # because attributes do not contain id
 
-    data['attributes'].each do |key, value|
+    data['attributes'].except(*skip_data_attributes).each do |key, value|
       if db_record.send(key).is_a?(Time)
         time_formatted = I18n.l(db_record.send(key), format: :iso8601_utc)
         expect(time_formatted).to eq(value.to_s)

@@ -231,6 +231,12 @@
               "$ref": "#/definitions/tag_association_response"
             }
           },
+          "404": {
+            "description": "Record not found",
+            "schema": {
+              "$ref": "#/definitions/error_404"
+            }
+          },
           "422": {
             "description": "Invalid request",
             "schema": {
@@ -738,6 +744,12 @@
             "description": "Time Range created",
             "schema": {
               "$ref": "#/definitions/time_range_response_with_relationships"
+            }
+          },
+          "404": {
+            "description": "Record not found",
+            "schema": {
+              "$ref": "#/definitions/error_404"
             }
           },
           "422": {
@@ -1901,25 +1913,25 @@
         },
         "tag_type_id": {
           "type": "integer",
-          "required": false,
+          "required": true,
           "example": 200,
           "x-nullable": false
         },
         "taggable_id": {
           "type": "integer",
-          "required": true,
+          "required": false,
           "example": 123,
           "x-nullable": false
         },
         "taggable_type": {
           "type": "string",
-          "required": true,
+          "required": false,
           "example": "TimeRange",
           "x-nullable": false
         }
       }
     },
-    "tag_association_attributes_without_tag_type_id": {
+    "tag_association_post_attributes": {
       "type": "object",
       "properties": {
         "tag_id": {
@@ -1930,15 +1942,21 @@
         },
         "taggable_id": {
           "type": "integer",
-          "required": true,
+          "required": false,
           "example": 123,
           "x-nullable": false
         },
         "taggable_type": {
           "type": "string",
-          "required": true,
+          "required": false,
           "example": "TimeRange",
           "x-nullable": false
+        },
+        "time_range_appointment_id": {
+          "type": "string",
+          "required": false,
+          "example": "lorem123",
+          "x-nullable": true
         }
       }
     },
@@ -1983,7 +2001,7 @@
               "example": "tag_associations"
             },
             "attributes": {
-              "$ref": "#/definitions/tag_association_attributes_without_tag_type_id"
+              "$ref": "#/definitions/tag_association_post_attributes"
             }
           }
         }
@@ -2141,33 +2159,85 @@
       "properties": {
         "start_time": {
           "type": "string",
+          "required": true,
           "example": "2021-01-22T09:00:00+00:00",
           "x-nullable": false
         },
         "end_time": {
           "type": "string",
+          "required": true,
           "example": "2021-01-22T09:45:00+00:00",
           "x-nullable": false
         },
         "user_id": {
           "type": "integer",
+          "required": false,
           "example": 123,
           "x-nullable": false
         },
         "minutes_worked": {
           "type": "integer",
+          "required": true,
           "example": 45,
           "x-nullable": false
         },
         "time_range_type_id": {
           "type": "integer",
+          "required": false,
           "example": 1,
           "x-nullable": false
         },
         "appointment_id": {
           "type": "string",
-          "example": "12345678",
+          "required": false,
+          "example": "33445566",
           "x-nullable": true
+        }
+      }
+    },
+    "time_range_attributes_with_user_epr_uuid": {
+      "type": "object",
+      "properties": {
+        "start_time": {
+          "type": "string",
+          "required": true,
+          "example": "2021-01-22T09:00:00+00:00",
+          "x-nullable": false
+        },
+        "end_time": {
+          "type": "string",
+          "required": true,
+          "example": "2021-01-22T09:45:00+00:00",
+          "x-nullable": false
+        },
+        "user_id": {
+          "type": "integer",
+          "required": false,
+          "example": 123,
+          "x-nullable": false
+        },
+        "minutes_worked": {
+          "type": "integer",
+          "required": true,
+          "example": 45,
+          "x-nullable": false
+        },
+        "time_range_type_id": {
+          "type": "integer",
+          "required": false,
+          "example": 1,
+          "x-nullable": false
+        },
+        "appointment_id": {
+          "type": "string",
+          "required": false,
+          "example": "33445566",
+          "x-nullable": true
+        },
+        "user_epr_uuid": {
+          "type": "string",
+          "example": "01234567890",
+          "x-nullable": false
         }
       }
     },
@@ -2321,7 +2391,7 @@
               "example": "time_ranges"
             },
             "attributes": {
-              "$ref": "#/definitions/time_range_attributes"
+              "$ref": "#/definitions/time_range_attributes_with_user_epr_uuid"
             },
             "relationships": {
               "type": "object",
@@ -2690,7 +2760,7 @@
       "properties": {
         "name": {
           "type": "string",
-          "example": "illum",
+          "example": "Lorems",
           "x-nullable": false
         },
         "group_type_id": {
