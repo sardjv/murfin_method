@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.11.0] - 2021-04-13
+
+### Changed
+
+- Job Plan sign off - leads of a user's user groups are at the top of the sign off select
+- Admin User form - user group select is now a multi select so a user can be a member of multiple user groups within a group type
+- TimeRange API POST API endpoint - allow  epr_uuid instead of the user_id
+- TagAssociations POST API endpoint - allow appointment_id instead of time_range_id
+- TagAssociation API endpoint changed so if just the tag_id is provided then the tag_type_id defaults to the tag_type_id of the tag
+
+### Added
+
+- Time worked per week total and breakdown by activity on an individual Job Plans
+- Add unique appointment_id on TimeRange API end point
+
+### Fixed
+
+- Fix Job Plan bug whereby filter fields duplicated when go back in browser
+- Fix Job Plan bug which created duplicated signoff on job plans
+- Authorization on admin pages
+
 ## [0.10.1] - 2021-03-24
 
 ### Changed
