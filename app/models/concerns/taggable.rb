@@ -23,7 +23,7 @@ module Taggable
 
   module ClassMethods
     # example logic: (tag_type1 AND (tag1a OR tag1b)) AND (tag_type2 AND (tag2a))
-    def filter_by_tag_types_and_tags(filter_tag_ids)
+    def filter_by_tag_types_and_tags(filter_tag_ids) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       scope = all
       scope_klass = scope.any? ? scope.first.class : nil
       tags_by_tag_type = Tag.where(id: filter_tag_ids).group_by(&:tag_type)

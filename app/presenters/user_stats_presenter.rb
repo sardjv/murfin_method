@@ -102,7 +102,7 @@ class UserStatsPresenter
     actual_time_ranges.empty?
   end
 
-  def calculate_actual_time_ranges
+  def calculate_actual_time_ranges # rubocop:disable Metrics/AbcSize
     scope = user_actual_time_ranges
 
     scope = scope.where('start_time BETWEEN ? AND ?', filter_start_time, filter_end_time).or(
@@ -112,7 +112,6 @@ class UserStatsPresenter
     ).distinct
 
     scope = scope.filter_by_tag_types_and_tags(filter_tag_ids) if filter_tag_ids.present?
-    # scope = scope.joins(:tags).where(tags: { id: filter_tag_ids }) if filter_tag_ids.any?
 
     scope.distinct.to_a
   end
@@ -125,7 +124,6 @@ class UserStatsPresenter
 
   def user_plan_time_ranges
     scope = Activity.joins(:plan).where(plans: { user_id: user.id })
-    # scope = scope.joins(:tags).where(tags: { id: filter_tag_ids }) if filter_tag_ids.any?
     scope = scope.filter_by_tag_types_and_tags(filter_tag_ids) if filter_tag_ids.present?
     scope.distinct.flat_map(&:to_time_ranges)
   end
