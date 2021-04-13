@@ -3,6 +3,7 @@ class Admin::TeamsController < TeamsController
 
   def index
     @user_groups = UserGroup.with_lead.order(:name).page(params[:page])
+    authorize @user_groups
   end
 
   private
