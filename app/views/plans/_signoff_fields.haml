@@ -1,8 +1,7 @@
 %tr.nested-fields
   = f.hidden_field :id
   %td
-    = f.select :user_id,
-      options_for_select(User.order(:first_name).all.map { |t| [t.name, t.id] }, selected: f.object.user_id),
+    = f.select :user_id, options_for_select(plan_sign_off_options(f.object.plan), selected: f.object.user_id),
       { hide_label: true, class: 'input-group-btn', required: true },
       disabled: !policy(f.object.plan).update?
   %td

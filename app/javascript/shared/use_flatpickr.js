@@ -4,8 +4,9 @@ require('flatpickr/dist/flatpickr.css')
 import monthSelectPlugin from 'flatpickr/dist/plugins/monthSelect'
 require('flatpickr/dist/plugins/monthSelect/style.css')
 
-$(document).on('turbolinks:load', () => {
-  const useFlatpickrSelector = 'input[data-behaviour-flatpickr]'
+const useFlatpickrSelector = 'input[data-behaviour-flatpickr]'
+
+const useFlatpickr = () => {
   const predefinedRangesToggleSelector = '#filters-predefined-ranges-toggle'
   const predefinedRangesMenuSelector = '#filters-predefined-ranges-menu'
 
@@ -38,4 +39,12 @@ $(document).on('turbolinks:load', () => {
   }
 
   flatpickr(useFlatpickrSelector, flatpickrConfig)
+}
+
+document.addEventListener('turbolinks:load', () => useFlatpickr() )
+
+document.addEventListener('turbolinks:before-cache', () => {
+  $(useFlatpickrSelector).each(function() {
+    $(this).flatpickr().destroy()
+  })
 })

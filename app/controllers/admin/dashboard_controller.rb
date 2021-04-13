@@ -2,6 +2,7 @@ class Admin::DashboardController < ApplicationController
   include RememberParams
 
   def show
+    authorize :dashboard, :admin_dashboard?
     @presenter = DashboardPresenter.new(params: dashboard_params)
 
     respond_to do |format|
