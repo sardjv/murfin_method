@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   include RememberParams
 
+  skip_after_action :verify_authorized
   before_action :initialize_presenter, only: %i[summary data]
 
   def dashboard; end

@@ -1,0 +1,2 @@
+class TagPolicy < AdminCrudPolicy
+end

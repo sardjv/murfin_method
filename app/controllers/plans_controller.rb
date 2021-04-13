@@ -1,5 +1,8 @@
 class PlansController < ApplicationController
+  before_action :find_and_authorize_plan, only: %i[edit update destroy]
+
   def index
+    authorize :plan
     @plans = policy_scope(Plan).order(updated_at: :desc).page(params[:page])
   end
 
@@ -23,9 +26,6 @@ class PlansController < ApplicationController
   end
 
   def edit
-    @plan = Plan.find(params[:id])
-    authorize @plan
-
     @activities = @plan.activities.includes(tags: :children)
     @activity_tags_top_level = @activities.collect do |a|
       a.tags.where(parent_id: nil).with_tag_type_active_for(Activity)
@@ -33,9 +33,6 @@ class PlansController < ApplicationController
   end
 
   def update
-    @plan = Plan.find(params[:id])
-    authorize @plan
-
     if @plan.update(plan_params)
       redirect_to edit_plan_path(@plan), notice: notice('successfully.updated')
     else
@@ -45,14 +42,16 @@ class PlansController < ApplicationController
   end
 
   def destroy
-    @plan = Plan.find(params[:id])
-    authorize @plan
-
     @plan.destroy
     redirect_to plans_path, notice: notice('successfully.destroyed')
   end
 
   private
+
+  def find_and_authorize_plan
+    @plan = Plan.find(params[:id])
+    authorize @plan
+  end
 
   def notice(action)
     t("notice.#{action}", model_name: Plan.model_name.human)

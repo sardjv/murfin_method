@@ -31,14 +31,6 @@ describe 'Admin generates a token for an API User', type: :feature, js: true do
     expect(api_user.token_sample).not_to be_nil
     expect(api_user.token_generated_at).not_to be_nil
     expect(api_user.token_generated_by).to eq admin.name
-
-    expect(page).to have_content(I18n.t('api_users.token_description'))
-    expect(page).to have_content(I18n.t('api_users.current_token'))
-    expect(page).to have_content(api_user.token_sample)
-    expect(page).to have_content(ApiUser.human_attribute_name('token_generated_by'))
-    expect(page).to have_content(admin.name)
-    expect(page).to have_content(ApiUser.human_attribute_name('token_generated_at'))
-    expect(page).to have_content(I18n.t('api_users.token_warning'))
   end
 
   context 'when api user has a token' do
@@ -62,12 +54,6 @@ describe 'Admin generates a token for an API User', type: :feature, js: true do
       expect(api_user.token_generated_at).not_to eq current_token_generated_at
       expect(api_user.token_generated_by).not_to eq current_token_generated_by
       expect(api_user.token_generated_by).to eq admin.name
-
-      expect(page).to have_content(I18n.t('api_users.current_token'))
-      expect(page).to have_content(api_user.token_sample)
-      expect(page).to have_content(ApiUser.human_attribute_name('token_generated_by'))
-      expect(page).to have_content(admin.name)
-      expect(page).to have_content(ApiUser.human_attribute_name('token_generated_at'))
     end
   end
 end

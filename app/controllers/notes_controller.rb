@@ -1,4 +1,5 @@
 class NotesController < ApplicationController
+  skip_after_action :verify_authorized
   def new
     @note = Note.new(note_params)
 
