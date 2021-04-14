@@ -1,0 +1,10 @@
+.row
+  .col-12
+    %h5= t('graph.title.individuals')
+    %p= t('graph.showing_users', count: presenter.paginated_users.total_count)
+    .card.my-4
+      .card-body
+        %canvas#bar-chart
+
+:javascript
+  let chartData = #{raw @presenter.to_json(graphs: [{ type: :bar_chart, data: :individual_data, units: '%' }])};
