@@ -5,6 +5,8 @@ require 'concerns/uses_filters'
 class DashboardPresenter
   include UsesFilters
 
+  attr_accessor :context
+
   def initialize(args)
     @cookies = args[:cookies]
     query = args[:params].delete(:query)

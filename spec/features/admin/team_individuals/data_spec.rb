@@ -3,12 +3,11 @@ require 'rails_helper'
 describe 'Team Individual Data', type: :feature, js: true, freeze: Time.zone.local(2021, 2, 28, 15, 30, 0) do
   let(:actual_id) { TimeRangeType.actual_type.id }
 
-  let(:manager) { create :user }
+  let(:admin) { create :admin }
   let(:user) { create :user }
 
   let(:user_group) { create :user_group }
 
-  let!(:lead_membership) { create :membership, user_group: user_group, user: manager, role: 'lead' }
   let!(:user_membership) { create :membership, user_group: user_group, user: user, role: 'member' }
 
   let(:plan_start_date) { 11.months.ago.beginning_of_month.to_date }
@@ -35,9 +34,17 @@ describe 'Team Individual Data', type: :feature, js: true, freeze: Time.zone.loc
   end
 
   before do
-    log_in manager
-    visit data_team_individual_path(user_group, user)
+    log_in admin
+    visit admin_team_individual_path(user_group, user)
+
+    within '.thin-tabs' do
+      click_link 'Data'
+    end
+
+    expect(page).to have_css 'a.nav-link.active', text: 'Data'
   end
+
+  it { expect(current_path).to eql data_admin_team_individual_path(user_group, user) }
 
   it 'shows boxes with stats' do
     within '#team-individual-box-average-planned-per-week' do
@@ -56,14 +63,14 @@ describe 'Team Individual Data', type: :feature, js: true, freeze: Time.zone.loc
     end
   end
 
-  it 'contains user group name' do
+  it 'contains team name' do
     within '#team-individual-user-groups' do
       expect(page).to have_content user_group.name
     end
   end
 
   it 'shows table with stats groupped weekly' do
-    within '.table-responsive' do
+    within '#team-individual-table' do
       within "tr[data-week-start-date='2020-02-24']" do
         within '.team-individual-table-week' do
           expect(page).to have_content 'Feb 24th - Mar 1st'
