@@ -11,4 +11,4 @@
   = render 'individuals_table', presenter: @presenter
 
 :javascript
-  var chartData = #{raw @presenter.to_json(graphs: [{ type: :bar_chart, data: :individual_data, units: '%' }])};
+  let chartData = #{raw @presenter.to_json(graphs: [{ type: :bar_chart, data: :individual_data, units: '%' }])}
