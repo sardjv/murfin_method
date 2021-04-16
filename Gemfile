@@ -29,6 +29,10 @@ gem 'factory_bot', '~> 6.1.0'
 # https://github.com/faker-ruby/faker
 gem 'faker', '~> 2.17.0'
 
+# A Ruby gem to transform HTML into PDFs, PNGs or JPEGs using Google Puppeteer/Chromium
+# https://github.com/Studiosity/grover
+gem 'grover', '~> 0.14.2'
+
 # HTML Abstraction Markup Language - A Markup Haiku
 # https://github.com/haml/haml
 gem 'haml', '~> 5.2.1'

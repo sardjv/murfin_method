@@ -1,0 +1,16 @@
+!!!
+%html{lang: 'en'}
+  %head
+    %meta{content: '', name: 'description'}
+    %meta{content: 'SARD JV Ltd', name: 'author'}
+    %meta{content: 'width=device-width, initial-scale=1, shrink-to-fit=no', name: 'viewport'}
+    %meta{content: 'IE=edge', 'http-equiv': 'X-UA-Compatible'}
+    %title= t('app.name')
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+  %body.pdf
+    %main
+      .container= yield
+  %footer layout pdf

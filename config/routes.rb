@@ -66,7 +66,9 @@ Rails.application.routes.draw do
   end
 
   resources :notes, except: :show
-  resources :plans, except: :show
+  resources :plans, except: :show do
+    get :download, on: :member
+  end
 
   resources :signoffs, only: %i[sign revoke] do
     put :sign, on: :member

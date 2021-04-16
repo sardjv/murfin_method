@@ -1,4 +1,8 @@
 class PlansController < ApplicationController
+  layout(proc { |c| c.pdf? ? 'pdf' : 'application' })
+
+  before_action :find_and_authorize_plan, only: [:edit, :update, :destroy, :download]
+
   def index
     @plans = policy_scope(Plan).order(updated_at: :desc).page(params[:page])
   end
@@ -22,15 +26,18 @@ class PlansController < ApplicationController
     end
   end
 
-  def edit
-    @plan = Plan.find(params[:id])
-    authorize @plan
+  def edit; end
+
+  def download
+    respond_to do |format|
+      format.html do
+        filename = "plan_#{@plan.id}.pdf"
+        render_attachment(filename) if pdf? && params.key?(:download)
+      end
+    end
   end
 
   def update
-    @plan = Plan.find(params[:id])
-    authorize @plan
-
     if @plan.update(plan_params)
       redirect_to edit_plan_path(@plan), notice: notice('successfully.updated')
     else
@@ -40,9 +47,6 @@ class PlansController < ApplicationController
   end
 
   def destroy
-    @plan = Plan.find(params[:id])
-    authorize @plan
-
     @plan.destroy
     redirect_to plans_path, notice: notice('successfully.destroyed')
   end
@@ -57,6 +61,11 @@ class PlansController < ApplicationController
     Plan.new(plan_params) do |plan|
       plan.end_date = plan.start_date + Plan.default_length
     end
+  end
+
+  def find_and_authorize_plan
+    @plan = Plan.find(params[:id])
+    authorize @plan
   end
 
   def plan_params
