@@ -28,6 +28,8 @@ class PlansController < ApplicationController
 
   def edit; end
 
+  include PlanHelper
+
   def download
     respond_to do |format|
       format.html do

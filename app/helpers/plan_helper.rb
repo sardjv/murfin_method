@@ -25,6 +25,6 @@ module PlanHelper
   end
 
   def plan_pdf_filename(plan)
-    "job_plan_#{plan.user.name.downcase.gsub(/\s+/, '_')}.pdf"
+    "job_plan_#{@plan.user.name.downcase.gsub(/\s+/, '_')}.pdf"
   end
 end
