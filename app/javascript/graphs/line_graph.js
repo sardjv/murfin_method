@@ -1,7 +1,7 @@
-import Chart from 'chart.js'
+import Chart from 'chart.js/auto'
 import Rails from '@rails/ujs'
 import { API } from './api'
-import * as SCSSColours from '!!sass-variable-loader!../stylesheets/variables/colours.scss';
+import * as SCSSColours from '!!sass-variable-loader!../stylesheets/variables/colours.scss'
 import { Note } from './note'
 import minutesHumanized from '../shared/minutes_humanized'
 import { format, addDays } from 'date-fns'
@@ -24,7 +24,7 @@ window.addEventListener('turbolinks:load', () => {
     $(graphKindSelector).on('click', (e) => {
       if(prev_graph_kind != e.target.value) {
         current_graph_kind = e.target.value
-        drawGraph(context, current_graph_kind, current_time_scope)
+        drawLineChart(context, current_graph_kind, current_time_scope)
         prev_graph_kind = current_graph_kind
       }
     })
@@ -32,16 +32,16 @@ window.addEventListener('turbolinks:load', () => {
     $(graphTimeScopeSelector).on('click', (e) => {
       if(prev_time_scope != e.target.value) {
         current_time_scope = e.target.value
-        drawGraph(context, current_graph_kind, current_time_scope)
+        drawLineChart(context, current_graph_kind, current_time_scope)
         prev_time_scope = current_time_scope
       }
     })
 
-    drawGraph(context, current_graph_kind, current_time_scope)
+    drawLineChart(context, current_graph_kind, current_time_scope)
   }
-});
+})
 
-function drawGraph(context, graph_kind, time_scope) {
+function drawLineChart(context, graph_kind, time_scope) {
   const query_params = prepareQueryParamsFromFilters()
   const url_params = { query: query_params, graph_kind: graph_kind, time_scope: time_scope }
 
@@ -62,7 +62,7 @@ function drawGraph(context, graph_kind, time_scope) {
         $('#team-dash-members-under-delivered-percent').html(data.members_under_delivered_percent)
       }
     }
-  });
+  })
 }
 
 function prepareQueryParamsFromFilters() {
@@ -103,16 +103,17 @@ function getColour(number) {
 }
 
 function buildDatasets(datas, options = {}) {
-  let index = 0;
+  let index = 0
   return datas.map(function(data) {
     const dataset = {
       label: options.dataset_labels ? options.dataset_labels[index] : null,
       data: data.map(function(e) {
-        return e.value;
+        return e.value
       }),
       notes: data.map(function(e) {
-        return JSON.parse(e.notes);
+        return JSON.parse(e.notes)
       }),
+      units: options.units,
       fill: false,
       backgroundColor: getColour(index),
       borderColor: getColour(index),
@@ -122,14 +123,14 @@ function buildDatasets(datas, options = {}) {
       pointRadius: 0,
       pointHitRadius: 20,
     }
-    index += 1;
-    return dataset;
-  });
+    index += 1
+    return dataset
+  })
 }
 
 function line_graph(context, line_graph, options = {}) {
   const originalLabels = line_graph.data[0].map(function(e) {
-    return e.name;
+    return e.name
   })
 
   const formattedLabels = line_graph.data[0].map(function(e) {
@@ -148,14 +149,14 @@ function line_graph(context, line_graph, options = {}) {
     } else if (options.time_scope == 'monthly') {
       return format(date, 'MMM yyyy')
     }
-  });
+  })
 
   const units = line_graph.units || ''
-  const datasets = buildDatasets(line_graph.data, { dataset_labels: line_graph.dataset_labels })
+  const datasets = buildDatasets(line_graph.data, { dataset_labels: line_graph.dataset_labels, units: units })
 
   const notes = datasets.map(function(dataset) {
     return dataset.notes
-  });
+  })
 
   const formatChartValue = (val, units) => {
     return units == 'minutes' ? minutesHumanized(val) : `${val}${units}`
@@ -167,62 +168,61 @@ function line_graph(context, line_graph, options = {}) {
       labels: formattedLabels,
       originalLabels: originalLabels,
       datasets: datasets,
-      units: units,
       notes: notes
     },
     options: {
-      legend: {
-        display: line_graph.dataset_labels ? true : false,
-        onHover: function(e) {
-          e.target.style.cursor = 'pointer';
-        }
-      },
-      hover: {
-        onHover: function(e) {
-           let point = this.getElementAtEvent(e);
-           if (point.length) e.target.style.cursor = 'pointer';
-           else e.target.style.cursor = 'default';
-        }
-      },
-      tooltips: {
-        displayColors: false,
-        xPadding: 12,
-        yPadding: 12,
-        callbacks: {
-          label: (tooltipItem, data) => {
-            let tooltip = []
+      plugins: {
+        legend: {
+          display: line_graph.dataset_labels !== undefined,
+          onHover: function(e, _elements, _legend) {
+            e.native.target.style.cursor = 'pointer'
+          }
+        },
+        tooltip: {
+          displayColors: false,
+          xPadding: 12,
+          yPadding: 12,
+          callbacks: {
+            label: (context) => {
+              let tooltip = []
 
-            const tooltip_str = formatChartValue(tooltipItem.value, data.units)
-            tooltip.push(tooltip_str)
-            const notes = global.chart.data.datasets[tooltipItem.datasetIndex].notes[tooltipItem.index]
-            _.each(Note.toMultilineArray(notes, 50), (note) => {
-              tooltip.push(note)
-            });
+              const units = context.dataset.units
+              const tooltip_str = formatChartValue(context.raw, units)
+              tooltip.push(tooltip_str)
 
-            return tooltip;
+              const notes = context.dataset.notes[ context.dataIndex ]
+
+              _.each(Note.toMultilineArray(notes, 50), (note) => {
+                tooltip.push(note)
+              })
+              return tooltip
+            }
           }
         }
       },
       elements: {
         point: {
           pointStyle: (context) => {
-            const notes = context.dataset.notes[ context.dataIndex ];
+            const notes = context.dataset.notes[ context.dataIndex ]
             if (notes.length > 0) {
-              return Note.icon(notes[0].state);
+              return Note.icon(notes[0].state)
             } else {
-              return null;
+              return null
             }
           }
         }
       },
       scales: {
-        xAxes: [{
-          gridLines: {
+        x: {
+          grid: {
             display: false
+          },
+          ticks: {
+            autoSkip: false
           }
-        }],
-        yAxes: [{
-          gridLines: {
+        },
+        y: {
+          grid: {
             borderDash: [7, 7],
             drawBorder: false
           },
@@ -232,19 +232,27 @@ function line_graph(context, line_graph, options = {}) {
               return formatChartValue(value, units)
             }
           }
-        }]
+        }
       },
-      onClick: (_event, elements) => {
+      onHover: function(e, elements, _chart) {
+        const point = elements[0] ? elements[0].element : null
+
+        if (point) e.native.target.style.cursor = 'pointer'
+        else e.native.target.style.cursor = 'default'
+      },
+      onClick: (_e, elements, chart) => {
         if(elements[0]) {
-          const notes = global.chart.data.datasets[0].notes[elements[0]._index]
-          if (notes.length > 0) {
+          const el_index = elements[0].index
+          const notes = chart.data.datasets[0].notes[el_index]
+
+          if (notes !== undefined && notes.length > 0) {
             Note.debouncedGetEditNote(notes[0].id)
           } else {
-            const date_clicked = new Date(global.chart.data.originalLabels[elements[0]._index])
+            const date_clicked = new Date(chart.data.originalLabels[el_index])
             Note.debouncedGetNewNote(date_clicked)
           }
         }
       }
     }
-  });
+  })
 }
