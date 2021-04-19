@@ -1,7 +1,7 @@
 class PlansController < ApplicationController
   layout(proc { |c| c.pdf? ? 'pdf' : 'application' })
 
-  before_action :find_and_authorize_plan, only: [:edit, :update, :destroy, :download]
+  before_action :find_and_authorize_plan, only: %i[edit update destroy download]
 
   def index
     @plans = policy_scope(Plan).order(updated_at: :desc).page(params[:page])
@@ -31,8 +31,9 @@ class PlansController < ApplicationController
   def download
     respond_to do |format|
       format.html do
-        filename = "plan_#{@plan.id}.pdf"
-        render_attachment(filename) if pdf? && params.key?(:download)
+        render_attachment(plan_pdf_filename(@plan)) if pdf? && params.key?(:download)
+
+        render :edit
       end
     end
   end

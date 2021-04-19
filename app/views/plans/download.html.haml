@@ -1,7 +1,7 @@
 .container.my-4
   .row
     .col-8
-      %h5.h5-pdf= @plan.name
+      %h5= @plan.name
     .col-4
       %h1.text-white
         %span{ class: state_badge_class(@plan) }= display_state(@plan)

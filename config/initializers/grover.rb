@@ -3,11 +3,10 @@
 Grover.configure do |config|
   config.options = {
     executable_path: ENV['CHROMIUM_PATH'],
-    display_url: 'http://localhost:3000/',
     format: 'A4',
     margin: {
-      top: '15px',
-      bottom: '15px'
+      top: '10px',
+      bottom: '10px'
     },
     print_background: true,
     # viewport: {
@@ -18,9 +17,9 @@ Grover.configure do |config|
     emulate_media: 'screen',
     bypass_csp: true,
     cache: false,
-    timeout: 50_000, # Timeout in ms. A value of `0` means 'no timeout'
+    timeout: 10_000, # Timeout in ms. A value of `0` means 'no timeout'
     # launch_args: ['--font-render-hinting=medium'],
-    #wait_until: 'networkidle2',
+    # wait_until: 'networkidle2',
     wait_until: 'domcontentloaded'
     # debug: {
     #   headless: false,  # Default true. When set to false, the Chromium browser will be displayed

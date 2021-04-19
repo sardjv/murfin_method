@@ -6,11 +6,10 @@
     %meta{content: 'width=device-width, initial-scale=1, shrink-to-fit=no', name: 'viewport'}
     %meta{content: 'IE=edge', 'http-equiv': 'X-UA-Compatible'}
     %title= t('app.name')
-    = csrf_meta_tags
-    = csp_meta_tag
-    = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
-    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+    //= csrf_meta_tags
+    //= csp_meta_tag
+    = pdf_javascript_pack_tag 'pdf'#, 'data-turbolinks-track': 'reload', host: 'webpacker:3035'
+    = pdf_stylesheet_pack_tag 'pdf'#, media: 'all', 'data-turbolinks-track': 'reload', host: 'webpacker:3035'
   %body.pdf
     %main
       .container= yield
-  %footer layout pdf
