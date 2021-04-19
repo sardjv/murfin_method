@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 describe 'User indexes plans', type: :feature, js: true do
-  let(:current_user) { create(:user) }
+  let(:first_name) { Faker::Name.first_name }
+  let(:last_name) { Faker::Name.last_name }
+  let(:current_user) { create :user, first_name: first_name, last_name: last_name }
+
   let!(:plan) { create(:plan, user: current_user) }
   let!(:other_plan) { create(:plan, user: create(:user)) }
   let!(:signoff_plan) { create(:plan, user: create(:user), signoffs: [create(:signoff, user: current_user)]) }
@@ -27,6 +30,17 @@ describe 'User indexes plans', type: :feature, js: true do
 
     it 'shows the change in the plan index' do
       expect(page).to have_content(new_name)
+    end
+  end
+
+  describe 'generate pdf', js: false do
+    let(:filename) { "job_plan_#{first_name.downcase}_#{last_name.downcase}.pdf" }
+
+    it 'returns pdf' do
+      click_link 'Download'
+
+      expect(page.response_headers['Content-Type']).to eql 'application/pdf'
+      expect(page.response_headers['Content-Disposition']).to eql "attachment; filename=\"#{filename}\""
     end
   end
 end

@@ -1,7 +1,44 @@
-.container.my-4
+%div
   .row
-    .col-8
-      %h5= @plan.name
-    .col-4
-      %h1.text-white
-        %span{ class: state_badge_class(@plan) }= display_state(@plan)
+    .col-12
+      %h5
+        #{Plan.human_attribute_name('user')}:
+        = @plan.user.name
+    .col-12
+      %h5
+        #{Plan.human_attribute_name('start_date')}:
+        = l @plan.start_date, format: :long
+    .col-12
+      %h5
+        #{Plan.human_attribute_name('end_date')}:
+        = l @plan.end_date, format: :long
+    .col-12
+      %h5
+        #{Plan.human_attribute_name('state')}:
+        = display_state(@plan)
+
+  %br
+  %h5= Plan.human_attribute_name('activities')
+  %table.table
+    %thead
+      %tr
+        - TagType.active_for(Activity).sorted.each do |t|
+          %th.font-weight-normal
+            = t.name
+        %th.font-weight-normal
+          = Activity.human_attribute_name('duration')
+        %th
+    %tbody.activities.list
+      - @plan.activities.each do |activity|
+        %tr
+          - activity.active_tag_associations.each do |tag_assoc|
+            %td= tag_assoc.tag.name
+          %td= duration_in_words(activity.seconds_per_week / 60, :short)
+
+  %br
+  %h5= Plan.human_attribute_name('signoffs')
+  %table.table
+    %tbody.signoffs.list
+      - @plan.required_signoffs.each do |signoff|
+        %tr
+          %td= signoff.user.name

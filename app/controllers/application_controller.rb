@@ -30,16 +30,6 @@ class ApplicationController < ActionController::Base
     @nav_presenter ||= NavPresenter.new(params: params, current_user: current_user)
   end
 
-  def render_attachment(filename)
-    response.headers['Content-Disposition'] = %(attachment; filename="#{filename}")
-  end
-
-  def pdf?
-    pp "params[:layout] #{params[:layout]} | request.env['Rack-Middleware-Grover'] #{request.env['Rack-Middleware-Grover']}"
-    (Rails.env.development? && params[:layout] == 'pdf') || request.env['Rack-Middleware-Grover'] == 'true'
-  end
-  helper_method :pdf?
-
   protected
 
   def authenticate_user!

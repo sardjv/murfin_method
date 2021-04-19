@@ -1,5 +1,5 @@
 class PlansController < ApplicationController
-  layout(proc { |c| c.pdf? ? 'pdf' : 'application' })
+  include RenderPdf
 
   before_action :find_and_authorize_plan, only: %i[edit update destroy download]
 
@@ -33,9 +33,7 @@ class PlansController < ApplicationController
   def download
     respond_to do |format|
       format.html do
-        render_attachment(plan_pdf_filename(@plan)) if pdf? && params.key?(:download)
-
-        render :edit
+        render_attachment(plan_pdf_filename(@plan)) if pdf? && !params.key?(:layout)
       end
     end
   end

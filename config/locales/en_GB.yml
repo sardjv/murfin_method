@@ -33,6 +33,7 @@ en:
   actions:
     add: Add %{model_name}
     edit: Edit %{model_name}
+    download: Download
     remove: Remove %{model_name}
     cancel: Cancel
     confirm: Are you sure?

@@ -1,15 +1,13 @@
 !!!
-%html{lang: 'en'}
+%html{ lang: 'en' }
   %head
-    %meta{content: '', name: 'description'}
-    %meta{content: 'SARD JV Ltd', name: 'author'}
-    %meta{content: 'width=device-width, initial-scale=1, shrink-to-fit=no', name: 'viewport'}
-    %meta{content: 'IE=edge', 'http-equiv': 'X-UA-Compatible'}
+    %meta{ content: '', name: 'description' }
+    %meta{ content: 'SARD JV Ltd', name: 'author' }
+    %meta{ content: 'width=device-width, initial-scale=1, shrink-to-fit=no', name: 'viewport' }
+    %meta{ content: 'IE=edge', 'http-equiv': 'X-UA-Compatible' }
     %title= t('app.name')
-    //= csrf_meta_tags
-    //= csp_meta_tag
-    = pdf_javascript_pack_tag 'pdf'#, 'data-turbolinks-track': 'reload', host: 'webpacker:3035'
-    = pdf_stylesheet_pack_tag 'pdf'#, media: 'all', 'data-turbolinks-track': 'reload', host: 'webpacker:3035'
-  %body.pdf
+    = pdf_javascript_pack_tag 'application'
+    = pdf_stylesheet_pack_tag 'application'
+  %body
     %main
-      .container= yield
+      .m-4= yield

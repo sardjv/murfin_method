@@ -6,9 +6,9 @@
       %h1.text-white
         %span{ class: state_badge_class(@plan) }= display_state(@plan)
 
-      - if !pdf? && @plan.persisted?
-        = link_to download_plan_path(@plan, format: :pdf, download: true), class: 'btn btn-primary float-right mr-2' do
-          Download Plan
+      - if @plan.persisted?
+        = link_to download_plan_path(@plan, format: :pdf), class: 'btn btn-primary float-right mr-2' do
+          = t('actions.download')
           = icon('download')
 
   .row
@@ -41,7 +41,7 @@
               = f.fields_for :activities, wrapper: false, include_id: false do |activity_form|
                 = render 'activity_fields', plan: @plan, plan_form: f, f: activity_form
 
-          - if !pdf? && policy(@plan).update?
+          - if policy(@plan).update?
             %div
               = link_to_add_association I18n.t('actions.add', model_name: Activity.model_name.human.titleize), f,
                                         :activities,
@@ -61,8 +61,7 @@
               = link_to_add_association I18n.t('actions.add', model_name: Signoff.model_name.human.titleize), f, :signoffs,
                                         data: { 'association-insertion-node': 'tbody.signoffs', 'association-insertion-method': 'append' },
                                         class: 'btn btn-primary',
-                                        render_options: { locals: { plan: @plan } } unless pdf?
-        - unless pdf?
-          - if policy(@plan).update?
-            = f.submit I18n.t('actions.save'), class: 'btn btn-primary mt-4'
-          = link_to I18n.t('actions.cancel'), plans_path, class: 'btn btn-outline-secondary mt-4'
+                                        render_options: { locals: { plan: @plan } }
+        - if policy(@plan).update?
+          = f.submit I18n.t('actions.save'), class: 'btn btn-primary mt-4'
+        = link_to I18n.t('actions.cancel'), plans_path, class: 'btn btn-outline-secondary mt-4'
