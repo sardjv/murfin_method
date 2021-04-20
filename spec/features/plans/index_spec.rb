@@ -33,14 +33,7 @@ describe 'User indexes plans', type: :feature, js: true do
     end
   end
 
-  describe 'generate pdf', js: false do
-    let(:filename) { "job_plan_#{first_name.downcase}_#{last_name.downcase}.pdf" }
-
-    it 'returns pdf' do
-      click_link 'Download'
-
-      expect(page.response_headers['Content-Type']).to eql 'application/pdf'
-      expect(page.response_headers['Content-Disposition']).to eql "attachment; filename=\"#{filename}\""
-    end
+  it 'has download pdf link' do
+    expect(page).to have_link href: download_plan_path(plan, format: :pdf)
   end
 end
