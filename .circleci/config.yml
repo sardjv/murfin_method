@@ -49,6 +49,7 @@ jobs:
       PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
       CHROMIUM_PATH: /usr/bin/chromium-browser
       GROVER_NO_SANDBOX: true
+      PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium-browser
     steps:
       - checkout
       - ruby/install-deps
