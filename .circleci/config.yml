@@ -47,6 +47,7 @@ jobs:
       CAPYBARA_APP_HOST: http://localhost:3001
       SPEC_RETRIES: 3
       PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+      CHROMIUM_PATH: /usr/bin/chromium-browser
     steps:
       - checkout
       - ruby/install-deps
