@@ -55,7 +55,7 @@ gem 'mysql2', '~> 0.5.3'
 
 # OmniAuth is a flexible authentication system utilizing Rack middleware.
 # https://github.com/auth0/omniauth-auth0
-gem 'omniauth-auth0', '~> 2.6.0'
+gem 'omniauth-auth0', '~> 3.0.0'
 
 # Provides CSRF protection on OmniAuth request endpoint on Rails application.
 # https://github.com/cookpad/omniauth-rails_csrf_protection
