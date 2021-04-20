@@ -4,6 +4,7 @@ orbs:
   ruby: circleci/ruby@1.1.2
   node: circleci/node@4.1.0
   heroku: circleci/heroku@1.0.1
+  puppeteer: threetreeslight/puppeteer@0.1.2
 
 jobs:
   hamllint:
@@ -46,8 +47,8 @@ jobs:
       HEADLESS_CHROME_URL: http://localhost:4444/wd/hub
       CAPYBARA_APP_HOST: http://localhost:3001
       SPEC_RETRIES: 3
-      PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
-      CHROMIUM_PATH: /usr/bin/chromium-browser
+      #PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+      #CHROMIUM_PATH: /usr/bin/chromium-browser
     steps:
       - checkout
       - ruby/install-deps
