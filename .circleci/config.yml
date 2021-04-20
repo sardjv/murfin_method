@@ -56,7 +56,7 @@ jobs:
           name: Install chromium browser
           command: |
             sudo apt-get -y update
-            sudo apt-get -y install chromium
+            sudo apt-get -y install chromium-browser
       # - run:
       #     name: Install Chromium
       #     command: npm i chromium
