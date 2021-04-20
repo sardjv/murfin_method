@@ -46,6 +46,7 @@ jobs:
       HEADLESS_CHROME_URL: http://localhost:4444/wd/hub
       CAPYBARA_APP_HOST: http://localhost:3001
       SPEC_RETRIES: 3
+      PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
     steps:
       - checkout
       - ruby/install-deps
