@@ -55,8 +55,11 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn
       - run:
-          name: Install Puppeteer with Chromium
-          command: npm i puppeteer
+          name: Install Chromium
+          command: yarn add chromium
+      # - run:
+      #     name: Install Puppeteer skip Chromium
+      #     command: npm i puppeteer
       - run:
           name: Wait for DB
           command: dockerize -wait tcp://localhost:3306 -timeout 1m
