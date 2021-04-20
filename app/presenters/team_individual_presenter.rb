@@ -4,11 +4,13 @@ require 'concerns/uses_filters'
 
 class TeamIndividualPresenter
   attr_reader :user, :user_group_team, :user_groups
+  attr_accessor :context
 
   include UsesFilters
 
   def initialize(args) # rubocop:disable Metrics/AbcSize
     @cookies = args[:cookies]
+    @user_group_team = args[:user_group]
     query = args[:params].delete(:query)
     @query_params = prepare_query_params(query)
 
@@ -17,7 +19,6 @@ class TeamIndividualPresenter
               .merge(query_params)
 
     @user = User.find(@params[:id])
-    @user_group_team = UserGroup.find(@params[:team_id]) if @params[:team_id]
     @user_groups = @user.user_groups.where.not(id: @user_group_team.try(:id))
   end
 

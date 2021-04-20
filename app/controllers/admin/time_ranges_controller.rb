@@ -1,15 +1,20 @@
 class Admin::TimeRangesController < ApplicationController
+  before_action :find_and_authorize_time_range, only: %i[edit update destroy]
+
   def index
+    authorize :time_range
     @time_ranges = TimeRange.order(:user_id, start_time: :asc).page(params[:page])
   end
 
   def new
     @time_range = TimeRange.new
+    authorize @time_range
     render action: :edit
   end
 
   def create
     @time_range = TimeRange.new(time_range_params)
+    authorize @time_range
     if @time_range.save
       redirect_to admin_time_ranges_path, notice: notice('successfully.created')
     else
@@ -18,13 +23,9 @@ class Admin::TimeRangesController < ApplicationController
     end
   end
 
-  def edit
-    @time_range = TimeRange.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @time_range = TimeRange.find(params[:id])
-
     if @time_range.update(time_range_params)
       redirect_to admin_time_ranges_path, notice: notice('successfully.updated')
     else
@@ -34,12 +35,16 @@ class Admin::TimeRangesController < ApplicationController
   end
 
   def destroy
-    @time_range = TimeRange.find(params[:id])
     @time_range.destroy
     redirect_to admin_time_ranges_path, notice: notice('successfully.destroyed')
   end
 
   private
+
+  def find_and_authorize_time_range
+    @time_range = TimeRange.find(params[:id])
+    authorize @time_range
+  end
 
   def notice(action)
     t("notice.#{action}", model_name: TimeRange.model_name.human)

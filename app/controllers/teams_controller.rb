@@ -1,8 +1,8 @@
 class TeamsController < ApplicationController
   include RememberParams
 
-  before_action :find_user_group
-  before_action :initialize_presenter, only: %i[dashboard individuals]
+  before_action :find_and_authorize_user_group, only: %i[dashboard individuals plans]
+  before_action :initialize_presenter, only: %i[dashboard individuals plans]
   after_action :remember_params, only: %i[dashboard individuals], format: :json
 
   def dashboard
@@ -28,8 +28,9 @@ class TeamsController < ApplicationController
 
   private
 
-  def find_user_group
+  def find_and_authorize_user_group
     @user_group = UserGroup.find(params[:id])
+    authorize @user_group
   end
 
   def initialize_presenter

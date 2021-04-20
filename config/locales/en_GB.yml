@@ -27,6 +27,8 @@ en:
         epr_uuid: EPR UUID
         first_name: First name
         last_name: Last name
+      user_group:
+        name: Name
   log_in_out: &log_in_out
     log_in: Log in
     log_out: Log out
@@ -155,6 +157,7 @@ en:
       summary: Summary
       tags: Tags
       team: '%{team_name} dashboard'
+      teams: Teams
       time_ranges: Actuals
     team_dashboard: Team
   notes:
@@ -182,6 +185,9 @@ en:
         "%{model_name} deleted"
       updated:
         "%{model_name} successfully updated"
+  plans:
+    totals: Totals
+    total_time_worked_per_week: "Total time worked per week: %{total}"
   signoffs:
     revoke: Revoke
     sign: Sign
@@ -198,6 +204,12 @@ en:
   user_groups:
     add: Add %{group_type_name} User Group
   api:
+    tag_association_resource:
+      errors:
+        invalid_time_range_appointment_id: Time range with appointment id %{appointment_id} not found.
+    time_range_resource:
+      errors:
+        invalid_user_epr_uuid: User with EPR UUID %{epr_uuid} not found.
     user_resource:
       errors:
         admin_delete: Admin user can not be deleted.

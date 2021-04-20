@@ -15,6 +15,7 @@ Dir[File.join(__dir__, 'support/', '*.rb')].sort.each { |file| require file }
 
 require 'rspec/retry'
 require 'strip_attributes/matchers'
+require 'pundit/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are

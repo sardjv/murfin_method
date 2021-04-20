@@ -1,8 +1,12 @@
 :ruby
+  tab_team_url = @presenter.context == :admin_teams ? dashboard_admin_team_path(@user_group) : dashboard_team_path(@user_group)
+  tab_individuals_url = @presenter.context == :admin_teams ? individuals_admin_team_path(@user_group) : individuals_team_path(@user_group)
+  tab_plans_url = @presenter.context == :admin_teams ? plans_admin_team_path(@user_group) : plans_team_path(@user_group)
+
   tabs = [
-    { label: I18n.t('nav.tabs.team', team_name: @user_group.name), path: [:dashboard, :team, { id: @user_group }] },
-    { label: I18n.t('nav.tabs.individuals'), path: [:individuals, :team, { id: @user_group }] },
-    { label: I18n.t('nav.tabs.plans'), path: [:plans, :team, { id: @user_group }] }
+    { label: I18n.t('nav.tabs.team', team_name: @user_group.name), path: tab_team_url },
+    { label: I18n.t('nav.tabs.individuals'), path: tab_individuals_url },
+    { label: I18n.t('nav.tabs.plans'), path: tab_plans_url }
   ]
 
 .thin-tabs

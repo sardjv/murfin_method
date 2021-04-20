@@ -1,4 +1,6 @@
 class Admin::TagsController < ApplicationController
+  before_action :find_and_authorize_tag, only: %i[edit update destroy]
+
   def index
     @tags = Tag.page(params[:page])
   end
@@ -6,12 +8,14 @@ class Admin::TagsController < ApplicationController
   def new
     @tag_type = TagType.find(params[:tag_type_id])
     @tag = Tag.new(tag_type_id: @tag_type.id)
+    authorize @tag
     render action: :edit
   end
 
   def create
     @tag_type = TagType.find(params[:tag_type_id])
     @tag = @tag_type.tags.new(tag_params)
+    authorize @tag
     if @tag.save
       redirect_to admin_tag_types_path, notice: notice('successfully.created')
     else
@@ -20,13 +24,9 @@ class Admin::TagsController < ApplicationController
     end
   end
 
-  def edit
-    @tag = Tag.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @tag = Tag.find(params[:id])
-
     if @tag.update(tag_params)
       redirect_to admin_tag_types_path, notice: notice('successfully.updated')
     else
@@ -36,7 +36,6 @@ class Admin::TagsController < ApplicationController
   end
 
   def destroy
-    @tag = Tag.find(params[:id])
     if @tag.destroy
       redirect_to admin_tag_types_path, notice: notice('successfully.destroyed')
     else
@@ -45,6 +44,11 @@ class Admin::TagsController < ApplicationController
   end
 
   private
+
+  def find_and_authorize_tag
+    @tag = Tag.find(params[:id])
+    authorize @tag
+  end
 
   def notice(action)
     t("notice.#{action}", model_name: Tag.model_name.human)

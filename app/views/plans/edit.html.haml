@@ -28,7 +28,7 @@
 
         .border.my-4.p-4
           %label= Plan.human_attribute_name('activities')
-          %table#sortable.table
+          %table#plan-activities-table.table
             %thead.bg-white
               %tr
                 - TagType.active_for(Activity).sorted.each do |t|
@@ -40,6 +40,11 @@
             %tbody.activities.list
               = f.fields_for :activities, wrapper: false, include_id: false do |activity_form|
                 = render 'activity_fields', plan: @plan, plan_form: f, f: activity_form
+            %tfoot
+              %tr
+                %td{ colspan: 3 }
+                %td#plan-total-time-worked-per-week.small{ colspan: 2 }
+                  = t('plans.total_time_worked_per_week', total: duration_in_words(plan_total_time_worked_per_week(@plan), :short))
 
           - if policy(@plan).update?
             %div
@@ -48,6 +53,8 @@
                                         data: { 'association-insertion-node': 'tbody.activities', 'association-insertion-method': 'append' },
                                         class: 'btn btn-primary',
                                         render_options: { locals: { plan: @plan } }
+
+        = render 'totals_card', activity_tags_top_level: @activity_tags_top_level, activities: @activities if @plan.persisted?
 
         .border.my-4.p-4
           %label= Plan.human_attribute_name('signoffs')

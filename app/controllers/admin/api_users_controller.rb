@@ -1,16 +1,19 @@
 class Admin::ApiUsersController < ApplicationController
-  before_action :find_api_user, only: %i[show generate_token destroy]
+  before_action :find_and_authorize_api_user, only: %i[show generate_token destroy]
 
   def index
+    authorize :api_user
     @api_users = ApiUser.order(created_at: :asc).page(params[:page])
   end
 
   def new
     @api_user = ApiUser.new
+    authorize @api_user
   end
 
   def create
     @api_user = ApiUser.new(api_user_params.merge(created_by: current_user.name))
+    authorize @api_user
 
     if @api_user.save
       redirect_to admin_api_user_path(@api_user), notice: notice('successfully.created')
@@ -28,7 +31,7 @@ class Admin::ApiUsersController < ApplicationController
     if token && @api_user.update({ token_sample: token.last(5),
                                    token_generated_at: timestamp,
                                    token_generated_by: current_user.name })
-      redirect_to admin_api_user_path(@api_user),
+      redirect_to admin_api_users_path,
                   notice: "#{I18n.t('api_users.token_notice', name: @api_user.name)} #{token}"
     else
       flash.now.alert = t('notice.could_not_be.generated', attribute_name: ApiUser.human_attribute_name('api_token'))
@@ -46,8 +49,9 @@ class Admin::ApiUsersController < ApplicationController
 
   private
 
-  def find_api_user
+  def find_and_authorize_api_user
     @api_user = ApiUser.find(params[:id])
+    authorize @api_user
   end
 
   def notice(action)

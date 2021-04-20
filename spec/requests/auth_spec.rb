@@ -9,11 +9,11 @@ RSpec.describe 'Auth', type: :request do
     end
 
     describe 'GET admin_dashboard_path' do
-      let(:user) { create :user, first_name: 'John', last_name: 'Smith', email: 'john@example.com' }
+      let(:admin) { create :admin, first_name: 'John', last_name: 'Smith', email: 'john@example.com' }
 
       context 'when authenticated' do
         before do
-          log_in(user)
+          log_in(admin)
         end
 
         it 'returns http success' do
@@ -46,11 +46,11 @@ RSpec.describe 'Auth', type: :request do
     end
 
     describe 'GET admin_dashboard_path' do
-      let(:user) { create :user }
+      let(:admin) { create :admin }
 
       context 'when authenticated' do
         before do
-          log_in(user)
+          log_in(admin)
         end
 
         it 'returns http success' do

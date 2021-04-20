@@ -1,0 +1,2 @@
+class GroupTypePolicy < AdminCrudPolicy
+end

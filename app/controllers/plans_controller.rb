@@ -1,9 +1,9 @@
 class PlansController < ApplicationController
   include RenderPdf
-
   before_action :find_and_authorize_plan, only: %i[edit update destroy download]
 
   def index
+    authorize :plan
     @plans = policy_scope(Plan).order(updated_at: :desc).page(params[:page])
   end
 
@@ -26,8 +26,6 @@ class PlansController < ApplicationController
     end
   end
 
-  def edit; end
-
   include PlanHelper
 
   def download
@@ -36,6 +34,13 @@ class PlansController < ApplicationController
         render_attachment(plan_pdf_filename(@plan)) if pdf? && !params.key?(:layout)
       end
     end
+  end
+
+  def edit
+    @activities = @plan.activities.includes(tags: :children)
+    @activity_tags_top_level = @activities.collect do |a|
+      a.tags.where(parent_id: nil).with_tag_type_active_for(Activity)
+    end.flatten.uniq.sort_by(&:tag_type_id)
   end
 
   def update
@@ -53,6 +58,11 @@ class PlansController < ApplicationController
   end
 
   private
+
+  def find_and_authorize_plan
+    @plan = Plan.find(params[:id])
+    authorize @plan
+  end
 
   def notice(action)
     t("notice.#{action}", model_name: Plan.model_name.human)

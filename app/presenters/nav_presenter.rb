@@ -6,7 +6,7 @@ class NavPresenter
     @current_user = args[:current_user]
   end
 
-  def navs # rubocop:disable Metrics/MethodLength
+  def navs # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     return [] unless @current_user
 
     [
@@ -43,6 +43,9 @@ class NavPresenter
           { label: I18n.t('nav.tabs.tags'),
             path: %i[admin tag_types],
             controllers: ['admin/tag_types'] },
+          { label: I18n.t('nav.tabs.teams'),
+            path: %i[admin teams],
+            controllers: ['admin/teams'] },
           { label: I18n.t('nav.tabs.api_users'),
             path: %i[admin api_users],
             controllers: ['admin/api_users'] }

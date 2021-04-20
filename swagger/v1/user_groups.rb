@@ -6,7 +6,7 @@ module Swagger
           user_group_attributes: {
             type: 'object',
             properties: {
-              name: { type: 'string', example: Faker::Lorem.word, 'x-nullable': false },
+              name: { type: 'string', example: 'Lorems', 'x-nullable': false },
               group_type_id: { type: 'integer', example: 2, 'x-nullable': false }
             }
           },
