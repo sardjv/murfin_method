@@ -52,16 +52,16 @@ jobs:
     steps:
       - checkout
       - ruby/install-deps
-      - run:
-          name: Install snapd
-          command: |
-            sudo apt-get -y update
-            sudo apt-get -y install snapd
+      # - run:
+      #     name: Install snapd
+      #     command: |
+      #       sudo apt-get -y update
+      #       sudo apt-get -y install snapd
       - run:
           name: Install chromium browser
-          command: sudo snap install chromium
-      #sudo apt-get -y update
-      #sudo apt-get -y install chromium-browser
+          command: |
+            sudo apt-get -y update
+            sudo apt-get -y install chromium-browser chromium
       - node/install-packages:
           pkg-manager: yarn
       - run:
