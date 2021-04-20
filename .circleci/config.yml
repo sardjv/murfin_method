@@ -53,11 +53,15 @@ jobs:
       - checkout
       - ruby/install-deps
       - run:
-          name: Install chromium browser
+          name: Install snapd
           command: |
-            snap install chromium
-            sudo apt-get -y update
-            sudo apt-get -y install chromium-browser
+            sudo apt update
+            sudo apt install snapd
+      - run:
+          name: Install chromium browser
+          command: sudo snap install chromium
+      #sudo apt-get -y update
+      #sudo apt-get -y install chromium-browser
       - node/install-packages:
           pkg-manager: yarn
       - run:
