@@ -70,7 +70,7 @@ jobs:
           command: yarn info puppetter
       - run:
           name: TMP chromium info
-          command: which chromium
+          command: which chromium-browser
       - run:
           name: Wait for DB
           command: dockerize -wait tcp://localhost:3306 -timeout 1m
