@@ -74,11 +74,6 @@ class PlansController < ApplicationController
     end
   end
 
-  def find_and_authorize_plan
-    @plan = Plan.find(params[:id])
-    authorize @plan
-  end
-
   def plan_params
     params.require(:plan).permit(
       :start_date,
