@@ -47,7 +47,7 @@ jobs:
       CAPYBARA_APP_HOST: http://localhost:3001
       SPEC_RETRIES: 3
       PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
-      CHROMIUM_PATH: /usr/bin/chromium-browser
+      # CHROMIUM_PATH: /usr/bin/chromium-browser
       GROVER_NO_SANDBOX: true
     steps:
       - checkout
@@ -56,10 +56,10 @@ jobs:
           pkg-manager: yarn
       - run:
           name: Install Chromium
-          command: yarn add chromium
+          command: sudo apt-get install chromium-browser
       - run:
           name: Install Puppeteer skip Chromium
-          command: yarn add puppeteer
+          command: npm i puppeteer
       - run:
           name: Wait for DB
           command: dockerize -wait tcp://localhost:3306 -timeout 1m
