@@ -47,7 +47,7 @@ jobs:
       CAPYBARA_APP_HOST: http://localhost:3001
       SPEC_RETRIES: 3
       PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
-      #CHROMIUM_PATH: /usr/bin/chromium-browser
+      CHROMIUM_PATH: /usr/bin/chromium-browser
       GROVER_NO_SANDBOX: true
     steps:
       - checkout
