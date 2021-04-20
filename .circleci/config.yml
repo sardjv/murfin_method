@@ -52,11 +52,11 @@ jobs:
     steps:
       - checkout
       - ruby/install-deps
-      - run:
-          name: Install snapd
-          command: |
-            sudo apt update
-            sudo apt install snapd
+      # - run:
+      #     name: Install snapd
+      #     command: |
+      #       sudo apt update
+      #       sudo apt install snapd
       - run:
           name: Install chromium browser
           command: sudo snap install chromium
