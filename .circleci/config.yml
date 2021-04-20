@@ -52,9 +52,9 @@ jobs:
     steps:
       - checkout
       - ruby/install-deps
-      - run:
-          name: Install Chromium
-          command: npm i chromium
+      # - run:
+      #     name: Install Chromium
+      #     command: npm i chromium
       # - run:
       #     name: Install Puppeteer skip Chromium
       #     command: npm i puppeteer
@@ -66,6 +66,7 @@ jobs:
       - run:
           name: TMP chromium info
           command: which chromium \
+                   which chromium-browser \
                    echo $CHROMIUM_PATH
       - run:
           name: Wait for DB
