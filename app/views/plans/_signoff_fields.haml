@@ -4,14 +4,13 @@
     = f.select :user_id, options_for_select(plan_sign_off_options(f.object.plan), selected: f.object.user_id),
       { hide_label: true, class: 'input-group-btn', required: true },
       disabled: !policy(f.object.plan).update?
-  - unless pdf?
+  %td
+    - if policy(f.object).sign? && f.object.persisted?
+      - if f.object.signed?
+        = link_to I18n.t('signoffs.revoke'), revoke_signoff_path(f.object.id), { remote: true, method: :put, class: 'btn btn-danger' }
+      - else
+        = link_to I18n.t('signoffs.sign'), sign_signoff_path(f.object.id), { remote: true, method: :put, class: 'btn btn-success' }
+  - if policy(f.object.plan).update?
     %td
-      - if policy(f.object).sign? && f.object.persisted?
-        - if f.object.signed?
-          = link_to I18n.t('signoffs.revoke'), revoke_signoff_path(f.object.id), { remote: true, method: :put, class: 'btn btn-danger' }
-        - else
-          = link_to I18n.t('signoffs.sign'), sign_signoff_path(f.object.id), { remote: true, method: :put, class: 'btn btn-success' }
-    - if policy(f.object.plan).update?
-      %td
-        = link_to_remove_association f do
-          = icon('trash')
+      = link_to_remove_association f do
+        = icon('trash')
