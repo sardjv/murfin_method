@@ -52,14 +52,21 @@ jobs:
     steps:
       - checkout
       - ruby/install-deps
-      - node/install-packages:
-          pkg-manager: yarn
       - run:
           name: Install Chromium
           command: npm i chromium
+      # - run:
+      #     name: Install Puppeteer skip Chromium
+      #     command: npm i puppeteer
+      - node/install-packages:
+          pkg-manager: yarn
       - run:
-          name: Install Puppeteer skip Chromium
-          command: npm i puppeteer
+          name: TMP make sure puppeteer installed
+          command: yarn info puppetter
+      - run:
+          name: TMP chromium info
+          command: which chromium \
+                   echo $CHROMIUM_PATH
       - run:
           name: Wait for DB
           command: dockerize -wait tcp://localhost:3306 -timeout 1m
