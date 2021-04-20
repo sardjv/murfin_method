@@ -43,7 +43,7 @@ gem 'jsonapi-resources', '~> 0.10.4'
 
 # A ruby implementation of the RFC 7519 OAuth JSON Web Token (JWT) standard.
 # https://github.com/jwt/ruby-jwt
-gem 'jwt', '~> 2.2.2'
+gem 'jwt', '~> 2.2.3'
 
 # paginator for modern web app frameworks and ORMs.
 # https://github.com/kaminari/kaminari
