@@ -28,3 +28,12 @@
   word-wrap: break-word;
   overflow: visible;
 }
+
+#search-form {
+  .form-group {
+    width: 80%;
+    input {
+      width: 100% !important
+    }
+  }
+}

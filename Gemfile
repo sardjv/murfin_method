@@ -78,6 +78,10 @@ gem 'pundit', '~> 2.1.0'
 # https://github.com/rails/rails
 gem 'rails', '~> 6.1.3'
 
+# Object-based searching.
+# https://github.com/activerecord-hackery/ransack
+gem 'ransack', '~> 2.4.2'
+
 # A very fast key-value store to hold jobs until they are run.
 # https://github.com/redis/redis-rb
 gem 'redis', '~> 4.2.5'

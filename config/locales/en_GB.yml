@@ -19,6 +19,7 @@ en:
         updated_at: Updated %{when} ago
       time_range:
         appointment_id: Appointment ID
+        appointment_id_short: Appt. ID
         time_range_type: Type
         value: Time worked
         time_worked: Worked
@@ -34,14 +35,16 @@ en:
     log_out: Log out
   actions:
     add: Add %{model_name}
-    edit: Edit %{model_name}
-    remove: Remove %{model_name}
     cancel: Cancel
     confirm: Are you sure?
     delete: Delete
-    save: Save
+    edit: Edit %{model_name}
     filter: Filter
     generate: Generate %{attribute_name}
+    reset: Reset
+    remove: Remove %{model_name}
+    save: Save
+    search: Search
     << : *log_in_out
   api_users:
     current_token:
@@ -187,6 +190,11 @@ en:
   plans:
     totals: Totals
     total_time_worked_per_week: "Total time worked per week: %{total}"
+  search_form:
+    placeholders:
+      job_plans: Activity tag, user name or email
+      time_ranges: Type, tag, appointment ID, user name or email
+      users: Name, email or EPR UUID
   signoffs:
     revoke: Revoke
     sign: Sign
