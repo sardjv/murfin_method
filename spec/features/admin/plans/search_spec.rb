@@ -25,13 +25,13 @@ describe 'Admin searches for plan', type: :feature, js: true do
   let!(:activity1b) { create :activity, plan: plan1, tags: [tag1b] }
 
   let(:plan2) { create :plan, user: user2 }
-  let!(:activity2a) { create :activity, plan: plan2, tags: [tag1a, tag2ab, tag1b, tag2bc] }
+  let!(:activity2a) { create :activity, plan: plan2, tags: [tag1a, tag2ab] }
 
   let(:plan3) { create :plan, user: user3 }
 
   let(:plan4) { create :plan, user: user4 }
   let!(:activity4a) { create :activity, plan: plan3, tags: [tag1b, tag2bc] }
-  let!(:activity4b) { create :activity, plan: plan4, tags: [tag1a, tag2aa, tag1b, tag2bb] }
+  let!(:activity4b) { create :activity, plan: plan4, tags: [tag1a, tag2aa] }
 
   before do
     log_in admin

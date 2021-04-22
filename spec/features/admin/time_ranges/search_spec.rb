@@ -5,10 +5,10 @@ describe 'Admin searches for time range', type: :feature, js: true do
 
   let!(:last_name) { Faker::Name.last_name }
 
-  let!(:user1) { create :user, last_name: last_name }
-  let!(:user2) { create :user }
-  let!(:user3) { create :user }
-  let!(:user4) { create :user, last_name: last_name }
+  let!(:user1) { create :user }
+  let!(:user2) { create :user, last_name: last_name }
+  let!(:user3) { create :user, last_name: last_name }
+  let!(:user4) { create :user }
 
   let(:tag_type1) { create :tag_type }
   let!(:tag1a) { create :tag, tag_type: tag_type1 }
@@ -20,11 +20,12 @@ describe 'Admin searches for time range', type: :feature, js: true do
 
   let!(:tag2ba) { create :tag, tag_type: tag_type2, parent: tag1b }
   let!(:tag2bb) { create :tag, tag_type: tag_type2, parent: tag1b }
+  let!(:tag2bc) { create :tag, tag_type: tag_type2, parent: tag1b }
 
-  let(:time_range1) { create :time_range, user: user3, tags: [tag1a, tag2ab] }
-  let(:time_range2) { create :time_range, user: user2, tags: [tag1a] }
-  let(:time_range3) { create :time_range, user: user1, tags: [tag1a, tag2ab, tag1b, tag2bb] }
-  let(:time_range4) { create :time_range, user: user1, tags: [tag1b, tag2ba] }
+  let!(:time_range1) { create :time_range, user: user3, tags: [tag1a, tag2ab] }
+  let!(:time_range2) { create :time_range, user: user2, tags: [tag1a] }
+  let!(:time_range3) { create :time_range, user: user1, tags: [tag1a, tag2ab] }
+  let!(:time_range4) { create :time_range, user: user1, tags: [tag1b, tag2ba] }
 
   before do
     log_in admin
@@ -37,12 +38,12 @@ describe 'Admin searches for time range', type: :feature, js: true do
   describe 'find by user last name' do
     let(:query) { last_name }
 
-    it 'finds matching users' do
+    it 'find matching users' do
       within '#time-ranges-list' do
         expect(page).to have_css "tr[data-time-range-id='#{time_range1.id}']"
-        expect(page).not_to have_css "tr[data-time-range-id='#{time_range2.id}']"
+        expect(page).to have_css "tr[data-time-range-id='#{time_range2.id}']"
         expect(page).not_to have_css "tr[data-time-range-id='#{time_range3.id}']"
-        expect(page).to have_css "tr[data-time-range-id='#{time_range4.id}']"
+        expect(page).not_to have_css "tr[data-time-range-id='#{time_range4.id}']"
       end
     end
   end
