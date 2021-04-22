@@ -1,6 +1,0 @@
-.container.my-4
-  = link_to '< Back to Teams', admin_teams_path if @presenter.context == :admin_teams
-  = render 'team_tabs', user_group: @user_group
-  = render 'shared/filters', presenter: @presenter
-  = render 'teams/individuals/bar_chart', presenter: @presenter
-  = render 'teams/individuals/table', presenter: @presenter

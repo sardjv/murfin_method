@@ -1,2 +1,0 @@
-class GroupTypePolicy < AdminCrudPolicy
-end

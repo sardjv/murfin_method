@@ -1,1 +1,0 @@
-class MaxDurationError < StandardError; end

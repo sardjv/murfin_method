@@ -1,2 +1,0 @@
-class UserPolicy < AdminCrudPolicy
-end

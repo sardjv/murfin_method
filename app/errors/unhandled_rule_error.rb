@@ -1,1 +1,0 @@
-class UnhandledRuleError < StandardError; end
