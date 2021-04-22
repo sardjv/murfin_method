@@ -3,7 +3,7 @@ module.exports = {
   title: 'Murfin+',
   tagline: 'Documentation',
   url: 'https://sardjv.github.io',
-  baseUrl: '/murfin_plus/',
+  baseUrl: '/murfin_method/',
   //onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
@@ -84,7 +84,7 @@ module.exports = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/sardjv/esr_api',
+              href: 'https://github.com/sardjv/murfin_method',
             },
           ],
         },
@@ -101,12 +101,6 @@ module.exports = {
           // Please change this to your repo.
           editUrl:
             'https://github.com/sardjv/murfin_method/edit/master/docs',
-        },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/blog/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
