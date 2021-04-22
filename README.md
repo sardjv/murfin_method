@@ -80,7 +80,15 @@ Core dependencies:
 
 ## Documentation
 
-The API documentation can be viewed at [http://localhost:3000/api_docs](http://localhost:3000/api_docs).
+### Docusaurus
+
+Murfin plus docs for development purposes can be viewed at [http://localhost:3002/murfin_plus](http://localhost:3002/murfin_plus).
+
+Live version is available at [https://sardjv.github.io/murfin_plus/](https://sardjv.github.io/murfin_plus/)
+
+### API
+
+The auto-generated API documentation can be viewed at [http://localhost:3000/api_docs](http://localhost:3000/api_docs).
 
 The Swagger docs are generated from the RSpec tests in `spec/api` To rebuild the swagger docs:
 
