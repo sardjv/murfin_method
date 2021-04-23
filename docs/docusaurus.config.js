@@ -8,10 +8,10 @@ module.exports = {
   projectName: 'murfin_method', // Usually your repo name.
   themeConfig: {
     navbar: {
-      title: 'Murfin Method',
+      title: 'Murfin Plus',
       logo: {
-        alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        alt: 'Murfin Plus logo',
+        src: 'img/murfin-plus-logo.svg',
       },
       items: [
         {
