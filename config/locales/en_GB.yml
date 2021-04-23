@@ -189,8 +189,14 @@ en:
     totals: Totals
     total_time_worked_per_week: "Total time worked per week: %{total}"
   signoffs:
+    states:
+      signed: Signed
+      revoked: Revoked
+      unsigned: Unsigned
     revoke: Revoke
     sign: Sign
+    revoked_at: Revoked at %{when}
+    signed_at: Signed at %{when}
   status:
     about_right: About Right
     over: Over
