@@ -16,7 +16,11 @@ FactoryBot.define do
     plan_id { Plan.all.sample.try(:id) || create(:plan).id }
   end
 
-  factory :signed_signoff, parent: :signoff do
-    signed_at { Time.current - 1.second }
+  trait :signed do
+    signed_at { 10.minutes.ago }
+  end
+
+  trait :revoked do
+    revoked_at { 5.minutes.ago }
   end
 end

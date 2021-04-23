@@ -1,9 +1,9 @@
 %div
   .row
-    .col-12
+    .col-12.mb-2
       %h5
-        #{Plan.human_attribute_name('user')}:
-        = @plan.user.name
+        = image_pack_tag 'media/images/logos/murfin-plus-logo.svg', height: 50
+        = @plan.name
     .col-12
       %h5
         #{Plan.human_attribute_name('start_date')}:
@@ -44,6 +44,13 @@
   %h5= Plan.human_attribute_name('signoffs')
   %table#plan-signoffs.table
     %tbody.list
-      - @plan.required_signoffs.each do |signoff|
-        %tr
+      - @plan.signoffs.each do |signoff|
+        %tr{ data: { signoff_id: signoff.id} }
           %td= signoff.user.name
+          %td= t "signoffs.states.#{signoff.state}"
+          %td
+            - unless signoff.unsigned?
+              - if signoff.signed?
+                = t 'signoffs.signed_at', when: l(signoff.signed_at, format: :short)
+              - elsif signoff.revoked?
+                = t 'signoffs.revoked_at', when: l(signoff.revoked_at, format: :short)

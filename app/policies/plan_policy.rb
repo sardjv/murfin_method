@@ -22,7 +22,7 @@ class PlanPolicy < ApplicationPolicy
   end
 
   def download?
-    (record.user_id == user.id) || user.admin?
+    edit?
   end
 
   def change_user?

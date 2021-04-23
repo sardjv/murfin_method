@@ -59,7 +59,7 @@
         .border.my-4.p-4
           %label= Plan.human_attribute_name('signoffs')
           %table#plan-signoffs.table
-            %tbody.list
+            %tbody.signoffs.list
               = f.fields_for :signoffs, @plan.required_signoffs, wrapper: false, include_id: false do |signoff_form|
                 = render 'signoff_fields', f: signoff_form
 
