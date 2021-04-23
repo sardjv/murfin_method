@@ -39,7 +39,7 @@ describe 'User downloads plan', type: :feature, js: true do
   end
 
   it 'contains plan info' do
-    expect(page).to have_content @plan.name
+    expect(page).to have_content plan.name
     expect(page).to have_content 'Start date: January 01, 2020'
     expect(page).to have_content 'End date: December 31, 2020'
     expect(page).to have_content 'State: Draft'
@@ -102,7 +102,7 @@ describe 'User downloads plan', type: :feature, js: true do
 
         within "tr[data-signoff-id='#{signoff2.id}']" do
           expect(page).to have_content other_user.name
-          expect(page).to have_content "Signed at: #{I18n.l signoff2.signed_at, format: :short}"
+          expect(page).to have_content "Signed at #{I18n.l signoff2.signed_at, format: :short}"
         end
       end
     end
