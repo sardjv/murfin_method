@@ -45,7 +45,7 @@
   %table#plan-signoffs.table
     %tbody.list
       - @plan.signoffs.each do |signoff|
-        %tr{ data: { signoff_id: signoff.id} }
+        %tr{ data: { signoff_id: signoff.id } }
           %td= signoff.user.name
           %td= t "signoffs.states.#{signoff.state}"
           %td
