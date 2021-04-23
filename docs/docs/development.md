@@ -30,7 +30,7 @@ If you have Docker on your machine, run:
 docker-compose up
 ```
 
-It can then be accessed at [http://localhost:3001/](http://localhost:3001/)
+It can then be accessed at [http://localhost:3000/](http://localhost:3000/)
 
 ## API Documentation
 
@@ -54,26 +54,36 @@ To add accepted licenses:
 bundle exec license_finder permitted_licenses add MIT
 ```
 
-## ETL and Kiba
-
-This project uses the [Kiba](https://github.com/thbar/kiba) gem for scalable and maintainable data processing.
-
-[This talk](https://www.youtube.com/watch?v=fxVtbog7pIQ) contains a short, clear explanation of how Kiba works.
-
-### Tips
-- Don't insert rows one by one - use bulk insert.
-- Skip activerecord validations because they are too slow, find other ways to validate data.
-- Fail fast; raise an exception and stop on failure rather than trying to carry on and creating bad data.
-
 ## Specs
 
 To run Rubocop, and listen for file changes:
 
 ```
-docker-compose run api bundle exec guard
+docker-compose run app bundle exec guard
 ```
 
 Just press enter to run the whole test suite straight away.
+
+To view and interact with a visible Chrome browser in feature tests, uncomment this line in `rails_helper.rb`:
+
+```
+c.javascript_driver = :chrome_visible
+```
+
+This exposes a [VNC](https://en.wikipedia.org/wiki/Virtual_Network_Computing) server on port `5900`. You can access it on MacOS with:
+
+```
+open vnc://0.0.0.0:5900
+```
+
+The password is 'secret'. Run a feature spec with that window open and you should see the test running.
+
+_Note: feature specs should be run from app shell, so connect first:_
+
+```
+docker exec -it murfin_method_app_1 sh
+```
+
 
 ## Code Coverage
 
@@ -91,6 +101,14 @@ To access a 'binding.pry' debugging point, run with:
 docker-compose run --service-ports api
 ```
 
+## Model Annotation
+
+To annotate rails models with schema run
+
+```
+docker-compose run --rm app bundle exec annotate --models
+```
+
 ## Accessing the database console
 
 To access the MySQL database console:
@@ -100,13 +118,9 @@ docker-compose exec db bash
 mysql -u root -p
 (enter root password)
 show databases;
-use esr_api_development;
-SELECT * FROM person_records;
+use murfin_method_development;
+SELECT * FROM users;
 ```
-
-## Emails
-
-The application does not currently send any emails.
 
 ## Stop
 
@@ -122,13 +136,45 @@ Stop containers and remove them:
 docker-compose down --remove-orphans
 ```
 
+## Profiling performance
+
+To print a report of time, memory and database calls:
+
+```
+  require 'performance'
+  Performance.test { object.method }
+```
+
+## Resolving issues
+
+On first run new file is created:
+
+```script/first_run_complete.tmp```
+
+In some cases deleting it may help with resolving your running issues.
+
+
+## Caching
+
+You can view keys in the Redis cache from the console with:
+
+```
+Redis.new(url: "redis://redis:#{ENV['REDIS_PORT']}/0", password: ENV['REDIS_PASSWORD'], namespace: ENV['REDIS_CACHE_NAMESPACE']).keys('*')
+```
+
+or
+
+```
+Rails.cache.redis.keys('*')
+```
+
 ## Documentation
 
 The documentation can be found in the `/docs` directory. When Docker is running the documentation site
-is served locally at [http://localhost:3002/esr_api](http://localhost:3002/esr_api). Any changes made
+is served locally at [http://localhost:3002/murfin_method](http://localhost:3002/murfin_method). Any changes made
 in the `/docs` directory will be immediately visible.
 
-We also serve the documentation online at [https://sardjv.github.io/esr_api/](https://sardjv.github.io/esr_api/).
+We also serve the documentation online at [https://sardjv.github.io/murfin_method/](https://sardjv.github.io/murfin_method/).
 
 To deploy changes to this site:
 

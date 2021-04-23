@@ -1,5 +1,7 @@
 # Murfin+: a Ruby on Rails app for building NHS data dashboards
 
+# Full documentation can be found here: [https://sardjv.github.io/murfin_method](https://sardjv.github.io/murfin_method)
+
 [![CircleCI Build Status](https://circleci.com/gh/sardjv/murfin_method.svg?style=shield)](https://circleci.com/gh/sardjv/murfin_method)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/sardjv/murfin_method/blob/master/LICENSE)
 
@@ -77,14 +79,6 @@ Core dependencies:
 - Sidekiq [https://github.com/mperham/sidekiq](https://github.com/mperham/sidekiq)
 - MySQL
 - Multiple supporting gems as listed in the Gemfile, Bundler (included in Ruby) should take care of installing these.
-
-## Documentation
-
-### Docusaurus
-
-Murfin plus docs for development purposes can be viewed at [http://localhost:3002/murfin_plus](http://localhost:3002/murfin_plus).
-
-Live version is available at [https://sardjv.github.io/murfin_plus/](https://sardjv.github.io/murfin_plus/)
 
 ### API
 
