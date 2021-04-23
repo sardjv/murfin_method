@@ -72,6 +72,22 @@ jobs:
           path: /tmp/test-results/rspec
       - store_artifacts:
           path: coverage
+  deploy_docs:
+    docker:
+      - image: node:15.14.0
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - 61:dd:b7:4e:61:ca:f1:80:26:ef:fb:ad:72:50:e0:d6
+      - run:
+          name: Install and configure dependencies
+          command: |
+            git config --global user.email "$GIT_AUTHOR_EMAIL"
+            git config --global user.name "$GIT_AUTHOR_NAME"
+      - run:
+          name: Deploy docs
+          command: cd docs/ && yarn install && GIT_USER=$GIT_USERNAME USE_SSH=true yarn deploy
 workflows:
   version: 2
   checks:
@@ -87,3 +103,7 @@ workflows:
           filters:
             branches:
               only: master
+      - deploy_docs:
+        filters:
+          branches:
+            only: master
