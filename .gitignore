@@ -53,5 +53,6 @@ docs/node_modules
 docs/docs/docs
 docs/website
 docs/supervisord.*
+docs/*.log
 docs/.docusaurus
 docs/build

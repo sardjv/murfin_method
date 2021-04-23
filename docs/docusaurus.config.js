@@ -1,20 +1,17 @@
-/** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: 'Murfin+',
+  title: 'Murfin Method',
   tagline: 'Documentation',
   url: 'https://sardjv.github.io',
   baseUrl: '/murfin_method/',
-  //onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'sardjv', // Usually your GitHub org/user name.
   projectName: 'murfin_method', // Usually your repo name.
   themeConfig: {
     navbar: {
-      title: 'Murfin+',
+      title: 'Murfin Method',
       logo: {
-        alt: 'Murfin+',
-        src: 'img/logo.svg', // TODO
+        alt: 'My Site Logo',
+        src: 'img/logo.svg',
       },
       items: [
         {
