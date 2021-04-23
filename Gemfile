@@ -59,7 +59,7 @@ gem 'mysql2', '~> 0.5.3'
 
 # OmniAuth is a flexible authentication system utilizing Rack middleware.
 # https://github.com/auth0/omniauth-auth0
-gem 'omniauth-auth0', '~> 2.6.0'
+gem 'omniauth-auth0', '~> 3.0.0'
 
 # Provides CSRF protection on OmniAuth request endpoint on Rails application.
 # https://github.com/cookpad/omniauth-rails_csrf_protection
@@ -173,9 +173,8 @@ group :test do
   gem 'rspec-retry', '~> 0.6.2'
 
   # A browser automation framework and ecosystem.
-  # https://github.com/SeleniumHQ/selenium
-  # Use edge until v4.0.0 of this gem is released, for Ruby 3.0.0 compatability.
-  gem 'selenium-webdriver', github: 'SeleniumHQ/selenium', ref: '8e5a9ede90137c048715125a14be3c25c08a51e7'
+  # https://github.com/SeleniumHQ/selenium/tree/trunk/rb
+  gem 'selenium-webdriver', '4.0.0.beta3'
 
   # Simple one-liner tests for common Rails functionality.
   # https://github.com/thoughtbot/shoulda-matchers
