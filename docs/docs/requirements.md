@@ -5,7 +5,9 @@ title: Requirements
 
 ## Docker
 
-If you can run [Docker](https://en.wikipedia.org/wiki/Docker_(software)), that is the quickest way to get started. If Docker install is not possible, the Dockerfile, docker-compose.yml and Gemfile files included in the repository can be used as a guide for dependencies.
+If you can run [Docker](https://en.wikipedia.org/wiki/Docker_(software)), that is the quickest way to get started.
+If Docker install is not possible, the Dockerfile, docker-compose.yml and Gemfile files included in the repository can
+be used as a guide for dependencies.
 
 ## Core Technologies
 

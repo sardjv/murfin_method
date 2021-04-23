@@ -5,7 +5,7 @@ title: Licenses
 
 ## Open Source Licenses
 
-ESR API is built on open source projects which are released under the following licenses:
+Murfin+ is built on open source projects which are released under the following licenses:
 
 - [Apache 2.0](https://tldrlegal.com/license/apache-license-2.0-(apache-2.0))
 - [CC0-1.0](https://tldrlegal.com/license/creative-commons-cc0-1.0-universal)
