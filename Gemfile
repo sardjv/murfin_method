@@ -47,7 +47,7 @@ gem 'jsonapi-resources', '~> 0.10.4'
 
 # A ruby implementation of the RFC 7519 OAuth JSON Web Token (JWT) standard.
 # https://github.com/jwt/ruby-jwt
-gem 'jwt', '~> 2.2.2'
+gem 'jwt', '~> 2.2.3'
 
 # paginator for modern web app frameworks and ORMs.
 # https://github.com/kaminari/kaminari
@@ -59,7 +59,7 @@ gem 'mysql2', '~> 0.5.3'
 
 # OmniAuth is a flexible authentication system utilizing Rack middleware.
 # https://github.com/auth0/omniauth-auth0
-gem 'omniauth-auth0', '~> 3.0.0'
+gem 'omniauth-auth0', '~> 2.6.0'
 
 # Provides CSRF protection on OmniAuth request endpoint on Rails application.
 # https://github.com/cookpad/omniauth-rails_csrf_protection

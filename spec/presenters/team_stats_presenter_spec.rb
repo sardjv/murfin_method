@@ -96,19 +96,19 @@ describe TeamStatsPresenter, freeze: Time.zone.local(2020, 6, 26, 14, 59, 59) do
             # Approx 4 hours per week * 10 users = approx 2400 minutes per week.
             expect(subject.average_weekly_planned_per_month).to eq(
               [
-                { 'name': '2019-06-01T00:00:00.000Z', 'value': 400, 'notes': '[]' },
-                { 'name': '2019-07-01T00:00:00.000Z', 'value': 2400, 'notes': '[]' },
-                { 'name': '2019-08-01T00:00:00.000Z', 'value': 2400, 'notes': '[]' },
-                { 'name': '2019-09-01T00:00:00.000Z', 'value': 2400, 'notes': '[]' },
-                { 'name': '2019-10-01T00:00:00.000Z', 'value': 2400, 'notes': '[]' },
-                { 'name': '2019-11-01T00:00:00.000Z', 'value': 2400, 'notes': '[]' },
-                { 'name': '2019-12-01T00:00:00.000Z', 'value': 2400, 'notes': '[]' },
-                { 'name': '2020-01-01T00:00:00.000Z', 'value': 2400, 'notes': '[]' },
-                { 'name': '2020-02-01T00:00:00.000Z', 'value': 2400, 'notes': '[]' },
-                { 'name': '2020-03-01T00:00:00.000Z', 'value': 2400, 'notes': '[]' },
-                { 'name': '2020-04-01T00:00:00.000Z', 'value': 2400, 'notes': '[]' },
-                { 'name': '2020-05-01T00:00:00.000Z', 'value': 2400, 'notes': '[]' },
-                { 'name': '2020-06-01T00:00:00.000Z', 'value': 2080, 'notes': '[]' }
+                { name: '2019-06-01T00:00:00.000Z', value: 400, notes: '[]' },
+                { name: '2019-07-01T00:00:00.000Z', value: 2400, notes: '[]' },
+                { name: '2019-08-01T00:00:00.000Z', value: 2400, notes: '[]' },
+                { name: '2019-09-01T00:00:00.000Z', value: 2400, notes: '[]' },
+                { name: '2019-10-01T00:00:00.000Z', value: 2400, notes: '[]' },
+                { name: '2019-11-01T00:00:00.000Z', value: 2400, notes: '[]' },
+                { name: '2019-12-01T00:00:00.000Z', value: 2400, notes: '[]' },
+                { name: '2020-01-01T00:00:00.000Z', value: 2400, notes: '[]' },
+                { name: '2020-02-01T00:00:00.000Z', value: 2400, notes: '[]' },
+                { name: '2020-03-01T00:00:00.000Z', value: 2400, notes: '[]' },
+                { name: '2020-04-01T00:00:00.000Z', value: 2400, notes: '[]' },
+                { name: '2020-05-01T00:00:00.000Z', value: 2400, notes: '[]' },
+                { name: '2020-06-01T00:00:00.000Z', value: 2080, notes: '[]' }
               ]
             )
           end
@@ -127,19 +127,19 @@ describe TeamStatsPresenter, freeze: Time.zone.local(2020, 6, 26, 14, 59, 59) do
             # 6240 (2 hours per week per user for year) * 10 users / 52 weeks = 1200.
             expect(subject.average_weekly_actual_per_month).to eq(
               [
-                { 'name': '2019-06-01T00:00:00.000Z', 'value': 175, 'notes': '[]' },
-                { 'name': '2019-07-01T00:00:00.000Z', 'value': 1193, 'notes': '[]' },
-                { 'name': '2019-08-01T00:00:00.000Z', 'value': 1193, 'notes': '[]' },
-                { 'name': '2019-09-01T00:00:00.000Z', 'value': 1193, 'notes': '[]' },
-                { 'name': '2019-10-01T00:00:00.000Z', 'value': 1193, 'notes': '[]' },
-                { 'name': '2019-11-01T00:00:00.000Z', 'value': 1193, 'notes': '[]' },
-                { 'name': '2019-12-01T00:00:00.000Z', 'value': 1193, 'notes': '[]' },
-                { 'name': '2020-01-01T00:00:00.000Z', 'value': 1193, 'notes': '[]' },
-                { 'name': '2020-02-01T00:00:00.000Z', 'value': 1193, 'notes': '[]' },
-                { 'name': '2020-03-01T00:00:00.000Z', 'value': 1193, 'notes': '[]' },
-                { 'name': '2020-04-01T00:00:00.000Z', 'value': 1193, 'notes': '[]' },
-                { 'name': '2020-05-01T00:00:00.000Z', 'value': 1193, 'notes': '[]' },
-                { 'name': '2020-06-01T00:00:00.000Z', 'value': 1019, 'notes': '[]' }
+                { name: '2019-06-01T00:00:00.000Z', value: 175, notes: '[]' },
+                { name: '2019-07-01T00:00:00.000Z', value: 1193, notes: '[]' },
+                { name: '2019-08-01T00:00:00.000Z', value: 1193, notes: '[]' },
+                { name: '2019-09-01T00:00:00.000Z', value: 1193, notes: '[]' },
+                { name: '2019-10-01T00:00:00.000Z', value: 1193, notes: '[]' },
+                { name: '2019-11-01T00:00:00.000Z', value: 1193, notes: '[]' },
+                { name: '2019-12-01T00:00:00.000Z', value: 1193, notes: '[]' },
+                { name: '2020-01-01T00:00:00.000Z', value: 1193, notes: '[]' },
+                { name: '2020-02-01T00:00:00.000Z', value: 1193, notes: '[]' },
+                { name: '2020-03-01T00:00:00.000Z', value: 1193, notes: '[]' },
+                { name: '2020-04-01T00:00:00.000Z', value: 1193, notes: '[]' },
+                { name: '2020-05-01T00:00:00.000Z', value: 1193, notes: '[]' },
+                { name: '2020-06-01T00:00:00.000Z', value: 1019, notes: '[]' }
               ]
             )
           end
@@ -161,19 +161,19 @@ describe TeamStatsPresenter, freeze: Time.zone.local(2020, 6, 26, 14, 59, 59) do
             # Approx 6240/12480 == 0.5.
             expect(subject.weekly_percentage_delivered_per_month).to eq(
               [
-                { 'name': '2019-06-01T00:00:00.000Z', 'value': 43.75, 'notes': '[]' },
-                { 'name': '2019-07-01T00:00:00.000Z', 'value': 49.71, 'notes': '[]' },
-                { 'name': '2019-08-01T00:00:00.000Z', 'value': 49.71, 'notes': '[]' },
-                { 'name': '2019-09-01T00:00:00.000Z', 'value': 49.71, 'notes': '[]' },
-                { 'name': '2019-10-01T00:00:00.000Z', 'value': 49.71, 'notes': '[]' },
-                { 'name': '2019-11-01T00:00:00.000Z', 'value': 49.71, 'notes': [n1, n2].map(&:with_author).to_json },
-                { 'name': '2019-12-01T00:00:00.000Z', 'value': 49.71, 'notes': '[]' },
-                { 'name': '2020-01-01T00:00:00.000Z', 'value': 49.71, 'notes': '[]' },
-                { 'name': '2020-02-01T00:00:00.000Z', 'value': 49.71, 'notes': '[]' },
-                { 'name': '2020-03-01T00:00:00.000Z', 'value': 49.71, 'notes': '[]' },
-                { 'name': '2020-04-01T00:00:00.000Z', 'value': 49.71, 'notes': '[]' },
-                { 'name': '2020-05-01T00:00:00.000Z', 'value': 49.71, 'notes': '[]' },
-                { 'name': '2020-06-01T00:00:00.000Z', 'value': 48.99, 'notes': '[]' }
+                { name: '2019-06-01T00:00:00.000Z', value: 43.75, notes: '[]' },
+                { name: '2019-07-01T00:00:00.000Z', value: 49.71, notes: '[]' },
+                { name: '2019-08-01T00:00:00.000Z', value: 49.71, notes: '[]' },
+                { name: '2019-09-01T00:00:00.000Z', value: 49.71, notes: '[]' },
+                { name: '2019-10-01T00:00:00.000Z', value: 49.71, notes: '[]' },
+                { name: '2019-11-01T00:00:00.000Z', value: 49.71, notes: [n1, n2].map(&:with_author).to_json },
+                { name: '2019-12-01T00:00:00.000Z', value: 49.71, notes: '[]' },
+                { name: '2020-01-01T00:00:00.000Z', value: 49.71, notes: '[]' },
+                { name: '2020-02-01T00:00:00.000Z', value: 49.71, notes: '[]' },
+                { name: '2020-03-01T00:00:00.000Z', value: 49.71, notes: '[]' },
+                { name: '2020-04-01T00:00:00.000Z', value: 49.71, notes: '[]' },
+                { name: '2020-05-01T00:00:00.000Z', value: 49.71, notes: '[]' },
+                { name: '2020-06-01T00:00:00.000Z', value: 48.99, notes: '[]' }
               ]
             )
           end
@@ -308,17 +308,17 @@ describe TeamStatsPresenter, freeze: Time.zone.local(2020, 6, 26, 14, 59, 59) do
             # 4800 because there is one 8h long activity in the plan
             expect(subject.average_weekly_planned_per_week).to eq(
               [
-                { 'name': '2020-04-20T00:00:00.000Z', 'value': 685.7, 'notes': '[]' },
+                { name: '2020-04-20T00:00:00.000Z', value: 685.7, notes: '[]' },
                 # 4800/7 * 1 because filter range starts on Sun, so only one day from the week counted
-                { 'name': '2020-04-27T00:00:00.000Z', 'value': 4800.0, 'notes': '[]' },
-                { 'name': '2020-05-04T00:00:00.000Z', 'value': 4800.0, 'notes': '[]' },
-                { 'name': '2020-05-11T00:00:00.000Z', 'value': 4800.0, 'notes': '[]' },
-                { 'name': '2020-05-18T00:00:00.000Z', 'value': 4800.0, 'notes': '[]' },
-                { 'name': '2020-05-25T00:00:00.000Z', 'value': 4800.0, 'notes': '[]' },
-                { 'name': '2020-06-01T00:00:00.000Z', 'value': 4800.0, 'notes': '[]' },
-                { 'name': '2020-06-08T00:00:00.000Z', 'value': 4800.0, 'notes': '[]' },
-                { 'name': '2020-06-15T00:00:00.000Z', 'value': 4800.0, 'notes': '[]' },
-                { 'name': '2020-06-22T00:00:00.000Z', 'value': 3428.6, 'notes': '[]' }
+                { name: '2020-04-27T00:00:00.000Z', value: 4800.0, notes: '[]' },
+                { name: '2020-05-04T00:00:00.000Z', value: 4800.0, notes: '[]' },
+                { name: '2020-05-11T00:00:00.000Z', value: 4800.0, notes: '[]' },
+                { name: '2020-05-18T00:00:00.000Z', value: 4800.0, notes: '[]' },
+                { name: '2020-05-25T00:00:00.000Z', value: 4800.0, notes: '[]' },
+                { name: '2020-06-01T00:00:00.000Z', value: 4800.0, notes: '[]' },
+                { name: '2020-06-08T00:00:00.000Z', value: 4800.0, notes: '[]' },
+                { name: '2020-06-15T00:00:00.000Z', value: 4800.0, notes: '[]' },
+                { name: '2020-06-22T00:00:00.000Z', value: 3428.6, notes: '[]' }
                 # 4800/7 * 5 because filter range ends on Fri so only 5 days from the week counted
               ]
             )
@@ -337,16 +337,16 @@ describe TeamStatsPresenter, freeze: Time.zone.local(2020, 6, 26, 14, 59, 59) do
           it 'returns average weekly actual values for the time range' do
             expect(subject.average_weekly_actual_per_week).to eq(
               [
-                { 'name': '2020-04-20T00:00:00.000Z', 'value': 4800.0, 'notes': '[]' },
-                { 'name': '2020-04-27T00:00:00.000Z', 'value': 4800.0, 'notes': '[]' },
-                { 'name': '2020-05-04T00:00:00.000Z', 'value': 0, 'notes': '[]' },
-                { 'name': '2020-05-11T00:00:00.000Z', 'value': 0, 'notes': '[]' },
-                { 'name': '2020-05-18T00:00:00.000Z', 'value': 0, 'notes': '[]' },
-                { 'name': '2020-05-25T00:00:00.000Z', 'value': 3300.0, 'notes': '[]' }, # 4.5h + 6.5.h / 2 = 5.5h p/u * 10 = 3300
-                { 'name': '2020-06-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
-                { 'name': '2020-06-08T00:00:00.000Z', 'value': 0, 'notes': '[]' },
-                { 'name': '2020-06-15T00:00:00.000Z', 'value': 0, 'notes': '[]' },
-                { 'name': '2020-06-22T00:00:00.000Z', 'value': 5400.0, 'notes': '[]' }
+                { name: '2020-04-20T00:00:00.000Z', value: 4800.0, notes: '[]' },
+                { name: '2020-04-27T00:00:00.000Z', value: 4800.0, notes: '[]' },
+                { name: '2020-05-04T00:00:00.000Z', value: 0, notes: '[]' },
+                { name: '2020-05-11T00:00:00.000Z', value: 0, notes: '[]' },
+                { name: '2020-05-18T00:00:00.000Z', value: 0, notes: '[]' },
+                { name: '2020-05-25T00:00:00.000Z', value: 3300.0, notes: '[]' }, # 4.5h + 6.5.h / 2 = 5.5h p/u * 10 = 3300
+                { name: '2020-06-01T00:00:00.000Z', value: 0, notes: '[]' },
+                { name: '2020-06-08T00:00:00.000Z', value: 0, notes: '[]' },
+                { name: '2020-06-15T00:00:00.000Z', value: 0, notes: '[]' },
+                { name: '2020-06-22T00:00:00.000Z', value: 5400.0, notes: '[]' }
               ]
             )
           end
@@ -364,16 +364,16 @@ describe TeamStatsPresenter, freeze: Time.zone.local(2020, 6, 26, 14, 59, 59) do
           it 'returns the percentage delivered over the time range, with any notes' do
             expect(subject.weekly_percentage_delivered_per_week).to eq(
               [
-                { 'name': '2020-04-20T00:00:00.000Z', 'value': 700.01, 'notes': '[]' },
-                { 'name': '2020-04-27T00:00:00.000Z', 'value': 100, 'notes': '[]' },
-                { 'name': '2020-05-04T00:00:00.000Z', 'value': 0, 'notes': '[]' },
-                { 'name': '2020-05-11T00:00:00.000Z', 'value': 0, 'notes': '[]' },
-                { 'name': '2020-05-18T00:00:00.000Z', 'value': 0, 'notes': '[]' },
-                { 'name': '2020-05-25T00:00:00.000Z', 'value': 68.75, 'notes': '[]' },
-                { 'name': '2020-06-01T00:00:00.000Z', 'value': 0, 'notes': '[]' },
-                { 'name': '2020-06-08T00:00:00.000Z', 'value': 0, 'notes': '[]' },
-                { 'name': '2020-06-15T00:00:00.000Z', 'value': 0, 'notes': '[]' },
-                { 'name': '2020-06-22T00:00:00.000Z', 'value': 157.5, 'notes': '[]' }
+                { name: '2020-04-20T00:00:00.000Z', value: 700.01, notes: '[]' },
+                { name: '2020-04-27T00:00:00.000Z', value: 100, notes: '[]' },
+                { name: '2020-05-04T00:00:00.000Z', value: 0, notes: '[]' },
+                { name: '2020-05-11T00:00:00.000Z', value: 0, notes: '[]' },
+                { name: '2020-05-18T00:00:00.000Z', value: 0, notes: '[]' },
+                { name: '2020-05-25T00:00:00.000Z', value: 68.75, notes: '[]' },
+                { name: '2020-06-01T00:00:00.000Z', value: 0, notes: '[]' },
+                { name: '2020-06-08T00:00:00.000Z', value: 0, notes: '[]' },
+                { name: '2020-06-15T00:00:00.000Z', value: 0, notes: '[]' },
+                { name: '2020-06-22T00:00:00.000Z', value: 157.5, notes: '[]' }
               ]
             )
           end
