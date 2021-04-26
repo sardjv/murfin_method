@@ -10,3 +10,9 @@ class Numeric
     end
   end
 end
+
+class Object
+  def as_boolean
+    ActiveModel::Type::Boolean.new.cast(self)
+  end
+end

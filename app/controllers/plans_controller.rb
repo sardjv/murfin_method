@@ -1,5 +1,6 @@
 class PlansController < ApplicationController
-  before_action :find_and_authorize_plan, only: %i[edit update destroy]
+  include RenderPdf
+  before_action :find_and_authorize_plan, only: %i[edit update destroy download]
 
   def index
     authorize :plan
@@ -22,6 +23,16 @@ class PlansController < ApplicationController
     else
       flash.now.alert = notice('could_not_be.created')
       render :edit
+    end
+  end
+
+  include PlanHelper
+
+  def download
+    respond_to do |format|
+      format.html do
+        render_attachment(plan_pdf_filename(@plan)) if pdf? && !params.key?(:layout)
+      end
     end
   end
 

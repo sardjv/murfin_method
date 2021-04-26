@@ -66,6 +66,10 @@ module Murfin # rubocop:disable Style/ClassAndModuleChildren
       g.view_specs false
     end
 
+    # Middleware that allows users to get a PDF, PNG or JPEG view of any page on your site by appending .pdf, .png or .jpeg/.jpg to the URL.
+    require 'grover'
+    config.middleware.use Grover::Middleware
+
     initializer 'murfin.extensions', before: :load_config_initializers do |_app|
       require 'extensions'
     end
