@@ -38,8 +38,8 @@ class DashboardPresenter
   def individual_data
     users.map do |user|
       {
-        'name': user.name,
-        'value': bar_chart_value(user: user)
+        name: user.name,
+        value: bar_chart_value(user: user)
       }
     end
   end
