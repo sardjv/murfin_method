@@ -144,6 +144,8 @@ en:
     account: Account
     admin_dashboard: Admin
     dashboard: Dashboard
+    logo:
+      alt: Murfin+ logo
     tabs:
       admin_dashboard: Admin dashboard
       admin_group_types: Groups

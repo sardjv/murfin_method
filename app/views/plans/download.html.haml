@@ -2,8 +2,12 @@
   .row
     .col-12.mb-2
       %h5
-        = image_pack_tag 'media/images/logos/murfin-plus-logo.svg', height: 50
+        = image_tag pdf_image_url('media/images/logos/murfin-plus-logo.svg'), height: 50, alt: t('nav.logo.alt')
         = @plan.name
+    .col-12
+      %h5
+        #{Plan.human_attribute_name('user')}:
+        = @plan.user.name
     .col-12
       %h5
         #{Plan.human_attribute_name('start_date')}:
@@ -44,8 +48,8 @@
   %h5= Plan.human_attribute_name('signoffs')
   %table#plan-signoffs.table
     %tbody.list
-      - @plan.signoffs.each do |signoff|
-        %tr{ data: { signoff_id: signoff.id } }
+      - @plan.required_signoffs.each do |signoff|
+        %tr{ data: { signoff_id: signoff.id} }
           %td= signoff.user.name
           %td= t "signoffs.states.#{signoff.state}"
           %td
