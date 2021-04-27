@@ -1,4 +1,7 @@
 .container.my-4
   .row
     .col-12
+      = link_to new_plan_path, class: 'btn btn-primary float-right mb-3' do
+        = icon 'plus'
+        = t 'actions.add', model_name: Plan.model_name.human.titleize
       = render partial: 'plans/plans', locals: { plans: @plans }
