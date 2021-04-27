@@ -38,7 +38,7 @@ RSpec.describe 'Signoffs', type: :request do
   end
 
   context 'with a signed signoff' do
-    let!(:signoff) { create(:signed_signoff, user_id: user_id) }
+    let!(:signoff) { create :signoff, :signed, user_id: user_id }
 
     describe 'PUT /signoffs/:id/revoke' do
       it 'updates state' do

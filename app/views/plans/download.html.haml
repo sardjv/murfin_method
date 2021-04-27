@@ -1,0 +1,60 @@
+%div
+  .row
+    .col-12.mb-2
+      %h5
+        = image_tag pdf_image_url('media/images/logos/murfin-plus-logo.svg'), height: 50, alt: t('nav.logo.alt')
+        = @plan.name
+    .col-12
+      %h5
+        #{Plan.human_attribute_name('user')}:
+        = @plan.user.name
+    .col-12
+      %h5
+        #{Plan.human_attribute_name('start_date')}:
+        = l @plan.start_date, format: :long
+    .col-12
+      %h5
+        #{Plan.human_attribute_name('end_date')}:
+        = l @plan.end_date, format: :long
+    .col-12
+      %h5
+        #{Plan.human_attribute_name('state')}:
+        = display_state(@plan)
+
+  %br
+  %h5= Plan.human_attribute_name('activities')
+  %table#plan-activities-table.table
+    %thead
+      %tr
+        - TagType.active_for(Activity).sorted.each do |t|
+          %th.font-weight-normal
+            = t.name
+        %th.font-weight-normal
+          = Activity.human_attribute_name('duration')
+        %th
+    %tbody.activities.list
+      - @plan.activities.each do |activity|
+        %tr.nested-fields
+          - activity.active_tag_associations.each do |tag_assoc|
+            %td{ class: tag_assoc.tag_type.name.parameterize }= tag_assoc.tag.try(:name)
+          %td{ class: Activity.human_attribute_name('duration').parameterize }= duration_in_words(activity.seconds_per_week / 60, :short)
+    %tfoot
+      %tr
+        %td{ colspan: 3 }
+        %td#plan-total-time-worked-per-week.small{ colspan: 2 }
+          = t('plans.total_time_worked_per_week', total: duration_in_words(plan_total_time_worked_per_week(@plan), :short))
+
+  %br
+  %h5= Plan.human_attribute_name('signoffs')
+  %table#plan-signoffs.table
+    %tbody.list
+      - @plan.required_signoffs.each do |signoff|
+        %tr{ data: { signoff_id: signoff.id } }
+          %td= signoff.user.name
+          %td= t "signoffs.states.#{signoff.state}"
+          %td
+            - unless signoff.unsigned?
+              - if signoff.signed?
+                = t 'signoffs.signed_at', when: l(signoff.signed_at, format: :short)
+              - elsif signoff.revoked?
+                = t 'signoffs.revoked_at', when: l(signoff.revoked_at, format: :short)

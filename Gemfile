@@ -29,6 +29,10 @@ gem 'factory_bot', '~> 6.1.0'
 # https://github.com/faker-ruby/faker
 gem 'faker', '~> 2.17.0'
 
+# A Ruby gem to transform HTML into PDFs, PNGs or JPEGs using Google Puppeteer/Chromium
+# https://github.com/Studiosity/grover
+gem 'grover', '~> 0.14.2'
+
 # HTML Abstraction Markup Language - A Markup Haiku
 # https://github.com/haml/haml
 gem 'haml', '~> 5.2.1'
@@ -43,7 +47,7 @@ gem 'jsonapi-resources', '~> 0.10.4'
 
 # A ruby implementation of the RFC 7519 OAuth JSON Web Token (JWT) standard.
 # https://github.com/jwt/ruby-jwt
-gem 'jwt', '~> 2.2.2'
+gem 'jwt', '~> 2.2.3'
 
 # paginator for modern web app frameworks and ORMs.
 # https://github.com/kaminari/kaminari

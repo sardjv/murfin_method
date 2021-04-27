@@ -1,0 +1,13 @@
+!!!
+%html{ lang: 'en' }
+  %head
+    %meta{ content: '', name: 'description' }
+    %meta{ content: 'SARD JV Ltd', name: 'author' }
+    %meta{ content: 'width=device-width, initial-scale=1, shrink-to-fit=no', name: 'viewport' }
+    %meta{ content: 'IE=edge', 'http-equiv': 'X-UA-Compatible' }
+    %title= t('app.name')
+    = pdf_javascript_pack_tag 'application'
+    = pdf_stylesheet_pack_tag 'application'
+  %body
+    %main
+      .m-4= yield

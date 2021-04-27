@@ -35,10 +35,11 @@ en:
     log_out: Log out
   actions:
     add: Add %{model_name}
+    edit: Edit %{model_name}
+    download: Download
     cancel: Cancel
     confirm: Are you sure?
     delete: Delete
-    edit: Edit %{model_name}
     filter: Filter
     generate: Generate %{attribute_name}
     reset: Reset
@@ -146,6 +147,8 @@ en:
     account: Account
     admin_dashboard: Admin
     dashboard: Dashboard
+    logo:
+      alt: Murfin+ logo
     tabs:
       admin_dashboard: Admin dashboard
       admin_group_types: Groups
@@ -196,8 +199,14 @@ en:
       time_ranges: Type, tag, appointment ID, user name or email
       users: Name, email or EPR UUID
   signoffs:
+    states:
+      signed: Signed
+      revoked: Revoked
+      unsigned: Unsigned
     revoke: Revoke
     sign: Sign
+    revoked_at: Revoked at %{when}
+    signed_at: Signed at %{when}
   status:
     about_right: About Right
     over: Over

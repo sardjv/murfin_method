@@ -142,17 +142,17 @@ class TeamStatsPresenter
 
   def response(month:, value:)
     {
-      'name': month.strftime(I18n.t('time.formats.iso8601_utc')),
-      'value': value,
-      'notes': relevant_notes(key: month.strftime('%Y-%m'))
+      name: month.strftime(I18n.t('time.formats.iso8601_utc')),
+      value: value,
+      notes: relevant_notes(key: month.strftime('%Y-%m'))
     }
   end
 
   def response_week(week:, value:)
     {
-      'name': week.strftime(I18n.t('time.formats.iso8601_utc')),
-      'value': value,
-      'notes': relevant_notes(key: week.strftime('%Y-%m-%d'))
+      name: week.strftime(I18n.t('time.formats.iso8601_utc')),
+      value: value,
+      notes: relevant_notes(key: week.strftime('%Y-%m-%d'))
     }
   end
 
