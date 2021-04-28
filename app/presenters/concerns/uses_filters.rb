@@ -35,7 +35,7 @@ module UsesFilters
       @params[:filter_tag_ids]&.split('&')
     else
       @params[:filter_tag_ids]
-    end
+    end.collect(&:to_i)
   end
 
   def prepare_query_params(query) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity

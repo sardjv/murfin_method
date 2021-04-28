@@ -3,7 +3,9 @@ class Admin::UsersController < ApplicationController
 
   def index
     authorize :user
-    @users = User.order(last_name: :asc).page(params[:page])
+
+    @q = User.order(last_name: :asc).ransack(params[:q])
+    @users = @q.result(distinct: true).page(params[:page])
   end
 
   def new

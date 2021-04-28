@@ -115,6 +115,10 @@ RSpec.configure do |config|
   config.include ActiveJob::TestHelper, type: :job
 
   config.include CapybaraHelpers, type: :feature
+  config.include CapybaraSelect2
+  # Specific select2 helpers that allow more refined access to a select2 control https://github.com/Hirurg103/capybara_select2#helpers
+  # config.include CapybaraSelect2::Helpers
+
   config.include FeatureSessionHelpers, type: :feature
   config.include RequestSessionHelpers, type: :request
   config.include FormHelpers, type: :feature

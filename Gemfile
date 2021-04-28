@@ -82,6 +82,10 @@ gem 'pundit', '~> 2.1.0'
 # https://github.com/rails/rails
 gem 'rails', '~> 6.1.3'
 
+# Object-based searching.
+# https://github.com/activerecord-hackery/ransack
+gem 'ransack', '~> 2.4.2'
+
 # A very fast key-value store to hold jobs until they are run.
 # https://github.com/redis/redis-rb
 gem 'redis', '~> 4.2.5'
@@ -159,6 +163,10 @@ group :test do
   # Acceptance test framework for web applications.
   # https://github.com/teamcapybara/capybara
   gem 'capybara', '~> 3.35.3'
+
+  # Capybara helpers for https://select2.org select box (supports Select2 version 2/3/4)
+  # https://github.com/Hirurg103/capybara_select2
+  gem 'capybara-select-2', '~> 0.5.1'
 
   # Strategies for cleaning databases between tests.
   # https://github.com/DatabaseCleaner/database_cleaner

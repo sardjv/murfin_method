@@ -24,4 +24,4 @@
           %div
             %label  
           = f.submit t('actions.filter'), name: nil, class: 'btn btn-primary'
-          %div= link_to 'Reset', filters_reset_url, class: 'small text-muted', title: 'Reset filters'
+          %div= link_to t('actions.reset'), filters_reset_url, class: 'small text-muted'

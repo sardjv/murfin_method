@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.12.0] - 2021-04-28
+
+### Added
+
+- Ability to PDF Job Plans
+- Search on admin Users, TimeRanges and JobPlans
+- Admins can create a user Job Plan
+
+### Changed
+
+- Filter logic:
+AND for tags with different TagTypes e.g. if select DCC and Outcomed on RiO -> Yes, then get DCC activities that are outcomed on RiO (previously this was all DCC regardless of Outcomed on RiO tag and all Outcomed on RiO -> Yes regardless of category tag).
+OR within a TagType e.g. if select DCC and RiO Type -> Attended and RiO Type -> DNA, then want all DCC activities that were either attended or that were DNA.
+
 ## [0.11.1] - 2021-04-23
 
 ### Added
