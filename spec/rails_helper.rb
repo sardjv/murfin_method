@@ -78,6 +78,7 @@ RSpec.configure do |config|
     Faker::Name.unique.clear
     Faker::Company.unique.clear
     Faker::Commerce.unique.clear
+    Faker::Lorem.unique.clear
   end
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
