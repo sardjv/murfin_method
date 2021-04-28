@@ -31,7 +31,7 @@ gem 'faker', '~> 2.17.0'
 
 # A Ruby gem to transform HTML into PDFs, PNGs or JPEGs using Google Puppeteer/Chromium
 # https://github.com/Studiosity/grover
-gem 'grover', '~> 0.14.2'
+gem 'grover', '~> 1.0.0'
 
 # HTML Abstraction Markup Language - A Markup Haiku
 # https://github.com/haml/haml
