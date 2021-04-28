@@ -1,5 +1,5 @@
 .table-responsive
-  %table.table.table-bordered
+  %table#plans-list.table.table-bordered
     %thead
       %tr
         %th= Plan.human_attribute_name('name')
@@ -10,7 +10,7 @@
     %tbody
       - plans.each do |plan|
         - cache plan do
-          %tr
+          %tr{ data: { plan_id: plan.id } }
             %td= plan.name
             %td= I18n.l(plan.start_date, format: :readable)
             %td= I18n.l(plan.end_date, format: :readable)

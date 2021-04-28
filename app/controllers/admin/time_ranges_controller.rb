@@ -3,7 +3,9 @@ class Admin::TimeRangesController < ApplicationController
 
   def index
     authorize :time_range
-    @time_ranges = TimeRange.order(:user_id, start_time: :asc).page(params[:page])
+
+    @q = TimeRange.order('time_ranges.user_id', start_time: :asc).ransack(params[:q])
+    @time_ranges = @q.result(distinct: true).includes(:user, :tags).page(params[:page])
   end
 
   def new
