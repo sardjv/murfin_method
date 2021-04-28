@@ -19,6 +19,7 @@ en:
         updated_at: Updated %{when} ago
       time_range:
         appointment_id: Appointment ID
+        appointment_id_short: Appt. ID
         time_range_type: Type
         value: Time worked
         time_worked: Worked
@@ -27,19 +28,24 @@ en:
         epr_uuid: EPR UUID
         first_name: First name
         last_name: Last name
+      user_group:
+        name: Name
   log_in_out: &log_in_out
     log_in: Log in
     log_out: Log out
   actions:
     add: Add %{model_name}
     edit: Edit %{model_name}
-    remove: Remove %{model_name}
+    download: Download
     cancel: Cancel
     confirm: Are you sure?
     delete: Delete
-    save: Save
     filter: Filter
     generate: Generate %{attribute_name}
+    reset: Reset
+    remove: Remove %{model_name}
+    save: Save
+    search: Search
     << : *log_in_out
   api_users:
     current_token:
@@ -141,6 +147,8 @@ en:
     account: Account
     admin_dashboard: Admin
     dashboard: Dashboard
+    logo:
+      alt: Murfin+ logo
     tabs:
       admin_dashboard: Admin dashboard
       admin_group_types: Groups
@@ -154,6 +162,7 @@ en:
       summary: Summary
       tags: Tags
       team: '%{team_name} dashboard'
+      teams: Teams
       time_ranges: Actuals
     team_dashboard: Team
   notes:
@@ -184,9 +193,20 @@ en:
   plans:
     totals: Totals
     total_time_worked_per_week: "Total time worked per week: %{total}"
+  search_form:
+    placeholders:
+      job_plans: Activity tag, user name or email
+      time_ranges: Type, tag, appointment ID, user name or email
+      users: Name, email or EPR UUID
   signoffs:
+    states:
+      signed: Signed
+      revoked: Revoked
+      unsigned: Unsigned
     revoke: Revoke
     sign: Sign
+    revoked_at: Revoked at %{when}
+    signed_at: Signed at %{when}
   status:
     about_right: About Right
     over: Over

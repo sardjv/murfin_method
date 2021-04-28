@@ -136,7 +136,7 @@ describe 'User edits a plan', type: :feature, js: true do
 
       context 'one signoff assigned' do
         it 'should not duplicate signoff' do
-          within '.signoffs' do
+          within '#plan-signoffs' do
             expect(page).to have_css '.filter-option-inner-inner', text: current_user.name, count: 1
           end
         end
@@ -251,7 +251,7 @@ describe 'User edits a plan', type: :feature, js: true do
     let!(:member_membership1) { create :membership, user_group: user_group4, user: user4, role: 'member' }
 
     it "shows user group' leads ordered first in the select options" do
-      within '.signoffs' do
+      within '#plan-signoffs' do
         find('button.dropdown-toggle').click
 
         within '.dropdown-menu.inner.show' do

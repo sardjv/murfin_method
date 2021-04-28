@@ -1,17 +1,16 @@
 .table-responsive
-  %table.table.table-bordered
+  %table#plans-list.table.table-bordered
     %thead
       %tr
         %th= Plan.human_attribute_name('name')
         %th= Plan.human_attribute_name('start_date')
         %th= Plan.human_attribute_name('end_date')
         %th= Plan.human_attribute_name('state')
-        %th{ style: 'width: 50px;' }
-        %th{ style: 'width: 50px;' }
+        %th{ colspan: 3 }
     %tbody
       - plans.each do |plan|
         - cache plan do
-          %tr
+          %tr{ data: { plan_id: plan.id } }
             %td= plan.name
             %td= I18n.l(plan.start_date, format: :readable)
             %td= I18n.l(plan.end_date, format: :readable)
@@ -19,11 +18,15 @@
               %h4.text-white
                 %span{ class: "badge #{state_badge_colour(plan)}" }
                   = display_state(plan)
-            %td
+            %td{ style: 'width: 50px;' }
               - if policy(plan).edit?
                 = link_to [:edit, plan], class: 'btn btn-link' do
                   = icon('pencil')
-            %td
+            %td{ style: 'width: 50px;' }
+              - if policy(plan).download?
+                = link_to download_plan_path(plan, format: :pdf), title: t('actions.download'), class: 'btn btn-link' do
+                  = icon('download')
+            %td{ style: 'width: 50px;' }
               - if policy(plan).destroy?
                 = link_to [plan], method: :delete, data: { confirm: I18n.t('actions.confirm') }, class: 'btn btn-link' do
                   = icon('trash')

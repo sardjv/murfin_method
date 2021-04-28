@@ -21,6 +21,10 @@ class PlanPolicy < ApplicationPolicy
     (record.user_id == user.id) || user.admin?
   end
 
+  def download?
+    edit?
+  end
+
   def change_user?
     record.new_record? && user.admin?
   end

@@ -1,18 +1,23 @@
 .container.my-4
+  .row.mb-3
+    .col-9
+      = render 'shared/search_form',
+                search_field_key: :email_or_first_name_or_last_name_or_epr_uuid_cont,
+                placeholder_key: :users
+    .col-3
+      = link_to [:new, :admin, :user], class: 'btn btn-primary float-right' do
+        = icon('plus')
+        = t('actions.add', model_name: User.model_name.human.titleize)
   .row
     .col-12
-      = link_to [:new, :admin, :user], class: 'btn btn-primary float-right mb-3' do
-        = icon('plus')
-        = I18n.t('actions.add', model_name: User.model_name.human.titleize)
       .table-responsive
-        %table.table.table-bordered
+        %table#users-list.table.table-bordered
           %thead
             %tr
               %th= User.human_attribute_name('name')
               %th= User.human_attribute_name('email')
               %th= User.human_attribute_name('epr_uuid')
-              %th{ style: 'width: 50px;' }
-              %th{ style: 'width: 50px;' }
+              %th{ colspan: 2 }
           %tbody
             - @users.each do |user|
               - cache user do
@@ -24,10 +29,10 @@
                       Admin
                   %td= user.email
                   %td= user.epr_uuid
-                  %td
+                  %td{ style: 'width: 50px;' }
                     = link_to [:edit, :admin, user], class: 'btn btn-link' do
                       = icon('pencil')
-                  %td
+                  %td{ style: 'width: 50px;' }
                     = link_to [:admin, user], method: :delete, data: { confirm: I18n.t('actions.confirm') }, class: 'btn btn-link' do
                       = icon('trash')
       = paginate @users

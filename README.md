@@ -1,5 +1,7 @@
 # Murfin+: a Ruby on Rails app for building NHS data dashboards
 
+# Full documentation can be found here: [https://sardjv.github.io/murfin_method](https://sardjv.github.io/murfin_method)
+
 [![CircleCI Build Status](https://circleci.com/gh/sardjv/murfin_method.svg?style=shield)](https://circleci.com/gh/sardjv/murfin_method)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/sardjv/murfin_method/blob/master/LICENSE)
 
@@ -78,9 +80,9 @@ Core dependencies:
 - MySQL
 - Multiple supporting gems as listed in the Gemfile, Bundler (included in Ruby) should take care of installing these.
 
-## Documentation
+### API
 
-The API documentation can be viewed at [http://localhost:3000/api_docs](http://localhost:3000/api_docs).
+The auto-generated API documentation can be viewed at [http://localhost:3000/api_docs](http://localhost:3000/api_docs).
 
 The Swagger docs are generated from the RSpec tests in `spec/api` To rebuild the swagger docs:
 

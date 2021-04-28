@@ -5,6 +5,8 @@ require 'concerns/uses_filters'
 class DashboardPresenter
   include UsesFilters
 
+  attr_accessor :context
+
   def initialize(args)
     @cookies = args[:cookies]
     query = args[:params].delete(:query)
@@ -36,8 +38,8 @@ class DashboardPresenter
   def individual_data
     users.map do |user|
       {
-        'name': user.name,
-        'value': bar_chart_value(user: user)
+        name: user.name,
+        value: bar_chart_value(user: user)
       }
     end
   end

@@ -61,12 +61,22 @@ Rails.application.routes.draw do
     resources :api_users, except: %i[edit update] do
       patch :generate_token, on: :member
     end
+    resources :teams, only: %i[index dashboard individuals plans] do
+      get :dashboard, on: :member
+      get :plans, on: :member
+      resources :individuals, only: :show, controller: 'team_individuals' do
+        get :data, on: :member
+      end
+      get :individuals, on: :member
+    end
     resources :users, except: :show
     resources :plans, only: :index
   end
 
   resources :notes, except: :show
-  resources :plans, except: :show
+  resources :plans, except: :show do
+    get :download, on: :member
+  end
 
   resources :signoffs, only: %i[sign revoke] do
     put :sign, on: :member

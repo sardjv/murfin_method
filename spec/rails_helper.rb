@@ -10,8 +10,8 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 require 'database_cleaner/active_record'
-Dir[File.join(__dir__, 'fixtures/', '*.rb')].sort.each { |file| require file }
-Dir[File.join(__dir__, 'support/', '*.rb')].sort.each { |file| require file }
+Dir[File.join(__dir__, 'fixtures/', '*.rb')].each { |file| require file }
+Dir[File.join(__dir__, 'support/', '*.rb')].each { |file| require file }
 
 require 'rspec/retry'
 require 'strip_attributes/matchers'
@@ -148,7 +148,7 @@ OmniAuth.config.test_mode = true
 
 Capybara.register_driver :chrome_headless do |app|
   args = %w[no-sandbox headless window-size=1400,1400]
-  options = { 'goog:chromeOptions' => { 'args': args } }
+  options = { 'goog:chromeOptions' => { args: args } }
   chrome_capabilities = ::Selenium::WebDriver::Remote::Capabilities.chrome(options)
   Capybara::Selenium::Driver.new(app,
                                  browser: :remote,
@@ -158,7 +158,7 @@ end
 
 Capybara.register_driver :chrome_visible do |app|
   args = %w[no-sandbox window-size=1400,1400]
-  options = { 'goog:chromeOptions' => { 'args': args } }
+  options = { 'goog:chromeOptions' => { args: args } }
   chrome_capabilities = ::Selenium::WebDriver::Remote::Capabilities.chrome(options)
   Capybara::Selenium::Driver.new(app,
                                  browser: :remote,

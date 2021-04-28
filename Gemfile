@@ -29,6 +29,10 @@ gem 'factory_bot', '~> 6.1.0'
 # https://github.com/faker-ruby/faker
 gem 'faker', '~> 2.17.0'
 
+# A Ruby gem to transform HTML into PDFs, PNGs or JPEGs using Google Puppeteer/Chromium
+# https://github.com/Studiosity/grover
+gem 'grover', '~> 0.14.2'
+
 # HTML Abstraction Markup Language - A Markup Haiku
 # https://github.com/haml/haml
 gem 'haml', '~> 5.2.1'
@@ -43,7 +47,7 @@ gem 'jsonapi-resources', '~> 0.10.4'
 
 # A ruby implementation of the RFC 7519 OAuth JSON Web Token (JWT) standard.
 # https://github.com/jwt/ruby-jwt
-gem 'jwt', '~> 2.2.2'
+gem 'jwt', '~> 2.2.3'
 
 # paginator for modern web app frameworks and ORMs.
 # https://github.com/kaminari/kaminari
@@ -77,6 +81,10 @@ gem 'pundit', '~> 2.1.0'
 # Create database-backed web applications using the MVC pattern.
 # https://github.com/rails/rails
 gem 'rails', '~> 6.1.3'
+
+# Object-based searching.
+# https://github.com/activerecord-hackery/ransack
+gem 'ransack', '~> 2.4.2'
 
 # A very fast key-value store to hold jobs until they are run.
 # https://github.com/redis/redis-rb
@@ -173,9 +181,8 @@ group :test do
   gem 'rspec-retry', '~> 0.6.2'
 
   # A browser automation framework and ecosystem.
-  # https://github.com/SeleniumHQ/selenium
-  # Use edge until v4.0.0 of this gem is released, for Ruby 3.0.0 compatability.
-  gem 'selenium-webdriver', github: 'SeleniumHQ/selenium', ref: '8e5a9ede90137c048715125a14be3c25c08a51e7'
+  # https://github.com/SeleniumHQ/selenium/tree/trunk/rb
+  gem 'selenium-webdriver', '4.0.0.beta3'
 
   # Simple one-liner tests for common Rails functionality.
   # https://github.com/thoughtbot/shoulda-matchers

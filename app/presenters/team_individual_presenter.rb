@@ -4,6 +4,7 @@ require 'concerns/uses_filters'
 
 class TeamIndividualPresenter
   attr_reader :user, :user_group_team, :user_groups
+  attr_accessor :context
 
   include UsesFilters
 

@@ -2,4 +2,8 @@
   thead {
     background-color: $grey-50;
   }
+  .small-cell {
+    width: 1px;
+    white-space: nowrap;
+  }
 }

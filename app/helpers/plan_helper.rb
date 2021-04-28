@@ -35,4 +35,8 @@ module PlanHelper
 
     User.order(Arel.sql("#{lead_ids_partial_query} last_name ASC, first_name ASC")).map { |t| [t.name, t.id] }
   end
+
+  def plan_pdf_filename(plan)
+    "job_plan_#{plan.user.name.downcase.gsub(/\s+/, '_')}.pdf"
+  end
 end
