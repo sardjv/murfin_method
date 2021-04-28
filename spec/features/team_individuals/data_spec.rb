@@ -224,6 +224,10 @@ describe 'Team Individual Data', type: :feature, js: true, freeze: Time.zone.loc
         end
 
         within '#team-individual-table' do
+          expect(page).not_to have_content 'Dec 23th - 29th'
+        end
+
+        within '#team-individual-table' do
           within first('.team-individual-table-week') do
             expect(page).to have_content 'Dec 30th, 2019 - Jan 5th, 2020'
           end

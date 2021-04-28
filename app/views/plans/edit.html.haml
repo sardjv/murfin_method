@@ -44,7 +44,8 @@
               %tr
                 %td{ colspan: 3 }
                 %td#plan-total-time-worked-per-week.small{ colspan: 2 }
-                  = t('plans.total_time_worked_per_week', total: duration_in_words(plan_total_time_worked_per_week(@plan), :short)) if @plan.activities.any?
+                  - if @plan.activities.any?
+                    = t('plans.total_time_worked_per_week', total: duration_in_words(plan_total_time_worked_per_week(@plan), :short))
 
           - if policy(@plan).update?
             %div
