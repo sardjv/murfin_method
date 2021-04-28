@@ -10,13 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Ability to PDF Job Plans
-- Admins can search Users, TimeRanges and JobPlans
+- Search on admin Users, TimeRanges and JobPlans
 - Admins can create a user Job Plan
 
 ### Changed
 
-- Filter logic - AND for tags with different TagTypes, OR within a TagType e.g. if select DCC and Outcomed on RiO -> Yes, then only want DCC activities that have Outcomed on RiO Yes (not all DCC regardless of Outcomed on RiO tag and all Outcomed on RiO -> Yes regardless of category tag)
-All DCC and Outcomed on RiO -> Yes
+- Filter logic:
+AND for tags with different TagTypes e.g. if select DCC and Outcomed on RiO -> Yes, then get DCC activities that are outcomed on RiO (previously this was all DCC regardless of Outcomed on RiO tag and all Outcomed on RiO -> Yes regardless of category tag).
+OR within a TagType e.g. if select DCC and RiO Type -> Attended and RiO Type -> DNA, then want all DCC activities that were either attended or that were DNA.
 
 ## [0.11.1] - 2021-04-23
 
