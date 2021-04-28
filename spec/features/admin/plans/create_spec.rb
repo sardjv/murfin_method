@@ -28,7 +28,7 @@ describe 'Admin creates plan on behalf of a user', type: :feature, js: true do
       bootstrap_select user2.name, from: 'User'
     end
 
-    expect { click_button 'Save' }.to change { Plan.count }.by(1)
+    click_button 'Save'
 
     expect(page).to have_content(I18n.t('notice.successfully.created', model_name: Plan.model_name.human))
     expect(plan.user_id).to eq(user2.id)
