@@ -3,7 +3,7 @@ import actionIcon from '!!svg-url-loader!../../../node_modules/bootstrap-icons/i
 import infoIcon from '!!svg-url-loader!../../../node_modules/bootstrap-icons/icons/info-square.svg';
 import resolvedIcon from '!!svg-url-loader!../../../node_modules/bootstrap-icons/icons/clipboard-check.svg';
 
-window.addEventListener('turbolinks:load', () => {
+window.addEventListener('turbo:load', () => {
   if (document.getElementById('line-graph')) {
     window.addEventListener('prev', (event) => {
       Note.getEditNote(Note.getPrevNoteId(event.detail.note_id))

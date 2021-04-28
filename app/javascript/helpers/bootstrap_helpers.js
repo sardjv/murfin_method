@@ -1,14 +1,16 @@
-// Initial render.
-window.addEventListener('turbolinks:load', () => {
-  styleSelects();
-  styleDurations();
-});
+// Initial render
+window.addEventListener('turbo:load', () => bootstrapHelpers() )
+
+// After e.g. form submit fails
+window.addEventListener('turbo:render', () => bootstrapHelpers() )
 
 // After nested form added.
-$(document).on('cocoon:after-insert', () => {
-  styleSelects();
-  styleDurations();
-});
+$(document).on('cocoon:after-insert', () => bootstrapHelpers() )
+
+function bootstrapHelpers() {
+  styleSelects()
+  styleDurations()
+}
 
 function styleSelects() {
   $('select').not('[multiple="multiple"]').not('[data-use-select2]').selectpicker({ width: 'fit', liveSearch: true });

@@ -41,9 +41,9 @@ const useFlatpickr = () => {
   flatpickr(useFlatpickrSelector, flatpickrConfig)
 }
 
-document.addEventListener('turbolinks:load', () => useFlatpickr() )
+document.addEventListener('turbo:load', () => useFlatpickr() )
 
-document.addEventListener('turbolinks:before-cache', () => {
+document.addEventListener('turbo:before-cache', () => {
   $(useFlatpickrSelector).each(function() {
     $(this).flatpickr().destroy()
   })

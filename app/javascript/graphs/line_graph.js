@@ -7,7 +7,7 @@ import minutesHumanized from '../shared/minutes_humanized'
 import { format, addDays } from 'date-fns'
 import { pickBy } from 'lodash'
 
-window.addEventListener('turbolinks:load', () => {
+window.addEventListener('turbo:load', () => {
   const lineGraphId = 'line-graph'
   const context = document.getElementById(lineGraphId)
 
