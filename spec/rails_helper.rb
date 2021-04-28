@@ -176,6 +176,6 @@ Capybara.configure do |c|
   # Set c.javascript_driver = :chrome_visible to render on a visible copy of Chrome.
   # You can access it on a mac using `open vnc://0.0.0.0:5900`. The password is 'secret'.
   # Run a test with js:true to watch it play out, and use binding.pry to pause and interact.
-  # c.javascript_driver = :chrome_headless
-  c.javascript_driver = :chrome_visible
+  c.javascript_driver = :chrome_headless
+  # c.javascript_driver = :chrome_visible
 end

@@ -35,16 +35,12 @@ describe 'Team Individual Data', type: :feature, js: true, freeze: Time.zone.loc
 
   before do
     log_in admin
-    visit admin_team_individual_path(user_group, user)
-
-    within '.thin-tabs' do
-      click_link 'Data'
-    end
-
-    expect(page).to have_css 'a.nav-link.active', text: 'Data'
+    visit data_admin_team_individual_path(user_group, user)
   end
 
-  it { expect(current_path).to eql data_admin_team_individual_path(user_group, user) }
+  it 'has active tab set' do
+    expect(page).to have_css 'a.nav-link.active', text: 'Data'
+  end
 
   it 'shows boxes with stats' do
     within '#team-individual-box-average-planned-per-week' do
@@ -229,6 +225,8 @@ describe 'Team Individual Data', type: :feature, js: true, freeze: Time.zone.loc
         end
 
         within '#team-individual-table' do
+          expect(page).not_to have_content 'Dec 23rd - 29th'
+
           within first('.team-individual-table-week') do
             expect(page).to have_content 'Dec 30th, 2019 - Jan 5th, 2020'
           end
