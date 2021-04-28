@@ -122,16 +122,14 @@ class TeamStatsPresenter
   # Up to 50% of users: index_time_range_team_stats
   # >50% of users: index_time_ranges_on_time_range_type_id
   def actual_time_ranges
-    scope = TimeRange.select(:time_range_type_id, :user_id, :start_time, :end_time, :value, :updated_at)
-                     .where(time_range_type_id: @actual_id, user_id: @user_ids)
-
-    scope = scope.joins(:tags).where(tags: { id: @filter_tag_ids }) if @filter_tag_ids.present?
+    scope = TimeRange.where(time_range_type_id: @actual_id, user_id: @user_ids)
+    scope = scope.filter_by_tag_types_and_tags(@filter_tag_ids) if @filter_tag_ids.present?
 
     scope.where('start_time BETWEEN ? AND ?', @filter_start_time, @filter_end_time).or(
       scope.where('end_time BETWEEN ? AND ?', @filter_start_time, @filter_end_time)
     ).or(
       scope.where('start_time <= ? AND end_time >= ?', @filter_start_time, @filter_end_time)
-    ).distinct # .to_a
+    ).distinct
   end
 
   def weeks
@@ -170,7 +168,7 @@ class TeamStatsPresenter
                     .distinct
                     .preload(:plan)
 
-    scope = scope.joins(:tags).where(tags: { id: @filter_tag_ids }).preload(:tags) if @filter_tag_ids.present?
+    scope = scope.filter_by_tag_types_and_tags(@filter_tag_ids) if @filter_tag_ids.present?
 
     scope.flat_map(&:to_time_ranges)
   end
