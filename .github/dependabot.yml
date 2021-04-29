@@ -1,0 +1,31 @@
+version: 2
+updates:
+- package-ecosystem: bundler
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: mimemagic
+    versions:
+    - 0.4.3
+  - dependency-name: rspec-rails
+    versions:
+    - 4.1.0
+  - dependency-name: database_cleaner-redis
+    versions:
+    - 2.0.0
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: chart.js
+    versions:
+    - 3.1.0
+    - 3.1.1
+  - dependency-name: date-fns
+    versions:
+    - 2.20.2
+    - 2.20.3
