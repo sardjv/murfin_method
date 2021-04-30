@@ -15,7 +15,7 @@ gem 'climate_control'
 
 # Devise is a flexible authentication solution for Rails based on Warden.
 # https://github.com/heartcombo/devise
-gem 'devise', '~> 4.7.3'
+gem 'devise', '~> 4.8.0'
 
 # Better distance of time in words for Rails.
 # https://github.com/radar/distance_of_time_in_words
