@@ -52,7 +52,7 @@ class ScheduleBuilder
 
     days = %w[monday tuesday wednesday thursday friday saturday sunday][0...number_of_days]
 
-    schedule = set_start_time(schedule: schedule, value: Time.zone.local(1, 1, 1, 9, 0))
+    schedule = set_start_time(schedule: schedule, value: schedule.start_time.change(hour: 9, min: 0))
     schedule = set_end_time(schedule: schedule, value: schedule.start_time + seconds_per_day.seconds)
     set_rules(schedule: schedule, value: [{ type: 'weekly', days: days }])
   end
