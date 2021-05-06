@@ -30,7 +30,7 @@ describe 'Admin downloads users csv', js: true do
         expect(page).to have_link 'Download', href: download_admin_users_path(format: :csv)
       end
 
-      expect(File.exists?(tmp_file_path))
+      expect(File.exist?(tmp_file_path))
     end
   end
 
