@@ -5,6 +5,10 @@ ruby '3.0.0'
 # https://github.com/bootstrap-ruby/bootstrap_form
 gem 'bootstrap_form', '~> 4.0'
 
+# CableReady completes the ActionCable story and expands the utility of web sockets in your Rails app
+# https://github.com/hopsoft/cable_ready
+gem 'cable_ready', '~> 4.5'
+
 # Dynamic nested forms using jQuery made easy.
 # https://github.com/nathanvda/cocoon
 gem 'cocoon', '~> 1.2.15'

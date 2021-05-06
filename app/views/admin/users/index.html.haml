@@ -1,13 +1,16 @@
 .container.my-4
   .row.mb-3
-    .col-9
+    .col-8
       = render 'shared/search_form',
                 search_field_key: :email_or_first_name_or_last_name_or_epr_uuid_cont,
                 placeholder_key: :users
-    .col-3
+    .col-4
       = link_to [:new, :admin, :user], class: 'btn btn-primary float-right' do
         = icon('plus')
         = t('actions.add', model_name: User.model_name.human.titleize)
+      = link_to generate_csv_admin_users_path, method: :post, class: 'btn btn-primary float-right mr-2' do
+        = icon('gear')
+        = t('actions.generate_csv')
   .row
     .col-12
       .table-responsive

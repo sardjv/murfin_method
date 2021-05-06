@@ -4,8 +4,49 @@ class Admin::UsersController < ApplicationController
   def index
     authorize :user
 
-    @q = User.order(last_name: :asc).ransack(params[:q])
-    @users = @q.result(distinct: true).page(params[:page])
+    respond_to do |format|
+      format.html do
+        @q = User.order(last_name: :asc).ransack(params[:q])
+        @users = @q.result(distinct: true).page(params[:page])
+      end
+      format.csv do # test only
+        send_data CsvExport::Users.call(users: User.order(last_name: :asc)), filename: "users_#{Date.current}.csv"
+      end
+    end
+  end
+
+  include CableReady::Broadcaster
+
+  def generate_csv
+    authorize :user, :download?
+
+    FlashMessageBroadcastJob.perform_now(
+      current_user_id: current_user.id,
+      message: t('download.queued', file_type: 'CSV'),
+      extra_data: { message_type: 'download' }
+    )
+
+    GenerateUsersCsvJob.perform_later(current_user_id: current_user.id)
+  end
+
+  def download
+    authorize :user
+
+    respond_to do |format|
+      format.csv do
+        tmp_filename = "users_#{Date.current}_#{current_user.id}.csv"
+        filename = "users_#{Date.current}.csv"
+        path = Rails.root.join('tmp', tmp_filename)
+        begin
+          file = File.open(path, 'r')
+          csv = file.read
+          send_data csv, filename: filename, type: 'text/csv', disposition: 'attachment'
+        ensure
+          # file.close unless file.closed?
+          File.delete(file) if File.exist? file
+        end
+      end
+    end
   end
 
   def new

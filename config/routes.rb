@@ -1,6 +1,8 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  mount ActionCable.server => '/cable'
+
   root to: 'pages#home'
 
   get 'auth/:provider/callback' => 'auth0#callback'
@@ -28,7 +30,8 @@ Rails.application.routes.draw do
   mount Rswag::Ui::Engine => 'api_docs'
   mount Rswag::Api::Engine => 'api_docs'
 
-  constraints ->(request) { request.session[:user_id].present? } do
+  # https://github.com/mperham/sidekiq/wiki/Devise
+  authenticate :user, ->(user) { user.admin? } do
     mount Sidekiq::Web => '/sidekiq'
   end
 
@@ -69,7 +72,10 @@ Rails.application.routes.draw do
       end
       get :individuals, on: :member
     end
-    resources :users, except: :show
+    resources :users, except: :show do
+      post :generate_csv, on: :collection
+      get :download, on: :collection
+    end
     resources :plans, only: :index
   end
 

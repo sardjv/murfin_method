@@ -6,6 +6,8 @@ require('turbolinks').start()
 require('@nathanvda/cocoon')
 require('date-fns')
 
+require('channels')
+
 import 'bootstrap'
 import 'bootstrap-select'
 
