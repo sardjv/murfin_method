@@ -4,7 +4,7 @@ class FlashMessageBroadcastJob < ApplicationJob
   queue_as :default
 
   include CableReady::Broadcaster
-  include ActionView::Helpers::TagHelper # for content_tag
+  include ActionView::Helpers::TagHelper # for tag
 
   FLASH_CONTAINER_SELECTOR = '#flash-container'
   CHANNEL_NAME_BASE = 'flash_messages'
