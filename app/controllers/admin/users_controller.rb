@@ -43,7 +43,7 @@ class Admin::UsersController < ApplicationController
           send_data csv, filename: filename, type: 'text/csv', disposition: 'attachment'
         ensure
           # file.close unless file.closed?
-          File.delete(file) if File.exist? file
+          File.delete(file) if file && File.exist?(file)
         end
       end
     end
