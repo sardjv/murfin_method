@@ -17,9 +17,13 @@ describe 'Admin Dashboard', type: :feature do
   end
 
   it 'has user and job plan count' do
-    expect(page).to have_text '2'
-    expect(page).to have_text 'Users'
-    expect(page).to have_text '1'
-    expect(page).to have_text 'Plan'
+    within('#box-users') do
+      expect(page).to have_text '2'
+      expect(page).to have_text 'Users'
+    end
+    within('#box-job-plans') do
+      expect(page).to have_text '1'
+      expect(page).to have_text 'Plan'
+    end
   end
 end
