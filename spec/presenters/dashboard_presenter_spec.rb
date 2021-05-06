@@ -1,6 +1,6 @@
-describe DashboardPresenter, freeze: Time.zone.local(2020, 6, 30, 23, 59, 59) do
+describe TeamDashboardPresenter, freeze: Time.zone.local(2020, 6, 30, 23, 59, 59) do
   subject do
-    DashboardPresenter.new(
+    TeamDashboardPresenter.new(
       params: presenter_params
     )
   end
@@ -49,19 +49,6 @@ describe DashboardPresenter, freeze: Time.zone.local(2020, 6, 30, 23, 59, 59) do
   end
 
   describe 'to_json' do
-    context 'with :admin data' do
-      it 'returns a multi-line graph' do
-        data = JSON.parse(
-          subject.to_json(
-            graphs: [{ type: :line_graph, data: :admin_data }]
-          )
-        )['line_graph']['data']
-
-        expect(data.count).to eq(4)
-        expect(data.flatten.flat_map(&:keys).uniq).to match_array(%w[name value notes])
-      end
-    end
-
     context 'with :team data' do
       context 'parcentage delivered' do
         let(:presenter_params) { default_presenter_params.merge({ graph_kind: 'percentage_delivered' }) }
@@ -91,8 +78,7 @@ describe DashboardPresenter, freeze: Time.zone.local(2020, 6, 30, 23, 59, 59) do
 
       context 'planned vs actual' do
         let(:presenter_params) { default_presenter_params.merge({ graph_kind: 'planned_vs_actual' }) }
-        let(:dataset_labels) { [Faker::Lorem.sentence, Faker::Lorem.sentence] }
-        let(:graphs_params) { [{ type: :line_graph, data: :team_data, units: 'minutes', dataset_labels: dataset_labels }] }
+        let(:graphs_params) { [{ type: :line_graph, data: :team_data }] }
 
         it 'returns a line graph' do
           expect(subject.to_json(graphs: graphs_params)).to eq(
@@ -123,7 +109,7 @@ describe DashboardPresenter, freeze: Time.zone.local(2020, 6, 30, 23, 59, 59) do
                   ]
                 ],
                 units: 'minutes',
-                dataset_labels: dataset_labels
+                dataset_labels: ['Average weekly planned per month', 'Average weekly actual per month']
               }
             }.to_json
           )
@@ -136,7 +122,7 @@ describe DashboardPresenter, freeze: Time.zone.local(2020, 6, 30, 23, 59, 59) do
       it 'returns a bar chart' do
         expect(
           subject.to_json(
-            graphs: [{ type: :bar_chart, data: :individual_data, units: '%' }]
+            graphs: [{ type: :bar_chart, data: :individual_data }]
           )
         ).to eq(
           {
@@ -146,8 +132,7 @@ describe DashboardPresenter, freeze: Time.zone.local(2020, 6, 30, 23, 59, 59) do
                   name: user.name,
                   value: 47
                 }
-              ],
-              units: '%'
+              ]
             }
           }.to_json
         )

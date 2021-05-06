@@ -16,15 +16,12 @@ class Activity < ApplicationRecord
 
   belongs_to :plan, touch: true
 
+  validates :plan, presence: true
   validates :schedule, presence: true
   validate :validate_end_time_after_start_time
+  before_validation :build_schedule
 
-  def seconds_per_week=(seconds)
-    self.schedule = ScheduleBuilder.call(
-      schedule: schedule,
-      minutes_per_week: seconds.to_f / 60
-    )
-  end
+  attr_writer :seconds_per_week
 
   def seconds_per_week
     return unless schedule
@@ -83,14 +80,20 @@ class Activity < ApplicationRecord
     "Activity#to_time_ranges##{id}##{updated_at.to_f}"
   end
 
-  def time_value(hash)
-    # Store time values on the same day so the duration of each occurrence is correct.
-    Time.zone.local(1, 1, 1, hash[4], hash[5])
-  end
-
   def validate_end_time_after_start_time
     return unless start_time && end_time && end_time <= start_time
 
     errors.add :duration, I18n.t('errors.activity.duration.missing')
+  end
+
+  def build_schedule
+    return unless plan
+
+    activity_start_time = plan.start_date.beginning_of_day
+    self.schedule = ScheduleBuilder.call(
+      start_time: activity_start_time,
+      schedule: schedule,
+      minutes_per_week: @seconds_per_week.to_f / 60
+    )
   end
 end

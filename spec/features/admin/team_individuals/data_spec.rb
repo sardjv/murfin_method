@@ -47,17 +47,17 @@ describe 'Team Individual Data', type: :feature, js: true, freeze: Time.zone.loc
   it { expect(current_path).to eql data_admin_team_individual_path(user_group, user) }
 
   it 'shows boxes with stats' do
-    within '#team-individual-box-average-planned-per-week' do
+    within '#box-average-planned-per-week' do
       expect(page).to have_content '4h'
       expect(page).to have_content 'Average planned per week'
     end
 
-    within '#team-individual-box-average-actual-per-week' do
+    within '#box-average-actual-per-week' do
       expect(page).to have_content '8m'
       expect(page).to have_content 'Average actual per week'
     end
 
-    within '#team-individual-box-average-percentage-per-week' do
+    within '#box-average-percentage-per-week' do
       expect(page).to have_content '3%'
       expect(page).to have_content 'Average percentage per week'
     end

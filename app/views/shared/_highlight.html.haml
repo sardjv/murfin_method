@@ -1,4 +1,4 @@
-.card.mt-2{ id: ("team-individual-box-#{label.downcase.downcase.gsub(/\s+/, '-')}" if label.present?) }
+.card.mt-2{ id: ("box-#{label.downcase.downcase.gsub(/\s+/, '-')}" if label.present?) }
   .card-body.highlight
     %div{ class: "card-icon #{colour}" }= icon(icon, width: '1em')
     %h2= value
