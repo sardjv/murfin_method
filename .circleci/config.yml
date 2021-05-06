@@ -43,8 +43,8 @@ jobs:
       DB_DATABASE: circle_ci
       DB_USERNAME: root
       DB_HOST: "127.0.0.1"
-      REDIS_PORT: 6579
-      REDIS_PASSWORD: 'secret'
+      REDIS_PORT: '6579'
+      REDIS_PASSWORD: ''
       HEADLESS_CHROME_URL: http://localhost:4444/wd/hub
       CAPYBARA_APP_HOST: http://localhost:3001
       SPEC_RETRIES: 3
