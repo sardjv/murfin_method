@@ -24,9 +24,11 @@ describe 'Admin downloads users csv', js: true do
       click_link 'Generate CSV'
 
       expect(page).not_to have_css '.alert-info', text: queued_msg
+      page.save_screenshot
+      expect(page).to have_css '.alert-success', text: ready_msg
 
       within '.alert-success' do
-        expect(page).to have_content ready_msg
+        # expect(page).to have_content ready_msg
         expect(page).to have_link 'Download', href: download_admin_users_path(format: :csv)
       end
 
