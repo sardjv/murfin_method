@@ -37,7 +37,9 @@ window.addEventListener('turbolinks:load', () => {
       }
     })
 
-    drawLineChart(context, current_graph_kind, current_time_scope)
+    // first page load
+    if (global.chart) { global.chart.destroy() }
+    global.chart = line_graph(context, lineChartData.line_chart, { graph_kind: current_graph_kind, time_scope: current_time_scope })
   }
 })
 
@@ -53,14 +55,6 @@ function drawLineChart(context, graph_kind, time_scope) {
     success: function(data) {
       if (global.chart) { global.chart.destroy() }
       global.chart = line_graph(context, data.line_graph, { graph_kind: graph_kind, time_scope: time_scope })
-
-      if(data.average_delivery_percent !== undefined) {
-        $('#team-dash-average-delivery-percent').html(`${data.average_delivery_percent}%`)
-      }
-
-      if(data.members_under_delivered_percent !== undefined) {
-        $('#team-dash-members-under-delivered-percent').html(data.members_under_delivered_percent)
-      }
     }
   })
 }

@@ -46,17 +46,17 @@ describe 'User Data', type: :feature, js: true, freeze: Time.zone.local(2021, 2,
   it { expect(page).to have_css 'a.nav-link.active', text: 'Data' }
 
   it 'shows boxes with stats' do
-    within '#team-individual-box-average-planned-per-week' do
+    within '#box-average-planned-per-week' do
       expect(page).to have_content '4h'
       expect(page).to have_content 'Average planned per week'
     end
 
-    within '#team-individual-box-average-actual-per-week' do
+    within '#box-average-actual-per-week' do
       expect(page).to have_content '8m'
       expect(page).to have_content 'Average actual per week'
     end
 
-    within '#team-individual-box-average-percentage-per-week' do
+    within '#box-average-percentage-per-week' do
       expect(page).to have_content '3%'
       expect(page).to have_content 'Average percentage per week'
     end

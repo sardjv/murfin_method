@@ -1,5 +1,5 @@
 describe ScheduleBuilder do
-  let(:start_time) { Time.current }
+  let(:start_time) { Time.zone.local(2021, 1, 1, 0, 0) }
   let(:end_time) { start_time + 1.hour }
   let(:rules) { [{ type: 'weekly', days: ['monday'] }] }
 
@@ -25,6 +25,7 @@ describe ScheduleBuilder do
   describe 'minutes_per_week' do
     subject do
       ScheduleBuilder.call(
+        start_time: start_time,
         minutes_per_week: minutes_per_week.to_s
       )
     end
@@ -34,8 +35,8 @@ describe ScheduleBuilder do
 
       it 'builds a schedule' do
         expect(subject).to be_an(IceCube::Schedule)
-        expect(subject.start_time).to eq(Time.zone.local(1, 1, 1, 9, 0))
-        expect(subject.end_time).to be_within(1.second).of(Time.zone.local(1, 1, 1, 9, 8, 34))
+        expect(subject.start_time).to eq(Time.zone.local(2021, 1, 1, 9, 0))
+        expect(subject.end_time).to be_within(1.second).of(Time.zone.local(2021, 1, 1, 9, 8, 34))
         expect(subject.rrules.count).to eq(1)
 
         subject.rrules.each do |rule|
@@ -48,8 +49,8 @@ describe ScheduleBuilder do
       let(:minutes_per_week) { 7 * 8 * 60 }
 
       it 'splits across the week' do
-        expect(subject.start_time).to eq(Time.zone.local(1, 1, 1, 9, 0))
-        expect(subject.end_time).to be_within(1.second).of(Time.zone.local(1, 1, 1, 17, 0))
+        expect(subject.start_time).to eq(Time.zone.local(2021, 1, 1, 9, 0))
+        expect(subject.end_time).to be_within(1.second).of(Time.zone.local(2021, 1, 1, 17, 0))
         expect(subject.rrules.count).to eq(1)
 
         subject.rrules.each do |rule|

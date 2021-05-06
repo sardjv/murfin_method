@@ -9,7 +9,7 @@
 #  updated_at :datetime         not null
 #
 describe Activity, type: :model do
-  subject { build(:activity) }
+  subject { build(:activity, plan: build(:plan, start_date: Date.parse('01/01/2020'))) }
 
   it { expect(subject).to be_valid }
 
@@ -27,8 +27,8 @@ describe Activity, type: :model do
 
       it 'spreads it across the week' do
         expect(subject.days).to eq(%w[monday tuesday wednesday thursday friday saturday sunday])
-        expect(subject.start_time).to eq(Time.zone.local(1, 1, 1, 9, 0))
-        expect(subject.end_time).to eq(Time.zone.local(1, 1, 1, 10, 0))
+        expect(subject.start_time).to eq(Time.zone.local(2020, 1, 1, 9, 0))
+        expect(subject.end_time).to eq(Time.zone.local(2020, 1, 1, 10, 0))
         expect(subject.seconds_per_week).to eq(seconds_per_week)
       end
 
