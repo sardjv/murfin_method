@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Admin downloads users csv', js: true do
   let!(:admin) { create :admin }
-  let!(:users) { create_list :user, 100 }
+  let!(:users) { create_list :user, 10 }
 
   let(:queued_msg) { 'Preparing CSV file for download. Please wait…' }
   let(:ready_msg) { 'Requested CSV file is ready.' }
@@ -25,12 +25,12 @@ describe 'Admin downloads users csv', js: true do
 
       # expect(page).to have_css '.alert-info', text: queued_msg
 
-      within '.alert-success' do
+      within '.alert-success', wait: 3 do
         expect(page).to have_content ready_msg
         expect(page).to have_link 'Download', href: download_admin_users_path(format: :csv)
       end
 
-      expect(File.exist?(tmp_file_path))
+      expect(File.exist?(tmp_file_path)).to eql true
     end
   end
 
@@ -39,7 +39,7 @@ describe 'Admin downloads users csv', js: true do
       GenerateUsersCsvJob.perform_now(current_user_id: admin.id)
     end
 
-    it 'downloads' do
+    it 'sends file to the browser' do
       visit download_admin_users_path(format: :csv)
 
       expect(page.response_headers['Content-Type']).to eql 'text/csv'
