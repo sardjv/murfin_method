@@ -18,7 +18,7 @@ module SecuredWithToken
   end
 
   def auth_token
-    decoded_token = JWT.decode http_token, ENV['JWT_SECRET'], true, { algorithm: ENV['JWT_ALGORITHM'] }
+    decoded_token = JWT.decode http_token, ENV.fetch('JWT_SECRET'), true, { algorithm: ENV.fetch('JWT_ALGORITHM') }
     api_user_id = decoded_token.first['data']
     api_timestamp = decoded_token.first['timestamp']
     ApiUser.find_by!(id: api_user_id, token_generated_at: api_timestamp)

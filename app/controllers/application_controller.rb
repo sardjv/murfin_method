@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
 
   def auth_method?(method_name)
-    ENV['AUTH_METHOD'] == method_name.to_s
+    ENV.fetch('AUTH_METHOD') == method_name.to_s
   end
   helper_method :auth_method?
 

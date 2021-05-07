@@ -64,9 +64,9 @@ class Admin::ApiUsersController < ApplicationController
 
   def generate_api_user_token(timestamp)
     payload = { data: @api_user.id, timestamp: timestamp }
-    jwt_secret = ENV['JWT_SECRET']
+    jwt_secret = ENV.fetch('JWT_SECRET')
     return unless jwt_secret
 
-    JWT.encode(payload, jwt_secret, ENV['JWT_ALGORITHM'])
+    JWT.encode(payload, jwt_secret, ENV.fetch('JWT_ALGORITHM'))
   end
 end
