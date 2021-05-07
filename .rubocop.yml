@@ -40,9 +40,6 @@ Rails/OutputSafety:
 Rails/SkipsModelValidations:
   Enabled: false
 
-Rails/EnvironmentVariableAccess:
-  Enabled: false
-
 Style/CaseLikeIf:
   Enabled: false
 

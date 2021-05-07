@@ -4,10 +4,10 @@ module LogoutHelper
   def logout_url
     request_params = {
       returnTo: root_url,
-      client_id: ENV.fetch('AUTH0_CLIENT_ID')
+      client_id: ENV['AUTH0_CLIENT_ID']
     }
 
-    URI::HTTPS.build(host: ENV.fetch('AUTH0_CLIENT_DOMAIN'),
+    URI::HTTPS.build(host: ENV['AUTH0_CLIENT_DOMAIN'],
                      path: '/v2/logout',
                      query: to_query(request_params))
   end
