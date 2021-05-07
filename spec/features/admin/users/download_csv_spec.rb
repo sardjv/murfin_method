@@ -25,7 +25,7 @@ describe 'Admin downloads users csv', js: true do
 
       expect(page).not_to have_css '.alert-info', text: queued_msg
       expect(File.exist?(tmp_file_path)).to eql true
-      # TODO fails on CircleCI
+      # TODO: fails on CircleCI
       # expect(page).to have_content ready_msg
 
       # within '.alert-success' do
