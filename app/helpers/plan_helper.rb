@@ -33,7 +33,7 @@ module PlanHelper
     lead_ids = Membership.where(user_group_id: user_group_ids, role: 'lead').pluck(:user_id).uniq || []
     lead_ids_partial_query = lead_ids.any? ? "(id IN (#{lead_ids.join(',')}) IS TRUE) DESC," : ''
 
-    User.order(Arel.sql("#{lead_ids_partial_query} last_name ASC, first_name ASC")).map { |t| [t.name, t.id] }
+    User.order(Arel.sql("#{lead_ids_partial_query} last_name ASC, first_name ASC")).collect { |u| [u.name, u.id] }
   end
 
   def plan_pdf_filename(plan)
