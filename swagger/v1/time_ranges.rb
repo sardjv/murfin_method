@@ -20,7 +20,8 @@ module Swagger
           },
           time_range_attributes_with_user_epr_uuid: {
             type: 'object',
-            properties: time_range_properties.merge({ user_epr_uuid: { type: 'string', example: '01234567890', 'x-nullable': false } })
+            properties: time_range_properties.merge({ user_epr_uuid: { type: 'string', required: false, example: '01234567890',
+                                                                       'x-nullable': false } })
           },
           time_ranges_response: {
             type: 'object',

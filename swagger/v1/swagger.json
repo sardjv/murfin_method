@@ -49,7 +49,7 @@
             }
           },
           "400": {
-            "description": "Bad request",
+            "description": "Error: Bad Request",
             "schema": {
               "$ref": "#/definitions/error_400"
             }
@@ -58,6 +58,12 @@
             "description": "Invalid request",
             "schema": {
               "$ref": "#/definitions/error_422"
+            }
+          },
+          "404": {
+            "description": "Record not found",
+            "schema": {
+              "$ref": "#/definitions/error_404"
             }
           }
         }
@@ -756,6 +762,12 @@
             "description": "Invalid request",
             "schema": {
               "$ref": "#/definitions/error_422"
+            }
+          },
+          "400": {
+            "description": "Error: Bad Request",
+            "schema": {
+              "$ref": "#/definitions/error_400"
             }
           }
         }
@@ -1538,17 +1550,49 @@
       "properties": {
         "user_id": {
           "type": "integer",
+          "required": false,
           "example": 1234,
           "x-nullable": false
         },
         "user_group_id": {
           "type": "integer",
+          "required": true,
           "example": 13,
           "x-nullable": false
         },
         "role": {
           "type": "string",
+          "required": true,
           "example": "member",
+          "x-nullable": false
+        }
+      }
+    },
+    "membership_attributes_with_user_epr_uuid": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "integer",
+          "required": false,
+          "example": 1234,
+          "x-nullable": false
+        },
+        "user_group_id": {
+          "type": "integer",
+          "required": true,
+          "example": 13,
+          "x-nullable": false
+        },
+        "role": {
+          "type": "string",
+          "required": true,
+          "example": "member",
+          "x-nullable": false
+        },
+        "user_epr_uuid": {
+          "type": "string",
+          "required": false,
+          "example": "01234567890",
           "x-nullable": false
         }
       }
@@ -1585,14 +1629,9 @@
               "example": "memberships"
             },
             "attributes": {
-              "$ref": "#/definitions/membership_attributes"
+              "$ref": "#/definitions/membership_attributes_with_user_epr_uuid"
             }
-          },
-          "required": [
-            "user_id",
-            "user_group_id",
-            "role"
-          ]
+          }
         }
       }
     },
@@ -2236,6 +2275,7 @@
         },
         "user_epr_uuid": {
           "type": "string",
+          "required": false,
           "example": "01234567890",
           "x-nullable": false
         }
