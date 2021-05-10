@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'User downloads plan', type: :feature, js: true do
+describe 'User previews job plan pdf', type: :feature, js: true do
   let(:user) { create :user }
 
   let!(:tag_type1) { create :tag_type, name: 'Category' }

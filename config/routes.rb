@@ -76,7 +76,10 @@ Rails.application.routes.draw do
       post :generate_csv, on: :collection
       get :download, on: :collection
     end
-    resources :plans, only: :index
+    resources :plans, only: :index do
+      post :generate_csv, on: :collection
+      get :download, on: :collection
+    end
   end
 
   resources :notes, except: :show

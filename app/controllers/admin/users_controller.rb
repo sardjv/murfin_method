@@ -9,7 +9,7 @@ class Admin::UsersController < ApplicationController
         @q = User.order(last_name: :asc).ransack(params[:q])
         @users = @q.result(distinct: true).page(params[:page])
       end
-      format.csv do # test only
+      format.csv do # debug only
         send_data CsvExport::Users.call(users: User.order(last_name: :asc)), filename: "users_#{Date.current}.csv"
       end
     end

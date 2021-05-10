@@ -1,5 +1,3 @@
-# require 'app/decorators/user_csv_decorator'
-
 class CsvExport::Users
   COLUMNS = %i[first_name last_name email epr_uuid admin user_group_names].freeze
 
@@ -11,8 +9,8 @@ class CsvExport::Users
     end
   end
 
-  def self.call(users)
-    new(users).call
+  def self.call(args)
+    new(args).call
   end
 
   def call
