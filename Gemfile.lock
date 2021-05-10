@@ -89,7 +89,7 @@ GEM
     concurrent-ruby (1.1.8)
     connection_pool (2.2.5)
     crass (1.0.6)
-    database_cleaner-active_record (2.0.0)
+    database_cleaner-active_record (2.0.1)
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
@@ -395,7 +395,7 @@ DEPENDENCIES
   capybara-select-2 (~> 0.5.1)
   climate_control
   cocoon (~> 1.2.15)
-  database_cleaner-active_record (~> 2.0.0)
+  database_cleaner-active_record (~> 2.0.1)
   devise (~> 4.8.0)
   dotiw (~> 5.3.1)
   factory_bot (~> 6.2.0)
