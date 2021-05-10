@@ -105,7 +105,7 @@ GEM
       activesupport
       i18n
     erubi (1.10.0)
-    factory_bot (6.1.0)
+    factory_bot (6.2.0)
       activesupport (>= 5.0.0)
     faker (2.17.0)
       i18n (>= 1.6, < 2)
@@ -398,7 +398,7 @@ DEPENDENCIES
   database_cleaner-active_record (~> 2.0.0)
   devise (~> 4.8.0)
   dotiw (~> 5.3.1)
-  factory_bot (~> 6.1.0)
+  factory_bot (~> 6.2.0)
   faker (~> 2.17.0)
   grover (~> 1.0.0)
   guard-rspec (~> 4.7.3)
