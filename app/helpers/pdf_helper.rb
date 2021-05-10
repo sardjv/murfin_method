@@ -2,7 +2,7 @@ module PdfHelper
   def pdf_stylesheet_pack_tag(source)
     options = { media: 'all', 'data-turbolinks-track': 'reload' }
 
-    options[:host] = "#{Webpacker.dev_server.host}:#{Webpacker.dev_server.port}" if pdf_user_full_url?
+    options[:host] = "#{Webpacker.dev_server.host}:#{Webpacker.dev_server.port}" if pdf_use_full_url?
 
     stylesheet_pack_tag(source, **options)
   end
@@ -10,13 +10,13 @@ module PdfHelper
   def pdf_javascript_pack_tag(source)
     options = { 'data-turbolinks-track': 'reload' }
 
-    options[:host] = "#{Webpacker.dev_server.host}:#{Webpacker.dev_server.port}" if pdf_user_full_url?
+    options[:host] = "#{Webpacker.dev_server.host}:#{Webpacker.dev_server.port}" if pdf_use_full_url?
 
     javascript_pack_tag(source, **options)
   end
 
   def pdf_image_url(source, _options = {})
-    if pdf_user_full_url?
+    if pdf_use_full_url?
       asset_pack_path(source, host: "#{Webpacker.dev_server.host}:#{Webpacker.dev_server.port}")
     else
       asset_pack_path(source)
@@ -25,7 +25,7 @@ module PdfHelper
 
   private
 
-  def pdf_user_full_url?
+  def pdf_use_full_url?
     Rails.env.development? && pdf? && !params[:layout]
   end
 end
