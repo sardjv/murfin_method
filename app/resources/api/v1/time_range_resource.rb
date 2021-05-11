@@ -6,7 +6,7 @@ class Api::V1::TimeRangeResource < JSONAPI::Resource
 
   has_many :tags, acts_as_set: true, exclude_links: :default
 
-  attr_writer :user_epr_uuid
+  attr_accessor :user_epr_uuid
 
   def minutes_worked
     @model.value.to_i
@@ -17,13 +17,18 @@ class Api::V1::TimeRangeResource < JSONAPI::Resource
   end
 
   before_save do
-    if !@model.user && @user_epr_uuid.present?
-      user = User.find_by(epr_uuid: @user_epr_uuid)
+    if user_id.present? && user_epr_uuid.present?
+      raise JSONAPI::Exceptions::ParameterNotAllowed.new(user_epr_uuid,
+                                                         detail: I18n.t('api.errors.ambiguous_user_identifier'))
+    end
+
+    if !@model.user && user_epr_uuid.present?
+      user = User.find_by(epr_uuid: user_epr_uuid)
 
       unless user
-        raise JSONAPI::Exceptions::RecordNotFound.new(@user_epr_uuid,
-                                                      detail: I18n.t('api.time_range_resource.errors.invalid_user_epr_uuid',
-                                                                     epr_uuid: @user_epr_uuid))
+        raise JSONAPI::Exceptions::RecordNotFound.new(user_epr_uuid,
+                                                      detail: I18n.t('api.errors.invalid_user_epr_uuid',
+                                                                     epr_uuid: user_epr_uuid))
       end
 
       @model.user = user
