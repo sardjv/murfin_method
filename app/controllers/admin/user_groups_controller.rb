@@ -20,7 +20,7 @@ class Admin::UserGroupsController < ApplicationController
       redirect_to admin_group_types_path, notice: notice('successfully.created')
     else
       flash.now.alert = notice('could_not_be.created')
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -31,7 +31,7 @@ class Admin::UserGroupsController < ApplicationController
       redirect_to admin_group_types_path, notice: notice('successfully.updated')
     else
       flash.now.alert = notice('could_not_be.updated')
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

@@ -1,6 +1,6 @@
 .container.my-4
   - if @presenter.user_group_team
-    = link_to '< Back to team', [:dashboard, (@presenter.context == :admin_teams ? :admin : nil), :team, { id: @presenter.user_group_team }]
+    = link_to '< Back to Team', [:dashboard, (@presenter.context == :admin_teams ? :admin : nil), :team, { id: @presenter.user_group_team }]
   = render 'info', presenter: @presenter
   = render 'tabs', presenter: @presenter
   = render 'shared/filters', presenter: @presenter

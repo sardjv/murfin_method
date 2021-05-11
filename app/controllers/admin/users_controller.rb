@@ -21,7 +21,7 @@ class Admin::UsersController < ApplicationController
       redirect_to admin_users_path, notice: notice('successfully.created')
     else
       flash.now.alert = notice('could_not_be.created')
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -32,7 +32,7 @@ class Admin::UsersController < ApplicationController
       redirect_to admin_users_path, notice: notice('successfully.updated')
     else
       flash.now.alert = notice('could_not_be.updated')
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

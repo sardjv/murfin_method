@@ -19,7 +19,7 @@ class Admin::ApiUsersController < ApplicationController
       redirect_to admin_api_user_path(@api_user), notice: notice('successfully.created')
     else
       flash.now.alert = notice('could_not_be.created')
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 

@@ -103,6 +103,10 @@ gem 'sidekiq', '~> 6.2.1'
 # https://github.com/rmm5t/strip_attributes
 gem 'strip_attributes', '~> 1.11.0'
 
+# About Use Turbo in your Ruby on Rails app
+# https://github.com/hotwired/turbo-rails
+gem 'turbo-rails', '~> 0.5.9'
+
 # Bundle zoneinfo files which are not included in Windows.
 # https://github.com/tzinfo/tzinfo-data
 gem 'tzinfo-data', '~> 1.2021.1'
