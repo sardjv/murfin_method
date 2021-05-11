@@ -21,6 +21,7 @@ describe 'Admin downloads users csv', js: true do
     end
 
     it 'shows flash messages about preparing and csv ready for download' do
+      pp "ENV['AUTH_METHOD']----", ENV['AUTH_METHOD']
       click_link 'Generate CSV'
 
       expect(page).to have_no_css '.alert-info'
