@@ -22,21 +22,14 @@ describe 'Admin downloads users csv', js: true do
 
     it 'shows flash messages about preparing and csv ready for download' do
       click_link 'Generate CSV'
-      #expect(GenerateUsersCsvJob).to receive(:perform_later).with({ current_user_id: admin.id })
-      page.save_screenshot
-      # within '.alert-info', wait: 3 do
-      #   expect(page).to have_content queued_msg
-      # end
-      #expect(page).not_to have_css '.alert-info', text: queued_msg
-      expect(page).to have_no_css '.alert-info'#, text: queued_msg
 
-      page.save_screenshot
-      #expect(File.exist?(tmp_file_path)).to eql true
+      expect(page).to have_no_css '.alert-info'
+
+      # expect(File.exist?(tmp_file_path)).to eql true
       # TODO: fails on CircleCI
-      within '.alert-success', wait: 3 do
+      within '.alert-success' do
         expect(page).to have_content ready_msg
         expect(page).to have_link 'Download', href: download_admin_users_path(format: :csv)
-        click_link 'Download'
       end
     end
   end
