@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Admin downloads users csv', js: true do
-  let!(:admin) { create :admin }
+  let!(:admin) { create :admin, id: 123 }
   let!(:users) { create_list :user, 10 }
 
   let(:queued_msg) { 'Preparing CSV file for download. Please wait…' }
@@ -20,17 +20,32 @@ describe 'Admin downloads users csv', js: true do
       visit admin_users_path
     end
 
-    it 'shows flash messages about preparing csv and csv ready' do
+    it 'test' do
       click_link 'Generate CSV'
 
-      expect(page).not_to have_css '.alert-info', text: queued_msg
-      expect(File.exist?(tmp_file_path)).to eql true
-      # TODO: fails on CircleCI
-      # expect(page).to have_content ready_msg
+      expect(page).to have_css '.alert-info', text: queued_msg
+      expect(page).to have_no_css '.alert-info', text: queued_msg
 
-      # within '.alert-success' do
-      #  expect(page).to have_link 'Download', href: download_admin_users_path(format: :csv)
-      # end
+      within '.alert-success' do
+        expect(page).to have_content ready_msg
+      end
+    end
+
+    it 'shows flash messages about preparing and csv ready for download' do
+      click_link 'Generate CSV'
+      #expect(GenerateUsersCsvJob).to receive(:perform_later).with({ current_user_id: admin.id })
+
+      expect(page).not_to have_css '.alert-info', text: queued_msg
+
+
+      #expect(File.exist?(tmp_file_path)).to eql true
+      # TODO: fails on CircleCI
+      within '.alert-success', wait: 5 do
+        expect(page).to have_content ready_msg
+
+        expect(page).to have_link 'Download', href: download_admin_users_path(format: :csv)
+        click_link 'Download'
+      end
     end
   end
 

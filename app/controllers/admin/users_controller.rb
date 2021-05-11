@@ -27,6 +27,8 @@ class Admin::UsersController < ApplicationController
     )
 
     GenerateUsersCsvJob.perform_later(current_user_id: current_user.id)
+
+    head :no_content
   end
 
   def download
