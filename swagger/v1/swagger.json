@@ -564,6 +564,12 @@
             "required": false
           },
           {
+            "name": "filter[name]",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
             "name": "filter[tag_type_id]",
             "in": "query",
             "type": "integer",
