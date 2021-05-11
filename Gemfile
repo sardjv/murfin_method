@@ -27,7 +27,7 @@ gem 'dotiw', '~> 5.3.1'
 
 # Fixtures replacement with a straightforward definition syntax.
 # https://github.com/thoughtbot/factory_bot
-gem 'factory_bot', '~> 6.1.0'
+gem 'factory_bot', '~> 6.2.0'
 
 # Generate fake data such as names, addresses, and phone numbers.
 # https://github.com/faker-ruby/faker
@@ -107,6 +107,10 @@ gem 'sidekiq', '~> 6.2.1'
 # https://github.com/rmm5t/strip_attributes
 gem 'strip_attributes', '~> 1.11.0'
 
+# About Use Turbo in your Ruby on Rails app
+# https://github.com/hotwired/turbo-rails
+gem 'turbo-rails', '~> 0.5.9'
+
 # Bundle zoneinfo files which are not included in Windows.
 # https://github.com/tzinfo/tzinfo-data
 gem 'tzinfo-data', '~> 1.2021.1'
@@ -170,7 +174,7 @@ group :test do
 
   # Strategies for cleaning databases between tests.
   # https://github.com/DatabaseCleaner/database_cleaner
-  gem 'database_cleaner-active_record', '~> 2.0.0'
+  gem 'database_cleaner-active_record', '~> 2.0.1'
 
   # RSpec results that your CI can read.
   # https://github.com/sj26/rspec_junit_formatter

@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', () => {
+$(document).on('turbo:load', () => {
   const filtersPredefinedRangesMenuSelector = '#filters-predefined-ranges-menu'
 
   $(`${filtersPredefinedRangesMenuSelector} a`).on('click', (e) => {

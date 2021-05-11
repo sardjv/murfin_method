@@ -22,7 +22,7 @@ class PlansController < ApplicationController
       redirect_to plans_path, notice: notice('successfully.created')
     else
       flash.now.alert = notice('could_not_be.created')
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -48,7 +48,7 @@ class PlansController < ApplicationController
       redirect_to edit_plan_path(@plan), notice: notice('successfully.updated')
     else
       flash.now.alert = notice('could_not_be.updated')
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

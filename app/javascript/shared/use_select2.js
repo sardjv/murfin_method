@@ -18,9 +18,9 @@ const select2FormatTagSelection = (tag_selection) => {
   return result
 }
 
-document.addEventListener('turbolinks:load', () => useSelect2() )
+document.addEventListener('turbo:load', () => useSelect2() )
 
-document.addEventListener('turbolinks:before-cache', () => {
+document.addEventListener('turbo:before-cache', () => {
   $(useSelect2Selector).each(function() {
     $(this).select2('destroy')
   })
