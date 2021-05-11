@@ -9,12 +9,8 @@ class TeamsController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        dataset_labels = t("graphs.#{graph_kind}.dataset_labels.#{graph_time_scope}", default: nil)
-        units = t("graphs.#{graph_kind}.units", default: '')
-
         render json: @presenter.to_json(
-          graphs: [{ type: :line_graph, data: :team_data, units: units, dataset_labels: dataset_labels }],
-          extras: %i[average_delivery_percent members_under_delivered_percent]
+          graphs: [{ type: :line_graph, data: :team_data }]
         )
       end
     end
@@ -34,10 +30,10 @@ class TeamsController < ApplicationController
   end
 
   def initialize_presenter
-    @presenter = DashboardPresenter.new(params: team_params.merge(user_ids: @user_group.user_ids,
-                                                                  time_scope: graph_time_scope,
-                                                                  graph_kind: graph_kind),
-                                        cookies: cookies)
+    @presenter = TeamDashboardPresenter.new(params: team_params.merge(user_ids: @user_group.user_ids,
+                                                                      time_scope: graph_time_scope,
+                                                                      graph_kind: graph_kind),
+                                            cookies: cookies)
   end
 
   def team_params

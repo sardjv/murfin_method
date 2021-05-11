@@ -27,8 +27,7 @@ describe 'User edits a plan', type: :feature, js: true do
 
   before do
     log_in current_user
-    visit plans_path
-    first('.bi-pencil').click
+    visit edit_plan_path(plan)
   end
 
   it 'updates plan' do
@@ -234,33 +233,27 @@ describe 'User edits a plan', type: :feature, js: true do
   end
 
   describe 'signoffs' do
-    let(:user1) { create :user, first_name: 'Artur', last_name: 'Lorem' } # lead of user' group
-    let(:user2) { create :user, first_name: 'Barbara', last_name: 'Ipsum' } # lead of user' group
-    let(:user3) { create :user, first_name: 'Anthony', last_name: 'Bar' } # lead but some other users' group
-    let(:user4) { create :user, first_name: 'Andy', last_name: 'Foo' } # member of user' group
-    let!(:user5) { create :user, first_name: 'Deborah', last_name: 'Lorem' } # some user, not member of any group
+    let!(:user1) { create :user }
+    let!(:user2) { create :user }
+    let!(:user3) { create :user }
 
-    let(:user_group1) { create :user_group, users: [current_user] }
-    let(:user_group2) { create :user_group }
-    let(:user_group3) { create :user_group, users: [current_user] }
-    let(:user_group4) { create :user_group, users: [current_user] }
+    let!(:user_group1) { create :user_group, users: [current_user, user1, user3] }
+    let!(:user_group2) { create :user_group, users: [current_user, user2] }
 
-    let!(:lead_membership1) { create :membership, user_group: user_group1, user: user1, role: 'lead' }
-    let!(:lead_membership2) { create :membership, user_group: user_group3, user: user2, role: 'lead' }
-    let!(:lead_membership3) { create :membership, user_group: user_group2, user: user3, role: 'lead' }
-    let!(:member_membership1) { create :membership, user_group: user_group4, user: user4, role: 'member' }
+    let(:signoffs_last_row_selector) { '.signoffs .nested-fields:last-of-type' }
 
-    it "shows user group' leads ordered first in the select options" do
-      within '#plan-signoffs' do
-        find('button.dropdown-toggle').click
+    it 'change signoff' do
+      visit edit_plan_path(plan)
+      click_link 'Add Signoff'
 
-        within '.dropdown-menu.inner.show' do
-          expect('Barbara').to appear_before 'Artur'
-          expect('Artur').to appear_before 'Anthony'
-          expect('Anthony').to appear_before 'Andy'
-          expect('Andy').to appear_before 'Deborah'
-        end
+      within signoffs_last_row_selector do
+        bootstrap_select user2.name, from: 'User'
+        page.save_screenshot
       end
+
+      click_button 'Save'
+
+      expect(plan.signoffs.pluck(:user_id)).to eql [current_user.id, user2.id]
     end
   end
 end

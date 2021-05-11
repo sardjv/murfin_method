@@ -15,7 +15,7 @@ gem 'climate_control'
 
 # Devise is a flexible authentication solution for Rails based on Warden.
 # https://github.com/heartcombo/devise
-gem 'devise', '~> 4.7.3'
+gem 'devise', '~> 4.8.0'
 
 # Better distance of time in words for Rails.
 # https://github.com/radar/distance_of_time_in_words
@@ -23,7 +23,7 @@ gem 'dotiw', '~> 5.3.1'
 
 # Fixtures replacement with a straightforward definition syntax.
 # https://github.com/thoughtbot/factory_bot
-gem 'factory_bot', '~> 6.1.0'
+gem 'factory_bot', '~> 6.2.0'
 
 # Generate fake data such as names, addresses, and phone numbers.
 # https://github.com/faker-ruby/faker
@@ -31,7 +31,7 @@ gem 'faker', '~> 2.17.0'
 
 # A Ruby gem to transform HTML into PDFs, PNGs or JPEGs using Google Puppeteer/Chromium
 # https://github.com/Studiosity/grover
-gem 'grover', '~> 0.14.2'
+gem 'grover', '~> 1.0.0'
 
 # HTML Abstraction Markup Language - A Markup Haiku
 # https://github.com/haml/haml
@@ -68,7 +68,7 @@ gem 'omniauth-rails_csrf_protection', '~> 0.1.2'
 # A Ruby parser - used by Rubocop, added here to force it to a newer version
 # for compatibility with Ruby 3.0.0.
 # https://github.com/whitequark/parser
-gem 'parser', '~> 3.0.1.0'
+gem 'parser', '~> 3.0.1.1'
 
 # A Ruby/Rack web server built for concurrency.
 # https://github.com/puma/puma
@@ -113,7 +113,7 @@ gem 'tzinfo-data', '~> 1.2021.1'
 
 # Use Webpack to manage app-like JavaScript modules in Rails.
 # https://github.com/rails/webpacker
-gem 'webpacker', '~> 5.2.1'
+gem 'webpacker', '~> 5.3.0'
 
 group :development, :test do
   # Call 'binding.pry' anywhere in your code to drop into a debugger console.
@@ -156,7 +156,7 @@ group :development do
 
   # A static code analyzer and formatter, based on the community style guide.
   # https://github.com/rubocop-hq/rubocop-rails
-  gem 'rubocop-rails', '~> 2.9.1'
+  gem 'rubocop-rails', '~> 2.10.1'
 end
 
 group :test do
@@ -170,7 +170,7 @@ group :test do
 
   # Strategies for cleaning databases between tests.
   # https://github.com/DatabaseCleaner/database_cleaner
-  gem 'database_cleaner-active_record', '~> 2.0.0'
+  gem 'database_cleaner-active_record', '~> 2.0.1'
 
   # RSpec results that your CI can read.
   # https://github.com/sj26/rspec_junit_formatter
