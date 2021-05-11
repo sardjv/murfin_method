@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Admin downloads users csv', js: true do
-  let!(:admin) { create :admin }
+  let!(:admin) { create :admin, id: 123 }
   let!(:users) { create_list :user, 10 }
 
   let(:queued_msg) { 'Preparing CSV file for download. Please wait…' }
@@ -26,11 +26,14 @@ describe 'Admin downloads users csv', js: true do
 
       expect(page).to have_no_css '.alert-info'
 
+      # expect(page).to have_content ready_msg
+
       # expect(File.exist?(tmp_file_path)).to eql true
       # TODO: fails on CircleCI
-      within '.alert-success' do
+      within '.alert-success', wait: 3 do
         expect(page).to have_content ready_msg
         expect(page).to have_link 'Download', href: download_admin_users_path(format: :csv)
+        expect(File.exist?(tmp_file_path)).to be true
       end
     end
   end
