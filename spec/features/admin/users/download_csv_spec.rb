@@ -4,12 +4,10 @@ describe 'Admin downloads users csv', js: true do
   let!(:admin) { create :admin }
   let!(:users) { create_list :user, 10 }
 
-  let(:queued_msg) { 'Preparing CSV file for download. Please wait…' }
-  let(:ready_msg) { 'Requested CSV file is ready.' }
+  let(:queued_msg) { 'Preparing users CSV file for download. Please wait…' }
+  let(:ready_msg) { 'Requested users CSV file is ready.' }
 
-  # let(:tmp_filename) { "users_#{Date.current}_#{admin.id}.csv" }
   let(:filename) { "users_#{Date.current}.csv" }
-  let(:tmp_file_path) { Rails.root.join('tmp', tmp_filename) }
 
   before do
     log_in admin
@@ -28,7 +26,6 @@ describe 'Admin downloads users csv', js: true do
       within '.alert-success', wait: 3 do
         expect(page).to have_content ready_msg
         expect(page).to have_link 'Download', href: download_admin_users_path(format: :csv)
-        # expect(File.exist?(tmp_file_path)).to be true
       end
     end
   end

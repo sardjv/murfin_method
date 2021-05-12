@@ -1,14 +1,13 @@
 require 'rails_helper'
 
-describe 'Admin downloads all job plans csv', js: true do
+describe 'Admin downloads plans csv', js: true do
   let!(:admin) { create :admin }
+  let!(:plans) { create_list :plan, 10 }
 
-  let(:queued_msg) { 'Preparing CSV file for download. Please wait…' }
-  let(:ready_msg) { 'Requested CSV file is ready.' }
+  let(:queued_msg) { 'Preparing plans CSV file for download. Please wait…' }
+  let(:ready_msg) { 'Requested plans CSV file is ready.' }
 
-  let(:tmp_filename) { "job_plans_#{Date.current}_#{admin.id}.csv" }
-  let(:filename) { "job_plans_#{Date.current}.csv" }
-  let(:tmp_file_path) { Rails.root.join('tmp', tmp_filename) }
+  let(:filename) { "plans_#{Date.current}.csv" }
 
   before do
     log_in admin
@@ -19,16 +18,14 @@ describe 'Admin downloads all job plans csv', js: true do
       visit admin_plans_path
     end
 
-    it 'shows flash messages about preparing csv and csv ready' do
+    it 'shows flash messages about preparing csv and file ready for download' do
       click_link 'Generate CSV'
 
-      expect(page).not_to have_css '.alert-info', text: queued_msg
-      expect(File.exist?(tmp_file_path)).to eql true
-      # TODO: fails on CircleCI
-      # expect(page).to have_content ready_msg
+      expect(page).to have_no_css '.alert-info'
 
-      within '.alert-success' do
-       expect(page).to have_link 'Download', href: download_admin_plans_path(format: :csv)
+      within '.alert-success', wait: 3 do
+        expect(page).to have_content ready_msg
+        expect(page).to have_link 'Download', href: download_admin_plans_path(format: :csv)
       end
     end
   end

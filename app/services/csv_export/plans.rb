@@ -1,6 +1,6 @@
 class CsvExport::Plans
   include TimeRangeHelper # for duration_in_words
-  BASE_COLUMNS = %i[first_name last_name job_plan_start_date job_plan_end_date job_plan_state job_plan_total_hours_per_week]
+  BASE_COLUMNS = %i[first_name last_name job_plan_start_date job_plan_end_date job_plan_state job_plan_total_hours_per_week].freeze
 
   attr_accessor :plans
 
@@ -14,7 +14,7 @@ class CsvExport::Plans
     new(args).call
   end
 
-  def call
+  def call # rubocop:disable Metrics/AbcSize
     CSV.generate do |csv|
       csv << prepare_headers
 

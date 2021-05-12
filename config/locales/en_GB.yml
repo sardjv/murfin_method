@@ -88,9 +88,9 @@ en:
       - month
       - year
   download:
-    queued: Preparing %{file_type} file for download. Please wait…
-    ready: Requested %{file_type} file is ready. %{link}
-    processing_error: Error when preparing %{file_type} file for download. Please try again.
+    queued: Preparing %{records_type} %{file_type} file for download. Please wait…
+    ready: Requested %{records_type} %{file_type} file is ready. %{link}
+    processing_error: Error when preparing %{records_type} %{file_type} file for download. Please try again.
   errors:
     activity:
       duration:

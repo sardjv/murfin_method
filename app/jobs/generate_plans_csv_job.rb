@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class GenerateUsersCsvJob < ApplicationJob
+class GeneratePlansCsvJob < ApplicationJob
   queue_as :default
 
   include CableReady::Broadcaster
@@ -14,8 +14,8 @@ class GenerateUsersCsvJob < ApplicationJob
 
     channel_name = "flash_messages:#{current_user_id}"
 
-    csv = CsvExport::Users.call(users: User.order(last_name: :asc))
-    path = Rails.root.join('tmp', "users_#{Date.current}_#{current_user_id}.csv")
+    csv = CsvExport::Plans.call(plans: Plan.order(updated_at: :desc))
+    path = Rails.root.join('tmp', "plans_#{Date.current}_#{current_user_id}.csv")
 
     begin
       file = File.open(path, 'w')
@@ -28,19 +28,19 @@ class GenerateUsersCsvJob < ApplicationJob
       cable_ready.broadcast
 
       # show flash message with download link
-      path = Rails.application.routes.url_helpers.download_admin_users_path(format: :csv)
+      path = Rails.application.routes.url_helpers.download_admin_plans_path(format: :csv)
       link_html = link_to I18n.t('actions.download'), path, data: { turbo: false }
 
       FlashMessageBroadcastJob.perform_now(
         current_user_id: current_user_id,
-        message: raw(I18n.t('download.ready', records_type: 'users', file_type: 'CSV', link: link_html)), # rubocop:disable Rails/OutputSafety
+        message: raw(I18n.t('download.ready', records_type: 'plans', file_type: 'CSV', link: link_html)), # rubocop:disable Rails/OutputSafety
         alert_type: 'success',
         extra_data: { message_type: 'download' }
       )
     rescue StandardError
       FlashMessageBroadcastJob.perform_now(
         current_user_id: current_user_id,
-        message: I18n.t('download.processing_error', records_type: 'users', file_type: 'CSV'),
+        message: I18n.t('download.processing_error', records_type: 'plans', file_type: 'CSV'),
         alert_type: 'danger',
         extra_data: { message_type: 'download' }
       )
