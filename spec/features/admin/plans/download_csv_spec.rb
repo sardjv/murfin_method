@@ -21,9 +21,7 @@ describe 'Admin downloads plans csv', js: true do
     it 'shows flash messages about preparing csv and file ready for download' do
       click_link 'Generate CSV'
 
-      if page.has_css?('.alert-info', wait: 0)
-        expect(page).to have_content queued_msg
-      end
+      expect(page).to have_content queued_msg if page.has_css?('.alert-info', wait: 0)
 
       expect(page).to have_no_css '.alert-info'
 

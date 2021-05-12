@@ -1,5 +1,4 @@
 class BaseService
-
   def initialize(args = {})
     args.each do |k, v|
       send "#{k}=", v
@@ -9,5 +8,4 @@ class BaseService
   def self.call(args)
     new(args).call
   end
-
 end
