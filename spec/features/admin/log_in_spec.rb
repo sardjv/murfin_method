@@ -11,7 +11,7 @@ describe 'Admin log in', type: :feature do
     end
 
     before do
-      log_in admin # TODO spec real log in using VCR
+      log_in admin # TODO: spec real log in using VCR
       visit admin_dashboard_path
     end
 

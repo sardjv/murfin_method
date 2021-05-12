@@ -12,13 +12,8 @@ class ApplicationCable::Connection < ActionCable::Connection::Base
   protected
 
   def find_verified_user
-    pp "----find ver user--cookies.signed[:user_id]", cookies.signed[:user_id]
     verified_user = User.find_by(id: cookies.signed[:user_id])
 
-    if verified_user # && cookies.signed['user.expires_at'] > Time.now
-      verified_user
-    else
-      reject_unauthorized_connection
-    end
+    verified_user || reject_unauthorized_connection
   end
 end
