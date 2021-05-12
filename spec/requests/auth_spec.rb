@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Auth', type: :request do
+  let!(:admin) { create :admin }
+
   context 'via oauth2' do
     around do |example|
       ClimateControl.modify AUTH_METHOD: 'oauth2' do
@@ -9,8 +11,6 @@ RSpec.describe 'Auth', type: :request do
     end
 
     describe 'GET admin_dashboard_path' do
-      let(:admin) { create :admin, first_name: 'John', last_name: 'Smith', email: 'john@example.com' }
-
       context 'when authenticated' do
         before do
           log_in(admin)
@@ -19,13 +19,6 @@ RSpec.describe 'Auth', type: :request do
         it 'returns http success' do
           get admin_dashboard_path
           expect(response).to have_http_status(:success)
-        end
-
-        it 'sets the user name and email' do
-          get admin_dashboard_path
-          expect(User.last.first_name).to eq('John')
-          expect(User.last.last_name).to eq('Smith')
-          expect(User.last.email).to eq('john@example.com')
         end
       end
 
@@ -46,8 +39,6 @@ RSpec.describe 'Auth', type: :request do
     end
 
     describe 'GET admin_dashboard_path' do
-      let(:admin) { create :admin }
-
       context 'when authenticated' do
         before do
           log_in(admin)

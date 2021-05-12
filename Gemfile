@@ -192,6 +192,10 @@ group :test do
   # https://github.com/SeleniumHQ/selenium/tree/trunk/rb
   gem 'selenium-webdriver', '4.0.0.beta3'
 
+  # Cookie manipulation for Capybara
+  # https://github.com/nruth/show_me_the_cookies
+  gem 'show_me_the_cookies', '~> 5.0.1'
+
   # Simple one-liner tests for common Rails functionality.
   # https://github.com/thoughtbot/shoulda-matchers
   gem 'shoulda-matchers', '~> 4.5.1'
