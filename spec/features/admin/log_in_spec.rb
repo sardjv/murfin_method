@@ -11,13 +11,16 @@ describe 'Admin log in', type: :feature do
     end
 
     before do
-      log_in admin
+      log_in admin # TODO spec real log in using VCR
+      visit admin_dashboard_path
     end
 
     it 'logs admin in' do
-      visit admin_dashboard_path
-
       expect(page).to have_content 'Admin dashboard'
+    end
+
+    it 'sets signed cookie' do
+      expect(get_me_the_cookie('user_id')).to be_present
     end
   end
 
@@ -41,21 +44,32 @@ describe 'Admin log in', type: :feature do
     end
 
     context 'valid email and password' do
-      it 'logs admin in' do
+      let(:success_message) { 'Signed in successfully.' }
+
+      before do
         within 'form' do
           fill_in 'Email', with: email
           fill_in 'Password', with: password
           click_button 'Log in'
         end
+      end
+
+      it 'logs admin in' do
         expect(current_path).to eql admin_dashboard_path
 
         within '.alert-info' do
-          expect(page).to have_content 'Signed in successfully.'
+          expect(page).to have_content success_message
         end
+      end
+
+      it 'sets signed cookie' do
+        expect(get_me_the_cookie('user_id')).to be_present
       end
     end
 
     context 'invalid password' do
+      let(:failure_message) { 'Invalid Email or password.' }
+
       it 'shows form error' do
         within 'form' do
           fill_in 'Email', with: email
@@ -64,7 +78,7 @@ describe 'Admin log in', type: :feature do
         end
 
         within '.alert-danger' do
-          expect(page).to have_content 'Invalid Email or password.'
+          expect(page).to have_content failure_message
         end
       end
     end
