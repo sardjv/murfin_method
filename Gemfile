@@ -27,7 +27,7 @@ gem 'dotiw', '~> 5.3.1'
 
 # Fixtures replacement with a straightforward definition syntax.
 # https://github.com/thoughtbot/factory_bot
-gem 'factory_bot', '~> 6.1.0'
+gem 'factory_bot', '~> 6.2.0'
 
 # Generate fake data such as names, addresses, and phone numbers.
 # https://github.com/faker-ruby/faker
@@ -76,7 +76,7 @@ gem 'parser', '~> 3.0.1.1'
 
 # A Ruby/Rack web server built for concurrency.
 # https://github.com/puma/puma
-gem 'puma', '~> 5.2.2'
+gem 'puma', '~> 5.3.0'
 
 # Minimal authorization through OO design and pure Ruby classes.
 # https://github.com/varvet/pundit
@@ -106,6 +106,10 @@ gem 'sidekiq', '~> 6.2.1'
 # Strips attributes of leading and trailing whitespace before validation.
 # https://github.com/rmm5t/strip_attributes
 gem 'strip_attributes', '~> 1.11.0'
+
+# About Use Turbo in your Ruby on Rails app
+# https://github.com/hotwired/turbo-rails
+gem 'turbo-rails', '~> 0.5.9'
 
 # Bundle zoneinfo files which are not included in Windows.
 # https://github.com/tzinfo/tzinfo-data
@@ -170,7 +174,7 @@ group :test do
 
   # Strategies for cleaning databases between tests.
   # https://github.com/DatabaseCleaner/database_cleaner
-  gem 'database_cleaner-active_record', '~> 2.0.0'
+  gem 'database_cleaner-active_record', '~> 2.0.1'
 
   # RSpec results that your CI can read.
   # https://github.com/sj26/rspec_junit_formatter
@@ -187,6 +191,10 @@ group :test do
   # A browser automation framework and ecosystem.
   # https://github.com/SeleniumHQ/selenium/tree/trunk/rb
   gem 'selenium-webdriver', '4.0.0.beta3'
+
+  # Cookie manipulation for Capybara
+  # https://github.com/nruth/show_me_the_cookies
+  gem 'show_me_the_cookies', '~> 5.0.1'
 
   # Simple one-liner tests for common Rails functionality.
   # https://github.com/thoughtbot/shoulda-matchers

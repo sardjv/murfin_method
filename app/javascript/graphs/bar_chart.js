@@ -4,7 +4,7 @@ import { API } from './api'
 import { MissingData } from './missing_data'
 import * as SCSSColours from '!!sass-variable-loader!../stylesheets/variables/colours.scss'
 
-window.addEventListener('turbolinks:load', () => {
+window.addEventListener('turbo:load', () => {
   const barChartId = 'bar-chart'
   const context = document.getElementById(barChartId)
 

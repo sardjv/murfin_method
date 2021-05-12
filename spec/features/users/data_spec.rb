@@ -36,13 +36,9 @@ describe 'User Data', type: :feature, js: true, freeze: Time.zone.local(2021, 2,
 
   before do
     log_in user
-    visit dashboard_path
-    within '.nav-tabs' do
-      click_link 'Data'
-    end
+    visit users_data_path
   end
 
-  it { expect(current_path).to eql users_data_path }
   it { expect(page).to have_css 'a.nav-link.active', text: 'Data' }
 
   it 'shows boxes with stats' do
@@ -162,6 +158,8 @@ describe 'User Data', type: :feature, js: true, freeze: Time.zone.local(2021, 2,
         end
 
         within '#team-individual-table' do
+          expect(page).not_to have_content 'Feb 24th - Mar 1st'
+
           within first('.team-individual-table-week') do
             expect(page).to have_content 'Nov 30th - Dec 6th'
           end
@@ -200,6 +198,8 @@ describe 'User Data', type: :feature, js: true, freeze: Time.zone.local(2021, 2,
         end
 
         within '#team-individual-table' do
+          expect(page).not_to have_content 'Dec 24th - Dec 29th'
+
           within first('.team-individual-table-week') do
             expect(page).to have_content 'Dec 30th, 2019 - Jan 5th, 2020'
           end

@@ -15,11 +15,12 @@ class Admin::GroupTypesController < ApplicationController
   def create
     @group_type = GroupType.new(group_type_params)
     authorize @group_type
+
     if @group_type.save
       redirect_to admin_group_types_path, notice: notice('successfully.created')
     else
-      flash.now.alert = notice('could_not_be.created')
-      render :edit
+      flash.now.notice = notice('could_not_be.created')
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -30,7 +31,7 @@ class Admin::GroupTypesController < ApplicationController
       redirect_to admin_group_types_path, notice: notice('successfully.updated')
     else
       flash.now.alert = notice('could_not_be.updated')
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

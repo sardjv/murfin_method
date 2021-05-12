@@ -1,7 +1,7 @@
-window.addEventListener('turbolinks:load', () => {
+window.addEventListener('turbo:load', () => {
   if(document.querySelector('.state-badge') !== null) {
     window.addEventListener('ajax:success', (event) => {
-      const [data, _status, xhr] = event.detail;
+      const [data, _status, xhr] = event.detail
 
       if (xhr.status == 200) {
         $('.state-badge').text(data.plan.state_badge.text)
@@ -10,7 +10,6 @@ window.addEventListener('turbolinks:load', () => {
         $(event.target).attr('href', data.signoff.button.href)
         $(event.target).attr('class', data.signoff.button.class)
       }
-
-    });
+    })
   }
-});
+})

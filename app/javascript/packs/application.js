@@ -1,8 +1,9 @@
 // jQuery is needed globally for JS views like 'app/views/notes/new.js.erb'.
-global.$ = jQuery;
+global.$ = jQuery
 
-require('@rails/ujs').start()
-require('turbolinks').start()
+require('@rails/ujs').start() // TODO remove remote true from forms and links
+require('@hotwired/turbo-rails')
+
 require('@nathanvda/cocoon')
 require('date-fns')
 
@@ -12,7 +13,7 @@ import 'bootstrap'
 import 'bootstrap-select'
 
 import '../stylesheets/application'
-import * as _ from 'lodash';
+import * as _ from 'lodash'
 
 import 'select2'
 import 'select2/dist/css/select2.css'

@@ -1,6 +1,6 @@
 module PdfHelper
   def pdf_stylesheet_pack_tag(source)
-    options = { media: 'all', 'data-turbolinks-track': 'reload' }
+    options = { media: 'all', 'data-turbo-track': 'reload' }
 
     options[:host] = "#{Webpacker.dev_server.host}:#{Webpacker.dev_server.port}" if pdf_use_full_url?
 
@@ -8,7 +8,7 @@ module PdfHelper
   end
 
   def pdf_javascript_pack_tag(source)
-    options = { 'data-turbolinks-track': 'reload' }
+    options = { 'data-turbo-track': 'reload' }
 
     options[:host] = "#{Webpacker.dev_server.host}:#{Webpacker.dev_server.port}" if pdf_use_full_url?
 

@@ -1,11 +1,11 @@
 %li.nav-item
-  - if auth_method?('oauth2')
+  - if auth_method?(:oauth2)
     - if user_authenticated?
-      = link_to auth_logout_path, class: 'nav-link p-3' do
+      = link_to auth_logout_path, class: 'nav-link p-3', data: { turbo: false } do
         = I18n.t('auth.log_out')
         = icon('arrow-right-square', class: 'mx-2', width: '2em')
     - else
-      = button_to "#{root_url}auth/auth0", method: :post, type: 'button', class: 'btn btn-primary' do
+      = button_to "#{root_url}auth/auth0", method: :post, type: 'button', class: 'btn btn-primary', data: { turbo: false } do
         = I18n.t('auth.log_in')
         = icon('arrow-right-square', class: 'm-2', width: '2em')
   - elsif user_signed_in?

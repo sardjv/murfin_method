@@ -12,7 +12,7 @@ describe 'User creates a plan', type: :feature, js: true do
   end
 
   it 'creates plan for the current_user' do
-    wait_for_ajax
+    # wait_for_ajax
     click_link I18n.t('actions.add', model_name: Activity.model_name.human.titleize)
     find_field(type: 'number', match: :first).set(hours_per_week)
 

@@ -28,6 +28,7 @@ describe Api::V1::TagResource, type: :request, swagger_doc: 'v1/swagger.json' do
       produces 'application/vnd.api+json'
       parameter name: 'page[size]', in: :query, type: :integer, required: false
       parameter name: 'page[number]', in: :query, type: :integer, required: false
+      parameter name: 'filter[name]', in: :query, type: :string, required: false
       parameter name: 'filter[tag_type_id]', in: :query, type: :integer, required: false
       parameter name: 'filter[parent_id]', in: :query, type: :integer, required: false
 
@@ -57,6 +58,15 @@ describe Api::V1::TagResource, type: :request, swagger_doc: 'v1/swagger.json' do
         end
 
         describe 'filters' do
+          context 'name' do
+            let(:'filter[name]') { tag_name2 }
+
+            run_test! do
+              expect(parsed_json_data.length).to eq(1)
+              expect(parsed_json_data.collect { |e| e['id'].to_i }).to eql [tag1a.id]
+            end
+          end
+
           context 'tag_type_id' do
             let(:'filter[tag_type_id]') { tag_type3.id }
 

@@ -8,16 +8,21 @@ class Auth0Controller < ApplicationController
     return redirect_to root_path, alert: I18n.t('notice.login_error') unless user_id
 
     session[:user_id] = user_id
+    cookies.signed[:user_id] = user_id
+
     redirect_to dashboard_path
   end
 
   def failure
     flash.notice = request.params['message']
+
     redirect_to root_path
   end
 
   def destroy
     reset_session
+    cookies.delete :user_id
+
     flash.notice = I18n.t('notice.logged_out')
     redirect_to logout_url.to_s
   end

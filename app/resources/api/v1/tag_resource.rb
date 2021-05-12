@@ -3,6 +3,11 @@ class Api::V1::TagResource < JSONAPI::Resource
 
   attributes :name, :tag_type_id, :parent_id, :default_for_filter
 
+  filter :name,
+         apply: lambda { |records, values, _options|
+           records.where("name LIKE '%%%s%%'", values[0])
+         }
+
   filter :tag_type_id,
          verify: lambda { |values, _context|
            values[0] = values[0].to_i
