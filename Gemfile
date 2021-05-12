@@ -76,7 +76,7 @@ gem 'parser', '~> 3.0.1.1'
 
 # A Ruby/Rack web server built for concurrency.
 # https://github.com/puma/puma
-gem 'puma', '~> 5.2.2'
+gem 'puma', '~> 5.3.0'
 
 # Minimal authorization through OO design and pure Ruby classes.
 # https://github.com/varvet/pundit

@@ -4,8 +4,8 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
   let(:created_time_range) { TimeRange.unscoped.last }
 
   let(:epr_uuid) { Faker::Internet.uuid }
-  let(:user) { create :user, epr_uuid: epr_uuid }
-  let(:time_range_type) { create :time_range_type }
+  let!(:user) { create :user, epr_uuid: epr_uuid }
+  let!(:time_range_type) { create :time_range_type }
   let(:appointment_id) { Faker::Lorem.characters(number: 8) }
 
   let(:valid_attributes) do
@@ -90,6 +90,21 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
 
           response '422', 'Invalid request' do
             schema '$ref' => '#/definitions/error_422'
+
+            run_test! do
+              expect(parsed_json['errors'][0]['title']).to eql error_title
+              expect(parsed_json['errors'][0]['detail']).to eql error_detail
+            end
+          end
+        end
+
+        context 'both user_id and user_epr_uuid passed' do
+          let(:attributes) { valid_attributes.merge({ user_epr_uuid: epr_uuid }) }
+          let(:error_title) { 'Param not allowed' }
+          let(:error_detail) { 'To identify user you need to pass user_id OR user_epr_uuid, not both.' }
+
+          response '400', 'Error: Bad Request' do
+            schema '$ref' => '#/definitions/error_400'
 
             run_test! do
               expect(parsed_json['errors'][0]['title']).to eql error_title
