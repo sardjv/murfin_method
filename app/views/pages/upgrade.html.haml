@@ -4,7 +4,6 @@
       %h2
         You are currently using Internet Explorer Version
         = @browser_version
-        %span#ie-version-number
       Murfin+ is optimised for the latest, safest releases of all major browsers and platforms, because
       those which are no longer supported by their manufacturer are unstable and should not be used within
       large organisations.
@@ -12,10 +11,14 @@
       Browsers such as Google Chrome or Firefox are updated automatically and therefore you will always be
       using the latest version.
       %br
-      = link_to 'Microsoft have announced ', 'https://techcommunity.microsoft.com/t5/microsoft-365-blog/microsoft-365-apps-say-farewell-to-internet-explorer-11-and/ba-p/1591666', target: :_blank
+      = link_to 'Microsoft have announced ',
+        'https://techcommunity.microsoft.com/t5/microsoft-365-blog/microsoft-365-apps-say-farewell-to-internet-explorer-11-and/ba-p/1591666',
+        target: :_blank, rel: 'noopener'
       that support for IE11 and the "legacy" (EdgeHTML) version of the Microsoft Edge browser will end in Aug 2021, so we
       recommend IE is replaced by
-      = link_to('Google Chrome', 'https://www.google.com/chrome', target: :_blank) + ','
-      = link_to('Firefox', 'https://www.mozilla.org/en-US/firefox/new/', target: :_blank) + ','
-      = link_to('new Microsoft Edge', 'https://www.microsoft.com/en-us/edge/business', target: :_blank)
+      = succeed ',' do
+        = link_to 'Google Chrome', 'https://www.google.com/chrome', target: '_blank', rel: 'noopener'
+      = succeed ',' do
+        = link_to 'Firefox', 'https://www.mozilla.org/en-US/firefox/new/', target: '_blank', rel: 'noopener'
+      = link_to 'new Microsoft Edge', 'https://www.microsoft.com/en-us/edge/business', target: '_blank', rel: 'noopener'
       or any other modern browser.
