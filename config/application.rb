@@ -66,6 +66,10 @@ module Murfin # rubocop:disable Style/ClassAndModuleChildren
       g.view_specs false
     end
 
+    config.middleware.use Browser::Middleware do
+      redirect_to '/upgrade' if browser.ie?('<= 11')
+    end
+
     # Middleware that allows users to get a PDF, PNG or JPEG view of any page on your site by appending .pdf, .png or .jpeg/.jpg to the URL.
     require 'grover'
     config.middleware.use Grover::Middleware
