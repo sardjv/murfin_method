@@ -5,6 +5,10 @@ ruby '3.0.0'
 # https://github.com/bootstrap-ruby/bootstrap_form
 gem 'bootstrap_form', '~> 4.0'
 
+# Do some browser detection with Ruby. Includes ActionController integration.
+# https://github.com/fnando/browser
+gem 'browser', '~> 5.3.1', require: 'browser/browser'
+
 # Dynamic nested forms using jQuery made easy.
 # https://github.com/nathanvda/cocoon
 gem 'cocoon', '~> 1.2.15'
