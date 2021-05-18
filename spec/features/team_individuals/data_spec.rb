@@ -228,6 +228,8 @@ describe 'Team Individual Data', type: :feature, js: true, freeze: Time.zone.loc
         end
 
         within '#team-individual-table' do
+          find('.team-individual-table-week', text: 'Dec 30th, 2019 - Jan 5th, 2020')
+
           within first('.team-individual-table-week') do
             expect(page).to have_content 'Dec 30th, 2019 - Jan 5th, 2020'
           end
