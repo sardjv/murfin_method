@@ -198,6 +198,8 @@ describe 'User Data', type: :feature, js: true, freeze: Time.zone.local(2021, 2,
         end
 
         within '#team-individual-table' do
+          find('.team-individual-table-week', text: 'Dec 30th, 2019 - Jan 5th, 2020')
+
           expect(page).not_to have_content 'Dec 24th - Dec 29th'
 
           within first('.team-individual-table-week') do
