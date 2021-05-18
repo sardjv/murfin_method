@@ -67,7 +67,7 @@ gem 'omniauth-auth0', '~> 3.0.0'
 
 # Provides CSRF protection on OmniAuth request endpoint on Rails application.
 # https://github.com/cookpad/omniauth-rails_csrf_protection
-gem 'omniauth-rails_csrf_protection', '~> 0.1.2'
+gem 'omniauth-rails_csrf_protection', '~> 1.0.0'
 
 # A Ruby parser - used by Rubocop, added here to force it to a newer version
 # for compatibility with Ruby 3.0.0.
