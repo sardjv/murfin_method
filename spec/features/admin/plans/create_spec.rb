@@ -2,15 +2,21 @@ require 'rails_helper'
 
 describe 'Admin creates plan on behalf of a user', type: :feature, js: true do
   let!(:admin) { create :admin }
-  let!(:user) { create :user }
+  let!(:user1) { create :user }
   let!(:user2) { create :user }
 
   let(:hours_per_week) { 8 }
   let(:plan) { Plan.unscoped.last }
 
+  let(:default_start_date) { Date.current.change(month: 4) }
+  let(:default_end_date) { plan.start_date + 11.months.end_of_month }
+
+  let(:success_message) { I18n.t('notice.successfully.created', model_name: Plan.model_name.human) }
+
   before do
     log_in admin
     visit admin_plans_path
+
     click_link 'Add Job Plan'
   end
 
@@ -30,19 +36,22 @@ describe 'Admin creates plan on behalf of a user', type: :feature, js: true do
 
     click_button 'Save'
 
-    expect(page).to have_content(I18n.t('notice.successfully.created', model_name: Plan.model_name.human))
+    expect(page).to have_css '.alert-info', text: success_message
     expect(plan.user_id).to eq(user2.id)
     expect(plan.activities.count).to eq(1)
-    expect(plan.end_date).to eq(Plan.last.start_date + 1.year - 1.day)
+    expect(plan.start_date).to default_start_date
+    expect(plan.end_date).to default_end_date
     expect(plan.signoffs.pluck(:user_id)).to eq [user2.id]
   end
 
   context 'when invalid' do
+    let(:error_message) { I18n.t('notice.could_not_be.created', model_name: Plan.model_name.human) }
+
     it 'shows errors' do
       click_link 'Add Activity'
       click_button 'Save'
 
-      expect(page).to have_content(I18n.t('notice.could_not_be.created', model_name: Plan.model_name.human))
+      expect(page).to have_css '.alert-danger', text: error_message
       expect(page).to have_content("#{Activity.human_attribute_name('duration')} #{I18n.t('errors.activity.duration.missing')}")
     end
   end

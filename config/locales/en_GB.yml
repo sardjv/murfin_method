@@ -82,6 +82,7 @@ en:
   date:
     formats:
       readable: '%-d %B %Y'
+      month_year: '%B %Y'
     order:
       - day
       - month
@@ -208,6 +209,9 @@ en:
   plans:
     totals: Totals
     total_time_worked_per_week: "Total time worked per week: %{total}"
+    hints:
+      start_date: start of month
+      end_date: end of month
   search_form:
     placeholders:
       job_plans: Activity tag, user name or email

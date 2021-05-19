@@ -11,12 +11,13 @@
 #
 FactoryBot.define do
   factory :plan do
-    start_date { Faker::Date.between(from: Time.zone.today - 1.year, to: Time.zone.today + 1.year) }
     user_id { User.all.sample.try(:id) || create(:user).id }
 
     after(:build) do |plan|
-      # Set end_date to be after start_date.
-      plan.end_date = plan.start_date + 1.week unless plan.end_date
+      unless plan.start_date && plan.end_date
+        plan.start_date = Faker::Date.between(from: Time.zone.today - 1.year, to: Time.zone.today + 1.year).beginning_of_month
+        plan.end_date = (plan.start_date + 11.months).end_of_month
+      end
     end
   end
 end

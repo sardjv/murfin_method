@@ -21,10 +21,11 @@
         - else
           = f.hidden_field :user_id, value: f.object.user_id || current_user.id
 
-        = f.date_select :start_date, label: Plan.human_attribute_name('start_date'), disabled: !policy(@plan).update?
-
-        - if @plan.persisted?
-          = f.date_select :end_date, label: Plan.human_attribute_name('end_date'), disabled: !policy(@plan).update?
+        .row
+          = f.text_field :start_date, wrapper: { class: 'col-md-3 plan-start-date-container' }, help: t('plans.hints.start_date'),
+                          autocomplete: 'off', 'data-behaviour-flatpickr': true, disabled: !policy(@plan).update?
+          = f.text_field :end_date, wrapper: { class: 'col-md-3 plan-end-date-container' }, help: t('plans.hints.end_date'),
+                          autocomplete: 'off', 'data-behaviour-flatpickr': true, disabled: !policy(@plan).update?
 
         .border.my-4.p-4
           %label= Plan.human_attribute_name('activities')
