@@ -8,8 +8,8 @@ describe 'Admin creates plan on behalf of a user', type: :feature, js: true do
   let(:hours_per_week) { 8 }
   let(:plan) { Plan.unscoped.last }
 
-  let(:default_start_date) { Date.current.change(month: 4, day: 1) }
-  let(:default_end_date) { (plan.start_date + 11.months).end_of_month }
+  let(:default_start_date) { Plan::DEFAULT_START_DATE }
+  let(:default_end_date) { Plan::DEFAULT_END_DATE }
 
   let(:success_message) { I18n.t('notice.successfully.created', model_name: Plan.model_name.human) }
 
@@ -33,6 +33,7 @@ describe 'Admin creates plan on behalf of a user', type: :feature, js: true do
     within '#plan-signoffs' do
       bootstrap_select user2.name, from: 'User'
     end
+    page.save_screenshot
 
     click_button 'Save'
 
