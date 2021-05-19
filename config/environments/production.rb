@@ -90,7 +90,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Action Cable's server URI
-  config.web_socket_server_url = "wss://murfin-method.herokuapp.com/cable"
+  config.web_socket_server_url = 'wss://murfin-method.herokuapp.com/cable'
 
   # Action Cable's allowed Request Origins
   config.action_cable.allowed_request_origins = ['https://murfin-method.herokuapp.com']
