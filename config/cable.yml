@@ -11,7 +11,7 @@ test:
   adapter: test
 
 production:
-  adapter: redis
-  url: <%= ENV.fetch('REDIS_URL') %>
-  channel_prefix: murfin_method_production
+  <<: *default
   # network_timeout: 5
+  # url: <%= ENV.fetch('REDIS_URL') %>
+  channel_prefix: murfin_method_production
