@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-describe 'Admin downloads users csv', js: true do
+describe 'Admin downloads plans csv', js: true do
   let!(:admin) { create :admin }
-  let!(:users) { create_list :user, 10 }
+  let!(:plans) { create_list :plan, 10 }
 
-  let(:queued_msg) { 'Preparing users CSV file for download. Please wait…' }
-  let(:ready_msg) { 'Requested users CSV file is ready.' }
+  let(:queued_msg) { 'Preparing plans CSV file for download. Please wait…' }
+  let(:ready_msg) { 'Requested plans CSV file is ready.' }
 
-  let(:filename) { "users_#{Date.current}.csv" }
+  let(:filename) { "plans_#{Date.current}.csv" }
 
   before do
     log_in admin
@@ -15,28 +15,30 @@ describe 'Admin downloads users csv', js: true do
 
   describe 'generate' do
     before do
-      visit admin_users_path
+      visit admin_plans_path
     end
 
     it 'shows flash messages about preparing csv and file ready for download' do
       click_link 'Generate CSV'
 
+      expect(page).to have_content queued_msg if page.has_css?('.alert-info', wait: 0)
+
       expect(page).to have_no_css '.alert-info'
 
       within '.alert-success', wait: 3 do
         expect(page).to have_content ready_msg
-        expect(page).to have_link 'Download', href: download_admin_users_path(format: :csv)
+        expect(page).to have_link 'Download', href: download_admin_plans_path(format: :csv)
       end
     end
   end
 
   describe 'download', js: false do
     before do
-      GenerateUsersCsvJob.perform_now(current_user_id: admin.id)
+      GeneratePlansCsvJob.perform_now(current_user_id: admin.id)
     end
 
     it 'sends file to the browser' do
-      visit download_admin_users_path(format: :csv)
+      visit download_admin_plans_path(format: :csv)
 
       expect(page.response_headers['Content-Type']).to eql 'text/csv'
       expect(page.response_headers['Content-Disposition']).to include "attachment; filename=\"#{filename}\";"

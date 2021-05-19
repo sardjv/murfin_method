@@ -9,7 +9,7 @@ class Admin::UsersController < ApplicationController
         @q = User.order(last_name: :asc).ransack(params[:q])
         @users = @q.result(distinct: true).page(params[:page])
       end
-      format.csv do # test only
+      format.csv do # debug only
         send_data CsvExport::Users.call(users: User.order(last_name: :asc)), filename: "users_#{Date.current}.csv"
       end
     end
@@ -22,7 +22,7 @@ class Admin::UsersController < ApplicationController
 
     FlashMessageBroadcastJob.perform_now(
       current_user_id: current_user.id,
-      message: t('download.queued', file_type: 'CSV'),
+      message: t('download.queued', records_type: 'users', file_type: 'CSV'),
       extra_data: { message_type: 'download' }
     )
 

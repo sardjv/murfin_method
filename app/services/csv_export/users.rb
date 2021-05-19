@@ -1,19 +1,7 @@
-# require 'app/decorators/user_csv_decorator'
-
-class CsvExport::Users
+class CsvExport::Users < BaseService
   COLUMNS = %i[first_name last_name email epr_uuid admin user_group_names].freeze
 
   attr_accessor :users
-
-  def initialize(args = {})
-    args.each do |k, v|
-      send "#{k}=", v
-    end
-  end
-
-  def self.call(users)
-    new(users).call
-  end
 
   def call
     CSV.generate do |csv|
