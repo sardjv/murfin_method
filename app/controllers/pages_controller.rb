@@ -12,4 +12,9 @@ class PagesController < ApplicationController
       format.json { render json: @presenter.to_json }
     end
   end
+
+  def upgrade
+    browser = Browser.new request.user_agent
+    @browser_version = browser.try(:version).try(:present?) ? browser.version : '11 or lower'
+  end
 end
