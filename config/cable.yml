@@ -11,5 +11,6 @@ test:
   adapter: test
 
 production:
-  <<: *default
+  adapter: redis
+  url: <%= ENV['REDIS_URL'] %>
   channel_prefix: murfin_method_production
