@@ -27,7 +27,7 @@ describe 'User edits a plan', type: :feature, js: true do
 
   let(:end_date_year) { plan.start_date.year + 2 }
   let(:success_message) { I18n.t('notice.successfully.updated', model_name: Plan.model_name.human) }
-  let(:error_message) { 'Job plan could not be created' }
+  let(:error_message) { 'Job plan could not be updated' }
 
   before do
     log_in current_user
@@ -157,23 +157,25 @@ describe 'User edits a plan', type: :feature, js: true do
   end
   # TODO: add similar scenario for create spec
 
-  context 'start date before end date' do
+  context 'end date before start date' do
     let(:end_date_error_details) { 'must occur after start date' }
 
     it 'does not update plan' do
-      find('.plan-end-date-container input').click
+      find('.plan-start-date-container input').click
 
-      within '.flatpickr-calendar .flatpickr-months' do # prev year
-        find('.flatpickr-prev-month').click
+      within '.flatpickr-monthSelect-months' do # Nov
+        find(:xpath, "span[text() = 'Nov']").click
       end
 
-      within '.flatpickr-monthSelect-months' do # Jan
-        find(:xpath, "span[text() = 'Jan']").click
+      find('.plan-end-date-container input').click
+
+      within '.flatpickr-monthSelect-months' do # Oct
+        find(:xpath, "span[text() = 'Oct']").click
       end
 
       click_button 'Save'
 
-      expect(page).to have_content error_message
+      expect(page).to have_css '.alert-danger', text: error_message
       expect(page).to have_css '.plan-end-date-container .invalid-feedback', text: end_date_error_details
     end
   end
