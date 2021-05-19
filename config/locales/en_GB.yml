@@ -42,6 +42,7 @@ en:
     delete: Delete
     filter: Filter
     generate: Generate %{attribute_name}
+    generate_csv: Generate CSV
     reset: Reset
     remove: Remove %{model_name}
     save: Save
@@ -86,6 +87,10 @@ en:
       - day
       - month
       - year
+  download:
+    queued: Preparing %{records_type} %{file_type} file for download. Please wait…
+    ready: Requested %{records_type} %{file_type} file is ready. %{link}
+    processing_error: Error when preparing %{records_type} %{file_type} file for download. Please try again.
   errors:
     activity:
       duration:

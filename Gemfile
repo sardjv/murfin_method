@@ -5,6 +5,9 @@ ruby '3.0.0'
 # https://github.com/bootstrap-ruby/bootstrap_form
 gem 'bootstrap_form', '~> 4.0'
 
+# CableReady completes the ActionCable story and expands the utility of web sockets in your Rails app
+# https://github.com/hopsoft/cable_ready
+gem 'cable_ready', '~> 4.5'
 # Do some browser detection with Ruby. Includes ActionController integration.
 # https://github.com/fnando/browser
 gem 'browser', '~> 5.3.1', require: 'browser/browser'
@@ -191,6 +194,10 @@ group :test do
   # A browser automation framework and ecosystem.
   # https://github.com/SeleniumHQ/selenium/tree/trunk/rb
   gem 'selenium-webdriver', '4.0.0.beta3'
+
+  # Cookie manipulation for Capybara
+  # https://github.com/nruth/show_me_the_cookies
+  gem 'show_me_the_cookies', '~> 5.0.1'
 
   # Simple one-liner tests for common Rails functionality.
   # https://github.com/thoughtbot/shoulda-matchers

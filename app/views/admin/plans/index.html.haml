@@ -1,12 +1,17 @@
 .container.my-4
   .row.mb-3
-    .col-9
+    .col-8
       = render 'shared/search_form',
                 search_field_key: :activities_tags_name_or_user_last_name_or_user_first_name_or_user_email_cont,
                 placeholder_key: :job_plans
-  .row
-    .col-12
+    .col-4
       = link_to new_plan_path, class: 'btn btn-primary float-right mb-3' do
         = icon 'plus'
         = t 'actions.add', model_name: Plan.model_name.human.titleize
+      = link_to generate_csv_admin_plans_path, method: :post, class: 'btn btn-primary float-right mr-2' do
+        = icon('gear')
+        = t('actions.generate_csv')
+
+  .row
+    .col-12
       = render partial: 'plans/plans', locals: { plans: @plans }

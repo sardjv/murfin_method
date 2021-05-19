@@ -1,0 +1,16 @@
+default: &default
+  adapter: redis
+  url: <%= "redis://redis:#{ENV.fetch('REDIS_PORT')}/1" %>
+  password: <%= ENV.fetch('REDIS_PASSWORD') %>
+
+development:
+  <<: *default
+  channel_prefix: murfin_method_development
+
+test:
+  adapter: test
+
+production:
+  <<: *default
+  # network_timeout: 5
+  channel_prefix: murfin_method_production
