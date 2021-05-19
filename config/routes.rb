@@ -3,6 +3,8 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
   root to: 'pages#home'
 
+  get 'upgrade' => 'pages#upgrade' # show warning for IE <= 11
+
   get 'auth/:provider/callback' => 'auth0#callback'
   get 'auth/failure' => 'auth0#failure'
   get 'auth_logout' => 'auth0#destroy'

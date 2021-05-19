@@ -5,6 +5,10 @@ ruby '3.0.0'
 # https://github.com/bootstrap-ruby/bootstrap_form
 gem 'bootstrap_form', '~> 4.0'
 
+# Do some browser detection with Ruby. Includes ActionController integration.
+# https://github.com/fnando/browser
+gem 'browser', '~> 5.3.1', require: 'browser/browser'
+
 # Dynamic nested forms using jQuery made easy.
 # https://github.com/nathanvda/cocoon
 gem 'cocoon', '~> 1.2.15'
@@ -27,7 +31,7 @@ gem 'factory_bot', '~> 6.2.0'
 
 # Generate fake data such as names, addresses, and phone numbers.
 # https://github.com/faker-ruby/faker
-gem 'faker', '~> 2.17.0'
+gem 'faker', '~> 2.18.0'
 
 # A Ruby gem to transform HTML into PDFs, PNGs or JPEGs using Google Puppeteer/Chromium
 # https://github.com/Studiosity/grover
@@ -59,11 +63,11 @@ gem 'mysql2', '~> 0.5.3'
 
 # OmniAuth is a flexible authentication system utilizing Rack middleware.
 # https://github.com/auth0/omniauth-auth0
-gem 'omniauth-auth0', '~> 2.6.0'
+gem 'omniauth-auth0', '~> 3.0.0'
 
 # Provides CSRF protection on OmniAuth request endpoint on Rails application.
 # https://github.com/cookpad/omniauth-rails_csrf_protection
-gem 'omniauth-rails_csrf_protection', '~> 0.1.2'
+gem 'omniauth-rails_csrf_protection', '~> 1.0.0'
 
 # A Ruby parser - used by Rubocop, added here to force it to a newer version
 # for compatibility with Ruby 3.0.0.
