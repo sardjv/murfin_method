@@ -171,7 +171,6 @@ describe 'User edits a plan', type: :feature, js: true do
         find(:xpath, "span[text() = 'Jan']").click
       end
 
-      page.save_screenshot
       click_button 'Save'
 
       expect(page).to have_content error_message

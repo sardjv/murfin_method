@@ -39,8 +39,8 @@ describe 'Admin creates plan on behalf of a user', type: :feature, js: true do
     expect(page).to have_css '.alert-info', text: success_message
     expect(plan.user_id).to eq(user2.id)
     expect(plan.activities.count).to eq(1)
-    expect(plan.start_date).to default_start_date
-    expect(plan.end_date).to default_end_date
+    expect(plan.start_date).to eql default_start_date
+    expect(plan.end_date).to eql default_end_date
     expect(plan.signoffs.pluck(:user_id)).to eq [user2.id]
   end
 

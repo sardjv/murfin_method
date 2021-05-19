@@ -55,7 +55,6 @@ describe 'User creates a plan', type: :feature, js: true do
 
       expect(page).to have_css '.alert-danger', text: error_message
       expect(page).to have_content activity_duration_error_details
-      page.save_screenshot
     end
   end
 end
