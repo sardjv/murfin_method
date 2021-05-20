@@ -41,6 +41,7 @@ class Admin::UsersController < ApplicationController
         path = Rails.root.join('tmp', tmp_filename)
         begin
           file = File.open(path, 'r')
+          pp '====== UsersController#download file ======', file
           csv = file.read
           send_data csv, filename: filename, type: 'text/csv', disposition: 'attachment'
         ensure

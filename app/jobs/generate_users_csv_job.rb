@@ -21,7 +21,7 @@ class GenerateUsersCsvJob < ApplicationJob
       file = File.open(path, 'w')
       file.write(csv)
       file.rewind
-
+pp '====== GenerateUsersCsvJob ======', file
       # delete download related previous flash messages
       selector_download_ready_message = "#flash-container .alert[data-message-type='download']"
       cable_ready[channel_name].remove(select_all: true, selector: selector_download_ready_message)
