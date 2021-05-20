@@ -32,16 +32,21 @@ class Admin::PlansController < ApplicationController
 
     respond_to do |format|
       format.csv do
-        tmp_filename = "plans_#{Date.current}_#{current_user.id}.csv"
-        filename = "plans_#{Date.current}.csv"
-        path = Rails.root.join('tmp', tmp_filename)
-        begin
-          file = File.open(path, 'r')
-          csv = file.read
-          send_data csv, filename: filename, type: 'text/csv', disposition: 'attachment'
-        ensure
-          # file.close unless file.closed?
-          File.delete(file) if file && File.exist?(file)
+        redis_key = "plans_#{Date.current}_#{current_user.id}.csv"
+        csv_data = REDIS_CLIENT.get(redis_key)
+
+        if csv_data
+          csv_filename = "plans_#{Date.current}.csv"
+          send_data csv_data, filename: csv_filename, type: 'text/csv', disposition: 'attachment'
+
+          REDIS_CLIENT.del(redis_key)
+        else
+          FlashMessageBroadcastJob.perform_now(
+            current_user_id: current_user.id,
+            message: I18n.t('download.errors.not_found', records_type: 'plans', file_type: 'CSV'),
+            alert_type: 'danger',
+            extra_data: { message_type: 'download' }
+          )
         end
       end
     end

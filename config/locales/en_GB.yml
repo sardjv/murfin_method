@@ -90,7 +90,9 @@ en:
   download:
     queued: Preparing %{records_type} %{file_type} file for download. Please wait…
     ready: Requested %{records_type} %{file_type} file is ready. %{link}
-    processing_error: Error when preparing %{records_type} %{file_type} file for download. Please try again.
+    errors:
+      processing: Error when preparing %{records_type} %{file_type} file for download. Please try again.
+      not_found: Error when downloading %{records_type} %{file_type}. File not found.
   errors:
     activity:
       duration:

@@ -14,20 +14,19 @@ class GenerateUsersCsvJob < ApplicationJob
 
     channel_name = "flash_messages:#{current_user_id}"
 
-    csv = CsvExport::Users.call(users: User.order(last_name: :asc))
-    file_name = "users_#{Date.current}_#{current_user_id}.csv"
-    path = Rails.root.join('tmp', file_name)
-
-    file = File.open(path, 'w')
-    file.write(csv)
-    file.close
-
-    tmp_file_path = File.join(Dir.tmpdir, file_name)
-    File.open(tmp_file_path, 'w') do |tmp_file|
-      tmp_file.write(csv)
-
-      Rails.logger.info "===================== tmp_file.path #{tmp_file.path}"
+    begin
+      csv_data = CsvExport::Users.call(users: User.order(last_name: :asc))
+    rescue StandardError
+      FlashMessageBroadcastJob.perform_now(
+        current_user_id: current_user_id,
+        message: I18n.t('download.errors.processing', records_type: 'users', file_type: 'CSV'),
+        alert_type: 'danger',
+        extra_data: { message_type: 'download' }
+      )
     end
+
+    redis_key = "users_#{Date.current}_#{current_user_id}.csv"
+    REDIS_CLIENT.set(redis_key, csv_data)
 
     # delete download related previous flash messages
     selector_download_ready_message = "#flash-container .alert[data-message-type='download']"
@@ -44,14 +43,5 @@ class GenerateUsersCsvJob < ApplicationJob
       alert_type: 'success',
       extra_data: { message_type: 'download' }
     )
-    # rescue StandardError
-    #   FlashMessageBroadcastJob.perform_now(
-    #     current_user_id: current_user_id,
-    #     message: I18n.t('download.processing_error', records_type: 'users', file_type: 'CSV'),
-    #     alert_type: 'danger',
-    #     extra_data: { message_type: 'download' }
-    #   )
-    # ensure
-    # file&.close
   end
 end

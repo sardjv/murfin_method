@@ -31,24 +31,26 @@ class Admin::UsersController < ApplicationController
     head :no_content
   end
 
-  def download # rubocop:disable Metrics/AbcSize
+  def download
     authorize :user
 
     respond_to do |format|
       format.csv do
-        tmp_filename = "users_#{Date.current}_#{current_user.id}.csv"
-        filename = "users_#{Date.current}.csv"
-        # path = Rails.root.join('tmp', tmp_filename)
-        path = File.join(Dir.tmpdir, tmp_filename)
+        redis_key = "users_#{Date.current}_#{current_user.id}.csv"
+        csv_data = REDIS_CLIENT.get(redis_key)
 
-        begin
-          file = File.open(path, 'r')
-          Rails.logger.info "====== UsersController#download file.path ====== #{file.path}"
-          csv = file.read
-          send_data csv, filename: filename, type: 'text/csv', disposition: 'attachment'
-          # file.close
-        ensure
-          File.delete(file) if file && File.exist?(file)
+        if csv_data
+          csv_filename = "users_#{Date.current}.csv"
+          send_data csv_data, filename: csv_filename, type: 'text/csv', disposition: 'attachment'
+
+          REDIS_CLIENT.del(redis_key)
+        else
+          FlashMessageBroadcastJob.perform_now(
+            current_user_id: current_user.id,
+            message: I18n.t('download.errors.not_found', records_type: 'users', file_type: 'CSV'),
+            alert_type: 'danger',
+            extra_data: { message_type: 'download' }
+          )
         end
       end
     end
