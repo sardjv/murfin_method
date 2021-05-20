@@ -43,11 +43,11 @@ class Admin::UsersController < ApplicationController
 
         begin
           file = File.open(path, 'r')
-          Rails.logger.info '====== UsersController#download file ======', file
+          Rails.logger.info "====== UsersController#download file.path ====== #{file.path}"
           csv = file.read
           send_data csv, filename: filename, type: 'text/csv', disposition: 'attachment'
+          file.close
         ensure
-          # file.close unless file.closed?
           File.delete(file) if file && File.exist?(file)
         end
       end
