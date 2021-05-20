@@ -31,17 +31,19 @@ class Admin::UsersController < ApplicationController
     head :no_content
   end
 
-  def download
+  def download # rubocop:disable Metrics/AbcSize
     authorize :user
 
     respond_to do |format|
       format.csv do
         tmp_filename = "users_#{Date.current}_#{current_user.id}.csv"
         filename = "users_#{Date.current}.csv"
-        path = Rails.root.join('tmp', tmp_filename)
+        # path = Rails.root.join('tmp', tmp_filename)
+        path = File.join(Dir.tmpdir, tmp_filename)
+
         begin
           file = File.open(path, 'r')
-          pp '====== UsersController#download file ======', file
+          Rails.logger.info '====== UsersController#download file ======', file
           csv = file.read
           send_data csv, filename: filename, type: 'text/csv', disposition: 'attachment'
         ensure
