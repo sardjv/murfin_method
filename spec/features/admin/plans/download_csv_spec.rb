@@ -18,12 +18,10 @@ describe 'Admin downloads plans csv', js: true do
       visit admin_plans_path
     end
 
-    # TODO: fix for CI
-    xit 'shows flash messages about preparing csv and file ready for download' do
+    it 'shows flash messages about preparing csv and file ready for download' do
       click_link 'Generate CSV'
 
       expect(page).to have_content queued_msg if page.has_css?('.alert-info', wait: 0)
-
       expect(page).to have_no_css '.alert-info'
 
       within '.alert-success', wait: 3 do
