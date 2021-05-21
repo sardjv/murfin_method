@@ -7,9 +7,20 @@ import minutesHumanized from '../shared/minutes_humanized'
 import { format, addDays } from 'date-fns'
 import { pickBy } from 'lodash'
 
-window.addEventListener('turbo:load', () => {
-  const lineGraphId = 'line-graph'
-  const context = document.getElementById(lineGraphId)
+const lineGraphCanvasId = 'line-graph'
+
+document.addEventListener('turbo:before-cache', () => {
+  console.log('turbo:before-cache')
+})
+
+document.addEventListener('turbo:render', () => {
+  console.log('turbo:render')
+})
+
+document.addEventListener('turbo:load', () => {
+  console.log('turbo:load')
+
+  const context = document.getElementById(lineGraphCanvasId)
 
   if (context) {
     const graphKindSelector = "input:radio[name='graph_kind']"
@@ -24,7 +35,7 @@ window.addEventListener('turbo:load', () => {
     $(graphKindSelector).on('click', (e) => {
       if(prev_graph_kind != e.target.value) {
         current_graph_kind = e.target.value
-        drawLineChart(context, current_graph_kind, current_time_scope)
+        loadAndDrawLineGraph(context, current_graph_kind, current_time_scope)
         prev_graph_kind = current_graph_kind
       }
     })
@@ -32,18 +43,16 @@ window.addEventListener('turbo:load', () => {
     $(graphTimeScopeSelector).on('click', (e) => {
       if(prev_time_scope != e.target.value) {
         current_time_scope = e.target.value
-        drawLineChart(context, current_graph_kind, current_time_scope)
+        loadAndDrawLineGraph(context, current_graph_kind, current_time_scope)
         prev_time_scope = current_time_scope
       }
     })
 
-    // first page load
-    if (global.chart) { global.chart.destroy() }
-    global.chart = line_graph(context, lineChartData.line_chart, { graph_kind: current_graph_kind, time_scope: current_time_scope })
+    loadAndDrawLineGraph(context, current_graph_kind, current_time_scope)
   }
 })
 
-function drawLineChart(context, graph_kind, time_scope) {
+function loadAndDrawLineGraph(context, graph_kind, time_scope) {
   const query_params = prepareQueryParamsFromFilters()
   const url_params = { query: query_params, graph_kind: graph_kind, time_scope: time_scope }
 
@@ -53,8 +62,7 @@ function drawLineChart(context, graph_kind, time_scope) {
     data: $.param(url_params).toString(),
     dataType: 'json',
     success: function(data) {
-      if (global.chart) { global.chart.destroy() }
-      global.chart = line_graph(context, data.line_graph, { graph_kind: graph_kind, time_scope: time_scope })
+      drawLineGraph(context, data.line_graph, { graph_kind: graph_kind, time_scope: time_scope })
     }
   })
 }
@@ -122,7 +130,7 @@ function buildDatasets(datas, options = {}) {
   })
 }
 
-function line_graph(context, line_graph, options = {}) {
+function drawLineGraph(context, line_graph, options = {}) {
   const originalLabels = line_graph.data[0].map(function(e) {
     return e.name
   })
@@ -154,6 +162,13 @@ function line_graph(context, line_graph, options = {}) {
 
   const formatChartValue = (val, units) => {
     return units == 'minutes' ? minutesHumanized(val) : `${val}${units}`
+  }
+
+  // if chart instance exists it must be destroyed
+  const chart = Chart.getChart(lineGraphCanvasId)
+  if(chart) {
+    console.log('drawLineGraph | chart instance found and destriying', chart)
+    chart.destroy()
   }
 
   return new Chart(context, {
