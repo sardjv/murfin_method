@@ -23,11 +23,7 @@ class Plan < ApplicationRecord
   validates :start_date, :end_date, presence: true
   validate :validate_end_date_after_start_date
 
-  def validate_end_date_after_start_date
-    return unless start_date && end_date && end_date <= start_date
-
-    errors.add :end_date, 'must occur after start date'
-  end
+  after_update :activities_rebuild_schedule
 
   def name
     "#{user.name}'s #{start_date.year} #{Plan.model_name.human.titleize}"
@@ -70,6 +66,19 @@ class Plan < ApplicationRecord
   end
 
   private
+
+  def activities_rebuild_schedule
+    activities.each do |a|
+      a.build_schedule
+      a.save
+    end
+  end
+
+  def validate_end_date_after_start_date
+    return unless start_date && end_date && end_date <= start_date
+
+    errors.add :end_date, 'must occur after start date'
+  end
 
   # Use updated_at.to_f here because the default is only accurate to
   # the second and can lead to tricky bugs, e.g. if 2 updates happen
