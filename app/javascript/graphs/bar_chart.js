@@ -9,7 +9,7 @@ window.addEventListener('turbo:load', () => {
   const context = document.getElementById(barChartId)
 
   if (context) {
-    drawBarChart(context, chartData.bar_chart.data)
+    drawBarChart(context, barChartData.bar_chart.data)
   }
 })
 

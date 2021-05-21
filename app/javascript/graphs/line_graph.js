@@ -11,6 +11,7 @@ const lineGraphCanvasId = 'line-graph'
 
 document.addEventListener('turbo:before-cache', () => {
   console.log('turbo:before-cache')
+
 })
 
 document.addEventListener('turbo:render', () => {
@@ -48,20 +49,22 @@ document.addEventListener('turbo:load', () => {
       }
     })
 
-    loadAndDrawLineGraph(context, current_graph_kind, current_time_scope)
+    // lineChartData is set from presenter in the view
+    drawLineGraph(context, lineChartData.line_chart, { graph_kind: current_graph_kind, time_scope: current_time_scope })
   }
 })
 
 function loadAndDrawLineGraph(context, graph_kind, time_scope) {
   const query_params = prepareQueryParamsFromFilters()
   const url_params = { query: query_params, graph_kind: graph_kind, time_scope: time_scope }
-
+  console.log('ajax call for graph data')
   Rails.ajax({
     url: API.url(),
     type: 'GET',
     data: $.param(url_params).toString(),
     dataType: 'json',
     success: function(data) {
+      console.log('ajax data', data)
       drawLineGraph(context, data.line_graph, { graph_kind: graph_kind, time_scope: time_scope })
     }
   })

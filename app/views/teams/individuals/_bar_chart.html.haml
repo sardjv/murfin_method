@@ -7,4 +7,4 @@
         %canvas#bar-chart
 
 :javascript
-  var chartData = #{raw @presenter.to_json(graphs: [{ type: :bar_chart, data: :individual_data, units: '%' }])};
+  barChartData = #{raw @presenter.to_json(graphs: [{ type: :bar_chart, data: :individual_data, units: '%' }])};
