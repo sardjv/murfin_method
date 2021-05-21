@@ -15,5 +15,7 @@
   units = t("graphs.#{graph_kind}.units", default: '')
 
 :javascript
-  lineChartData = #{raw @presenter.to_json(graphs: [{ type: :line_chart, data: :team_individual_data, units: units, dataset_labels: dataset_labels }])};
-  console.log('summary | lineChartData line_chart team_individual_data from presenter added here', lineChartData)
+  lineChartData = #{raw @presenter.to_json(graphs: [{ type: :line_chart,
+                                                      data: :team_individual_data,
+                                                      units: units,
+                                                      dataset_labels: dataset_labels }])};

@@ -9,18 +9,7 @@ import { pickBy } from 'lodash'
 
 const lineGraphCanvasId = 'line-graph'
 
-document.addEventListener('turbo:before-cache', () => {
-  console.log('turbo:before-cache')
-
-})
-
-document.addEventListener('turbo:render', () => {
-  console.log('turbo:render')
-})
-
 document.addEventListener('turbo:load', () => {
-  console.log('turbo:load')
-
   const context = document.getElementById(lineGraphCanvasId)
 
   if (context) {
@@ -57,14 +46,12 @@ document.addEventListener('turbo:load', () => {
 function loadAndDrawLineGraph(context, graph_kind, time_scope) {
   const query_params = prepareQueryParamsFromFilters()
   const url_params = { query: query_params, graph_kind: graph_kind, time_scope: time_scope }
-  console.log('ajax call for graph data')
   Rails.ajax({
     url: API.url(),
     type: 'GET',
     data: $.param(url_params).toString(),
     dataType: 'json',
     success: function(data) {
-      console.log('ajax data', data)
       drawLineGraph(context, data.line_graph, { graph_kind: graph_kind, time_scope: time_scope })
     }
   })
@@ -170,7 +157,6 @@ function drawLineGraph(context, line_graph, options = {}) {
   // if chart instance exists it must be destroyed
   const chart = Chart.getChart(lineGraphCanvasId)
   if(chart) {
-    console.log('drawLineGraph | chart instance found and destriying', chart)
     chart.destroy()
   }
 
