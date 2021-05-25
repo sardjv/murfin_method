@@ -77,10 +77,17 @@ class Plan < ApplicationRecord
     self.end_date ||= DEFAULT_END_DATE
   end
 
+  def activities_rebuild_schedule
+    activities.each do |a|
+      a.build_schedule
+      a.save
+    end
+  end
+
   def validate_end_date_after_start_date
     return unless start_date && end_date && end_date <= start_date
 
-    errors.add :end_date, I18n.t('errors.plan.end_date.should_be_before_start_date')
+    errors.add :end_date, I18n.t('errors.plan.end_date.should_be_after_start_date')
   end
 
   # Use updated_at.to_f here because the default is only accurate to

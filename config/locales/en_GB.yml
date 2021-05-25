@@ -100,7 +100,7 @@ en:
         missing: required
     plan:
       end_date:
-        should_be_before_start_date: must occur after start date'
+        should_be_after_start_date: must occur after start date'
     tag:
       should_match_parent: must match the selected parent
       should_match_tag_type: must belong to the selected tag_type
