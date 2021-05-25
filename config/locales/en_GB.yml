@@ -42,6 +42,7 @@ en:
     delete: Delete
     filter: Filter
     generate: Generate %{attribute_name}
+    generate_csv: Generate CSV
     reset: Reset
     remove: Remove %{model_name}
     save: Save
@@ -87,10 +88,19 @@ en:
       - day
       - month
       - year
+  download:
+    queued: Preparing %{records_type} %{file_type} file for download. Please wait…
+    ready: Requested %{records_type} %{file_type} file is ready. %{link}
+    errors:
+      processing: Error when preparing %{records_type} %{file_type} file for download. Please try again.
+      not_found: Error when downloading %{records_type} %{file_type}. File not found.
   errors:
     activity:
       duration:
         missing: required
+    plan:
+      end_date:
+        should_be_before_start_date: must occur after start date'
     tag:
       should_match_parent: must match the selected parent
       should_match_tag_type: must belong to the selected tag_type

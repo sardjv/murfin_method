@@ -34,4 +34,8 @@ module ApplicationHelper
     when 'alert' then 'alert alert-danger'
     end
   end
+
+  def decorate(model, decorate_class = nil)
+    (decorate_class || "#{model.class}Decorator".constantize).new(model)
+  end
 end

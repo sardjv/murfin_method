@@ -10,6 +10,8 @@
     %meta{ content: 'IE=edge', 'http-equiv': 'X-UA-Compatible' }
     %meta{ content: 'width=device-width, initial-scale=1, shrink-to-fit=no', name: 'viewport' }
     %meta{ content: '', name: 'description' }
+    - if user_signed_in?
+      %meta{ content: 'true', name: 'user_logged_in' }
     %title= I18n.t('app.name')
     = csrf_meta_tags
     = csp_meta_tag

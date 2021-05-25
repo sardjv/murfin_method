@@ -19,6 +19,10 @@ class AdminCrudPolicy < ApplicationPolicy
     user.admin?
   end
 
+  def download?
+    user.admin?
+  end
+
   def destroy?
     user.admin?
   end

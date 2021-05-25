@@ -120,6 +120,7 @@ RSpec.configure do |config|
   # config.include CapybaraSelect2::Helpers
 
   config.include FeatureSessionHelpers, type: :feature
+  config.include ShowMeTheCookies, type: :feature
   config.include RequestSessionHelpers, type: :request
   config.include FormHelpers, type: :feature
   config.include StripAttributes::Matchers
