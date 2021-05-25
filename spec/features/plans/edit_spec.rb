@@ -17,13 +17,17 @@ describe 'User edits a plan', type: :feature, js: true do
   let!(:tag2d) { create :tag, tag_type: tag_type2, parent: tag1b }
   let!(:tag2e) { create :tag, tag_type: tag_type2, parent: tag1b }
 
-  let(:plan) { create :plan, user: current_user }
+  let(:start_date) { Date.current.beginning_of_year }
+  let(:end_date) { Date.current.end_of_year }
+  let(:plan) { create :plan, user: current_user, start_date: start_date, end_date: end_date }
+
   let!(:activity1) { create :activity, plan: plan, seconds_per_week: 4 * 3600 } # 4h
   let!(:tag_association1) { create :tag_association, tag_type: tag_type1, tag: tag1a, taggable: activity1 }
   let!(:tag_association1a) { create :tag_association, :skip_validate, tag_type: tag_type2, tag: tag2a, taggable: activity1 }
 
   let(:end_date_year) { plan.start_date.year + 2 }
   let(:success_message) { I18n.t('notice.successfully.updated', model_name: Plan.model_name.human) }
+  let(:error_message) { 'Job plan could not be updated' }
 
   before do
     log_in current_user
@@ -31,11 +35,20 @@ describe 'User edits a plan', type: :feature, js: true do
   end
 
   it 'updates plan' do
-    bootstrap_select_year end_date_year, from: 'End date'
-
     within '.category' do
       find("option[data-id='#{tag1b.id}']").click
     end
+
+    find('.plan-end-date-container input').click
+
+    within '.flatpickr-calendar .flatpickr-months' do
+      2.times { find('.flatpickr-next-month').click } # 2 years forward
+    end
+
+    within '.flatpickr-monthSelect-months' do
+      find(:xpath, "span[text() = 'Jan']").click # Jan
+    end
+
     click_button 'Save'
 
     expect(page).to have_content success_message
@@ -144,17 +157,26 @@ describe 'User edits a plan', type: :feature, js: true do
   end
   # TODO: add similar scenario for create spec
 
-  context 'with end before start' do
-    let(:end_date_year) { plan.start_date.year - 1 }
+  context 'end date before start date' do
+    let(:end_date_error_details) { 'must occur after start date' }
 
-    before do
-      bootstrap_select_year end_date_year, from: Plan.human_attribute_name('end_date')
-    end
+    it 'does not update plan' do
+      find('.plan-start-date-container input').click
 
-    it 'does not save' do
-      expect { click_button 'Save' }.not_to change(Plan, :count)
+      within '.flatpickr-monthSelect-months' do # Nov
+        find(:xpath, "span[text() = 'Nov']").click
+      end
 
-      expect(page).not_to have_content success_message
+      find('.plan-end-date-container input').click
+
+      within '.flatpickr-monthSelect-months' do # Oct
+        find(:xpath, "span[text() = 'Oct']").click
+      end
+
+      click_button 'Save'
+
+      expect(page).to have_css '.alert-danger', text: error_message
+      expect(page).to have_css '.plan-end-date-container .invalid-feedback', text: end_date_error_details
     end
   end
 
@@ -248,7 +270,6 @@ describe 'User edits a plan', type: :feature, js: true do
 
       within signoffs_last_row_selector do
         bootstrap_select user2.name, from: 'User'
-        page.save_screenshot
       end
 
       click_button 'Save'

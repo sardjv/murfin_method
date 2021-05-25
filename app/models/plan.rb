@@ -10,6 +10,13 @@
 #  updated_at :datetime         not null
 #
 class Plan < ApplicationRecord
+  DEFAULT_START_DATE = (if ENV['PLAN_DEFAULT_START_MONTH']
+                          Date.current.change(month: ENV['PLAN_DEFAULT_START_MONTH'].to_i)
+                        else
+                          Date.current
+                        end).beginning_of_month
+  DEFAULT_END_DATE = (DEFAULT_START_DATE + 11.months).end_of_month
+
   include Cacheable
   cacheable watch: %w[start_date end_date], bust: [{ klass: 'User', ids: :user_id }]
 
@@ -17,6 +24,8 @@ class Plan < ApplicationRecord
   has_many :activities, dependent: :destroy
   accepts_nested_attributes_for :activities, allow_destroy: true
   has_many :signoffs, dependent: :destroy
+
+  after_initialize :set_default_range
 
   accepts_nested_attributes_for :signoffs, allow_destroy: true
 
@@ -27,10 +36,6 @@ class Plan < ApplicationRecord
 
   def name
     "#{user.name}'s #{start_date.year} #{Plan.model_name.human.titleize}"
-  end
-
-  def self.default_length
-    1.year - 1.day
   end
 
   def to_time_ranges
@@ -67,6 +72,11 @@ class Plan < ApplicationRecord
 
   private
 
+  def set_default_range
+    self.start_date ||= DEFAULT_START_DATE
+    self.end_date ||= DEFAULT_END_DATE
+  end
+
   def activities_rebuild_schedule
     activities.each do |a|
       a.build_schedule
@@ -77,7 +87,7 @@ class Plan < ApplicationRecord
   def validate_end_date_after_start_date
     return unless start_date && end_date && end_date <= start_date
 
-    errors.add :end_date, 'must occur after start date'
+    errors.add :end_date, I18n.t('errors.plan.end_date.should_be_after_start_date')
   end
 
   # Use updated_at.to_f here because the default is only accurate to

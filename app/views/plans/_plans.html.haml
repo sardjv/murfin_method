@@ -12,8 +12,8 @@
         - cache plan do
           %tr{ data: { plan_id: plan.id } }
             %td= plan.name
-            %td= I18n.l(plan.start_date, format: :readable)
-            %td= I18n.l(plan.end_date, format: :readable)
+            %td= I18n.l(plan.start_date, format: :month_year)
+            %td= I18n.l(plan.end_date, format: :month_year)
             %td
               %h4.text-white
                 %span{ class: "badge #{state_badge_colour(plan)}" }
