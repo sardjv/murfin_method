@@ -10,6 +10,8 @@ en:
       already_authenticated: "You are already signed in."
       inactive: "Your account is not activated yet."
       invalid: "Invalid %{authentication_keys} or password."
+      ldap_invalid: "Invalid Active Directory username or password."
+      ldap_user_not_found_in_database: User not found in Murfin+ database.
       locked: "Your account is locked."
       last_attempt: "You have one more attempt before your account is locked."
       not_found_in_database: "Invalid %{authentication_keys} or password."

@@ -24,6 +24,8 @@ gem 'climate_control'
 # https://github.com/heartcombo/devise
 gem 'devise', '~> 4.8.0'
 
+# gem 'devise_custom_authenticatable'
+
 # Better distance of time in words for Rails.
 # https://github.com/radar/distance_of_time_in_words
 gem 'dotiw', '~> 5.3.1'
@@ -63,6 +65,10 @@ gem 'kaminari', '~> 1.2.1'
 # Use MySQL as the database for Active Record.
 # https://github.com/brianmario/mysql2
 gem 'mysql2', '~> 0.5.3'
+
+# Pure Ruby LDAP library
+# https://github.com/ruby-ldap/ruby-net-ldap
+gem 'net-ldap', '~> 0.17'
 
 # OmniAuth is a flexible authentication system utilizing Rack middleware.
 # https://github.com/auth0/omniauth-auth0

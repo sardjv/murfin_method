@@ -18,7 +18,14 @@
 class User < ApplicationRecord
   strip_attributes only: %i[first_name last_name email epr_uuid]
   # :confirmable, :lockable, :timeoutable, :recoverable, :trackable and :omniauthable
+  #devise :custom_authenticatable, :database_authenticatable, :validatable, :rememberable
   devise :database_authenticatable, :validatable, :rememberable
+
+  def valid_for_custom_authentication?(password)
+    puts '----------------------'
+    # Your authentication logic goes here and returns either true or false
+    #LDAP.authenticate(self.username, password)
+  end
 
   include HasOptionalPassword
 
