@@ -1,4 +1,4 @@
-%nav.rootnav.navbar.navbar-expand-lg.navbar-dark.bg-primary
+%nav.rootnav.navbar.navbar-expand-md.navbar-dark.bg-primary
   .container
     %a.navbar-brand{ href: root_path }
       = image_pack_tag 'media/images/logos/murfin-plus-logo.svg', height: 50, class: 'ml-2', alt: 'Murfin+ logo'
@@ -22,9 +22,13 @@
         = render partial: 'shared/auth'
 - navs.each do |nav|
   - if presenter.any_subnavs_active?(nav) && nav[:enabled]
-    %nav.subnav.navbar.navbar-expand-lg
+    %nav.subnav.navbar.navbar-expand-lg.navbar-light
       .container
-        .collapse.navbar-collapse.pl-4
+        %a.navbar-brand.d-lg-none Admin Menu
+        %button.navbar-toggler{ 'aria-controls': 'subnav-content', 'aria-expanded': 'false', 'aria-label': 'Toggle navigation',
+                                'data-target': '#subnav-content', 'data-toggle': 'collapse', type: 'button' }
+          %span.navbar-toggler-icon
+        #subnav-content.collapse.navbar-collapse.pl-4
           - if user_authenticated?
             %ul.navbar-nav.mr-auto
               - nav[:subnavs].each do |subnav|
