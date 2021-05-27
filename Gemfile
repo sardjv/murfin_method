@@ -24,8 +24,6 @@ gem 'climate_control'
 # https://github.com/heartcombo/devise
 gem 'devise', '~> 4.8.0'
 
-# gem 'devise_custom_authenticatable'
-
 # Better distance of time in words for Rails.
 # https://github.com/radar/distance_of_time_in_words
 gem 'dotiw', '~> 5.3.1'
