@@ -3,13 +3,16 @@
   background-color: $yellow-500;
 }
 
-.page-footer {
-  border-top: 2px solid $primary;
-}
 
+
+// Top navbar ===================================
 .rootnav {
   padding-top: 0px;
   padding-bottom: 0px;
+
+  .navbar-toggler{
+    border: 1px solid white;
+  }
 
   .navbar-nav {
     .nav-link {
@@ -22,8 +25,16 @@
   }
 }
 
+
+
+// Admin navbar =================================
 .subnav {
   background-color: $grey-50;
+
+  .navbar-toggler{
+    border: 1px solid $grey-600;
+    // color: $grey-600;
+  }
 
   .nav-link {
     color: $grey-600;
@@ -34,7 +45,16 @@
   }
 }
 
-// Icons.
+
+
+// Footer =======================================
+.page-footer {
+  border-top: 2px solid $primary;
+}
+
+
+
+// Icons ========================================
 .bi-chevron-left, .bi-chevron-right {
   color: $grey-900;
 }
