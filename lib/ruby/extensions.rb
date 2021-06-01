@@ -13,6 +13,6 @@ end
 
 class Object
   def as_boolean
-    ActiveModel::Type::Boolean.new.cast(self)
+    !!ActiveModel::Type::Boolean.new.cast(self)
   end
 end
