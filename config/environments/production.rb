@@ -93,5 +93,5 @@ Rails.application.configure do
   config.web_socket_server_url = "#{ENV['SCHEME'] == 'https' : 'wss' : 'ws'}://#{ENV['HOSTNAME']}/cable" if ENV['HOSTNAME']
 
   # Action Cable's allowed Request Origins
-  config.action_cable.allowed_request_origins = ["#{ENV['SCHEME'] : 'http'}://#ENV['HOSTNAME']"] if ENV['HOSTNAME']
+  config.action_cable.allowed_request_origins = ["#{ENV['SCHEME'] || 'http'}://#ENV['HOSTNAME']"] if ENV['HOSTNAME']
 end
