@@ -1,4 +1,6 @@
 Rails.application.configure do
+  force_ssl = !!ActiveModel::Type::Boolean.new.cast(ENV['FORCE_SSL'])
+
   # Settings specified here will take precedence over
   # those in config/application.rb.
 
@@ -48,7 +50,7 @@ Rails.application.configure do
 
   # Force all access to the app over SSL, use Strict-Transport-Security,
   # and use secure cookies.
-  config.force_ssl = ENV['FORCE_SSL'].as_boolean
+  config.force_ssl = force_ssl
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -90,8 +92,8 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Action Cable's server URI
-  config.web_socket_server_url = "#{ENV['FORCE_SSL'].as_boolean ? 'wss' : 'ws'}://#{ENV['HOSTNAME']}/cable" if ENV['HOSTNAME']
+  config.web_socket_server_url = "#{force_ssl ? 'wss' : 'ws'}://#{ENV['HOSTNAME']}/cable" if ENV['HOSTNAME']
 
   # Action Cable's allowed Request Origins
-  config.action_cable.allowed_request_origins = ["#{ENV['FORCE_SSL'].as_boolean ? 'https' : 'http'}://#ENV['HOSTNAME']"] if ENV['HOSTNAME']
+  config.action_cable.allowed_request_origins = ["#{force_ssl ? 'https' : 'http'}://#ENV['HOSTNAME']"] if ENV['HOSTNAME']
 end
