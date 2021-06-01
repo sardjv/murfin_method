@@ -1,7 +1,7 @@
-sidekiq_config = if ENV['REDIS_PASSWORD']
-                   { url: "redis://:#{ENV['REDIS_PASSWORD']}@redis:#{ENV['REDIS_PORT']}/0" }
+sidekiq_config = if ENV['REDIS_URL'] && !ENV['REDIS_PASSWORD']
+                  { url: "#{ENV['REDIS_URL']}/0" }
                  else
-                   { url: ENV['REDIS_URL'] }
+                  { url: "redis://:#{ENV['REDIS_PASSWORD']}@#{ENV['REDIS_HOST']}:#{ENV['REDIS_PORT']}/0" }
                  end
 
 Sidekiq.configure_server do |config|
