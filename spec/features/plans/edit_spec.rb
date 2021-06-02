@@ -26,6 +26,9 @@ describe 'User edits a plan', type: :feature, js: true do
   let!(:tag_association1a) { create :tag_association, :skip_validate, tag_type: tag_type2, tag: tag2a, taggable: activity1 }
 
   let(:end_date_year) { plan.start_date.year + 2 }
+
+  let(:working_hours_per_week) { 40 }
+
   let(:success_message) { I18n.t('notice.successfully.updated', model_name: Plan.model_name.human) }
   let(:error_message) { 'Job plan could not be updated' }
 
@@ -38,6 +41,8 @@ describe 'User edits a plan', type: :feature, js: true do
     within '.category' do
       find("option[data-id='#{tag1b.id}']").click
     end
+
+    fill_in working_hours_per_week, with: working_hours_per_week
 
     find('.plan-end-date-container input').click
 
@@ -53,6 +58,7 @@ describe 'User edits a plan', type: :feature, js: true do
 
     expect(page).to have_content success_message
     expect(plan.reload.end_date.year).to eq end_date_year
+    expect(plan.working_hours_per_week).to eq working_hours_per_week
     expect(plan.activities.first.tags.first).to eq tag1b
   end
 

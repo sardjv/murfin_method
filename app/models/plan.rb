@@ -2,12 +2,13 @@
 #
 # Table name: plans
 #
-#  id         :bigint           not null, primary key
-#  start_date :date             not null
-#  end_date   :date             not null
-#  user_id    :bigint           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                     :bigint           not null, primary key
+#  start_date             :date             not null
+#  end_date               :date             not null
+#  user_id                :bigint           not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  working_hours_per_week :decimal(6, 2)
 #
 class Plan < ApplicationRecord
   DEFAULT_START_DATE = (if ENV['PLAN_DEFAULT_START_MONTH']
@@ -17,19 +18,24 @@ class Plan < ApplicationRecord
                         end).beginning_of_month
   DEFAULT_END_DATE = (DEFAULT_START_DATE + 11.months).end_of_month
 
+  DEFAULT_WORKING_HOURS_PER_WEEK = ENV['PLAN_DEFAULT_WORKING_HOURS_PER_WEEK'] || 37.5
+
   include Cacheable
   cacheable watch: %w[start_date end_date], bust: [{ klass: 'User', ids: :user_id }]
+
+  include HasRecordWarnings
 
   belongs_to :user
   has_many :activities, dependent: :destroy
   accepts_nested_attributes_for :activities, allow_destroy: true
   has_many :signoffs, dependent: :destroy
 
-  after_initialize :set_default_range
+  after_initialize :set_defaults
 
   accepts_nested_attributes_for :signoffs, allow_destroy: true
 
   validates :start_date, :end_date, presence: true
+  validates :working_hours_per_week, presence: true, numericality: { greater_than: 0, less_than_or_equal_to: 100 } # TODO set max
   validate :validate_end_date_after_start_date
 
   after_update :activities_rebuild_schedule
@@ -72,9 +78,11 @@ class Plan < ApplicationRecord
 
   private
 
-  def set_default_range
+  def set_defaults
     self.start_date ||= DEFAULT_START_DATE
     self.end_date ||= DEFAULT_END_DATE
+
+    self.working_hours_per_week ||= DEFAULT_WORKING_HOURS_PER_WEEK
   end
 
   def activities_rebuild_schedule

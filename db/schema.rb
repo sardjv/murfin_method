@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_23_150802) do
+ActiveRecord::Schema.define(version: 2021_06_01_135945) do
 
   create_table "activities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "schedule", size: :medium, null: false
@@ -70,7 +70,18 @@ ActiveRecord::Schema.define(version: 2021_03_23_150802) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.decimal "working_hours_per_week", precision: 6, scale: 2
     t.index ["user_id"], name: "index_plans_on_user_id"
+  end
+
+  create_table "record_warnings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "warnable_id"
+    t.string "warnable_type"
+    t.string "key"
+    t.json "data"
+    t.datetime "expires_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "signoffs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

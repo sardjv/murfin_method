@@ -5,6 +5,7 @@
         %th= Plan.human_attribute_name('name')
         %th= Plan.human_attribute_name('start_date')
         %th= Plan.human_attribute_name('end_date')
+        %th= Plan.human_attribute_name('working_hours_per_week')
         %th= Plan.human_attribute_name('state')
         %th{ colspan: 3 }
     %tbody
@@ -14,6 +15,7 @@
             %td= plan.name
             %td= I18n.l(plan.start_date, format: :month_year)
             %td= I18n.l(plan.end_date, format: :month_year)
+            %td= number_to_human plan.working_hours_per_week # TODO separator . or , ?
             %td
               %h4.text-white
                 %span{ class: "badge #{state_badge_colour(plan)}" }

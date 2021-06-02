@@ -26,6 +26,8 @@
                           autocomplete: 'off', 'data-behaviour-flatpickr': true, disabled: !policy(@plan).update?
           = f.text_field :end_date, wrapper: { class: 'col-md-3 plan-end-date-container' }, help: t('plans.hints.end_date'),
                           autocomplete: 'off', 'data-behaviour-flatpickr': true, disabled: !policy(@plan).update?
+        .row
+          = f.number_field :working_hours_per_week, wrapper: { class: 'col-md-3' }, step: 0.5
 
         .border.my-4.p-4
           %label= Plan.human_attribute_name('activities')
