@@ -12,5 +12,5 @@ test:
   adapter: test
 
 production:
-  adapter: redis
+  <<: *default
   channel_prefix: murfin_method_production
