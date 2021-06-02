@@ -1,3 +1,5 @@
+require 'ruby/extensions' # for as_boolean
+
 Rails.application.configure do
   # Settings specified here will take precedence over those
   # in config/application.rb.
@@ -56,4 +58,5 @@ Rails.application.configure do
   # https://www.fngtps.com/2019/rails6-blocked-host/
   config.hosts << 'www.example.com'
   config.hosts << 'app' # Dockerized app host
+  config.hosts << "#{ENV['FORCE_SSL'].as_boolean ? 'https' : 'http'}://#{ENV['HOSTNAME']}" if ENV['HOSTNAME'] # .env specified hostname
 end
