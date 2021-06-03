@@ -1,16 +1,16 @@
 default: &default
   adapter: redis
-  url: <%= "redis://redis:#{ENV['REDIS_PORT']}/1" %>
+  url: <%= "#{ENV['REDIS_URL'] || "redis://#{ENV['REDIS_HOST']}:#{ENV['REDIS_PORT']}"}/1" %>
   password: <%= ENV['REDIS_PASSWORD'] %>
 
 development:
   <<: *default
+  # adapter: async
   channel_prefix: murfin_method_development
 
 test:
   adapter: test
 
 production:
-  adapter: redis
-  url: <%= ENV['REDIS_URL'] %>
+  <<: *default
   channel_prefix: murfin_method_production
