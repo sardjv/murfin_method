@@ -33,7 +33,6 @@ describe 'Admin creates plan on behalf of a user', type: :feature, js: true do
     within '#plan-signoffs' do
       bootstrap_select user2.name, from: 'User'
     end
-    page.save_screenshot
 
     click_button 'Save'
 

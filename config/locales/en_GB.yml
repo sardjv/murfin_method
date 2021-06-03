@@ -30,6 +30,14 @@ en:
         last_name: Last name
       user_group:
         name: Name
+    errors:
+      models:
+        plan:
+          attributes:
+            contracted_minutes_per_week:
+              quarter_step_required: must use quarter step for minutes
+            end_date:
+              should_be_after_start_date: must occur after start date
   log_in_out: &log_in_out
     log_in: Log in
     log_out: Log out
@@ -98,9 +106,6 @@ en:
     activity:
       duration:
         missing: required
-    plan:
-      end_date:
-        should_be_after_start_date: must occur after start date'
     tag:
       should_match_parent: must match the selected parent
       should_match_tag_type: must belong to the selected tag_type
@@ -222,6 +227,8 @@ en:
     hints:
       start_date: start of month
       end_date: end of month
+    errors:
+      total_time_worked_per_week_higher_than_contracted: Total time worked per week is higher than contracted hours.
   search_form:
     placeholders:
       job_plans: Activity tag, user name or email

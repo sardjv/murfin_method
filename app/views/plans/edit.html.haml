@@ -27,7 +27,9 @@
           = f.text_field :end_date, wrapper: { class: 'col-md-3 plan-end-date-container' }, help: t('plans.hints.end_date'),
                           autocomplete: 'off', 'data-behaviour-flatpickr': true, disabled: !policy(@plan).update?
         .row
-          = f.number_field :working_hours_per_week, wrapper: { class: 'col-md-3' }, step: 0.5
+          = f.number_field :contracted_seconds_per_week, label: Plan.human_attribute_name('contracted_hours_per_week'),
+                            class: 'duration-picker-contracted-hours-per-week', step: :any,
+                            wrapper: { class: 'col-md-6 plan_contracted_hours_per_week_wrapper' }
 
         .border.my-4.p-4
           %label= Plan.human_attribute_name('activities')
@@ -49,7 +51,10 @@
                   %td{ colspan: 3 }
                   %td#plan-total-time-worked-per-week.small{ colspan: 2 }
                     - if @plan.activities.any?
-                      = t('plans.total_time_worked_per_week', total: duration_in_words(plan_total_time_worked_per_week(@plan), :short))
+                      = t('plans.total_time_worked_per_week', total: duration_in_words(@plan.total_minutes_worked_per_week, :short))
+
+          - if plan_show_contracted_hours_error?(@plan)
+            .alert.alert-warning= t('plans.errors.total_time_worked_per_week_higher_than_contracted')
 
           - if policy(@plan).update?
             %div

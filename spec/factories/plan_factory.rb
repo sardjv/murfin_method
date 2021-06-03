@@ -2,13 +2,13 @@
 #
 # Table name: plans
 #
-#  id                     :bigint           not null, primary key
-#  start_date             :date             not null
-#  end_date               :date             not null
-#  user_id                :bigint           not null
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  working_hours_per_week :decimal(6, 2)
+#  id                          :bigint           not null, primary key
+#  start_date                  :date             not null
+#  end_date                    :date             not null
+#  user_id                     :bigint           not null
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
+#  contracted_minutes_per_week :integer
 #
 FactoryBot.define do
   factory :plan do

@@ -2,20 +2,19 @@
 #
 # Table name: plans
 #
-#  id                     :bigint           not null, primary key
-#  start_date             :date             not null
-#  end_date               :date             not null
-#  user_id                :bigint           not null
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  working_hours_per_week :decimal(6, 2)
+#  id                          :bigint           not null, primary key
+#  start_date                  :date             not null
+#  end_date                    :date             not null
+#  user_id                     :bigint           not null
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
+#  contracted_minutes_per_week :integer
 #
 describe Plan, type: :model do
   subject { build(:plan) }
 
   it { should belong_to(:user) }
   it { should have_many(:activities).dependent(:destroy) }
-  it { should have_many(:record_warnings).dependent(:destroy) }
   it { should have_many(:signoffs).dependent(:destroy) }
 
   it { expect(subject).to be_valid }
@@ -24,7 +23,7 @@ describe Plan, type: :model do
 
   it { should validate_presence_of(:start_date) }
   it { should validate_presence_of(:end_date) }
-  it { should validate_numericality_of(:working_hours_per_week).greater_than(0).less_than_or_equal_to(100)
+  it { should validate_numericality_of(:contracted_minutes_per_week).greater_or_equal_to(0) }
 
   context 'with nil user_id' do
     subject { build(:plan, user_id: nil) }

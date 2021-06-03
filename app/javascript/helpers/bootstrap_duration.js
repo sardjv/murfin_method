@@ -19,6 +19,7 @@
       },
       showSeconds: false,
       showDays: true,
+      minutesStep: 1
     };
 
     const plugin = this;
@@ -30,12 +31,14 @@
     plugin.init = function init() {
       plugin.settings = $.extend({}, defaults, options);
 
+      const minutesStep = mainInput.attr('data-minutes-step') || null;
+
       const mainInputReplacer = $('<div>', {
         class: 'bdp-input form-inline',
         html: [
           buildDisplayBlock('days', !plugin.settings.showDays),
           buildDisplayBlock('hours', false, plugin.settings.showDays ? 23 : (plugin.settings.maxHours || 99999)),
-          buildDisplayBlock('minutes', false, 59),
+          buildDisplayBlock('minutes', false, 59, plugin.settings.minutesStep),
           buildDisplayBlock('seconds', !plugin.settings.showSeconds, 59),
         ],
       });
@@ -99,7 +102,7 @@
       updateUI();
     }
 
-    function buildDisplayBlock(id, hidden, max) {
+    function buildDisplayBlock(id, hidden, max, step = null) {
       const input = $('<input>', {
         class: 'form-control input-sm',
         type: 'number',
@@ -118,6 +121,10 @@
         text: translate(id),
       });
       labels[id] = label;
+
+      if(step) {
+        input.attr('step', step);
+      }
 
       return $('<div>', {
         class: `bdp-block ${hidden ? 'hidden d-none' : ''}`,
