@@ -47,11 +47,13 @@ describe CsvExport::Plans do
                             'Job plan contracted hours per week', 'Job plan total hours per week',
                             'Category', 'Subcategory', 'Outcomed on RiO', 'Activity time worked per week']
 
-    expect(data[1]).to eql [user1.first_name, user1.last_name, plan1.start_date.to_s, plan1.end_date.to_s, 'Draft', '37h 30m', '14h 30m', 'DCC',
-                            'Care Co-ordination', 'Yes', '8h']
-    expect(data[2]).to eql [user1.first_name, user1.last_name, plan1.start_date.to_s, plan1.end_date.to_s, 'Draft', '37h 30m', '14h 30m', 'SPA',
-                            'Initial Assessment', 'No', '6h 30m']
-    expect(data[3]).to eql [user2.first_name, user2.last_name, plan2.start_date.to_s, plan2.end_date.to_s, 'Draft', '0h', '7h', 'DCC', 'Team Meetings', nil,
-                            '7h']
+    expect(data[1]).to eql [user1.first_name, user1.last_name, plan1.start_date.to_s, plan1.end_date.to_s,
+                            'Draft', '37h 30m', '14h 30m', 'DCC', 'Care Co-ordination', 'Yes', '8h']
+
+    expect(data[2]).to eql [user1.first_name, user1.last_name, plan1.start_date.to_s, plan1.end_date.to_s,
+                            'Draft', '37h 30m', '14h 30m', 'SPA', 'Initial Assessment', 'No', '6h 30m']
+
+    expect(data[3]).to eql [user2.first_name, user2.last_name, plan2.start_date.to_s, plan2.end_date.to_s,
+                            'Draft', '0h', '7h', 'DCC', 'Team Meetings', nil, '7h']
   end
 end
