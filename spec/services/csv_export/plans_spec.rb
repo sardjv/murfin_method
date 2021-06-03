@@ -20,7 +20,9 @@ describe CsvExport::Plans do
   let!(:tag3b) { create :tag, name: 'No', tag_type: tag_type3, parent: nil }
 
   let(:user1) { create :user }
-  let(:plan1) { create :plan, user: user1, start_date: 1.year.ago.beginning_of_month, end_date: Date.current.end_of_month, contracted_minutes_per_week: 37.5 * 60 }
+  let(:plan1) do
+    create :plan, user: user1, start_date: 1.year.ago.beginning_of_month, end_date: Date.current.end_of_month, contracted_minutes_per_week: 37.5 * 60
+  end
 
   let!(:activity1) { create :activity, plan: plan1, seconds_per_week: 8 * 3600 } # 8h
   let!(:tag_association1a) { create :tag_association, tag_type: tag_type1, tag: tag1a, taggable: activity1 }

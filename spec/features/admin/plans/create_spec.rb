@@ -28,7 +28,9 @@ describe 'Admin creates plan on behalf of a user', type: :feature, js: true do
     end
 
     click_link 'Add Activity'
-    find_field(type: 'number', match: :first).set(hours_per_week)
+    within '#plan-activities-table' do
+      find_field(type: 'number', match: :first).set(hours_per_week)
+    end
 
     within '#plan-signoffs' do
       bootstrap_select user2.name, from: 'User'
@@ -41,6 +43,7 @@ describe 'Admin creates plan on behalf of a user', type: :feature, js: true do
     expect(plan.activities.count).to eq(1)
     expect(plan.start_date).to eql default_start_date
     expect(plan.end_date).to eql default_end_date
+    expect(plan.contracted_minutes_per_week).to eql 0
     expect(plan.signoffs.pluck(:user_id)).to eq [user2.id]
   end
 

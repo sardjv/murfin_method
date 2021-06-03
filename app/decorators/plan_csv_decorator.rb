@@ -7,11 +7,11 @@ class PlanCsvDecorator < BaseDecorator
   alias_attribute :job_plan_end_date, :end_date
 
   def job_plan_total_hours_per_week
-    duration_in_words(self.total_minutes_worked_per_week, :short)
+    duration_in_words(total_minutes_worked_per_week, :short)
   end
 
   def job_plan_contracted_hours_per_week
-    duration_in_words(self.contracted_minutes_per_week, :short)
+    duration_in_words(contracted_minutes_per_week, :short)
   end
 
   def job_plan_state
