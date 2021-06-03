@@ -25,17 +25,15 @@ class Plan < ApplicationRecord
   has_many :activities, dependent: :destroy
   accepts_nested_attributes_for :activities, allow_destroy: true
   has_many :signoffs, dependent: :destroy
+  accepts_nested_attributes_for :signoffs, allow_destroy: true
 
   after_initialize :set_defaults
-
-  accepts_nested_attributes_for :signoffs, allow_destroy: true
+  after_update :activities_rebuild_schedule
 
   validates :start_date, :end_date, presence: true
   validates :contracted_minutes_per_week, numericality: { greater_or_equal_to: 0 }
   validate :validate_contracted_minutes_per_week_quarter_step
   validate :validate_end_date_after_start_date
-
-  after_update :activities_rebuild_schedule
 
   def name
     "#{user.name}'s #{start_date.year} #{Plan.model_name.human.titleize}"

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'User creates a plan', type: :feature, js: true do
-  let(:current_user) { create :user }
+  let!(:current_user) { create :user }
   let(:contracted_hours_per_week) { 4 }
   let(:activity_hours_per_week) { 4 }
   let(:plan) { Plan.unscoped.last }
@@ -37,7 +37,9 @@ describe 'User creates a plan', type: :feature, js: true do
 
     click_link I18n.t('actions.add', model_name: Activity.model_name.human.titleize)
 
-    find_field(type: 'number', match: :first).set(activity_hours_per_week)
+    within '#plan-activities-table' do
+      find_field(type: 'number', match: :first).set(activity_hours_per_week)
+    end
 
     click_button 'Save'
 

@@ -1,6 +1,6 @@
 class CsvExport::Plans < BaseService
   include TimeRangeHelper # for duration_in_words
-  BASE_COLUMNS = %i[first_name last_name job_plan_start_date job_plan_end_date job_plan_state job_plan_total_hours_per_week].freeze
+  BASE_COLUMNS = %i[first_name last_name job_plan_start_date job_plan_end_date job_plan_state job_plan_contracted_hours_per_week job_plan_total_hours_per_week].freeze
 
   attr_accessor :plans
 

@@ -23,7 +23,7 @@ describe Plan, type: :model do
 
   it { should validate_presence_of(:start_date) }
   it { should validate_presence_of(:end_date) }
-  it { should validate_numericality_of(:contracted_minutes_per_week).greater_or_equal_to(0) }
+  it { should validate_numericality_of(:contracted_minutes_per_week).greater_than_or_equal_to(0) }
 
   context 'with nil user_id' do
     subject { build(:plan, user_id: nil) }
