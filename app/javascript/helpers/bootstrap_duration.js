@@ -31,8 +31,6 @@
     plugin.init = function init() {
       plugin.settings = $.extend({}, defaults, options);
 
-      const minutesStep = mainInput.attr('data-minutes-step') || null;
-
       const mainInputReplacer = $('<div>', {
         class: 'bdp-input form-inline',
         html: [
