@@ -53,6 +53,8 @@ services:
       - WEB_CONCURRENCY=1 # 1 is good for debugging.
     env_file:
       - '.env'
+    # extra_hosts: # if you need to connect some external host from container, it adds entries to /etc/hosts
+    #  - 'ldap.forumsys.com:52.87.186.93'
 
   chrome_headless:
     image: selenium/standalone-chrome:3.141.0
