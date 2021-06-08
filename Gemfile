@@ -38,7 +38,7 @@ gem 'faker', '~> 2.18.0'
 
 # A Ruby gem to transform HTML into PDFs, PNGs or JPEGs using Google Puppeteer/Chromium
 # https://github.com/Studiosity/grover
-gem 'grover', '~> 1.0.0'
+gem 'grover', '~> 1.0.1'
 
 # HTML Abstraction Markup Language - A Markup Haiku
 # https://github.com/haml/haml
@@ -193,7 +193,7 @@ group :test do
 
   # A browser automation framework and ecosystem.
   # https://github.com/SeleniumHQ/selenium/tree/trunk/rb
-  gem 'selenium-webdriver', '4.0.0.beta3'
+  gem 'selenium-webdriver', '4.0.0.beta4'
 
   # Cookie manipulation for Capybara
   # https://github.com/nruth/show_me_the_cookies
