@@ -235,9 +235,6 @@ describe 'filters tags logic', js: true do
             expect(page).to have_content '6h'
           end
         end
-        page.save_screenshot
-        pp time_range7_start_date.beginning_of_week
-        pp time_range7_start_date.beginning_of_week.to_s(:db)
 
         within "tr[data-week-start-date = '#{time_range7_start_date.beginning_of_week}']" do
           within '.team-individual-table-actual-minutes' do
