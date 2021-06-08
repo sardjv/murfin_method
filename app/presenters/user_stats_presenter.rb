@@ -102,7 +102,7 @@ class UserStatsPresenter
     actual_time_ranges.empty?
   end
 
-  def calculate_actual_time_ranges # rubocop:disable Metrics/AbcSize
+  def calculate_actual_time_ranges
     scope = user_actual_time_ranges
 
     scope = scope.where('start_time BETWEEN ? AND ?', filter_start_time, filter_end_time).or(
