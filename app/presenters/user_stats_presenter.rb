@@ -111,8 +111,6 @@ class UserStatsPresenter
       scope.where('start_time <= ? AND end_time >= ?', filter_start_time, filter_end_time)
     ).distinct
 
-    scope = scope.filter_by_tag_types_and_tags(filter_tag_ids) if filter_tag_ids.present?
-
     scope.distinct.to_a
   end
 
@@ -129,6 +127,8 @@ class UserStatsPresenter
   end
 
   def user_actual_time_ranges
-    user.time_ranges.where(time_range_type_id: actual_id)
+    scope = user.time_ranges.where(time_range_type_id: actual_id)
+    scope = scope.filter_by_tag_types_and_tags(filter_tag_ids) if filter_tag_ids.present?
+    scope
   end
 end
