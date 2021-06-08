@@ -21,31 +21,33 @@
         - else
           = f.hidden_field :user_id, value: f.object.user_id || current_user.id
 
-        = f.date_select :start_date, label: Plan.human_attribute_name('start_date'), disabled: !policy(@plan).update?
-
-        - if @plan.persisted?
-          = f.date_select :end_date, label: Plan.human_attribute_name('end_date'), disabled: !policy(@plan).update?
+        .row
+          = f.text_field :start_date, wrapper: { class: 'col-md-3 plan-start-date-container' }, help: t('plans.hints.start_date'),
+                          autocomplete: 'off', 'data-behaviour-flatpickr': true, disabled: !policy(@plan).update?
+          = f.text_field :end_date, wrapper: { class: 'col-md-3 plan-end-date-container' }, help: t('plans.hints.end_date'),
+                          autocomplete: 'off', 'data-behaviour-flatpickr': true, disabled: !policy(@plan).update?
 
         .border.my-4.p-4
           %label= Plan.human_attribute_name('activities')
-          %table#plan-activities-table.table
-            %thead.bg-white
-              %tr
-                - TagType.active_for(Activity).sorted.each do |t|
-                  %th.font-weight-normal.sort{ 'data-sort': t.name.parameterize }
-                    = t.name
-                %th.font-weight-normal.sort{ 'data-sort': Activity.human_attribute_name('duration').parameterize }
-                  = Activity.human_attribute_name('duration')
-                %th
-            %tbody.activities.list
-              = f.fields_for :activities, wrapper: false, include_id: false do |activity_form|
-                = render 'activity_fields', plan: @plan, plan_form: f, f: activity_form
-            %tfoot
-              %tr
-                %td{ colspan: 3 }
-                %td#plan-total-time-worked-per-week.small{ colspan: 2 }
-                  - if @plan.activities.any?
-                    = t('plans.total_time_worked_per_week', total: duration_in_words(plan_total_time_worked_per_week(@plan), :short))
+          .table-responsive
+            %table#plan-activities-table.table.table-sm
+              %thead.bg-white
+                %tr
+                  - TagType.active_for(Activity).sorted.each do |t|
+                    %th.font-weight-normal.sort{ 'data-sort': t.name.parameterize }
+                      = t.name
+                  %th.font-weight-normal.sort{ 'data-sort': Activity.human_attribute_name('duration').parameterize }
+                    = Activity.human_attribute_name('duration')
+                  %th
+              %tbody.activities.list
+                = f.fields_for :activities, wrapper: false, include_id: false do |activity_form|
+                  = render 'activity_fields', plan: @plan, plan_form: f, f: activity_form
+              %tfoot
+                %tr
+                  %td{ colspan: 3 }
+                  %td#plan-total-time-worked-per-week.small{ colspan: 2 }
+                    - if @plan.activities.any?
+                      = t('plans.total_time_worked_per_week', total: duration_in_words(plan_total_time_worked_per_week(@plan), :short))
 
           - if policy(@plan).update?
             %div

@@ -9,4 +9,4 @@
   = render 'summary', presenter: @presenter.team_stats_presenter
 
 :javascript
-  var lineChartData = #{raw @presenter.to_json(graphs: [{ type: :line_chart, data: :team_data }])};
+  lineChartData = #{raw @presenter.to_json(graphs: [{ type: :line_chart, data: :team_data }])};

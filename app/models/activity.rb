@@ -70,6 +70,17 @@ class Activity < ApplicationRecord
     end
   end
 
+  def build_schedule
+    return unless plan
+
+    activity_start_time = plan.start_date.beginning_of_day
+    self.schedule = ScheduleBuilder.call(
+      start_time: activity_start_time,
+      schedule: schedule,
+      minutes_per_week: @seconds_per_week.to_f / 60
+    )
+  end
+
   private
 
   # Use updated_at.to_f here because the default is only accurate to
@@ -84,16 +95,5 @@ class Activity < ApplicationRecord
     return unless start_time && end_time && end_time <= start_time
 
     errors.add :duration, I18n.t('errors.activity.duration.missing')
-  end
-
-  def build_schedule
-    return unless plan
-
-    activity_start_time = plan.start_date.beginning_of_day
-    self.schedule = ScheduleBuilder.call(
-      start_time: activity_start_time,
-      schedule: schedule,
-      minutes_per_week: @seconds_per_week.to_f / 60
-    )
   end
 end

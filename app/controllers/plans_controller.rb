@@ -15,7 +15,7 @@ class PlansController < ApplicationController
   end
 
   def create
-    @plan = build_plan
+    @plan = Plan.new(plan_params)
     authorize @plan
 
     if @plan.save
@@ -66,12 +66,6 @@ class PlansController < ApplicationController
 
   def notice(action)
     t("notice.#{action}", model_name: Plan.model_name.human)
-  end
-
-  def build_plan
-    Plan.new(plan_params) do |plan|
-      plan.end_date = plan.start_date + Plan.default_length
-    end
   end
 
   def plan_params

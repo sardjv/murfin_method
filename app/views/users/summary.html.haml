@@ -10,5 +10,12 @@
       = render 'team_individuals/boxes', presenter: @presenter
       = render 'team_individuals/graph', presenter: @presenter
 
+:ruby
+  dataset_labels = t("graphs.#{graph_kind}.dataset_labels.#{graph_time_scope}", default: nil)
+  units = t("graphs.#{graph_kind}.units", default: '')
+
 :javascript
-  var lineChartData = #{raw @presenter.to_json(graphs: [{ type: :line_chart, data: :team_individual_data }])};
+  lineChartData = #{raw @presenter.to_json(graphs: [{ type: :line_chart,
+                                                      data: :team_individual_data,
+                                                      units: units,
+                                                      dataset_labels: dataset_labels }])};
