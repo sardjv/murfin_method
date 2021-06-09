@@ -54,7 +54,7 @@ class TimeRange < ApplicationRecord
 
   # requires custom validation because value is BigDecimal
   def validate_value_positive
-    return if value&.to_i&.positive?
+    return if value&.to_f&.positive?
 
     errors.add :value, :greater_than, count: 0
   end
