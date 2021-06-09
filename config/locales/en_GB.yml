@@ -21,8 +21,8 @@ en:
         appointment_id: Appointment ID
         appointment_id_short: Appt. ID
         time_range_type: Type
-        value: Time worked
-        time_worked: Worked
+        value: Appointment duration
+        time_worked: Appointment duration
       user:
         email: Email
         epr_uuid: EPR UUID
@@ -100,7 +100,10 @@ en:
         missing: required
     plan:
       end_date:
-        should_be_after_start_date: must occur after start date'
+        should_be_after_start_date: must occur after start date
+    time_range:
+      end_time:
+        should_be_after_start_time: must occur after start time
     tag:
       should_match_parent: must match the selected parent
       should_match_tag_type: must belong to the selected tag_type

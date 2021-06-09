@@ -5,7 +5,8 @@ describe 'Admin creates plan on behalf of a user', type: :feature, js: true do
   let!(:user1) { create :user }
   let!(:user2) { create :user }
 
-  let(:hours_per_week) { 8 }
+  let(:hours) { Faker::Number.between(from: 1, to: 16) }
+
   let(:plan) { Plan.unscoped.last }
 
   let(:default_start_date) { Plan::DEFAULT_START_DATE }
@@ -28,16 +29,16 @@ describe 'Admin creates plan on behalf of a user', type: :feature, js: true do
     end
 
     click_link 'Add Activity'
-    find_field(type: 'number', match: :first).set(hours_per_week)
+    find_field(type: 'number', match: :first).set(hours)
 
     within '#plan-signoffs' do
       bootstrap_select user2.name, from: 'User'
     end
-    page.save_screenshot
 
     click_button 'Save'
 
     expect(page).to have_css '.alert-info', text: success_message
+
     expect(plan.user_id).to eq(user2.id)
     expect(plan.activities.count).to eq(1)
     expect(plan.start_date).to eql default_start_date
@@ -45,15 +46,55 @@ describe 'Admin creates plan on behalf of a user', type: :feature, js: true do
     expect(plan.signoffs.pluck(:user_id)).to eq [user2.id]
   end
 
-  context 'when invalid' do
+  context 'with tags' do
+    let(:tag_type1) { create :tag_type }
+    let(:tag_type2) { create :tag_type }
+    let(:tag_type3) { create :tag_type }
+    let(:tag_type4) { create :tag_type }
+
+    let!(:tag1a) { create :tag, tag_type: tag_type1 }
+    let!(:tag1b) { create :tag, tag_type: tag_type1 }
+
+    let!(:tag2a) { create :tag, tag_type: tag_type2 }
+    let!(:tag2b) { create :tag, tag_type: tag_type2 }
+
+    it 'creates plan with activity and tag' do
+      within '.plan-user-id-form-group' do
+        bootstrap_select user2.name, from: 'User'
+      end
+
+      click_link 'Add Activity'
+
+      within '.activities .nested-fields' do
+        bootstrap_select tag1b.name, from: tag_type1.name
+        find_field(type: 'number', match: :first).set(hours)
+      end
+
+      expect do
+        click_button 'Save'
+
+        expect(page).to have_css '.alert-info', text: success_message
+      end.to change { TagAssociation.count }.by(1)
+
+      expect(plan.activities.count).to eq 1
+
+      expect(plan.activities.first.tags.pluck(:id)).to eql [tag1b.id]
+    end
+  end
+
+  context 'activity has missing time worked per week' do
     let(:error_message) { I18n.t('notice.could_not_be.created', model_name: Plan.model_name.human) }
+    let(:error_details) { 'Time worked per week required' }
 
     it 'shows errors' do
       click_link 'Add Activity'
       click_button 'Save'
 
       expect(page).to have_css '.alert-danger', text: error_message
-      expect(page).to have_content("#{Activity.human_attribute_name('duration')} #{I18n.t('errors.activity.duration.missing')}")
+
+      within '.time-worked-per-week' do
+        expect(page).to have_content error_details
+      end
     end
   end
 end
