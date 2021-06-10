@@ -50,13 +50,16 @@ describe 'Admin creates plan on behalf of a user', type: :feature, js: true do
     let(:tag_type1) { create :tag_type }
     let(:tag_type2) { create :tag_type }
     let(:tag_type3) { create :tag_type }
-    let(:tag_type4) { create :tag_type }
 
     let!(:tag1a) { create :tag, tag_type: tag_type1 }
     let!(:tag1b) { create :tag, tag_type: tag_type1 }
 
     let!(:tag2a) { create :tag, tag_type: tag_type2 }
     let!(:tag2b) { create :tag, tag_type: tag_type2 }
+
+    before do
+      visit new_plan_path
+    end
 
     it 'creates plan with activity and tag' do
       within '.plan-user-id-form-group' do
@@ -66,19 +69,19 @@ describe 'Admin creates plan on behalf of a user', type: :feature, js: true do
       click_link 'Add Activity'
 
       within '.activities .nested-fields' do
-        bootstrap_select tag1b.name, from: tag_type1.name
+        bootstrap_select tag1a.name, from: tag_type1.name
+
         find_field(type: 'number', match: :first).set(hours)
       end
 
       expect do
         click_button 'Save'
-
-        expect(page).to have_css '.alert-info', text: success_message
       end.to change { TagAssociation.count }.by(1)
 
-      expect(plan.activities.count).to eq 1
+      expect(page).to have_css '.alert-info', text: success_message
 
-      expect(plan.activities.first.tags.pluck(:id)).to eql [tag1b.id]
+      expect(plan.activities.count).to eq 1
+      expect(plan.activities.first.tags.pluck(:id)).to eql [tag1a.id]
     end
   end
 
