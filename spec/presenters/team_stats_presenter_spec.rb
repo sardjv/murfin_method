@@ -25,6 +25,9 @@ describe TeamStatsPresenter, freeze: Time.zone.local(2020, 6, 26, 14, 59, 59) do
   let(:tag2) { create(:tag) }
   let(:tag3) { create(:tag) }
 
+  let(:tag4) { create(:tag) }
+  let(:tag5) { create(:tag) }
+
   let(:graph_kind) { 'planned_vs_actual' }
 
   context 'monthly' do
@@ -114,7 +117,7 @@ describe TeamStatsPresenter, freeze: Time.zone.local(2020, 6, 26, 14, 59, 59) do
           end
 
           context 'not related tags included' do
-            let(:filter_tag_ids) { [1001, 1002] }
+            let(:filter_tag_ids) { [tag4.id, tag5.id] }
 
             it "returns 0s for all rows' values" do
               expect(subject.average_weekly_planned_per_month.pluck(:value).uniq).to eq [0]
@@ -145,7 +148,7 @@ describe TeamStatsPresenter, freeze: Time.zone.local(2020, 6, 26, 14, 59, 59) do
           end
 
           context 'not related tags included' do
-            let(:filter_tag_ids) { [1001, 1002] }
+            let(:filter_tag_ids) { [tag4.id, tag5.id] }
 
             it "returns 0s for all rows' values" do
               expect(subject.average_weekly_actual_per_month.pluck(:value).uniq).to eq [0]
@@ -325,7 +328,7 @@ describe TeamStatsPresenter, freeze: Time.zone.local(2020, 6, 26, 14, 59, 59) do
           end
 
           context 'not related tags included' do
-            let(:filter_tag_ids) { [1001, 1002] }
+            let(:filter_tag_ids) { [tag4.id, tag5.id] }
 
             it "returns 0s for all rows' values" do
               expect(subject.average_weekly_planned_per_week.pluck(:value).uniq).to eq [0]

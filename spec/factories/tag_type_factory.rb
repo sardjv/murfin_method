@@ -13,7 +13,7 @@
 FactoryBot.define do
   factory :tag_type do
     name { Faker::Lorem.unique.word }
-    active_for_activities_at { Time.current - 1.second }
-    active_for_time_ranges_at { Time.current - 1.second }
+    active_for_activities_at { 1.year.ago }
+    active_for_time_ranges_at { 1.year.ago }
   end
 end
