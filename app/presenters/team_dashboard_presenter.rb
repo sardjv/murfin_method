@@ -105,7 +105,7 @@ class TeamDashboardPresenter
   private
 
   def users
-    @users ||= User.where(id: @params[:user_ids])
+    @users ||= User.where(id: @params[:user_ids]) #.limit(50).offset(100) # TODO remove limit
   end
 
   def defaults
@@ -124,7 +124,6 @@ class TeamDashboardPresenter
   end
 
   # team individuals bar chart
-
   def bar_chart_value(user:)
     return if user.time_ranges.none?
 

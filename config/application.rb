@@ -49,9 +49,12 @@ module Murfin # rubocop:disable Style/ClassAndModuleChildren
 
     # Set Redis as the back-end for the cache.
     config.cache_store = :redis_cache_store, {
+      # driver: :hiredis,
       url: "#{ENV['REDIS_URL'] || "redis://#{ENV['REDIS_HOST']}:#{ENV['REDIS_PORT']}"}/0",
       password: ENV['REDIS_PASSWORD'],
-      namespace: ENV['REDIS_CACHE_NAMESPACE']
+      namespace: ENV['REDIS_CACHE_NAMESPACE'],
+      #read_timeout:       0.5, # Defaults to 1 second
+      #write_timeout:      0.5, # Defaults to 1 second
     }
 
     # Set Sidekiq as the back-end for Active Job.

@@ -57,9 +57,18 @@ class Activity < ApplicationRecord
     super(ice_cube_schedule.to_yaml)
   end
 
-  def to_time_ranges # rubocop:disable Metrics/AbcSize
-    Rails.cache.fetch(time_ranges_cache_key, expires_in: 1.week) do
-      schedule.occurrences_between(plan.start_date.beginning_of_day, plan.end_date.end_of_day).map do |o|
+  def to_time_ranges(filter_start_time = nil, filter_end_time = nil) # rubocop:disable Metrics/AbcSize
+
+    # FIXME: take intersection of plan and filter ranges ?
+    range_start = (filter_start_time || plan.start_date).beginning_of_day
+    range_end = (filter_end_time || plan.end_date).end_of_day
+
+    cache_key = "#{time_ranges_cache_key}##{range_start.to_i}##{range_end.to_i}"
+
+    #Rails.cache.fetch(time_ranges_cache_key, expires_in: 1.week) do
+    Rails.cache.fetch(cache_key, expires_in: 1.week) do
+      #schedule.occurrences_between(plan.start_date.beginning_of_day, plan.end_date.end_of_day).map do |o|
+      schedule.occurrences_between(range_start, range_end).map do |o|
         TimeRange.new(
           start_time: o.start_time,
           end_time: o.end_time,
@@ -88,7 +97,7 @@ class Activity < ApplicationRecord
   # within 1 second. Also makes for a shorter key.
   # "2021-01-29 13:52:43 UTC" vs "1611928363.130215"
   def time_ranges_cache_key
-    "Activity#to_time_ranges##{id}##{updated_at.to_f}"
+    "Activity#to_time_ranges##{self.id}##{self.updated_at.to_f}"
   end
 
   def validate_end_time_after_start_time
