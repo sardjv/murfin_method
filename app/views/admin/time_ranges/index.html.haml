@@ -28,7 +28,7 @@
                   %td.text-nowrap= time_range.time_range_type.name
                   %td= time_range.start_time.strftime(I18n.t('time.formats.readable'))
                   %td= time_range.end_time.strftime(I18n.t('time.formats.readable'))
-                  %td= duration_in_words(time_range.value, :short)
+                  %td= duration_in_words(time_range.value.to_i, :short)
                   %td.text-nowrap= time_range.user.name
                   %td= time_range.appointment_id
                   %td.small-cell

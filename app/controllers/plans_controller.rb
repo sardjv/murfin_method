@@ -21,6 +21,7 @@ class PlansController < ApplicationController
     if @plan.save
       redirect_to plans_path, notice: notice('successfully.created')
     else
+      copy_errors_for_contracted_minutes_per_week
       flash.now.alert = notice('could_not_be.created')
       render :edit, status: :unprocessable_entity
     end
@@ -47,6 +48,7 @@ class PlansController < ApplicationController
     if @plan.update(plan_params)
       redirect_to edit_plan_path(@plan), notice: notice('successfully.updated')
     else
+      copy_errors_for_contracted_minutes_per_week
       flash.now.alert = notice('could_not_be.updated')
       render :edit, status: :unprocessable_entity
     end
@@ -73,10 +75,19 @@ class PlansController < ApplicationController
       :start_date,
       :end_date,
       :user_id,
+      :contracted_seconds_per_week,
       activities_attributes: [
         :id, :seconds_per_week, :_destroy, { tag_associations_attributes: %i[id tag_type_id tag_id _destroy] }
       ],
       signoffs_attributes: %i[id user_id _destroy]
     )
+  end
+
+  # make display error on the form for respective field
+  # we use contracted_minutes_per_week there because of time duration lib
+  def copy_errors_for_contracted_minutes_per_week
+    return if @plan.errors.messages_for(:contracted_mintes_per_week).empty?
+
+    @plan.errors.add :contracted_seconds_per_week, @plan.errors.messages_for(:contracted_minutes_per_week)
   end
 end

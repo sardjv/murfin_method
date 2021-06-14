@@ -56,9 +56,18 @@ function styleDurations() {
     showDays: false,
     showSeconds: false
   });
+
   $('.duration-picker-activity').durationPicker({
     showDays: false,
     showSeconds: false,
-    maxHours: 99
+    maxHours: 99,
+    minutesStep: 15
+  });
+
+  $('.duration-picker-contracted-hours-per-week').durationPicker({
+    showDays: false,
+    showSeconds: false,
+    maxHours: 99,
+    minutesStep: 15
   });
 }

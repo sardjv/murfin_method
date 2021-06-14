@@ -63,13 +63,13 @@ describe 'Team Individuals', type: :feature, js: true, freeze: Time.zone.local(2
     describe 'caching' do
       context 'when actuals are updated' do
         before do
-          user.time_ranges.each { |tr| tr.update(value: 0) }
+          user.time_ranges.each { |tr| tr.update(value: 240) }
           visit current_path
         end
 
         it 'updates the values' do
           within('.table') do
-            expect(page).to have_text 'Really Under'
+            expect(page).to have_text 'About Right'
           end
         end
       end

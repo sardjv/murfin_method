@@ -20,6 +20,7 @@ class Admin::TimeRangesController < ApplicationController
     if @time_range.save
       redirect_to admin_time_ranges_path, notice: notice('successfully.created')
     else
+      copy_errors_for_seconds_worked
       flash.now.alert = notice('could_not_be.created')
       render :edit, status: :unprocessable_entity
     end
@@ -31,6 +32,7 @@ class Admin::TimeRangesController < ApplicationController
     if @time_range.update(time_range_params)
       redirect_to admin_time_ranges_path, notice: notice('successfully.updated')
     else
+      copy_errors_for_seconds_worked
       flash.now.alert = notice('could_not_be.updated')
       render :edit, status: :unprocessable_entity
     end
@@ -62,5 +64,13 @@ class Admin::TimeRangesController < ApplicationController
       :user_id,
       tag_associations_attributes: %i[id tag_type_id tag_id _destroy]
     )
+  end
+
+  # display error on the form for respective field
+  # we use seconds_worked there because of duration picker js lib
+  def copy_errors_for_seconds_worked
+    return if @time_range.errors.messages_for(:value).empty?
+
+    @time_range.errors.add :seconds_worked, @time_range.errors.messages_for(:value)
   end
 end

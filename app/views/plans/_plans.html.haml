@@ -5,6 +5,7 @@
         %th= Plan.human_attribute_name('name')
         %th= Plan.human_attribute_name('start_date')
         %th= Plan.human_attribute_name('end_date')
+        %th.text-nowrap= Plan.human_attribute_name('contracted_hours_per_week')
         %th= Plan.human_attribute_name('state')
         %th{ colspan: 3 }
     %tbody
@@ -14,6 +15,7 @@
             %td= plan.name
             %td= I18n.l(plan.start_date, format: :month_year)
             %td= I18n.l(plan.end_date, format: :month_year)
+            %td= duration_in_words(plan.contracted_minutes_per_week, :short) if plan.contracted_minutes_per_week
             %td
               %h4.text-white
                 %span{ class: "badge #{state_badge_colour(plan)}" }

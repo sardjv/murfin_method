@@ -3,7 +3,7 @@ module Taggable
 
   included do
     has_many :tag_associations, as: :taggable, dependent: :destroy
-    accepts_nested_attributes_for :tag_associations, allow_destroy: true
+    accepts_nested_attributes_for :tag_associations, allow_destroy: true, reject_if: proc { |attrs| attrs['tag_id'].blank? }
     has_many :tag_types, through: :tag_associations
     has_many :tags, through: :tag_associations
 
