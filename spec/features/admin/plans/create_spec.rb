@@ -74,7 +74,7 @@ describe 'Admin creates plan on behalf of a user', type: :feature, js: true do
       within '.activities .nested-fields' do
         bootstrap_select tag1a.name, from: tag_type1.name
 
-        find_field(type: 'number', match: :first).set(hours)
+        find_field(type: 'number', match: :first).set(activity_hours_per_week)
       end
 
       expect do
