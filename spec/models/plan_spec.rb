@@ -2,24 +2,28 @@
 #
 # Table name: plans
 #
-#  id         :bigint           not null, primary key
-#  start_date :date             not null
-#  end_date   :date             not null
-#  user_id    :bigint           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                          :bigint           not null, primary key
+#  start_date                  :date             not null
+#  end_date                    :date             not null
+#  user_id                     :bigint           not null
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
+#  contracted_minutes_per_week :integer
 #
 describe Plan, type: :model do
   subject { build(:plan) }
 
+  it { should belong_to(:user) }
+  it { should have_many(:activities).dependent(:destroy) }
+  it { should have_many(:signoffs).dependent(:destroy) }
+
   it { expect(subject).to be_valid }
+
+  it { should accept_nested_attributes_for(:activities).allow_destroy(true) }
 
   it { should validate_presence_of(:start_date) }
   it { should validate_presence_of(:end_date) }
-  it { should belong_to(:user) }
-  it { should have_many(:activities).dependent(:destroy) }
-  it { should accept_nested_attributes_for(:activities).allow_destroy(true) }
-  it { should have_many(:signoffs).dependent(:destroy) }
+  it { should validate_numericality_of(:contracted_minutes_per_week) }
 
   context 'with nil user_id' do
     subject { build(:plan, user_id: nil) }

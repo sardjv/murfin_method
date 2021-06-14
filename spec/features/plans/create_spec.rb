@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 describe 'User creates a plan', type: :feature, js: true do
-  let(:current_user) { create :user }
-  let(:hours_per_week) { 4 }
+  let!(:current_user) { create :user }
+  let(:contracted_hours_per_week) { 4 }
+  let(:activity_hours_per_week) { 4 }
   let(:plan) { Plan.unscoped.last }
 
   let(:start_date) { Date.current.change(month: 5, day: 1) } # May current year
@@ -30,9 +31,15 @@ describe 'User creates a plan', type: :feature, js: true do
       find(:xpath, "span[text() = 'Feb']").click
     end
 
+    within '.plan_contracted_hours_per_week_wrapper' do
+      find_field(type: 'number', match: :first).set(contracted_hours_per_week)
+    end
+
     click_link I18n.t('actions.add', model_name: Activity.model_name.human.titleize)
 
-    find_field(type: 'number', match: :first).set(hours_per_week)
+    within '#plan-activities-table' do
+      find_field(type: 'number', match: :first).set(activity_hours_per_week)
+    end
 
     click_button 'Save'
 
@@ -42,6 +49,7 @@ describe 'User creates a plan', type: :feature, js: true do
     expect(plan.activities.count).to eq(1)
     expect(plan.start_date).to eql start_date
     expect(plan.end_date).to eql end_date
+    expect(plan.contracted_minutes_per_week).to eql contracted_hours_per_week * 60
     expect(plan.signoffs.pluck(:user_id)).to eql [current_user.id]
   end
 
