@@ -168,7 +168,7 @@ describe 'User edits a plan', type: :feature, js: true do
   # TODO: add similar scenario for create spec
 
   context 'time worked per week higher than contracted' do
-    let(:warning_message) { 'Total time worked per week is higher than contracted hours.' }
+    let(:warning_message) { 'Total time worked per week exceeds contracted hours.' }
 
     it 'should show warning message' do
       within '.plan_contracted_hours_per_week_wrapper' do
