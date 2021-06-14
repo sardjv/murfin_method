@@ -32,6 +32,12 @@ describe UserStatsPresenter, freeze: Time.zone.local(2020, 10, 30, 17, 59, 59) d
   end
 
   context 'when user has time range values' do
+    let(:actual_value) { 6274 } # 2 hours per week over the year in minutes.
+    let(:plan_start_time) { (1.year.ago + 1.day).beginning_of_day }
+    let(:plan_end_time) { Time.current.end_of_day }
+    let(:actual_start_time) { (1.year.ago + 1.day).beginning_of_day }
+    let(:actual_end_time) { Time.current.end_of_day }
+
     let!(:planned_activity) do
       create(
         :plan,
@@ -49,11 +55,6 @@ describe UserStatsPresenter, freeze: Time.zone.local(2020, 10, 30, 17, 59, 59) d
              end_time: actual_end_time,
              value: actual_value)
     end
-    let(:actual_value) { 6274 } # 2 hours per week over the year in minutes.
-    let(:plan_start_time) { (1.year.ago + 1.day).beginning_of_day }
-    let(:plan_end_time) { Time.current.end_of_day }
-    let(:actual_start_time) { (1.year.ago + 1.day).beginning_of_day }
-    let(:actual_end_time) { Time.current.end_of_day }
 
     describe 'status' do
       context 'when no planned data' do
@@ -62,36 +63,35 @@ describe UserStatsPresenter, freeze: Time.zone.local(2020, 10, 30, 17, 59, 59) d
           expect(subject.status).to eq 'Unknown'
         end
       end
+
       context 'when no actual data' do
         let!(:actual_activity) { nil }
         it 'returns Unknown' do
           expect(subject.status).to eq 'Unknown'
         end
       end
-      context 'when actual data with 0 value' do
-        let(:actual_value) { 0 }
-        it 'returns Really Under' do
-          expect(subject.status).to eq 'Really Under'
-        end
-      end
+
       context 'when 1 to 49' do
         let(:actual_value) { 6149 } # 49%
         it 'returns Really Under' do
           expect(subject.status).to eq 'Really Under'
         end
       end
+
       context 'when 50 to 79' do
         let(:actual_value) { 6274 } # 50%
         it 'returns Under' do
           expect(subject.status).to eq 'Under'
         end
       end
+
       context 'when 80 to 119' do
         let(:actual_value) { 10_039 } # 80%
         it 'returns About Right' do
           expect(subject.status).to eq 'About Right'
         end
       end
+
       context 'when 120+' do
         let(:actual_value) { 15_058 } # 120%
         it 'returns Over' do

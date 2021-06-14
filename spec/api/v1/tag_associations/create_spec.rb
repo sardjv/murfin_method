@@ -91,7 +91,8 @@ describe Api::V1::TagAssociationResource, type: :request, swagger_doc: 'v1/swagg
         end
       end
 
-      context 'optional tag id not passed but passed tag type id' do
+      # TODO: probably not needed, we don't have tag associations without tag id
+      xcontext 'optional tag id not passed but passed tag type id' do
         let(:attributes) { valid_attributes.except(:tag_id).merge({ tag_type_id: tag_type.id }) }
 
         response '201', 'Tag Association created' do

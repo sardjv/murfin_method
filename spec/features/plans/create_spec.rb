@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'User creates a plan', type: :feature, js: true do
-  let!(:current_user) { create :user }
+  let(:current_user) { create :user }
   let(:contracted_hours_per_week) { 4 }
   let(:activity_hours_per_week) { 4 }
   let(:plan) { Plan.unscoped.last }
@@ -9,6 +9,7 @@ describe 'User creates a plan', type: :feature, js: true do
   let(:start_date) { Date.current.change(month: 5, day: 1) } # May current year
   let(:end_date) { Date.current.change(year: Date.current.year + 1, month: 2).end_of_month } # Feb next year
 
+  let(:plan) { Plan.unscoped.last }
   let(:success_message) { I18n.t('notice.successfully.created', model_name: Plan.model_name.human) }
 
   before do
@@ -55,14 +56,17 @@ describe 'User creates a plan', type: :feature, js: true do
 
   context 'missing activity duration' do
     let(:error_message) { I18n.t('notice.could_not_be.created', model_name: Plan.model_name.human) }
-    let(:activity_duration_error_details) { "#{Activity.human_attribute_name('duration')} #{I18n.t('errors.activity.duration.missing')}" }
+    let(:error_details) { "#{Activity.human_attribute_name('duration')} #{I18n.t('errors.activity.duration.missing')}" }
 
     it 'shows errors' do
       click_link I18n.t('actions.add', model_name: Activity.model_name.human.titleize)
       click_button I18n.t('actions.save')
 
       expect(page).to have_css '.alert-danger', text: error_message
-      expect(page).to have_content activity_duration_error_details
+
+      within '.time-worked-per-week' do
+        expect(page).to have_content error_details
+      end
     end
   end
 end

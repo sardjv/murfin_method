@@ -38,10 +38,6 @@ describe 'User edits a plan', type: :feature, js: true do
   end
 
   it 'updates plan' do
-    within '.category' do
-      find("option[data-id='#{tag1b.id}']").click
-    end
-
     find('.plan-end-date-container input').click
 
     within '.flatpickr-calendar .flatpickr-months' do
@@ -63,7 +59,6 @@ describe 'User edits a plan', type: :feature, js: true do
 
     expect(plan.reload.end_date.year).to eq end_date_year
     expect(plan.contracted_minutes_per_week).to eq contracted_minutes_per_week
-    expect(plan.activities.first.tags.first).to eq tag1b
   end
 
   it 'contains total time worked per week' do

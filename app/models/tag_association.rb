@@ -12,7 +12,7 @@
 #
 class TagAssociation < ApplicationRecord
   belongs_to :tag_type
-  belongs_to :tag, optional: true
+  belongs_to :tag
   belongs_to :taggable, polymorphic: true
 
   validates :taggable_id, uniqueness: { scope: %i[taggable_type tag_type_id tag_id], case_sensitive: false }
