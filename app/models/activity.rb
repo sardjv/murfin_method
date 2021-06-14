@@ -58,15 +58,12 @@ class Activity < ApplicationRecord
   end
 
   def to_time_ranges(filter_start_time = nil, filter_end_time = nil) # rubocop:disable Metrics/AbcSize
-    # FIXME: take intersection of plan and filter ranges ?
-    range_start = (filter_start_time || plan.start_date).beginning_of_day
-    range_end = (filter_end_time || plan.end_date).end_of_day
+    range_start = ((filter_start_time && (plan.start_date > filter_start_time)) ? filter_start_time : plan.start_date).beginning_of_day
+    range_end = ((filter_end_time && (plan.end_date < filter_end_time)) ? filter_end_time : plan.end_date).end_of_day
 
     cache_key = "#{time_ranges_cache_key}##{range_start.to_i}##{range_end.to_i}"
 
-    # Rails.cache.fetch(time_ranges_cache_key, expires_in: 1.week) do
     Rails.cache.fetch(cache_key, expires_in: 1.week) do
-      # schedule.occurrences_between(plan.start_date.beginning_of_day, plan.end_date.end_of_day).map do |o|
       schedule.occurrences_between(range_start, range_end).map do |o|
         TimeRange.new(
           start_time: o.start_time,
