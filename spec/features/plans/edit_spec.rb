@@ -26,8 +26,11 @@ describe 'User edits a plan', type: :feature, js: true do
   let!(:tag_association1a) { create :tag_association, :skip_validate, tag_type: tag_type2, tag: tag2a, taggable: activity1 }
 
   let(:end_date_year) { plan.start_date.year + 2 }
+
+  let(:contracted_minutes_per_week) { (12.5 * 60).to_i } # 12h 30m
+
   let(:success_message) { I18n.t('notice.successfully.updated', model_name: Plan.model_name.human) }
-  let(:error_message) { 'Job plan could not be updated' }
+  let(:error_message) { I18n.t('notice.could_not_be.updated', model_name: Plan.model_name.human) }
 
   before do
     log_in current_user
@@ -45,10 +48,18 @@ describe 'User edits a plan', type: :feature, js: true do
       find(:xpath, "span[text() = 'Jan']").click # Jan
     end
 
+    within '.plan_contracted_hours_per_week_wrapper' do
+      find_field(type: 'number', match: :first).set(12)
+      all('input[type=number]').last.set(30)
+    end
+
     click_button 'Save'
 
-    expect(page).to have_content success_message
+    expect(page).to have_css '.alert-info', text: success_message
+
     expect(plan.reload.end_date.year).to eq end_date_year
+    expect(plan.contracted_minutes_per_week).to eq contracted_minutes_per_week
+    expect(plan.activities.first.tags.first).to eq tag1b
   end
 
   it 'contains total time worked per week' do
@@ -152,6 +163,37 @@ describe 'User edits a plan', type: :feature, js: true do
   end
   # TODO: add similar scenario for create spec
 
+  context 'time worked per week higher than contracted' do
+    let(:warning_message) { 'Total time worked per week exceeds contracted hours.' }
+
+    it 'should show warning message' do
+      within '.plan_contracted_hours_per_week_wrapper' do
+        find_field(type: 'number', match: :first).set(12)
+        all('input[type=number]').last.set(30)
+      end
+
+      within '.category' do
+        find("option[data-id='#{tag1b.id}']").click
+      end
+
+      within '.subcategory' do
+        find("option[data-id='#{tag2c.id}']").click
+      end
+
+      within '.time-worked-per-week' do
+        find_field(type: 'number', match: :first).set(13)
+      end
+
+      click_button 'Save'
+
+      expect(page).to have_css '.alert-info', text: success_message
+
+      within 'form.edit_plan' do
+        expect(page).to have_content warning_message
+      end
+    end
+  end
+
   context 'end date before start date' do
     let(:end_date_error_details) { 'must occur after start date' }
 
@@ -181,7 +223,7 @@ describe 'User edits a plan', type: :feature, js: true do
 
       click_button 'Save'
 
-      expect(page).to have_content success_message
+      expect(page).to have_css '.alert-info', text: success_message
     end
   end
 

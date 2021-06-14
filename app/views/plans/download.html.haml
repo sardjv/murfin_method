@@ -4,18 +4,27 @@
       %h5
         = image_tag pdf_image_url('media/images/logos/murfin-plus-logo.svg'), height: 50, alt: t('nav.logo.alt')
         = @plan.name
+
     .col-12
       %h5
         #{Plan.human_attribute_name('user')}:
         = @plan.user.name
+
     .col-12
       %h5
         #{Plan.human_attribute_name('start_date')}:
         = l @plan.start_date, format: :long
+
     .col-12
       %h5
         #{Plan.human_attribute_name('end_date')}:
         = l @plan.end_date, format: :long
+
+    .col-12
+      %h5
+        #{Plan.human_attribute_name('contracted_hours_per_week')}:
+        = duration_in_words(@plan.contracted_minutes_per_week, :short) unless @plan.contracted_minutes_per_week.zero?
+
     .col-12
       %h5
         #{Plan.human_attribute_name('state')}:
@@ -42,7 +51,7 @@
       %tr
         %td{ colspan: 3 }
         %td#plan-total-time-worked-per-week.small{ colspan: 2 }
-          = t('plans.total_time_worked_per_week', total: duration_in_words(plan_total_time_worked_per_week(@plan), :short))
+          = t('plans.total_time_worked_per_week', total: duration_in_words(@plan.total_minutes_worked_per_week, :short))
 
   %br
   %h5= Plan.human_attribute_name('signoffs')
