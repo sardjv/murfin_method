@@ -58,8 +58,8 @@ class Activity < ApplicationRecord
   end
 
   def to_time_ranges(filter_start_time = nil, filter_end_time = nil) # rubocop:disable Metrics/AbcSize
-    range_start = ((filter_start_time && (plan.start_date > filter_start_time)) ? filter_start_time : plan.start_date).beginning_of_day
-    range_end = ((filter_end_time && (plan.end_date < filter_end_time)) ? filter_end_time : plan.end_date).end_of_day
+    range_start = (filter_start_time && (plan.start_date > filter_start_time) ? filter_start_time : plan.start_date).beginning_of_day
+    range_end = (filter_end_time && (plan.end_date < filter_end_time) ? filter_end_time : plan.end_date).end_of_day
 
     cache_key = "#{time_ranges_cache_key}##{range_start.to_i}##{range_end.to_i}"
 
