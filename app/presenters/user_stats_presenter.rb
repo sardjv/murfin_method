@@ -128,5 +128,4 @@ class UserStatsPresenter
     scope.distinct.flat_map(&:to_time_ranges)
     # scope.distinct.flat_map { |a| a.to_time_ranges(filter_start_time, filter_end_time) }
   end
-
 end
