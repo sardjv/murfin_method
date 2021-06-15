@@ -105,7 +105,7 @@ class TeamDashboardPresenter
   private
 
   def users
-    @users ||= User.where(id: @params[:user_ids]) # .limit(50).offset(100) # TODO remove limit
+    @users ||= User.where(id: @params[:user_ids])
   end
 
   def defaults
