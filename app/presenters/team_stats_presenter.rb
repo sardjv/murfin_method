@@ -170,8 +170,8 @@ class TeamStatsPresenter
 
     scope = scope.filter_by_tag_types_and_tags(@filter_tag_ids) if @filter_tag_ids.present?
 
-    # scope = scope.distinct.flat_map { |a| a.to_time_ranges(filter_start_time, filter_end_time) }
-    scope.distinct.flat_map(&:to_time_ranges)
+    # scope.distinct.flat_map(&:to_time_ranges)
+    scope.distinct.flat_map { |a| a.to_time_ranges(filter_start_time, filter_end_time) }
   end
 
   def weekly_averages_per_month(time_ranges:)

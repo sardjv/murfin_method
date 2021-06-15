@@ -61,19 +61,17 @@ class Activity < ApplicationRecord
     # range_start = ((filter_start_time && (filter_start_time < plan.start_date)) ? filter_start_time : plan.start_date).beginning_of_day
     # range_end = ((filter_end_time && (filter_end_time > plan.end_date)) ? filter_end_time : plan.end_date).end_of_day
 
-    range_start = (filter_start_time || plan.start_date).beginning_of_day
-    range_end = (filter_end_time || plan.end_date).end_of_day
+    # range_start = (filter_start_time || plan.start_date).beginning_of_day
+    # range_end = (filter_end_time || plan.end_date).end_of_day
 
-    # beginning/end of month margin to make it look better on the chart
+    range_start = [filter_start_time, plan.start_date].compact.max.beginning_of_day
+    range_end = [filter_end_time, plan.end_date].compact.min.end_of_day
+
     # range_start = [filter_start_time, plan.start_date].compact.max.beginning_of_week.beginning_of_day
     # range_end = [filter_end_time, plan.end_date].compact.min.end_of_week.end_of_day
 
     # range_start = [filter_start_time, plan.start_date].compact.max.beginning_of_month.beginning_of_day
     # range_end = [filter_end_time, plan.end_date].compact.min.end_of_month.end_of_day
-
-    puts "========= filter_start_time = #{filter_start_time}, filter_end_time = #{filter_end_time}"
-    puts "========= plan: #{plan.start_date} - #{plan.end_date}"
-    puts "------RANGE: #{range_start} - #{range_end}"
 
     cache_key = "#{time_ranges_cache_key}##{range_start.to_i}-#{range_end.to_i}"
 
