@@ -9,7 +9,9 @@
 #  updated_at :datetime         not null
 #
 describe Activity, type: :model do
-  subject { build(:activity, plan: build(:plan, start_date: Date.parse('01/01/2020'))) }
+  subject { build :activity, plan: plan }
+
+  let(:plan) { build :plan, start_date: Date.parse('01/01/2020'), end_date: Date.parse('31/12/2020') }
 
   it { expect(subject).to be_valid }
 
@@ -22,20 +24,39 @@ describe Activity, type: :model do
       subject.update(seconds_per_week: seconds_per_week)
     end
 
-    context 'with 7 hours' do
-      let(:seconds_per_week) { 7 * 60 * 60 }
+    context 'with 10 hours per week' do
+      let(:seconds_per_week) { 10 * 60 * 60 }
+
+      let(:activity_start_time) { Time.zone.local(2020, 1, 1, 9, 0) }
+      let(:activity_end_time) { Time.zone.local(2020, 1, 1, 10, 25, 42) } # ~85m = 1h 25m per day
 
       it 'spreads it across the week' do
         expect(subject.days).to eq(%w[monday tuesday wednesday thursday friday saturday sunday])
-        expect(subject.start_time).to eq(Time.zone.local(2020, 1, 1, 9, 0))
-        expect(subject.end_time).to eq(Time.zone.local(2020, 1, 1, 10, 0))
+        expect(subject.start_time).to eq activity_start_time
+        expect(subject.end_time.to_s).to eq activity_end_time.to_s
         expect(subject.seconds_per_week).to eq(seconds_per_week)
       end
 
       describe 'to_time_ranges' do
-        it { expect(subject.to_time_ranges.first).to be_a(TimeRange) }
-        it { expect(subject.to_time_ranges.first.value).to eq(60) } # Minutes in 1 hour.
-        it { expect(subject.to_time_ranges.first.user_id).to eq(subject.plan.user_id) }
+        let(:time_range_value) { (seconds_per_week.to_f / 60 / 7) } # ~ 85m per day TODO change to value
+        let(:bulk_time_range_value) { 366 * time_range_value }
+
+        let(:result) { subject.to_time_ranges }
+        let(:result_prev) { subject.to_time_rangesPREV }
+
+        it 'returns one bulk time range' do
+          expect(result).to be_a TimeRange
+          expect(result.value.to_i).to eql bulk_time_range_value.to_i
+          expect(result.start_time.to_s).to eql plan.start_date.beginning_of_day.to_s
+          expect(result.end_time.to_s).to eql plan.end_date.end_of_day.to_s
+          expect(result.user_id).to eql plan.user_id
+        end
+
+        it 'PREV to time ranges' do
+          expect(result_prev.first).to be_a(TimeRange)
+          expect(result_prev.first.value.to_i).to eq time_range_value.to_i
+          expect(result_prev.first.user_id).to eq plan.user_id
+        end
       end
     end
   end
