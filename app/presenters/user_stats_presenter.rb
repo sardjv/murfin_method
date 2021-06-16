@@ -123,7 +123,8 @@ class UserStatsPresenter
   def user_plan_time_ranges
     scope = Activity.joins(:plan).where(plans: { user_id: user.id })
     scope = scope.filter_by_tag_types_and_tags(filter_tag_ids) if filter_tag_ids.present?
-    scope.distinct.flat_map(&:to_time_ranges)
+    #scope.distinct.flat_map(&:to_time_ranges)
+    scope.distinct.flat_map(&:to_bulk_time_range)
   end
 
   def user_actual_time_ranges

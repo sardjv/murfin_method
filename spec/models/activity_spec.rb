@@ -26,6 +26,7 @@ describe Activity, type: :model do
 
     context 'with 10 hours per week' do
       let(:seconds_per_week) { 10 * 60 * 60 }
+      let(:time_range_value) { (seconds_per_week.to_f / 60 / 7) } # ~ 85m per day TODO change to value
 
       let(:activity_start_time) { Time.zone.local(2020, 1, 1, 9, 0) }
       let(:activity_end_time) { Time.zone.local(2020, 1, 1, 10, 25, 42) } # ~85m = 1h 25m per day
@@ -37,12 +38,9 @@ describe Activity, type: :model do
         expect(subject.seconds_per_week).to eq(seconds_per_week)
       end
 
-      describe 'to_time_ranges' do
-        let(:time_range_value) { (seconds_per_week.to_f / 60 / 7) } # ~ 85m per day TODO change to value
+      describe 'to_bulk_time_range' do
+        let(:result) { subject.to_bulk_time_range }
         let(:bulk_time_range_value) { 366 * time_range_value }
-
-        let(:result) { subject.to_time_ranges }
-        let(:result_prev) { subject.to_time_ranges_prev }
 
         it 'returns one bulk time range' do
           expect(result).to be_a TimeRange
@@ -51,13 +49,19 @@ describe Activity, type: :model do
           expect(result.end_time.to_s).to eql plan.end_date.end_of_day.to_s
           expect(result.user_id).to eql plan.user_id
         end
+      end
 
-        it 'PREV to time ranges' do
-          expect(result_prev.first).to be_a(TimeRange)
-          expect(result_prev.first.value.to_i).to eq time_range_value.to_i
-          expect(result_prev.first.user_id).to eq plan.user_id
+      describe 'to_time_ranges' do
+        let(:result) { subject.to_time_ranges }
+
+        it 'returns time ranges' do
+          expect(result.count).to eql 366
+          expect(result.first).to be_a(TimeRange)
+          expect(result.first.value.to_i).to eq time_range_value.to_i
+          expect(result.first.user_id).to eq plan.user_id
         end
       end
+
     end
   end
 
