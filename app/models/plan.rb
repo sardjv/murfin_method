@@ -53,8 +53,8 @@ class Plan < ApplicationRecord
 
   def to_time_ranges
     Rails.cache.fetch(activities_cache_key, expires_in: 1.week) do
-      # activities.flat_map(&:to_time_ranges)
-      activities.flat_map(&:to_bulk_time_range)
+      activities.flat_map(&:to_time_ranges)
+      # activities.flat_map(&:to_bulk_time_range)
     end
   end
 
