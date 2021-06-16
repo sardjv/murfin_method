@@ -94,7 +94,7 @@ class Activity < ApplicationRecord
     self.schedule = ScheduleBuilder.call(
       start_time: activity_start_time,
       schedule: schedule,
-      minutes_per_week: @seconds_per_week / 60
+      minutes_per_week: @seconds_per_week.to_f / 60
     )
   end
 
