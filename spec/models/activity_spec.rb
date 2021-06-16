@@ -61,7 +61,6 @@ describe Activity, type: :model do
           expect(result.first.user_id).to eq plan.user_id
         end
       end
-
     end
   end
 
