@@ -57,17 +57,44 @@ class Activity < ApplicationRecord
     super(ice_cube_schedule.to_yaml)
   end
 
+  def to_time_rangesPREV # rubocop:disable Metrics/AbcSize
+    res = nil
+    # Rails.cache.fetch(time_ranges_cache_key, expires_in: 1.week) do
+    bm = Benchmark.bm( 60 ) do |bm|
+      bm.report( "\nto_time_ranges (Activity##{self.id}) (schedule.occurences_between, no cache):" ) do
+
+        res = schedule.occurrences_between(plan.start_date.beginning_of_day, plan.end_date.end_of_day).map do |o|
+          TimeRange.new(
+            start_time: o.start_time,
+            end_time: o.end_time,
+            value: o.duration / 60, # Duration in minutes.
+            user_id: plan.user_id
+          )
+        end
+      end
+    end
+    # end
+
+    res
+  end
+
   def to_time_ranges # rubocop:disable Metrics/AbcSize
-    Rails.cache.fetch(time_ranges_cache_key, expires_in: 1.week) do
-      schedule.occurrences_between(plan.start_date.beginning_of_day, plan.end_date.end_of_day).map do |o|
-        TimeRange.new(
-          start_time: o.start_time,
-          end_time: o.end_time,
-          value: o.duration / 60, # Duration in minutes.
+    res = nil
+    Benchmark.bm( 60 ) do |bm|
+      bm.report( "\nto_time_ranges (Activity##{self.id}) (Barbara' fix): " ) do
+        plan_days = (plan.end_date.end_of_day - plan.start_date.beginning_of_day).seconds.in_days.to_i.abs
+        minutes_per_week = seconds_per_week / 60 / 7 * plan_days
+
+        res = TimeRange.new(
+          start_time: plan.start_date.beginning_of_day,
+          end_time: plan.end_date.end_of_day,
+          value: minutes_per_week, # Duration in minutes.
           user_id: plan.user_id
         )
       end
     end
+
+    res
   end
 
   def build_schedule
