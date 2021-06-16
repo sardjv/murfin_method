@@ -42,7 +42,7 @@ describe Activity, type: :model do
         let(:bulk_time_range_value) { 366 * time_range_value }
 
         let(:result) { subject.to_time_ranges }
-        let(:result_prev) { subject.to_time_rangesPREV }
+        let(:result_prev) { subject.to_time_ranges_prev }
 
         it 'returns one bulk time range' do
           expect(result).to be_a TimeRange

@@ -57,7 +57,7 @@ class Activity < ApplicationRecord
     super(ice_cube_schedule.to_yaml)
   end
 
-  def to_time_rangesPREV # rubocop:disable Metrics/AbcSize
+  def to_time_ranges_prev # rubocop:disable Metrics/AbcSize
     Rails.cache.fetch(time_ranges_cache_key, expires_in: 1.week) do
       schedule.occurrences_between(plan.start_date.beginning_of_day, plan.end_date.end_of_day).map do |o|
         TimeRange.new(
@@ -70,10 +70,10 @@ class Activity < ApplicationRecord
     end
   end
 
-  def to_time_ranges
+  def to_time_ranges # rubocop:disable Metrics/AbcSize
     Rails.cache.fetch(time_ranges_cache_key, expires_in: 1.week) do
       occurences = schedule.occurrences_between(plan.start_date.beginning_of_day, plan.end_date.end_of_day)
-      bulk_time_range_value = occurences.sum {|o| o.duration } / 60
+      bulk_time_range_value = occurences.sum(&:duration) / 60
 
       # plan_days = (plan.end_date.end_of_day - plan.start_date.beginning_of_day).seconds.in_days.to_i.abs
       # bulk_time_range_value = (seconds_per_week.to_f / 60 / 7) * plan_days
