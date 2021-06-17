@@ -51,6 +51,7 @@ class Plan < ApplicationRecord
     @total_minutes_worked_per_week ||= activities.sum(&:seconds_per_week) / 60
   end
 
+  # only used in FakeGraphDataJob now
   def to_time_ranges
     Rails.cache.fetch(activities_cache_key, expires_in: 1.week) do
       activities.flat_map(&:to_time_ranges)

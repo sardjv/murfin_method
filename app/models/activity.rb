@@ -57,15 +57,16 @@ class Activity < ApplicationRecord
     super(ice_cube_schedule.to_yaml)
   end
 
+  # only used in FakeGraphDataJob now
   def to_time_ranges(filter_start_time = nil, filter_end_time = nil) # rubocop:disable Metrics/AbcSize
+    range_start = (filter_start_time || plan.start_date).beginning_of_day
+    range_end = (filter_end_time || plan.end_date).end_of_day
+
+    # range_start = [filter_start_time, plan.start_date].compact.max.beginning_of_day
+    # range_end = [filter_end_time, plan.end_date].compact.min.end_of_day
+
     # range_start = ((filter_start_time && (filter_start_time < plan.start_date)) ? filter_start_time : plan.start_date).beginning_of_day
     # range_end = ((filter_end_time && (filter_end_time > plan.end_date)) ? filter_end_time : plan.end_date).end_of_day
-
-    # range_start = (filter_start_time || plan.start_date).beginning_of_day
-    # range_end = (filter_end_time || plan.end_date).end_of_day
-
-    range_start = [filter_start_time, plan.start_date].compact.max.beginning_of_day
-    range_end = [filter_end_time, plan.end_date].compact.min.end_of_day
 
     # range_start = [filter_start_time, plan.start_date].compact.max.beginning_of_week.beginning_of_day
     # range_end = [filter_end_time, plan.end_date].compact.min.end_of_week.end_of_day
@@ -84,6 +85,31 @@ class Activity < ApplicationRecord
           user_id: plan.user_id
         )
       end
+    end
+  end
+
+  def to_bulk_time_range(filter_start_time = nil, filter_end_time = nil) # rubocop:disable Metrics/AbcSize
+    Rails.cache.fetch(time_ranges_cache_key, expires_in: 1.week) do
+      if filter_start_time && filter_end_time
+        filter_range = filter_start_time.beginning_of_day..filter_end_time.end_of_day
+        plan_range = plan.start_date.beginning_of_day..plan.end_date.end_of_day
+        occurences_range = filter_range.intersection plan_range
+      else
+        occurences_range = plan.start_date.beginning_of_day..plan.end_date.end_of_day
+      end
+
+      occurences = schedule.occurrences_between(occurences_range.begin, occurences_range.end)
+      bulk_time_range_value = occurences.sum(&:duration) / 60
+
+      # plan_days = (plan.end_date.end_of_day - plan.start_date.beginning_of_day).seconds.in_days.to_i.abs
+      # bulk_time_range_value = (seconds_per_week.to_f / 60 / 7) * plan_days
+
+      TimeRange.new(
+        start_time: plan.start_date.beginning_of_day,
+        end_time: plan.end_date.end_of_day,
+        value: bulk_time_range_value,
+        user_id: plan.user_id
+      )
     end
   end
 
