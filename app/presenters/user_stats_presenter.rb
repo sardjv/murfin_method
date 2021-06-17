@@ -18,19 +18,19 @@ class UserStatsPresenter
   end
 
   def average_weekly_planned
-    return nil if no_planned_data?
+    return if no_planned_data?
 
     average_weekly(planned_time_ranges)
   end
 
   def average_weekly_actual
-    return nil if no_actual_data?
+    return if no_actual_data?
 
     average_weekly(actual_time_ranges)
   end
 
   def percentage_delivered
-    return nil if no_planned_data? || no_actual_data?
+    return if no_planned_data? || no_actual_data?
 
     Numeric.percentage_rounded(total(actual_time_ranges), total(planned_time_ranges))
   end
