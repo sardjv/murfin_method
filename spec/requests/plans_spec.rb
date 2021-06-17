@@ -42,7 +42,7 @@ RSpec.describe 'Plans', type: :request do
 
         it 'redirects to the index' do
           post '/plans', params: params
-          expect(response).to redirect_to(plans_url)
+          expect(response).to redirect_to(edit_plan_url(Plan.last))
         end
 
         it 'creates a new plan' do
