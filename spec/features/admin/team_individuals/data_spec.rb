@@ -117,7 +117,7 @@ describe 'Team Individual Data', type: :feature, js: true, freeze: Time.zone.loc
         end
 
         within '.team-individual-table-percentage' do
-          expect(page).to have_content '113%'
+          expect(page).to have_content '112%'
         end
       end
 

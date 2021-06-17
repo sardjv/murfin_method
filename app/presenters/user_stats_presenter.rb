@@ -18,19 +18,19 @@ class UserStatsPresenter
   end
 
   def average_weekly_planned
-    return nil if no_planned_data?
+    return if no_planned_data?
 
     average_weekly(planned_time_ranges)
   end
 
   def average_weekly_actual
-    return nil if no_actual_data?
+    return if no_actual_data?
 
     average_weekly(actual_time_ranges)
   end
 
   def percentage_delivered
-    return nil if no_planned_data? || no_actual_data?
+    return if no_planned_data? || no_actual_data?
 
     Numeric.percentage_rounded(total(actual_time_ranges), total(planned_time_ranges))
   end
@@ -102,7 +102,7 @@ class UserStatsPresenter
     actual_time_ranges.empty?
   end
 
-  def calculate_actual_time_ranges # rubocop:disable Metrics/AbcSize
+  def calculate_actual_time_ranges
     scope = user_actual_time_ranges
 
     scope = scope.where('start_time BETWEEN ? AND ?', filter_start_time, filter_end_time).or(
@@ -110,8 +110,6 @@ class UserStatsPresenter
     ).or(
       scope.where('start_time <= ? AND end_time >= ?', filter_start_time, filter_end_time)
     ).distinct
-
-    scope = scope.filter_by_tag_types_and_tags(filter_tag_ids) if filter_tag_ids.present?
 
     scope.distinct.to_a
   end
@@ -125,10 +123,13 @@ class UserStatsPresenter
   def user_plan_time_ranges
     scope = Activity.joins(:plan).where(plans: { user_id: user.id })
     scope = scope.filter_by_tag_types_and_tags(filter_tag_ids) if filter_tag_ids.present?
-    scope.distinct.flat_map(&:to_time_ranges)
+    # scope.distinct.flat_map(&:to_time_ranges)
+    scope.distinct.flat_map(&:to_bulk_time_range)
   end
 
   def user_actual_time_ranges
-    user.time_ranges.where(time_range_type_id: actual_id)
+    scope = user.time_ranges.where(time_range_type_id: actual_id)
+    scope = scope.filter_by_tag_types_and_tags(filter_tag_ids) if filter_tag_ids.present?
+    scope
   end
 end

@@ -99,7 +99,7 @@ gem 'ransack', '~> 2.4.2'
 
 # A very fast key-value store to hold jobs until they are run.
 # https://github.com/redis/redis-rb
-gem 'redis', '~> 4.2.5'
+gem 'redis', '~> 4.3.1'
 
 # Serve Swagger documentation generated from RSpec tests.
 # https://github.com/rswag/rswag
@@ -116,7 +116,7 @@ gem 'strip_attributes', '~> 1.11.0'
 
 # About Use Turbo in your Ruby on Rails app
 # https://github.com/hotwired/turbo-rails
-gem 'turbo-rails', '~> 0.5.9'
+gem 'turbo-rails', '~> 0.5.11'
 
 # Bundle zoneinfo files which are not included in Windows.
 # https://github.com/tzinfo/tzinfo-data

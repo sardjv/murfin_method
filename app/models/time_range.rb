@@ -21,10 +21,10 @@ class TimeRange < ApplicationRecord
   belongs_to :time_range_type
 
   validates :start_time, :end_time, :value, presence: true
+  validate :validate_value_positive
+
   validates :appointment_id, uniqueness: { case_sensitive: true }, allow_blank: true
   validate :validate_end_time_after_start_time
-
-  # TODO: add validation for value, only positive numbers ?
 
   def seconds_worked=(seconds)
     self.value = seconds.to_f / 60
@@ -49,6 +49,13 @@ class TimeRange < ApplicationRecord
   def validate_end_time_after_start_time
     return unless start_time && end_time && end_time <= start_time
 
-    errors.add :end_time, 'must occur after start time'
+    errors.add :end_time, I18n.t('errors.time_range.end_time.should_be_after_start_time')
+  end
+
+  # requires custom validation because value is BigDecimal
+  def validate_value_positive
+    return if value&.to_f&.positive?
+
+    errors.add :value, :greater_than, count: 0
   end
 end

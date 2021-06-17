@@ -22,7 +22,7 @@ describe 'User previews job plan pdf', type: :feature, js: true do
 
   let(:start_date) { '2020-01-01' }
   let(:end_date) { '2020-12-31' }
-  let!(:plan) { create :plan, user_id: user.id, start_date: start_date, end_date: end_date }
+  let!(:plan) { create :plan, user_id: user.id, start_date: start_date, end_date: end_date, contracted_minutes_per_week: 37.5 * 60 }
 
   let!(:activity1) { create :activity, plan: plan, seconds_per_week: 8 * 3600 } # 8h
   let!(:tag_association1a) { create :tag_association, tag_type: tag_type1, tag: tag1a, taggable: activity1 }
@@ -42,6 +42,7 @@ describe 'User previews job plan pdf', type: :feature, js: true do
     expect(page).to have_content plan.name
     expect(page).to have_content 'Start date: January 01, 2020'
     expect(page).to have_content 'End date: December 31, 2020'
+    expect(page).to have_content 'Contracted hours per week: 37h 30m'
     expect(page).to have_content 'State: Draft'
   end
 

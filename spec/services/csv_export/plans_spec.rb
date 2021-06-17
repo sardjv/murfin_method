@@ -20,7 +20,9 @@ describe CsvExport::Plans do
   let!(:tag3b) { create :tag, name: 'No', tag_type: tag_type3, parent: nil }
 
   let(:user1) { create :user }
-  let(:plan1) { create :plan, user: user1, start_date: 1.year.ago.beginning_of_month, end_date: Date.current.end_of_month }
+  let(:plan1) do
+    create :plan, user: user1, start_date: 1.year.ago.beginning_of_month, end_date: Date.current.end_of_month, contracted_minutes_per_week: 37.5 * 60
+  end
 
   let!(:activity1) { create :activity, plan: plan1, seconds_per_week: 8 * 3600 } # 8h
   let!(:tag_association1a) { create :tag_association, tag_type: tag_type1, tag: tag1a, taggable: activity1 }
@@ -41,14 +43,17 @@ describe CsvExport::Plans do
 
   it 'returns csv' do
     data = CSV.parse(subject)
-    expect(data[0]).to eql ['First name', 'Last name', 'Job plan start date', 'Job plan end date', 'Job plan state', 'Job plan total hours per week',
+    expect(data[0]).to eql ['First name', 'Last name', 'Job plan start date', 'Job plan end date', 'Job plan state',
+                            'Job plan contracted hours per week', 'Job plan total hours per week',
                             'Category', 'Subcategory', 'Outcomed on RiO', 'Activity time worked per week']
 
-    expect(data[1]).to eql [user1.first_name, user1.last_name, plan1.start_date.to_s, plan1.end_date.to_s, 'Draft', '14h 30m', 'DCC',
-                            'Care Co-ordination', 'Yes', '8h']
-    expect(data[2]).to eql [user1.first_name, user1.last_name, plan1.start_date.to_s, plan1.end_date.to_s, 'Draft', '14h 30m', 'SPA',
-                            'Initial Assessment', 'No', '6h 30m']
-    expect(data[3]).to eql [user2.first_name, user2.last_name, plan2.start_date.to_s, plan2.end_date.to_s, 'Draft', '7h', 'DCC', 'Team Meetings', nil,
-                            '7h']
+    expect(data[1]).to eql [user1.first_name, user1.last_name, plan1.start_date.to_s, plan1.end_date.to_s,
+                            'Draft', '37h 30m', '14h 30m', 'DCC', 'Care Co-ordination', 'Yes', '8h']
+
+    expect(data[2]).to eql [user1.first_name, user1.last_name, plan1.start_date.to_s, plan1.end_date.to_s,
+                            'Draft', '37h 30m', '14h 30m', 'SPA', 'Initial Assessment', 'No', '6h 30m']
+
+    expect(data[3]).to eql [user2.first_name, user2.last_name, plan2.start_date.to_s, plan2.end_date.to_s,
+                            'Draft', '0h', '7h', 'DCC', 'Team Meetings', nil, '7h']
   end
 end

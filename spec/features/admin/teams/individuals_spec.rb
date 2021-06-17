@@ -13,7 +13,7 @@ describe 'Team Individuals', type: :feature, js: true, freeze: Time.zone.local(2
       create(
         :plan,
         user_id: user.id,
-        start_date: (Time.current - 1.week + 1.day).beginning_of_day,
+        start_date: 6.days.ago.beginning_of_day,
         end_date: Time.current.end_of_day,
         activities: [create(:activity)] # 240 minutes in 1 week.
       )
@@ -21,8 +21,8 @@ describe 'Team Individuals', type: :feature, js: true, freeze: Time.zone.local(2
         :time_range,
         user_id: user.id,
         time_range_type_id: actual_id,
-        start_time: (Time.current - 1.week + 1.day).beginning_of_day,
-        end_time: Time.current.end_of_day,
+        start_time: 6.days.ago.beginning_of_day,
+        end_time: 6.days.ago.end_of_day,
         value: 120 # 120 minutes in 1 week.
       )
       create(:membership, user_group: user_group, user: user) unless user == manager
@@ -63,13 +63,13 @@ describe 'Team Individuals', type: :feature, js: true, freeze: Time.zone.local(2
     describe 'caching' do
       context 'when actuals are updated' do
         before do
-          user.time_ranges.each { |tr| tr.update(value: 0) }
+          user.time_ranges.each { |tr| tr.update(value: 240) }
           visit current_path
         end
 
         it 'updates the values' do
           within('.table') do
-            expect(page).to have_text 'Really Under'
+            expect(page).to have_text 'About Right'
           end
         end
       end

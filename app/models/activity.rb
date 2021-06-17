@@ -57,6 +57,7 @@ class Activity < ApplicationRecord
     super(ice_cube_schedule.to_yaml)
   end
 
+  # only used in FakeGraphDataJob now
   def to_time_ranges # rubocop:disable Metrics/AbcSize
     Rails.cache.fetch(time_ranges_cache_key, expires_in: 1.week) do
       schedule.occurrences_between(plan.start_date.beginning_of_day, plan.end_date.end_of_day).map do |o|
@@ -67,6 +68,23 @@ class Activity < ApplicationRecord
           user_id: plan.user_id
         )
       end
+    end
+  end
+
+  def to_bulk_time_range # rubocop:disable Metrics/AbcSize
+    Rails.cache.fetch(time_ranges_cache_key, expires_in: 1.week) do
+      occurences = schedule.occurrences_between(plan.start_date.beginning_of_day, plan.end_date.end_of_day)
+      bulk_time_range_value = occurences.sum(&:duration) / 60
+
+      # plan_days = (plan.end_date.end_of_day - plan.start_date.beginning_of_day).seconds.in_days.to_i.abs
+      # bulk_time_range_value = (seconds_per_week.to_f / 60 / 7) * plan_days
+
+      TimeRange.new(
+        start_time: plan.start_date.beginning_of_day,
+        end_time: plan.end_date.end_of_day,
+        value: bulk_time_range_value,
+        user_id: plan.user_id
+      )
     end
   end
 
