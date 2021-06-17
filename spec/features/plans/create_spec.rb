@@ -27,9 +27,8 @@ describe 'User creates a plan', type: :feature, js: true do
     end
 
     within '.plan-start-date-container' do
-      expect(page).to have_css "input[type = 'hidden'][value='%s']" % start_date.to_s(:db), visible: false
+      expect(page).to have_css "input[type = 'hidden'][value='#{start_date.to_s(:db)}']", visible: false
     end
-
 
     find('.plan-end-date-container input').click
 
@@ -38,9 +37,8 @@ describe 'User creates a plan', type: :feature, js: true do
     end
 
     within '.plan-end-date-container' do
-      expect(page).to have_css "input[type = 'hidden'][value='%s']" % end_date.to_s(:db), visible: false
+      expect(page).to have_css "input[type = 'hidden'][value='#{end_date.to_s(:db)}']", visible: false
     end
-
 
     within '.plan_contracted_hours_per_week_wrapper' do
       find_field(type: 'number', match: :first).set(contracted_hours_per_week)
