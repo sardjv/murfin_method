@@ -26,11 +26,21 @@ describe 'User creates a plan', type: :feature, js: true do
       find(:xpath, "span[text() = 'May']").click # May current year
     end
 
+    within '.plan-start-date-container' do
+      expect(page).to have_css "input[type = 'hidden'][value='%s']" % start_date.to_s(:db), visible: false
+    end
+
+
     find('.plan-end-date-container input').click
 
     within '.flatpickr-monthSelect-months' do # Feb next year
       find(:xpath, "span[text() = 'Feb']").click
     end
+
+    within '.plan-end-date-container' do
+      expect(page).to have_css "input[type = 'hidden'][value='%s']" % end_date.to_s(:db), visible: false
+    end
+
 
     within '.plan_contracted_hours_per_week_wrapper' do
       find_field(type: 'number', match: :first).set(contracted_hours_per_week)
