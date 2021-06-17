@@ -57,6 +57,7 @@ class Activity < ApplicationRecord
     super(ice_cube_schedule.to_yaml)
   end
 
+  # only used in FakeGraphDataJob now
   def to_time_ranges # rubocop:disable Metrics/AbcSize
     Rails.cache.fetch(time_ranges_cache_key, expires_in: 1.week) do
       schedule.occurrences_between(plan.start_date.beginning_of_day, plan.end_date.end_of_day).map do |o|
