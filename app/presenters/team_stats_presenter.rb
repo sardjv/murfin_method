@@ -288,7 +288,7 @@ class TeamStatsPresenter
   def percentage(key:)
     return 0 if @actual[key].nil? || @plan[key].nil? || @plan[key].zero?
 
-    Numeric.percentage_rounded(@actual[key], @plan[key])
+    Numeric.percentage_rounded @actual[key], @plan[key], 2
   end
 
   def relevant_notes(key:)
