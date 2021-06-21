@@ -23,6 +23,8 @@ class Activity < ApplicationRecord
 
   attr_writer :seconds_per_week
 
+  after_update { delay.to_bulk_time_range }
+
   def seconds_per_week
     return unless schedule
 
@@ -62,19 +64,7 @@ class Activity < ApplicationRecord
     range_start = (filter_start_time || plan.start_date).beginning_of_day
     range_end = (filter_end_time || plan.end_date).end_of_day
 
-    # range_start = [filter_start_time, plan.start_date].compact.max.beginning_of_day
-    # range_end = [filter_end_time, plan.end_date].compact.min.end_of_day
-
-    # range_start = ((filter_start_time && (filter_start_time < plan.start_date)) ? filter_start_time : plan.start_date).beginning_of_day
-    # range_end = ((filter_end_time && (filter_end_time > plan.end_date)) ? filter_end_time : plan.end_date).end_of_day
-
-    # range_start = [filter_start_time, plan.start_date].compact.max.beginning_of_week.beginning_of_day
-    # range_end = [filter_end_time, plan.end_date].compact.min.end_of_week.end_of_day
-
-    # range_start = [filter_start_time, plan.start_date].compact.max.beginning_of_month.beginning_of_day
-    # range_end = [filter_end_time, plan.end_date].compact.min.end_of_month.end_of_day
-
-    cache_key = "#{time_ranges_cache_key}##{range_start.to_i}-#{range_end.to_i}"
+    cache_key = "#{to_time_ranges_cache_key}##{range_start.to_date}-#{range_end.to_date}"
 
     Rails.cache.fetch(cache_key, expires_in: 1.week) do
       schedule.occurrences_between(range_start, range_end).map do |o|
@@ -88,8 +78,14 @@ class Activity < ApplicationRecord
     end
   end
 
-  def to_bulk_time_range(filter_start_time = nil, filter_end_time = nil) # rubocop:disable Metrics/AbcSize
-    Rails.cache.fetch(time_ranges_cache_key, expires_in: 1.week) do
+  def to_bulk_time_range(filter_start_time = nil, filter_end_time = nil) # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity
+    cache_key = if filter_start_time && filter_end_time
+                  "#{to_bulk_time_range_cache_key}##{filter_start_time.to_date}-#{filter_end_time.to_date}"
+                else
+                  to_bulk_time_range_cache_key
+                end
+
+    Rails.cache.fetch(cache_key, expires_in: 1.week) do
       if filter_start_time && filter_end_time
         filter_range = filter_start_time.beginning_of_day..filter_end_time.end_of_day
         plan_range = plan.start_date.beginning_of_day..plan.end_date.end_of_day
@@ -130,8 +126,12 @@ class Activity < ApplicationRecord
   # the second and can lead to tricky bugs, e.g. if 2 updates happen
   # within 1 second. Also makes for a shorter key.
   # "2021-01-29 13:52:43 UTC" vs "1611928363.130215"
-  def time_ranges_cache_key
+  def to_time_ranges_cache_key
     "Activity#to_time_ranges##{id}##{updated_at.to_f}"
+  end
+
+  def to_bulk_time_range_cache_key
+    "Activity#to_bulk_time_range##{id}##{updated_at.to_f}"
   end
 
   def validate_end_time_after_start_time

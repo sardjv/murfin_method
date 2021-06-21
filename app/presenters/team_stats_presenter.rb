@@ -170,9 +170,8 @@ class TeamStatsPresenter
 
     scope = scope.filter_by_tag_types_and_tags(@filter_tag_ids) if @filter_tag_ids.present?
 
-    # TODO calculate range here not in Activity ?
-    # scope.distinct.flat_map(&:to_bulk_time_range)
-    scope.distinct.flat_map { |a| a.to_bulk_time_range(filter_start_time, filter_end_time) }
+    scope.distinct.flat_map(&:to_bulk_time_range)
+    # scope.distinct.flat_map { |a| a.to_bulk_time_range(filter_start_time, filter_end_time) }
   end
 
   def weekly_averages_per_month(time_ranges:)
@@ -289,7 +288,7 @@ class TeamStatsPresenter
   def percentage(key:)
     return 0 if @actual[key].nil? || @plan[key].nil? || @plan[key].zero?
 
-    ((@actual[key] / @plan[key]) * 100).round(2)
+    Numeric.percentage_rounded(@actual[key], @plan[key])
   end
 
   def relevant_notes(key:)
