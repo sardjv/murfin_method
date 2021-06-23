@@ -9,6 +9,6 @@
             %canvas#bar-chart
 
 :ruby
-  chart_args = { graphs: [{ type: :bar_chart, data: :individual_data, units: '%', reverse: true }] }
+  chart_args = { graphs: [{ type: :bar_chart, data: :individual_data, units: '%'}] }
 :javascript
   barChartData = #{raw presenter.to_json(chart_args)};

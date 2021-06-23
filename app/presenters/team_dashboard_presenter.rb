@@ -96,8 +96,6 @@ class TeamDashboardPresenter
         dataset_labels: dataset_labels
       }.delete_if { |_k, v| v.blank? }
 
-      hash[graph[:type]][:reverse] = true if graph[:reverse]
-
       (args[:extras] || []).each do |name|
         hash[name] = @team_stats_presenter.send(name)
       end

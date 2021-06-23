@@ -145,8 +145,8 @@ describe TeamDashboardPresenter, freeze: Time.zone.local(2020, 6, 30, 23, 59, 59
               bar_chart: {
                 data: [
                   {
-                    value: 47,
-                    name: user.name
+                    name: user.name,
+                    value: 47
                   }
                 ]
               }

@@ -71,7 +71,7 @@ function drawBarChart(context, data) {
     },
     options: {
       indexAxis: 'y',
-      maintainAspectRatio: false, // bars do not overlap each other
+      maintainAspectRatio: false,
       plugins: {
         legend: {
           display: false

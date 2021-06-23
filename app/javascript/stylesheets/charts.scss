@@ -1,6 +1,6 @@
 #bar-chart-scroll-container {
-  min-height: 400px;
-  overflow-y: scroll;
+  height: 400px;
+  overflow-y: auto;
 
   #bar-chart-container {
     height: auto;
