@@ -124,7 +124,6 @@ class TeamDashboardPresenter
   end
 
   # team individuals bar chart
-
   def bar_chart_value(user:)
     return if user.time_ranges.none?
 
