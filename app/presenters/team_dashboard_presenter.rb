@@ -86,7 +86,7 @@ class TeamDashboardPresenter
     )
   end
 
-  def to_json(args)
+  def to_json(args) # rubocop:disable Metrics/AbcSize
     args[:graphs].each_with_object({}) do |graph, hash|
       data = send(graph[:data])
 
