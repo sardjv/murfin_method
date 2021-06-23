@@ -135,25 +135,6 @@ describe TeamDashboardPresenter, freeze: Time.zone.local(2020, 6, 30, 23, 59, 59
           }.to_json
         )
       end
-
-      context 'graph with flip chart option' do
-        let(:args) { { graphs: [{ type: :bar_chart, data: :individual_data, flip_chart: true }] } }
-
-        it 'flips data' do
-          expect(subject.to_json(args)).to eq(
-            {
-              bar_chart: {
-                data: [
-                  {
-                    name: user.name,
-                    value: 47
-                  }
-                ]
-              }
-            }.to_json
-          )
-        end
-      end
     end
   end
 
