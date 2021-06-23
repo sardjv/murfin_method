@@ -76,4 +76,13 @@ describe Activity, type: :model do
       end
     end
   end
+
+  describe 'to_bulk_time_range' do
+    before { subject.save }
+
+    it 'is called scheduled update' do
+      expect(subject).to receive_message_chain(:delay, :to_bulk_time_range)
+      subject.update seconds_per_week: 10_000
+    end
+  end
 end

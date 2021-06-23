@@ -33,25 +33,24 @@
 
         .border.my-4.p-4
           %label= Plan.human_attribute_name('activities')
-          .table-responsive
-            %table#plan-activities-table.table.table-sm
-              %thead.bg-white
-                %tr
-                  - TagType.active_for(Activity).sorted.each do |t|
-                    %th.font-weight-normal.sort{ 'data-sort': t.name.parameterize }
-                      = t.name
-                  %th.font-weight-normal.sort{ 'data-sort': Activity.human_attribute_name('duration').parameterize }
-                    = Activity.human_attribute_name('duration')
-                  %th
-              %tbody.activities.list
-                = f.fields_for :activities, wrapper: false, include_id: false do |activity_form|
-                  = render 'activity_fields', plan: @plan, plan_form: f, f: activity_form
-              %tfoot
-                %tr
-                  %td{ colspan: 3 }
-                  %td#plan-total-time-worked-per-week.small{ colspan: 2 }
-                    - if @plan.activities.any?
-                      = t('plans.total_time_worked_per_week', total: duration_in_words(@plan.total_minutes_worked_per_week, :short))
+          %table#plan-activities-table.table.table-sm
+            %thead.bg-white
+              %tr
+                - TagType.active_for(Activity).sorted.each do |t|
+                  %th.font-weight-normal.sort{ 'data-sort': t.name.parameterize }
+                    = t.name
+                %th.font-weight-normal.sort{ 'data-sort': Activity.human_attribute_name('duration').parameterize }
+                  = Activity.human_attribute_name('duration')
+                %th
+            %tbody.activities.list
+              = f.fields_for :activities, wrapper: false, include_id: false do |activity_form|
+                = render 'activity_fields', plan: @plan, plan_form: f, f: activity_form
+            %tfoot
+              %tr
+                %td{ colspan: 3 }
+                %td#plan-total-time-worked-per-week.small{ colspan: 2 }
+                  - if @plan.activities.any?
+                    = t('plans.total_time_worked_per_week', total: duration_in_words(@plan.total_minutes_worked_per_week, :short))
 
           - if plan_show_contracted_hours_error?(@plan)
             .alert.alert-warning= t('plans.errors.total_time_worked_per_week_higher_than_contracted')

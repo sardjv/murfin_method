@@ -51,13 +51,13 @@ class UserStatsPresenter
   end
 
   def actual_time_ranges
-    return @cache[:actual_time_ranges] if @cache[:actual_time_ranges].present?
+    return @cache[:actual_time_ranges] if @cache.key? :actual_time_ranges
 
     @cache[:actual_time_ranges] = calculate_actual_time_ranges
   end
 
   def planned_time_ranges
-    return @cache[:planned_time_ranges] if @cache[:planned_time_ranges].present?
+    return @cache[:planned_time_ranges] if @cache.key? :planned_time_ranges
 
     @cache[:planned_time_ranges] = calculate_planned_time_ranges
   end
@@ -123,8 +123,10 @@ class UserStatsPresenter
   def user_plan_time_ranges
     scope = Activity.joins(:plan).where(plans: { user_id: user.id })
     scope = scope.filter_by_tag_types_and_tags(filter_tag_ids) if filter_tag_ids.present?
+
     # scope.distinct.flat_map(&:to_time_ranges)
     scope.distinct.flat_map(&:to_bulk_time_range)
+    # scope.distinct.flat_map { |a| a.to_bulk_time_range(filter_start_time, filter_end_time) }
   end
 
   def user_actual_time_ranges

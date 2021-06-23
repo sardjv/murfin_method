@@ -53,6 +53,7 @@ describe 'User creates a plan', type: :feature, js: true do
     click_button 'Save'
 
     expect(page).to have_css '.alert-info', text: success_message
+    expect(current_path).to eql edit_plan_path(plan)
 
     expect(plan.user).to eq current_user
     expect(plan.activities.count).to eq(1)

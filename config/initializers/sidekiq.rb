@@ -11,3 +11,5 @@ end
 Sidekiq.configure_client do |config|
   config.redis = sidekiq_config
 end
+
+Sidekiq::Extensions.enable_delay! # to use delay with instance method to_bulk_time_range in Activity model
