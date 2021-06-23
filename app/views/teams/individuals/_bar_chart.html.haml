@@ -1,10 +1,14 @@
 .row
   .col-12
-    %h5= t('graph.title.individuals')
-    %p= t('graph.showing_users', count: presenter.paginated_users.total_count)
+    %h5=t('graph.title.individuals')
+    %p=t('graph.showing_users', count: presenter.paginated_users.total_count)
     .card.my-4
       .card-body
-        %canvas#bar-chart
+        #bar-chart-scroll-container
+          #bar-chart-container{ style: bar_chart_container_height_css(presenter.user_count) }
+            %canvas#bar-chart
 
+:ruby
+  chart_args = { graphs: [{ type: :bar_chart, data: :individual_data, units: '%', reverse: true }] }
 :javascript
-  barChartData = #{raw @presenter.to_json(graphs: [{ type: :bar_chart, data: :individual_data, units: '%' }])};
+  barChartData = #{raw presenter.to_json(chart_args)};

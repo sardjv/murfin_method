@@ -23,7 +23,7 @@ class TeamDashboardPresenter
   delegate :members_under_delivered_percent, to: :team_stats_presenter
 
   def user_count
-    users.count
+    @user_count ||= users.count
   end
 
   def users_with_job_plan_count
@@ -88,11 +88,15 @@ class TeamDashboardPresenter
 
   def to_json(args)
     args[:graphs].each_with_object({}) do |graph, hash|
+      data = send(graph[:data])
+
       hash[graph[:type]] = {
-        data: send(graph[:data]),
+        data: data,
         units: units,
         dataset_labels: dataset_labels
       }.delete_if { |_k, v| v.blank? }
+
+      hash[graph[:type]][:reverse] = true if graph[:reverse]
 
       (args[:extras] || []).each do |name|
         hash[name] = @team_stats_presenter.send(name)
@@ -105,7 +109,7 @@ class TeamDashboardPresenter
   private
 
   def users
-    @users ||= User.where(id: @params[:user_ids])
+    @users ||= User.where(id: @params[:user_ids]).order(:last_name, :first_name)
   end
 
   def defaults
