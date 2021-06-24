@@ -18,7 +18,7 @@ function drawBarChart(context, data) {
     const val = e.value
 
     if (val == null) {
-      return SCSSColours['unknown']
+      //return SCSSColours['unknown']
     } else if (val >= 120) {
       // Over.
       return SCSSColours['over']
@@ -50,10 +50,10 @@ function drawBarChart(context, data) {
     }
   })
 
-  const fallback = MissingData.generate(data)
+  // const fallback = MissingData.generate(data)
 
   const values = data.map(function(e) {
-    return e.value || fallback
+    return e.value // || fallback
   })
 
   new Chart(context, {
