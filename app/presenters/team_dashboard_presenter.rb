@@ -27,7 +27,7 @@ class TeamDashboardPresenter
   end
 
   def users_with_job_plan_count
-    users.all.joins(:plans).count('DISTINCT(users.id)')
+    Plan.where(user_id: users.pluck(:id)).pluck('DISTINCT(user_id)').count
   end
 
   # team dashboard line chart
