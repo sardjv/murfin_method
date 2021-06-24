@@ -119,12 +119,10 @@ describe TeamDashboardPresenter, freeze: Time.zone.local(2020, 6, 30, 23, 59, 59
 
     context 'with :individual data' do
       let(:filter_tag_ids) { [tag1.id] }
+      let(:args) { { graphs: [{ type: :bar_chart, data: :individual_data }] } }
+
       it 'returns a bar chart' do
-        expect(
-          subject.to_json(
-            graphs: [{ type: :bar_chart, data: :individual_data }]
-          )
-        ).to eq(
+        expect(subject.to_json(args)).to eq(
           {
             bar_chart: {
               data: [
