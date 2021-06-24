@@ -132,6 +132,7 @@ class UserStatsPresenter
   def user_actual_time_ranges
     scope = user.time_ranges.where(time_range_type_id: actual_id)
     scope = scope.filter_by_tag_types_and_tags(filter_tag_ids) if filter_tag_ids.present?
+
     scope
   end
 end

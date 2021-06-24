@@ -4,8 +4,8 @@
     %p= t('graph.showing_users', count: presenter.paginated_users.total_count)
     .card.my-4
       .card-body
-        #bar-chart-scroll-container
-          #bar-chart-container{ style: bar_chart_container_height_css(presenter.user_count) }
+        #bar-chart-scroll-container{ style: bar_chart_scroll_container_height_css(presenter.users_count) }
+          #bar-chart-container{ style: bar_chart_container_height_css(presenter.users_count) }
             %canvas#bar-chart
 
 :ruby
