@@ -33,6 +33,60 @@ describe TagAssociation, type: :model do
     end
   end
 
+  describe 'validate_tag_type_active_for_taggables' do
+    let(:tag) { create :tag, tag_type: tag_type }
+    let(:subject) { build :tag_association, taggable: taggable, tag: tag, tag_type: tag_type }
+
+    context 'tag type active for taggable' do
+      before do
+        subject.save
+      end
+
+      context 'taggable is activity' do
+        let(:taggable) { create :activity }
+        let(:tag_type) { create :tag_type, active_for_activities_at: 1.week.ago }
+
+        it { expect(subject).to be_valid }
+      end
+
+      context 'taggable is time range' do
+        let(:taggable) { create :time_range }
+        let(:tag_type) { create :tag_type, active_for_time_ranges_at: 1.week.ago }
+        let(:error) { 'must be active for time ranges' }
+
+        it { expect(subject).to be_valid }
+      end
+
+      before do
+        subject.save
+      end
+    end
+
+    context 'tag type not active for taggable' do
+      before do
+        subject.save
+      end
+
+      context 'taggable is activity' do
+        let(:taggable) { create :activity }
+        let(:tag_type) { create :tag_type, active_for_activities_at: nil }
+        let(:error) { 'must be active for activities' }
+
+        it { expect(subject).not_to be_valid }
+        it { expect(subject.errors.messages_for(:tag_type_id)).to match_array([error]) }
+      end
+
+      context 'taggable is time range' do
+        let(:taggable) { create :time_range }
+        let(:tag_type) { create :tag_type, active_for_time_ranges_at: nil }
+        let(:error) { 'must be active for time ranges' }
+
+        it { expect(subject).not_to be_valid }
+        it { expect(subject.errors.messages_for(:tag_type_id)).to match_array([error]) }
+      end
+    end
+  end
+
   context 'when tag.tag_type != tag_type' do
     # Types.
     let!(:type) { create(:tag_type) }

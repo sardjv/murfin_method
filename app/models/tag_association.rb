@@ -19,6 +19,7 @@ class TagAssociation < ApplicationRecord
   validate :validate_tag_matches_type
   validate :validate_tag_parent
   validate :validate_tag_child
+  validate :validate_tag_type_active_for_taggables
 
   before_validation do
     self.tag_type_id ||= tag.tag_type_id if tag
@@ -27,8 +28,7 @@ class TagAssociation < ApplicationRecord
   private
 
   def validate_tag_matches_type
-    return if tag.nil?
-
+    return unless tag
     return if tag.tag_type == tag_type
 
     errors.add :tag_id, I18n.t('errors.tag.should_match_tag_type')
@@ -44,6 +44,15 @@ class TagAssociation < ApplicationRecord
     return if correct_child_tag?
 
     errors.add :tag_id, I18n.t('errors.tag.should_match_parent')
+  end
+
+  def validate_tag_type_active_for_taggables
+    return unless taggable && tag_type
+
+    assoc_name = taggable.class.table_name
+    return if tag_type.send("active_for_#{assoc_name}_at").present?
+
+    errors.add :tag_type_id, I18n.t('errors.tag_type.should_be_active_for_taggable', taggable_name: assoc_name.humanize.pluralize.downcase)
   end
 
   def correct_parent_tag?
