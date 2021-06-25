@@ -98,12 +98,14 @@ class TeamDashboardPresenter
       total_segment_values(trs)
     end
 
-    user_names_map.collect do |id, name|
+    result = user_names_map.collect do |id, name|
       {
         name: name,
         value: total_percentage_delivered(total_planned_time_ranges_by_user_id[id], total_actual_time_ranges_by_user_id[id])
       }
     end
+
+    result.sort_by { |el| el[:value] ? -el[:value] : 0 }
   end
 
   def total_percentage_delivered(total_planned, total_actual)

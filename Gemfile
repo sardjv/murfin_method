@@ -87,7 +87,7 @@ gem 'pundit', '~> 2.1.0'
 
 # Create database-backed web applications using the MVC pattern.
 # https://github.com/rails/rails
-gem 'rails', '~> 6.1.3'
+gem 'rails', '~> 6.1.4'
 
 # Object-based searching.
 # https://github.com/activerecord-hackery/ransack
