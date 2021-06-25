@@ -19,7 +19,7 @@ class PlansController < ApplicationController
     authorize @plan
 
     if @plan.save
-      redirect_to plans_path, notice: notice('successfully.created')
+      redirect_to edit_plan_path(@plan), notice: notice('successfully.created')
     else
       copy_errors_for_contracted_minutes_per_week
       flash.now.alert = notice('could_not_be.created')

@@ -18,7 +18,7 @@ function drawBarChart(context, data) {
     const val = e.value
 
     if (val == null) {
-      return SCSSColours['unknown']
+      //return SCSSColours['unknown']
     } else if (val >= 120) {
       // Over.
       return SCSSColours['over']
@@ -50,10 +50,10 @@ function drawBarChart(context, data) {
     }
   })
 
-  const fallback = MissingData.generate(data)
+  // const fallback = MissingData.generate(data)
 
   const values = data.map(function(e) {
-    return e.value || fallback
+    return e.value // || fallback
   })
 
   new Chart(context, {
@@ -62,6 +62,7 @@ function drawBarChart(context, data) {
       labels: labels,
       datasets: [{
         barPercentage: 0.4,
+        barThickness: 10,
         data: values,
         backgroundColor: colours,
         borderColor: colours,
@@ -69,6 +70,8 @@ function drawBarChart(context, data) {
       }]
     },
     options: {
+      indexAxis: 'y',
+      maintainAspectRatio: false,
       plugins: {
         legend: {
           display: false
@@ -82,12 +85,12 @@ function drawBarChart(context, data) {
         }
       },
       scales: {
-        x: {
+        y: {
           grid: {
             display: false
           }
         },
-        y: {
+        x: {
           grid: {
             borderDash: [7, 7],
             drawBorder: false

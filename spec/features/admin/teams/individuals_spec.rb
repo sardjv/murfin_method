@@ -135,10 +135,14 @@ describe 'Team Individuals', type: :feature, js: true, freeze: Time.zone.local(2
   end
 
   context 'with 11 users' do
-    let(:users) { create_list(:user, 11) }
+    let(:users) { create_list :user, 11 }
+
+    before do
+      users.last.update last_name: 'Zoobar', first_name: 'Xoo'
+    end
 
     describe 'pagination' do
-      it 'puts user #11 on the next page' do
+      it 'puts last user the next page' do
         within('.table') do
           expect(page).not_to have_text users.last.name
         end

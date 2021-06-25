@@ -56,6 +56,7 @@ describe 'User edits a plan', type: :feature, js: true do
     click_button 'Save'
 
     expect(page).to have_css '.alert-info', text: success_message
+    expect(current_path).to eql edit_plan_path(plan)
 
     expect(plan.reload.end_date.year).to eq end_date_year
     expect(plan.contracted_minutes_per_week).to eq contracted_minutes_per_week

@@ -22,16 +22,15 @@ class TeamDashboardPresenter
   delegate :average_delivery_percent, to: :team_stats_presenter
   delegate :members_under_delivered_percent, to: :team_stats_presenter
 
-  def user_count
-    users.count
+  def users_count
+    @users_count ||= users.count
   end
 
   def users_with_job_plan_count
-    users.all.joins(:plans).count('DISTINCT(users.id)')
+    Plan.where(user_id: user_ids).pluck('DISTINCT(user_id)').count
   end
 
   # team dashboard line chart
-
   def team_data
     case @params[:graph_kind]
     when 'planned_vs_actual'
@@ -49,12 +48,12 @@ class TeamDashboardPresenter
     end
   end
 
-  # individuals
-
+  # team individuals
   def paginated_users
     users.page(@params[:page])
   end
 
+  # used for users table
   def user_stats_presenter(user)
     UserStatsPresenter.new(
       user: user,
@@ -65,13 +64,54 @@ class TeamDashboardPresenter
     )
   end
 
-  def individual_data
-    users.map do |user|
+  # used for bar chart
+  def individual_data # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
+    plan_ids = Plan.where(user_id: user_ids).pluck(:id)
+    activities = Activity.where(plan_id: plan_ids)
+    activities = activities.filter_by_tag_types_and_tags(filter_tag_ids) if filter_tag_ids.present?
+    activitites_by_user_id = activities.includes(:plan).group_by { |a| a.plan.user_id }
+
+    planned_time_ranges_by_user_id = activitites_by_user_id.transform_values { |aa| aa.flat_map(&:to_bulk_time_range) }
+    calculated_planned_time_ranges_by_user_id = planned_time_ranges_by_user_id.transform_values do |trs|
+      trs.select do |tr|
+        Intersection.call(a_start: tr.start_time, a_end: tr.end_time, b_start: filter_start_time, b_end: filter_end_time).positive?
+      end
+    end
+
+    total_planned_time_ranges_by_user_id = calculated_planned_time_ranges_by_user_id.transform_values do |trs|
+      total_segment_values(trs)
+    end
+
+    actual_time_ranges = TimeRange.where(user_id: user_ids)
+    actual_time_ranges = actual_time_ranges.filter_by_tag_types_and_tags(filter_tag_ids) if filter_tag_ids.present?
+
+    if filter_start_time && filter_end_time
+      actual_time_ranges = actual_time_ranges.where('start_time BETWEEN ? AND ?', filter_start_time, filter_end_time).or(
+        actual_time_ranges.where('end_time BETWEEN ? AND ?', filter_start_time, filter_end_time)
+      ).or(
+        actual_time_ranges.where('start_time <= ? AND end_time >= ?', filter_start_time, filter_end_time)
+      ).distinct
+    end
+
+    actual_time_ranges_by_user_id = actual_time_ranges.group_by(&:user_id)
+    total_actual_time_ranges_by_user_id = actual_time_ranges_by_user_id.transform_values do |trs|
+      total_segment_values(trs)
+    end
+
+    result = user_names_map.collect do |id, name|
       {
-        name: user.name,
-        value: bar_chart_value(user: user)
+        name: name,
+        value: total_percentage_delivered(total_planned_time_ranges_by_user_id[id], total_actual_time_ranges_by_user_id[id])
       }
     end
+
+    result.sort_by { |el| el[:value] ? -el[:value] : 0 }
+  end
+
+  def total_percentage_delivered(total_planned, total_actual)
+    return unless total_planned && total_actual
+
+    Numeric.percentage_rounded(total_actual, total_planned)
   end
 
   def team_stats_presenter
@@ -86,10 +126,12 @@ class TeamDashboardPresenter
     )
   end
 
-  def to_json(args)
+  def to_json(args) # rubocop:disable Metrics/AbcSize
     args[:graphs].each_with_object({}) do |graph, hash|
+      data = send(graph[:data])
+
       hash[graph[:type]] = {
-        data: send(graph[:data]),
+        data: data,
         units: units,
         dataset_labels: dataset_labels
       }.delete_if { |_k, v| v.blank? }
@@ -105,7 +147,24 @@ class TeamDashboardPresenter
   private
 
   def users
-    @users ||= User.where(id: @params[:user_ids])
+    @users ||= User.where(id: @params[:user_ids]).order(:last_name, :first_name)
+  end
+
+  def user_ids
+    @user_ids ||= users.pluck(:id)
+  end
+
+  def user_names_map
+    users.select(:id, :first_name, :last_name).collect { |u| [u.id, u.name] }.to_h
+  end
+
+  def total_segment_values(time_ranges)
+    time_ranges.sum do |t|
+      t.segment_value(
+        segment_start: filter_start_time,
+        segment_end: filter_end_time
+      )
+    end
   end
 
   def defaults
@@ -121,13 +180,5 @@ class TeamDashboardPresenter
 
   def units
     I18n.t("graphs.#{@params[:graph_kind]}.units", default: '')
-  end
-
-  # team individuals bar chart
-
-  def bar_chart_value(user:)
-    return if user.time_ranges.none?
-
-    user_stats_presenter(user).percentage_delivered
   end
 end
