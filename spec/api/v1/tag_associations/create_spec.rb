@@ -26,7 +26,7 @@ describe Api::V1::TagAssociationResource, type: :request, swagger_doc: 'v1/swagg
       consumes 'application/vnd.api+json'
       produces 'application/vnd.api+json'
       parameter name: :tag_association, in: :body, schema: { '$ref' => '#/definitions/tag_association_post_params' }
-      description "Can use <strong>time_range_appointment_id</strong> instead of <strong>taggable_id</strong> and <strong>taggable_type</strong>. Do not use both."
+      description 'Can use <strong>time_range_appointment_id</strong> instead of <strong>taggable_id</strong> and <strong>taggable_type</strong>. Do not use both.' # rubocop:disable Layout/LineLength:
 
       let(:tag_association) do
         {

@@ -25,7 +25,7 @@ describe Api::V1::MembershipResource, type: :request, swagger_doc: 'v1/swagger.j
       consumes 'application/vnd.api+json'
       produces 'application/vnd.api+json'
       parameter name: :membership, in: :body, schema: { '$ref' => '#/definitions/membership_post_params' }
-      description "Can use <strong>user_epr_uuid</strong> instead of <strong>user_id</strong>. Do not use both."
+      description 'Can use <strong>user_epr_uuid</strong> instead of <strong>user_id</strong>. Do not use both.'
 
       let(:membership) do
         {
