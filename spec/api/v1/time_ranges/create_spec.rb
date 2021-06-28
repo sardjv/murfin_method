@@ -28,6 +28,7 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
       consumes 'application/vnd.api+json'
       produces 'application/vnd.api+json'
       parameter name: :time_range, in: :body, schema: { '$ref' => '#/definitions/time_range_post_params' }
+      description "Can use <strong>user_epr_uuid</strong> instead of <strong>user_id</strong>. Do not use both."
 
       let(:time_range) do
         {
