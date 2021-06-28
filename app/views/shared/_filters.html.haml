@@ -8,7 +8,7 @@
       .form-row
         = f.select :filter_tag_ids, grouped_options_for_select(filters_tag_options, filter_tag_ids),
                     { label: t('filters.tags'), wrapper: { class: 'col-md-7 filters-tags-container' } },
-                    { class: 'filter', multiple: true, 'data-actions-box': true, 'data-use-select2': true }
+                    { class: 'filter', multiple: true, 'data-use-select2': true }
         = f.text_field :filter_start_date,
                         { value: presenter.filter_start_date,
                         label: t('filters.start_date'),

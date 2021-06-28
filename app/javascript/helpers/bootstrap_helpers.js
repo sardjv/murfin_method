@@ -14,7 +14,7 @@ function bootstrapHelpers() {
 
 function styleSelects() {
   $('select').not('[multiple="multiple"]').not('[data-use-select2]').selectpicker({ width: 'fit', liveSearch: true });
-  $('select[multiple="multiple"').not('[data-use-select2]').selectpicker({ liveSearch: true });
+  $('select[multiple="multiple"]').not('[data-use-select2]').selectpicker({ liveSearch: true });
   $('.rails-bootstrap-forms-datetime-select').addClass('form-inline');
   $('.rails-bootstrap-forms-date-select').addClass('form-inline');
 
