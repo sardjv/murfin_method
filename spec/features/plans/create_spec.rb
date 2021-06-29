@@ -7,7 +7,7 @@ describe 'User creates a plan', type: :feature, js: true do
   let(:plan) { Plan.unscoped.last }
 
   let(:start_date) { Date.current.change(month: 5, day: 1) } # May current year
-  let(:end_date) { Date.current.change(year: Date.current.year + 1, month: 2).end_of_month } # Feb next year
+  let(:end_date) { Date.new(Date.current.year + 1, 2, 1).end_of_month } # Feb next year
 
   let(:plan) { Plan.unscoped.last }
   let(:success_message) { I18n.t('notice.successfully.created', model_name: Plan.model_name.human) }
