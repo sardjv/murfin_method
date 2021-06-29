@@ -34,7 +34,6 @@
                     #{user_presenter.percentage_delivered}%
                 %td{ class: user_presenter.status.parameterize }= user_presenter.status
                 %td
-                  = link_to presenter.context == :admin_teams ? admin_team_individual_path(@user_group, user) : team_individual_path(@user_group, user),
-                            title: 'Individual Summary', class: 'btn btn-link' do
+                  = link_to team_individual_path_for_context(@user_group, user), title: 'Individual Summary', class: 'btn btn-link' do
                     = icon('eye')
       = paginate presenter.paginated_users
