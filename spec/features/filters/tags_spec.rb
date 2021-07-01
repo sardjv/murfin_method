@@ -85,31 +85,39 @@ describe 'filters tags logic', js: true do
     visit data_team_individual_path(user_group, user)
   end
 
+  include TimeRangeHelper # for duration_in_words
+
   context 'no tag filters applied' do
+    let(:first_week_days_worked) { 7 - (plan_start_date - plan_start_date.beginning_of_week).to_i }
+    let(:first_week_minutes_worked) { plan.total_minutes_worked_per_week.to_f / 7 * first_week_days_worked }
+
+    let(:last_week_days_worked) { 7 - (plan_end_date.end_of_week - plan_end_date).to_i }
+    let(:last_week_minutes_worked) { plan.total_minutes_worked_per_week.to_f / 7 * last_week_days_worked }
+
     it 'shows planned times' do
       within '#team-individual-table' do
         # first week of the plan
         within "tr[data-week-start-date = '#{plan_start_date.beginning_of_week}']" do
           within '.team-individual-table-planned-minutes' do
-            expect(page).to have_content '8h 34m'
+            expect(page).to have_content duration_in_words(first_week_minutes_worked, :short)
+          end
+        end
+
+        weeks_count = (plan_end_date.beginning_of_week.to_time - plan_start_date.beginning_of_week.to_time).seconds.in_weeks.to_i
+
+        (weeks_count - 2).times do |n| # go through all weeeks of the plan except first and last one
+          start_date = plan_start_date.beginning_of_week + (n + 1).weeks
+          within "tr[data-week-start-date = '#{start_date}']" do
+            within '.team-individual-table-planned-minutes' do
+              expect(page).to have_content '12h'
+            end
           end
         end
 
         # last week of the plan
         within "tr[data-week-start-date = '#{plan_end_date.beginning_of_week}']" do
           within '.team-individual-table-planned-minutes' do
-            expect(page).to have_content '5h 9m'
-          end
-        end
-
-        weeks_count = (plan_end_date.beginning_of_week.to_time - plan_start_date.beginning_of_week.to_time).seconds.in_weeks.to_i
-
-        (weeks_count - 2).times do |n|
-          start_date = plan_start_date.beginning_of_week + (n + 1).weeks
-          within "tr[data-week-start-date = '#{start_date}']" do
-            within '.team-individual-table-planned-minutes' do
-              expect(page).to have_content '12h'
-            end
+            expect(page).to have_content duration_in_words(last_week_minutes_worked, :short)
           end
         end
       end
