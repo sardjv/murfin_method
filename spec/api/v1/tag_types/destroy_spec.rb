@@ -11,23 +11,20 @@ describe Api::V1::TagTypeResource, type: :request, swagger_doc: 'v1/swagger.json
       parameter name: :id, in: :path, type: :string, required: true
 
       let(:Authorization) { 'Bearer dummy_json_web_token' }
-      let(:id) { tag_type.id }
 
       response '204', 'OK: No Content' do
+        let(:id) { tag_type.id }
+
         run_test! do
           refute(TagType.exists?(tag_type.id))
         end
       end
 
-      response '404', 'Record not found' do
-        schema '$ref' => '#/definitions/error_404'
-
-        let(:id) { 333_222_111 }
-
-        run_test!
-      end
+      it_behaves_like 'has response record not found'
 
       context 'tag type has tag with association' do
+        let(:id) { tag_type.id }
+
         let!(:tag) { create :tag, tag_type: tag_type }
         let!(:tag_association) { create :tag_association, tag: tag }
         let(:error_detail) { 'Cannot delete record because dependent tag associations exist.' }

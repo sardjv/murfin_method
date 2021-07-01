@@ -12,10 +12,11 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
       produces 'application/vnd.api+json'
 
       let(:Authorization) { 'Bearer dummy_json_web_token' }
-      let(:id) { time_range.id }
       let(:include) { '' }
 
       response '200', 'Showing time range' do
+        let(:id) { time_range.id }
+
         schema '$ref' => '#/definitions/time_range_response'
 
         run_test! do
@@ -27,6 +28,8 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
       end
 
       context 'include tags' do
+        let(:id) { time_range.id }
+
         let(:include) { 'tags' }
 
         let!(:parent_tag_type) { create :tag_type }
@@ -50,14 +53,10 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
         end
       end
 
-      response '404', 'Record not found' do
-        let(:id) { 999_888 }
-        run_test!
-      end
+      it_behaves_like 'has response record not found'
 
-      response '406', 'Unsupported accept header' do
-        let(:Accept) { 'application/json' }
-        run_test!
+      it_behaves_like 'has response unsupported accept header' do
+        let(:id) { time_range.id }
       end
     end
   end

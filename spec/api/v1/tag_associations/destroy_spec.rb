@@ -11,21 +11,16 @@ describe Api::V1::TagAssociationResource, type: :request, swagger_doc: 'v1/swagg
       parameter name: :id, in: :path, type: :string, required: true
 
       let(:Authorization) { 'Bearer dummy_json_web_token' }
-      let(:id) { tag_association.id }
 
       response '204', 'OK: No Content' do
+        let(:id) { tag_association.id }
+
         run_test! do
           refute(TagAssociation.exists?(tag_association.id))
         end
       end
 
-      response '404', 'Record not found' do
-        schema '$ref' => '#/definitions/error_404'
-
-        let(:id) { 987_654 }
-
-        run_test!
-      end
+      it_behaves_like 'has response record not found'
     end
   end
 end

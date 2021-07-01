@@ -11,9 +11,10 @@ describe Api::V1::UserGroupResource, type: :request, swagger_doc: 'v1/swagger.js
       produces 'application/vnd.api+json'
 
       let(:Authorization) { 'Bearer dummy_json_web_token' }
-      let!(:id) { user_group.id }
 
       response '200', 'Showing tag type' do
+        let!(:id) { user_group.id }
+
         schema '$ref' => '#/definitions/user_group_response'
 
         run_test! do
@@ -21,19 +22,10 @@ describe Api::V1::UserGroupResource, type: :request, swagger_doc: 'v1/swagger.js
         end
       end
 
-      response '404', 'Record not found' do
-        schema '$ref' => '#/definitions/error_404'
+      it_behaves_like 'has response record not found'
 
-        let(:id) { 111_222 }
-
-        run_test!
-      end
-
-      response '406', 'Unsupported accept header' do
-        schema '$ref' => '#/definitions/error_406'
-
-        let(:Accept) { 'application/json' }
-        run_test!
+      it_behaves_like 'has response unsupported accept header' do
+        let(:id) { user_group.id }
       end
     end
   end

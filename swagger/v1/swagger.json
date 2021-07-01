@@ -49,13 +49,13 @@
             }
           },
           "400": {
-            "description": "Error: Bad Request",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/error_400"
             }
           },
           "422": {
-            "description": "Invalid request",
+            "description": "Unprocessable Entity",
             "schema": {
               "$ref": "#/definitions/error_422"
             }
@@ -143,10 +143,16 @@
             }
           },
           "404": {
-            "description": "Record not found"
+            "description": "Record not found",
+            "schema": {
+              "$ref": "#/definitions/error_404"
+            }
           },
           "406": {
-            "description": "Unsupported accept header"
+            "description": "Unsupported accept header",
+            "schema": {
+              "$ref": "#/definitions/error_406"
+            }
           }
         }
       }
@@ -244,7 +250,7 @@
             }
           },
           "422": {
-            "description": "Invalid request",
+            "description": "Unprocessable Entity",
             "schema": {
               "$ref": "#/definitions/error_422"
             }
@@ -323,7 +329,7 @@
             }
           },
           "422": {
-            "description": "Invalid request",
+            "description": "Unprocessable Entity",
             "schema": {
               "$ref": "#/definitions/error_422"
             }
@@ -492,7 +498,7 @@
             }
           },
           "422": {
-            "description": "Invalid request",
+            "description": "Unprocessable Entity",
             "schema": {
               "$ref": "#/definitions/error_422"
             }
@@ -535,7 +541,7 @@
             }
           },
           "422": {
-            "description": "Invalid request",
+            "description": "Unprocessable Entity",
             "schema": {
               "$ref": "#/definitions/error_422"
             }
@@ -625,16 +631,16 @@
           "204": {
             "description": "OK: No Content"
           },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/error_422"
+            }
+          },
           "404": {
             "description": "Record not found",
             "schema": {
               "$ref": "#/definitions/error_404"
-            }
-          },
-          "422": {
-            "description": "Error: Unprocessable Entity",
-            "schema": {
-              "$ref": "#/definitions/error_422"
             }
           }
         }
@@ -765,13 +771,13 @@
             }
           },
           "422": {
-            "description": "Invalid request",
+            "description": "Unprocessable Entity",
             "schema": {
               "$ref": "#/definitions/error_422"
             }
           },
           "400": {
-            "description": "Error: Bad Request",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/error_400"
             }
@@ -879,10 +885,16 @@
             }
           },
           "404": {
-            "description": "Record not found"
+            "description": "Record not found",
+            "schema": {
+              "$ref": "#/definitions/error_404"
+            }
           },
           "406": {
-            "description": "Unsupported accept header"
+            "description": "Unsupported accept header",
+            "schema": {
+              "$ref": "#/definitions/error_406"
+            }
           }
         }
       }
@@ -922,7 +934,7 @@
             }
           },
           "422": {
-            "description": "Invalid request",
+            "description": "Unprocessable Entity",
             "schema": {
               "$ref": "#/definitions/error_422"
             }
@@ -1097,7 +1109,7 @@
             }
           },
           "422": {
-            "description": "Invalid request",
+            "description": "Unprocessable Entity",
             "schema": {
               "$ref": "#/definitions/error_422"
             }
@@ -1153,13 +1165,13 @@
             }
           },
           "404": {
-            "description": "Not found",
+            "description": "Record not found",
             "schema": {
               "$ref": "#/definitions/error_404"
             }
           },
           "400": {
-            "description": "Error: Bad Request",
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/error_400"
             }
@@ -1218,6 +1230,12 @@
             "description": "Users index",
             "schema": {
               "$ref": "#/definitions/users_response"
+            }
+          },
+          "406": {
+            "description": "Unsupported accept header",
+            "schema": {
+              "$ref": "#/definitions/error_406"
             }
           }
         }
@@ -1363,7 +1381,7 @@
             }
           },
           "404": {
-            "description": "Not found",
+            "description": "Record not found",
             "schema": {
               "$ref": "#/definitions/error_404"
             }
@@ -1493,52 +1511,6 @@
         "error": {
           "type": "string",
           "example": "Invalid request"
-        }
-      }
-    },
-    "error_422_start_end_time": {
-      "type": "object",
-      "properties": {
-        "errors": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "title": {
-                "type": "string",
-                "example": "must occur after start time"
-              },
-              "detail": {
-                "type": "string",
-                "example": "end_time - must occur after start time"
-              },
-              "code": {
-                "type": "string",
-                "example": "100"
-              },
-              "status": {
-                "type": "string",
-                "example": "422"
-              }
-            }
-          }
-        }
-      }
-    },
-    "error_422_password_too_short": {
-      "type": "object",
-      "properties": {
-        "errors": {
-          "type": "array",
-          "items": {
-            "title": "is too short (minimum is 6 characters)",
-            "detail": "password - is too short (minimum is 6 characters)",
-            "code": "100",
-            "source": {
-              "pointer": "/data/attributes/password"
-            },
-            "status": "422"
-          }
         }
       }
     },

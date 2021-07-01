@@ -85,6 +85,8 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
           end
         end
       end
+
+      it_behaves_like 'has response unsupported accept header'
     end
   end
 end

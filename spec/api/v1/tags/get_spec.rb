@@ -11,9 +11,10 @@ describe Api::V1::TagResource, type: :request, swagger_doc: 'v1/swagger.json' do
       produces 'application/vnd.api+json'
 
       let(:Authorization) { 'Bearer dummy_json_web_token' }
-      let!(:id) { tag.id }
 
       response '200', 'Showing tag type' do
+        let!(:id) { tag.id }
+
         schema '$ref' => '#/definitions/tag_response'
 
         run_test! do
@@ -21,19 +22,10 @@ describe Api::V1::TagResource, type: :request, swagger_doc: 'v1/swagger.json' do
         end
       end
 
-      response '404', 'Record not found' do
-        schema '$ref' => '#/definitions/error_404'
+      it_behaves_like 'has response record not found'
 
-        let(:id) { 999_888 }
-
-        run_test!
-      end
-
-      response '406', 'Unsupported accept header' do
-        schema '$ref' => '#/definitions/error_406'
-
-        let(:Accept) { 'application/json' }
-        run_test!
+      it_behaves_like 'has response unsupported accept header' do
+        let(:id) { tag.id }
       end
     end
   end

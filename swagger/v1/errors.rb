@@ -82,40 +82,6 @@ module Swagger
               error: { type: 'string', example: 'Invalid request' }
             }
           },
-          error_422_start_end_time: {
-            type: 'object',
-            properties: {
-              errors: {
-                type: 'array',
-                items: {
-                  type: 'object',
-                  properties: {
-                    title: { type: 'string', example: 'must occur after start time' },
-                    detail: { type: 'string', example: 'end_time - must occur after start time' },
-                    code: { type: 'string', example: JSONAPI::VALIDATION_ERROR },
-                    status: { type: 'string', example: '422' }
-                  }
-                }
-              }
-            }
-          },
-          error_422_password_too_short: {
-            type: 'object',
-            properties: {
-              errors: {
-                type: 'array',
-                items: {
-                  title: 'is too short (minimum is 6 characters)',
-                  detail: 'password - is too short (minimum is 6 characters)',
-                  code: JSONAPI::VALIDATION_ERROR,
-                  source: {
-                    pointer: '/data/attributes/password'
-                  },
-                  status: '422'
-                }
-              }
-            }
-          },
           error_423: {
             type: 'object',
             properties: {
