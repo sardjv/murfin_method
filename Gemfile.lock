@@ -374,7 +374,7 @@ GEM
     thread-local (1.1.0)
     tilt (2.0.10)
     timecop (0.9.4)
-    turbo-rails (0.5.11)
+    turbo-rails (0.5.12)
       rails (>= 6.0.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
@@ -448,7 +448,7 @@ DEPENDENCIES
   sql_tracker (~> 1.3.2)
   strip_attributes (~> 1.11.0)
   timecop (~> 0.9.4)
-  turbo-rails (~> 0.5.11)
+  turbo-rails (~> 0.5.12)
   tzinfo-data (~> 1.2021.1)
   webpacker (~> 5.4.0)
 
