@@ -61,7 +61,11 @@ function styleDurations() {
     showDays: false,
     showSeconds: false,
     maxHours: 99,
-    minutesStep: 15
+    minutesStep: 15,
+    translations: {
+      hours: 'h',
+      minutes: 'm'
+    }
   });
 
   $('.duration-picker-contracted-hours-per-week').durationPicker({

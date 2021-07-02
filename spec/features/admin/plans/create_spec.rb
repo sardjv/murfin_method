@@ -29,7 +29,7 @@ describe 'Admin creates plan on behalf of a user', type: :feature, js: true do
     end
 
     click_link 'Add Activity'
-    within '#plan-activities-table' do
+    within '#plan-activities-list' do
       find_field(type: 'number', match: :first).set(activity_hours_per_week)
     end
 
@@ -72,7 +72,7 @@ describe 'Admin creates plan on behalf of a user', type: :feature, js: true do
 
       click_link 'Add Activity'
 
-      within '.activities .nested-fields' do
+      within '#plan-activities-list .nested-fields' do
         bootstrap_select tag1a.name, from: tag_type1.name
 
         find_field(type: 'number', match: :first).set(activity_hours_per_week)

@@ -1,11 +1,14 @@
-%tr.nested-fields
+.row.nested-fields.border-bottom.pt-2.pb-2
   = f.hidden_field :id
   = render 'shared/tag_associations', f: f
-  %td{ class: Activity.human_attribute_name('duration').parameterize }
-    = f.number_field :seconds_per_week, { class: 'duration-picker-activity', hide_label: true, step: :any, disabled: !policy(plan).update? }
-    - f.object.errors.full_messages_for(:duration).each do |error|
-      .error.text-danger.small= error
-  - if policy(plan).update?
-    %td
-      = link_to_remove_association f do
-        = icon('trash')
+  .col-3{ class: Activity.human_attribute_name('duration').parameterize }
+    .d-flex.align-content-around
+      %div
+        = f.number_field :seconds_per_week,
+          { class: 'duration-picker-activity', hide_label: true, step: :any, disabled: !policy(plan).update?, wrapper: { class: 'mb-0' } }
+        - f.object.errors.full_messages_for(:duration).each do |error|
+          .error.text-danger.small= error
+      - if policy(plan).update?
+        %div
+          = link_to_remove_association f, title: t('action.remove', model_name: f.object.class.name.humanize) do
+            = icon('trash')

@@ -26,9 +26,11 @@ describe 'Admin creates a time_range', type: :feature, js: true do
     it 'creates with defaults to 9:00 to 17:00' do
       set_required_fields
 
-      expect { click_button I18n.t('actions.save') }.to change { TimeRange.count }.by(1)
+      expect do
+        click_button I18n.t('actions.save')
 
-      expect(page).to have_css '.alert-info', text: success_message
+        expect(page).to have_css '.alert-info', text: success_message
+      end.to change { TimeRange.count }.by(1)
 
       expect(time_range.start_time.strftime('%H:%M')).to eq '09:00'
       expect(time_range.end_time.strftime('%H:%M')).to eq '17:00'

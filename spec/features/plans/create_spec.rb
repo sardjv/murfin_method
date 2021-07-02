@@ -40,13 +40,13 @@ describe 'User creates a plan', type: :feature, js: true do
       expect(page).to have_css "input[type = 'hidden'][value='#{end_date.to_s(:db)}']", visible: false, wait: 3
     end
 
-    within '.plan_contracted_hours_per_week_wrapper' do
+    within '.plan-contracted-hours-per-week-wrapper' do
       find_field(type: 'number', match: :first).set(contracted_hours_per_week)
     end
 
     click_link I18n.t('actions.add', model_name: Activity.model_name.human.titleize)
 
-    within '#plan-activities-table' do
+    within '#plan-activities-list' do
       find_field(type: 'number', match: :first).set(activity_hours_per_week)
     end
 
