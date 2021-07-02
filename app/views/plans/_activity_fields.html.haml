@@ -10,5 +10,5 @@
           .error.text-danger.small= error
       - if policy(plan).update?
         %div
-          = link_to_remove_association f, title: t('action.remove', model_name: f.object.class.name.humanize) do
+          = link_to_remove_association f, title: t('actions.remove', model_name: f.object.class.name.humanize) do
             = icon('trash')
