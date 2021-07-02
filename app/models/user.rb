@@ -48,6 +48,18 @@ class User < ApplicationRecord
   validates :admin, inclusion: { in: [true, false] }
   validates :epr_uuid, uniqueness: { case_sensitive: true }, allow_blank: true
 
+  ransacker :first_last_name do |parent|
+    Arel::Nodes::NamedFunction.new('CONCAT_WS', [
+                                     Arel::Nodes.build_quoted(' '), parent.table[:first_name], parent.table[:last_name]
+                                   ])
+  end
+
+  ransacker :last_first_name do |parent|
+    Arel::Nodes::NamedFunction.new('CONCAT_WS', [
+                                     Arel::Nodes.build_quoted(' '), parent.table[:last_name], parent.table[:first_name]
+                                   ])
+  end
+
   def name
     "#{first_name} #{last_name}"
   end
