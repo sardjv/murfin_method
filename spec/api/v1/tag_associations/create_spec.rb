@@ -48,6 +48,8 @@ describe Api::V1::TagAssociationResource, type: :request, swagger_doc: 'v1/swagg
         end
       end
 
+      it_behaves_like 'has response unauthorized'
+
       describe 'find tabbable by time_range_appointment_id instead taggable_id and taggable_type' do
         context 'correct time_range_appointment_id passed' do
           let(:attributes) do

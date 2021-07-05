@@ -14,9 +14,9 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
       let(:Authorization) { 'Bearer dummy_json_web_token' }
       let(:include) { '' }
 
-      response '200', 'Showing time range' do
-        let(:id) { time_range.id }
+      let(:id) { time_range.id }
 
+      response '200', 'Showing time range' do
         schema '$ref' => '#/definitions/time_range_response'
 
         run_test! do
@@ -28,8 +28,6 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
       end
 
       context 'include tags' do
-        let(:id) { time_range.id }
-
         let(:include) { 'tags' }
 
         let!(:parent_tag_type) { create :tag_type }
@@ -53,11 +51,9 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
         end
       end
 
+      it_behaves_like 'has response unauthorized'
       it_behaves_like 'has response record not found'
-
-      it_behaves_like 'has response unsupported accept header' do
-        let(:id) { time_range.id }
-      end
+      it_behaves_like 'has response unsupported accept header'
     end
   end
 end

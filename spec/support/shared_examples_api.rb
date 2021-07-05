@@ -12,6 +12,18 @@ shared_examples 'has response bad request' do
   end
 end
 
+shared_examples 'has response unauthorized', skip_jwt_authorization_stub: true do
+  let(:error_title) { 'Unauthorized' }
+
+  response '401', 'Unauthorized' do
+    schema '$ref' => '#/definitions/error_401'
+
+    run_test! do
+      expect(parsed_json_error).to eql error_title
+    end
+  end
+end
+
 shared_examples 'has response forbidden' do
   let(:error_title) { 'Forbidden' } unless method_defined?(:error_title)
   let(:error_detail) { 'Forbidden' } unless method_defined?(:error_detail)
@@ -28,7 +40,7 @@ shared_examples 'has response forbidden' do
 end
 
 shared_examples 'has response record not found' do
-  let(:id) { 123_456_789 } unless method_defined?(:id)
+  let(:id) { 123_456_789 }
   let(:error_title) { 'Record not found' } unless method_defined?(:error_title)
   let(:error_detail) { "The record identified by #{id} could not be found." } unless method_defined?(:error_detail)
   let(:error_status) { '404' }

@@ -33,24 +33,24 @@ describe Api::V1::UserGroupResource, type: :request, swagger_doc: 'v1/swagger.js
         }
       end
 
-      context 'authorized' do
-        let(:Authorization) { 'Bearer dummy_json_web_token' }
+      let(:Authorization) { 'Bearer dummy_json_web_token' }
 
-        response '200', 'OK: User Group updated' do
-          schema '$ref' => '#/definitions/user_group_patch_params'
+      response '200', 'OK: User Group updated' do
+        schema '$ref' => '#/definitions/user_group_patch_params'
 
-          run_test! do
-            parsed_json_data_matches_db_record(updated_user_group)
-          end
+        run_test! do
+          parsed_json_data_matches_db_record(updated_user_group)
         end
+      end
 
-        context 'group type does not exist' do
-          let(:attributes) { valid_attributes.merge({ group_type_id: 9_876_543 }) }
+      it_behaves_like 'has response unauthorized'
 
-          it_behaves_like 'has response unprocessable entity' do
-            let(:error_title) { 'must exist' }
-            let(:error_detail) { 'group_type - must exist' }
-          end
+      context 'group type does not exist' do
+        let(:attributes) { valid_attributes.merge({ group_type_id: 9_876_543 }) }
+
+        it_behaves_like 'has response unprocessable entity' do
+          let(:error_title) { 'must exist' }
+          let(:error_detail) { 'group_type - must exist' }
         end
       end
     end

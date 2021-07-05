@@ -11,10 +11,9 @@ describe Api::V1::TagTypeResource, type: :request, swagger_doc: 'v1/swagger.json
       produces 'application/vnd.api+json'
 
       let(:Authorization) { 'Bearer dummy_json_web_token' }
+      let(:id) { tag_type.id }
 
       response '200', 'Showing tag type' do
-        let(:id) { tag_type.id }
-
         schema '$ref' => '#/definitions/tag_type_response'
 
         run_test! do
@@ -22,11 +21,9 @@ describe Api::V1::TagTypeResource, type: :request, swagger_doc: 'v1/swagger.json
         end
       end
 
+      it_behaves_like 'has response unauthorized'
       it_behaves_like 'has response record not found'
-
-      it_behaves_like 'has response unsupported accept header' do
-        let(:id) { tag_type.id }
-      end
+      it_behaves_like 'has response unsupported accept header'
     end
   end
 end

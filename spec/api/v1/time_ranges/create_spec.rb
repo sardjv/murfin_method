@@ -51,6 +51,8 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
         end
       end
 
+      it_behaves_like 'has response unauthorized'
+
       context 'find user by user_epr_uuid instead user_id' do
         context 'correct user_epr_uuid passed' do
           let(:attributes) { valid_attributes.except(:user_id).merge({ user_epr_uuid: epr_uuid }) }

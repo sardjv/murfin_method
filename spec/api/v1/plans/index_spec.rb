@@ -76,6 +76,8 @@ describe Api::V1::PlanResource, type: :request, swagger_doc: 'v1/swagger.json' d
           end
         end
       end
+
+      it_behaves_like 'has response unauthorized'
     end
   end
 end

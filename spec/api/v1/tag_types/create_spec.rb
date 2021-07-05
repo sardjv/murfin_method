@@ -47,6 +47,8 @@ describe Api::V1::TagTypeResource, type: :request, swagger_doc: 'v1/swagger.json
         end
       end
 
+      it_behaves_like 'has response unauthorized'
+
       context 'tag type has no parent' do
         let(:attributes) { valid_attributes.except(:parent_id) }
 

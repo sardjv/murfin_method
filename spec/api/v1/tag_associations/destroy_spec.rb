@@ -10,16 +10,16 @@ describe Api::V1::TagAssociationResource, type: :request, swagger_doc: 'v1/swagg
       produces 'application/vnd.api+json'
       parameter name: :id, in: :path, type: :string, required: true
 
+      let(:id) { tag_association.id }
       let(:Authorization) { 'Bearer dummy_json_web_token' }
 
       response '204', 'OK: No Content' do
-        let(:id) { tag_association.id }
-
         run_test! do
           refute(TagAssociation.exists?(tag_association.id))
         end
       end
 
+      it_behaves_like 'has response unauthorized'
       it_behaves_like 'has response record not found'
     end
   end

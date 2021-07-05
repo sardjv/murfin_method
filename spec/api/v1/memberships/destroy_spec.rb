@@ -11,15 +11,15 @@ describe Api::V1::MembershipResource, type: :request, swagger_doc: 'v1/swagger.j
       parameter name: :id, in: :path, type: :string, required: true
 
       let(:Authorization) { 'Bearer dummy_json_web_token' }
+      let(:id) { membership.id }
 
       response '204', 'OK: No Content' do
-        let(:id) { membership.id }
-
         run_test! do
           refute(Membership.exists?(membership.id))
         end
       end
 
+      it_behaves_like 'has response unauthorized'
       it_behaves_like 'has response record not found'
     end
   end

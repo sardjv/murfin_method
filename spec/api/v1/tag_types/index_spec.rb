@@ -43,6 +43,8 @@ describe Api::V1::TagTypeResource, type: :request, swagger_doc: 'v1/swagger.json
           end
         end
       end
+
+      it_behaves_like 'has response unauthorized'
     end
   end
 end

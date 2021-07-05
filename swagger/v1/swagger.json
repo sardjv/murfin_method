@@ -48,6 +48,12 @@
               "$ref": "#/definitions/membership_response"
             }
           },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
+            }
+          },
           "400": {
             "description": "Bad Request",
             "schema": {
@@ -96,6 +102,12 @@
           "204": {
             "description": "OK: No Content"
           },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
+            }
+          },
           "404": {
             "description": "Record not found",
             "schema": {
@@ -140,6 +152,12 @@
             "description": "Showing plan",
             "schema": {
               "$ref": "#/definitions/plan_response_with_relationships"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
             }
           },
           "404": {
@@ -205,6 +223,12 @@
             "schema": {
               "$ref": "#/definitions/plans_response"
             }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
+            }
           }
         }
       }
@@ -241,6 +265,12 @@
             "description": "Tag Association created",
             "schema": {
               "$ref": "#/definitions/tag_association_response"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
             }
           },
           "404": {
@@ -285,6 +315,12 @@
           "204": {
             "description": "OK: No Content"
           },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
+            }
+          },
           "404": {
             "description": "Record not found",
             "schema": {
@@ -326,6 +362,12 @@
             "description": "Tag Type created",
             "schema": {
               "$ref": "#/definitions/tag_type_post_params"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
             }
           },
           "422": {
@@ -370,6 +412,12 @@
             "schema": {
               "$ref": "#/definitions/tag_types_response"
             }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
+            }
           }
         }
       }
@@ -400,6 +448,12 @@
         "responses": {
           "204": {
             "description": "OK: No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
+            }
           },
           "404": {
             "description": "Record not found",
@@ -442,6 +496,12 @@
             "description": "Showing tag type",
             "schema": {
               "$ref": "#/definitions/tag_type_response"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
             }
           },
           "404": {
@@ -497,6 +557,12 @@
               "$ref": "#/definitions/tag_type_patch_params"
             }
           },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
+            }
+          },
           "422": {
             "description": "Unprocessable Entity",
             "schema": {
@@ -538,6 +604,12 @@
             "description": "Tag created",
             "schema": {
               "$ref": "#/definitions/tag_post_params"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
             }
           },
           "422": {
@@ -600,6 +672,12 @@
             "schema": {
               "$ref": "#/definitions/tags_response"
             }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
+            }
           }
         }
       }
@@ -637,6 +715,12 @@
               "$ref": "#/definitions/error_422"
             }
           },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
+            }
+          },
           "404": {
             "description": "Record not found",
             "schema": {
@@ -672,6 +756,12 @@
             "description": "Showing tag type",
             "schema": {
               "$ref": "#/definitions/tag_response"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
             }
           },
           "404": {
@@ -726,6 +816,12 @@
             "schema": {
               "$ref": "#/definitions/tag_patch_params"
             }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
+            }
           }
         }
       }
@@ -762,6 +858,12 @@
             "description": "Time Range created",
             "schema": {
               "$ref": "#/definitions/time_range_response_with_relationships"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
             }
           },
           "404": {
@@ -843,6 +945,12 @@
             "schema": {
               "$ref": "#/definitions/time_ranges_response"
             }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
+            }
           }
         }
       }
@@ -882,6 +990,12 @@
             "description": "Showing time range",
             "schema": {
               "$ref": "#/definitions/time_range_response_with_relationships"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
             }
           },
           "404": {
@@ -931,6 +1045,12 @@
             "description": "User Group created",
             "schema": {
               "$ref": "#/definitions/user_group_post_params"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
             }
           },
           "422": {
@@ -987,6 +1107,12 @@
             "schema": {
               "$ref": "#/definitions/user_groups_response"
             }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
+            }
           }
         }
       }
@@ -1017,6 +1143,12 @@
         "responses": {
           "204": {
             "description": "OK: No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
+            }
           },
           "404": {
             "description": "Record not found",
@@ -1053,6 +1185,12 @@
             "description": "Showing tag type",
             "schema": {
               "$ref": "#/definitions/user_group_response"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
             }
           },
           "404": {
@@ -1106,6 +1244,12 @@
             "description": "OK: User Group updated",
             "schema": {
               "$ref": "#/definitions/user_group_patch_params"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
             }
           },
           "422": {
@@ -1162,6 +1306,12 @@
             "description": "Unprocessable Entity",
             "schema": {
               "$ref": "#/definitions/error_422"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
             }
           },
           "404": {
@@ -1232,6 +1382,12 @@
               "$ref": "#/definitions/users_response"
             }
           },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
+            }
+          },
           "406": {
             "description": "Unsupported accept header",
             "schema": {
@@ -1267,6 +1423,12 @@
         "responses": {
           "204": {
             "description": "OK: No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
+            }
           },
           "404": {
             "description": "Record not found",
@@ -1313,6 +1475,12 @@
             "description": "Showing user",
             "schema": {
               "$ref": "#/definitions/user_response_with_relationships"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
             }
           },
           "404": {
@@ -1366,6 +1534,12 @@
             "description": "OK: User updated",
             "schema": {
               "$ref": "#/definitions/user_response_with_relationships"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
             }
           },
           "400": {

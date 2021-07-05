@@ -107,6 +107,8 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
           end
         end
       end
+
+      it_behaves_like 'has response unauthorized'
     end
   end
 end
