@@ -140,7 +140,6 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
       end
 
       it_behaves_like 'has response unauthorized'
-
     end
   end
 end

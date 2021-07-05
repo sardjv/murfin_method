@@ -13,7 +13,7 @@ shared_examples 'has response bad request' do
 end
 
 shared_examples 'has response unauthorized', skip_jwt_authorization_stub: true do
-  let(:error_title) { 'Not Authorized' }
+  let(:error_title) { 'Unauthorized' }
 
   response '401', 'Unauthorized' do
     schema '$ref' => '#/definitions/error_401'
@@ -40,7 +40,7 @@ shared_examples 'has response forbidden' do
 end
 
 shared_examples 'has response record not found' do
-  let(:id) { 123_456_789 } unless method_defined?(:id)
+  let(:id) { 123_456_789 } # unless method_defined?(:id)
   let(:error_title) { 'Record not found' } unless method_defined?(:error_title)
   let(:error_detail) { "The record identified by #{id} could not be found." } unless method_defined?(:error_detail)
   let(:error_status) { '404' }

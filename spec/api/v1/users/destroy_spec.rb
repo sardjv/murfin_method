@@ -20,9 +20,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
       end
 
       it_behaves_like 'has response unauthorized'
-      it_behaves_like 'has response record not found' do
-        let(:id) { 123_456 }
-      end
+      it_behaves_like 'has response record not found'
 
       context 'user for destroy is admin' do
         let!(:user) { create :user, admin: true }
