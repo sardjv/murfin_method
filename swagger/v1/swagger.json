@@ -1175,6 +1175,12 @@
             "schema": {
               "$ref": "#/definitions/error_400"
             }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
+            }
           }
         }
       },
@@ -1232,6 +1238,12 @@
               "$ref": "#/definitions/users_response"
             }
           },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
+            }
+          },
           "406": {
             "description": "Unsupported accept header",
             "schema": {
@@ -1267,6 +1279,12 @@
         "responses": {
           "204": {
             "description": "OK: No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
+            }
           },
           "404": {
             "description": "Record not found",
@@ -1313,6 +1331,12 @@
             "description": "Showing user",
             "schema": {
               "$ref": "#/definitions/user_response_with_relationships"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
             }
           },
           "404": {
@@ -1385,6 +1409,12 @@
             "schema": {
               "$ref": "#/definitions/error_404"
             }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
+            }
           }
         }
       }
@@ -1405,7 +1435,7 @@
       "properties": {
         "error": {
           "type": "string",
-          "example": "Unauthorized"
+          "example": "Not Authorized"
         }
       }
     },

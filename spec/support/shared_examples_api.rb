@@ -12,6 +12,18 @@ shared_examples 'has response bad request' do
   end
 end
 
+shared_examples 'has response unauthorized', skip_jwt_authorization_stub: true do
+  let(:error_title) { 'Not Authorized' }
+
+  response '401', 'Unauthorized' do
+    schema '$ref' => '#/definitions/error_401'
+
+    run_test! do
+      expect(parsed_json_error).to eql error_title
+    end
+  end
+end
+
 shared_examples 'has response forbidden' do
   let(:error_title) { 'Forbidden' } unless method_defined?(:error_title)
   let(:error_detail) { 'Forbidden' } unless method_defined?(:error_detail)

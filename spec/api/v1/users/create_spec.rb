@@ -138,6 +138,9 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
           let(:error_detail) { 'admin is not allowed.' }
         end
       end
+
+      it_behaves_like 'has response unauthorized'
+
     end
   end
 end

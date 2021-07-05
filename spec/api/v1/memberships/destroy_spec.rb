@@ -20,6 +20,7 @@ describe Api::V1::MembershipResource, type: :request, swagger_doc: 'v1/swagger.j
         end
       end
 
+      it_behaves_like 'has response unauthorized'
       it_behaves_like 'has response record not found'
     end
   end

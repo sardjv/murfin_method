@@ -14,7 +14,7 @@ module Swagger
           error_401: {
             type: 'object',
             properties: {
-              error: { type: 'string', example: 'Unauthorized' }
+              error: { type: 'string', example: 'Not Authorized' }
             }
           },
           error_403: {
