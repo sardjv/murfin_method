@@ -11,15 +11,15 @@ describe Api::V1::UserGroupResource, type: :request, swagger_doc: 'v1/swagger.js
       parameter name: :id, in: :path, type: :string, required: true
 
       let(:Authorization) { 'Bearer dummy_json_web_token' }
+      let(:id) { user_group.id }
 
       response '204', 'OK: No Content' do
-        let(:id) { user_group.id }
-
         run_test! do
           refute(UserGroup.exists?(user_group.id))
         end
       end
 
+      it_behaves_like 'has response unauthorized'
       it_behaves_like 'has response record not found'
     end
   end

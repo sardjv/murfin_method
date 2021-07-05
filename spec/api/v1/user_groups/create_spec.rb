@@ -41,6 +41,8 @@ describe Api::V1::UserGroupResource, type: :request, swagger_doc: 'v1/swagger.js
         end
       end
 
+      it_behaves_like 'has response unauthorized'
+
       context 'name not unique in group type scope' do
         let!(:existing_user_group) { create :user_group, name: user_group_name, group_type_id: group_type.id }
 

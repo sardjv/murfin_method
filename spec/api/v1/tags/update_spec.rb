@@ -34,6 +34,8 @@ describe Api::V1::TagResource, type: :request, swagger_doc: 'v1/swagger.json' do
           expect(updated_tag.reload.name).to eql tag_name
         end
       end
+
+      it_behaves_like 'has response unauthorized'
     end
   end
 end

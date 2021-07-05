@@ -152,8 +152,20 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
             }
           end
 
-          it_behaves_like 'has response record not found' do
-            let!(:error_detail) { "User groups with ids #{invalid_group_id1}, #{invalid_group_id2} not found." }
+          let(:error_title) { 'Record not found' }
+          let(:error_detail) { "User groups with ids #{invalid_group_id1}, #{invalid_group_id2} not found." }
+          let(:error_status) { '404' }
+          let(:error_code) { '404' }
+
+          response '404', 'Record not found' do
+            schema '$ref' => '#/definitions/error_404'
+
+            run_test! do
+              expect(parsed_json_error[:title]).to eql error_title
+              expect(parsed_json_error[:detail]).to eql error_detail
+              expect(parsed_json_error[:status]).to eql error_status
+              expect(parsed_json_error[:code]).to eql error_code
+            end
           end
         end
       end

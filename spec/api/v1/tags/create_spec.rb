@@ -48,6 +48,8 @@ describe Api::V1::TagResource, type: :request, swagger_doc: 'v1/swagger.json' do
         end
       end
 
+      it_behaves_like 'has response unauthorized'
+
       context 'tag has no parent' do
         let!(:tag_type) { create :tag_type, parent_id: nil }
         let(:attributes) { valid_attributes.except(:parent_id) }

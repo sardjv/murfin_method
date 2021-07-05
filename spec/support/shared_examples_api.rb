@@ -40,9 +40,9 @@ shared_examples 'has response forbidden' do
 end
 
 shared_examples 'has response record not found' do
-  let(:id) { 123_456_789 } # unless method_defined?(:id)
+  let(:id) { 123_456_789 }
   let(:error_title) { 'Record not found' } unless method_defined?(:error_title)
-  let(:error_detail) { "The record identified by #{id} could not be found." } unless method_defined?(:error_detail)
+  let(:error_detail) { "The record identified by #{id} could not be found." } if !method_defined?(:error_detail)
   let(:error_status) { '404' }
   let(:error_code) { '404' }
 
