@@ -37,3 +37,54 @@
     }
   }
 }
+
+
+// Activities-form ==============================
+.activities-form{
+  .form-elements{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #dee2e6;
+    @include media-breakpoint-down(md){
+      flex-direction: column;
+    }
+  }
+
+  .form-group{
+    margin: 8px 8px 8px 0;
+  }
+
+  :not(.input-group) > .bootstrap-select.form-control:not([class*=col-]) {
+    width: 100%!important;
+  }
+
+  .times-worked{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    label {
+      margin: 0 10px;
+    }
+    input{
+      width: 50px;
+    }
+  }
+
+  .icons{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 4px 0;
+  }
+
+  .form-buttons{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-top: 8px;
+  }
+}
