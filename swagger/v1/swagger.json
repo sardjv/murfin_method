@@ -1579,7 +1579,7 @@
       "properties": {
         "error": {
           "type": "string",
-          "example": "Not Authorized"
+          "example": "Unauthorized"
         }
       }
     },
