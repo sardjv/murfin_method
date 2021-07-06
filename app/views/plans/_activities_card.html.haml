@@ -36,8 +36,8 @@
                                   data: { 'association-insertion-node': '#plan-activities-list', 'association-insertion-method': 'append' },
                                   class: 'btn btn-primary', render_options: { locals: { plan: plan } }
       - if @plan.activities.any?
-        #plan-total-time-worked-per-week.small
-          = t 'plans.total_time_worked_per_week', total: duration_in_words(plan.total_minutes_worked_per_week, :short)
-
-      - if plan_show_contracted_hours_error?(plan)
-        .alert.alert-warning= t('plans.errors.total_time_worked_per_week_higher_than_contracted')
+        - if plan_show_contracted_hours_error?(plan)
+          .alert.alert-warning= t('plans.errors.total_time_worked_per_week_higher_than_contracted')
+        #plan-total-time-worked-per-week
+          .small
+            = t 'plans.total_time_worked_per_week', total: duration_in_words(plan.total_minutes_worked_per_week, :short)
