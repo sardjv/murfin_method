@@ -1,6 +1,6 @@
 - if activity_tags_top_level.present?
   #plan-totals-card.border.my-4.p-4
-    %label= t('plans.totals')
+    %h6= t('plans.totals')
 
     #plan-totals.accordion
       - activity_tags_top_level.each do |tl_tag|
