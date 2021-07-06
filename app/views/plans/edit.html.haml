@@ -30,9 +30,144 @@
                             class: 'duration-picker-contracted-hours-per-week', step: :any,
                             wrapper: { class: 'col-md-6 plan-contracted-hours-per-week-wrapper' }
 
-        -# NEW
+        -# NEW CSS-Grid Mockup
+        #plan-activities-card.sa-activities-grid.border.my-4.p-4
+          %h6 Activites Simons' CSS-Grid mockup
+          .sa-form-flex-row
+            .sa-form-grid-fluid-columns
+              .form-group
+                %label{:for => "category"} Category
+                %select#category.form-control
+                  %option None
+                  %option DCC (Direct Clinical Care)
+                  %option{:selected => "selected"} SPA (Supporting Professional Activities)
+              .form-group
+                %label{:for => "subcategory"} Subcategory
+                %select#subcategory.form-control
+                  %option None
+                  %option Care Co-ordination
+                  %option Care Intervention Network
+                  %option{:selected => "selected"} CBT / Psychology Treatments
+                  %option Psychotherapy Treatments
+                  %option Family Therapy Treatments
+                  %option Psychiatry Treatment
+                  %option Initial Assessmet
+                  %option All Pathways
+              .form-group
+                %label{:for => "RiO"} Outcomed on RiO
+                %select#RiO.form-control
+                  %option{:selected => "selected"} None
+                  %option Yes
+                  %option No
+              .form-group
+                %label.top-label{:for => "timeWorkedPerWeek"} Time worked per week
+                .times-worked
+                  %input#inputHours.form-control
+                  %label{:for => "inputHours"} h
+                  %input#inputMinutes.form-control
+                  %label{:for => "inputMinutes"} m
+            .icons
+              = link_to_remove_association f, title: t('actions.remove', model_name: f.object.class.name.humanize) do
+                = icon('trash')
+
+          .sa-form-flex-row
+            .sa-form-grid-fluid-columns
+              .form-group
+                %label{:for => "category"} Category
+                %select#category.form-control
+                  %option{:selected => "selected"} None
+                  %option DCC (Direct Clinical Care)
+                  %option SPA (Supporting Professional Activities)
+              .form-group
+                %label{:for => "subcategory"} Subcategory
+                %select#subcategory.form-control
+                  %option None
+                  %option Care Co-ordination
+                  %option Care Intervention Network
+                  %option{:selected => "selected"} CBT / Psychology Treatments
+                  %option Psychotherapy Treatments
+                  %option Family Therapy Treatments
+                  %option Psychiatry Treatment
+                  %option Initial Assessmet
+                  %option All Pathways
+              .form-group
+                %label{:for => "RiO"} Outcomed on RiO
+                %select#RiO.form-control
+                  %option{:selected => "selected"} None
+                  %option Yes
+                  %option No
+              .form-group
+                %label{:for => "inputState"} Fourth select
+                %select#inputState.form-control
+                  %option{:selected => "selected"} Fourth select
+                  %option ...
+              .form-group
+                %label.top-label{:for => "timeWorkedPerWeek"} Time worked per week
+                .times-worked
+                  %input#inputHours.form-control
+                  %label{:for => "inputHours"} h
+                  %input#inputMinutes.form-control
+                  %label{:for => "inputMinutes"} m
+            .icons
+              = link_to_remove_association f, title: t('actions.remove', model_name: f.object.class.name.humanize) do
+                = icon('trash')
+
+          .sa-form-flex-row
+            .sa-form-grid-fluid-columns
+              .form-group
+                %label{:for => "category"} Category
+                %select#category.form-control
+                  %option{:selected => "selected"} None
+                  %option DCC (Direct Clinical Care)
+                  %option SPA (Supporting Professional Activities)
+              .form-group
+                %label{:for => "subcategory"} Subcategory
+                %select#subcategory.form-control
+                  %option{:selected => "selected"} None
+                  %option Care Co-ordination
+                  %option Care Intervention Network
+                  %option CBT / Psychology Treatments
+                  %option Psychotherapy Treatments
+                  %option Family Therapy Treatments
+                  %option Psychiatry Treatment
+                  %option Initial Assessmet
+                  %option All Pathways
+              .form-group
+                %label{:for => "RiO"} Outcomed on RiO
+                %select#RiO.form-control
+                  %option{:selected => "selected"} None
+                  %option Yes
+                  %option No
+              .form-group
+                %label{:for => "inputState"} Fourth select
+                %select#inputState.form-control
+                  %option{:selected => "selected"} Fourth select
+                  %option ...
+              .form-group
+                %label{:for => "inputState"} Fifth select
+                %select#inputState.form-control
+                  %option{:selected => "selected"} Fifth select
+                  %option ...
+              .form-group
+                %label{:for => "timeWorkedPerWeek"} Time worked per week
+                .times-worked
+                  %input#inputHours.form-control
+                  %label{:for => "inputHours"} h
+                  %input#inputMinutes.form-control
+                  %label{:for => "inputMinutes"} m
+            .icons
+              = link_to_remove_association f, title: t('actions.remove', model_name: f.object.class.name.humanize) do
+                = icon('trash')
+          .form-buttons
+            #plan-activities-list.btn.btn-primary.add_fields
+              Add Activity
+            #plan-total-time-worked-per-week.small
+              Total time worked per week: 20h
+
+
+        -# NEW Flexbox Mockup
         #plan-activities-card.activities-form.border.my-4.p-4
-          %h6 Activites Simons' mockup
+          %h6 Activites Simons' flexbox mockup
           .form-elements
             .form-group
               %label{:for => "category"} Category
