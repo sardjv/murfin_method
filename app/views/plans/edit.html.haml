@@ -30,6 +30,9 @@
                             class: 'duration-picker-contracted-hours-per-week', step: :any,
                             wrapper: { class: 'col-md-6 plan-contracted-hours-per-week-wrapper' }
 
+        - # Simon' css-grid
+        = render 'activities_card', plan: @plan, f: f
+
         -# NEW CSS-Grid Mockup
         #plan-activities-card.sa-activities-grid.border.my-4.p-4
           %h6 Activites Simons' CSS-Grid mockup
@@ -260,8 +263,8 @@
             #plan-total-time-worked-per-week.small
               Total time worked per week: 20h
 
-        - # Simon' changes applied
-        = render 'activities_card', plan: @plan, f: f
+        - # Simon' flexbox bakup
+        = render 'activities_card_flexbox', plan: @plan, f: f
 
         -# OLD
         = render 'activities_card_old', plan: @plan, f: f
