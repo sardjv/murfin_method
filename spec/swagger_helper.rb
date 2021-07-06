@@ -17,9 +17,7 @@ class Swagger::V1::Core
         info: {
           title: 'Murfin+ API',
           version: 'v1',
-          description: 'This is the Murfin+ API. For more information visit
-                        <a href="https://github.com/sardjv/murfin_method">
-                        github.com/sardjv/murfin_method</a>.'
+          description: 'This is the Murfin+ API. For more information visit <a href="https://github.com/sardjv/murfin_method">github.com/sardjv/murfin_method</a>.'
         },
         securityDefinitions: {
           JWT: {
