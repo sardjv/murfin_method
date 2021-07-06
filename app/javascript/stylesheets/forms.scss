@@ -44,6 +44,7 @@
   .form-elements{
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     border-bottom: 1px solid #dee2e6;
     @include media-breakpoint-down(md){
       flex-direction: column;
@@ -52,6 +53,7 @@
 
   .form-group{
     margin: 8px 8px 8px 0;
+    flex: auto;
   }
 
   .form-group:last-of-type{
