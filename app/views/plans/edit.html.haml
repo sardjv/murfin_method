@@ -70,9 +70,9 @@
                 %label{:for => "inputHours"} h
                 %input#inputMinutes.form-control
                 %label{:for => "inputMinutes"} m
-            .icons
-              = link_to_remove_association f, title: t('actions.remove', model_name: f.object.class.name.humanize) do
-                = icon('trash')
+                .icons
+                  = link_to_remove_association f, title: t('actions.remove', model_name: f.object.class.name.humanize) do
+                    = icon('trash')
 
           .form-elements
             .form-group
@@ -105,15 +105,20 @@
                 %option{:selected => "selected"} Fourth select
                 %option ...
             .form-group
+              %label{:for => "inputState"} Fifth select
+              %select#inputState.form-control
+                %option{:selected => "selected"} Fifth select
+                %option ...
+            .form-group
               %label{:for => "timeWorkedPerWeek"} Time worked per week
               .times-worked
                 %input#inputHours.form-control
                 %label{:for => "inputHours"} h
                 %input#inputMinutes.form-control
                 %label{:for => "inputMinutes"} m
-            .icons
-              = link_to_remove_association f, title: t('actions.remove', model_name: f.object.class.name.humanize) do
-                = icon('trash')
+                .icons
+                  = link_to_remove_association f, title: t('actions.remove', model_name: f.object.class.name.humanize) do
+                    = icon('trash')
           .form-buttons
             #plan-activities-list.btn.btn-primary.add_fields
               Add Activity
