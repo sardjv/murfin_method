@@ -1,5 +1,7 @@
 #plan-activities-card.border.my-4.p-4
-  %label= Plan.human_attribute_name('activities')
+  %label
+    = Plan.human_attribute_name('activities')
+    OLD with cols and rows
 
   .row.border-bottom.border-top.pt-1.pb-1
     - TagType.active_for(Activity).sorted.each do |tt|
