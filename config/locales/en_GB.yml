@@ -117,6 +117,7 @@ en:
       should_match_tag_type: must belong to the selected tag_type
     tag_type:
       should_be_acyclic: cannot be descended from itself
+      should_be_active_for_taggable: must be active for %{taggable_name}
   faker:
     time_range_type:
       name:

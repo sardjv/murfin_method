@@ -2,7 +2,7 @@
   .row.mb-3
     .col-8
       = render 'shared/search_form',
-                search_field_key: :email_or_first_name_or_last_name_or_epr_uuid_cont,
+                search_field_key: :email_or_first_last_name_or_last_first_name_or_epr_uuid_cont,
                 placeholder_key: :users
     .col-4
       = link_to [:new, :admin, :user], class: 'btn btn-primary float-right' do
