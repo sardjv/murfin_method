@@ -54,7 +54,6 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  # Whitelist example.com for tests.
   # https://www.fngtps.com/2019/rails6-blocked-host/
   config.hosts << 'www.example.com'
   config.hosts << 'app' # Dockerized app host
