@@ -126,10 +126,10 @@
               Total time worked per week: 20h
 
         - # Simon' changes applied
-        = render 'activities_card_new', plan: @plan, f: f
+        = render 'activities_card', plan: @plan, f: f
 
         -# OLD
-        = render 'activities_card', plan: @plan, f: f
+        = render 'activities_card_old', plan: @plan, f: f
 
         = render 'totals_card', activity_tags_top_level: @activity_tags_top_level, activities: @activities if @plan.persisted?
 
