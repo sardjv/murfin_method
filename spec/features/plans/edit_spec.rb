@@ -143,7 +143,7 @@ describe 'User edits a plan', type: :feature, js: true do
 
       it 'shows form error' do
         within activities_last_row_selector do
-          within '.time-worked-per-week' do
+          within '.time-worked-per-week-container' do
             expect(page).to have_css '.error', text: time_worked_error_message
           end
         end
@@ -151,7 +151,7 @@ describe 'User edits a plan', type: :feature, js: true do
 
       it 'keeps other fields selected' do
         within activities_last_row_selector do
-          within '.time-worked-per-week' do
+          within '.time-worked-per-week-container' do
             expect(page).to have_css '.error', text: time_worked_error_message
           end
 

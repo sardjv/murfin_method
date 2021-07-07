@@ -73,9 +73,13 @@ describe 'Admin creates plan on behalf of a user', type: :feature, js: true do
       click_link 'Add Activity'
 
       within '#plan-activities-list .nested-fields' do
-        bootstrap_select tag1a.name, from: tag_type1.name
+        within ".#{tag_type1.name.parameterize}" do
+          bootstrap_select tag1a.name, from: tag_type1.name
+        end
 
-        find_field(type: 'number', match: :first).set(activity_hours_per_week)
+        within '.time-worked-per-week' do
+          find_field(type: 'number', match: :first).set(activity_hours_per_week)
+        end
       end
 
       expect do
@@ -99,7 +103,7 @@ describe 'Admin creates plan on behalf of a user', type: :feature, js: true do
 
       expect(page).to have_css '.alert-danger', text: error_message
 
-      within '.time-worked-per-week' do
+      within '.time-worked-per-week-container' do
         expect(page).to have_content error_details
       end
     end

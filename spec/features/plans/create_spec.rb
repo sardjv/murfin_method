@@ -73,7 +73,7 @@ describe 'User creates a plan', type: :feature, js: true do
 
       expect(page).to have_css '.alert-danger', text: error_message
 
-      within '.time-worked-per-week' do
+      within '.time-worked-per-week-container' do
         expect(page).to have_content error_details
       end
     end

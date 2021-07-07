@@ -1,14 +1,25 @@
-.row.nested-fields.border-bottom.pt-2.pb-2
-  = f.hidden_field :id
-  = render 'shared/tag_associations', f: f
-  .col-3{ class: Activity.human_attribute_name('duration').parameterize }
-    .d-flex.align-content-around
-      %div
+.sa-form-flex-row.nested-fields
+  .sa-form-grid-fluid-columns
+    = f.hidden_field :id
+    = f.fields_for :tag_associations, f.object.active_tag_associations do |taf|
+      - tag_type = taf.object.tag_type
+      = taf.hidden_field :id
+      = taf.hidden_field :tag_type_id
+      = taf.select :tag_id,
+                    tag_type.tags.map { |t| [t.name, t.id, { 'data-id': t.id, 'data-parent-id': t.parent_id }] },
+                    { include_blank: t('prompts.none'), label: tag_type.name, hide_label: false, wrapper: { class: tag_type.name.parameterize } },
+                    { class: 'filter-child-select',
+                      'data-tag-type-id': tag_type.id,
+                      'data-tag-type-parent-id': tag_type.parent_id,
+                      'data-size': TagTypeHelper.visible_options_count(tag_type),
+                      disabled: !policy(taf.object.taggable).update? }
+    .form-group.time-worked-per-week-container
+      %label{ for: 'seconds_per_week' }= Activity.human_attribute_name('duration')
+      .time-worked-per-week
         = f.number_field :seconds_per_week,
-          { class: 'duration-picker-activity', hide_label: true, step: :any, disabled: !policy(plan).update?, wrapper: { class: 'mb-0' } }
-        - f.object.errors.full_messages_for(:duration).each do |error|
-          .error.text-danger.small= error
-      - if policy(plan).update?
-        %div
-          = link_to_remove_association f, title: t('actions.remove', model_name: f.object.class.name.humanize) do
-            = icon('trash')
+                         { class: 'duration-picker-activity', label: false, step: :any, disabled: !policy(plan).update?, wrapper: false }
+      - f.object.errors.full_messages_for(:duration).each do |error|
+        .error.text-danger.small= error
+  .icons
+    = link_to_remove_association f, title: t('actions.remove', model_name: f.object.class.name.humanize) do
+      = icon('trash')

@@ -1,34 +1,9 @@
 #plan-activities-card.sa-activities-grid.border.my-4.p-4
-  %h6
-    = Plan.human_attribute_name('activities')
-    Simon' css-grid applied to real data
+  %h6= Plan.human_attribute_name('activities')
+
   #plan-activities-list
     = f.fields_for :activities, wrapper: false, include_id: false do |af|
-      .sa-form-flex-row
-        .sa-form-grid-fluid-columns
-          = af.hidden_field :id
-          = af.fields_for :tag_associations, af.object.active_tag_associations do |taf|
-            - tag_type = taf.object.tag_type
-            // tag_type.name.parameterize
-            = taf.hidden_field :id
-            = taf.hidden_field :tag_type_id
-            = taf.select :tag_id,
-                          tag_type.tags.map { |t| [t.name, t.id, { 'data-id': t.id, 'data-parent-id': t.parent_id }] },
-                          { include_blank: t('prompts.none'), label: tag_type.name, hide_label: false },
-                          { class: 'filter-child-select',
-                            'data-tag-type-id': tag_type.id,
-                            'data-tag-type-parent-id': tag_type.parent_id,
-                            'data-size': TagTypeHelper.visible_options_count(tag_type),
-                            disabled: !policy(taf.object.taggable).update? }
-          .form-group
-            %label{ for: 'seconds_per_week' }= Activity.human_attribute_name('duration')
-            .times-worked
-              = af.number_field :seconds_per_week, { class: 'duration-picker-activity', label: false, step: :any, disabled: !policy(plan).update?, wrapper: false }
-              - af.object.errors.full_messages_for(:duration).each do |error|
-                .error.text-danger.small= error
-        .icons
-          = link_to_remove_association f, title: t('actions.remove', model_name: af.object.class.name.humanize) do
-            = icon('trash')
+      = render 'activity_fields', plan: plan, f: af, plan_form: f
 
   .form-buttons
     - if policy(plan).update?
