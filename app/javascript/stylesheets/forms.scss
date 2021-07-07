@@ -110,11 +110,17 @@
 
   .sa-form-grid-fluid-columns{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
     gap: 1rem;
     width: 100%;
     @include media-breakpoint-down(md){
       grid-template-columns: auto;
+    }
+  }
+
+  .sa-form-flex-row:not(:first-child){
+    @include media-breakpoint-up(lg){
+      label{ display: none;}
     }
   }
 
