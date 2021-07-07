@@ -1,18 +1,8 @@
 .sa-form-flex-row.nested-fields
   .sa-form-grid-fluid-columns
     = f.hidden_field :id
-    = f.fields_for :tag_associations, f.object.active_tag_associations do |taf|
-      - tag_type = taf.object.tag_type
-      = taf.hidden_field :id
-      = taf.hidden_field :tag_type_id
-      = taf.select :tag_id,
-                    tag_type.tags.map { |t| [t.name, t.id, { 'data-id': t.id, 'data-parent-id': t.parent_id }] },
-                    { include_blank: t('prompts.none'), label: tag_type.name, hide_label: false, wrapper: { class: tag_type.name.parameterize } },
-                    { class: 'filter-child-select',
-                      'data-tag-type-id': tag_type.id,
-                      'data-tag-type-parent-id': tag_type.parent_id,
-                      'data-size': TagTypeHelper.visible_options_count(tag_type),
-                      disabled: !policy(taf.object.taggable).update? }
+    = render 'shared/tag_associations', f: f
+
     .form-group.time-worked-per-week-container
       %label{ for: 'seconds_per_week' }= Activity.human_attribute_name('duration')
       .time-worked-per-week

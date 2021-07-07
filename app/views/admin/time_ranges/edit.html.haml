@@ -14,12 +14,10 @@
         = f.datetime_select :end_time, label: TimeRange.human_attribute_name('end_time'), default: { hour: 17, minute: 0 }
         = f.number_field :seconds_worked, class: 'duration-picker-time-range', label: TimeRange.human_attribute_name('value'), step: :any
 
-        .row.border-bottom.border-top.pt-1.pb-1.mt-4
-          - TagType.active_for(TimeRange).sorted.each do |tt|
-            .col-3.font-weight-normal= tt.name
-
-        #time-range-tag-associations.row.nested-fields.border-bottom.pt-2.pb-2.mb-4
-          = render 'shared/tag_associations', f: f
+        #time-range-tag-associations.sa-activities-grid
+          .sa-form-flex-row.nested-fields
+            .sa-form-grid-fluid-columns
+              = render 'shared/tag_associations', f: f
 
         = f.select :user_id,
           options_for_select(User.all.map { |t| [t.name, t.id] }, selected: f.object.user_id),
