@@ -34,7 +34,7 @@
         = render 'totals_card', activity_tags_top_level: @activity_tags_top_level, activities: @activities if @plan.persisted?
 
         .border.my-4.p-4
-          %label= Plan.human_attribute_name('signoffs')
+          %h6= Plan.human_attribute_name('signoffs')
           %table#plan-signoffs.table
             %tbody.signoffs.list
               = f.fields_for :signoffs, @plan.required_signoffs, wrapper: false, include_id: false do |signoff_form|
