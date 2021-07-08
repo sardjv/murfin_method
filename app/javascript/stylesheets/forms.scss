@@ -38,66 +38,6 @@
   }
 }
 
-// TODO check if used
-// Activities-form ==============================
-.activities-form{
-  .form-elements{
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    border-bottom: 1px solid #dee2e6;
-    @include media-breakpoint-down(md){
-      flex-direction: column;
-    }
-  }
-
-  .form-group{
-    margin: 8px 8px 8px 0;
-    flex: auto;
-  }
-
-  .form-group:last-of-type{
-    margin-right: 0;
-  }
-
-  :not(.input-group) > .bootstrap-select.form-control:not([class*=col-]) {
-    width: 100%!important;
-  }
-
-  .time-worked-per-week {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    label {
-      margin: 0 10px;
-    }
-    input{
-      width: 60px;
-      padding-left: 2px;
-      padding-right: 2px;
-      text-align: center;
-    }
-  }
-
-  .icons{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    flex-wrap: nowrap;
-    align-items: center;
-    flex: 1;
-  }
-
-  .form-buttons{
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    align-items: center;
-    padding-top: 8px;
-  }
-}
-
 // Activities-grid ==============================
 
 .sa-activities-grid {
