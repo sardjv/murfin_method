@@ -1,0 +1,18 @@
+#plan-activities-card.sa-activities-grid.border.my-4.p-4
+  %h6= Plan.human_attribute_name('activities')
+
+  #plan-activities-list
+    = f.fields_for :activities, wrapper: false, include_id: false do |af|
+      = render 'activity_fields', plan: plan, f: af, plan_form: f
+
+  .form-buttons
+    - if policy(plan).update?
+      = link_to_add_association t('actions.add', model_name: Activity.model_name.human.titleize), f, :activities,
+                                data: { 'association-insertion-node': '#plan-activities-list', 'association-insertion-method': 'append' },
+                                class: 'btn btn-primary', render_options: { locals: { plan: plan } }
+    - if @plan.activities.any?
+      - if plan_show_contracted_hours_error?(plan)
+        .alert.alert-warning= t('plans.errors.total_time_worked_per_week_higher_than_contracted')
+      #plan-total-time-worked-per-week
+        .small
+          = t 'plans.total_time_worked_per_week', total: duration_in_words(plan.total_minutes_worked_per_week, :short)
