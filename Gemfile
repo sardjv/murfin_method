@@ -163,7 +163,7 @@ group :development do
 
   # A static code analyzer and formatter, based on the community style guide.
   # https://github.com/rubocop-hq/rubocop-rails
-  gem 'rubocop-rails', '~> 2.11.2'
+  gem 'rubocop-rails', '~> 2.11.3'
 end
 
 group :test do
