@@ -59,8 +59,17 @@ class LDAPTest
   end
 end
 
-ldap = LDAPTest.bind(host: 'ldap.forumsys.com', port: 389, base: 'dc=example,dc=com', bind_dn: 'uid=tesla,dc=example,dc=com', password: 'password')
-LDAPTest.filter(ldap, %w[uid tesla])
+# ldap = LDAPTest.bind(host: 'ldap.forumsys.com', port: 389, base: 'dc=example,dc=com', bind_dn: 'uid=tesla,dc=example,dc=com', password: 'password')
+# LDAPTest.filter(ldap, %w[uid tesla])
+
+# $SSLPort = 636
+# $ServerName = "Ox01DC"
+# $basedn = "ou=staff,dc=int,dc=oxleas,dc=nhs,dc=uk"
+# $UserName = "cn=barbara white,ou=staff,dc=int,dc=oxleas,dc=nhs,dc=uk"
+# $Password = "Newstartertooxleas"
+
+ldap = LDAPTest.bind(host: 'Ox01DC', port: 636, base: 'ou=staff,dc=int,dc=oxleas,dc=nhs,dc=uk', bind_dn: 'cn=barbara white,ou=staff,dc=int,dc=oxleas,dc=nhs,dc=uk', password: 'Newstartertooxleas')
+LDAPTest.filter(ldap, %w[cn barbara white])
 
 # cn = 'Philip J. Fry'
 # login = 'fry'
