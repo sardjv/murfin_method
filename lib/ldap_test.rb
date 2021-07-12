@@ -18,8 +18,9 @@ class LDAPTest
   # PORT = ENV.fetch('LDAP_PORT')
   # LDAP_BASE = ENV.fetch('LDAP_BASE')
 
-  def self.bind(host:, port:, base:, bind_dn:, password:) #, email: nil, cn: nil)
-    #ou_query = cn && cn == 'admin' ? nil : "ou=#{ORGANISATION_UNIT},"
+  # , email: nil, cn: nil)
+  def self.bind(host:, port:, base:, bind_dn:, password:)
+    # ou_query = cn && cn == 'admin' ? nil : "ou=#{ORGANISATION_UNIT},"
 
     ldap = Net::LDAP.new(
       host: host,
@@ -28,7 +29,7 @@ class LDAPTest
       # encryption: :simple_tls,
       auth: {
         username: bind_dn,
-        #username: "cn=#{cn},#{ou_query}#{LDAP_BASE}",
+        # username: "cn=#{cn},#{ou_query}#{LDAP_BASE}",
         # username: "uid=#{uid},ou=#{ORGANISATION_UNIT},#{ENV.fetch('LDAP_BASE')}",
         password: password,
         method: :simple
@@ -38,7 +39,7 @@ class LDAPTest
     puts "\r\n"
 
     if ldap.bind
-      #puts "\r\nbind success: #{cn || uid || email}"
+      # puts "\r\nbind success: #{cn || uid || email}"
       puts "bind success: #{ldap.get_operation_result.message}"
       ldap
     else
@@ -48,18 +49,18 @@ class LDAPTest
 
   def self.filter(ldap, args)
     filter = Net::LDAP::Filter.eq(*args)
-    #result_attrs = %w[sAMAccountName displayName mail]
-    #ldap.search(base: LDAP_BASE, filter: filter, attributes: result_attrs, return_result: true)
+    # result_attrs = %w[sAMAccountName displayName mail]
+    # ldap.search(base: LDAP_BASE, filter: filter, attributes: result_attrs, return_result: true)
     puts 'search results:'
     ldap.search(filter: filter, return_result: true) do |item|
-    #ldap.search(base: base, filter: filters, return_result: true) do |item|
+      # ldap.search(base: base, filter: filters, return_result: true) do |item|
       pp item.to_h
     end
   end
 end
 
 ldap = LDAPTest.bind(host: 'ldap.forumsys.com', port: 389, base: 'dc=example,dc=com', bind_dn: 'uid=tesla,dc=example,dc=com', password: 'password')
-LDAPTest.filter(ldap, ['uid', 'tesla'])
+LDAPTest.filter(ldap, %w[uid tesla])
 
 # cn = 'Philip J. Fry'
 # login = 'fry'
@@ -71,7 +72,6 @@ LDAPTest.filter(ldap, ['uid', 'tesla'])
 # pp 'filter res', res
 
 # LdapTest.valid_credentials?(cn: 'admin', password: 'GoodNewsEveryone')
-
 
 # ldap3 = Net::LDAP.new(
 #   host: 'ldap.forumsys.com',
