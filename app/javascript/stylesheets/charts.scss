@@ -1,0 +1,14 @@
+#bar-chart-scroll-container {
+  overflow-y: auto;
+
+  #bar-chart-container {
+    height: auto;
+    position: relative;
+
+    canvas#bar-chart {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }
+}

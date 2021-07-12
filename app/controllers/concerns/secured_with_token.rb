@@ -10,7 +10,7 @@ module SecuredWithToken
   def authenticate_request!
     auth_token
   rescue ActiveRecord::RecordNotFound, JWT::VerificationError, JWT::DecodeError
-    render json: { errors: ['Not Authenticated'] }, status: :unauthorized
+    render json: { error: 'Unauthorized' }, status: :unauthorized
   end
 
   def http_token

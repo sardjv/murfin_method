@@ -71,7 +71,7 @@ class FakeGraphDataJob < ApplicationJob
   end
 
   def mondays_in_year(start:)
-    (start.beginning_of_year..start.end_of_year).to_a.select { |d| d.wday == 1 }
+    start.all_year.to_a.select { |d| d.wday == 1 }
   end
 
   def plan(user_id:, start_time:, end_time:)

@@ -36,7 +36,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
           parsed_json_data_matches_db_record(user2, user2_data)
         end
 
-        context 'with 1 result per page' do
+        context 'with 1 result per page', skip_jwt_authorization_mock: true do
           let!(:'page[size]') { 1 }
           let!(:'page[number]') { 2 }
 
@@ -85,6 +85,9 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
           end
         end
       end
+
+      it_behaves_like 'has response unauthorized'
+      it_behaves_like 'has response unsupported accept header'
     end
   end
 end

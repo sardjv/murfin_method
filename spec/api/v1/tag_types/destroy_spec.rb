@@ -19,13 +19,8 @@ describe Api::V1::TagTypeResource, type: :request, swagger_doc: 'v1/swagger.json
         end
       end
 
-      response '404', 'Record not found' do
-        schema '$ref' => '#/definitions/error_404'
-
-        let(:id) { 333_222_111 }
-
-        run_test!
-      end
+      it_behaves_like 'has response unauthorized'
+      it_behaves_like 'has response record not found'
 
       context 'tag type has tag with association' do
         let!(:tag) { create :tag, tag_type: tag_type }

@@ -31,26 +31,26 @@ describe Api::V1::TagTypeResource, type: :request, swagger_doc: 'v1/swagger.json
         }
       end
 
-      context 'authorized' do
-        let(:Authorization) { 'Bearer dummy_json_web_token' }
+      let(:Authorization) { 'Bearer dummy_json_web_token' }
 
-        response '200', 'OK: Tag updated' do
-          schema '$ref' => '#/definitions/tag_type_patch_params'
+      response '200', 'OK: Tag updated' do
+        schema '$ref' => '#/definitions/tag_type_patch_params'
 
-          run_test! do
-            parsed_json_data_matches_db_record(updated_tag_type)
-          end
+        run_test! do
+          parsed_json_data_matches_db_record(updated_tag_type)
         end
+      end
 
-        context 'tag type name not unique' do
-          let(:tag_type_name) { Faker::Lorem.word }
-          let!(:existing_tag_type) { create :tag_type, name: tag_type_name }
-          let(:attributes) { valid_attributes.merge({ name: tag_type_name }) }
+      it_behaves_like 'has response unauthorized'
 
-          response '422', 'Invalid request' do
-            schema '$ref' => '#/definitions/error_422'
-            run_test!
-          end
+      context 'tag type name not unique' do
+        let(:tag_type_name) { Faker::Lorem.word }
+        let!(:existing_tag_type) { create :tag_type, name: tag_type_name }
+        let(:attributes) { valid_attributes.merge({ name: tag_type_name }) }
+
+        it_behaves_like 'has response unprocessable entity' do
+          let(:error_title) { 'has already been taken' }
+          let(:error_detail) { 'name - has already been taken' }
         end
       end
     end

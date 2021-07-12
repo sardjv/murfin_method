@@ -13,27 +13,21 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
       let(:Authorization) { 'Bearer dummy_json_web_token' }
       let(:id) { user.id }
 
-      context 'authorized' do
-        response '204', 'OK: No Content' do
+      response '204', 'OK: No Content' do
+        run_test! do
+          expect(User.exists?(user.id)).to eql false
+        end
+      end
+
+      it_behaves_like 'has response unauthorized'
+      it_behaves_like 'has response record not found'
+
+      context 'user for destroy is admin' do
+        let!(:user) { create :user, admin: true }
+
+        response '423', 'Error: Record Locked' do
           run_test! do
-            expect(User.exists?(user.id)).to eql false
-          end
-        end
-
-        response '404', 'Record not found' do # TODO: refactor to shared example
-          schema '$ref' => '#/definitions/error_404'
-          let(:id) { 123_456 }
-
-          run_test!
-        end
-
-        context 'user for destroy is admin' do
-          let!(:user) { create :user, admin: true }
-
-          response '423', 'Error: Record Locked' do
-            run_test! do
-              expect(user.reload).not_to be_destroyed
-            end
+            expect(user.reload).not_to be_destroyed
           end
         end
       end

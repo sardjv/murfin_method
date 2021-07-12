@@ -4,7 +4,11 @@
     %p= t('graph.showing_users', count: presenter.paginated_users.total_count)
     .card.my-4
       .card-body
-        %canvas#bar-chart
+        #bar-chart-scroll-container{ style: bar_chart_scroll_container_height_css(presenter.users_count) }
+          #bar-chart-container{ style: bar_chart_container_height_css(presenter.users_count) }
+            %canvas#bar-chart
 
+:ruby
+  chart_args = { graphs: [{ type: :bar_chart, data: :individual_data, units: '%' }] }
 :javascript
-  barChartData = #{raw @presenter.to_json(graphs: [{ type: :bar_chart, data: :individual_data, units: '%' }])};
+  barChartData = #{raw presenter.to_json(chart_args)};

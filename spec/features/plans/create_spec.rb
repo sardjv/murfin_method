@@ -7,7 +7,7 @@ describe 'User creates a plan', type: :feature, js: true do
   let(:plan) { Plan.unscoped.last }
 
   let(:start_date) { Date.current.change(month: 5, day: 1) } # May current year
-  let(:end_date) { Date.current.change(year: Date.current.year + 1, month: 2).end_of_month } # Feb next year
+  let(:end_date) { Date.new(Date.current.year + 1, 2, 1).end_of_month } # Feb next year
 
   let(:plan) { Plan.unscoped.last }
   let(:success_message) { I18n.t('notice.successfully.created', model_name: Plan.model_name.human) }
@@ -26,25 +26,34 @@ describe 'User creates a plan', type: :feature, js: true do
       find(:xpath, "span[text() = 'May']").click # May current year
     end
 
+    within '.plan-start-date-container' do
+      expect(page).to have_css "input[type = 'hidden'][value='#{start_date.to_s(:db)}']", visible: false, wait: 3
+    end
+
     find('.plan-end-date-container input').click
 
     within '.flatpickr-monthSelect-months' do # Feb next year
       find(:xpath, "span[text() = 'Feb']").click
     end
 
-    within '.plan_contracted_hours_per_week_wrapper' do
+    within '.plan-end-date-container' do
+      expect(page).to have_css "input[type = 'hidden'][value='#{end_date.to_s(:db)}']", visible: false, wait: 3
+    end
+
+    within '.plan-contracted-hours-per-week-wrapper' do
       find_field(type: 'number', match: :first).set(contracted_hours_per_week)
     end
 
     click_link I18n.t('actions.add', model_name: Activity.model_name.human.titleize)
 
-    within '#plan-activities-table' do
+    within '#plan-activities-list' do
       find_field(type: 'number', match: :first).set(activity_hours_per_week)
     end
 
     click_button 'Save'
 
     expect(page).to have_css '.alert-info', text: success_message
+    expect(current_path).to eql edit_plan_path(plan)
 
     expect(plan.user).to eq current_user
     expect(plan.activities.count).to eq(1)
@@ -64,7 +73,7 @@ describe 'User creates a plan', type: :feature, js: true do
 
       expect(page).to have_css '.alert-danger', text: error_message
 
-      within '.time-worked-per-week' do
+      within '.time-worked-per-week-container' do
         expect(page).to have_content error_details
       end
     end

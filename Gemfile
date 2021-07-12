@@ -79,7 +79,7 @@ gem 'omniauth-rails_csrf_protection', '~> 1.0.0'
 # A Ruby parser - used by Rubocop, added here to force it to a newer version
 # for compatibility with Ruby 3.0.0.
 # https://github.com/whitequark/parser
-gem 'parser', '~> 3.0.1.1'
+gem 'parser', '~> 3.0.2.0'
 
 # A Ruby/Rack web server built for concurrency.
 # https://github.com/puma/puma
@@ -91,7 +91,7 @@ gem 'pundit', '~> 2.1.0'
 
 # Create database-backed web applications using the MVC pattern.
 # https://github.com/rails/rails
-gem 'rails', '~> 6.1.3'
+gem 'rails', '~> 6.1.4'
 
 # Object-based searching.
 # https://github.com/activerecord-hackery/ransack
@@ -116,7 +116,7 @@ gem 'strip_attributes', '~> 1.11.0'
 
 # About Use Turbo in your Ruby on Rails app
 # https://github.com/hotwired/turbo-rails
-gem 'turbo-rails', '~> 0.5.11'
+gem 'turbo-rails', '~> 0.5.12'
 
 # Bundle zoneinfo files which are not included in Windows.
 # https://github.com/tzinfo/tzinfo-data
@@ -159,7 +159,7 @@ group :development do
 
   # haml-lint is a tool to help keep your HAML files clean and readable
   # https://github.com/sds/haml-lint
-  gem 'haml_lint', '~> 0.37.0', require: false
+  gem 'haml_lint', '~> 0.37.1', require: false
 
   # Listens to file modifications and notifies you about the changes.
   # https://github.com/guard/listen
@@ -167,7 +167,7 @@ group :development do
 
   # A static code analyzer and formatter, based on the community style guide.
   # https://github.com/rubocop-hq/rubocop-rails
-  gem 'rubocop-rails', '~> 2.10.1'
+  gem 'rubocop-rails', '~> 2.11.3'
 end
 
 group :test do
@@ -205,7 +205,7 @@ group :test do
 
   # Simple one-liner tests for common Rails functionality.
   # https://github.com/thoughtbot/shoulda-matchers
-  gem 'shoulda-matchers', '~> 4.5.1'
+  gem 'shoulda-matchers', '~> 5.0.0'
 
   # Generate code coverage documentation.
   # https://github.com/colszowka/simplecov

@@ -48,6 +48,8 @@ describe Api::V1::TagResource, type: :request, swagger_doc: 'v1/swagger.json' do
         end
       end
 
+      it_behaves_like 'has response unauthorized'
+
       context 'tag has no parent' do
         let!(:tag_type) { create :tag_type, parent_id: nil }
         let(:attributes) { valid_attributes.except(:parent_id) }
@@ -64,18 +66,18 @@ describe Api::V1::TagResource, type: :request, swagger_doc: 'v1/swagger.json' do
       context 'tag name not unique' do
         let!(:existing_tag) { create :tag, parent: parent_tag, tag_type: tag_type, name: tag_name }
 
-        response '422', 'Invalid request' do
-          schema '$ref' => '#/definitions/error_422'
-          run_test!
+        it_behaves_like 'has response unprocessable entity' do
+          let(:error_title) { 'has already been taken' }
+          let(:error_detail) { 'name - has already been taken' }
         end
       end
 
       context 'parent tag does not exist' do
-        let(:attributes) { valid_attributes.merge({ parent_id: 111_222 }) }
+        let(:attributes) { valid_attributes.merge({ parent_id: 111_222_333 }) }
 
-        response '422', 'Invalid request' do
-          schema '$ref' => '#/definitions/error_422'
-          run_test!
+        it_behaves_like 'has response unprocessable entity' do
+          let(:error_title) { 'must match the selected parent' }
+          let(:error_detail) { 'parent_id - must match the selected parent' }
         end
       end
 
@@ -83,18 +85,18 @@ describe Api::V1::TagResource, type: :request, swagger_doc: 'v1/swagger.json' do
         let(:other_tag_type) { create :tag_type }
         let!(:parent_tag) { create :tag, tag_type: other_tag_type }
 
-        response '422', 'Invalid request' do
-          schema '$ref' => '#/definitions/error_422'
-          run_test!
+        it_behaves_like 'has response unprocessable entity' do
+          let(:error_title) { 'must match the selected parent' }
+          let(:error_detail) { 'parent_id - must match the selected parent' }
         end
       end
 
       context 'tag type is missing' do
         let(:attributes) { valid_attributes.except(:tag_type_id) }
 
-        response '422', 'Invalid request' do
-          schema '$ref' => '#/definitions/error_422'
-          run_test!
+        it_behaves_like 'has response unprocessable entity' do
+          let(:error_title) { 'must exist' }
+          let(:error_detail) { 'tag_type - must exist' }
         end
       end
     end

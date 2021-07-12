@@ -41,12 +41,14 @@ describe Api::V1::UserGroupResource, type: :request, swagger_doc: 'v1/swagger.js
         end
       end
 
+      it_behaves_like 'has response unauthorized'
+
       context 'name not unique in group type scope' do
         let!(:existing_user_group) { create :user_group, name: user_group_name, group_type_id: group_type.id }
 
-        response '422', 'Invalid request' do
-          schema '$ref' => '#/definitions/error_422'
-          run_test!
+        it_behaves_like 'has response unprocessable entity' do
+          let(:error_title) { 'has already been taken' }
+          let(:error_detail) { 'name - has already been taken' }
         end
       end
 
@@ -58,9 +60,9 @@ describe Api::V1::UserGroupResource, type: :request, swagger_doc: 'v1/swagger.js
           }
         end
 
-        response '422', 'Invalid request' do
-          schema '$ref' => '#/definitions/error_422'
-          run_test!
+        it_behaves_like 'has response unprocessable entity' do
+          let(:error_title) { 'must exist' }
+          let(:error_detail) { 'group_type - must exist' }
         end
       end
     end

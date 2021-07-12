@@ -32,7 +32,7 @@
 
   %br
   %h5= Plan.human_attribute_name('activities')
-  %table#plan-activities-table.table
+  %table#plan-activities-list.table
     %thead
       %tr
         - TagType.active_for(Activity).sorted.each do |t|
@@ -49,9 +49,9 @@
           %td{ class: Activity.human_attribute_name('duration').parameterize }= duration_in_words(activity.seconds_per_week / 60, :short)
     %tfoot
       %tr
-        %td{ colspan: 3 }
+        %td{ colspan: @plan.activities.count - 2 }
         %td#plan-total-time-worked-per-week.small{ colspan: 2 }
-          = t('plans.total_time_worked_per_week', total: duration_in_words(@plan.total_minutes_worked_per_week, :short))
+          = t 'plans.total_time_worked_per_week', total: duration_in_words(@plan.total_minutes_worked_per_week, :short)
 
   %br
   %h5= Plan.human_attribute_name('signoffs')

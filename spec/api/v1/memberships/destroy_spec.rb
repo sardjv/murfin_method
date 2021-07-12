@@ -19,13 +19,8 @@ describe Api::V1::MembershipResource, type: :request, swagger_doc: 'v1/swagger.j
         end
       end
 
-      response '404', 'Record not found' do
-        schema '$ref' => '#/definitions/error_404'
-
-        let(:id) { 123_456 }
-
-        run_test!
-      end
+      it_behaves_like 'has response unauthorized'
+      it_behaves_like 'has response record not found'
     end
   end
 end

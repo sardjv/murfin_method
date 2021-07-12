@@ -29,6 +29,8 @@ describe 'User edits a plan', type: :feature, js: true do
 
   let(:contracted_minutes_per_week) { (12.5 * 60).to_i } # 12h 30m
 
+  let(:activities_last_row_selector) { '#plan-activities-list .nested-fields:last-of-type' }
+
   let(:success_message) { I18n.t('notice.successfully.updated', model_name: Plan.model_name.human) }
   let(:error_message) { I18n.t('notice.could_not_be.updated', model_name: Plan.model_name.human) }
 
@@ -48,7 +50,7 @@ describe 'User edits a plan', type: :feature, js: true do
       find(:xpath, "span[text() = 'Jan']").click # Jan
     end
 
-    within '.plan_contracted_hours_per_week_wrapper' do
+    within '.plan-contracted-hours-per-week-wrapper' do
       find_field(type: 'number', match: :first).set(12)
       all('input[type=number]').last.set(30)
     end
@@ -56,21 +58,33 @@ describe 'User edits a plan', type: :feature, js: true do
     click_button 'Save'
 
     expect(page).to have_css '.alert-info', text: success_message
+    expect(current_path).to eql edit_plan_path(plan)
 
     expect(plan.reload.end_date.year).to eq end_date_year
     expect(plan.contracted_minutes_per_week).to eq contracted_minutes_per_week
   end
 
   it 'contains total time worked per week' do
-    within '#plan-activities-table' do
-      expect(page).to have_css '#plan-total-time-worked-per-week', text: 'Total time worked per week: 4h'
+    expect(page).to have_css '#plan-total-time-worked-per-week', text: 'Total time worked per week: 4h'
+  end
+
+  describe 'remove activity' do
+    it 'removes activity from the plan' do
+      within activities_last_row_selector do
+        click_link 'Remove Activity'
+      end
+
+      expect do
+        click_button 'Save'
+
+        expect(page).to have_css '.alert-info', text: success_message
+      end.to change(plan.activities, :count).by(-1)
     end
   end
 
   describe 'add activity' do
     let(:time_worked_hours) { 8 }
     let(:new_activity) { plan.activities.unscoped.last }
-    let(:activities_last_row_selector) { '.activities .nested-fields:last-of-type' }
 
     before do
       click_link 'Add Activity'
@@ -129,7 +143,7 @@ describe 'User edits a plan', type: :feature, js: true do
 
       it 'shows form error' do
         within activities_last_row_selector do
-          within '.time-worked-per-week' do
+          within '.time-worked-per-week-container' do
             expect(page).to have_css '.error', text: time_worked_error_message
           end
         end
@@ -137,7 +151,7 @@ describe 'User edits a plan', type: :feature, js: true do
 
       it 'keeps other fields selected' do
         within activities_last_row_selector do
-          within '.time-worked-per-week' do
+          within '.time-worked-per-week-container' do
             expect(page).to have_css '.error', text: time_worked_error_message
           end
 
@@ -166,7 +180,7 @@ describe 'User edits a plan', type: :feature, js: true do
     let(:warning_message) { 'Total time worked per week exceeds contracted hours.' }
 
     it 'should show warning message' do
-      within '.plan_contracted_hours_per_week_wrapper' do
+      within '.plan-contracted-hours-per-week-wrapper' do
         find_field(type: 'number', match: :first).set(12)
         all('input[type=number]').last.set(30)
       end

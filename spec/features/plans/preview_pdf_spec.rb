@@ -47,7 +47,7 @@ describe 'User previews job plan pdf', type: :feature, js: true do
   end
 
   it 'contains plan activities' do
-    within '#plan-activities-table' do
+    within '#plan-activities-list' do
       within '.activities .nested-fields:first-of-type' do
         within '.category' do
           expect(page).to have_content tag1a.name

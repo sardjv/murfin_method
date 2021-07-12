@@ -20,6 +20,30 @@ describe 'Admin searches for user', type: :feature, js: true do
     click_button 'Search'
   end
 
+  describe 'find by first and last name' do
+    let(:query) { "#{user3.first_name} #{user3.last_name}" }
+
+    it 'finds matching users' do
+      within '#users-list' do
+        expect(page).not_to have_content user1.email
+        expect(page).not_to have_content user2.email
+        expect(page).to have_content user3.email
+      end
+    end
+  end
+
+  describe 'find by last and first name' do
+    let(:query) { "#{user3.last_name} #{user3.first_name}" }
+
+    it 'finds matching users' do
+      within '#users-list' do
+        expect(page).not_to have_content user1.email
+        expect(page).not_to have_content user2.email
+        expect(page).to have_content user3.email
+      end
+    end
+  end
+
   describe 'find by last name' do
     let(:query) { last_name }
 

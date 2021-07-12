@@ -31,169 +31,161 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
         }
       end
 
-      context 'authorized' do
-        let(:Authorization) { 'Bearer dummy_json_web_token' }
+      let(:Authorization) { 'Bearer dummy_json_web_token' }
+
+      response '200', 'OK: User updated' do
+        schema '$ref' => '#/definitions/user_response'
+
+        run_test! do
+          updated_user.reload
+          attributes.each do |key, value|
+            expect(value.to_s).to eq(updated_user.send(key).to_s)
+          end
+        end
+      end
+
+      it_behaves_like 'has response unauthorized'
+
+      context 'user attributes contain password' do
+        let(:password) { Faker::Internet.password }
+
+        let(:user) do
+          {
+            data: {
+              type: 'users',
+              id: updated_user.id,
+              attributes: attributes.merge(password: password)
+            }
+          }
+        end
+
+        context 'valid password and user is not admin' do
+          response '200', 'OK: User updated' do
+            schema '$ref' => '#/definitions/user_response'
+
+            run_test! do
+              expect(updated_user.reload.valid_password?(password)).to eql true
+            end
+          end
+        end
+
+        context 'valid password but user is admin' do
+          let!(:updated_user) { create :user, admin: true, password: Faker::Internet.password }
+
+          it_behaves_like 'has response bad request' do
+            let(:error_detail) { 'Admin password change via API is not allowed.' }
+          end
+        end
+      end
+
+      context 'epr_uuid is null' do
+        let(:attributes) { valid_attributes.merge(epr_uuid: '') }
 
         response '200', 'OK: User updated' do
           schema '$ref' => '#/definitions/user_response'
 
           run_test! do
-            updated_user.reload
-            attributes.each do |key, value|
-              expect(value.to_s).to eq(updated_user.send(key).to_s)
-            end
+            expect(updated_user.reload.epr_uuid).to eql nil
           end
         end
+      end
 
-        context 'user attributes contain password' do
-          let(:password) { Faker::Internet.password }
+      context 'user group relationships passed' do
+        let!(:user_group1) { create :user_group }
+        let!(:user_group2) { create :user_group }
+        let!(:user_group3) { create :user_group }
+        let!(:user_group4) { create :user_group }
 
-          let(:user) do
-            {
-              data: {
-                type: 'users',
-                id: updated_user.id,
-                attributes: attributes.merge(password: password)
-              }
+        let(:relationships) do
+          {
+            user_groups: {
+              data: [
+                { type: 'user_groups', id: user_group1.id },
+                { type: 'user_groups', id: user_group3.id }
+              ]
             }
-          end
+          }
+        end
 
-          context 'valid password and user is not admin' do
-            response '200', 'OK: User updated' do
-              schema '$ref' => '#/definitions/user_response'
+        let(:user) do
+          {
+            data: {
+              type: 'users',
+              id: updated_user.id,
+              attributes: attributes,
+              relationships: relationships
+            }
+          }
+        end
 
-              run_test! do
-                expect(updated_user.reload.valid_password?(password)).to eql true
-              end
-            end
-          end
+        response '200', 'OK: User updated' do
+          schema '$ref' => '#/definitions/user_response_with_relationships'
 
-          context 'valid password but user is admin' do
-            let!(:updated_user) { create :user, admin: true, password: Faker::Internet.password }
-            let(:error_detail) { 'Admin password change via API is not allowed.' }
-            let(:error_title) { 'Param not allowed' }
-
-            response '400', 'Bad Request' do
-              schema '$ref' => '#/definitions/error_400'
-
-              run_test! do
-                expect(parsed_json['errors'][0]['detail']).to eql error_detail
-                expect(parsed_json['errors'][0]['title']).to eql error_title
-              end
-            end
+          run_test! do
+            expect(updated_user.user_groups.reload.pluck(:id)).to match_array [user_group1.id, user_group3.id]
           end
         end
 
-        context 'epr_uuid is null' do
-          let(:attributes) { valid_attributes.merge(epr_uuid: '') }
+        context 'user already has user group assigned' do
+          before do
+            updated_user.user_groups << user_group2
+          end
 
-          response '200', 'OK: User updated' do
-            schema '$ref' => '#/definitions/user_response'
-
-            run_test! do
-              expect(updated_user.reload.epr_uuid).to eql nil
-            end
+          it_behaves_like 'has response forbidden' do
+            let(:error_title) { 'Complete replacement forbidden' }
+            let(:error_detail) { 'User already has user group(s) assigned. Use memberships POST endpoint.' }
           end
         end
 
-        context 'user group relationships passed' do
-          let!(:user_group1) { create :user_group }
-          let!(:user_group2) { create :user_group }
-          let!(:user_group3) { create :user_group }
-          let!(:user_group4) { create :user_group }
+        context 'user group ids are invalid' do
+          let(:invalid_group_id1) { 543 }
+          let(:invalid_group_id2) { 210 }
 
           let(:relationships) do
             {
               user_groups: {
                 data: [
-                  { type: 'user_groups', id: user_group1.id },
-                  { type: 'user_groups', id: user_group3.id }
+                  { type: 'user_groups', id: invalid_group_id1 },
+                  { type: 'user_groups', id: invalid_group_id2 }
                 ]
               }
             }
           end
+
+          let(:error_title) { 'Record not found' }
+          let(:error_detail) { "User groups with ids #{invalid_group_id1}, #{invalid_group_id2} not found." }
+          let(:error_status) { '404' }
+          let(:error_code) { '404' }
+
+          response '404', 'Record not found' do
+            schema '$ref' => '#/definitions/error_404'
+
+            run_test! do
+              expect(parsed_json_error[:title]).to eql error_title
+              expect(parsed_json_error[:detail]).to eql error_detail
+              expect(parsed_json_error[:status]).to eql error_status
+              expect(parsed_json_error[:code]).to eql error_code
+            end
+          end
+        end
+      end
+
+      context 'user params include not permitted admin flag' do
+        response '400', 'Error: Bad Request' do
+          let(:attributes_with_admin) { valid_attributes.merge(admin: true) }
 
           let(:user) do
             {
               data: {
                 type: 'users',
                 id: updated_user.id,
-                attributes: attributes,
-                relationships: relationships
+                attributes: attributes_with_admin
               }
             }
           end
 
-          response '200', 'OK: User updated' do
-            schema '$ref' => '#/definitions/user_response_with_relationships'
-
-            run_test! do
-              expect(updated_user.user_groups.reload.pluck(:id)).to match_array [user_group1.id, user_group3.id]
-            end
-          end
-
-          context 'user already has user group assigned' do
-            before do
-              updated_user.user_groups << user_group2
-            end
-
-            let(:error_detail) { 'User already has user group(s) assigned. Use memberships POST endpoint.' }
-            let(:error_title) { 'Complete replacement forbidden' }
-
-            response '403', 'Forbidden' do
-              schema '$ref' => '#/definitions/error_403'
-              run_test! do
-                expect(parsed_json['errors'][0]['title']).to eql error_title
-                expect(parsed_json['errors'][0]['detail']).to eql error_detail
-              end
-            end
-          end
-
-          context 'user group ids are invalid' do
-            let(:invalid_group_id1) { 543 }
-            let(:invalid_group_id2) { 210 }
-
-            let(:relationships) do
-              {
-                user_groups: {
-                  data: [
-                    { type: 'user_groups', id: invalid_group_id1 },
-                    { type: 'user_groups', id: invalid_group_id2 }
-                  ]
-                }
-              }
-            end
-
-            let(:error_detail) { "User groups with ids #{invalid_group_id1}, #{invalid_group_id2} not found." }
-            let(:error_title) { 'Record not found' }
-
-            response '404', 'Not found' do
-              schema '$ref' => '#/definitions/error_404'
-              run_test! do
-                expect(parsed_json['errors'][0]['title']).to eql error_title
-                expect(parsed_json['errors'][0]['detail']).to eql error_detail
-              end
-            end
-          end
-        end
-
-        context 'user params include not permitted admin flag' do
-          response '400', 'Error: Bad Request' do
-            let(:attributes_with_admin) { valid_attributes.merge(admin: true) }
-
-            let(:user) do
-              {
-                data: {
-                  type: 'users',
-                  id: updated_user.id,
-                  attributes: attributes_with_admin
-                }
-              }
-            end
-
-            schema '$ref' => '#/definitions/error_400'
-            run_test!
-          end
+          schema '$ref' => '#/definitions/error_400'
+          run_test!
         end
       end
     end

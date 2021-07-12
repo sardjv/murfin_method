@@ -21,20 +21,9 @@ describe Api::V1::UserGroupResource, type: :request, swagger_doc: 'v1/swagger.js
         end
       end
 
-      response '404', 'Record not found' do
-        schema '$ref' => '#/definitions/error_404'
-
-        let(:id) { 111_222 }
-
-        run_test!
-      end
-
-      response '406', 'Unsupported accept header' do
-        schema '$ref' => '#/definitions/error_406'
-
-        let(:Accept) { 'application/json' }
-        run_test!
-      end
+      it_behaves_like 'has response unauthorized'
+      it_behaves_like 'has response record not found'
+      it_behaves_like 'has response unsupported accept header'
     end
   end
 end

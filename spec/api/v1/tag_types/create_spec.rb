@@ -47,6 +47,8 @@ describe Api::V1::TagTypeResource, type: :request, swagger_doc: 'v1/swagger.json
         end
       end
 
+      it_behaves_like 'has response unauthorized'
+
       context 'tag type has no parent' do
         let(:attributes) { valid_attributes.except(:parent_id) }
 
@@ -62,9 +64,9 @@ describe Api::V1::TagTypeResource, type: :request, swagger_doc: 'v1/swagger.json
       context 'tag type name not unique' do
         let!(:existing_tag_type) { create :tag_type, name: tag_type_name }
 
-        response '422', 'Invalid request' do
-          schema '$ref' => '#/definitions/error_422'
-          run_test!
+        it_behaves_like 'has response unprocessable entity' do
+          let(:error_title) { 'has already been taken' }
+          let(:error_detail) { 'name - has already been taken' }
         end
       end
     end
