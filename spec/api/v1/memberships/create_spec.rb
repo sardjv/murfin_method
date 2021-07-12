@@ -46,17 +46,14 @@ describe Api::V1::MembershipResource, type: :request, swagger_doc: 'v1/swagger.j
         end
       end
 
+      it_behaves_like 'has response unauthorized'
+
       context 'role not valid' do
         let!(:role) { 'foobarist' }
-        let(:error_detail) { "#{role} is not a valid value for role." }
-        let(:error_title) { 'Invalid field value' }
 
-        response '400', 'Bad request' do
-          schema '$ref' => '#/definitions/error_400'
-          run_test! do
-            expect(parsed_json['errors'][0]['title']).to eql error_title
-            expect(parsed_json['errors'][0]['detail']).to eql error_detail
-          end
+        it_behaves_like 'has response bad request' do
+          let(:error_title) { 'Invalid field value' }
+          let(:error_detail) { "#{role} is not a valid value for role." }
         end
       end
 
@@ -68,9 +65,9 @@ describe Api::V1::MembershipResource, type: :request, swagger_doc: 'v1/swagger.j
           }
         end
 
-        response '422', 'Invalid request' do
-          schema '$ref' => '#/definitions/error_422'
-          run_test!
+        it_behaves_like 'has response unprocessable entity' do
+          let(:error_title) { 'must exist' }
+          let(:error_detail) { 'user - must exist' }
         end
       end
 
@@ -85,46 +82,26 @@ describe Api::V1::MembershipResource, type: :request, swagger_doc: 'v1/swagger.j
 
         context 'invalid user_epr_uuid passed' do
           let(:attributes) { valid_attributes.except(:user_id).merge({ user_epr_uuid: 'f00' }) }
-          let(:error_title) { 'Record not found' }
+
           let(:error_detail) { 'User with EPR UUID f00 not found.' }
 
-          response '404', 'Record not found' do
-            schema '$ref' => '#/definitions/error_404'
-
-            run_test! do
-              expect(parsed_json['errors'][0]['title']).to eql error_title
-              expect(parsed_json['errors'][0]['detail']).to eql error_detail
-            end
-          end
+          it_behaves_like 'has response record not found'
         end
 
         context 'missing both user_id and user_epr_uuid' do
           let(:attributes) { valid_attributes.except(:user_id) }
-          let(:error_title) { 'must exist' }
-          let(:error_detail) { 'user - must exist' }
 
-          response '422', 'Invalid request' do
-            schema '$ref' => '#/definitions/error_422'
-
-            run_test! do
-              expect(parsed_json['errors'][0]['title']).to eql error_title
-              expect(parsed_json['errors'][0]['detail']).to eql error_detail
-            end
+          it_behaves_like 'has response unprocessable entity' do
+            let(:error_title) { 'must exist' }
+            let(:error_detail) { 'user - must exist' }
           end
         end
 
         context 'both user_id and user_epr_uuid passed' do
           let(:attributes) { valid_attributes.merge({ user_epr_uuid: epr_uuid }) }
-          let(:error_title) { 'Param not allowed' }
-          let(:error_detail) { 'To identify user you need to pass user_id OR user_epr_uuid, not both.' }
 
-          response '400', 'Error: Bad Request' do
-            schema '$ref' => '#/definitions/error_400'
-
-            run_test! do
-              expect(parsed_json['errors'][0]['title']).to eql error_title
-              expect(parsed_json['errors'][0]['detail']).to eql error_detail
-            end
+          it_behaves_like 'has response bad request' do
+            let(:error_detail) { 'To identify user you need to pass user_id OR user_epr_uuid, not both.' }
           end
         end
       end

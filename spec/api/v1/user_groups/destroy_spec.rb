@@ -19,13 +19,8 @@ describe Api::V1::UserGroupResource, type: :request, swagger_doc: 'v1/swagger.js
         end
       end
 
-      response '404', 'Record not found' do
-        schema '$ref' => '#/definitions/error_404'
-
-        let(:id) { 54_321 }
-
-        run_test!
-      end
+      it_behaves_like 'has response unauthorized'
+      it_behaves_like 'has response record not found'
     end
   end
 end

@@ -49,6 +49,8 @@ describe Api::V1::TagAssociationResource, type: :request, swagger_doc: 'v1/swagg
         end
       end
 
+      it_behaves_like 'has response unauthorized'
+
       describe 'find tabbable by time_range_appointment_id instead taggable_id and taggable_type' do
         context 'correct time_range_appointment_id passed' do
           let(:attributes) do
@@ -78,16 +80,9 @@ describe Api::V1::TagAssociationResource, type: :request, swagger_doc: 'v1/swagg
               time_range_appointment_id: 'l0r3m'
             }
           end
-          let(:error_title) { 'Record not found' }
-          let(:error_detail) { 'Time range with appointment id l0r3m not found.' }
 
-          response '404', 'Record not found' do
-            schema '$ref' => '#/definitions/error_404'
-
-            run_test! do
-              expect(parsed_json['errors'][0]['title']).to eql error_title
-              expect(parsed_json['errors'][0]['detail']).to eql error_detail
-            end
+          it_behaves_like 'has response record not found' do
+            let(:error_detail) { 'Time range with appointment id l0r3m not found.' }
           end
         end
       end
@@ -108,34 +103,28 @@ describe Api::V1::TagAssociationResource, type: :request, swagger_doc: 'v1/swagg
       context 'tag id and tag type id not passed' do
         let(:attributes) { valid_attributes.except(:tag_id) }
 
-        response '422', 'Invalid request' do
-          schema '$ref' => '#/definitions/error_422'
-          run_test!
+        it_behaves_like 'has response unprocessable entity' do
+          let(:error_title) { 'must exist' }
+          let(:error_detail) { 'tag_type - must exist' }
         end
       end
 
       context 'required taggable type is missing' do
         let(:attributes) { valid_attributes.except(:taggable_type) }
 
-        response '422', 'Invalid request' do
-          schema '$ref' => '#/definitions/error_422'
-          run_test!
+        it_behaves_like 'has response unprocessable entity' do
+          let(:error_title) { 'must exist' }
+          let(:error_detail) { 'taggable - must exist' }
         end
       end
 
       context 'tag does not match tag type' do
         let!(:other_tag_type) { create :tag_type }
-        let(:error_detail) { 'tag_id - must belong to the selected tag_type' }
-        let(:error_title) { 'must belong to the selected tag_type' }
-
         let(:attributes) { valid_attributes.merge({ tag_type_id: other_tag_type.id }) }
 
-        response '422', 'Invalid request' do
-          schema '$ref' => '#/definitions/error_422'
-          run_test! do
-            expect(parsed_json['errors'][0]['title']).to eql error_title
-            expect(parsed_json['errors'][0]['detail']).to eql error_detail
-          end
+        it_behaves_like 'has response unprocessable entity' do
+          let(:error_title) { 'must belong to the selected tag_type' }
+          let(:error_detail) { 'tag_id - must belong to the selected tag_type' }
         end
       end
     end

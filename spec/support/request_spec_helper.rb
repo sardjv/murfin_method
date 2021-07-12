@@ -7,6 +7,14 @@ module RequestSpecHelper
     parsed_json['data']
   end
 
+  def parsed_json_errors
+    parsed_json['errors']
+  end
+
+  def parsed_json_error
+    parsed_json['error'] || parsed_json_errors[0].symbolize_keys
+  end
+
   def parsed_json_data_matches_db_record(db_record, data = nil, skip_data_attributes: []) # rubocop:disable Metrics/AbcSize
     data ||= parsed_json_data
 

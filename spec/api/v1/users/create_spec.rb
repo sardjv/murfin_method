@@ -58,9 +58,10 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
         context 'password is too short' do
           let(:password) { 'f00' }
 
-          response '422', 'Unprocessable Entity' do
-            schema '$ref' => '#/definitions/error_422_password_too_short'
-            run_test!
+          it_behaves_like 'has response unprocessable entity' do
+            let(:error_title) { 'is too short (minimum is 6 characters)' }
+            let(:error_detail) { 'password - is too short (minimum is 6 characters)' }
+            let(:error_code) { JSONAPI::VALIDATION_ERROR }
           end
         end
       end
@@ -99,6 +100,8 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
           end
         end
 
+        it_behaves_like 'has response unauthorized'
+
         context 'one user group id is invalid' do
           let(:invalid_group_id) { 543_210 }
 
@@ -113,36 +116,29 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
             }
           end
 
-          let(:error_detail) { "User group with id #{invalid_group_id} not found." }
-          let(:error_title) { 'Record not found' }
-
-          response '404', 'Not found' do
-            schema '$ref' => '#/definitions/error_404'
-            run_test! do
-              expect(parsed_json['errors'][0]['title']).to eql error_title
-              expect(parsed_json['errors'][0]['detail']).to eql error_detail
-            end
+          it_behaves_like 'has response record not found' do
+            let(:error_detail) { "User group with id #{invalid_group_id} not found." }
           end
         end
       end
 
-      # email already exists
-      response '422', 'Unprocessable Entity' do
+      context 'email already taken' do
         let!(:existing_user) { create :user }
         let(:email) { existing_user.email }
-
         let(:attributes) { valid_attributes.merge(email: email) }
 
-        schema '$ref' => '#/definitions/error_422'
-        run_test!
+        it_behaves_like 'has response unprocessable entity' do
+          let(:error_title) { 'has already been taken' }
+          let(:error_detail) { 'email - has already been taken' }
+        end
       end
 
-      # user params include not permitted admin flag
-      response '400', 'Error: Bad Request' do
+      context 'user params include not permitted admin flag' do
         let(:attributes) { valid_attributes.merge(admin: true) }
 
-        schema '$ref' => '#/definitions/error_400'
-        run_test!
+        it_behaves_like 'has response bad request' do
+          let(:error_detail) { 'admin is not allowed.' }
+        end
       end
     end
   end

@@ -12,8 +12,9 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
       produces 'application/vnd.api+json'
 
       let(:Authorization) { 'Bearer dummy_json_web_token' }
-      let!(:id) { user.id }
       let(:include) { '' }
+
+      let(:id) { user.id }
 
       response '200', 'Showing user' do
         schema '$ref' => '#/definitions/user_response_with_relationships'
@@ -23,17 +24,9 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
         end
       end
 
-      response '404', 'Record not found' do # TODO: refactor to shared example
-        let(:id) { 12_345 }
-        schema '$ref' => '#/definitions/error_404'
-        run_test!
-      end
-
-      response '406', 'Unsupported accept header' do # TODO: refactor to shared example
-        let(:Accept) { 'application/json' }
-        schema '$ref' => '#/definitions/error_406'
-        run_test!
-      end
+      it_behaves_like 'has response unauthorized'
+      it_behaves_like 'has response record not found'
+      it_behaves_like 'has response unsupported accept header'
     end
   end
 end

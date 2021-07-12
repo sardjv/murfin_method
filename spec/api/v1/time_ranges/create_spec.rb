@@ -52,6 +52,8 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
         end
       end
 
+      it_behaves_like 'has response unauthorized'
+
       context 'find user by user_epr_uuid instead user_id' do
         context 'correct user_epr_uuid passed' do
           let(:attributes) { valid_attributes.except(:user_id).merge({ user_epr_uuid: epr_uuid }) }
@@ -86,31 +88,19 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
 
         context 'missing both user_id and user_epr_uuid' do
           let(:attributes) { valid_attributes.except(:user_id) }
-          let(:error_title) { 'must exist' }
-          let(:error_detail) { 'user - must exist' }
 
-          response '422', 'Invalid request' do
-            schema '$ref' => '#/definitions/error_422'
-
-            run_test! do
-              expect(parsed_json['errors'][0]['title']).to eql error_title
-              expect(parsed_json['errors'][0]['detail']).to eql error_detail
-            end
+          it_behaves_like 'has response unprocessable entity' do
+            let(:error_title) { 'must exist' }
+            let(:error_detail) { 'user - must exist' }
           end
         end
 
         context 'both user_id and user_epr_uuid passed' do
           let(:attributes) { valid_attributes.merge({ user_epr_uuid: epr_uuid }) }
-          let(:error_title) { 'Param not allowed' }
-          let(:error_detail) { 'To identify user you need to pass user_id OR user_epr_uuid, not both.' }
 
-          response '400', 'Error: Bad Request' do
-            schema '$ref' => '#/definitions/error_400'
-
-            run_test! do
-              expect(parsed_json['errors'][0]['title']).to eql error_title
-              expect(parsed_json['errors'][0]['detail']).to eql error_detail
-            end
+          it_behaves_like 'has response bad request' do
+            let(:error_title) { 'Param not allowed' }
+            let(:error_detail) { 'To identify user you need to pass user_id OR user_epr_uuid, not both.' }
           end
         end
       end
@@ -118,27 +108,28 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
       context 'start time after end time' do
         let(:attributes) { valid_attributes.merge({ start_time: 20.hours.since.iso8601, end_time: 1.hour.since.iso8601 }) }
 
-        response '422', 'Invalid request' do
-          schema '$ref' => '#/definitions/error_422'
-          run_test!
+        it_behaves_like 'has response unprocessable entity' do
+          let(:error_title) { 'must occur after start time' }
+          let(:error_detail) { 'end_time - must occur after start time' }
+          let(:error_code) { JSONAPI::VALIDATION_ERROR }
         end
       end
 
       context 'user not exists' do
         let(:attributes) { valid_attributes.merge({ user_id: 987_654 }) }
 
-        response '422', 'Invalid request' do
-          schema '$ref' => '#/definitions/error_422_start_end_time'
-          run_test!
+        it_behaves_like 'has response unprocessable entity' do
+          let(:error_title) { 'must exist' }
+          let(:error_detail) { 'user - must exist' }
         end
       end
 
       context 'appointment id already used' do
         let!(:other_time_range) { create :time_range, appointment_id: appointment_id }
 
-        response '422', 'Invalid request' do
-          schema '$ref' => '#/definitions/error_422'
-          run_test!
+        it_behaves_like 'has response unprocessable entity' do
+          let(:error_title) { 'has already been taken' }
+          let(:error_detail) { 'appointment_id - has already been taken' }
         end
       end
 

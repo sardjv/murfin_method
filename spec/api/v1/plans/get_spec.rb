@@ -12,8 +12,9 @@ describe Api::V1::PlanResource, type: :request, swagger_doc: 'v1/swagger.json' d
       produces 'application/vnd.api+json'
 
       let(:Authorization) { 'Bearer dummy_json_web_token' }
-      let(:id) { plan.id }
       let(:include) { '' }
+
+      let(:id) { plan.id }
 
       response '200', 'Showing plan' do
         schema '$ref' => '#/definitions/plan_response_with_relationships'
@@ -38,15 +39,9 @@ describe Api::V1::PlanResource, type: :request, swagger_doc: 'v1/swagger.json' d
         end
       end
 
-      response '404', 'Record not found' do
-        let(:id) { 111_222 }
-        run_test!
-      end
-
-      response '406', 'Unsupported accept header' do
-        let(:Accept) { 'application/json' }
-        run_test!
-      end
+      it_behaves_like 'has response unauthorized'
+      it_behaves_like 'has response record not found'
+      it_behaves_like 'has response unsupported accept header'
     end
   end
 end
