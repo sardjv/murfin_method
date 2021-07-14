@@ -11,6 +11,6 @@
       - else
         = link_to I18n.t('signoffs.sign'), sign_signoff_path(f.object.id), { remote: true, method: :put, class: 'btn btn-success' }
   - if policy(f.object.plan).update?
-    %td
+    %td.text-right.pr-0
       = link_to_remove_association f do
         = icon('trash')
