@@ -5,7 +5,7 @@ require 'net/ldap'
 # docker run -it --rm -p 10389:10389 dwimberger/ldap-ad-it
 
 # https://www.forumsys.com/tutorials/integration-how-to/ldap/online-ldap-test-server/
-# ldapsearch -W -h ldap.forumsys.com -D "uid=tesla,dc=example,dc=com" -b "dc=example,dc=com"
+# ldapsearch -h ldap.forumsys.com -D "uid=tesla,dc=example,dc=com" -b "dc=example,dc=com" -w password -p 389
 # password: password
 
 # bundle exec rails runner lib/ldap_test.rb
@@ -62,16 +62,9 @@ end
 # ldap = LDAPTest.bind(host: 'ldap.forumsys.com', port: 389, base: 'dc=example,dc=com', bind_dn: 'uid=tesla,dc=example,dc=com', password: 'password')
 # LDAPTest.filter(ldap, %w[uid tesla])
 
-# $SSLPort = 636
-# $ServerName = "Ox01DC"
-# $basedn = "ou=staff,dc=int,dc=oxleas,dc=nhs,dc=uk"
-# $UserName = "cn=barbara white,ou=staff,dc=int,dc=oxleas,dc=nhs,dc=uk"
-# $Password = "Newstartertooxleas"
-
-#ldapsearch -H ldaps://ox01dc.int.oxleas.nhs.uk -D "cn=barbara white,ou=staff,dc=int,dc=oxleas,dc=nhs,dc=uk" -W -x -v "(sAMAccountName=whiteba)" "memberOf"
-
-ldap = LDAPTest.bind(host: 'ox01dc.int.oxleas.nhs.uk', port: 636, base: 'ou=staff,dc=int,dc=oxleas,dc=nhs,dc=uk', bind_dn: 'cn=barbara white,ou=staff,dc=int,dc=oxleas,dc=nhs,dc=uk', password: 'Newstartertooxleas')
-LDAPTest.filter(ldap, %w[cn barbara white])
+base = 'ou=staff,dc=int,dc=oxleas,dc=nhs,dc=uk'
+ldap = LDAPTest.bind(host: 'ox01dc.int.oxleas.nhs.uk', port: 636, base: nil, bind_dn: 'cn=TODO,ou=staff,dc=int,dc=oxleas,dc=nhs,dc=uk', password: 'TODO')
+LDAPTest.filter(ldap, %w[cn TODO])
 
 # cn = 'Philip J. Fry'
 # login = 'fry'
