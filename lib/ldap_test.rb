@@ -68,7 +68,9 @@ end
 # $UserName = "cn=barbara white,ou=staff,dc=int,dc=oxleas,dc=nhs,dc=uk"
 # $Password = "Newstartertooxleas"
 
-ldap = LDAPTest.bind(host: 'Ox01DC', port: 636, base: 'ou=staff,dc=int,dc=oxleas,dc=nhs,dc=uk', bind_dn: 'cn=barbara white,ou=staff,dc=int,dc=oxleas,dc=nhs,dc=uk', password: 'Newstartertooxleas')
+#ldapsearch -H ldaps://ox01dc.int.oxleas.nhs.uk -D "cn=barbara white,ou=staff,dc=int,dc=oxleas,dc=nhs,dc=uk" -W -x -v "(sAMAccountName=whiteba)" "memberOf"
+
+ldap = LDAPTest.bind(host: 'ox01dc.int.oxleas.nhs.uk', port: 636, base: 'ou=staff,dc=int,dc=oxleas,dc=nhs,dc=uk', bind_dn: 'cn=barbara white,ou=staff,dc=int,dc=oxleas,dc=nhs,dc=uk', password: 'Newstartertooxleas')
 LDAPTest.filter(ldap, %w[cn barbara white])
 
 # cn = 'Philip J. Fry'
