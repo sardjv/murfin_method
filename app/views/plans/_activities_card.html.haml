@@ -1,7 +1,7 @@
 #plan-activities-card.sa-activities-grid.border.my-4.p-4
   %h6= Plan.human_attribute_name('activities')
 
-  #plan-activities-list
+  #plan-activities-list{ data: { activity_active_tag_associations_count: Activity.new.active_tag_associations.count } }
     = f.fields_for :activities, wrapper: false, include_id: false do |af|
       = render 'activity_fields', plan: plan, f: af, plan_form: f
 
