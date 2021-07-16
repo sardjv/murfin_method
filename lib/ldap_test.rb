@@ -5,8 +5,9 @@ require 'net/ldap'
 # docker run -it --rm -p 10389:10389 dwimberger/ldap-ad-it
 
 # https://www.forumsys.com/tutorials/integration-how-to/ldap/online-ldap-test-server/
-# ldapsearch -h ldap.forumsys.com -D "uid=tesla,dc=example,dc=com" -b "dc=example,dc=com" -w password -p 389
+# ldapsearch -h ldap.forumsys.com -D "uid=tesla,dc=example,dc=com" -b "dc=example,dc=com" -w password -d 65535
 # password: password
+# ldapwhoami -H ldap://ldap.forumsys.com -x
 
 # bundle exec rails runner lib/ldap_test.rb
 # or
