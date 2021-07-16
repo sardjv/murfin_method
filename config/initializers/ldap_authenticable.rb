@@ -1,7 +1,7 @@
 require 'net/ldap'
 require 'devise/strategies/authenticatable'
 
-class Devise::Strategies::LdapAuthenticatable < Authenticatable
+class Devise::Strategies::LdapAuthenticatable < Devise::Strategies::Authenticatable
   ORGANISATION_UNIT = 'people'.freeze
 
   def valid?
