@@ -159,7 +159,7 @@ group :development do
 
   # Listens to file modifications and notifies you about the changes.
   # https://github.com/guard/listen
-  gem 'listen', '~> 3.5.1'
+  gem 'listen', '~> 3.6.0'
 
   # A static code analyzer and formatter, based on the community style guide.
   # https://github.com/rubocop-hq/rubocop-rails
