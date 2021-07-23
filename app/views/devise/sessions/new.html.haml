@@ -1,6 +1,6 @@
 .container.my-4
   .row
-    - if AuthMethods.form?
+    - if auth_method_enabled?('form')
       .col-md-4
         %h5= t('auth.log_in')
         = bootstrap_form_for resource, as: resource_name, url: session_path(resource_name), data: { turbo: false } do |f|
@@ -10,7 +10,7 @@
             = f.check_box :remember_me
           = f.submit t('actions.log_in'), class: 'btn btn-primary mt-2'
 
-    - if AuthMethods.ldap?
+    - if auth_method_enabled?('ldap')
       .col-md-4
         %h5= t('auth.ldap.log_in')
         = bootstrap_form_for :ldap_user, url: session_path(resource_name), data: { turbo: false } do |f|
