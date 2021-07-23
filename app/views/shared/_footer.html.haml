@@ -8,3 +8,12 @@
       - if current_user.try(:admin?)
         .text-center.m-4
           %a{ href: '/sidekiq', target: '_blank' } Sidekiq
+
+  - if Rails.env.development?
+    .container
+      .d-flex.justify-content-start
+        %small
+          auth methods enabled: #{ENV['AUTH_METHOD']}
+          - if current_user
+            %br
+            auth method used: #{session[:auth_method]}

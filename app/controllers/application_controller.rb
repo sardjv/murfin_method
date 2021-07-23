@@ -6,13 +6,13 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!
 
-  # def auth_method?(method_name)
-  #   ENV['AUTH_METHOD'] == method_name.to_s
-  # end
-  # helper_method :auth_method?
+  def auth_method?(method_name)
+    session[:auth_method] == method_name.to_s
+  end
+  helper_method :auth_method?
 
   def user_authenticated?
-    AuthMethods.form? ? user_authenticated_via_devise? : user_authenticated_via_oauth?
+    auth_method?('form') ? user_authenticated_via_devise? : user_authenticated_via_oauth?
   end
   helper_method :user_authenticated?
 
@@ -34,6 +34,6 @@ class ApplicationController < ActionController::Base
   protected
 
   def authenticate_user!
-    AuthMethods.form? ? authenticate_user_via_devise! : authenticate_user_via_oauth!
+    auth_method?('form') ? authenticate_user_via_devise! : authenticate_user_via_oauth!
   end
 end

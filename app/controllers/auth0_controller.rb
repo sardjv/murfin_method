@@ -7,6 +7,7 @@ class Auth0Controller < ApplicationController
     user_id = find_or_create_user_from_auth_info(request.env['omniauth.auth'])
     return redirect_to root_path, alert: I18n.t('notice.login_error') unless user_id
 
+    session[:auth_method] = 'oauth2'
     session[:user_id] = user_id
     cookies.signed[:user_id] = user_id
 

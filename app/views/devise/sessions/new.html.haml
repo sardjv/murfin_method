@@ -18,5 +18,3 @@
           = f.password_field :password, autocomplete: 'off'
           = f.submit t('actions.log_in'), class: 'btn btn-primary mt-2'
 
-- if Rails.env.development?
-  %small auth methods enabled: #{AuthMethods::AUTH_METHODS_ENABLED.join(', ')}
