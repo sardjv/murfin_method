@@ -37,6 +37,7 @@ services:
     command: ./script/start_rails_development.sh
     ports:
       - '3000:3000'
+      - '636:636'
     volumes:
       - '.:/app'
       # We cache the bundle so that we don't re-download every gem on any change to the Gemfile.
@@ -53,8 +54,9 @@ services:
       - WEB_CONCURRENCY=1 # 1 is good for debugging.
     env_file:
       - '.env'
-    # extra_hosts: # if you need to connect some external host from container, it adds entries to /etc/hosts
-    #  - 'ldap.forumsys.com:52.87.186.93'
+    extra_hosts: # if you need to connect some external host from container, it adds entries to /etc/hosts
+      - 'ldap.forumsys.com:52.87.186.93'
+      - 'ox01dc.int.oxleas.nhs.uk:10.212.25.30'
 
   chrome_headless:
     image: selenium/standalone-chrome:3.141.0
@@ -107,24 +109,6 @@ services:
       - RAILS_ENV=development
     env_file:
       - '.env'
-
-  # https://github.com/dwimberger/ldap-ad-it Simple LDAP test server simulating AD
-  # ldap_ad_it:
-  #   image: dwimberger/ldap-ad-it
-  #   hostname: ldap_ad_it # set it for LDAP_HOST in .env file
-  #   ports:
-  #     - '10389:10389'
-  #   expose:
-  #     - '10389'
-
-  # https://github.com/rroemhild/docker-test-openldap OpenLDAP test server
-  # test_openldap:
-  #   image: rroemhild/test-openldap
-  #   hostname: test_openldap # set it for LDAP_HOST in .env file
-  #   ports:
-  #     - '10389:10389'
-  #   expose:
-  #     - '10389'
 
 volumes:
   bundle_cache:

@@ -2,49 +2,64 @@ require 'net/ldap'
 require 'devise/strategies/authenticatable'
 
 class Devise::Strategies::LdapAuthenticatable < Devise::Strategies::Authenticatable
-  ORGANISATION_UNIT = 'people'.freeze
-
   def valid?
-    ENV['LDAP_AUTH_ENABLED'].as_boolean && params[:ldap_user].present?
+    AuthMethods.ldap? && params[:ldap_user].present?
   end
 
   def authenticate!
     if uid.present? || password.present?
-
-      ldap = Net::LDAP.new(
-        host: ENV.fetch('LDAP_HOST'),
-        port: ENV.fetch('LDAP_PORT'),
-        base: ENV.fetch('LDAP_BASE'),
-        # encryption: :simple_tls,
+      attrs = {
+        host: ENV.fetch('LDAP_AUTH_HOST'),
+        port: ENV.fetch('LDAP_AUTH_PORT'),
+        base: ENV.fetch('LDAP_AUTH_BASE'),
         auth: {
-          # username: "cn=Philip J. Fry,ou=people,dc=planetexpress,dc=com", # works
-          # username: "uid=#{uid},ou=people,#{ENV.fetch('LDAP_BASE')}",
-          username: "cn=#{uid},ou=#{ORGANISATION_UNIT},#{ENV.fetch('LDAP_BASE')}", # works
+          username: "#{ENV.fetch('LDAP_AUTH_USER_FIELD')}=#{uid},#{ENV.fetch('LDAP_AUTH_BASE')}",
           password: password,
           method: :simple
         }
-      )
+      }
+
+      attrs[:encryption] = :simple_tls if ENV['LDAP_AUTH_ENCRYPTED'].try(:as_boolean)
+
+      ldap = Net::LDAP.new(attrs)
 
       if ldap.bind
         pp 'ldap bound: ', ldap
 
-        filter = Net::LDAP::Filter.eq('sAMAccountName', uid)
-        result_attrs = %w[sAMAccountName displayName mail]
+        # filter = Net::LDAP::Filter.eq('samaccountname', uid)
+        filter = Net::LDAP::Filter.eq(ENV.fetch('LDAP_AUTH_USER_FIELD'), uid)
+        # result_attrs = %w[samaccountname displayname mail sn givenname surname]
 
-        res = ldap.search(base: ENV.fetch('LDAP_BASE'), filter: filter, attributes: result_attrs, return_result: true)
-        user = User.find_by(email: res['mail']) if res.present? && res['mail']
+        # search_result = ldap.search(base: ENV.fetch('LDAP_AUTH_BASE'), filter: filter, return_result: tru, attributes: result_attrs)
+        result = ldap.search(filter: filter, return_result: true)
+        search_result = result[0]
+        pp 'search_result:', search_result
+
+        email = search_result['mail'][0]
+
+        unless user = User.find_by(email: email)
+          user_attrs = { email: email }.merge(prepare_name(search_result))
+          pp 'user_attrs', user_attrs
+          user = User.create(user_attrs)
+          pp 'user errors', user.errors
+        end
 
         if user
+          session[:user_id] = user.id
+          cookies.signed[:user_id] = user.id
+
           success!(user)
         else
-          raise(:ldap_user_not_found_in_database)
+          fail!(:ldap_user_fetch)
         end
       else
         pp 'LDAP error', ldap.get_operation_result.message
-        fail!(:ldap_invalid) # fail without "!" goes to the next strategy
+        fail!(:ldap_bind) # fail without "!" goes to the next strategy
       end
     end
   end
+
+  private
 
   def uid
     params[:ldap_user][:uid]
@@ -52,6 +67,15 @@ class Devise::Strategies::LdapAuthenticatable < Devise::Strategies::Authenticata
 
   def password
     params[:ldap_user][:password]
+  end
+
+  def prepare_name(res)
+    if res[:sn].present? && res[:givenname].present?
+      { first_name: res[:givenname][0], last_name: res[:sn][0] }
+    elsif res[:cn].present?
+      arr = res[:cn][0].split
+      { first_name: arr[0], last_name: arr[1] }
+    end
   end
 end
 

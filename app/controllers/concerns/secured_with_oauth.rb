@@ -9,7 +9,7 @@ module SecuredWithOauth
 
   def authenticate_user_via_oauth!
     if user_authenticated?
-      @current_user = User.find(session[:user_id])
+      @current_user = User.find session[:user_id]
     else
       redirect_to root_path
     end

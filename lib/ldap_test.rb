@@ -1,41 +1,28 @@
 require 'rubygems'
 require 'net/ldap'
 
-# docker run --rm -p 10389:10389 -p 10636:10636 rroemhild/test-openldap
-# docker run -it --rm -p 10389:10389 dwimberger/ldap-ad-it
-
 # https://www.forumsys.com/tutorials/integration-how-to/ldap/online-ldap-test-server/
 # ldapsearch -h ldap.forumsys.com -D "uid=tesla,dc=example,dc=com" -b "dc=example,dc=com" -w password -d 65535
 # password: password
 # ldapwhoami -H ldap://ldap.forumsys.com -x
 
 # bundle exec rails runner lib/ldap_test.rb
-# or
-# bundle exec ruby lib/ldap_test.rb
 
-class LDAPTest
-  # ORGANISATION_UNIT = 'people'.freeze
-  # HOST = ENV.fetch('LDAP_HOST')
-  # PORT = ENV.fetch('LDAP_PORT')
-  # LDAP_BASE = ENV.fetch('LDAP_BASE')
-
-  # , email: nil, cn: nil)
-  def self.bind(host:, port:, base:, bind_dn:, password:)
-    # ou_query = cn && cn == 'admin' ? nil : "ou=#{ORGANISATION_UNIT},"
-
-    ldap = Net::LDAP.new(
+class LdapTest
+  def self.bind(host:, port:, base:, bind_dn:, password:, encrypted: true)
+    attrs = {
       host: host,
       port: port,
       base: base,
-      # encryption: :simple_tls,
       auth: {
         username: bind_dn,
-        # username: "cn=#{cn},#{ou_query}#{LDAP_BASE}",
-        # username: "uid=#{uid},ou=#{ORGANISATION_UNIT},#{ENV.fetch('LDAP_BASE')}",
         password: password,
         method: :simple
       }
-    )
+    }
+
+    attrs[:encryption] = :simple_tls if encrypted.as_boolean
+    ldap = Net::LDAP.new(attrs)
 
     puts "\r\n"
 
@@ -60,42 +47,21 @@ class LDAPTest
   end
 end
 
-# ldap = LDAPTest.bind(host: 'ldap.forumsys.com', port: 389, base: 'dc=example,dc=com', bind_dn: 'uid=tesla,dc=example,dc=com', password: 'password')
-# LDAPTest.filter(ldap, %w[uid tesla])
+ldap = LdapTest.bind(host: ENV['LDAP_TEST_HOST'],
+                     port: ENV['LDAP_TEST_PORT'],
+                     base: ENV['LDAP_TEST_BASE'],
+                     bind_dn: ENV['LDAP_TEST_BIND_DN'],
+                     password: ENV['LDAP_TEST_PASSWORD'],
+                     encrypted: ENV['LDAP_TEST_ENCRYPTED'])
 
-base = 'ou=staff,dc=int,dc=oxleas,dc=nhs,dc=uk'
-ldap = LDAPTest.bind(host: 'ox01dc.int.oxleas.nhs.uk', port: 636, base: nil, bind_dn: 'cn=TODO,ou=staff,dc=int,dc=oxleas,dc=nhs,dc=uk', password: 'TODO')
-LDAPTest.filter(ldap, %w[cn TODO])
+# LdapTest.filter(ldap, %w[cn TODO])
 
-# cn = 'Philip J. Fry'
-# login = 'fry'
-# password = 'fry'
-# email = 'fry@planetexpress.com'
+LdapTest.filter(ldap, %w[uid tesla])
 
-# ldap = LdapTest.valid_credentials?(cn: cn, password: password)
-# res = LdapTest.filter(ldap, %w[sAMAccountName fry])
-# pp 'filter res', res
+# ldap = LdapTest.bind(host: 'ldap.forumsys.com',
+#    port: 389,
+#    base: 'dc=example,dc=com',
+#    bind_dn: 'uid=tesla,dc=example,dc=com',
+#    password: 'password')
 
-# LdapTest.valid_credentials?(cn: 'admin', password: 'GoodNewsEveryone')
-
-# ldap3 = Net::LDAP.new(
-#   host: 'ldap.forumsys.com',
-#   port: 389,
-#   base: 'dc=example,dc=com',
-#   # encryption: :simple_tls,
-#   auth: {
-#     username: 'uid=tesla,dc=example,dc=com',
-#     password: 'password',
-#     method: :simple
-#   }
-# )
-
-# puts ldap3.bind
-
-# search_filter = Net::LDAP::Filter.eq("uid", 'tesla')
-# #result_attrs = %w[sAMAccountName displayName mail]
-# #result_attrs = %w[mail telephoneNumber]
-# ldap3.search(base: 'uid=tesla,dc=example,dc=com', filter: search_filter) { |item|
-#   #puts "#{item.sAMAccountName.first}: #{item.displayName.first} (#{item.mail.first})"
-#   puts item.to_h.inspect
-# }
+# LdapTest.filter(ldap, %w[uid tesla])

@@ -90,7 +90,8 @@ en:
     name: Murfin+
   auth:
     << : *log_in_out
-    active_directory_log_in: Log in via Active Directory
+    ldap:
+      log_in: Log in via Active Directory
   date:
     formats:
       readable: '%-d %B %Y'
