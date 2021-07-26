@@ -23,7 +23,8 @@ class ApplicationController < ActionController::Base
   helper_method :auth_method_used?
 
   def user_authenticated?
-    auth_method_used?('form') ? user_authenticated_via_devise? : user_authenticated_via_oauth?
+    # (auth_method_used?('form') || auth_method_used?('ldap')) ? user_authenticated_via_devise? : user_authenticated_via_oauth?
+    auth_method_enabled?('oauth2') ? user_authenticated_via_oauth? : user_authenticated_via_devise?
   end
   helper_method :user_authenticated?
 
@@ -38,6 +39,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def authenticate_user!
-    auth_method_used?('form') ? authenticate_user_via_devise! : authenticate_user_via_oauth!
+    # (auth_method_used?('form') || auth_method_used?('ldap')) ? authenticate_user_via_devise! : authenticate_user_via_oauth!
+    auth_method_enabled?('oauth2') ? authenticate_user_via_oauth! : authenticate_user_via_devise!
   end
 end

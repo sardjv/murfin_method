@@ -16,7 +16,7 @@
           DEV ONLY
           %br
           auth methods enabled: #{ENV['AUTH_METHOD']}
-          - if current_user
-            %br
-            auth method used: #{session[:auth_method]}
-            session user id: #{session[:user_id]}
+          %br
+          auth method used: #{session[:auth_method]}
+          %br
+          session user id: #{session[:user_id]}
