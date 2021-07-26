@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   def auth_method_enabled?(method_name)
     ENV['AUTH_METHOD'].split(',').include?(m)
   end
-  helper_method auth_method_enabled?
+  helper_method :auth_method_enabled?
 
   def auth_method_used?(method_name)
     session[:auth_method] == method_name.to_s
