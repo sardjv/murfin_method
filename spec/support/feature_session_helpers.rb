@@ -1,6 +1,6 @@
 module FeatureSessionHelpers
   def log_in(user)
-    if ENV['AUTH_METHOD'] == 'form'
+    if ENV['AUTH_METHOD'] == 'form' || ENV['AUTH_METHOD'] == 'ldap'
       login_as user, scope: :user # from Devise https://github.com/heartcombo/devise/wiki/How-To:-Test-with-Capybara
     else
       mock_valid_auth_hash(user)

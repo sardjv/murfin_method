@@ -6,7 +6,7 @@ class Devise::Strategies::LdapAuthenticatable < Devise::Strategies::Authenticata
     ENV['AUTH_METHOD'].split(',').include?('ldap') && params[:ldap_user].present?
   end
 
-  def authenticate!
+  def authenticate! # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     attrs = {
       host: ENV.fetch('LDAP_AUTH_HOST'),
       port: ENV.fetch('LDAP_AUTH_PORT'),
@@ -23,7 +23,7 @@ class Devise::Strategies::LdapAuthenticatable < Devise::Strategies::Authenticata
     ldap = Net::LDAP.new(attrs)
 
     if ldap.bind
-      pp 'ldap bound: ', ldap
+      Rails.logger.info "LdapAuthenticatable | bound: #{ldap.inspect}"
 
       # filter = Net::LDAP::Filter.eq('samaccountname', uid)
       filter = Net::LDAP::Filter.eq(ENV.fetch('LDAP_AUTH_USER_FIELD'), uid)
@@ -32,28 +32,26 @@ class Devise::Strategies::LdapAuthenticatable < Devise::Strategies::Authenticata
       # search_result = ldap.search(base: ENV.fetch('LDAP_AUTH_BASE'), filter: filter, return_result: tru, attributes: result_attrs)
       result = ldap.search(filter: filter, return_result: true)
       search_result = result[0]
-      pp 'search_result:', search_result
+      Rails.logger.info "LdapAuthenticatable | search_result: #{search_result.to_h.inspect}"
 
       email = search_result['mail'][0]
+      user = User.find_by(email: email)
 
-      unless user = User.find_by(email: email)
+      unless user
         user_attrs = { email: email }.merge(prepare_name(search_result))
-        pp 'user_attrs', user_attrs
         user = User.create(user_attrs)
-        pp 'user errors', user.errors
       end
 
       if user
         session[:auth_method] = 'ldap'
         session[:user_id] = user.id
-        cookies.signed[:user_id] = user.id
 
         success!(user)
       else
         fail!(:ldap_user_fetch)
       end
     else
-      pp 'LDAP error', ldap.get_operation_result.message
+      Rails.logger.error "LdapAuthenticatable | error: #{ldap.get_operation_result.message}"
       fail!(:ldap_bind) # fail without "!" goes to the next strategy
     end
   end

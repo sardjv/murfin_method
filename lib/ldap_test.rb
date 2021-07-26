@@ -1,3 +1,5 @@
+# rubocop:disable Metrics/ParameterLists, Rails/Output
+
 require 'rubygems'
 require 'net/ldap'
 
@@ -9,25 +11,23 @@ require 'net/ldap'
 # bundle exec rails runner lib/ldap_test.rb
 
 class LdapTest
-  def self.bind(host:, port:, base:, bind_dn:, password:, encrypted: true)
+  def self.bind(host:, port:, base:, user_field:, uid:, password:, encrypted: true)
     attrs = {
       host: host,
       port: port,
       base: base,
       auth: {
-        username: bind_dn,
+        username: "#{user_field}=#{uid},#{base}",
         password: password,
         method: :simple
       }
     }
 
     attrs[:encryption] = :simple_tls if encrypted.as_boolean
+    pp 'attrs:', attrs
     ldap = Net::LDAP.new(attrs)
 
-    puts "\r\n"
-
     if ldap.bind
-      # puts "\r\nbind success: #{cn || uid || email}"
       puts "bind success: #{ldap.get_operation_result.message}"
       ldap
     else
@@ -38,30 +38,19 @@ class LdapTest
   def self.filter(ldap, args)
     filter = Net::LDAP::Filter.eq(*args)
     # result_attrs = %w[sAMAccountName displayName mail]
-    # ldap.search(base: LDAP_BASE, filter: filter, attributes: result_attrs, return_result: true)
-    puts 'search results:'
-    ldap.search(filter: filter, return_result: true) do |item|
-      # ldap.search(base: base, filter: filters, return_result: true) do |item|
-      pp item.to_h
-    end
+    # base: base, attributes: attributes: result_attrs ?
+    ldap.search(filter: filter, return_result: true)
   end
 end
 
-ldap = LdapTest.bind(host: ENV['LDAP_TEST_HOST'],
-                     port: ENV['LDAP_TEST_PORT'],
-                     base: ENV['LDAP_TEST_BASE'],
-                     bind_dn: ENV['LDAP_TEST_BIND_DN'],
+ldap = LdapTest.bind(host: ENV['LDAP_AUTH_HOST'],
+                     port: ENV['LDAP_AUTH_PORT'],
+                     base: ENV['LDAP_AUTH_BASE'],
+                     user_field: ENV['LDAP_AUTH_USER_FIELD'],
+                     uid: ENV['LDAP_TEST_UID'],
                      password: ENV['LDAP_TEST_PASSWORD'],
-                     encrypted: ENV['LDAP_TEST_ENCRYPTED'])
+                     encrypted: ENV['LDAP_AUTH_ENCRYPTED'])
 
-# LdapTest.filter(ldap, %w[cn TODO])
+pp 'search results:', LdapTest.filter(ldap, [ENV['LDAP_AUTH_USER_FIELD'], ENV['LDAP_TEST_UID']])
 
-LdapTest.filter(ldap, %w[uid tesla])
-
-# ldap = LdapTest.bind(host: 'ldap.forumsys.com',
-#    port: 389,
-#    base: 'dc=example,dc=com',
-#    bind_dn: 'uid=tesla,dc=example,dc=com',
-#    password: 'password')
-
-# LdapTest.filter(ldap, %w[uid tesla])
+# rubocop:enable Metrics/ParameterLists, Rails/Output
