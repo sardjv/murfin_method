@@ -4,7 +4,7 @@ module SecuredWithOauth
   private
 
   def user_authenticated_via_oauth?
-    session && session[:user_id].present?
+    session && session[:auth_method] == 'oauth2' && session[:user_id]
   end
 
   def authenticate_user_via_oauth!

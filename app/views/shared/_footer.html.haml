@@ -9,7 +9,7 @@
         .text-center.m-4
           %a{ href: '/sidekiq', target: '_blank' } Sidekiq
 
-  - if Rails.env.development?
+  - if Rails.env.development? || Rails.env.test?
     .container
       .d-flex.justify-content-start
         %small
