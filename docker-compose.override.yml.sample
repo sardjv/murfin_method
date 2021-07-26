@@ -56,7 +56,6 @@ services:
       - '.env'
     extra_hosts: # if you need to connect some external host from container, it adds entries to /etc/hosts
       - 'ldap.forumsys.com:52.87.186.93'
-      - 'ox01dc.int.oxleas.nhs.uk:10.212.25.30'
 
   chrome_headless:
     image: selenium/standalone-chrome:3.141.0
