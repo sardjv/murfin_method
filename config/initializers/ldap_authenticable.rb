@@ -3,7 +3,7 @@ require 'devise/strategies/authenticatable'
 
 class Devise::Strategies::LdapAuthenticatable < Devise::Strategies::Authenticatable
   def valid?
-    ENV['AUTH_METHOD'] && ENV['AUTH_METHOD'].split(',').include?('ldap') && params[:ldap_user].present?
+    ENV['AUTH_METHOD']&.split(',').include?('ldap') && params[:ldap_user].present?
   end
 
   def authenticate! # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
@@ -43,9 +43,6 @@ class Devise::Strategies::LdapAuthenticatable < Devise::Strategies::Authenticata
       end
 
       if user
-        session[:auth_method] = 'ldap'
-        session[:user_id] = user.id
-
         success!(user)
       else
         fail!(:ldap_user_fetch)

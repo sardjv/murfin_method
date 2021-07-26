@@ -5,9 +5,15 @@ class ApplicationController < ActionController::Base
   include SecuredWithOauth
 
   before_action :authenticate_user!
+  before_action :nav_presenter, except: %w[create update destroy] # rubocop:disable Rails/LexicallyScopedActionFilter
+
+  include Pundit
+  include PunditHelper
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  after_action :verify_authorized, unless: -> { devise_controller? }
 
   def auth_method_enabled?(method_name)
-    ENV['AUTH_METHOD'].split(',').include?(method_name)
+    ENV['AUTH_METHOD']&.split(',').include?(method_name)
   end
   helper_method :auth_method_enabled?
 
@@ -22,13 +28,6 @@ class ApplicationController < ActionController::Base
   helper_method :user_authenticated?
 
   helper_method :current_user_name, :current_user_email
-
-  before_action :nav_presenter, except: %w[create update destroy] # rubocop:disable Rails/LexicallyScopedActionFilter
-
-  include Pundit
-  include PunditHelper
-  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
-  after_action :verify_authorized, unless: -> { devise_controller? }
 
   def nav_presenter
     return unless current_user
