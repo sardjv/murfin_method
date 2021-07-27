@@ -38,7 +38,7 @@ gem 'faker', '~> 2.18.0'
 
 # A Ruby gem to transform HTML into PDFs, PNGs or JPEGs using Google Puppeteer/Chromium
 # https://github.com/Studiosity/grover
-gem 'grover', '~> 1.0.1'
+gem 'grover', '~> 1.0.2'
 
 # HTML Abstraction Markup Language - A Markup Haiku
 # https://github.com/haml/haml
@@ -116,7 +116,7 @@ gem 'strip_attributes', '~> 1.11.0'
 
 # About Use Turbo in your Ruby on Rails app
 # https://github.com/hotwired/turbo-rails
-gem 'turbo-rails', '~> 0.5.12'
+gem 'turbo-rails', '~> 0.6.0'
 
 # Bundle zoneinfo files which are not included in Windows.
 # https://github.com/tzinfo/tzinfo-data
@@ -163,7 +163,7 @@ group :development do
 
   # Listens to file modifications and notifies you about the changes.
   # https://github.com/guard/listen
-  gem 'listen', '~> 3.5.1'
+  gem 'listen', '~> 3.6.0'
 
   # A static code analyzer and formatter, based on the community style guide.
   # https://github.com/rubocop-hq/rubocop-rails
