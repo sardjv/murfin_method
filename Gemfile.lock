@@ -146,7 +146,7 @@ GEM
     guard-rubocop (1.4.0)
       guard (~> 2.0)
       rubocop (< 2.0)
-    haml (5.2.1)
+    haml (5.2.2)
       temple (>= 0.8.0)
       tilt
     haml_lint (0.37.1)
@@ -415,7 +415,7 @@ DEPENDENCIES
   grover (~> 1.0.2)
   guard-rspec (~> 4.7.3)
   guard-rubocop (~> 1.4.0)
-  haml (~> 5.2.1)
+  haml (~> 5.2.2)
   haml_lint (~> 0.37.1)
   ice_cube (~> 0.16.3)
   jsonapi-resources (~> 0.10.4)
