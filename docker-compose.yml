@@ -14,7 +14,7 @@ services:
   docs:
     image: awesometic/docusaurus
     ports:
-      - '3002:80'
+      - '3003:80'
     volumes:
       - './docs:/docusaurus'
     environment:
