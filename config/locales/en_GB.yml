@@ -9,6 +9,8 @@ en:
         duration: Time worked per week
       api_user:
         api_token: API token
+      ldap_user:
+        uid: Username
       tag_type:
         active_for_time_ranges: Active for actual
       note:
@@ -88,6 +90,8 @@ en:
     name: Murfin+
   auth:
     << : *log_in_out
+    ldap:
+      log_in: Log in via Active Directory
   date:
     formats:
       readable: '%-d %B %Y'

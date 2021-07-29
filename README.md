@@ -9,7 +9,7 @@
 
 To get started, you need a `.env` file with secrets. If you use bash, you can generate one with the command `sh ./script/generate_env_file.sh`. If not, there is an `.env.example` file included in the repo that you can use, just remove the `.example` from the filename. Make sure to change all secrets marked with YOU_MUST_CHANGE_THIS_PASSWORD before running in production!
 
-You also need to set AUTH_METHOD to either _form_ or _oauth2_ in the _.env_ file.
+You also need to set AUTH_METHOD to either _form_ or _ldap_ or _oauth2_ in the _.env_ file.
 
 ## Booting up
 

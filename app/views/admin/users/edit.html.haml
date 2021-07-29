@@ -17,7 +17,7 @@
                        placeholder: User.human_attribute_name('email'), required: true
         = f.text_field :epr_uuid
 
-        - if auth_method?(:form)
+        - if auth_method_used?('form')
           = f.password_field :password, label: User.human_attribute_name('password'),
                               placeholder: User.human_attribute_name('password')
           = f.password_field :password_confirmation, label: User.human_attribute_name('password_confirmation'),

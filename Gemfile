@@ -64,6 +64,10 @@ gem 'kaminari', '~> 1.2.1'
 # https://github.com/brianmario/mysql2
 gem 'mysql2', '~> 0.5.3'
 
+# Pure Ruby LDAP library
+# https://github.com/ruby-ldap/ruby-net-ldap
+gem 'net-ldap', '~> 0.17'
+
 # OmniAuth is a flexible authentication system utilizing Rack middleware.
 # https://github.com/auth0/omniauth-auth0
 gem 'omniauth-auth0', '~> 3.0.0'
