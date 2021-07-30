@@ -37,7 +37,6 @@ services:
     command: ./script/start_rails_development.sh
     ports:
       - '3000:3000'
-      - '636:636'
     volumes:
       - '.:/app'
       # We cache the bundle so that we don't re-download every gem on any change to the Gemfile.
@@ -54,7 +53,8 @@ services:
       - WEB_CONCURRENCY=1 # 1 is good for debugging.
     env_file:
       - '.env'
-    extra_hosts: # if you need to connect some external host from container, it adds entries to /etc/hosts
+    # if you need to connect some external host from container, it adds entries to /etc/hosts
+    extra_hosts:
       - 'ldap.forumsys.com:52.87.186.93'
 
   chrome_headless:

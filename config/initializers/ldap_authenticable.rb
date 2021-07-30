@@ -10,9 +10,9 @@ class Devise::Strategies::LdapAuthenticatable < Devise::Strategies::Authenticata
     attrs = {
       host: ENV.fetch('LDAP_AUTH_HOST'),
       port: ENV.fetch('LDAP_AUTH_PORT'),
-      base: ENV.fetch('LDAP_AUTH_BASE'),
+      base: base,
       auth: {
-        username: "#{ENV.fetch('LDAP_AUTH_USER_FIELD')}=#{uid},#{ENV.fetch('LDAP_AUTH_BASE')}",
+        username: username,
         password: password,
         method: :simple
       }
@@ -26,7 +26,7 @@ class Devise::Strategies::LdapAuthenticatable < Devise::Strategies::Authenticata
       Rails.logger.info "LdapAuthenticatable | bound: #{ldap.inspect}"
 
       # filter = Net::LDAP::Filter.eq('samaccountname', uid)
-      filter = Net::LDAP::Filter.eq(ENV.fetch('LDAP_AUTH_USER_FIELD'), uid)
+      filter = Net::LDAP::Filter.eq(bind_key, bind_value)
       # result_attrs = %w[samaccountname displayname mail sn givenname surname]
 
       # search_result = ldap.search(base: ENV.fetch('LDAP_AUTH_BASE'), filter: filter, return_result: tru, attributes: result_attrs)
@@ -55,8 +55,36 @@ class Devise::Strategies::LdapAuthenticatable < Devise::Strategies::Authenticata
 
   private
 
-  def uid
+  def username
+    if bind_key == 'userPrincipalName' && upn_suffix.present?
+      "#{bind_value}@#{upn_suffix}"
+    else
+      "#{bind_key}=#{bind_value},#{base}"
+    end
+  end
+
+  def host
+    ENV.fetch('LDAP_AUTH_HOST')
+  end
+
+  def port
+    ENV.fetch('LDAP_AUTH_PORT')
+  end
+
+  def base
+    ENV.fetch('LDAP_AUTH_BASE')
+  end
+
+  def bind_key
+    ENV.fetch('LDAP_AUTH_BIND_KEY')
+  end
+
+  def bind_value
     params[:ldap_user][:uid]
+  end
+
+  def upn_suffix
+    ENV['LDAP_AUTH_UPN_SUFFIX']
   end
 
   def password
