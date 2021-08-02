@@ -8,8 +8,8 @@ class Devise::Strategies::LdapAuthenticatable < Devise::Strategies::Authenticata
 
   def authenticate! # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     attrs = {
-      host: ENV.fetch('LDAP_AUTH_HOST'),
-      port: ENV.fetch('LDAP_AUTH_PORT'),
+      host: host,
+      port: port,
       base: base,
       auth: {
         username: username,
@@ -18,7 +18,7 @@ class Devise::Strategies::LdapAuthenticatable < Devise::Strategies::Authenticata
       }
     }
 
-    attrs[:encryption] = :simple_tls if ENV['LDAP_AUTH_ENCRYPTED'].try(:as_boolean)
+    attrs[:encryption] = :simple_tls if encrypted
 
     ldap = Net::LDAP.new(attrs)
 
@@ -89,6 +89,10 @@ class Devise::Strategies::LdapAuthenticatable < Devise::Strategies::Authenticata
 
   def password
     params[:ldap_user][:password]
+  end
+
+  def encrypted
+    ENV['LDAP_AUTH_ENCRYPTED'].try(:as_boolean)
   end
 
   def prepare_name(res)
