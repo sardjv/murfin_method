@@ -2,10 +2,10 @@ module UsesActiveDirectory
   extend ActiveSupport::Concern
 
   included do
-    return unless ENV['AUTH_METHOD']&.split(',')&.include?('ldap')
+    # return unless ENV['AUTH_METHOD']&.split(',')&.include?('ldap')
 
     bind_key = ENV['LDAP_AUTH_BIND_KEY']
-    raise StandardError, 'LDAP_AUTH_BIND_KEY .env setting missing.' if bind_key.blank?
+    # raise StandardError, 'LDAP_AUTH_BIND_KEY .env setting missing.' if bind_key.blank?
 
     store :ad_preferences, accessors: ["ad_#{bind_key}".to_sym]
     send(:extend, MixinClassMethods)

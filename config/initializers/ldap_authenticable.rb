@@ -57,7 +57,7 @@ class Devise::Strategies::LdapAuthenticatable < Devise::Strategies::Authenticata
   private
 
   def username
-    if bind_key == 'userPrincipalName' && upn_suffix.present?
+    if (bind_key.downcase == 'userprincipalname' || bind_key.downcase == 'samaccountname') && upn_suffix.present?
       "#{bind_value}@#{upn_suffix}"
     else
       "#{bind_key}=#{bind_value},#{base}"
