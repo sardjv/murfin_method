@@ -32,5 +32,10 @@
                           options_from_collection_for_select(group_type.user_groups, :id, :name, selected: @user.user_groups.pluck(:id)),
                           multiple: true, id: "group_type_#{group_type.id}", include_blank: true
             %br
+        - if auth_method_enabled?('ldap') && @user.ad_preferences.present?
+          %p
+            = f.label 'Active Directory authentication details', for: :user_ad_preferences
+            %pre#user_ad_preferences= @user.ad_preferences
+
         = f.submit I18n.t('actions.save'), class: 'btn btn-primary mt-2'
         = link_to I18n.t('actions.cancel'), :back, class: 'btn btn-outline-secondary mt-2'

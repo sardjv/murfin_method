@@ -25,7 +25,6 @@ class Devise::Strategies::LdapAuthenticatable < Devise::Strategies::Authenticata
     if ldap.bind
       Rails.logger.info "LdapAuthenticatable | bound: #{ldap.inspect}"
 
-      # filter = Net::LDAP::Filter.eq('samaccountname', uid)
       filter = Net::LDAP::Filter.eq(bind_key, bind_value)
       # result_attrs = %w[samaccountname displayname mail sn givenname surname]
 
@@ -34,15 +33,16 @@ class Devise::Strategies::LdapAuthenticatable < Devise::Strategies::Authenticata
       search_result = result[0]
       Rails.logger.info "LdapAuthenticatable | search_result: #{search_result.to_h.inspect}"
 
-      email = search_result['mail'][0]
-      user = User.find_by(email: email)
+      user = User.find_by_ldap_bind(bind_value)
 
       unless user
-        user_attrs = { email: email }.merge(prepare_name(search_result))
+        email = search_result['mail'][0] if search_result['mail']
+        user_attrs = { user_ad_preferences_bind_key => bind_value, email: email }.merge(prepare_user_name(search_result)).compact
+        pp "LdapAuthenticatable | new user attrs: #{user_attrs.inspect}"
         user = User.create(user_attrs)
       end
 
-      if user
+      if user.valid?
         success!(user)
       else
         fail!(:ldap_user_fetch)
@@ -95,7 +95,11 @@ class Devise::Strategies::LdapAuthenticatable < Devise::Strategies::Authenticata
     ENV['LDAP_AUTH_ENCRYPTED'].try(:as_boolean)
   end
 
-  def prepare_name(res)
+  def user_ad_preferences_bind_key
+    "ad_#{bind_key}".to_sym
+  end
+
+  def prepare_user_name(res)
     if res[:sn].present? && res[:givenname].present?
       { first_name: res[:givenname][0], last_name: res[:sn][0] }
     elsif res[:cn].present?

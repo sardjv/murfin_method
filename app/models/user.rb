@@ -22,7 +22,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :validatable, :rememberable
 
   include HasOptionalPassword
-  include UsesActiveDirectory#, if: -> { ENV['AUTH_METHOD']&.split(',')&.include?('ldap') && ENV['LDAP_AUTH_BIND_KEY'].present? }
+  include UsesActiveDirectory
 
   include Cacheable
   cacheable watch: %w[first_name last_name], bust: [
