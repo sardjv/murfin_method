@@ -21,7 +21,7 @@ class LdapTest
     password = ENV.fetch('LDAP_AUTH_PASSWORD')
     encrypted = ENV['LDAP_AUTH_ENCRYPTED']&.as_boolean
 
-    username = if bind_key == 'userPrincipalName' && upx_suffix.present?
+    username = if bind_key == 'userPrincipalName' && upn_suffix.present?
                  "#{bind_value}@#{upn_suffix}"
                else
                  "#{bind_key}=#{bind_value},#{base}"
@@ -61,7 +61,7 @@ end
 
 ldap = LdapTest.bind
 
-pp 'LDAP search results 1:', LdapTest.filter(ldap, [ ENV['LDAP_AUTH_BIND_KEY'], ENV['LDAP_AUTH_BIND_VALUE'] ])
-pp 'LDAP search results 2:', LdapTest.filter(ldap, [ 'sAMAccountName', ENV['LDAP_AUTH_BIND_VALUE'] ])
+pp 'LDAP search results 1:', LdapTest.filter(ldap, [ENV['LDAP_AUTH_BIND_KEY'], ENV['LDAP_AUTH_BIND_VALUE']])
+pp 'LDAP search results 2:', LdapTest.filter(ldap, ['sAMAccountName', ENV['LDAP_AUTH_BIND_VALUE']])
 
 # rubocop:enable Rails/Output
