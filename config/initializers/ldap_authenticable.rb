@@ -20,6 +20,7 @@ class Devise::Strategies::LdapAuthenticatable < Devise::Strategies::Authenticata
 
     attrs[:encryption] = :simple_tls if encrypted
 
+    Rails.logger.info "LdapAuthenticatable | attrs: #{attrs.inspect}"
     ldap = Net::LDAP.new(attrs)
 
     if ldap.bind
@@ -31,14 +32,14 @@ class Devise::Strategies::LdapAuthenticatable < Devise::Strategies::Authenticata
       # search_result = ldap.search(base: ENV.fetch('LDAP_AUTH_BASE'), filter: filter, return_result: tru, attributes: result_attrs)
       result = ldap.search(filter: filter, return_result: true)
       search_result = result[0]
-      Rails.logger.info "LdapAuthenticatable | search_result: #{search_result.to_h.inspect}"
+      Rails.logger.info "LdapAuthenticatable | search result: #{search_result.to_h.inspect}"
 
-      user = User.find_by_ldap_bind(bind_value)
+      user = User.find_by(ldap_bind: bind_value)
 
       unless user
         email = search_result['mail'][0] if search_result['mail']
         user_attrs = { user_ad_preferences_bind_key => bind_value, email: email }.merge(prepare_user_name(search_result)).compact
-        pp "LdapAuthenticatable | new user attrs: #{user_attrs.inspect}"
+        Rails.logger.info "LdapAuthenticatable | new user attrs: #{user_attrs.inspect}"
         user = User.create(user_attrs)
       end
 
