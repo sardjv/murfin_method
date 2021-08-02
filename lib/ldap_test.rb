@@ -12,14 +12,14 @@ require 'net/ldap'
 
 class LdapTest
   def self.bind # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    host = ENV['LDAP_AUTH_HOST']
-    port = ENV['LDAP_AUTH_PORT']
-    base = ENV['LDAP_AUTH_BASE']
-    bind_key = ENV['LDAP_AUTH_BIND_KEY']
-    bind_value = ENV['LDAP_AUTH_BIND_VALUE']
-    upx_suffix = ENV['LDAP_AUTH_UPN_SUFFIX'] # upn prefix is taken from bind value
-    password = ENV['LDAP_AUTH_PASSWORD']
-    encrypted = ENV['LDAP_AUTH_ENCRYPTED']
+    host = ENV.fetch('LDAP_AUTH_HOST')
+    port = ENV.fetch('LDAP_AUTH_PORT')
+    base = ENV.fetch('LDAP_AUTH_BASE')
+    bind_key = ENV.fetch('LDAP_AUTH_BIND_KEY')
+    bind_value = ENV.fetch('LDAP_AUTH_BIND_VALUE')
+    upn_suffix = ENV['LDAP_AUTH_UPN_SUFFIX'] # upn prefix is taken from bind value
+    password = ENV.fetch('LDAP_AUTH_PASSWORD')
+    encrypted = ENV['LDAP_AUTH_ENCRYPTED']&.as_boolean
 
     username = if bind_key == 'userPrincipalName' && upx_suffix.present?
                  "#{bind_value}@#{upn_suffix}"
@@ -38,7 +38,7 @@ class LdapTest
       }
     }
 
-    attrs[:encryption] = :simple_tls if encrypted.as_boolean
+    attrs[:encryption] = :simple_tls if encrypted
     pp 'LDAP attrs:', attrs
     ldap = Net::LDAP.new(attrs)
 
@@ -51,6 +51,7 @@ class LdapTest
   end
 
   def self.filter(ldap, args)
+    puts "LDAP filter args: #{args.inspect}"
     filter = Net::LDAP::Filter.eq(*args)
     # result_attrs = %w[sAMAccountName displayName mail]
     # base: base, attributes: attributes: result_attrs
@@ -60,6 +61,7 @@ end
 
 ldap = LdapTest.bind
 
-pp 'LDAP search results:', LdapTest.filter(ldap, ['sAMAccountName', ENV['LDAP_AUTH_BIND_VALUE']])
+pp 'LDAP search results 1:', LdapTest.filter(ldap, [ ENV['LDAP_AUTH_BIND_KEY'], ENV['LDAP_AUTH_BIND_VALUE'] ])
+pp 'LDAP search results 2:', LdapTest.filter(ldap, [ 'sAMAccountName', ENV['LDAP_AUTH_BIND_VALUE'] ])
 
 # rubocop:enable Rails/Output
