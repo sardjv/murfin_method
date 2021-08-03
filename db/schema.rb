@@ -164,7 +164,7 @@ ActiveRecord::Schema.define(version: 2021_07_30_151127) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.string "epr_uuid"
-    t.text "ad_preferences"
+    t.text "ldap"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["epr_uuid"], name: "index_users_on_epr_uuid", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

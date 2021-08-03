@@ -10,7 +10,7 @@ en:
       api_user:
         api_token: API token
       ldap_user:
-        uid: Username
+        uid: User
       tag_type:
         active_for_time_ranges: Active for actual
       note:

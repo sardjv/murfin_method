@@ -28,6 +28,19 @@ class Api::V1::UserResource < JSONAPI::Resource
     super - [:admin]
   end
 
+  ### LDAP related
+  attribute "ldap_#{ENV['LDAP_AUTH_BIND_KEY'].downcase}".to_sym, if: :uses_ldap?
+
+  def self.uses_ldap?
+    ENV['AUTH_METHOD']&.split(',')&.include?('ldap') && ENV['LDAP_AUTH_BIND_KEY'].present?
+  end
+
+  def self.ldap_auth_bind_key_field
+    "ldap_#{ENV['LDAP_AUTH_BIND_KEY'].downcase}".to_sym
+  end
+
+  ### END LDAP related
+
   def replace_fields(field_data)
     # HACK: do not allow change admin password via API
     if @model.admin? && @model.persisted? && field_data[:attributes] && field_data[:attributes].include?(:password)

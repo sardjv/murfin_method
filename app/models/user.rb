@@ -14,7 +14,7 @@
 #  reset_password_sent_at :datetime
 #  remember_created_at    :datetime
 #  epr_uuid               :string(255)
-#  ad_preferences         :text(65535)
+#  ldap                   :text(65535)
 #
 class User < ApplicationRecord
   strip_attributes only: %i[first_name last_name email epr_uuid]
@@ -22,7 +22,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :validatable, :rememberable
 
   include HasOptionalPassword
-  include UsesActiveDirectory
+  include UsesLdap
 
   include Cacheable
   cacheable watch: %w[first_name last_name], bust: [
