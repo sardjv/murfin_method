@@ -29,7 +29,7 @@ class Api::V1::UserResource < JSONAPI::Resource
   end
 
   ### LDAP related
-  attribute "ldap_#{ENV['LDAP_AUTH_BIND_KEY'].downcase}".to_sym, if: :uses_ldap?
+  attribute "ldap_#{ENV['LDAP_AUTH_BIND_KEY']&.downcase}"&.to_sym, if: :uses_ldap?
 
   def self.uses_ldap?
     ENV['AUTH_METHOD']&.split(',')&.include?('ldap') && ENV['LDAP_AUTH_BIND_KEY'].present?
