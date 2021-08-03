@@ -11,7 +11,7 @@ module ResourceUsesLdap
 
   module ClassMethods
     def uses_ldap?
-      ENV['AUTH_METHOD']&.split(',')&.include?('ldap').as_boolean && ENV['LDAP_AUTH_BIND_KEY'].present?
+      !!ENV['AUTH_METHOD']&.split(',')&.include?('ldap') && ENV['LDAP_AUTH_BIND_KEY'].present?
     end
   end
 
