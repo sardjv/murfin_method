@@ -2,6 +2,7 @@ class Api::V1::UserResource < JSONAPI::Resource
   model_name 'User'
 
   attributes :first_name, :last_name, :email, :epr_uuid, :admin, :password
+  include ResourceUsesLdap
 
   has_many :user_groups, exclude_links: :default
   has_many :memberships, exclude_links: :default
@@ -27,19 +28,6 @@ class Api::V1::UserResource < JSONAPI::Resource
   def self.creatable_fields(_context)
     super - [:admin]
   end
-
-  ### LDAP related
-  attribute "ldap_#{ENV['LDAP_AUTH_BIND_KEY']&.downcase}"&.to_sym, if: :uses_ldap?
-
-  def self.uses_ldap?
-    ENV['AUTH_METHOD']&.split(',')&.include?('ldap') && ENV['LDAP_AUTH_BIND_KEY'].present?
-  end
-
-  def self.ldap_auth_bind_key_field
-    "ldap_#{ENV['LDAP_AUTH_BIND_KEY'].downcase}".to_sym
-  end
-
-  ### END LDAP related
 
   def replace_fields(field_data)
     # HACK: do not allow change admin password via API
