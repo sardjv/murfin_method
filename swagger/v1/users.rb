@@ -15,7 +15,7 @@ module Swagger
       end
 
       def self.uses_ldap?
-        ENV['AUTH_METHOD']&.split(',')&.include?('ldap') && ENV['LDAP_AUTH_BIND_KEY'].present?
+        !!ENV['AUTH_METHOD']&.split(',')&.include?('ldap') && ENV['LDAP_AUTH_BIND_KEY'].present?
       end
 
       def self.definitions # rubocop:disable Metrics/MethodLength

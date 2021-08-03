@@ -2649,7 +2649,7 @@
           "example": "435f9dfe-4e89-4b5a-b63e-9095327c3a6b",
           "x-nullable": true
         },
-        "ldap_uid": {
+        "ldap_samaccountname": {
           "type": "string",
           "example": "smithjohn",
           "x-nullable": true
@@ -2684,7 +2684,7 @@
           "example": "435f9dfe-4e89-4b5a-b63e-9095327c3a6b",
           "x-nullable": true
         },
-        "ldap_uid": {
+        "ldap_samaccountname": {
           "type": "string",
           "example": "smithjohn",
           "x-nullable": true
@@ -2714,7 +2714,7 @@
           "example": "435f9dfe-4e89-4b5a-b63e-9095327c3a6b",
           "x-nullable": true
         },
-        "ldap_uid": {
+        "ldap_samaccountname": {
           "type": "string",
           "example": "smithjohn",
           "x-nullable": true

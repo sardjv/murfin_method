@@ -34,8 +34,8 @@
             %br
         - if auth_method_enabled?('ldap') && @user.ldap.present?
           %p
-            = f.label 'LDAP authentication details', for: :user_ldap
-            %pre#user_ldap= @user.ldap
+            = f.label 'LDAP authentication details', for: 'user-ldap'
+            %pre#user-ldap= @user.ldap
 
         = f.submit I18n.t('actions.save'), class: 'btn btn-primary mt-2'
         = link_to I18n.t('actions.cancel'), :back, class: 'btn btn-outline-secondary mt-2'
