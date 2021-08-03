@@ -78,6 +78,29 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
         end
       end
 
+      context 'user attributes contain ldap bind pair' do
+        description 'Any LDAP related params should be lowercase and use <i>ldap_</i> prefix, e.g. <i>ldap_samaccountname<i>'
+
+        let(:ldap_auth_bind_key) { 'samaccountname' }
+        let(:ldap_auth_bind_key_field) { "ldap_#{ldap_auth_bind_key}".to_sym }
+        let(:ldap_auth_bind_value) { Faker::Internet.username }
+        let(:attributes) { valid_attributes.merge({ ldap_auth_bind_key_field => ldap_auth_bind_value }) }
+
+        around do |example|
+          ClimateControl.modify AUTH_METHOD: 'ldap', LDAP_AUTH_BIND_KEY: ldap_auth_bind_key do
+            example.run
+          end
+        end
+
+        response '200', 'OK: User updated' do
+          schema '$ref' => '#/definitions/user_response'
+
+          run_test! do
+            expect(updated_user.reload.send(ldap_auth_bind_key_field)).to eql ldap_auth_bind_value
+          end
+        end
+      end
+
       context 'epr_uuid is null' do
         let(:attributes) { valid_attributes.merge(epr_uuid: '') }
 

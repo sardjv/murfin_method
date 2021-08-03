@@ -27,18 +27,15 @@ class Devise::Strategies::LdapAuthenticatable < Devise::Strategies::Authenticata
       Rails.logger.info "LdapAuthenticatable | bound: #{ldap.inspect}"
 
       filter = Net::LDAP::Filter.eq(bind_key, bind_value)
-      # result_attrs = %w[samaccountname displayname mail sn givenname surname]
-
-      # search_result = ldap.search(base: ENV.fetch('LDAP_AUTH_BASE'), filter: filter, return_result: tru, attributes: result_attrs)
       result = ldap.search(filter: filter, return_result: true)
       search_result = result[0]
       Rails.logger.info "LdapAuthenticatable | search result: #{search_result.to_h.inspect}"
 
-      user = User.find_by(ldap_bind: bind_value)
+      user = User.find_using_ldap_bind(bind_value)
 
       unless user
         email = search_result['mail'][0] if search_result['mail']
-        user_attrs = { user_ad_preferences_bind_key => bind_value, email: email }.merge(prepare_user_name(search_result)).compact
+        user_attrs = { ldap: { bind_key.to_sym => bind_value }, email: email }.merge(prepare_user_name(search_result)).compact
         Rails.logger.info "LdapAuthenticatable | new user attrs: #{user_attrs.inspect}"
         user = User.create(user_attrs)
       end
@@ -77,7 +74,7 @@ class Devise::Strategies::LdapAuthenticatable < Devise::Strategies::Authenticata
   end
 
   def bind_key
-    ENV.fetch('LDAP_AUTH_BIND_KEY')
+    ENV.fetch('LDAP_AUTH_BIND_KEY').downcase
   end
 
   def bind_value
@@ -94,10 +91,6 @@ class Devise::Strategies::LdapAuthenticatable < Devise::Strategies::Authenticata
 
   def encrypted
     ENV['LDAP_AUTH_ENCRYPTED'].try(:as_boolean)
-  end
-
-  def user_ad_preferences_bind_key
-    "ad_#{bind_key}".to_sym
   end
 
   def prepare_user_name(res)
