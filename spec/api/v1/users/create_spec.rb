@@ -50,11 +50,15 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
         around do |example|
           ClimateControl.modify AUTH_METHOD: 'ldap', LDAP_AUTH_BIND_KEY: ldap_auth_bind_key do
             # we need to reload classes which use ENV variables we just had changed
-            Object.send(:remove_const, :UsesLdap)
-            Object.send(:remove_const, :User)
-            load 'app/models/concerns/uses_ldap.rb'
-            load 'app/models/user.rb'
-            load 'app/resources/api/v1/user_resource.rb'
+
+            Object.send(:remove_const, :AuthConfig)
+            load 'lib/auth_config.rb'
+
+            # Object.send(:remove_const, :UsesLdap)
+            # Object.send(:remove_const, :User)
+            # load 'app/models/concerns/uses_ldap.rb'
+            # load 'app/models/user.rb'
+            # load 'app/resources/api/v1/user_resource.rb'
 
             example.run
           end

@@ -13,9 +13,9 @@
     .container
       .d-flex.justify-content-start
         %small
-          DEV ONLY
+          DEV AND TEST ONLY | TODO REMOVE
           %br
-          auth methods enabled: #{ENV['AUTH_METHOD']}
+          auth methods enabled: #{AUTH_CONFIG.auth_methods_enabled&.join(', ')}
           %br
           auth method used: #{session[:auth_method]}
           %br

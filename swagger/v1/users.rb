@@ -7,15 +7,17 @@ module Swagger
           first_name: { type: 'string', example: 'John', 'x-nullable': true },
           email: { type: 'string', example: 'john.smith@example.com', 'x-nullable': false },
           epr_uuid: { type: 'string', example: '435f9dfe-4e89-4b5a-b63e-9095327c3a6b', 'x-nullable': true }
-        }.merge(Api::V1::UserResource.uses_ldap? ? ldap_item : {})
+        }.merge(uses_ldap? ? ldap_item : {})
       end
 
       def self.ldap_item
-        { Api::V1::UserResource.ldap_auth_bind_key_field => { type: 'string', example: 'smithjohn', 'x-nullable': true } }
+        #{ AuthConfig.ldap_auth_bind_key_field => { type: 'string', example: 'smithjohn', 'x-nullable': true } }
+        { AUTH_CONFIG.ldap_auth_bind_key_field => { type: 'string', example: 'smithjohn', 'x-nullable': true } }
       end
 
       def self.uses_ldap?
-        !!ENV['AUTH_METHOD']&.split(',')&.include?('ldap') && ENV['LDAP_AUTH_BIND_KEY'].present?
+        #AuthConfig.auth_method_enabled?('ldap') && ENV['LDAP_AUTH_BIND_KEY'].present?
+        AUTH_CONFIG.auth_method_enabled?('ldap') && AUTH_CONFIG.ldap_auth[:bind_key].present?
       end
 
       def self.definitions # rubocop:disable Metrics/MethodLength

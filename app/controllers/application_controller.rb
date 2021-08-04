@@ -13,12 +13,14 @@ class ApplicationController < ActionController::Base
   after_action :verify_authorized, unless: -> { devise_controller? }
 
   def auth_method_enabled?(method_name)
-    ENV['AUTH_METHOD']&.split(',')&.include?(method_name)
+    # AuthConfig.auth_method_enabled?(method_name)
+    AUTH_CONFIG.auth_method_enabled?(method_name)
   end
   helper_method :auth_method_enabled?
 
   def auth_method_used?(method_name)
-    session[:auth_method] == method_name.to_s
+    # AuthConfig.auth_method_used?(session, method_name)
+    AUTH_CONFIG.auth_method_used?(session, method_name)
   end
   helper_method :auth_method_used?
 

@@ -3,7 +3,8 @@ require 'devise/strategies/authenticatable'
 
 class Devise::Strategies::LdapAuthenticatable < Devise::Strategies::Authenticatable
   def valid?
-    ENV['AUTH_METHOD']&.split(',')&.include?('ldap') && params[:ldap_user].present?
+    #AuthConfig.auth_method_enabled?('ldap') && params[:ldap_user].present?
+    AUTH_CONFIG.auth_method_enabled?('ldap') && params[:ldap_user].present?
   end
 
   def authenticate! # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
