@@ -14,6 +14,7 @@
 #  reset_password_sent_at :datetime
 #  remember_created_at    :datetime
 #  epr_uuid               :string(255)
+#  ldap                   :text(65535)
 #
 FactoryBot.define do
   factory :user do

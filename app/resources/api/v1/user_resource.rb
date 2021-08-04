@@ -2,6 +2,7 @@ class Api::V1::UserResource < JSONAPI::Resource
   model_name 'User'
 
   attributes :first_name, :last_name, :email, :epr_uuid, :admin, :password
+  include ResourceUsesLdap
 
   has_many :user_groups, exclude_links: :default
   has_many :memberships, exclude_links: :default

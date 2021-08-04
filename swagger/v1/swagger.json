@@ -3,7 +3,7 @@
   "info": {
     "title": "Murfin+ API",
     "version": "v1",
-    "description": "This is the Murfin+ API. For more information visit\n                        <a href=\"https://github.com/sardjv/murfin_method\">\n                        github.com/sardjv/murfin_method</a>."
+    "description": "This is the Murfin+ API. For more information visit <a href=\"https://github.com/sardjv/murfin_method\">github.com/sardjv/murfin_method</a>."
   },
   "securityDefinitions": {
     "JWT": {
@@ -1296,8 +1296,16 @@
             "schema": {
               "$ref": "#/definitions/user_post_params"
             }
+          },
+          {
+            "name": "user",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/user_post_params"
+            }
           }
         ],
+        "description": "Any LDAP related params should be lowercase and use <i>ldap_</i> prefix, e.g. <i>ldap_samaccountname<i>",
         "responses": {
           "201": {
             "description": "User created",
@@ -1532,6 +1540,7 @@
             }
           }
         ],
+        "description": "Any LDAP related params should be lowercase and use <i>ldap_</i> prefix, e.g. <i>ldap_samaccountname<i>",
         "responses": {
           "200": {
             "description": "OK: User updated",
@@ -2640,6 +2649,11 @@
           "example": "435f9dfe-4e89-4b5a-b63e-9095327c3a6b",
           "x-nullable": true
         },
+        "ldap_samaccountname": {
+          "type": "string",
+          "example": "smithjohn",
+          "x-nullable": true
+        },
         "admin": {
           "type": "boolean",
           "example": false,
@@ -2669,6 +2683,11 @@
           "type": "string",
           "example": "435f9dfe-4e89-4b5a-b63e-9095327c3a6b",
           "x-nullable": true
+        },
+        "ldap_samaccountname": {
+          "type": "string",
+          "example": "smithjohn",
+          "x-nullable": true
         }
       }
     },
@@ -2693,6 +2712,11 @@
         "epr_uuid": {
           "type": "string",
           "example": "435f9dfe-4e89-4b5a-b63e-9095327c3a6b",
+          "x-nullable": true
+        },
+        "ldap_samaccountname": {
+          "type": "string",
+          "example": "smithjohn",
           "x-nullable": true
         },
         "password": {

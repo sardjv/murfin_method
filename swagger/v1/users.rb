@@ -7,7 +7,11 @@ module Swagger
           first_name: { type: 'string', example: 'John', 'x-nullable': true },
           email: { type: 'string', example: 'john.smith@example.com', 'x-nullable': false },
           epr_uuid: { type: 'string', example: '435f9dfe-4e89-4b5a-b63e-9095327c3a6b', 'x-nullable': true }
-        }
+        }.merge(Api::V1::UserResource.uses_ldap? ? ldap_bind_item : {})
+      end
+
+      def self.ldap_bind_item
+        { Api::V1::UserResource.ldap_auth_bind_key_field => { type: 'string', example: 'smithjohn', 'x-nullable': true } }
       end
 
       def self.definitions # rubocop:disable Metrics/MethodLength
