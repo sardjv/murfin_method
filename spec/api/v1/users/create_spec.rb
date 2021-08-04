@@ -49,12 +49,13 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
 
         around do |example|
           ClimateControl.modify AUTH_METHOD: 'ldap', LDAP_AUTH_BIND_KEY: ldap_auth_bind_key do
-            # we need to reload classes which use ENV variables we just had changed
+            # we need to reload modules which use ENV variables we just had changed
             Object.send(:remove_const, :UsesLdap)
-            Object.send(:remove_const, :User)
+            Object.send(:remove_const, :ResourceUsesLdap)
             load 'app/models/concerns/uses_ldap.rb'
-            load 'app/models/user.rb'
-            load 'app/resources/api/v1/user_resource.rb'
+            load 'app/resources/concerns/resource_uses_ldap.rb'
+            User.include(UsesLdap)
+            Api::V1::UserResource.include(ResourceUsesLdap)
 
             example.run
           end
@@ -64,7 +65,6 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
           schema '$ref' => '#/definitions/user_response'
 
           run_test! do
-            pp ENV['LDAP_AUTH_BIND_KEY']
             expect(created_user.send(ldap_auth_bind_key_field)).to eql ldap_auth_bind_value
           end
         end
