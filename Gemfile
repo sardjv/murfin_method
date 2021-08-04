@@ -42,7 +42,7 @@ gem 'grover', '~> 1.0.2'
 
 # HTML Abstraction Markup Language - A Markup Haiku
 # https://github.com/haml/haml
-gem 'haml', '~> 5.2.1'
+gem 'haml', '~> 5.2.2'
 
 # Allows easy creation of recurrence rules and fast querying.
 # https://github.com/seejohnrun/ice_cube
