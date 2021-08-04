@@ -3,8 +3,10 @@ module ResourceUsesLdap
 
   included do
     #if AuthConfig.auth_method_enabled?('ldap')
-    if AUTH_CONFIG.auth_method_enabled?('ldap')
-      attribute "ldap_#{ENV['LDAP_AUTH_BIND_KEY'].downcase}".to_sym, if: :uses_ldap?
+    pp 'before: ', AUTH_CONFIG.auth_method_enabled?('ldap')
+    if AUTH_CONFIG.auth_method_enabled?('ldap') && AUTH_CONFIG.ldap_auth[:bind_key].present?
+      pp '------------------innnn'
+      attribute "ldap_#{AUTH_CONFIG.ldap_auth[:bind_key].downcase}".to_sym#, if: :uses_ldap?
 
       # send(:extend, MixinClassMethods)
     end

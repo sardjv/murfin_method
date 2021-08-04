@@ -51,14 +51,22 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
           ClimateControl.modify AUTH_METHOD: 'ldap', LDAP_AUTH_BIND_KEY: ldap_auth_bind_key do
             # we need to reload classes which use ENV variables we just had changed
 
+            Object.send(:remove_const, :AUTH_CONFIG)
             Object.send(:remove_const, :AuthConfig)
-            load 'lib/auth_config.rb'
+            Object.send(:remove_const, :UsesLdap)
+            Object.send(:remove_const, :ResourceUsesLdap)
+            # Object.send(:remove_const, :UserResource)
+            Object.send(:remove_const, :User)
 
-            # Object.send(:remove_const, :UsesLdap)
-            # Object.send(:remove_const, :User)
-            # load 'app/models/concerns/uses_ldap.rb'
-            # load 'app/models/user.rb'
-            # load 'app/resources/api/v1/user_resource.rb'
+            load 'lib/auth_config.rb'
+            load 'app/models/concerns/uses_ldap.rb'
+            load 'app/resources/concerns/resource_uses_ldap.rb'
+            load 'app/resources/api/v1/user_resource.rb'
+            load 'app/models/user.rb'
+
+            AUTH_CONFIG = AuthConfig.instance
+
+            pp 'AUTH_CONFIG mocked', AUTH_CONFIG
 
             example.run
           end
@@ -68,7 +76,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
           schema '$ref' => '#/definitions/user_response'
 
           run_test! do
-            pp ENV['LDAP_AUTH_BIND_KEY']
+            # pp ENV['LDAP_AUTH_BIND_KEY']
             expect(created_user.send(ldap_auth_bind_key_field)).to eql ldap_auth_bind_value
           end
         end
