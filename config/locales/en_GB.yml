@@ -10,7 +10,7 @@ en:
       api_user:
         api_token: API token
       ldap_user:
-        uid: User
+        uid: Username
       tag_type:
         active_for_time_ranges: Active for actual
       note:
@@ -91,7 +91,7 @@ en:
   auth:
     << : *log_in_out
     ldap:
-      log_in: Log in via Active Directory
+      log_in: Windows Log in
   date:
     formats:
       readable: '%-d %B %Y'
