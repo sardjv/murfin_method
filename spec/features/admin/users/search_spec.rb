@@ -20,8 +20,8 @@ describe 'Admin searches for user', type: :feature, js: true do
     click_button 'Search'
   end
 
-  describe 'find by first and last name' do
-    let(:query) { "#{user3.first_name} #{user3.last_name}" }
+  describe 'find by first and last name, case insensitive' do
+    let(:query) { "#{user3.first_name.downcase} #{user3.last_name}" }
 
     it 'finds matching users' do
       within '#users-list' do
@@ -32,8 +32,8 @@ describe 'Admin searches for user', type: :feature, js: true do
     end
   end
 
-  describe 'find by last and first name' do
-    let(:query) { "#{user3.last_name} #{user3.first_name}" }
+  describe 'find by last and first name, case insensitive' do
+    let(:query) { "#{user3.last_name.downcase} #{user3.first_name}" }
 
     it 'finds matching users' do
       within '#users-list' do
