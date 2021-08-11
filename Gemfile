@@ -50,7 +50,7 @@ gem 'ice_cube', '~> 0.16.3'
 
 # A resource-focused Rails library for developing JSON:API compliant servers.
 # https://github.com/cerebris/jsonapi-resources
-gem 'jsonapi-resources', '~> 0.10.4'
+gem 'jsonapi-resources', '~> 0.10.5'
 
 # A ruby implementation of the RFC 7519 OAuth JSON Web Token (JWT) standard.
 # https://github.com/jwt/ruby-jwt
