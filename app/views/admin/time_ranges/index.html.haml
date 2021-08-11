@@ -1,10 +1,10 @@
 .container.my-4
   .row.mb-3
-    .col-6
+    .col-md-8.col-sm-12
       = render 'shared/search_form',
-                search_field_key: :user_last_name_or_user_first_name_or_tags_name_or_time_range_type_name_or_appointment_id_cont,
+                search_field_key: :user_first_last_name_or_user_last_first_name_or_tags_name_or_time_range_type_name_or_appointment_id_cont,
                 placeholder_key: :time_ranges
-    .col-6
+    .col-md-4.col-sm-12
       = link_to [:new, :admin, :time_range], class: 'btn btn-primary float-right' do
         = icon('plus')
         = t('actions.add', model_name: TimeRange.model_name.human.titleize)

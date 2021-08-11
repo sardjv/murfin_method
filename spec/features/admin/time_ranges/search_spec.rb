@@ -3,10 +3,11 @@ require 'rails_helper'
 describe 'Admin searches for time range', type: :feature, js: true do
   let!(:admin) { create :admin }
 
+  let!(:first_name) { Faker::Name.first_name }
   let!(:last_name) { Faker::Name.last_name }
 
   let!(:user1) { create :user }
-  let!(:user2) { create :user, last_name: last_name }
+  let!(:user2) { create :user, last_name: last_name, first_name: first_name }
   let!(:user3) { create :user, last_name: last_name }
   let!(:user4) { create :user }
 
@@ -35,10 +36,36 @@ describe 'Admin searches for time range', type: :feature, js: true do
     click_button 'Search'
   end
 
+  describe 'find by first and last name, case insensitive' do
+    let(:query) { "#{user2.first_name} #{user2.last_name.downcase}" }
+
+    it 'finds matching time ranges' do
+      within '#time-ranges-list' do
+        expect(page).not_to have_css "tr[data-time-range-id='#{time_range1.id}']"
+        expect(page).to have_css "tr[data-time-range-id='#{time_range2.id}']"
+        expect(page).not_to have_css "tr[data-time-range-id='#{time_range3.id}']"
+        expect(page).not_to have_css "tr[data-time-range-id='#{time_range4.id}']"
+      end
+    end
+  end
+
+  describe 'find by last and first name, case insensitive' do
+    let(:query) { "#{user2.last_name.downcase} #{user2.first_name.downcase}" }
+
+    it 'finds matching time ranges' do
+      within '#time-ranges-list' do
+        expect(page).not_to have_css "tr[data-time-range-id='#{time_range1.id}']"
+        expect(page).to have_css "tr[data-time-range-id='#{time_range2.id}']"
+        expect(page).not_to have_css "tr[data-time-range-id='#{time_range3.id}']"
+        expect(page).not_to have_css "tr[data-time-range-id='#{time_range4.id}']"
+      end
+    end
+  end
+
   describe 'find by user last name' do
     let(:query) { last_name }
 
-    it 'find matching users' do
+    it 'finds matching time ranges' do
       within '#time-ranges-list' do
         expect(page).to have_css "tr[data-time-range-id='#{time_range1.id}']"
         expect(page).to have_css "tr[data-time-range-id='#{time_range2.id}']"
@@ -51,7 +78,7 @@ describe 'Admin searches for time range', type: :feature, js: true do
   describe 'find by tag' do
     let(:query) { tag2ab.name }
 
-    it 'finds matching users' do
+    it 'finds matching time ranges' do
       within '#time-ranges-list' do
         expect(page).to have_css "tr[data-time-range-id='#{time_range1.id}']"
         expect(page).not_to have_css "tr[data-time-range-id='#{time_range2.id}']"
@@ -64,7 +91,7 @@ describe 'Admin searches for time range', type: :feature, js: true do
   describe 'find by appointment id' do
     let(:query) { time_range2.appointment_id }
 
-    it 'finds matching users' do
+    it 'finds matching time ranges' do
       within '#time-ranges-list' do
         expect(page).not_to have_css "tr[data-time-range-id='#{time_range1.id}']"
         expect(page).to have_css "tr[data-time-range-id='#{time_range2.id}']"
