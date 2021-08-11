@@ -15,6 +15,11 @@
 #  remember_created_at    :datetime
 #  epr_uuid               :string(255)
 #  ldap                   :text(65535)
+#  sign_in_count          :integer          default(0), not null
+#  current_sign_in_at     :datetime
+#  last_sign_in_at        :datetime
+#  current_sign_in_ip     :string(255)
+#  last_sign_in_ip        :string(255)
 #
 describe User, type: :model do
   subject { build(:user) }

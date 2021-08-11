@@ -2649,6 +2649,21 @@
           "example": "435f9dfe-4e89-4b5a-b63e-9095327c3a6b",
           "x-nullable": true
         },
+        "sign_in_count": {
+          "type": "integer",
+          "example": "10",
+          "x-nullable": false
+        },
+        "current_sign_in_at": {
+          "type": "string",
+          "example": "2021-08-11T15:30:00+00:00",
+          "x-nullable": false
+        },
+        "last_sign_in_at": {
+          "type": "string",
+          "example": "2021-08-10T11:15:00+00:00",
+          "x-nullable": false
+        },
         "ldap_samaccountname": {
           "type": "string",
           "example": "smithjohn",
@@ -2684,6 +2699,21 @@
           "example": "435f9dfe-4e89-4b5a-b63e-9095327c3a6b",
           "x-nullable": true
         },
+        "sign_in_count": {
+          "type": "integer",
+          "example": "10",
+          "x-nullable": false
+        },
+        "current_sign_in_at": {
+          "type": "string",
+          "example": "2021-08-11T15:30:00+00:00",
+          "x-nullable": false
+        },
+        "last_sign_in_at": {
+          "type": "string",
+          "example": "2021-08-10T11:15:00+00:00",
+          "x-nullable": false
+        },
         "ldap_samaccountname": {
           "type": "string",
           "example": "smithjohn",
@@ -2713,6 +2743,21 @@
           "type": "string",
           "example": "435f9dfe-4e89-4b5a-b63e-9095327c3a6b",
           "x-nullable": true
+        },
+        "sign_in_count": {
+          "type": "integer",
+          "example": "10",
+          "x-nullable": false
+        },
+        "current_sign_in_at": {
+          "type": "string",
+          "example": "2021-08-11T15:30:00+00:00",
+          "x-nullable": false
+        },
+        "last_sign_in_at": {
+          "type": "string",
+          "example": "2021-08-10T11:15:00+00:00",
+          "x-nullable": false
         },
         "ldap_samaccountname": {
           "type": "string",

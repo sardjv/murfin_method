@@ -6,7 +6,10 @@ module Swagger
           last_name: { type: 'string', example: 'Smith', 'x-nullable': true },
           first_name: { type: 'string', example: 'John', 'x-nullable': true },
           email: { type: 'string', example: 'john.smith@example.com', 'x-nullable': false },
-          epr_uuid: { type: 'string', example: '435f9dfe-4e89-4b5a-b63e-9095327c3a6b', 'x-nullable': true }
+          epr_uuid: { type: 'string', example: '435f9dfe-4e89-4b5a-b63e-9095327c3a6b', 'x-nullable': true },
+          sign_in_count: { type: 'integer', example: '10', 'x-nullable': false },
+          current_sign_in_at: { type: 'string', example: Time.parse('2021-08-11 15:30').iso8601, 'x-nullable': false },
+          last_sign_in_at: { type: 'string', example: Time.parse('2021-08-10 11:15').iso8601, 'x-nullable': false }
         }.merge(Api::V1::UserResource.uses_ldap? ? ldap_bind_item : {})
       end
 

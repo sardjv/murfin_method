@@ -15,11 +15,16 @@
 #  remember_created_at    :datetime
 #  epr_uuid               :string(255)
 #  ldap                   :text(65535)
+#  sign_in_count          :integer          default(0), not null
+#  current_sign_in_at     :datetime
+#  last_sign_in_at        :datetime
+#  current_sign_in_ip     :string(255)
+#  last_sign_in_ip        :string(255)
 #
 class User < ApplicationRecord
   strip_attributes only: %i[first_name last_name email epr_uuid]
-  # :confirmable, :lockable, :timeoutable, :recoverable, :trackable and :omniauthable
-  devise :database_authenticatable, :validatable, :rememberable
+  # :confirmable, :lockable, :timeoutable, :recoverable, and :omniauthable
+  devise :database_authenticatable, :validatable, :rememberable, :trackable
 
   include HasOptionalPassword
   include UsesLdap

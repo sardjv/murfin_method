@@ -20,3 +20,8 @@
           auth method used: #{session[:auth_method]}
           %br
           session user id: #{session[:user_id]}
+          - if current_user
+            %br
+            sign in at: #{current_user.current_sign_in_at}
+            %br
+            ip: #{current_user.current_sign_in_ip}
