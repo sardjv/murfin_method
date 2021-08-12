@@ -22,6 +22,8 @@
           session user id: #{session[:user_id]}
           - if current_user
             %br
-            sign in at: #{current_user.current_sign_in_at}
+            current sign in at: #{current_user.current_sign_in_at}
+            %br
+            last sign in at: #{current_user.last_sign_in_at}
             %br
             ip: #{current_user.current_sign_in_ip}

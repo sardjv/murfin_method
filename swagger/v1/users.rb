@@ -1,16 +1,37 @@
 module Swagger
   module V1
     class Users
-      def self.user_properties_without_admin
+      # def self.user_properties_without_admin
+      #   {
+      #     last_name: { type: 'string', example: 'Smith', 'x-nullable': true },
+      #     first_name: { type: 'string', example: 'John', 'x-nullable': true },
+      #     email: { type: 'string', example: 'john.smith@example.com', 'x-nullable': false },
+      #     epr_uuid: { type: 'string', example: '435f9dfe-4e89-4b5a-b63e-9095327c3a6b', 'x-nullable': true },
+      #     sign_in_count: { type: 'integer', example: 10, 'x-nullable': false },
+      #     current_sign_in_at: { type: 'string', example: Time.parse('2021-08-11 15:30').iso8601, 'x-nullable': false },
+      #     last_sign_in_at: { type: 'string', example: Time.parse('2021-08-10 11:15').iso8601, 'x-nullable': false },
+      #     current_sign_in_auth_method: { type: 'string', example: 'form', 'x-nullable': false },
+      #     last_sign_in_auth_method: { type: 'string', example: 'form', 'x-nullable': false }
+      #   }.merge(Api::V1::UserResource.uses_ldap? ? ldap_bind_item : {})
+      # end
+
+      def self.user_properties
         {
           last_name: { type: 'string', example: 'Smith', 'x-nullable': true },
           first_name: { type: 'string', example: 'John', 'x-nullable': true },
           email: { type: 'string', example: 'john.smith@example.com', 'x-nullable': false },
+          admin: { type: 'boolean', example: false, 'x-nullable': false },
           epr_uuid: { type: 'string', example: '435f9dfe-4e89-4b5a-b63e-9095327c3a6b', 'x-nullable': true },
-          sign_in_count: { type: 'integer', example: '10', 'x-nullable': false },
-          current_sign_in_at: { type: 'string', example: Time.parse('2021-08-11 15:30').iso8601, 'x-nullable': false },
-          last_sign_in_at: { type: 'string', example: Time.parse('2021-08-10 11:15').iso8601, 'x-nullable': false }
+          sign_in_count: { type: 'integer', example: 10, 'x-nullable': true },
+          current_sign_in_at: { type: 'string', example: Time.parse('2021-08-11 15:30').iso8601, 'x-nullable': true },
+          last_sign_in_at: { type: 'string', example: Time.parse('2021-08-10 11:15').iso8601, 'x-nullable': true },
+          current_sign_in_auth_method: { type: 'string', example: 'form', 'x-nullable': true },
+          last_sign_in_auth_method: { type: 'string', example: 'form', 'x-nullable': true }
         }.merge(Api::V1::UserResource.uses_ldap? ? ldap_bind_item : {})
+      end
+
+      def self.user_updatable_properties
+        user_properties.except(*([:admin] + Api::V1::UserResource::TRACKABLE_FIELDS))
       end
 
       def self.ldap_bind_item
@@ -21,15 +42,15 @@ module Swagger
         {
           user_attributes: {
             type: 'object',
-            properties: user_properties_without_admin.merge({ admin: { type: 'boolean', example: false, 'x-nullable': false } })
+            properties: user_properties
           },
-          user_attributes_without_admin: {
+          user_updatable_attributes: {
             type: 'object',
-            properties: user_properties_without_admin
+            properties: user_updatable_properties
           },
           user_attributes_with_password: {
             type: 'object',
-            properties: user_properties_without_admin.merge({ password: { type: 'string', example: 'pA$$w0Rd', 'x-nullable': true } })
+            properties: user_updatable_properties.merge({ password: { type: 'string', example: 'pA$$w0Rd', 'x-nullable': true } })
           },
           users_response: {
             type: 'object',
@@ -197,7 +218,7 @@ module Swagger
                 properties: {
                   id: { type: 'string', example: '1' },
                   type: { type: 'string', example: 'users' },
-                  attributes: { '$ref' => '#/definitions/user_attributes' }
+                  attributes: { '$ref' => '#/definitions/user_updatable_attributes' }
                 }
               }
             }

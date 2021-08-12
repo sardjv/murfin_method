@@ -2644,6 +2644,11 @@
           "example": "john.smith@example.com",
           "x-nullable": false
         },
+        "admin": {
+          "type": "boolean",
+          "example": false,
+          "x-nullable": false
+        },
         "epr_uuid": {
           "type": "string",
           "example": "435f9dfe-4e89-4b5a-b63e-9095327c3a6b",
@@ -2651,32 +2656,37 @@
         },
         "sign_in_count": {
           "type": "integer",
-          "example": "10",
-          "x-nullable": false
+          "example": 10,
+          "x-nullable": true
         },
         "current_sign_in_at": {
           "type": "string",
           "example": "2021-08-11T15:30:00+00:00",
-          "x-nullable": false
+          "x-nullable": true
         },
         "last_sign_in_at": {
           "type": "string",
           "example": "2021-08-10T11:15:00+00:00",
-          "x-nullable": false
+          "x-nullable": true
+        },
+        "current_sign_in_auth_method": {
+          "type": "string",
+          "example": "form",
+          "x-nullable": true
+        },
+        "last_sign_in_auth_method": {
+          "type": "string",
+          "example": "form",
+          "x-nullable": true
         },
         "ldap_samaccountname": {
           "type": "string",
           "example": "smithjohn",
           "x-nullable": true
-        },
-        "admin": {
-          "type": "boolean",
-          "example": false,
-          "x-nullable": false
         }
       }
     },
-    "user_attributes_without_admin": {
+    "user_updatable_attributes": {
       "type": "object",
       "properties": {
         "last_name": {
@@ -2698,21 +2708,6 @@
           "type": "string",
           "example": "435f9dfe-4e89-4b5a-b63e-9095327c3a6b",
           "x-nullable": true
-        },
-        "sign_in_count": {
-          "type": "integer",
-          "example": "10",
-          "x-nullable": false
-        },
-        "current_sign_in_at": {
-          "type": "string",
-          "example": "2021-08-11T15:30:00+00:00",
-          "x-nullable": false
-        },
-        "last_sign_in_at": {
-          "type": "string",
-          "example": "2021-08-10T11:15:00+00:00",
-          "x-nullable": false
         },
         "ldap_samaccountname": {
           "type": "string",
@@ -2743,21 +2738,6 @@
           "type": "string",
           "example": "435f9dfe-4e89-4b5a-b63e-9095327c3a6b",
           "x-nullable": true
-        },
-        "sign_in_count": {
-          "type": "integer",
-          "example": "10",
-          "x-nullable": false
-        },
-        "current_sign_in_at": {
-          "type": "string",
-          "example": "2021-08-11T15:30:00+00:00",
-          "x-nullable": false
-        },
-        "last_sign_in_at": {
-          "type": "string",
-          "example": "2021-08-10T11:15:00+00:00",
-          "x-nullable": false
         },
         "ldap_samaccountname": {
           "type": "string",
@@ -3013,7 +2993,7 @@
               "example": "users"
             },
             "attributes": {
-              "$ref": "#/definitions/user_attributes"
+              "$ref": "#/definitions/user_updatable_attributes"
             }
           }
         }
