@@ -419,7 +419,7 @@ DEPENDENCIES
   haml (~> 5.2.2)
   haml_lint (~> 0.37.1)
   ice_cube (~> 0.16.3)
-  jsonapi-resources (~> 0.10.4)
+  jsonapi-resources (= 0.10.4)
   jwt (~> 2.2.3)
   kaminari (~> 1.2.1)
   listen (~> 3.6.0)

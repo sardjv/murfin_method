@@ -138,12 +138,15 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
         let!(:tag2) { create :tag }
         let!(:tag3) { create :tag }
 
+        let(:tag2_id) { tag2.id }
+        let(:tag3_id) { tag3.id }
+
         let(:relationships) do
           {
             tags: {
               data: [
-                { type: 'tags', id: tag2.id },
-                { type: 'tags', id: tag3.id }
+                { type: 'tags', id: tag2_id },
+                { type: 'tags', id: tag3_id }
               ]
             }
           }
@@ -164,6 +167,22 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
 
           run_test! do
             expect(created_time_range.tags.collect(&:id)).to match_array [tag2.id, tag3.id]
+          end
+        end
+
+        context 'one of passed tags does not exist' do
+          let(:tag3_id) { Faker::Number.number(digits: 10) }
+
+          let(:error_title) { 'Record not found' }
+          let(:error_detail) { "Tag with id #{tag3_id} not found." }
+
+          response '404', 'Record not found' do
+            schema '$ref' => '#/definitions/error_404'
+
+            run_test! do
+              expect(parsed_json['errors'][0]['title']).to eql error_title
+              expect(parsed_json['errors'][0]['detail']).to eql error_detail
+            end
           end
         end
       end
