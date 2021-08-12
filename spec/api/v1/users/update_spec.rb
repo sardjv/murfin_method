@@ -37,10 +37,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
         schema '$ref' => '#/definitions/user_response'
 
         run_test! do
-          updated_user.reload
-          attributes.each do |key, value|
-            expect(value.to_s).to eq(updated_user.send(key).to_s)
-          end
+          parsed_json_data_matches_db_record(updated_user)
         end
       end
 
