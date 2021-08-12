@@ -1,0 +1,6 @@
+%script{ src: "https://www.googletagmanager.com/gtag/js?id=#{ENV['GA_GLOBAL_SITE_TAG']}", async: true }
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '#{ENV['GA_GLOBAL_SITE_TAG']}');
