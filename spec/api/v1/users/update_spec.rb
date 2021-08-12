@@ -4,7 +4,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
   let!(:updated_user) { create :user }
 
   let(:valid_attributes) do
-    Swagger::V1::Users.definitions.dig(:user_attributes_without_admin, :properties).transform_values do |v|
+    Swagger::V1::Users.definitions.dig(:user_updatable_attributes, :properties).transform_values do |v|
       v[:example]
     end
   end
@@ -37,10 +37,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
         schema '$ref' => '#/definitions/user_response'
 
         run_test! do
-          updated_user.reload
-          attributes.each do |key, value|
-            expect(value.to_s).to eq(updated_user.send(key).to_s)
-          end
+          parsed_json_data_matches_db_record(updated_user)
         end
       end
 

@@ -20,6 +20,7 @@
               %th= User.human_attribute_name('name')
               %th= User.human_attribute_name('email')
               %th= User.human_attribute_name('epr_uuid')
+              %th= User.human_attribute_name('last_sign_in_at')
               %th{ colspan: 2 }
           %tbody
             - @users.each do |user|
@@ -32,6 +33,7 @@
                       Admin
                   %td= user.email
                   %td= user.epr_uuid
+                  %td= l user.current_sign_in_at, format: :short if user.current_sign_in_at
                   %td{ style: 'width: 50px;' }
                     = link_to [:edit, :admin, user], class: 'btn btn-link' do
                       = icon('pencil')

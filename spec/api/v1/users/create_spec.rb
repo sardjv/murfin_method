@@ -4,7 +4,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
   let(:created_user) { User.unscoped.last }
 
   let(:valid_attributes) do
-    Swagger::V1::Users.definitions.dig(:user_attributes_without_admin, :properties).transform_values do |v|
+    Swagger::V1::Users.definitions.dig(:user_updatable_attributes, :properties).transform_values do |v|
       v[:example]
     end
   end

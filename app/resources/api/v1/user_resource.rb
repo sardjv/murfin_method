@@ -1,7 +1,9 @@
 class Api::V1::UserResource < JSONAPI::Resource
   model_name 'User'
 
-  attributes :first_name, :last_name, :email, :epr_uuid, :admin, :password
+  TRACKABLE_FIELDS = %i[sign_in_count current_sign_in_at last_sign_in_at current_sign_in_auth_method last_sign_in_auth_method].freeze
+  attributes(*(%i[first_name last_name email epr_uuid admin password] + TRACKABLE_FIELDS))
+
   include ResourceUsesLdap
 
   has_many :user_groups, exclude_links: :default
@@ -22,11 +24,11 @@ class Api::V1::UserResource < JSONAPI::Resource
   end
 
   def self.updatable_fields(_context)
-    super - [:admin]
+    super - [:admin] - TRACKABLE_FIELDS
   end
 
   def self.creatable_fields(_context)
-    super - [:admin]
+    super - [:admin] - TRACKABLE_FIELDS
   end
 
   def replace_fields(field_data)
