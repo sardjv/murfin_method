@@ -4,6 +4,5 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   document.addEventListener('turbo:load', function(event) {
-    console.log(event.detail.url);
     gtag('config', '#{ENV['GA_GLOBAL_SITE_TAG']}', { page_location: event.detail.url });
   });
