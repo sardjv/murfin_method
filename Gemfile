@@ -87,7 +87,7 @@ gem 'puma', '~> 5.4.0'
 
 # Minimal authorization through OO design and pure Ruby classes.
 # https://github.com/varvet/pundit
-gem 'pundit', '~> 2.1.0'
+gem 'pundit', '~> 2.1.1'
 
 # Create database-backed web applications using the MVC pattern.
 # https://github.com/rails/rails
