@@ -19,6 +19,23 @@ describe Activity, type: :model do
   it { should have_many(:tags).through(:tag_associations) }
   it { should accept_nested_attributes_for(:tag_associations).allow_destroy(true) }
 
+  context 'with schedule' do
+    subject { build :activity, plan: plan, schedule: ice_cube_schedule }
+    let(:jc_schedule) do
+      "---\n:start_time: 2021-03-29 08:00:00.000000000 +01:00\n:end_time: 2021-03-29 12:00:00.000000000 +01:00\n:rrules:\n- :validations:\n    :day:\n    - 1\n  :rule_type: IceCube::WeeklyRule\n  :interval: 1\n  :week_start: 1\n:rtimes: []\n:extimes: []\n" # rubocop:disable Layout/LineLength
+    end
+    let(:ice_cube_schedule) do
+      IceCube::Schedule.from_yaml(jc_schedule)
+    end
+
+    it 'can be built from an IceCube::Schedule' do
+      expect(subject.days).to eq(%w[monday])
+      expect(subject.start_time).to eq '2021-03-29 08:00:00 +0100'
+      expect(subject.end_time).to eq '2021-03-29 12:00:00 +0100'
+      expect(subject.seconds_per_week).to eq(14_400.0)
+    end
+  end
+
   context 'with seconds_per_week' do
     before do
       subject.update(seconds_per_week: seconds_per_week)

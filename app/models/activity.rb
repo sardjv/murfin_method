@@ -111,6 +111,7 @@ class Activity < ApplicationRecord
 
   def build_schedule
     return unless plan
+    return if schedule
 
     activity_start_time = plan.start_date.beginning_of_day
     self.schedule = ScheduleBuilder.call(
