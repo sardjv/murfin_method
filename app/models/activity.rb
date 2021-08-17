@@ -19,7 +19,7 @@ class Activity < ApplicationRecord
   validates :plan, presence: true
   validates :schedule, presence: true
   validate :validate_end_time_after_start_time
-  before_validation :build_schedule
+  before_validation :build_schedule, unless: :skip_build_schedule?
 
   attr_writer :seconds_per_week
 
@@ -111,7 +111,6 @@ class Activity < ApplicationRecord
 
   def build_schedule
     return unless plan
-    return if schedule
 
     activity_start_time = plan.start_date.beginning_of_day
     self.schedule = ScheduleBuilder.call(
@@ -122,6 +121,10 @@ class Activity < ApplicationRecord
   end
 
   private
+
+  def skip_build_schedule?
+    new_record? && schedule
+  end
 
   # Use updated_at.to_f here because the default is only accurate to
   # the second and can lead to tricky bugs, e.g. if 2 updates happen
