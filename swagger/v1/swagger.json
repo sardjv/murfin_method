@@ -3,7 +3,7 @@
   "info": {
     "title": "Murfin+ API",
     "version": "v1",
-    "description": "This is the Murfin+ API. For more information visit\n                        <a href=\"https://github.com/sardjv/murfin_method\">\n                        github.com/sardjv/murfin_method</a>."
+    "description": "This is the Murfin+ API. For more information visit <a href=\"https://github.com/sardjv/murfin_method\">github.com/sardjv/murfin_method</a>."
   },
   "securityDefinitions": {
     "JWT": {
@@ -1296,8 +1296,16 @@
             "schema": {
               "$ref": "#/definitions/user_post_params"
             }
+          },
+          {
+            "name": "user",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/user_post_params"
+            }
           }
         ],
+        "description": "Any LDAP related params should be lowercase and use <i>ldap_</i> prefix, e.g. <i>ldap_samaccountname<i>",
         "responses": {
           "201": {
             "description": "User created",
@@ -1532,6 +1540,7 @@
             }
           }
         ],
+        "description": "Any LDAP related params should be lowercase and use <i>ldap_</i> prefix, e.g. <i>ldap_samaccountname<i>",
         "responses": {
           "200": {
             "description": "OK: User updated",
@@ -2635,19 +2644,49 @@
           "example": "john.smith@example.com",
           "x-nullable": false
         },
+        "admin": {
+          "type": "boolean",
+          "example": false,
+          "x-nullable": false
+        },
         "epr_uuid": {
           "type": "string",
           "example": "435f9dfe-4e89-4b5a-b63e-9095327c3a6b",
           "x-nullable": true
         },
-        "admin": {
-          "type": "boolean",
-          "example": false,
-          "x-nullable": false
+        "sign_in_count": {
+          "type": "integer",
+          "example": 10,
+          "x-nullable": true
+        },
+        "current_sign_in_at": {
+          "type": "string",
+          "example": "2021-08-11T15:30:00+00:00",
+          "x-nullable": true
+        },
+        "last_sign_in_at": {
+          "type": "string",
+          "example": "2021-08-10T11:15:00+00:00",
+          "x-nullable": true
+        },
+        "current_sign_in_auth_method": {
+          "type": "string",
+          "example": "form",
+          "x-nullable": true
+        },
+        "last_sign_in_auth_method": {
+          "type": "string",
+          "example": "form",
+          "x-nullable": true
+        },
+        "ldap_samaccountname": {
+          "type": "string",
+          "example": "smithjohn",
+          "x-nullable": true
         }
       }
     },
-    "user_attributes_without_admin": {
+    "user_updatable_attributes": {
       "type": "object",
       "properties": {
         "last_name": {
@@ -2668,6 +2707,11 @@
         "epr_uuid": {
           "type": "string",
           "example": "435f9dfe-4e89-4b5a-b63e-9095327c3a6b",
+          "x-nullable": true
+        },
+        "ldap_samaccountname": {
+          "type": "string",
+          "example": "smithjohn",
           "x-nullable": true
         }
       }
@@ -2693,6 +2737,11 @@
         "epr_uuid": {
           "type": "string",
           "example": "435f9dfe-4e89-4b5a-b63e-9095327c3a6b",
+          "x-nullable": true
+        },
+        "ldap_samaccountname": {
+          "type": "string",
+          "example": "smithjohn",
           "x-nullable": true
         },
         "password": {
@@ -2944,7 +2993,7 @@
               "example": "users"
             },
             "attributes": {
-              "$ref": "#/definitions/user_attributes"
+              "$ref": "#/definitions/user_updatable_attributes"
             }
           }
         }

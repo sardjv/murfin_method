@@ -9,6 +9,8 @@ en:
         duration: Time worked per week
       api_user:
         api_token: API token
+      ldap_user:
+        uid: Username
       tag_type:
         active_for_time_ranges: Active for actual
       note:
@@ -63,6 +65,11 @@ en:
     tag_association_resource:
       errors:
         invalid_time_range_appointment_id: Time range with appointment id %{appointment_id} not found.
+    time_range_resource:
+      errors:
+        invalid_tags:
+          one: Tag with id %{invalid_ids} not found.
+          other: Tags with ids %{invalid_ids} not found.
     user_resource:
       errors:
         admin_delete: Admin user can not be deleted.
@@ -88,6 +95,8 @@ en:
     name: Murfin+
   auth:
     << : *log_in_out
+    ldap:
+      log_in: Windows Log in
   date:
     formats:
       readable: '%-d %B %Y'

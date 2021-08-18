@@ -23,9 +23,9 @@ RSpec.describe 'Auth', type: :request do
       end
 
       context 'when not authenticated' do
-        it 'redirects to root_path' do
+        it 'redirects to root path' do
           get admin_dashboard_path
-          expect(response).to redirect_to(root_path)
+          expect(response).to redirect_to root_path
         end
       end
     end
@@ -51,7 +51,7 @@ RSpec.describe 'Auth', type: :request do
       end
 
       context 'when not authenticated' do
-        it 'redirects to root_path' do
+        it 'redirects to login path' do
           get admin_dashboard_path
           expect(response).to redirect_to new_user_session_path
         end

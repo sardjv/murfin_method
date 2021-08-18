@@ -1,5 +1,5 @@
 %li.nav-item
-  - if auth_method?(:oauth2)
+  - if auth_method_enabled?('oauth2')
     - if user_authenticated?
       = link_to auth_logout_path, class: 'nav-link p-3', data: { turbo: false } do
         = I18n.t('auth.log_out')

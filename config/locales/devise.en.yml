@@ -10,6 +10,8 @@ en:
       already_authenticated: "You are already signed in."
       inactive: "Your account is not activated yet."
       invalid: "Invalid %{authentication_keys} or password."
+      ldap_bind: Invalid Windows username or password.
+      ldap_user_fetch: Can not find or match authenticated Windows user.
       locked: "Your account is locked."
       last_attempt: "You have one more attempt before your account is locked."
       not_found_in_database: "Invalid %{authentication_keys} or password."

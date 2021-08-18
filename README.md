@@ -9,7 +9,26 @@
 
 To get started, you need a `.env` file with secrets. If you use bash, you can generate one with the command `sh ./script/generate_env_file.sh`. If not, there is an `.env.example` file included in the repo that you can use, just remove the `.example` from the filename. Make sure to change all secrets marked with YOU_MUST_CHANGE_THIS_PASSWORD before running in production!
 
-You also need to set AUTH_METHOD to either _form_ or _oauth2_ in the _.env_ file.
+## Authentication
+
+You need to set *AUTH_METHOD* to either _form_ or _ldap_ or _oauth2_ in the _.env_ file.
+
+### Auth0
+
+You need to add *AUTH0_CLIENT_ID* and *AUTH0_CLIENT_SECRET* to the _.env_ file in the Auth0 section.
+
+### LDAP
+
+In the _.env_ file set respective LDAP configuration:
+
+*AUTH_METHOD* must contain _'ldap'_
+Set all required *LDAP_AUTH_* values depending on your LDAP server settings. Examples can be found in _.env.example_ file.
+After successful authentication on LDAP server side, Murfin+ user is matched with *LDAP_AUTH_BIND_KEY* and *LDAP_AUTH_BIND_KEY* pair, e.g. _samaccountname => shithjohn_.
+If user can not be found than it's created using pulled email and name details.
+
+### Form
+
+No extra settings required.
 
 ## Booting up
 
@@ -48,10 +67,6 @@ Remove all stopped containers, networks not used by at least one container, dang
 ```
 docker system prune
 ```
-
-## Logging in
-
-Auth0 or Devise can be used for login. For Auth0, you need to add your client ID and secret to the env file in the Auth0 section.
 
 ## Caching
 

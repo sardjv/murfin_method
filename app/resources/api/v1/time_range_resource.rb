@@ -16,6 +16,25 @@ class Api::V1::TimeRangeResource < JSONAPI::Resource
     super - [:user_epr_uuid]
   end
 
+  # HACK: set 404 exception if some of the tags to assign not found
+  def _replace_to_many_links(relationship_type, relationship_key_values, options)
+    tag_ids = relationship_key_values
+    if relationship_type == :tags && relationship_key_values.present?
+      tag_ids = relationship_key_values
+      tag_ids_found = Tag.where(id: tag_ids).pluck(:id)
+
+      if tag_ids.count != tag_ids_found.count
+        invalid_ids = tag_ids - tag_ids_found
+
+        raise JSONAPI::Exceptions::RecordNotFound.new(invalid_ids,
+                                                      detail: I18n.t('api.time_range_resource.errors.invalid_tags', count: invalid_ids.count,
+                                                                                                                    invalid_ids: invalid_ids.join(', '))) # rubocop:disable Layout/LineLength
+      end
+    end
+
+    super(relationship_type, relationship_key_values, options)
+  end
+
   before_save do
     if user_id.present? && user_epr_uuid.present?
       raise JSONAPI::Exceptions::ParameterNotAllowed.new(user_epr_uuid,

@@ -38,11 +38,11 @@ gem 'faker', '~> 2.18.0'
 
 # A Ruby gem to transform HTML into PDFs, PNGs or JPEGs using Google Puppeteer/Chromium
 # https://github.com/Studiosity/grover
-gem 'grover', '~> 1.0.1'
+gem 'grover', '~> 1.0.2'
 
 # HTML Abstraction Markup Language - A Markup Haiku
 # https://github.com/haml/haml
-gem 'haml', '~> 5.2.1'
+gem 'haml', '~> 5.2.2'
 
 # Allows easy creation of recurrence rules and fast querying.
 # https://github.com/seejohnrun/ice_cube
@@ -50,7 +50,7 @@ gem 'ice_cube', '~> 0.16.3'
 
 # A resource-focused Rails library for developing JSON:API compliant servers.
 # https://github.com/cerebris/jsonapi-resources
-gem 'jsonapi-resources', '~> 0.10.4'
+gem 'jsonapi-resources', '0.10.4'
 
 # A ruby implementation of the RFC 7519 OAuth JSON Web Token (JWT) standard.
 # https://github.com/jwt/ruby-jwt
@@ -63,6 +63,10 @@ gem 'kaminari', '~> 1.2.1'
 # Use MySQL as the database for Active Record.
 # https://github.com/brianmario/mysql2
 gem 'mysql2', '~> 0.5.3'
+
+# Pure Ruby LDAP library
+# https://github.com/ruby-ldap/ruby-net-ldap
+gem 'net-ldap', '~> 0.17'
 
 # OmniAuth is a flexible authentication system utilizing Rack middleware.
 # https://github.com/auth0/omniauth-auth0
@@ -79,11 +83,11 @@ gem 'parser', '~> 3.0.2.0'
 
 # A Ruby/Rack web server built for concurrency.
 # https://github.com/puma/puma
-gem 'puma', '~> 5.3.2'
+gem 'puma', '~> 5.4.0'
 
 # Minimal authorization through OO design and pure Ruby classes.
 # https://github.com/varvet/pundit
-gem 'pundit', '~> 2.1.0'
+gem 'pundit', '~> 2.1.1'
 
 # Create database-backed web applications using the MVC pattern.
 # https://github.com/rails/rails
@@ -95,7 +99,7 @@ gem 'ransack', '~> 2.4.2'
 
 # A very fast key-value store to hold jobs until they are run.
 # https://github.com/redis/redis-rb
-gem 'redis', '~> 4.3.1'
+gem 'redis', '~> 4.4.0'
 
 # Serve Swagger documentation generated from RSpec tests.
 # https://github.com/rswag/rswag
@@ -112,7 +116,7 @@ gem 'strip_attributes', '~> 1.11.0'
 
 # About Use Turbo in your Ruby on Rails app
 # https://github.com/hotwired/turbo-rails
-gem 'turbo-rails', '~> 0.5.12'
+gem 'turbo-rails', '~> 0.7.3'
 
 # Bundle zoneinfo files which are not included in Windows.
 # https://github.com/tzinfo/tzinfo-data
@@ -159,7 +163,7 @@ group :development do
 
   # Listens to file modifications and notifies you about the changes.
   # https://github.com/guard/listen
-  gem 'listen', '~> 3.5.1'
+  gem 'listen', '~> 3.6.0'
 
   # A static code analyzer and formatter, based on the community style guide.
   # https://github.com/rubocop-hq/rubocop-rails
@@ -185,7 +189,7 @@ group :test do
 
   # RSpec is a specification library for behaviour driven development.
   # https://github.com/rspec/rspec
-  gem 'rspec-rails', '~> 5.0.1'
+  gem 'rspec-rails', '~> 5.0.2'
 
   # Retry flaky specs to reduce time spent on random failures.
   # https://github.com/noredink/rspec-retry

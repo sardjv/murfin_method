@@ -1,0 +1,8 @@
+= javascript_include_tag "https://www.googletagmanager.com/gtag/js?id=#{ENV['GA_GLOBAL_SITE_TAG']}", async: true
+:javascript
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  document.addEventListener('turbo:load', function(event) {
+    gtag('config', '#{ENV['GA_GLOBAL_SITE_TAG']}', { page_location: event.detail.url });
+  });

@@ -4,7 +4,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
   let!(:updated_user) { create :user }
 
   let(:valid_attributes) do
-    Swagger::V1::Users.definitions.dig(:user_attributes_without_admin, :properties).transform_values do |v|
+    Swagger::V1::Users.definitions.dig(:user_updatable_attributes, :properties).transform_values do |v|
       v[:example]
     end
   end
@@ -37,10 +37,7 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
         schema '$ref' => '#/definitions/user_response'
 
         run_test! do
-          updated_user.reload
-          attributes.each do |key, value|
-            expect(value.to_s).to eq(updated_user.send(key).to_s)
-          end
+          parsed_json_data_matches_db_record(updated_user)
         end
       end
 
@@ -74,6 +71,37 @@ describe Api::V1::UserResource, type: :request, swagger_doc: 'v1/swagger.json' d
 
           it_behaves_like 'has response bad request' do
             let(:error_detail) { 'Admin password change via API is not allowed.' }
+          end
+        end
+      end
+
+      context 'user attributes contain ldap bind pair' do
+        description 'Any LDAP related params should be lowercase and use <i>ldap_</i> prefix, e.g. <i>ldap_samaccountname<i>'
+
+        let(:ldap_auth_bind_key) { 'samaccountname' }
+        let(:ldap_auth_bind_key_field) { "ldap_#{ldap_auth_bind_key}".to_sym }
+        let(:ldap_auth_bind_value) { Faker::Internet.username }
+        let(:attributes) { valid_attributes.merge({ ldap_auth_bind_key_field => ldap_auth_bind_value }) }
+
+        around do |example|
+          ClimateControl.modify AUTH_METHOD: 'ldap', LDAP_AUTH_BIND_KEY: ldap_auth_bind_key do
+            # we need to reload modules which use ENV variables we just had changed
+            Object.send(:remove_const, :UsesLdap)
+            Object.send(:remove_const, :ResourceUsesLdap)
+            load 'app/models/concerns/uses_ldap.rb'
+            load 'app/resources/concerns/resource_uses_ldap.rb'
+            User.include(UsesLdap)
+            Api::V1::UserResource.include(ResourceUsesLdap)
+
+            example.run
+          end
+        end
+
+        response '200', 'OK: User updated' do
+          schema '$ref' => '#/definitions/user_response'
+
+          run_test! do
+            expect(updated_user.reload.send(ldap_auth_bind_key_field)).to eql ldap_auth_bind_value
           end
         end
       end

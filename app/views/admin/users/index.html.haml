@@ -1,10 +1,10 @@
 .container.my-4
   .row.mb-3
-    .col-8
+    .col-md-8.col-sm-12
       = render 'shared/search_form',
                 search_field_key: :email_or_first_last_name_or_last_first_name_or_epr_uuid_cont,
                 placeholder_key: :users
-    .col-4
+    .col-md.4.col-sm-12
       = link_to [:new, :admin, :user], class: 'btn btn-primary float-right' do
         = icon('plus')
         = t('actions.add', model_name: User.model_name.human.titleize)
@@ -20,6 +20,7 @@
               %th= User.human_attribute_name('name')
               %th= User.human_attribute_name('email')
               %th= User.human_attribute_name('epr_uuid')
+              %th= User.human_attribute_name('last_sign_in_at')
               %th{ colspan: 2 }
           %tbody
             - @users.each do |user|
@@ -32,6 +33,7 @@
                       Admin
                   %td= user.email
                   %td= user.epr_uuid
+                  %td= l user.current_sign_in_at.in_time_zone('London'), format: :short if user.current_sign_in_at
                   %td{ style: 'width: 50px;' }
                     = link_to [:edit, :admin, user], class: 'btn btn-link' do
                       = icon('pencil')

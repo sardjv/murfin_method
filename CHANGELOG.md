@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.13.0] - 2021-08-03
+
+### Added
+- Enable authentication via LDAP
+- API add descriptions for some routes
+
+### Changed
+- Allow to enable both form and LDAP authentication, not only single one
+- Use CSS Grid for Activities or Actuals form fields
+- Flip bar chart
+
+### Fixed
+- Optimise loading times for charts and tables
+
 ## [0.12.0] - 2021-04-28
 
 ### Added
