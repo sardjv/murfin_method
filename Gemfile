@@ -87,7 +87,7 @@ gem 'puma', '~> 5.4.0'
 
 # Minimal authorization through OO design and pure Ruby classes.
 # https://github.com/varvet/pundit
-gem 'pundit', '~> 2.1.0'
+gem 'pundit', '~> 2.1.1'
 
 # Create database-backed web applications using the MVC pattern.
 # https://github.com/rails/rails
@@ -116,7 +116,7 @@ gem 'strip_attributes', '~> 1.11.0'
 
 # About Use Turbo in your Ruby on Rails app
 # https://github.com/hotwired/turbo-rails
-gem 'turbo-rails', '~> 0.7.0'
+gem 'turbo-rails', '~> 0.7.3'
 
 # Bundle zoneinfo files which are not included in Windows.
 # https://github.com/tzinfo/tzinfo-data
@@ -189,7 +189,7 @@ group :test do
 
   # RSpec is a specification library for behaviour driven development.
   # https://github.com/rspec/rspec
-  gem 'rspec-rails', '~> 5.0.1'
+  gem 'rspec-rails', '~> 5.0.2'
 
   # Retry flaky specs to reduce time spent on random failures.
   # https://github.com/noredink/rspec-retry
