@@ -14,7 +14,8 @@
         = f.datetime_select :end_time, label: TimeRange.human_attribute_name('end_time'), default: { hour: 17, minute: 0 }
         = f.number_field :seconds_worked, class: 'duration-picker-time-range', label: TimeRange.human_attribute_name('value'), step: :any
 
-        #time-range-tag-associations.sa-activities-grid.mb-2
+        #time-range-tag-associations.sa-activities-grid.mb-2{ data:
+          { time_range_active_tag_associations_count: TimeRange.new.active_tag_associations.count } }
           .sa-form-flex-row.nested-fields
             .sa-form-grid-fluid-columns
               = render 'shared/tag_associations', f: f
