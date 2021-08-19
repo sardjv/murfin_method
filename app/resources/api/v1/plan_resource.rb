@@ -1,8 +1,7 @@
 class Api::V1::PlanResource < JSONAPI::Resource
   model_name 'Plan'
-  immutable
 
-  attributes :start_date, :end_date, :user_id
+  attributes :start_date, :end_date, :user_id, :contracted_minutes_per_week
 
   has_many :activities, acts_as_set: true, exclude_links: :default
 

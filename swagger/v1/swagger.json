@@ -14,6 +14,62 @@
     }
   },
   "paths": {
+    "/api/v1/activities": {
+      "post": {
+        "summary": "create activity",
+        "tags": [
+          "Activities"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "consumes": [
+          "application/vnd.api+json"
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "parameters": [
+          {
+            "name": "activity",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/activity_post_params"
+            }
+          }
+        ],
+        "description": "Attribute <b>schedule_yaml</b> is <a href=\"https://github.com/seejohnrun/ice_cube\">IceCube</a> schedule object serialized with _to_yaml_ method.",
+        "responses": {
+          "201": {
+            "description": "Activity created",
+            "schema": {
+              "$ref": "#/definitions/activity_response_with_relationships"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/error_422"
+            }
+          },
+          "404": {
+            "description": "Record not found",
+            "schema": {
+              "$ref": "#/definitions/error_404"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
+            }
+          }
+        }
+      }
+    },
     "/api/v1/memberships": {
       "post": {
         "summary": "create membership",
@@ -118,6 +174,105 @@
         }
       }
     },
+    "/api/v1/plans": {
+      "post": {
+        "summary": "create plan",
+        "tags": [
+          "Plans"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "consumes": [
+          "application/vnd.api+json"
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "parameters": [
+          {
+            "name": "plan",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/plan_post_params"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Plan created",
+            "schema": {
+              "$ref": "#/definitions/plan_response"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "schema": {
+              "$ref": "#/definitions/error_422"
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "get plans",
+        "tags": [
+          "Plans"
+        ],
+        "security": [
+          {
+            "JWT": {
+            }
+          }
+        ],
+        "produces": [
+          "application/vnd.api+json"
+        ],
+        "parameters": [
+          {
+            "name": "page[size]",
+            "in": "query",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "page[number]",
+            "in": "query",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "filter[user_id]",
+            "in": "query",
+            "type": "integer",
+            "required": false
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "example": "activities"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Plans index",
+            "schema": {
+              "$ref": "#/definitions/plans_response"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/error_401"
+            }
+          }
+        }
+      }
+    },
     "/api/v1/plans/{id}": {
       "get": {
         "summary": "get plan",
@@ -171,64 +326,6 @@
             "description": "Unsupported accept header",
             "schema": {
               "$ref": "#/definitions/error_406"
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/plans": {
-      "get": {
-        "summary": "get plans",
-        "tags": [
-          "Plans"
-        ],
-        "security": [
-          {
-            "JWT": {
-            }
-          }
-        ],
-        "produces": [
-          "application/vnd.api+json"
-        ],
-        "parameters": [
-          {
-            "name": "page[size]",
-            "in": "query",
-            "type": "integer",
-            "required": false
-          },
-          {
-            "name": "page[number]",
-            "in": "query",
-            "type": "integer",
-            "required": false
-          },
-          {
-            "name": "filter[user_id]",
-            "in": "query",
-            "type": "integer",
-            "required": false
-          },
-          {
-            "name": "include",
-            "in": "query",
-            "type": "string",
-            "required": false,
-            "example": "activities"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Plans index",
-            "schema": {
-              "$ref": "#/definitions/plans_response"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/error_401"
             }
           }
         }
@@ -1816,6 +1913,28 @@
           "type": "integer",
           "example": 321,
           "x-nullable": false
+        },
+        "contracted_minutes_per_week": {
+          "type": "integer",
+          "example": 900,
+          "x-nullable": false
+        }
+      }
+    },
+    "plan_post_params": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "plans"
+            },
+            "attributes": {
+              "$ref": "#/definitions/plan_attributes"
+            }
+          }
         }
       }
     },
@@ -1946,6 +2065,168 @@
                           "type": {
                             "type": "string",
                             "example": "activities"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "activity_attributes": {
+      "type": "object",
+      "properties": {
+        "plan_id": {
+          "type": "integer",
+          "example": 8765,
+          "x-nullable": false
+        },
+        "minutes_per_week": {
+          "type": "integer",
+          "example": 240,
+          "x-nullable": false
+        }
+      }
+    },
+    "activity_attributes_with_schedule_yaml": {
+      "type": "object",
+      "properties": {
+        "plan_id": {
+          "type": "integer",
+          "example": 8765,
+          "x-nullable": false
+        },
+        "minutes_per_week": {
+          "type": "integer",
+          "example": 240,
+          "x-nullable": false
+        },
+        "schedule_yaml": {
+          "type": "string",
+          "example": "---\n:start_time: 2021-03-29 08:00:00.000000000 +01:00\n:end_time: 2021-03-29 12:00:00.000000000 +01:00\n:rrules:\n- :validations:\n    :day:\n    - 1\n  :rule_type: IceCube::WeeklyRule\n  :interval: 1\n  :week_start: 1\n:rtimes: []\n:extimes: []\n",
+          "x-nullable": false
+        }
+      }
+    },
+    "activity_post_params": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "activities"
+            },
+            "attributes": {
+              "$ref": "#/definitions/activity_attributes_with_schedule_yaml"
+            },
+            "relationships": {
+              "type": "object",
+              "properties": {
+                "tags": {
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "9001"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "tags"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "activity_response": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "1"
+            },
+            "type": {
+              "type": "string",
+              "example": "activities"
+            },
+            "link": {
+              "type": "object",
+              "properties": {
+                "self": {
+                  "type": "string",
+                  "example": "https://job-plan-stats.herokuapp.com/api/v1/activities/1"
+                }
+              }
+            },
+            "attributes": {
+              "$ref": "#/definitions/activity_attributes"
+            }
+          }
+        }
+      }
+    },
+    "activity_response_with_relationships": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "example": "1"
+            },
+            "type": {
+              "type": "string",
+              "example": "activities"
+            },
+            "link": {
+              "type": "object",
+              "properties": {
+                "self": {
+                  "type": "string",
+                  "example": "https://job-plan-stats.herokuapp.com/api/v1/activities/1"
+                }
+              }
+            },
+            "attributes": {
+              "$ref": "#/definitions/activity_attributes"
+            },
+            "relationships": {
+              "type": "object",
+              "properties": {
+                "tags": {
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "9001"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "tags"
                           }
                         }
                       }
