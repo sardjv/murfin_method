@@ -18,7 +18,7 @@ module Swagger
           },
           activity_attributes_with_schedule_yaml: {
             type: 'object',
-            properties: activity_properties.merge( { schedule_yaml: { type: 'string', example: SCHEDULE_YAML_EXAMPLE, 'x-nullable': false } } )
+            properties: activity_properties.merge({ schedule_yaml: { type: 'string', example: SCHEDULE_YAML_EXAMPLE, 'x-nullable': false } })
           },
           activity_post_params: {
             type: 'object',
