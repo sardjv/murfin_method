@@ -124,7 +124,7 @@ gem 'tzinfo-data', '~> 1.2021.1'
 
 # Use Webpack to manage app-like JavaScript modules in Rails.
 # https://github.com/rails/webpacker
-gem 'webpacker', '~> 5.4.0'
+gem 'webpacker', '~> 5.4.2'
 
 group :development, :test do
   # Call 'binding.pry' anywhere in your code to drop into a debugger console.
