@@ -116,7 +116,7 @@ describe Api::V1::TimeRangeResource, type: :request, swagger_doc: 'v1/swagger.js
       end
 
       context 'user not exists' do
-        let(:attributes) { valid_attributes.merge({ user_id: 987_654 }) }
+        let(:attributes) { valid_attributes.merge({ user_id: Faker::Number.number(digits: 10) }) }
 
         it_behaves_like 'has response unprocessable entity' do
           let(:error_title) { 'must exist' }

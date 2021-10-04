@@ -8,7 +8,20 @@ module Swagger
             properties: {
               start_date: { type: 'string', example: Date.parse('2021-01-01').iso8601, 'x-nullable': false },
               end_date: { type: 'string', example: Date.parse('2021-12-31').iso8601, 'x-nullable': false },
-              user_id: { type: 'integer', example: 321, 'x-nullable': false }
+              user_id: { type: 'integer', example: 321, 'x-nullable': false },
+              contracted_minutes_per_week: { type: 'integer', example: 60 * 15, 'x-nullable': false }
+            }
+          },
+          plan_post_params: {
+            type: 'object',
+            properties: {
+              data: {
+                type: 'object',
+                properties: {
+                  type: { type: 'string', example: 'plans' },
+                  attributes: { '$ref' => '#/definitions/plan_attributes' }
+                }
+              }
             }
           },
           plans_response: {

@@ -2,6 +2,7 @@ require 'rails_helper'
 require './swagger/v1/errors'
 require './swagger/v1/memberships'
 require './swagger/v1/plans'
+require './swagger/v1/activities'
 require './swagger/v1/tags'
 require './swagger/v1/tag_associations'
 require './swagger/v1/tag_types'
@@ -38,6 +39,7 @@ class Swagger::V1::Core
       Swagger::V1::Errors.definitions,
       Swagger::V1::Memberships.definitions,
       Swagger::V1::Plans.definitions,
+      Swagger::V1::Activities.definitions,
       Swagger::V1::Tags.definitions,
       Swagger::V1::TagAssociations.definitions,
       Swagger::V1::TagTypes.definitions,

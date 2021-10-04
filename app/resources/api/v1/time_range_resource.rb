@@ -8,6 +8,7 @@ class Api::V1::TimeRangeResource < JSONAPI::Resource
 
   attr_accessor :user_epr_uuid
 
+  # TODO: check if needed if delegated
   def minutes_worked
     @model.value.to_i
   end

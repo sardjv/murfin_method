@@ -18,7 +18,8 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       jsonapi_resources :memberships, only: %i[create destroy]
-      jsonapi_resources :plans, only: %i[index show]
+      jsonapi_resources :plans, only: %i[create index show]
+      jsonapi_resources :activities, only: %i[create]
       jsonapi_resources :tags
       jsonapi_resources :tag_associations, only: %i[create destroy]
       jsonapi_resources :tag_types
