@@ -155,7 +155,7 @@ group :development do
 
   # Automatically check Ruby code style with RuboCop when files are modified.
   # https://github.com/yujinakayama/guard-rubocop
-  gem 'guard-rubocop', '~> 1.4.0'
+  gem 'guard-rubocop', '~> 1.5.0'
 
   # haml-lint is a tool to help keep your HAML files clean and readable
   # https://github.com/sds/haml-lint
