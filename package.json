@@ -11,7 +11,7 @@
     "bootstrap-select": "^1.13.18",
     "cable_ready": "^4.5.0",
     "chart.js": "^3.5.1",
-    "date-fns": "^2.23.0",
+    "date-fns": "^2.26.0",
     "flatpickr": "^4.6.9",
     "jquery": "^3.6.0",
     "lodash": "^4.17.21",
