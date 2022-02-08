@@ -16,7 +16,7 @@
     "jquery": "^3.6.0",
     "lodash": "^4.17.21",
     "popper.js": "^1.16.1",
-    "puppeteer": "^10.2.0",
+    "puppeteer": "^13.2.0",
     "sass-variable-loader": "^0.1.2",
     "select2": "^4.1.0-rc.0",
     "svg-url-loader": "^7.1.1"
