@@ -116,7 +116,7 @@ gem 'strip_attributes', '~> 1.11.0'
 
 # About Use Turbo in your Ruby on Rails app
 # https://github.com/hotwired/turbo-rails
-gem 'turbo-rails', '~> 0.7.3'
+gem 'turbo-rails', '~> 1.1.1'
 
 # Bundle zoneinfo files which are not included in Windows.
 # https://github.com/tzinfo/tzinfo-data
