@@ -108,7 +108,7 @@ gem 'rswag-ui', '~> 2.4.0'
 
 # Simple, efficient background processing for Ruby.
 # https://github.com/mperham/sidekiq
-gem 'sidekiq', '~> 6.2.1'
+gem 'sidekiq', '~> 6.5.0'
 
 # Strips attributes of leading and trailing whitespace before validation.
 # https://github.com/rmm5t/strip_attributes
