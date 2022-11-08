@@ -197,7 +197,7 @@ group :test do
 
   # A browser automation framework and ecosystem.
   # https://github.com/SeleniumHQ/selenium/tree/trunk/rb
-  gem 'selenium-webdriver', '4.0.0.beta4'
+  gem 'selenium-webdriver', '4.6.1'
 
   # Cookie manipulation for Capybara
   # https://github.com/nruth/show_me_the_cookies
